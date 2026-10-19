@@ -34,6 +34,6 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	logger.Info("server_started", "address", listener.Addr().String(), "storage", "memory",
-		"data_survives_restart", false, "authentication", "not_implemented")
+		"data_survives_restart", false, "authentication_enabled", config.Auth.Enabled)
 	return server.Serve(ctx, listener, memory.New(), config, logger)
 }

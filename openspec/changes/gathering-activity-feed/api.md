@@ -7,8 +7,10 @@
 [contracts/openapi.yaml](../../../contracts/openapi.yaml), примеры и проверки —
 в [contracts/README.md](../../../contracts/README.md). Таблицы ниже задают
 поведение первого среза. Сейчас зарегистрированы только GET /healthz и
-анонимный GET /api/v1/invitations/{token}; остальные операции ещё не реализованы.
-Без модуля identity preview возвращает my_rsvp: null и my_rsvp_revision: "0";
+анонимный GET /api/v1/invitations/{token} и пять маршрутов входа/сессий.
+Операции встреч ещё не реализованы; OAuth выключен без конфигурации
+по [инструкции](../../../backend/docs/auth.md), реальный вход пока не проверен.
+Preview пока возвращает my_rsvp: null и my_rsvp_revision: "0";
 собственный ответ после входа добавляется с задачей 4.3.
 
 ## Общие правила

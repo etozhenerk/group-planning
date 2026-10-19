@@ -8,8 +8,10 @@ import (
 	"time"
 )
 
-// Config contains non-secret settings for the in-memory development server.
+// Config includes deployment settings and server-only OAuth credentials.
+// Do not log or serialize the configuration.
 type Config struct {
+	Auth            AuthConfig
 	Address         string
 	ShutdownTimeout time.Duration
 }
@@ -35,5 +37,10 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 		}
 		config.ShutdownTimeout = timeout
 	}
+	auth, err := loadAuthConfig(getenv)
+	if err != nil {
+		return Config{}, err
+	}
+	config.Auth = auth
 	return config, nil
 }

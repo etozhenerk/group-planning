@@ -3,10 +3,10 @@ info:
   title: Somewhere API
   version: 0.1.0
   description: "Контракт первого среза: вход → назначенная встреча → приглашение → RSVP → чат.
-    x-implemented отражает наличие HTTP route, а не готовность всего сценария. Сейчас работают
-    health и анонимный preview; session-aware preview появится с identity. Остальные операции пока
-    не зарегистрированы (404). Бизнес-правила и ошибки описаны в
-    openspec/changes/gathering-activity-feed/api.md."
+    Работают health, анонимный preview и серверные OAuth/session routes. Вход выключен без
+    конфигурации. Реальная интеграция Яндекс ID и клиентские приложения ещё не проверены; операции
+    встреч пока не зарегистрированы. x-implemented отмечает маршрут, а не готовность всего
+    сценария."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -30,11 +30,11 @@ paths:
         "200":
           description: Успешный ответ
           headers:
-            X-Request-ID: &a1
+            X-Request-ID:
               description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
-            Cache-Control: &a2
+            Cache-Control:
               description: Ответы API не кешируются.
               schema:
                 type: string
@@ -76,7 +76,7 @@ paths:
       tags:
         - auth
       security: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -133,7 +133,7 @@ paths:
       tags:
         - auth
       security: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "303":
           description: Операция завершена
@@ -201,7 +201,7 @@ paths:
       tags:
         - auth
       security: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -260,7 +260,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -313,7 +313,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "204":
           description: Операция завершена
@@ -1653,8 +1653,15 @@ components:
     APIError:
       description: Ошибка согласно api.md; детали реализации не раскрываются.
       headers:
-        X-Request-ID: *a1
-        Cache-Control: *a2
+        X-Request-ID:
+          description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+          schema:
+            $ref: "#/components/schemas/UUID"
+        Cache-Control:
+          description: Ответы API не кешируются.
+          schema:
+            type: string
+            const: no-store
       content:
         application/json:
           schema:

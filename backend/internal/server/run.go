@@ -23,8 +23,16 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 	if err := ctx.Err(); err != nil {
 		return nil
 	}
+	service, err := newIdentity(config.Auth, store)
+	if err != nil {
+		return err
+	}
+	cleanupCtx, stopCleanup := context.WithCancel(ctx)
+	cleanupDone := make(chan struct{})
+	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()
+	defer func() { stopCleanup(); <-cleanupDone }()
 	server := &http.Server{
-		Handler: httpapi.New(store, logger), ReadHeaderTimeout: 5 * time.Second,
+		Handler: httpapi.NewWithIdentity(store, service, logger), ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout: 10 * time.Second, WriteTimeout: 15 * time.Second,
 		IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10,
 		// net/http's default panic logger can include raw panic values. The middleware

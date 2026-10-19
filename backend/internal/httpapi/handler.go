@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
@@ -20,9 +21,14 @@ type previewResponse struct {
 	MyRSVPRevision string     `json:"my_rsvp_revision"`
 }
 
-// New builds the currently implemented anonymous routes. Authentication and
-// private operations are added separately; no header can impersonate a user.
+// New builds public routes and disabled auth endpoints for standalone storage tests.
 func New(store meetings.Store, logger *slog.Logger) http.Handler {
+	return NewWithIdentity(store, nil, logger)
+}
+
+// NewWithIdentity binds verified identity to authentication routes. A nil service
+// disables sign-in and never authorizes a user.
+func NewWithIdentity(store meetings.Store, service *identity.Service, logger *slog.Logger) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -57,6 +63,7 @@ func New(store meetings.Store, logger *slog.Logger) http.Handler {
 			Title: preview.Title, StartsAt: preview.StartsAt, Timezone: preview.Timezone,
 			Place: place, MyRSVPRevision: "0"})
 	})
+	registerAuth(mux, service)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "not_found", nil)
 	})

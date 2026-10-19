@@ -8,13 +8,13 @@ import { contract, responseSchema, root, validate } from './check-api-contract.m
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'somewhere-api-'));
 try {
   const capture = path.join(temporary, 'responses.json');
-  const result = spawnSync(process.env.GO_BIN || 'go', ['test', '-count=1', '-run', '^TestOpenAPIResponses$', './internal/httpapi'], {
+  const result = spawnSync(process.env.GO_BIN || 'go', ['test', '-count=1', '-run', '^(TestOpenAPIResponses|TestAuthOpenAPIResponses)$', './internal/httpapi'], {
     cwd: path.join(root, 'backend'),
     env: { ...process.env, SOMEWHERE_CONTRACT_CAPTURE: capture },
     encoding: 'utf8', timeout: 120_000,
   });
   assert.equal(result.status, 0, `HTTP tests failed: ${result.error || ''}\n${result.stdout}\n${result.stderr}`);
-  const responses = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  const responses = [...JSON.parse(fs.readFileSync(capture, 'utf8')), ...JSON.parse(fs.readFileSync(`${capture}.auth`, 'utf8'))];
   assert(responses.length >= 6, 'No captured HTTP responses');
   for (const response of responses) {
     const item = contract.paths[response.path];
@@ -26,9 +26,15 @@ try {
     } else {
       const operation = item[response.method];
       assert(operation?.['x-implemented'], `Unimplemented operation ${response.path}`);
-      schema = responseSchema(operation, response.status);
+      if (response.status === 204 || response.status === 303) {
+        assert(operation.responses[String(response.status)], 'Undocumented empty response');
+        assert.equal(response.body, null);
+        if (response.status === 303) assert(response.headers.Location?.[0], 'Missing callback Location');
+      } else {
+        schema = responseSchema(operation, response.status);
+      }
     }
-    validate(schema, response.body);
+    if (schema) validate(schema, response.body);
     assert.equal(response.headers['Cache-Control']?.[0], 'no-store');
     validate('UUID', response.headers['X-Request-Id']?.[0]);
   }
