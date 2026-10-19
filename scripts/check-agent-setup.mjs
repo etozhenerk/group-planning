@@ -85,12 +85,28 @@ try {
       `Skill version mismatch: ${name}; run npm run agent:update.`);
   }
 
+  const projectSkills = ['product-copy-editor'];
+  for (const name of projectSkills) {
+    const path = `.agents/skills/${name}/SKILL.md`;
+    if (!existsSync(join(root, path))) {
+      failures.push(`Missing project skill: ${name}`);
+      continue;
+    }
+    const match = read(path).match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+    check(Boolean(match), `Missing project skill frontmatter: ${name}`);
+    if (!match) continue;
+    const meta = parse(match[1]);
+    check(meta.name === name && typeof meta.description === 'string' && meta.description.trim().length > 0,
+      `Invalid project skill name or description: ${name}`);
+  }
+
   const config = parse(read('openspec/config.yaml'));
   check(config.schema === 'spec-driven' && typeof config.context === 'string', 'Invalid OpenSpec project configuration.');
 
   const documentation = [
     join(root, 'README.md'), join(root, 'AGENTS.md'),
     ...markdownFiles(join(root, 'docs')),
+    ...projectSkills.map((name) => join(root, `.agents/skills/${name}/SKILL.md`)),
     ...['backend', 'frontend/web', 'frontend/ios', 'frontend/android'].map((area) => join(root, area, 'AGENTS.md')),
   ];
   for (const file of documentation.filter(existsSync)) {
@@ -116,7 +132,7 @@ try {
     console.log('No active changes or current specs; product scenarios have not been verified.');
   }
   if (failures.length) throw new Error(failures.join('\n'));
-  console.log(`Agent setup OK: 5 instruction files, ${workflows.length} skills, pinned CLI and documentation links.`);
+  console.log(`Agent setup OK: 5 instruction files, ${workflows.length} OpenSpec skills, ${projectSkills.length} project skill, pinned CLI and documentation links.`);
 } catch (error) {
   console.error(`Agent setup check failed:\n${error.message}`);
   process.exitCode = 1;

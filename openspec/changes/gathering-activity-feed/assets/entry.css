@@ -230,3 +230,46 @@ a.calendar-cell:hover { background: #3a3542; }
 }
 @media (max-width: 360px) { .marketing-wrap { padding-inline: 20px; } .hero h1 { font-size: 40px; letter-spacing: -1.9px; } .feature-grid { grid-template-columns: minmax(0,1fr); } .feature-tile { padding: 21px; } .feature-tile .feature-icon { margin-bottom: 16px; } .hub-main { padding-inline: 16px; } .hub-header h1 { font-size: 26px; } .hub-header .button { padding-inline: 10px; } .calendar-section { margin-inline: -12px; } .calendar-head { padding-inline: 12px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Editorial onboarding examples, v0.7 */
+.examples-section { padding: 30px 0 48px; }
+.examples-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; align-items: start; }
+.example-card { min-width: 0; background: #303138; border-radius: 26px; overflow: hidden; }
+.example-copy { padding: 28px 28px 0; }
+.example-copy h2 { font-size: 25px; letter-spacing: -.7px; line-height: 1.2; margin: 0 0 13px; }
+.example-copy p { margin: 0; color: #c2b9cc; font-size: 14px; line-height: 1.65; }
+.example-media { margin: 24px 20px 20px; padding: 12px; background: #24252a; border-radius: 20px; overflow: hidden; }
+.example-media > img, .example-panels img { display: block; width: 100%; max-width: 376px; height: auto; margin: auto; border-radius: 12px; }
+.example-switch { border: 0; min-width: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.example-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.example-switch label { display: block; flex: 1; padding: 11px 7px; min-height: 44px; font-size: 12px; line-height: 1.5; text-align: center; border-radius: 11px; color: #c2b9cc; background: #333138; cursor: pointer; }
+.example-switch input:checked + label { background: #e0dce8; color: #27252d; }
+.example-switch input:focus-visible + label { outline: 2px solid #d6d1f5; outline-offset: 3px; }
+.example-panels { flex: 0 0 100%; min-width: 0; margin-top: 12px; }
+.example-after { display: none !important; }
+#poll-after:checked ~ .example-panels .example-after, #task-after:checked ~ .example-panels .example-after { display: block !important; }
+#poll-after:checked ~ .example-panels .example-before, #task-after:checked ~ .example-panels .example-before { display: none !important; }
+.entry-start { display: flex; justify-content: center; margin-top: 32px; }
+.entry-start .button { min-height: 50px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.example-canvas { width: 376px; max-width: 100%; background: #24252a; padding: 16px; color: #f5f4f1; }
+.example-canvas .feed-inner { padding: 0; max-width: none; margin: 0; }
+.example-canvas .entry { margin: 18px 0; }
+.example-canvas .entry:first-child { margin-top: 0; }
+.example-canvas .entry:last-child { margin-bottom: 0; }
+.example-canvas .invitation { width: auto; max-width: none; margin: 0; padding: 0; }
+.example-canvas .invitation h1 { font-size: 27px; letter-spacing: -.8px; }
+.example-canvas .calendar-head { margin-top: 0; }
+.example-canvas .calendar-layout { display: block; }
+.example-canvas .day-agenda { margin-top: 22px; }
+@media (max-width: 740px) {
+ .examples-section { padding: 16px 0 36px; }
+ .examples-grid { grid-template-columns: minmax(0,1fr); gap: 22px; }
+ .example-copy { padding: 23px 22px 0; }
+ .example-copy h2 { font-size: 23px; }
+ .example-copy p { font-size: 13px; }
+ .example-media { margin: 20px 12px 12px; padding: 7px; }
+ .example-switch label { font-size: 11px; }
+ .hero h1 { font-size: 39px; letter-spacing: -1.7px; }
+}
+@media (max-width: 360px) { .hero h1 { font-size: 34px; letter-spacing: -1.5px; } }
