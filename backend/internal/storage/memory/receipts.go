@@ -1,6 +1,10 @@
 package memory
 
-import "github.com/etozhenerk/group-planning/backend/internal/meetings"
+import (
+	"time"
+
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+)
 
 func (tx *transaction) Receipt(key meetings.RequestKey) (meetings.Receipt, error) {
 	tx.mu.Lock()
@@ -28,5 +32,19 @@ func (tx *transaction) InsertReceipt(receipt meetings.Receipt) error {
 		return meetings.ErrAlreadyExists
 	}
 	tx.data.receipts[receipt.Key] = receipt
+	return nil
+}
+
+func (tx *transaction) PruneReceipts(now time.Time) error {
+	tx.mu.Lock()
+	defer tx.mu.Unlock()
+	if err := tx.check(true); err != nil {
+		return err
+	}
+	for key, receipt := range tx.data.receipts {
+		if !now.Before(receipt.ExpiresAt) {
+			delete(tx.data.receipts, key)
+		}
+	}
 	return nil
 }

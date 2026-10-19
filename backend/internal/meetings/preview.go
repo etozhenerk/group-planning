@@ -16,14 +16,18 @@ type PublicInvitation struct {
 	Place     string
 }
 
+func validInvitationToken(token string) bool {
+	decoded, err := base64.RawURLEncoding.DecodeString(token)
+	return err == nil && len(decoded) == 32 && base64.RawURLEncoding.EncodeToString(decoded) == token
+}
+
 // Preview reads public details from a consistent snapshot without changing RSVP.
 func Preview(ctx context.Context, store Store, token string) (PublicInvitation, error) {
-	decoded, err := base64.RawURLEncoding.DecodeString(token)
-	if err != nil || len(decoded) != 32 || base64.RawURLEncoding.EncodeToString(decoded) != token {
+	if !validInvitationToken(token) {
 		return PublicInvitation{}, ErrNotFound
 	}
 	var preview PublicInvitation
-	err = store.View(ctx, func(reader Reader) error {
+	err := store.View(ctx, func(reader Reader) error {
 		invitation, err := reader.InvitationByToken(token)
 		if err != nil {
 			return err

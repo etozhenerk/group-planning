@@ -162,7 +162,7 @@ func TestFailuresDoNotExposeDetails(t *testing.T) {
 func TestUnknownRoutesAndHead(t *testing.T) {
 	logger := slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil))
 	handler := New(seededStore(t), logger)
-	for _, path := range []string{"/unknown", "/api/v1/meetings", "/api//v1/invitations/secret", "/api/v1/invitations/../secret"} {
+	for _, path := range []string{"/unknown", "/api//v1/invitations/secret", "/api/v1/invitations/../secret"} {
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, httptest.NewRequest("GET", path, nil))
 		if response.Code != 404 || !json.Valid(response.Body.Bytes()) {

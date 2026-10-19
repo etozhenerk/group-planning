@@ -2,6 +2,7 @@ package identity
 
 import (
 	"context"
+	"errors"
 	"time"
 )
 
@@ -88,3 +89,23 @@ func (s *Service) Cleanup(ctx context.Context) (CleanupCount, error) {
 	err := s.store.Update(ctx, func(records Records) error { count = records.Cleanup(s.now()); return nil })
 	return count, err
 }
+
+// Users resolves local public profiles for an already authorized meeting snapshot.
+// It never accepts provider subjects as proof of identity.
+func (s *Service) Users(ctx context.Context, ids []string) (map[string]User, error) {
+	result := make(map[string]User, len(ids))
+	err := s.store.Update(ctx, func(records Records) error {
+		for _, id := range ids {
+			user, ok := records.User(id)
+			if !ok {
+				return errors.New("meeting profile unavailable")
+			}
+			result[id] = user
+		}
+		return nil
+	})
+	return result, err
+}
+
+// PublicOrigin returns the configured HTTPS origin for links issued by this server.
+func (s *Service) PublicOrigin() string { return s.config.PublicOrigin }

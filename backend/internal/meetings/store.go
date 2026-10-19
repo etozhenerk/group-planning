@@ -3,6 +3,7 @@ package meetings
 import (
 	"context"
 	"errors"
+	"time"
 )
 
 var (
@@ -43,4 +44,5 @@ type Writer interface {
 	SaveRSVP(RSVP) error
 	AppendEntry(FeedEntry) (FeedEntry, error)
 	InsertReceipt(Receipt) error
+	PruneReceipts(time.Time) error
 }

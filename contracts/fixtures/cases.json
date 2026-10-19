@@ -191,5 +191,26 @@
       "timezone": "Europe/Moscow",
       "place": null
     }
+  },
+  {
+    "name": "first-answer-revision-conflict",
+    "schema": "Error",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "method": "put",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "rsvp_revision_conflict",
+        "field_errors": {},
+        "request_id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+        "current_response": {
+          "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "rsvp": null,
+          "rsvp_revision": "0",
+          "can_access_feed": false,
+          "meeting_revision": "1"
+        }
+      }
+    }
   }
 ]

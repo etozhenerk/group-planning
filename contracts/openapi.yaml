@@ -3,10 +3,9 @@ info:
   title: Somewhere API
   version: 0.1.0
   description: "Контракт первого среза: вход → назначенная встреча → приглашение → RSVP → чат.
-    Работают health, анонимный preview и серверные OAuth/session routes. Вход выключен без
-    конфигурации. Реальная интеграция Яндекс ID и клиентские приложения ещё не проверены; операции
-    встреч пока не зарегистрированы. x-implemented отмечает маршрут, а не готовность всего
-    сценария."
+    Зарегистрированы health, preview, OAuth/session и операции встреч с memory.Store.
+    Вход выключен без конфигурации. Реальный Яндекс ID отложен до конца разработки;
+    клиенты ещё не реализованы. x-implemented отмечает маршрут, а не готовность всего сценария."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -364,7 +363,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "201":
           description: Успешный ответ
@@ -425,7 +424,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -487,7 +486,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -539,7 +538,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -603,7 +602,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -658,7 +657,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -722,7 +721,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -777,7 +776,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -846,7 +845,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "201":
           description: Успешный ответ
@@ -963,7 +962,7 @@ paths:
       security:
         - WebSession: []
         - NativeSession: []
-      x-implemented: false
+      x-implemented: true
       responses:
         "200":
           description: Успешный ответ
@@ -1178,6 +1177,29 @@ components:
           $ref: "#/components/schemas/Revision"
         can_access_feed:
           type: boolean
+        meeting_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - meeting_id
+        - rsvp
+        - rsvp_revision
+        - can_access_feed
+        - meeting_revision
+      additionalProperties: true
+    RsvpSnapshot:
+      type: object
+      properties:
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+        can_access_feed:
+          type: boolean
+          const: false
         meeting_revision:
           $ref: "#/components/schemas/Revision"
       required:
@@ -1638,7 +1660,7 @@ components:
             request_id:
               $ref: "#/components/schemas/UUID"
             current_response:
-              $ref: "#/components/schemas/RsvpResult"
+              $ref: "#/components/schemas/RsvpSnapshot"
             current_meeting:
               $ref: "#/components/schemas/Meeting"
           required:

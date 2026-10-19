@@ -11,9 +11,11 @@ type errorBody struct {
 }
 
 type errorDetail struct {
-	Code        string            `json:"code"`
-	FieldErrors map[string]string `json:"field_errors"`
-	RequestID   string            `json:"request_id"`
+	CurrentMeeting  *meetingResponse  `json:"current_meeting,omitempty"`
+	CurrentResponse *rsvpResponse     `json:"current_response,omitempty"`
+	Code            string            `json:"code"`
+	FieldErrors     map[string]string `json:"field_errors"`
+	RequestID       string            `json:"request_id"`
 }
 
 func writeError(w http.ResponseWriter, status int, code string, fields map[string]string) {
