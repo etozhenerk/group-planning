@@ -10,10 +10,16 @@
     "openspec": "node scripts/openspec.mjs",
     "agent:setup": "node scripts/openspec.mjs init --tools codex --profile custom --no-animation",
     "agent:update": "node scripts/openspec.mjs update",
-    "agent:check": "node scripts/check-agent-setup.mjs"
+    "agent:check": "node scripts/check-agent-setup.mjs",
+    "api:lint": "redocly lint --config contracts/redocly.yaml contracts/openapi.yaml",
+    "api:check": "npm run api:lint && node scripts/check-api-contract.mjs",
+    "api:test": "npm run api:lint && node scripts/test-api-contract.mjs"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.3",
+    "@redocly/cli": "2.65.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
     "yaml": "2.9.1"
   }
 }

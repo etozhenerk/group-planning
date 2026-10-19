@@ -1,0 +1,1661 @@
+openapi: 3.1.1
+info:
+  title: Somewhere API
+  version: 0.1.0
+  description: "Контракт первого среза: вход → назначенная встреча → приглашение → RSVP → чат.
+    x-implemented отражает наличие HTTP route, а не готовность всего сценария. Сейчас работают
+    health и анонимный preview; session-aware preview появится с identity. Остальные операции пока
+    не зарегистрированы (404). Бизнес-правила и ошибки описаны в
+    openspec/changes/gathering-activity-feed/api.md."
+servers:
+  - url: http://127.0.0.1:8080
+    description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
+tags:
+  - name: runtime
+    description: Состояние процесса
+  - name: auth
+    description: Собственные сессии после проверки Яндекс ID
+  - name: meetings
+    description: Встречи и общая лента
+paths:
+  /healthz:
+    get:
+      operationId: health
+      summary: Проверка процесса
+      tags:
+        - runtime
+      security: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID: &a1
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control: &a2
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/auth/yandex/start:
+    post:
+      operationId: startYandexAuth
+      summary: Начать вход через Яндекс ID
+      tags:
+        - auth
+      security: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthStarted"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthStart"
+  /api/v1/auth/yandex/callback:
+    get:
+      operationId: yandexCallback
+      summary: Проверить callback и вернуть в клиент
+      tags:
+        - auth
+      security: []
+      x-implemented: false
+      responses:
+        "303":
+          description: Операция завершена
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+            Location:
+              description: Только заранее разрешённый адрес возврата; никогда не секрет сессии.
+              schema:
+                type: string
+                format: uri-reference
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: error
+          in: query
+          required: false
+          schema:
+            type: string
+  /api/v1/auth/mobile/exchange:
+    post:
+      operationId: exchangeMobileAuth
+      summary: Погасить одноразовый код мобильного входа
+      tags:
+        - auth
+      security: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MobileSession"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MobileExchange"
+  /api/v1/me:
+    get:
+      operationId: me
+      summary: Собственный профиль и параметры сессии
+      tags:
+        - auth
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Me"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/auth/logout:
+    post:
+      operationId: logout
+      summary: Отозвать текущую сессию
+      tags:
+        - auth
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "204":
+          description: Операция завершена
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings:
+    post:
+      operationId: createMeeting
+      summary: Создать встречу с назначенным временем
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatedMeeting"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMeeting"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+    get:
+      operationId: listMeetings
+      summary: Созданные и принятые встречи
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsPage"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+  /api/v1/meetings/{id}:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    get:
+      operationId: getMeeting
+      summary: Детали для организатора или текущего going
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meeting"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+    patch:
+      operationId: updateMeeting
+      summary: Изменить настройки организатором
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meeting"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMeeting"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/invitation:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    get:
+      operationId: getInvitationLink
+      summary: Повторно получить ссылку организатору
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvitationLink"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/rsvp:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    put:
+      operationId: changeResponse
+      summary: Сохранить собственный ответ
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RsvpResult"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RsvpRequest"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/participants:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    get:
+      operationId: listParticipants
+      summary: Организатор и ответившие участники
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Participants"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/feed:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    get:
+      operationId: getFeed
+      summary: Согласованная страница ленты; after и before несовместимы
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedPage"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - name: after_sequence
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^(0|[1-9][0-9]*)$
+        - name: before_sequence
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^(0|[1-9][0-9]*)$
+  /api/v1/meetings/{id}/messages:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    post:
+      operationId: sendMessage
+      summary: Отправить текст без дубля при повторе
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedEntry"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageRequest"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/invitations/{token}:
+    parameters:
+      - $ref: "#/components/parameters/Token"
+    get:
+      operationId: previewInvitation
+      summary: Публичное приглашение без чужих ответов и переписки
+      tags:
+        - meetings
+      security: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvitationPreview"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/invitations/{token}/rsvp:
+    parameters:
+      - $ref: "#/components/parameters/Token"
+    put:
+      operationId: respondToInvitation
+      summary: Сохранить собственный ответ
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: false
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RsvpResult"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RsvpRequest"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+components:
+  securitySchemes:
+    WebSession:
+      type: apiKey
+      in: cookie
+      name: __Host-somewhere_session
+      description: Secure, HttpOnly, SameSite=Lax, Path=/; для мутаций Origin + X-CSRF-Token.
+    NativeSession:
+      type: http
+      scheme: bearer
+      description: Собственная непрозрачная сессия, не токен Яндекса. Не смешивать с cookie.
+  parameters:
+    MeetingID:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Token:
+      name: token
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9_-]{43}$
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Один UUID на намерение; сообщение использует client_request_id. TTL receipt 30 дней в
+        пределах процесса. Другое тело с тем же ключом — 409.
+    CSRF:
+      name: X-CSRF-Token
+      in: header
+      required: false
+      schema:
+        type: string
+        minLength: 1
+      description: Обязателен для мутации с web-cookie вместе с точным Origin; Bearer не использует CSRF.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 50
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    Revision:
+      type: string
+      pattern: ^(0|[1-9][0-9]*)$
+    Answer:
+      type: string
+      enum:
+        - going
+        - maybe
+        - not_going
+    User:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        display_name:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - display_name
+      additionalProperties: true
+    ReturnContext:
+      oneOf:
+        - type: object
+          properties:
+            kind:
+              type: string
+              const: home
+          required:
+            - kind
+          additionalProperties: false
+        - type: object
+          properties:
+            kind:
+              type: string
+              const: invitation
+            token:
+              type: string
+              pattern: ^[A-Za-z0-9_-]{43}$
+          required:
+            - kind
+            - token
+          additionalProperties: false
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+          const: ok
+      required:
+        - status
+      additionalProperties: false
+    InvitationPreview:
+      type: object
+      properties:
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        timezone:
+          type: string
+          minLength: 1
+        place:
+          anyOf:
+            - type: string
+              maxLength: 500
+            - type: "null"
+        cover_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
+        my_rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        my_rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - meeting_id
+        - title
+        - starts_at
+        - timezone
+        - place
+        - cover_url
+        - my_rsvp
+        - my_rsvp_revision
+      additionalProperties: false
+    RsvpResult:
+      type: object
+      properties:
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        rsvp:
+          $ref: "#/components/schemas/Answer"
+        rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+        can_access_feed:
+          type: boolean
+        meeting_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - meeting_id
+        - rsvp
+        - rsvp_revision
+        - can_access_feed
+        - meeting_revision
+      additionalProperties: true
+    CreateMeeting:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        description:
+          anyOf:
+            - type: string
+              maxLength: 4000
+            - type: "null"
+        starts_at:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+          minLength: 1
+        place:
+          anyOf:
+            - type: string
+              maxLength: 500
+            - type: "null"
+      required:
+        - title
+        - starts_at
+        - timezone
+      additionalProperties: false
+    UpdateMeeting:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        description:
+          anyOf:
+            - type: string
+              maxLength: 4000
+            - type: "null"
+        starts_at:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+          minLength: 1
+        place:
+          anyOf:
+            - type: string
+              maxLength: 500
+            - type: "null"
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - expected_revision
+      additionalProperties: false
+    RsvpRequest:
+      type: object
+      properties:
+        answer:
+          $ref: "#/components/schemas/Answer"
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - answer
+        - expected_revision
+      additionalProperties: false
+    MessageRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        client_request_id:
+          $ref: "#/components/schemas/UUID"
+      required:
+        - text
+        - client_request_id
+      additionalProperties: false
+    InvitationLink:
+      type: object
+      properties:
+        invitation_url:
+          type: string
+          format: uri
+      required:
+        - invitation_url
+      additionalProperties: true
+    Participant:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        role:
+          type: string
+          enum:
+            - organizer
+            - guest
+        rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - user
+        - role
+        - rsvp
+        - rsvp_revision
+      additionalProperties: true
+    Participants:
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: "#/components/schemas/Participant"
+      required:
+        - participants
+      additionalProperties: true
+    AuthStart:
+      oneOf:
+        - type: object
+          properties:
+            client_kind:
+              type: string
+              const: web
+            return_context:
+              $ref: "#/components/schemas/ReturnContext"
+          required:
+            - client_kind
+            - return_context
+          additionalProperties: false
+        - type: object
+          properties:
+            client_kind:
+              type: string
+              enum:
+                - ios
+                - android
+            return_context:
+              $ref: "#/components/schemas/ReturnContext"
+            app_challenge:
+              type: string
+              pattern: ^[A-Za-z0-9_-]{43}$
+          required:
+            - client_kind
+            - return_context
+            - app_challenge
+          additionalProperties: false
+    AuthStarted:
+      type: object
+      properties:
+        attempt_id:
+          $ref: "#/components/schemas/UUID"
+        authorization_url:
+          type: string
+          format: uri
+        expires_at:
+          type: string
+          format: date-time
+      required:
+        - attempt_id
+        - authorization_url
+        - expires_at
+      additionalProperties: true
+    MobileExchange:
+      type: object
+      properties:
+        attempt_id:
+          $ref: "#/components/schemas/UUID"
+        handoff_code:
+          type: string
+          minLength: 1
+        app_verifier:
+          type: string
+          minLength: 43
+          maxLength: 128
+          pattern: ^[A-Za-z0-9._~-]+$
+      required:
+        - attempt_id
+        - handoff_code
+        - app_verifier
+      additionalProperties: false
+    MobileSession:
+      type: object
+      properties:
+        session_token:
+          type: string
+          minLength: 1
+        expires_at:
+          type: string
+          format: date-time
+        return_context:
+          $ref: "#/components/schemas/ReturnContext"
+      required:
+        - session_token
+        - expires_at
+        - return_context
+      additionalProperties: true
+    Me:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        expires_at:
+          type: string
+          format: date-time
+        csrf_token:
+          anyOf:
+            - type: string
+              minLength: 1
+            - type: "null"
+      required:
+        - user
+        - expires_at
+        - csrf_token
+      additionalProperties: true
+    Meeting:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        organizer_id:
+          $ref: "#/components/schemas/UUID"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        description:
+          anyOf:
+            - type: string
+              maxLength: 4000
+            - type: "null"
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        timezone:
+          type: string
+          minLength: 1
+        place:
+          anyOf:
+            - type: string
+              maxLength: 500
+            - type: "null"
+        cover_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
+        participant_count:
+          type: integer
+          minimum: 1
+        revision:
+          $ref: "#/components/schemas/Revision"
+        my_rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        my_rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - organizer_id
+        - title
+        - description
+        - starts_at
+        - timezone
+        - place
+        - cover_url
+        - participant_count
+        - revision
+        - my_rsvp
+        - my_rsvp_revision
+        - created_at
+      additionalProperties: true
+    CreatedMeeting:
+      type: object
+      properties:
+        meeting:
+          $ref: "#/components/schemas/Meeting"
+        role:
+          type: string
+          const: organizer
+        invitation_url:
+          type: string
+          format: uri
+      required:
+        - meeting
+        - role
+        - invitation_url
+      additionalProperties: true
+    MeetingSummary:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        timezone:
+          type: string
+          minLength: 1
+        place:
+          anyOf:
+            - type: string
+              maxLength: 500
+            - type: "null"
+        cover_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
+        participant_count:
+          type: integer
+          minimum: 1
+        revision:
+          $ref: "#/components/schemas/Revision"
+        my_rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        my_rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - id
+        - title
+        - starts_at
+        - timezone
+        - place
+        - cover_url
+        - participant_count
+        - revision
+        - my_rsvp
+        - my_rsvp_revision
+      additionalProperties: true
+    MeetingsPage:
+      type: object
+      properties:
+        meetings:
+          type: array
+          items:
+            $ref: "#/components/schemas/MeetingSummary"
+        next_cursor:
+          anyOf:
+            - type: string
+              minLength: 1
+            - type: "null"
+      required:
+        - meetings
+        - next_cursor
+      additionalProperties: true
+    FeedEntry:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        sequence:
+          type: string
+          pattern: ^(0|[1-9][0-9]*)$
+        kind:
+          type: string
+          minLength: 1
+          description: "Открытая строка: неизвестный тип сохраняется как безопасная заглушка."
+        payload_version:
+          type: integer
+          minimum: 1
+        actor:
+          $ref: "#/components/schemas/User"
+        occurred_at:
+          type: string
+          format: date-time
+        payload:
+          type: object
+        client_request_id:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+      required:
+        - id
+        - meeting_id
+        - sequence
+        - kind
+        - payload_version
+        - actor
+        - occurred_at
+        - payload
+        - client_request_id
+      additionalProperties: true
+    FeedPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/FeedEntry"
+        has_more:
+          type: boolean
+        meeting_revision:
+          $ref: "#/components/schemas/Revision"
+        participant_count:
+          type: integer
+          minimum: 1
+        my_rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        my_rsvp_revision:
+          $ref: "#/components/schemas/Revision"
+        latest_sequence:
+          type: string
+          pattern: ^(0|[1-9][0-9]*)$
+      required:
+        - entries
+        - has_more
+        - meeting_revision
+        - participant_count
+        - my_rsvp
+        - my_rsvp_revision
+        - latest_sequence
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              minLength: 1
+            field_errors:
+              type: object
+              additionalProperties:
+                type: string
+            request_id:
+              $ref: "#/components/schemas/UUID"
+            current_response:
+              $ref: "#/components/schemas/RsvpResult"
+            current_meeting:
+              $ref: "#/components/schemas/Meeting"
+          required:
+            - code
+            - field_errors
+            - request_id
+          additionalProperties: false
+      required:
+        - error
+      additionalProperties: false
+  responses:
+    APIError:
+      description: Ошибка согласно api.md; детали реализации не раскрываются.
+      headers:
+        X-Request-ID: *a1
+        Cache-Control: *a2
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

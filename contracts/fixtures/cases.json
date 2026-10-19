@@ -1,0 +1,195 @@
+[
+  {
+    "name": "public-invitation",
+    "schema": "InvitationPreview",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Суббота без спешки",
+      "starts_at": "2026-10-24T19:00:00+03:00",
+      "timezone": "Europe/Moscow",
+      "place": null,
+      "cover_url": null,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0"
+    },
+    "path": "/api/v1/invitations/{token}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "undated-invitation",
+    "schema": "InvitationPreview",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Суббота без спешки",
+      "starts_at": null,
+      "timezone": "Europe/Moscow",
+      "place": null,
+      "cover_url": null,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0"
+    },
+    "path": "/api/v1/invitations/{token}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "rsvp-going",
+    "schema": "RsvpResult",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "method": "put",
+    "status": 200
+  },
+  {
+    "name": "rsvp-maybe",
+    "schema": "RsvpResult",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "rsvp": "maybe",
+      "rsvp_revision": "1",
+      "can_access_feed": false,
+      "meeting_revision": "2"
+    },
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "method": "put",
+    "status": 200
+  },
+  {
+    "name": "rsvp-not_going",
+    "schema": "RsvpResult",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "rsvp": "not_going",
+      "rsvp_revision": "1",
+      "can_access_feed": false,
+      "meeting_revision": "2"
+    },
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "method": "put",
+    "status": 200
+  },
+  {
+    "name": "late-going-retry-after-maybe",
+    "schema": "RsvpResult",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "rsvp": "maybe",
+      "rsvp_revision": "2",
+      "can_access_feed": false,
+      "meeting_revision": "3"
+    },
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "method": "put",
+    "status": 200
+  },
+  {
+    "name": "revision-conflict",
+    "schema": "Error",
+    "body": {
+      "error": {
+        "code": "rsvp_revision_conflict",
+        "field_errors": {},
+        "request_id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+        "current_response": {
+          "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "rsvp": "maybe",
+          "rsvp_revision": "2",
+          "can_access_feed": false,
+          "meeting_revision": "3"
+        }
+      }
+    },
+    "path": "/api/v1/meetings/{id}/rsvp",
+    "method": "put",
+    "status": 409
+  },
+  {
+    "name": "access-lost",
+    "schema": "Error",
+    "body": {
+      "error": {
+        "code": "forbidden",
+        "field_errors": {},
+        "request_id": "9e5299e4-af6d-4935-9588-a1a419895f5e"
+      }
+    },
+    "path": "/api/v1/meetings/{id}/feed",
+    "method": "get",
+    "status": 403
+  },
+  {
+    "name": "session-expired",
+    "schema": "Error",
+    "body": {
+      "error": {
+        "code": "unauthenticated",
+        "field_errors": {},
+        "request_id": "9e5299e4-af6d-4935-9588-a1a419895f5e"
+      }
+    },
+    "path": "/api/v1/me",
+    "method": "get",
+    "status": 401
+  },
+  {
+    "name": "unknown-feed-kind",
+    "schema": "FeedEntry",
+    "body": {
+      "id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "sequence": "9007199254740993",
+      "kind": "future_kind",
+      "payload_version": 2,
+      "actor": {
+        "id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+        "display_name": "Лена"
+      },
+      "occurred_at": "2026-10-20T12:00:00Z",
+      "payload": {
+        "future_value": "не исполняется клиентом"
+      },
+      "client_request_id": null
+    }
+  },
+  {
+    "name": "late-message-retry",
+    "schema": "FeedEntry",
+    "body": {
+      "id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "sequence": "9007199254740993",
+      "kind": "message",
+      "payload_version": 1,
+      "actor": {
+        "id": "9e5299e4-af6d-4935-9588-a1a419895f5e",
+        "display_name": "Лена"
+      },
+      "occurred_at": "2026-10-20T12:00:00Z",
+      "payload": {
+        "text": "Буду к семи"
+      },
+      "client_request_id": "9e5299e4-af6d-4935-9588-a1a419895f5e"
+    },
+    "path": "/api/v1/meetings/{id}/messages",
+    "method": "post",
+    "status": 201
+  },
+  {
+    "name": "create-with-null",
+    "schema": "CreateMeeting",
+    "body": {
+      "title": "Суббота без спешки",
+      "description": null,
+      "starts_at": "2026-10-24T19:00:00+03:00",
+      "timezone": "Europe/Moscow",
+      "place": null
+    }
+  }
+]

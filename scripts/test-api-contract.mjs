@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { contract, responseSchema, root, validate } from './check-api-contract.mjs';
+
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'somewhere-api-'));
+try {
+  const capture = path.join(temporary, 'responses.json');
+  const result = spawnSync(process.env.GO_BIN || 'go', ['test', '-count=1', '-run', '^TestOpenAPIResponses$', './internal/httpapi'], {
+    cwd: path.join(root, 'backend'),
+    env: { ...process.env, SOMEWHERE_CONTRACT_CAPTURE: capture },
+    encoding: 'utf8', timeout: 120_000,
+  });
+  assert.equal(result.status, 0, `HTTP tests failed: ${result.error || ''}\n${result.stdout}\n${result.stderr}`);
+  const responses = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  assert(responses.length >= 6, 'No captured HTTP responses');
+  for (const response of responses) {
+    const item = contract.paths[response.path];
+    assert(item, `Undocumented route ${response.path}`);
+    let schema;
+    if (response.status === 405) {
+      assert(!item[response.method], '405 for an allowed operation');
+      schema = responseSchema(item.get, response.status);
+    } else {
+      const operation = item[response.method];
+      assert(operation?.['x-implemented'], `Unimplemented operation ${response.path}`);
+      schema = responseSchema(operation, response.status);
+    }
+    validate(schema, response.body);
+    assert.equal(response.headers['Cache-Control']?.[0], 'no-store');
+    validate('UUID', response.headers['X-Request-Id']?.[0]);
+  }
+  console.log(`HTTP contract: ${responses.length} actual responses match OpenAPI.`);
+} finally {
+  fs.rmSync(temporary, { recursive: true, force: true });
+}
