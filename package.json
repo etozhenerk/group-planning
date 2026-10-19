@@ -1,0 +1,19 @@
+{
+  "name": "group-planning",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Somewhere: shared planning for meetups and trips with friends",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "openspec": "node scripts/openspec.mjs",
+    "agent:setup": "node scripts/openspec.mjs init --tools codex --profile custom --no-animation",
+    "agent:update": "node scripts/openspec.mjs update",
+    "agent:check": "node scripts/check-agent-setup.mjs"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "1.14.3",
+    "yaml": "2.9.1"
+  }
+}
