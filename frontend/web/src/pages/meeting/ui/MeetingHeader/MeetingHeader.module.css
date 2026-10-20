@@ -1,0 +1,96 @@
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 18px;
+  color: var(--text);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 650;
+}
+
+button.ghost,
+.button.ghost {
+  background: transparent;
+}
+
+button.icon {
+  width: 44px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.conversation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 20px;
+  flex-shrink: 0;
+}
+
+.conversation-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 44px;
+}
+
+.header-share {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.conversation-header > button svg,
+.conversation-header > .button svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.conversation-header h1 {
+  margin: 0;
+  display: block;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  font-size: 18px;
+}
+
+.conversation-header small {
+  display: block;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.conversation-header > .button {
+  display: none;
+}
+
+@media (max-width: 739px) {
+  .conversation-header {
+    padding: 12px 12px 10px;
+  }
+
+  .conversation-header > .button {
+    display: inline-flex;
+  }
+
+  .conversation-header h1 {
+    font-size: 16px;
+  }
+
+  .conversation-header small {
+    font-size: 12px;
+  }
+}

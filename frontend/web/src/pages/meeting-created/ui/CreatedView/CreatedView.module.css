@@ -1,0 +1,68 @@
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 18px;
+  color: var(--text);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 650;
+}
+
+button.primary,
+.button.primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+button.ghost,
+.button.ghost {
+  background: transparent;
+}
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.panel {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+@media (max-width: 739px) {
+  .panel {
+    padding: 20px;
+  }
+}
+
+.entry-page {
+  max-width: 530px;
+  margin: 70px auto;
+  padding: 24px;
+}
+
+.entry-page > h1 {
+  margin-bottom: 8px;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 23px;
+  background: var(--message-own);
+  color: var(--text-own);
+}
+
+@media (max-width: 739px) {
+  .entry-page {
+    margin: 36px auto;
+    width: 100%;
+  }
+}

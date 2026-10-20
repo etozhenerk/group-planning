@@ -27,7 +27,7 @@ for (const width of [320, 1440]) {
     });
     await page.goto('/meetings');
     const create = page.getByRole('link', { name: 'Создать встречу', exact: true });
-    const header = page.locator('.page-heading');
+    const header = page.getByTestId('page-heading');
     await expect(page.getByRole('heading', { name: 'Загружаем встречи…' })).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();
@@ -36,7 +36,7 @@ for (const width of [320, 1440]) {
     await expect(page.getByRole('heading', { name: 'С чего начнём?' })).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(0);
-    await expect(page.locator('.home-empty').getByRole('link')).toBeVisible();
+    await expect(page.getByTestId('home-empty').getByRole('link')).toBeVisible();
     await page.screenshot({
       path: `test-results/home-empty-${width}.png`,
       fullPage: true,
@@ -50,7 +50,7 @@ for (const width of [320, 1440]) {
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();
     state = 'loaded';
     await page.reload();
-    await expect(page.locator('.meeting-card').first()).toBeVisible();
+    await expect(page.getByTestId('meeting-card').first()).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
@@ -72,11 +72,11 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await expect(
     page.getByRole('heading', { name: 'Детали без повторов', exact: true }),
   ).toHaveCount(1);
-  await expect(page.locator('.details-sidebar')).toBeVisible();
+  await expect(page.getByTestId('details-sidebar')).toBeVisible();
   await expect(info).toHaveCount(0);
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 390, height: 900 });
-  await expect(page.locator('.details-sidebar')).toHaveCount(0);
+  await expect(page.getByTestId('details-sidebar')).toHaveCount(0);
   await expect(when).toHaveCount(0);
   await info.click();
   await expect(dialog).toBeVisible();
@@ -84,7 +84,7 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await page.setViewportSize({ width: 1440, height: 900 });
   await expect(dialog).not.toBeVisible();
   await expect(info).toHaveCount(0);
-  await expect(page.locator('.details-sidebar')).toBeVisible();
+  await expect(page.getByTestId('details-sidebar')).toBeVisible();
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 390, height: 900 });
   await expect(dialog).toBeVisible();

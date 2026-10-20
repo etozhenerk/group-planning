@@ -94,7 +94,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await friend.getByLabel('Сообщение', { exact: true }).fill(plain);
   await friend.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByText(plain, { exact: true })).toBeVisible({ timeout: 10_000 });
-  expect(await page.locator('.message-bubble img').count()).toBe(0);
+  expect(await page.getByTestId('message-bubble').locator('img').count()).toBe(0);
 
   for (const width of [1440, 390, 320]) {
     for (const [viewer, ownText, otherText] of [

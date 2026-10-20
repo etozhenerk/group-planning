@@ -24,7 +24,7 @@ for (const width of [320, 390, 768, 1440]) {
     expect(size?.width).toBeGreaterThanOrEqual(44);
     expect(size?.height).toBeGreaterThanOrEqual(44);
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
-    const title = await page.locator('.conversation-title').boundingBox();
+    const title = await page.getByTestId('conversation-title').boundingBox();
     const share = page.getByRole('button', { name: 'Пригласить друзей', exact: true });
     const info = page.getByRole('button', { name: 'Информация о встрече' });
 
@@ -39,7 +39,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(invitation).toBeVisible();
     await expect(invitation).toHaveCSS(
       'animation-name',
-      width < 740 ? 'sheet-enter' : 'dialog-enter',
+      width < 740 ? /sheet-enter/ : /dialog-enter/,
     );
     const copy = invitation.getByRole('button', { name: 'Скопировать ссылку' });
     await expect(copy).toBeVisible();
@@ -60,7 +60,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 
     if (width < 1170) {
-      await expect(page.locator('.details-sidebar')).toHaveCount(0);
+      await expect(page.getByTestId('details-sidebar')).toHaveCount(0);
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(0);
       await info.click();
       await expect(page.getByRole('dialog', { name: 'Детали встречи' })).toBeVisible();
@@ -69,7 +69,7 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(info).toBeFocused();
     } else {
       await expect(info).toHaveCount(0);
-      await expect(page.locator('.details-sidebar')).toBeVisible();
+      await expect(page.getByTestId('details-sidebar')).toBeVisible();
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(1);
     }
 

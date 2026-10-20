@@ -81,8 +81,8 @@ test('message retry after a lost response keeps its ID and confirms once', async
   await page.getByLabel('Сообщение', { exact: true }).fill('Повтор без дубля');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
-  const pending = await page.locator('.pending-message').boundingBox();
-  const pendingList = await page.locator('.pending-messages').boundingBox();
+  const pending = await page.getByTestId('pending-message').boundingBox();
+  const pendingList = await page.getByTestId('pending-messages').boundingBox();
 
   if (!pending || !pendingList) {
     throw new Error('Failed message is not visible');

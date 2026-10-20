@@ -116,11 +116,11 @@ export const expectMessageSide = async (
   text: string,
   side: 'left' | 'right',
 ) => {
-  const message = page.locator('.feed-message').filter({ hasText: text });
+  const message = page.getByTestId('feed-message').filter({ hasText: text });
   const [row, bubble, avatar] = await Promise.all([
     message.boundingBox(),
-    message.locator('.message-bubble').boundingBox(),
-    message.locator('.avatar').boundingBox(),
+    message.getByTestId('message-bubble').boundingBox(),
+    message.getByTestId('avatar').boundingBox(),
   ]);
 
   if (!row || !bubble || !avatar) {

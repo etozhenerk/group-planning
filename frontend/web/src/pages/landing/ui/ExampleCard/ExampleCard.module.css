@@ -1,0 +1,81 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.example-card {
+  padding: 28px;
+  border-radius: 26px;
+  background: var(--surface);
+  min-width: 0;
+  align-self: start;
+}
+
+.example-card h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.example-card > p {
+  min-height: 56px;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 16px 0 24px;
+  line-height: 1.65;
+}
+
+.coming {
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--background);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.example-preview {
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--background);
+}
+
+.example-preview img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.example-switch {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+}
+
+.example-switch button {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 0;
+  padding: 10px;
+}
+
+.example-switch button[aria-pressed='true'] {
+  background: var(--message-own);
+  color: var(--text-own);
+}
+
+@media (max-width: 900px) {
+  .example-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 739px) {
+  .example-card > p {
+    min-height: 0;
+  }
+
+  .example-card h2 {
+    font-size: 23px;
+  }
+}

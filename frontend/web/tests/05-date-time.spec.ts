@@ -14,7 +14,7 @@ for (const width of [320, 390, 1440]) {
     await time.pressSequentially('1900');
     await expect(time).toHaveValue('19:00');
     const dateField = page.locator('.g-date-date-picker__field');
-    const timeField = page.locator('.control-field').filter({ has: time });
+    const timeField = page.getByTestId('time-input');
     const iconSlots = [
       {
         field: dateField,
@@ -40,7 +40,7 @@ for (const width of [320, 390, 1440]) {
       ),
     ).toHaveCount(0);
     await page.getByRole('button', { name: 'Календарь', exact: true }).click();
-    const popup = page.locator('.meeting-date-popup');
+    const popup = page.locator('.g-popup').filter({ has: page.getByRole('grid') });
     await expect(popup).toBeVisible();
     await expect(popup.getByRole('grid')).toHaveAttribute('aria-label', /октябрь 2026/);
     const bounds = await popup.boundingBox();

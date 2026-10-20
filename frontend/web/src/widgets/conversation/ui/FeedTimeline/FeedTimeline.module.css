@@ -1,0 +1,53 @@
+.error {
+  color: var(--error);
+}
+
+.error[role='alert']:empty {
+  display: none;
+}
+
+.feed-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  flex: 1;
+  padding: 8px 28px 20px;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+.feed-timeline {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  gap: 22px;
+  max-width: 690px;
+}
+
+.history-button {
+  display: flex;
+  margin: 8px auto 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.new-messages {
+  position: absolute;
+  bottom: 95px;
+  right: 28px;
+  box-shadow: 0 6px 20px #0005;
+  font-size: 12px;
+}
+
+@media (max-width: 739px) {
+  .feed-scroll {
+    padding: 8px 18px 18px;
+    scrollbar-gutter: auto;
+  }
+
+  .new-messages {
+    right: 18px;
+    bottom: 86px;
+  }
+}

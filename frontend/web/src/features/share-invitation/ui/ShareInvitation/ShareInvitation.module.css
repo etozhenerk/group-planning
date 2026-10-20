@@ -1,0 +1,50 @@
+button.primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--error);
+}
+
+.error[role='alert']:empty {
+  display: none;
+}
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.share-invitation-trigger.compact {
+  height: 44px;
+  line-height: 1;
+}
+
+.share-invitation-trigger.compact {
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 739px) {
+  .share-invitation-trigger.compact {
+    width: 44px;
+    font-size: 0;
+    padding: 10px;
+  }
+
+  .share-invitation-trigger.compact svg {
+    width: 20px;
+  }
+}

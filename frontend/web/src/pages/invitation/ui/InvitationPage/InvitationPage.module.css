@@ -1,0 +1,92 @@
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 18px;
+  color: var(--text);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 650;
+}
+
+button.ghost,
+.button.ghost {
+  background: transparent;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.public-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.invitation-page {
+  max-width: 490px;
+  margin: 40px auto 70px;
+}
+
+.invitation-card {
+  padding: 32px;
+  border-radius: 28px;
+  background: var(--surface);
+}
+
+.invitation-card > h1 {
+  margin: 0 0 8px;
+  font-size: 38px;
+  overflow-wrap: anywhere;
+}
+
+.meeting-description {
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 739px) {
+  .public-page {
+    padding: 0 18px;
+  }
+
+  .invitation-page {
+    margin: 24px auto;
+  }
+
+  .invitation-card {
+    padding: 24px;
+  }
+
+  .invitation-card > h1 {
+    font-size: 31px;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.eyebrow svg {
+  padding: 3px;
+  width: 23px;
+  height: 23px;
+  background: var(--accent);
+  border-radius: 6px;
+  color: var(--text-own);
+}

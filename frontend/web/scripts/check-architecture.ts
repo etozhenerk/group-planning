@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import ts from 'typescript';
+import { checkComponentDirectories } from '@tools/check-components';
 
 const ranks: Record<string, number> = {
   app: 6,
@@ -208,7 +209,7 @@ const files = (directory: string): string[] => {
 };
 
 export const checkProject = (directory: string): string[] => {
-  const failures: string[] = [];
+  const failures = checkComponentDirectories(path.join(directory, 'src'));
 
   for (const file of files(directory)) {
     if (/\.(js|jsx|mjs|cjs)$/.test(file)) {
@@ -249,7 +250,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.exitCode = 1;
   } else {
     process.stdout.write(
-      'FSD, public API, aliases, TypeScript-only and component boundaries: OK\n',
+      'FSD, public API, aliases, TypeScript-only, component folders and CSS Modules: OK\n',
     );
   }
 }

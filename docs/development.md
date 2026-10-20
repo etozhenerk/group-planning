@@ -79,6 +79,9 @@ Go: `sh scripts/format.sh --check` из `backend/` проверяет gofumpt и
 Веб: `npm run web:check` из корня проверяет типы, ESLint, пустые строки CSS,
 FSD/AST, Prettier и Vitest; `npm run web:build` и `web:test:e2e` проверяют
 сборку и Chromium с настоящим API. Объявления функций и компонентов — `const`.
+Каждый веб-компонент имеет свой одноимённый каталог, TSX и CSS Module, а
+`index.ts` реэкспортирует компонент. Личные `hooks/lib/utils` находятся рядом;
+доменные segments сохраняют границы FSD. Эти правила проверяются автоматически.
 
 Контракт и реальные HTTP-ответы проверяются через `npm run api:test`.
 `npm run agent:check` проверяет обвязку и документы. Реальный Яндекс ID

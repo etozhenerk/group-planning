@@ -1,0 +1,30 @@
+.control-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.control-field :global(.g-text-input) {
+  --g-text-input-background-color: var(--navigation);
+  --g-text-input-border-radius: 12px;
+  width: 100%;
+}
+
+.control-field :global(.g-text-input__additional-content) {
+  color: var(--muted);
+}
+
+.control-field.control-field :global(.g-text-input__additional-content_placement_start) {
+  order: -1;
+  flex: 0 0 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+.control-field.control-field :global(.g-text-input__control) {
+  padding-inline: 0 12px;
+}
+
+.control-field.control-field :global(.g-text-input__clear) {
+  margin-inline-end: 8px;
+}

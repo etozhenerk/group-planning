@@ -1,0 +1,48 @@
+.control-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.control-field :global(.g-text-input) {
+  --g-text-input-background-color: var(--navigation);
+  --g-text-input-border-radius: 12px;
+  width: 100%;
+}
+
+.control-field :global(.g-text-input__additional-content) {
+  color: var(--muted);
+}
+
+.meeting-date-popup {
+  --g-popup-border-radius: 14px;
+  max-width: calc(100vw - 16px);
+}
+
+.control-field :global(.g-date-date-picker__popup-anchor) {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.control-field.control-field :global(.g-text-input__additional-content_placement_start),
+.control-field.control-field
+  :global(.g-date-date-picker__field)
+  :global(.g-text-input__additional-content_placement_end) {
+  order: -1;
+  flex: 0 0 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+.control-field.control-field :global(.g-text-input__control) {
+  padding-inline: 0 12px;
+}
+
+.control-field.control-field :global(.g-text-input__clear) {
+  margin-inline-end: 8px;
+}
+
+.control-field :global(.g-date-date-picker) {
+  display: block;
+  width: 100%;
+}

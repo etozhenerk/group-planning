@@ -109,10 +109,14 @@ test('editing text preserves seconds and the selected DST instant', async ({ pag
     '01:30',
   );
   await dialog.getByRole('button', { name: 'Календарь', exact: true }).click();
-  await expect(page.locator('.meeting-date-popup')).toBeVisible();
+  await expect(
+    page.locator('.g-popup').filter({ has: page.getByRole('grid') }),
+  ).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeVisible();
-  await expect(page.locator('.meeting-date-popup')).not.toBeVisible();
+  await expect(
+    page.locator('.g-popup').filter({ has: page.getByRole('grid') }),
+  ).not.toBeVisible();
   await dialog.getByLabel(/^Описание/).fill('Описание без изменения даты');
   await dialog.getByRole('button', { name: 'Сохранить изменения' }).click();
   await expect(dialog).not.toBeVisible();
