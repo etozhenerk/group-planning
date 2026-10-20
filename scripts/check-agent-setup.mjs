@@ -77,7 +77,7 @@ try {
 
   for (const [name, entry] of Object.entries(lock.packages)) {
     if (entry.link) {
-      check(workspaceLinks.get(name) === entry.resolved,
+      check(workspaceLinks.has(name) && workspaceLinks.get(name) === entry.resolved,
         `Undeclared workspace link in lockfile: ${name}`);
       continue;
     }
