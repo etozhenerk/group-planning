@@ -26,19 +26,26 @@ func Preview(ctx context.Context, store Store, token string) (PublicInvitation, 
 	if !validInvitationToken(token) {
 		return PublicInvitation{}, ErrNotFound
 	}
+
 	var preview PublicInvitation
 	err := store.View(ctx, func(reader Reader) error {
 		invitation, err := reader.InvitationByToken(token)
 		if err != nil {
 			return err
 		}
+
 		meeting, err := reader.Meeting(invitation.MeetingID)
 		if err != nil {
 			return err
 		}
-		preview = PublicInvitation{MeetingID: meeting.ID, Title: meeting.Title,
-			StartsAt: meeting.StartsAt, Timezone: meeting.Timezone, Place: meeting.Place}
+
+		preview = PublicInvitation{
+			MeetingID: meeting.ID, Title: meeting.Title,
+			StartsAt: meeting.StartsAt, Timezone: meeting.Timezone, Place: meeting.Place,
+		}
+
 		return nil
 	})
+
 	return preview, err
 }

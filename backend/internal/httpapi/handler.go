@@ -33,6 +33,7 @@ func NewWithIdentity(store meetings.Store, service *identity.Service, logger *sl
 		if !getOnly(w, r) {
 			return
 		}
+
 		writeJSON(w, http.StatusOK, struct {
 			Status string `json:"status"`
 		}{"ok"})
@@ -42,6 +43,7 @@ func NewWithIdentity(store meetings.Store, service *identity.Service, logger *sl
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "not_found", nil)
 	})
+
 	return middleware(mux, logger)
 }
 
@@ -49,7 +51,9 @@ func getOnly(w http.ResponseWriter, r *http.Request) bool {
 	if r.Method == http.MethodGet || r.Method == http.MethodHead {
 		return true
 	}
+
 	w.Header().Set("Allow", "GET, HEAD")
 	writeError(w, http.StatusMethodNotAllowed, "method_not_allowed", nil)
+
 	return false
 }

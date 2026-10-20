@@ -16,12 +16,15 @@ func newIdentity(config AuthConfig, store meetings.Store) (*identity.Service, er
 	if !config.Enabled {
 		return nil, nil
 	}
+
 	provider := yandex.New(config.ClientID, config.ClientSecret, config.Identity.PublicOrigin+"/api/v1/auth/yandex/callback", nil)
+
 	return identity.New(config.Identity, memory.NewIdentity(), provider, time.Now, func(ctx context.Context, token string) (bool, error) {
 		_, err := meetings.Preview(ctx, store, token)
 		if errors.Is(err, meetings.ErrNotFound) {
 			return false, nil
 		}
+
 		return err == nil, err
 	})
 }
@@ -30,6 +33,7 @@ func cleanupIdentity(ctx context.Context, service *identity.Service, logger *slo
 	if service == nil {
 		return
 	}
+
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 	for {

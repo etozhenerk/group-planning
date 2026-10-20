@@ -22,8 +22,11 @@ func writeError(w http.ResponseWriter, status int, code string, fields map[strin
 	if fields == nil {
 		fields = map[string]string{}
 	}
-	writeJSON(w, status, errorBody{Error: errorDetail{Code: code,
-		FieldErrors: fields, RequestID: w.Header().Get("X-Request-ID")}})
+
+	writeJSON(w, status, errorBody{Error: errorDetail{
+		Code:        code,
+		FieldErrors: fields, RequestID: w.Header().Get("X-Request-ID"),
+	}})
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {
@@ -33,6 +36,7 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 		writeError(w, http.StatusInternalServerError, "internal_error", nil)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(status)
 	_, _ = w.Write(append(data, '\n'))

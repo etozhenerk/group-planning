@@ -69,23 +69,47 @@ type feedPageResponse struct {
 	LatestSequence   string              `json:"latest_sequence"`
 }
 
-func decimal(value uint64) string { return strconv.FormatUint(value, 10) }
+func decimal(value uint64) string {
+	return strconv.FormatUint(value, 10)
+}
+
 func optionalString(value string) *string {
 	if value == "" {
 		return nil
 	}
+
 	return &value
 }
+
 func summaryDTO(details meetings.Details) meetingSummaryResponse {
 	m := details.Meeting
-	return meetingSummaryResponse{ID: m.ID, Title: m.Title, StartsAt: m.StartsAt, Timezone: m.Timezone, Place: optionalString(m.Place), ParticipantCount: details.ParticipantCount, Revision: decimal(m.Revision), MyRSVP: optionalString(string(details.MyResponse.Answer)), MyRSVPRevision: decimal(details.MyResponse.Revision)}
+
+	return meetingSummaryResponse{
+		ID:               m.ID,
+		Title:            m.Title,
+		StartsAt:         m.StartsAt,
+		Timezone:         m.Timezone,
+		Place:            optionalString(m.Place),
+		ParticipantCount: details.ParticipantCount,
+		Revision:         decimal(m.Revision),
+		MyRSVP:           optionalString(string(details.MyResponse.Answer)),
+		MyRSVPRevision:   decimal(details.MyResponse.Revision),
+	}
 }
+
 func meetingDTO(details meetings.Details) meetingResponse {
-	return meetingResponse{meetingSummaryResponse: summaryDTO(details), OrganizerID: details.Meeting.OrganizerID, Description: optionalString(details.Meeting.Description), CreatedAt: details.Meeting.CreatedAt}
+	return meetingResponse{
+		meetingSummaryResponse: summaryDTO(details),
+		OrganizerID:            details.Meeting.OrganizerID,
+		Description:            optionalString(details.Meeting.Description),
+		CreatedAt:              details.Meeting.CreatedAt,
+	}
 }
+
 func rsvpDTO(state meetings.ResponseState) rsvpResponse {
 	return rsvpResponse{state.MeetingID, optionalString(string(state.Answer)), decimal(state.Revision), state.CanAccessFeed, decimal(state.MeetingRevision)}
 }
+
 func entryDTO(entry meetings.FeedEntry) feedEntryResponse {
 	return feedEntryResponse{entry.ID, entry.MeetingID, decimal(entry.Sequence), entry.Kind, entry.PayloadVersion, userResponse{entry.ActorID, entry.ActorName}, entry.OccurredAt, entry.Payload, optionalString(entry.ClientRequestID)}
 }

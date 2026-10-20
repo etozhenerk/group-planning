@@ -9,8 +9,10 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 )
 
-const sessionCookie = "__Host-somewhere_session"
-const bindingCookiePrefix = "__Host-somewhere_auth_"
+const (
+	sessionCookie       = "__Host-somewhere_session"
+	bindingCookiePrefix = "__Host-somewhere_auth_"
+)
 
 type authHandlers struct{ service *identity.Service }
 
@@ -42,24 +44,29 @@ func (h authHandlers) start(w http.ResponseWriter, r *http.Request) {
 	if !requireMethod(w, r, http.MethodPost) {
 		return
 	}
+
 	if h.service == nil {
 		writeError(w, 503, "auth_unavailable", nil)
 		return
 	}
+
 	var input authStartRequest
 	if !decodeJSON(w, r, &input) {
 		return
 	}
+
 	context, ok := parseAuthContext(input.ReturnContext)
 	if !ok {
 		writeError(w, 400, "invalid_json", nil)
 		return
 	}
+
 	// The web branch forbids app_challenge even when explicitly empty/null.
 	if input.ClientKind == "web" && len(input.AppChallenge) > 0 {
 		writeError(w, 422, "validation_failed", map[string]string{"app_challenge": "not_allowed"})
 		return
 	}
+
 	appChallenge := ""
 	if len(input.AppChallenge) > 0 {
 		if json.Unmarshal(input.AppChallenge, &appChallenge) != nil {
@@ -67,14 +74,17 @@ func (h authHandlers) start(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
 	result, err := h.service.Start(r.Context(), identity.StartInput{ClientKind: input.ClientKind, Context: context, AppChallenge: appChallenge}, singleHeader(r, "Origin"))
 	if err != nil {
 		writeAuthError(w, err)
 		return
 	}
+
 	if result.BindingSecret != "" {
 		setSecureCookie(w, bindingCookiePrefix+result.AttemptID, result.BindingSecret, result.ExpiresAt, 600)
 	}
+
 	writeJSON(w, 200, authStartedResponse{result.AttemptID, result.AuthorizationURL, result.ExpiresAt})
 }
 
@@ -85,12 +95,15 @@ func parseAuthContext(data json.RawMessage) (identity.ReturnContext, bool) {
 	if json.Unmarshal(data, &kind) != nil {
 		return identity.ReturnContext{}, false
 	}
+
 	if kind.Kind == "home" {
 		if validateJSONNames(data, &kind) != nil {
 			return identity.ReturnContext{}, false
 		}
+
 		return identity.ReturnContext{Kind: "home"}, true
 	}
+
 	var invitation struct {
 		Kind  string `json:"kind"`
 		Token string `json:"token"`
@@ -98,6 +111,7 @@ func parseAuthContext(data json.RawMessage) (identity.ReturnContext, bool) {
 	if kind.Kind != "invitation" || validateJSONNames(data, &invitation) != nil || json.Unmarshal(data, &invitation) != nil {
 		return identity.ReturnContext{}, false
 	}
+
 	return identity.ReturnContext{Kind: "invitation", Token: invitation.Token}, true
 }
 
@@ -105,15 +119,18 @@ func (h authHandlers) callback(w http.ResponseWriter, r *http.Request) {
 	if !requireMethod(w, r, http.MethodGet) {
 		return
 	}
+
 	if h.service == nil {
 		writeError(w, 503, "auth_unavailable", nil)
 		return
 	}
+
 	query, err := parseCallbackQuery(r)
 	if err != nil {
 		writeError(w, 400, "auth_invalid", nil)
 		return
 	}
+
 	binding, _ := uniqueCookie(r, bindingCookiePrefix+identity.AttemptID(query.State))
 	query.Binding = binding
 	result, err := h.service.Callback(r.Context(), query)
@@ -121,27 +138,40 @@ func (h authHandlers) callback(w http.ResponseWriter, r *http.Request) {
 		writeAuthError(w, err)
 		return
 	}
+
 	if result.ClientKind == "web" {
 		setSecureCookie(w, bindingCookiePrefix+result.AttemptID, "", time.Unix(1, 0), -1)
 		if result.SessionSecret != "" {
 			setSecureCookie(w, sessionCookie, result.SessionSecret, result.ExpiresAt, result.SessionMaxAge)
 		}
 	}
+
 	// Empty 303 body avoids reflecting provider parameters or handoff codes in HTML.
 	w.Header().Set("Location", result.RedirectURL)
 	w.WriteHeader(http.StatusSeeOther)
 }
 
 func setSecureCookie(w http.ResponseWriter, name, value string, expires time.Time, maxAge int) {
-	http.SetCookie(w, &http.Cookie{Name: name, Value: value, Path: "/", Secure: true, HttpOnly: true, SameSite: http.SameSiteLaxMode, Expires: expires, MaxAge: maxAge})
+	http.SetCookie(w, &http.Cookie{
+		Name:     name,
+		Value:    value,
+		Path:     "/",
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+		Expires:  expires,
+		MaxAge:   maxAge,
+	})
 }
 
 func requireMethod(w http.ResponseWriter, r *http.Request, method string) bool {
 	if r.Method == method {
 		return true
 	}
+
 	w.Header().Set("Allow", method)
 	writeError(w, 405, "method_not_allowed", nil)
+
 	return false
 }
 
@@ -150,6 +180,7 @@ func singleHeader(r *http.Request, name string) string {
 	if len(values) != 1 {
 		return ""
 	}
+
 	return values[0]
 }
 
@@ -161,10 +192,12 @@ func uniqueCookie(r *http.Request, name string) (string, bool) {
 			if found {
 				return "", false
 			}
+
 			found = true
 			value = cookie.Value
 		}
 	}
+
 	return value, found
 }
 
@@ -174,10 +207,16 @@ func parseCallbackQuery(r *http.Request) (identity.CallbackInput, error) {
 	if err != nil {
 		return identity.CallbackInput{}, identity.ErrInvalidAttempt
 	}
+
 	for name, items := range values {
 		if len(items) != 1 || (name != "code" && name != "state" && name != "error" && name != "error_description") {
 			err = identity.ErrInvalidAttempt
 		}
 	}
-	return identity.CallbackInput{State: values.Get("state"), Code: values.Get("code"), ProviderError: values.Get("error")}, err
+
+	return identity.CallbackInput{
+		State:         values.Get("state"),
+		Code:          values.Get("code"),
+		ProviderError: values.Get("error"),
+	}, err
 }

@@ -40,6 +40,7 @@ func TestJSONBoundary(t *testing.T) {
 			if (tc.status == 200) != ok || response.Code != tc.status {
 				t.Fatalf("ok=%v status=%d body=%s", ok, response.Code, response.Body)
 			}
+
 			if bytes.Contains(response.Body.Bytes(), []byte(tc.body)) {
 				t.Fatal("request echoed into error")
 			}

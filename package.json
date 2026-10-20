@@ -4,7 +4,7 @@
   "private": true,
   "description": "Somewhere: shared planning for meetups and trips with friends",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "openspec": "node scripts/openspec.mjs",
@@ -13,7 +13,12 @@
     "agent:check": "node scripts/check-agent-setup.mjs",
     "api:lint": "redocly lint --config contracts/redocly.yaml contracts/openapi.yaml",
     "api:check": "npm run api:lint && node scripts/check-api-contract.mjs",
-    "api:test": "npm run api:lint && node scripts/test-api-contract.mjs"
+    "api:test": "npm run api:lint && node scripts/test-api-contract.mjs",
+    "web:dev": "npm run dev --workspace @somewhere/web",
+    "web:check": "npm run check --workspace @somewhere/web",
+    "web:build": "npm run build --workspace @somewhere/web",
+    "web:test:e2e": "npm run test:e2e --workspace @somewhere/web",
+    "web:demo": "npm run demo --workspace @somewhere/web"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.3",
@@ -21,5 +26,8 @@
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
     "yaml": "2.9.1"
-  }
+  },
+  "workspaces": [
+    "frontend/web"
+  ]
 }

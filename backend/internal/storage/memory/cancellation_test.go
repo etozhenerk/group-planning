@@ -18,16 +18,20 @@ func TestCancelledUpdateRollsBack(t *testing.T) {
 		if err := tx.SaveMeeting(meetings.Meeting{ID: "meeting"}); err != nil {
 			return err
 		}
+
 		cancel()
+
 		return nil
 	})
 	if !errors.Is(err, context.Canceled) {
 		t.Fatalf("cancelled update: %v", err)
 	}
+
 	err = store.View(t.Context(), func(tx meetings.Reader) error { _, err := tx.Meeting("meeting"); return err })
 	if !errors.Is(err, meetings.ErrNotFound) {
 		t.Fatalf("cancelled changes were published: %v", err)
 	}
+
 	if err := store.Update(ctx, func(meetings.Writer) error { t.Error("cancelled callback ran"); return nil }); !errors.Is(err, context.Canceled) {
 		t.Fatalf("already cancelled context: %v", err)
 	}
@@ -41,6 +45,7 @@ func TestWaitingWriterCanCancel(t *testing.T) {
 		finished <- store.Update(t.Context(), func(meetings.Writer) error {
 			close(entered)
 			<-release
+
 			return nil
 		})
 	}()
@@ -75,6 +80,7 @@ func TestPanicRollsBackAndReleasesWriter(t *testing.T) {
 			if err := tx.SaveMeeting(meetings.Meeting{ID: "meeting"}); err != nil {
 				t.Fatal(err)
 			}
+
 			panic("abort")
 		})
 	}()
@@ -82,5 +88,6 @@ func TestPanicRollsBackAndReleasesWriter(t *testing.T) {
 	if !errors.Is(err, meetings.ErrNotFound) {
 		t.Fatalf("panic published candidate: %v", err)
 	}
+
 	createMeeting(t, store)
 }

@@ -51,7 +51,37 @@ try {
     check(lock.packages[`node_modules/${name}`]?.version === version, `Locked version mismatch: ${name}`);
     check(json(`node_modules/${name}/package.json`).version === version, `Installed version mismatch: ${name}; run npm ci.`);
   }
+  const workspaceLinks = new Map();
+
+  for (const workspace of pkg.workspaces ?? []) {
+    const literalPath = typeof workspace === 'string' &&
+      /^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(workspace);
+    check(literalPath, `Expected an explicit relative workspace path: ${workspace}`);
+    if (!literalPath) continue;
+
+    const manifest = json(`${workspace}/package.json`);
+    workspaceLinks.set(`node_modules/${manifest.name}`, workspace);
+    check(lock.packages[workspace]?.version === manifest.version,
+      `Workspace lockfile mismatch: ${workspace}`);
+
+    for (const group of ['dependencies', 'devDependencies']) {
+      for (const [name, version] of Object.entries(manifest[group] ?? {})) {
+        check(/^\d+\.\d+\.\d+$/.test(version), `Pin the exact version: ${workspace}: ${name}`);
+        check(lock.packages[workspace]?.[group]?.[name] === version,
+          `Workspace dependency mismatch: ${workspace}: ${name}`);
+        check(json(`node_modules/${name}/package.json`).version === version,
+          `Workspace installed version mismatch: ${workspace}: ${name}; run npm ci.`);
+      }
+    }
+  }
+
   for (const [name, entry] of Object.entries(lock.packages)) {
+    if (entry.link) {
+      check(workspaceLinks.get(name) === entry.resolved,
+        `Undeclared workspace link in lockfile: ${name}`);
+      continue;
+    }
+
     check(!entry.resolved || entry.resolved.startsWith('https://registry.npmjs.org/'),
       `Non-public registry in lockfile: ${name}`);
   }

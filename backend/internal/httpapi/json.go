@@ -18,6 +18,7 @@ func decodeJSON(w http.ResponseWriter, r *http.Request, destination any) bool {
 		writeError(w, http.StatusUnsupportedMediaType, "unsupported_media_type", nil)
 		return false
 	}
+
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -27,17 +28,21 @@ func decodeJSON(w http.ResponseWriter, r *http.Request, destination any) bool {
 		} else {
 			writeError(w, http.StatusBadRequest, "invalid_json", nil)
 		}
+
 		return false
 	}
+
 	// Go's JSON decoder accepts duplicate names and case-insensitive struct fields.
 	// Check names first so the wire contract has exactly one spelling and value.
 	if err := validateJSONNames(data, destination); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid_json", nil)
 		return false
 	}
+
 	if err := json.Unmarshal(data, destination); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid_json", nil)
 		return false
 	}
+
 	return true
 }

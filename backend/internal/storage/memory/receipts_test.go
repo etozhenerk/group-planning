@@ -29,15 +29,19 @@ func TestReceiptPruningBoundaryAndTransactionGuards(t *testing.T) {
 		if err := w.PruneReceipts(now); err != nil {
 			return err
 		}
+
 		return rollback
 	}); !errors.Is(err, rollback) {
 		t.Fatal(err)
 	}
+
 	must(store.View(ctx, func(r meetings.Reader) error {
 		if err := r.(meetings.Writer).PruneReceipts(now); !errors.Is(err, meetings.ErrReadOnly) {
 			t.Fatal("read-only prune", err)
 		}
+
 		_, err := r.Receipt(key)
+
 		return err
 	}))
 	var retained meetings.Writer
@@ -45,11 +49,13 @@ func TestReceiptPruningBoundaryAndTransactionGuards(t *testing.T) {
 	if err := retained.PruneReceipts(now); !errors.Is(err, meetings.ErrTransactionClosed) {
 		t.Fatal("closed prune", err)
 	}
+
 	must(store.View(ctx, func(r meetings.Reader) error {
 		_, err := r.Receipt(key)
 		if !errors.Is(err, meetings.ErrNotFound) {
 			t.Fatal("expiry boundary", err)
 		}
+
 		return nil
 	}))
 }

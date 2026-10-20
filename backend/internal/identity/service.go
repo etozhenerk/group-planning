@@ -28,15 +28,25 @@ func New(config Config, store Store, provider Provider, now func() time.Time, in
 	if err := ValidateConfig(config); err != nil {
 		return nil, err
 	}
+
 	if store == nil || provider == nil || now == nil || invitationExists == nil {
 		return nil, errors.New("missing identity dependency")
 	}
+
 	callbacks := make(map[string]string, len(config.NativeCallbacks))
 	for kind, value := range config.NativeCallbacks {
 		callbacks[kind] = value
 	}
+
 	config.NativeCallbacks = callbacks
-	return &Service{config: config, store: store, provider: provider, now: now, invitationExists: invitationExists}, nil
+
+	return &Service{
+		config:           config,
+		store:            store,
+		provider:         provider,
+		now:              now,
+		invitationExists: invitationExists,
+	}, nil
 }
 
 // StartInput identifies a client and a validated return context.
@@ -57,10 +67,12 @@ func (s *Service) Start(ctx context.Context, input StartInput, origin string) (S
 	if input.ClientKind != "web" && input.ClientKind != "ios" && input.ClientKind != "android" {
 		return Started{}, ValidationError{"client_kind"}
 	}
+
 	if input.ClientKind == "web" {
 		if origin != s.config.PublicOrigin {
 			return Started{}, ErrForbidden
 		}
+
 		if input.AppChallenge != "" {
 			return Started{}, ValidationError{"app_challenge"}
 		}
@@ -69,6 +81,7 @@ func (s *Service) Start(ctx context.Context, input StartInput, origin string) (S
 	} else if !validSecret(input.AppChallenge) {
 		return Started{}, ValidationError{"app_challenge"}
 	}
+
 	if input.Context.Kind == "home" {
 		if input.Context.Token != "" {
 			return Started{}, ValidationError{"return_context"}
@@ -77,16 +90,19 @@ func (s *Service) Start(ctx context.Context, input StartInput, origin string) (S
 		if !validSecret(input.Context.Token) {
 			return Started{}, ValidationError{"return_context"}
 		}
+
 		exists, err := s.invitationExists(ctx, input.Context.Token)
 		if err != nil {
 			return Started{}, err
 		}
+
 		if !exists {
 			return Started{}, ValidationError{"return_context"}
 		}
 	} else {
 		return Started{}, ValidationError{"return_context"}
 	}
+
 	id := uuid()
 	state := id + "." + secret()
 	verifier := secret()
@@ -94,13 +110,30 @@ func (s *Service) Start(ctx context.Context, input StartInput, origin string) (S
 	if input.ClientKind == "web" {
 		binding = secret()
 	}
+
 	expires := s.now().Add(10 * time.Minute)
-	attempt := Attempt{ID: id, StateHash: digest(state), ClientKind: input.ClientKind, BindingHash: digest(binding), AppChallenge: input.AppChallenge, ProviderVerifier: verifier, Context: input.Context, ExpiresAt: expires, Status: "pending"}
+	attempt := Attempt{
+		ID:               id,
+		StateHash:        digest(state),
+		ClientKind:       input.ClientKind,
+		BindingHash:      digest(binding),
+		AppChallenge:     input.AppChallenge,
+		ProviderVerifier: verifier,
+		Context:          input.Context,
+		ExpiresAt:        expires,
+		Status:           "pending",
+	}
 	err := s.store.Update(ctx, func(records Records) error { records.PutAttempt(attempt); return nil })
 	if err != nil {
 		return Started{}, err
 	}
-	return Started{AttemptID: id, AuthorizationURL: s.provider.AuthorizationURL(state, challenge(verifier)), BindingSecret: binding, ExpiresAt: expires}, nil
+
+	return Started{
+		AttemptID:        id,
+		AuthorizationURL: s.provider.AuthorizationURL(state, challenge(verifier)),
+		BindingSecret:    binding,
+		ExpiresAt:        expires,
+	}, nil
 }
 
 func (s *Service) returnURL(attempt Attempt, authError, handoff string) string {
@@ -118,8 +151,10 @@ func (s *Service) returnURL(attempt Attempt, authError, handoff string) string {
 			values.Set("handoff_code", handoff)
 		}
 	}
+
 	if authError != "" {
 		values.Set("auth_error", authError)
 	}
+
 	return target + "?" + values.Encode()
 }

@@ -19,6 +19,7 @@ func (w *responseWriter) WriteHeader(status int) {
 	if w.status != 0 {
 		return
 	}
+
 	w.status = status
 	w.ResponseWriter.WriteHeader(status)
 }
@@ -27,9 +28,11 @@ func (w *responseWriter) Write(data []byte) (int, error) {
 	if w.status == 0 {
 		w.WriteHeader(http.StatusOK)
 	}
+
 	if w.head {
 		return len(data), nil
 	}
+
 	return w.ResponseWriter.Write(data)
 }
 
@@ -49,8 +52,10 @@ func middleware(next http.Handler, logger *slog.Logger) http.Handler {
 				if response.status != 0 {
 					panic(http.ErrAbortHandler)
 				}
+
 				writeError(response, http.StatusInternalServerError, "internal_error", nil)
 			}
+
 			logger.Info("http_request", "request_id", id, "status", response.status,
 				"duration_ms", time.Since(started).Milliseconds())
 		}()
@@ -58,6 +63,7 @@ func middleware(next http.Handler, logger *slog.Logger) http.Handler {
 			writeError(response, http.StatusNotFound, "not_found", nil)
 			return
 		}
+
 		next.ServeHTTP(response, r)
 	})
 }
@@ -68,5 +74,6 @@ func requestID() string {
 	data[6] = data[6]&0x0f | 0x40
 	data[8] = data[8]&0x3f | 0x80
 	encoded := hex.EncodeToString(data[:])
+
 	return encoded[:8] + "-" + encoded[8:12] + "-" + encoded[12:16] + "-" + encoded[16:20] + "-" + encoded[20:]
 }

@@ -27,56 +27,70 @@ func registerMeetings(mux *http.ServeMux, store meetings.Store, service *identit
 	mux.HandleFunc("/api/v1/invitations/{token}", h.preview)
 	mux.HandleFunc("/api/v1/invitations/{token}/rsvp", h.respond)
 }
+
 func (h meetingHandlers) actor(w http.ResponseWriter, r *http.Request, mutation bool) (meetings.Actor, bool) {
 	principal, _, err := h.auth.authenticate(r)
 	if err == nil && mutation {
 		err = h.identity.AuthorizeMutation(principal, singleHeader(r, "Origin"), singleHeader(r, "X-CSRF-Token"))
 	}
+
 	if err != nil {
 		writeAuthError(w, err)
 		return meetings.Actor{}, false
 	}
+
 	return meetings.Actor{ID: principal.User.ID, Name: principal.User.DisplayName}, true
 }
+
 func (h meetingHandlers) link(token string) string {
 	return h.identity.PublicOrigin() + "/invitations/" + token
 }
+
 func parseMeetingID(w http.ResponseWriter, r *http.Request) (string, bool) {
 	id, err := meetings.ParseUUID(r.PathValue("id"))
 	if err != nil {
 		writeError(w, 404, "not_found", nil)
 		return "", false
 	}
+
 	return id, true
 }
+
 func requestKey(w http.ResponseWriter, r *http.Request) (string, bool) {
 	key, err := meetings.ParseUUID(singleHeader(r, "Idempotency-Key"))
 	if err != nil {
 		writeError(w, 422, "validation_failed", map[string]string{"idempotency_key": "invalid"})
 		return "", false
 	}
+
 	return key, true
 }
+
 func allowMethods(w http.ResponseWriter, r *http.Request, methods ...string) bool {
 	for _, method := range methods {
 		if r.Method == method || (r.Method == http.MethodHead && method == http.MethodGet) {
 			return true
 		}
 	}
+
 	value := ""
 	for _, method := range methods {
 		if value != "" {
 			value += ", "
 		}
+
 		value += method
 		if method == http.MethodGet {
 			value += ", HEAD"
 		}
 	}
+
 	w.Header().Set("Allow", value)
 	writeError(w, 405, "method_not_allowed", nil)
+
 	return false
 }
+
 func writeMeetingError(w http.ResponseWriter, err error) {
 	var validation meetings.ValidationError
 	var conflict *meetings.Conflict
@@ -84,15 +98,21 @@ func writeMeetingError(w http.ResponseWriter, err error) {
 	case errors.As(err, &validation):
 		writeError(w, 422, "validation_failed", validation.Fields)
 	case errors.As(err, &conflict):
-		detail := errorDetail{Code: conflict.Code, FieldErrors: map[string]string{}, RequestID: w.Header().Get("X-Request-ID")}
+		detail := errorDetail{
+			Code:        conflict.Code,
+			FieldErrors: map[string]string{},
+			RequestID:   w.Header().Get("X-Request-ID"),
+		}
 		if conflict.Current != nil {
 			value := meetingDTO(*conflict.Current)
 			detail.CurrentMeeting = &value
 		}
+
 		if conflict.Response != nil {
 			value := rsvpDTO(*conflict.Response)
 			detail.CurrentResponse = &value
 		}
+
 		writeJSON(w, 409, errorBody{detail})
 	case errors.Is(err, meetings.ErrIdempotencyConflict):
 		writeError(w, 409, "idempotency_key_reused", nil)

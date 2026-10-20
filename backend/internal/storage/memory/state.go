@@ -6,8 +6,10 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
-type responseKey struct{ meetingID, userID string }
-type messageKey struct{ meetingID, actorID, requestID string }
+type (
+	responseKey struct{ meetingID, userID string }
+	messageKey  struct{ meetingID, actorID, requestID string }
+)
 
 type state struct {
 	meetings    map[string]meetings.Meeting
@@ -38,6 +40,7 @@ func (s *state) clone() *state {
 	for id, meeting := range s.meetings {
 		copy.meetings[id] = cloneMeeting(meeting)
 	}
+
 	copy.invitations = maps.Clone(s.invitations)
 	copy.inviteIDs = maps.Clone(s.inviteIDs)
 	copy.responses = maps.Clone(s.responses)
@@ -47,6 +50,7 @@ func (s *state) clone() *state {
 	for id, entries := range s.feed {
 		copy.feed[id] = cloneEntries(entries)
 	}
+
 	return copy
 }
 
@@ -55,6 +59,7 @@ func cloneMeeting(meeting meetings.Meeting) meetings.Meeting {
 		startsAt := *meeting.StartsAt
 		meeting.StartsAt = &startsAt
 	}
+
 	return meeting
 }
 
@@ -68,5 +73,6 @@ func cloneEntries(entries []meetings.FeedEntry) []meetings.FeedEntry {
 	for i, entry := range entries {
 		copy[i] = cloneEntry(entry)
 	}
+
 	return copy
 }

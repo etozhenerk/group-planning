@@ -18,6 +18,7 @@ func (s *Service) Exchange(ctx context.Context, id, code, verifier string) (Issu
 	if !validSecret(code) || !verifierPattern.MatchString(verifier) {
 		return IssuedSession{}, ErrInvalidAttempt
 	}
+
 	token := secret()
 	var result IssuedSession
 	err := s.store.Update(ctx, func(records Records) error {
@@ -25,15 +26,19 @@ func (s *Service) Exchange(ctx context.Context, id, code, verifier string) (Issu
 		if !ok || attempt.ClientKind == "web" || attempt.Status != "provider_verified" || !s.now().Before(attempt.ExpiresAt) || !s.now().Before(attempt.HandoffExpiresAt) || !equal(attempt.HandoffHash, digest(code)) || !equal(attempt.AppChallenge, challenge(verifier)) {
 			return ErrInvalidAttempt
 		}
+
 		if _, ok := records.User(attempt.UserID); !ok {
 			return ErrInvalidAttempt
 		}
+
 		session := s.newSession(attempt.UserID, attempt.ClientKind, token)
 		records.PutSession(session)
 		records.DeleteAttempt(attempt.ID)
 		result = IssuedSession{Secret: token, ExpiresAt: session.ExpiresAt, Context: attempt.Context}
+
 		return nil
 	})
+
 	return result, err
 }
 
@@ -51,22 +56,27 @@ func (s *Service) Authenticate(ctx context.Context, token string, web bool) (Pri
 	if !validSecret(token) {
 		return Principal{}, ErrUnauthenticated
 	}
+
 	var result Principal
 	err := s.store.Update(ctx, func(records Records) error {
 		session, ok := records.Session(digest(token))
 		if !ok || !s.now().Before(session.ExpiresAt) || (session.ClientKind == "web") != web {
 			return ErrUnauthenticated
 		}
+
 		user, ok := records.User(session.UserID)
 		if !ok {
 			return ErrUnauthenticated
 		}
+
 		result = Principal{User: user, ClientKind: session.ClientKind, ExpiresAt: session.ExpiresAt}
 		if web {
 			result.CSRF = csrfToken(token)
 		}
+
 		return nil
 	})
+
 	return result, err
 }
 
@@ -75,6 +85,7 @@ func (s *Service) AuthorizeMutation(principal Principal, origin, csrf string) er
 	if principal.ClientKind == "web" && (origin != s.config.PublicOrigin || csrf == "" || !equal(principal.CSRF, csrf)) {
 		return ErrForbidden
 	}
+
 	return nil
 }
 
@@ -87,6 +98,7 @@ func (s *Service) Logout(ctx context.Context, token string) error {
 func (s *Service) Cleanup(ctx context.Context) (CleanupCount, error) {
 	var count CleanupCount
 	err := s.store.Update(ctx, func(records Records) error { count = records.Cleanup(s.now()); return nil })
+
 	return count, err
 }
 
@@ -100,12 +112,17 @@ func (s *Service) Users(ctx context.Context, ids []string) (map[string]User, err
 			if !ok {
 				return errors.New("meeting profile unavailable")
 			}
+
 			result[id] = user
 		}
+
 		return nil
 	})
+
 	return result, err
 }
 
 // PublicOrigin returns the configured HTTPS origin for links issued by this server.
-func (s *Service) PublicOrigin() string { return s.config.PublicOrigin }
+func (s *Service) PublicOrigin() string {
+	return s.config.PublicOrigin
+}

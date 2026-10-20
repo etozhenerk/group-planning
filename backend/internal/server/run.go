@@ -20,13 +20,16 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 	if config.ShutdownTimeout < time.Second || config.ShutdownTimeout > 30*time.Second {
 		return fmt.Errorf("invalid shutdown timeout")
 	}
+
 	if err := ctx.Err(); err != nil {
 		return nil
 	}
+
 	service, err := newIdentity(config.Auth, store)
 	if err != nil {
 		return err
 	}
+
 	cleanupCtx, stopCleanup := context.WithCancel(ctx)
 	cleanupDone := make(chan struct{})
 	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()
@@ -46,6 +49,7 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		if errors.Is(err, http.ErrServerClosed) {
 			return nil
 		}
+
 		return fmt.Errorf("serve HTTP: %w", err)
 	case <-ctx.Done():
 		deadline, cancel := context.WithTimeout(context.Background(), config.ShutdownTimeout)
@@ -53,16 +57,21 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		if err := server.Shutdown(deadline); err != nil {
 			_ = server.Close()
 			<-finished
+
 			return fmt.Errorf("shutdown HTTP: %w", err)
 		}
+
 		err := <-finished
 		if errors.Is(err, http.ErrServerClosed) {
 			return nil
 		}
+
 		return err
 	}
 }
 
 type discardWriter struct{}
 
-func (discardWriter) Write(data []byte) (int, error) { return len(data), nil }
+func (discardWriter) Write(data []byte) (int, error) {
+	return len(data), nil
+}

@@ -33,19 +33,23 @@ func (h authHandlers) exchange(w http.ResponseWriter, r *http.Request) {
 	if !requireMethod(w, r, http.MethodPost) {
 		return
 	}
+
 	if h.service == nil {
 		writeError(w, 503, "auth_unavailable", nil)
 		return
 	}
+
 	var input exchangeRequest
 	if !decodeJSON(w, r, &input) {
 		return
 	}
+
 	result, err := h.service.Exchange(r.Context(), input.AttemptID, input.HandoffCode, input.AppVerifier)
 	if err != nil {
 		writeAuthError(w, err)
 		return
 	}
+
 	writeJSON(w, 200, exchangeResponse{result.Secret, result.ExpiresAt, authContextResponse{result.Context.Kind, result.Context.Token}})
 }
 
@@ -53,15 +57,18 @@ func (h authHandlers) me(w http.ResponseWriter, r *http.Request) {
 	if !getOnly(w, r) {
 		return
 	}
+
 	principal, _, err := h.authenticate(r)
 	if err != nil {
 		writeAuthError(w, err)
 		return
 	}
+
 	var csrf *string
 	if principal.ClientKind == "web" {
 		csrf = &principal.CSRF
 	}
+
 	writeJSON(w, 200, meResponse{userResponse{principal.User.ID, principal.User.DisplayName}, principal.ExpiresAt, csrf})
 }
 
@@ -69,20 +76,25 @@ func (h authHandlers) logout(w http.ResponseWriter, r *http.Request) {
 	if !requireMethod(w, r, http.MethodPost) {
 		return
 	}
+
 	principal, token, err := h.authenticate(r)
 	if err == nil {
 		err = h.service.AuthorizeMutation(principal, singleHeader(r, "Origin"), singleHeader(r, "X-CSRF-Token"))
 	}
+
 	if err == nil {
 		err = h.service.Logout(r.Context(), token)
 	}
+
 	if err != nil {
 		writeAuthError(w, err)
 		return
 	}
+
 	if principal.ClientKind == "web" {
 		setSecureCookie(w, sessionCookie, "", time.Unix(1, 0), -1)
 	}
+
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -90,6 +102,7 @@ func (h authHandlers) authenticate(r *http.Request) (identity.Principal, string,
 	if h.service == nil {
 		return identity.Principal{}, "", identity.ErrUnauthenticated
 	}
+
 	cookie, hasCookie := uniqueCookie(r, sessionCookie)
 	count := 0
 	for _, c := range r.Cookies() {
@@ -97,23 +110,29 @@ func (h authHandlers) authenticate(r *http.Request) (identity.Principal, string,
 			count++
 		}
 	}
+
 	if count > 1 {
 		return identity.Principal{}, "", identity.ErrUnauthenticated
 	}
+
 	auth := r.Header.Values("Authorization")
 	if len(auth) > 0 && hasCookie {
 		return identity.Principal{}, "", identity.ErrUnauthenticated
 	}
+
 	token := cookie
 	web := true
 	if len(auth) > 0 {
 		if len(auth) != 1 || !strings.HasPrefix(auth[0], "Bearer ") {
 			return identity.Principal{}, "", identity.ErrUnauthenticated
 		}
+
 		token = strings.TrimPrefix(auth[0], "Bearer ")
 		web = false
 	}
+
 	principal, err := h.service.Authenticate(r.Context(), token, web)
+
 	return principal, token, err
 }
 

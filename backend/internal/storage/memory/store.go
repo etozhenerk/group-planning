@@ -31,6 +31,7 @@ func (s *Store) acquire(ctx context.Context) error {
 			<-s.gate
 			return err
 		}
+
 		return nil
 	}
 }
@@ -41,12 +42,14 @@ func (s *Store) View(ctx context.Context, fn func(meetings.Reader) error) error 
 	if err := s.acquire(ctx); err != nil {
 		return err
 	}
+
 	tx := &transaction{data: s.data.clone()}
 	<-s.gate
 	defer tx.close()
 	if err := fn(tx); err != nil {
 		return err
 	}
+
 	return ctx.Err()
 }
 
@@ -56,17 +59,21 @@ func (s *Store) Update(ctx context.Context, fn func(meetings.Writer) error) erro
 	if err := s.acquire(ctx); err != nil {
 		return err
 	}
+
 	defer func() { <-s.gate }()
 	tx := &transaction{data: s.data.clone(), writable: true}
 	defer tx.close()
 	if err := fn(tx); err != nil {
 		return err
 	}
+
 	candidate := tx.close()
 	if err := ctx.Err(); err != nil {
 		return err
 	}
+
 	s.data = candidate
+
 	return nil
 }
 
@@ -81,6 +88,7 @@ func (tx *transaction) close() *state {
 	tx.mu.Lock()
 	defer tx.mu.Unlock()
 	tx.closed = true
+
 	return tx.data
 }
 
@@ -88,8 +96,10 @@ func (tx *transaction) check(write bool) error {
 	if tx.closed {
 		return meetings.ErrTransactionClosed
 	}
+
 	if write && !tx.writable {
 		return meetings.ErrReadOnly
 	}
+
 	return nil
 }

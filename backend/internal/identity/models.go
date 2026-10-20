@@ -18,7 +18,9 @@ var (
 // ValidationError identifies a field without exposing submitted values.
 type ValidationError struct{ Field string }
 
-func (e ValidationError) Error() string { return "invalid authentication field: " + e.Field }
+func (e ValidationError) Error() string {
+	return "invalid authentication field: " + e.Field
+}
 
 // ReturnContext is a closed choice of local destinations, never an arbitrary URL.
 type ReturnContext struct{ Kind, Token string }

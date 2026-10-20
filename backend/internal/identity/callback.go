@@ -21,37 +21,46 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 	if input.State == "" || len(input.State) > 128 || (input.Code == "") == (input.ProviderError == "") || len(input.Code) > 4096 {
 		return Completed{}, ErrInvalidAttempt
 	}
+
 	var attempt Attempt
 	err := s.store.Update(ctx, func(records Records) error {
 		current, ok := records.Attempt(AttemptID(input.State))
 		if !ok || current.StateConsumed || !s.now().Before(current.ExpiresAt) || !equal(current.StateHash, digest(input.State)) {
 			return ErrInvalidAttempt
 		}
+
 		if current.ClientKind == "web" && (!validSecret(input.Binding) || !equal(current.BindingHash, digest(input.Binding))) {
 			return ErrForbidden
 		}
+
 		current.StateConsumed = true
 		records.PutAttempt(current)
 		attempt = current
+
 		return nil
 	})
 	if err != nil {
 		return Completed{}, err
 	}
+
 	if input.ProviderError != "" {
 		code := "auth_failed"
 		if input.ProviderError == "access_denied" {
 			code = "auth_cancelled"
 		}
+
 		return s.failedCallback(ctx, attempt, code)
 	}
+
 	profile, err := s.provider.Verify(ctx, input.Code, attempt.ProviderVerifier)
 	if err != nil {
 		return s.failedCallback(ctx, attempt, "auth_unavailable")
 	}
+
 	if profile.Subject == "" || len(profile.Subject) > 256 || profile.DisplayName == "" || len(profile.DisplayName) > 1000 {
 		return s.failedCallback(ctx, attempt, "auth_unavailable")
 	}
+
 	handoff := secret()
 	sessionSecret := secret()
 	result := Completed{AttemptID: attempt.ID, ClientKind: attempt.ClientKind}
@@ -60,6 +69,7 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 		if !ok || !current.StateConsumed || current.Status != "pending" || !s.now().Before(current.ExpiresAt) {
 			return ErrInvalidAttempt
 		}
+
 		user, exists := records.UserBySubject("yandex:" + profile.Subject)
 		if !exists {
 			user = User{ID: uuid(), DisplayName: profile.DisplayName, CreatedAt: s.now()}
@@ -67,6 +77,7 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 				return err
 			}
 		}
+
 		current.ProviderVerifier = ""
 		current.StateHash = ""
 		current.BindingHash = ""
@@ -84,9 +95,12 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 			current.HandoffExpiresAt = s.now().Add(time.Minute)
 			records.PutAttempt(current)
 		}
+
 		result.RedirectURL = s.returnURL(current, "", handoff)
+
 		return nil
 	})
+
 	return result, err
 }
 
@@ -95,9 +109,20 @@ func (s *Service) failedCallback(ctx context.Context, attempt Attempt, code stri
 	if err != nil {
 		return Completed{}, err
 	}
-	return Completed{AttemptID: attempt.ID, ClientKind: attempt.ClientKind, RedirectURL: s.returnURL(attempt, code, "")}, nil
+
+	return Completed{
+		AttemptID:   attempt.ID,
+		ClientKind:  attempt.ClientKind,
+		RedirectURL: s.returnURL(attempt, code, ""),
+	}, nil
 }
 
 func (s *Service) newSession(userID, kind, secret string) Session {
-	return Session{ID: uuid(), UserID: userID, SecretHash: digest(secret), ClientKind: kind, ExpiresAt: s.now().Add(s.config.SessionTTL)}
+	return Session{
+		ID:         uuid(),
+		UserID:     userID,
+		SecretHash: digest(secret),
+		ClientKind: kind,
+		ExpiresAt:  s.now().Add(s.config.SessionTTL),
+	}
 }

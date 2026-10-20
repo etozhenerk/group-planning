@@ -22,25 +22,32 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 	if storage := getenv("SOMEWHERE_STORAGE"); storage != "" && storage != "memory" {
 		return Config{}, fmt.Errorf("SOMEWHERE_STORAGE must be memory")
 	}
+
 	if address := getenv("SOMEWHERE_HTTP_ADDR"); address != "" {
 		config.Address = address
 	}
+
 	host, port, err := net.SplitHostPort(config.Address)
 	number, parseErr := strconv.Atoi(port)
 	if err != nil || host == "" || parseErr != nil || number < 1 || number > 65535 {
 		return Config{}, fmt.Errorf("SOMEWHERE_HTTP_ADDR must contain an explicit host and port 1..65535")
 	}
+
 	if value := getenv("SOMEWHERE_SHUTDOWN_TIMEOUT"); value != "" {
 		timeout, err := time.ParseDuration(value)
 		if err != nil || timeout < time.Second || timeout > 30*time.Second {
 			return Config{}, fmt.Errorf("SOMEWHERE_SHUTDOWN_TIMEOUT must be between 1s and 30s")
 		}
+
 		config.ShutdownTimeout = timeout
 	}
+
 	auth, err := loadAuthConfig(getenv)
 	if err != nil {
 		return Config{}, err
 	}
+
 	config.Auth = auth
+
 	return config, nil
 }

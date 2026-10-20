@@ -14,13 +14,16 @@ var receiptFailure = errors.New("receipt failure")
 
 type failedReceiptWriter struct{ meetings.Writer }
 
-func (failedReceiptWriter) InsertReceipt(meetings.Receipt) error { return receiptFailure }
+func (failedReceiptWriter) InsertReceipt(meetings.Receipt) error {
+	return receiptFailure
+}
 
 type failedReceiptStore struct{ meetings.Store }
 
 func (s failedReceiptStore) Update(ctx context.Context, callback func(meetings.Writer) error) error {
 	return s.Store.Update(ctx, func(w meetings.Writer) error { return callback(failedReceiptWriter{w}) })
 }
+
 func TestReceiptFailureRollsBackEveryOperation(t *testing.T) {
 	store := memory.New()
 	app := meetings.NewService(failedReceiptStore{store}, time.Now)
@@ -31,6 +34,7 @@ func TestReceiptFailureRollsBackEveryOperation(t *testing.T) {
 		if len(all) != 0 {
 			t.Fatal("partially committed creation")
 		}
+
 		return err
 	}))
 	f := setup(t)
@@ -41,6 +45,7 @@ func TestReceiptFailureRollsBackEveryOperation(t *testing.T) {
 	if len(feed(t, f).Entries) != 1 || feed(t, f).Details.ParticipantCount != 1 {
 		t.Fatal("partially committed RSVP")
 	}
+
 	_, err = broken.Update(ctx, owner, id, meetings.UpdateInput{Title: meetings.Field{Present: true, Value: "Changed"}, ExpectedRevision: 1}, key(3))
 	assertError(t, err, receiptFailure)
 	_, err = broken.SendMessage(ctx, owner, id, "Привет", key(4), key(4))
