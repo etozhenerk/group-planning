@@ -110,3 +110,33 @@ export const apiCreate = async (page: Page, title: string) => {
 
   return createdSchema.parse(raw);
 };
+
+export const expectMessageSide = async (
+  page: Page,
+  text: string,
+  side: 'left' | 'right',
+) => {
+  const message = page.locator('.feed-message').filter({ hasText: text });
+  const [row, bubble, avatar] = await Promise.all([
+    message.boundingBox(),
+    message.locator('.message-bubble').boundingBox(),
+    message.locator('.avatar').boundingBox(),
+  ]);
+
+  if (!row || !bubble || !avatar) {
+    throw new Error('Message is not visible');
+  }
+
+  const edge = side === 'right' ? row.x + row.width : row.x;
+  const avatarEdge = side === 'right' ? avatar.x + avatar.width : avatar.x;
+  expect(Math.abs(edge - avatarEdge)).toBeLessThan(1);
+
+  if (side === 'right') {
+    expect(avatar.x).toBeGreaterThan(bubble.x + bubble.width);
+  } else {
+    expect(bubble.x).toBeGreaterThan(avatar.x + avatar.width);
+  }
+
+  expect(bubble.x).toBeGreaterThanOrEqual(row.x);
+  expect(bubble.x + bubble.width).toBeLessThanOrEqual(row.x + row.width + 1);
+};

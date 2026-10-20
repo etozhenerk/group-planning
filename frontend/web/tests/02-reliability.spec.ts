@@ -5,6 +5,7 @@ import {
   apiMeeting,
   create,
   csrf,
+  expectMessageSide,
   inviteLink,
   login,
   setDate,
@@ -80,9 +81,20 @@ test('message retry after a lost response keeps its ID and confirms once', async
   await page.getByLabel('Сообщение', { exact: true }).fill('Повтор без дубля');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
+  const pending = await page.locator('.pending-message').boundingBox();
+  const pendingList = await page.locator('.pending-messages').boundingBox();
+
+  if (!pending || !pendingList) {
+    throw new Error('Failed message is not visible');
+  }
+
+  expect(
+    Math.abs(pending.x + pending.width - pendingList.x - pendingList.width),
+  ).toBeLessThan(1);
   await page.getByRole('button', { name: 'Повторить отправку' }).click();
   await expect(page.getByText('Повтор без дубля', { exact: true })).toHaveCount(1);
   expect(keys[0]).toBe(keys[1]);
+  await expectMessageSide(page, 'Повтор без дубля', 'right');
   await page.reload();
   await expect(page.getByText('Повтор без дубля', { exact: true })).toHaveCount(1);
 });

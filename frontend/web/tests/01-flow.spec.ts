@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { inviteLink, login, setDate, writeHeaders } from '@tests/helpers';
+import {
+  expectMessageSide,
+  inviteLink,
+  login,
+  setDate,
+  writeHeaders,
+} from '@tests/helpers';
 import { responseSchema } from '@/shared/api';
 
 test('create, retry, invite, join, chat and revoke across two profiles', async ({
@@ -89,6 +95,23 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await friend.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByText(plain, { exact: true })).toBeVisible({ timeout: 10_000 });
   expect(await page.locator('.message-bubble img').count()).toBe(0);
+
+  for (const width of [1440, 390, 320]) {
+    for (const [viewer, ownText, otherText] of [
+      [page, 'Принесу настолки!', plain],
+      [friend, plain, 'Принесу настолки!'],
+    ] as const) {
+      await viewer.setViewportSize({ width, height: 900 });
+      await expectMessageSide(viewer, ownText, 'right');
+      await expectMessageSide(viewer, otherText, 'left');
+      expect(
+        await viewer.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+    }
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await friend.setViewportSize({ width: 1440, height: 900 });
   await friend.getByRole('button', { name: 'Возможно', exact: true }).click();
   await expect(friend.getByRole('heading', { name: 'Переписка закрыта' })).toBeVisible();
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toHaveCount(0);
