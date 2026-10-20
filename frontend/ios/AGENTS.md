@@ -12,8 +12,8 @@ somewhere для iOS и его платформенные интеграции.
 и минимум закреплены: Xcode 26.0.1 (17A400), Swift 6.2 в режиме Swift 6,
 iOS 17.0, SDK iOS Simulator 26.0. Создана схема `Somewhere` без сторонних пакетов;
 приложение показывает знак слева и название `somewhere`. Реализованы API-адаптер,
-Codable-модели, Keychain-сессия и владельцы приватного состояния. Экраны и реальный
-вход ещё не подключены. Устройство данных — в [ios-data.md](../../openspec/changes/gathering-activity-feed/ios-data.md).
+Codable-модели, Keychain-сессия, онбординг, личный список и создание с черновиком.
+Реальный вход отложен, приглашение/RSVP и чат ещё не подключены. Устройство данных — в [ios-data.md](../../openspec/changes/gathering-activity-feed/ios-data.md).
 Команды и ограничения — в [README.md](README.md).
 
 ## Оформление Swift
@@ -74,11 +74,21 @@ Codable-модели, Keychain-сессия и владельцы приватн
 
 Из `frontend/ios` запускай `sh scripts/format.sh --check` и
 `sh scripts/build.sh`: строгий swift-format, чистая simulator-сборка и анализ.
-`sh scripts/test.sh` выполняет Swift Testing на отдельном временном iPhone 17:
+`sh scripts/test.sh` выполняет Swift Testing на уже запущенном симуляторе iOS 26:
 контрактные fixtures, URLSession/отмена, настоящий Keychain, 401/403 и гонки
-сессии. Скрипт ждёт загрузки симулятора и удаляет только созданное им устройство.
+сессии. Локальные тесты не создают и не удаляют устройства. Для выбора среди нескольких
+запущенных задай `SOMEWHERE_SIMULATOR_ID=<UDID>`. Запускай unit и UI строго
+последовательно на одном устройстве; `simulator.sh` ставит общий lock.
+Сборка тестов ограничена двумя задачами Xcode (`SOMEWHERE_XCODE_JOBS`).
+Только CI без явного UDID создаёт и удаляет свой временный iPhone 17.
 Тестовый хост подписывается локально (`CODE_SIGN_IDENTITY=-`), без Apple-аккаунта.
 Не отключай подпись в этом тесте: Keychain требует simulated entitlements.
+`sh scripts/test-ui.sh` запускает XCUITest с настоящим Go API на случайном
+loopback-порту. Нужен Go 1.27.2; `GO_BIN` может задавать путь. Тестовая схема
+`SomewhereUI` использует отдельный app target с теми же UI-исходниками;
+`SomewhereUITestSupport` не включается в обычный target. Не добавляй runtime
+обход входа и не ослабляй production TLS. Fixture проверяет один ID и ключ
+при повторе после потерянного ответа. Снимки находятся в UIResults xcresult.
 `sh scripts/build.sh Release` проверяет оптимизированную сборку.
 `sh scripts/check-toolchain.sh` проверяет точные инструменты; версия Xcode
 лежит в `.xcode-version`, compiler/formatter/SDK — в `Config/toolchain.env`.

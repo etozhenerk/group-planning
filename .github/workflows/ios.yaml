@@ -2,9 +2,9 @@ name: iOS
 on:
   push:
     branches: [main]
-    paths: [frontend/ios/**, contracts/fixtures/**, .github/workflows/ios.yaml]
+    paths: [frontend/ios/**, contracts/fixtures/**, backend/**, .github/workflows/ios.yaml]
   pull_request:
-    paths: [frontend/ios/**, contracts/fixtures/**, .github/workflows/ios.yaml]
+    paths: [frontend/ios/**, contracts/fixtures/**, backend/**, .github/workflows/ios.yaml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,11 +14,15 @@ concurrency:
 jobs:
   build:
     runs-on: macos-15
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
       - name: Select pinned Xcode
         run: echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
       - name: Swift format and lint
@@ -27,3 +31,5 @@ jobs:
         run: sh frontend/ios/scripts/build.sh
       - name: Models, transport and session tests
         run: sh frontend/ios/scripts/test.sh
+      - name: Entry, draft and API retry UI tests
+        run: sh frontend/ios/scripts/test-ui.sh

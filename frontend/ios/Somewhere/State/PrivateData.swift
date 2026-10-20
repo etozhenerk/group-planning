@@ -4,6 +4,10 @@ import Observation
 @MainActor @Observable
 final class PrivateData {
     var meetings = ResourceState<[MeetingSummary]>()
+    var meetingsCursor: String?
+    var loadingMore = false
+    var moreError: ClientFailure?
+    var listGeneration = UUID()
     var details: [UUID: ResourceState<Meeting>] = [:]
     var feeds: [UUID: ResourceState<FeedPage>] = [:]
     var participants: [UUID: ResourceState<Participants>] = [:]
@@ -50,6 +54,10 @@ final class PrivateData {
     func clear() {
         generation = UUID()
         meetings = ResourceState()
+        meetingsCursor = nil
+        loadingMore = false
+        moreError = nil
+        listGeneration = UUID()
         details.removeAll()
         feeds.removeAll()
         participants.removeAll()

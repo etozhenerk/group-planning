@@ -11,7 +11,7 @@ case "$somewhere_configuration" in
     *) printf 'Usage: sh scripts/build.sh [Debug|Release]\n' >&2; exit 2 ;;
 esac
 
-xcodebuild \
+xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" \
     -project Somewhere.xcodeproj \
     -scheme Somewhere \
     -configuration "$somewhere_configuration" \

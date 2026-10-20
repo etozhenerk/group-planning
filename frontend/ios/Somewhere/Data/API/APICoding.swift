@@ -6,6 +6,8 @@ enum APICoding {
     }
 
     static func encode<Value: Encodable>(_ value: Value) throws -> Data {
-        try JSONEncoder().encode(value)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        return try encoder.encode(value)
     }
 }

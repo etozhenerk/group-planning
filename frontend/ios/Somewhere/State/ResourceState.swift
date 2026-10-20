@@ -6,6 +6,8 @@ struct ResourceState<Value: Sendable>: Sendable {
     private(set) var error: ClientFailure?
     private var requestID: UUID?
 
+    func isCurrent(_ id: UUID) -> Bool { requestID == id }
+
     mutating func begin() -> UUID {
         let id = UUID()
         requestID = id

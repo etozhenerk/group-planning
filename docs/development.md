@@ -88,6 +88,8 @@ FSD/AST, Prettier и Vitest; `npm run web:build` и `web:test:e2e` провер�
 отложен; fake-provider используется только в тестах. Основа iOS имеет строгий
 swift-format и clean/build/analyze для симулятора через `scripts/build.sh`.
 Swift Testing проверяет её API-модели, URLSession, Keychain и владельцев
-состояния через `scripts/test.sh` на отдельном симуляторе. Экраны iOS,
+состояния через `scripts/test.sh` на отдельном симуляторе. Онбординг, список
+и создание iOS проверяются через `scripts/test-ui.sh` с настоящим Go API
+и test-only provider в отдельной сборке. Реальный вход, чат, приглашения iOS,
 БД и Android ещё не подключены.
 Подробные команды — в локальных инструкциях приложений.

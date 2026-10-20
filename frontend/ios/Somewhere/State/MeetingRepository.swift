@@ -7,10 +7,14 @@ struct MeetingRepository {
 
     func loadMeetings() async {
         guard let lease = try? state.lease() else { return }
+        state.listGeneration = UUID()
+        state.loadingMore = false
+        state.moreError = nil
         let token = state.meetings.begin()
         do {
             let page = try await session.send(MeetingRequests.list(), as: MeetingsPage.self)
-            guard state.isCurrent(lease) else { return }
+            guard state.isCurrent(lease), state.meetings.isCurrent(token) else { return }
+            state.meetingsCursor = page.nextCursor
             state.meetings.succeed(
                 page.meetings.filter { !state.denied.contains($0.id) }, requestID: token)
         } catch {
