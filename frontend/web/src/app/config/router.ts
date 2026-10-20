@@ -37,6 +37,12 @@ export const router = createBrowserRouter([
         lazy: async () => ({ Component: (await import('@/pages/meeting')).MeetingPage }),
       },
       {
+        path: '/i/:token',
+        lazy: async () => ({
+          Component: (await import('@/pages/invitation')).InvitationPage,
+        }),
+      },
+      {
         path: '/invitations/:token',
         lazy: async () => ({
           Component: (await import('@/pages/invitation')).InvitationPage,

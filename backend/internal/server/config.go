@@ -12,6 +12,8 @@ import (
 // Do not log or serialize the configuration.
 type Config struct {
 	Auth            AuthConfig
+	WebDirectory    string
+	WebOrigin       string
 	Address         string
 	ShutdownTimeout time.Duration
 }
@@ -45,6 +47,16 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 	auth, err := loadAuthConfig(getenv)
 	if err != nil {
 		return Config{}, err
+	}
+
+	config.WebDirectory = getenv("SOMEWHERE_WEB_DIST")
+	config.WebOrigin = getenv("SOMEWHERE_WEB_ORIGIN")
+	if (config.WebDirectory == "") != (config.WebOrigin == "") {
+		return Config{}, fmt.Errorf("SOMEWHERE_WEB_DIST and SOMEWHERE_WEB_ORIGIN must be configured together")
+	}
+
+	if auth.Enabled && config.WebOrigin != "" && config.WebOrigin != auth.Identity.PublicOrigin {
+		return Config{}, fmt.Errorf("web and authentication must use the same public origin")
 	}
 
 	config.Auth = auth

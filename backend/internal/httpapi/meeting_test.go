@@ -212,7 +212,7 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 
 	input := map[string]any{
 		"title":       "Настолки",
-		"description": "Тестовая закрытая заметка",
+		"description": "Описание приглашения",
 		"starts_at":   "2026-10-24T19:00:00+03:00",
 		"timezone":    "Europe/Moscow",
 		"place":       nil,
@@ -225,7 +225,7 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 	id := created.Meeting.ID
 	base := "/api/v1/meetings/" + id
 	address, _ := url.Parse(created.InvitationURL)
-	token := strings.TrimPrefix(address.Path, "/invitations/")
+	token := strings.TrimPrefix(address.Path, "/i/")
 	invite := "/api/v1/invitations/" + token
 	data, _ = h.request(ownerClient, "POST", "/api/v1/meetings", input, headersFor(h, owner, testKey("1")), 201)
 	if decodeMeetingTest[createdMeetingResponse](t, data).Meeting.ID != id {
@@ -234,7 +234,15 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 
 	h.request(ownerClient, "GET", base+"/invitation", nil, nil, 200)
 	data, _ = h.request(h.anonymous, "GET", invite, nil, nil, 200)
-	for _, word := range []string{"description", "organizer_id", "participants", "entries", "display_name", "Тестовая закрытая заметка"} {
+	if got := decodeMeetingTest[previewResponse](t, data).Description; got == nil || *got != "Описание приглашения" {
+		t.Fatal("public description missing")
+	}
+
+	if len(token) != 22 {
+		t.Fatal("new invitation is not compact")
+	}
+
+	for _, word := range []string{"organizer_id", "participants", "entries", "display_name"} {
 		if bytes.Contains(data, []byte(word)) {
 			t.Fatalf("public preview leaked %s", word)
 		}
@@ -385,7 +393,7 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 	}
 
 	// Invite tokens and text must not reach request logs.
-	for _, private := range []string{token, "Тестовая закрытая заметка", message["text"], native.SessionToken} {
+	for _, private := range []string{token, "Описание приглашения", message["text"], native.SessionToken} {
 		if strings.Contains(h.logs.String(), private) {
 			t.Fatal("private request logged")
 		}

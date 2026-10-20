@@ -49,7 +49,7 @@ func randomUUID() string {
 }
 
 func randomToken() string {
-	var data [32]byte
+	var data [16]byte
 	_, _ = rand.Read(data[:])
 
 	return base64.RawURLEncoding.EncodeToString(data[:])

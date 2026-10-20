@@ -30,7 +30,7 @@ func seededStore(t *testing.T) *memory.Store {
 		if err := writer.SaveMeeting(meetings.Meeting{
 			ID: meetingID, Title: "Суббота без спешки",
 			StartsAt: &instant, Timezone: "Europe/Moscow", OrganizerID: "private-profile",
-			Description: "private-description", CreationRequestHash: "private-hash",
+			Description: "Открытое описание встречи", CreationRequestHash: "private-hash",
 		}); err != nil {
 			return err
 		}

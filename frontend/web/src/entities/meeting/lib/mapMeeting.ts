@@ -34,6 +34,7 @@ export const mapInvitation = (wire: WirePreview): Invitation => {
   return {
     meetingId: wire.meeting_id,
     title: wire.title,
+    description: wire.description ?? null,
     startsAt: wire.starts_at,
     timezone: wire.timezone,
     place: wire.place,

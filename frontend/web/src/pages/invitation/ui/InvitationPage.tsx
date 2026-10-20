@@ -36,6 +36,9 @@ export const InvitationPage = () => {
               timezone={query.data.timezone}
               place={query.data.place}
             />
+            {query.data.description && (
+              <p className="meeting-description">{query.data.description}</p>
+            )}
             {session.isPending ? (
               <p role="status">Проверяем вход…</p>
             ) : session.error ? (

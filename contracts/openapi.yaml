@@ -1040,7 +1040,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: ^[A-Za-z0-9_-]{43}$
+        pattern: ^([A-Za-z0-9_-]{22}|[A-Za-z0-9_-]{43})$
     IdempotencyKey:
       name: Idempotency-Key
       in: header
@@ -1109,7 +1109,7 @@ components:
               const: invitation
             token:
               type: string
-              pattern: ^[A-Za-z0-9_-]{43}$
+              pattern: ^([A-Za-z0-9_-]{22}|[A-Za-z0-9_-]{43})$
           required:
             - kind
             - token
@@ -1132,6 +1132,11 @@ components:
           type: string
           minLength: 1
           maxLength: 120
+        description:
+          anyOf:
+            - type: string
+              maxLength: 4000
+            - type: "null"
         starts_at:
           anyOf:
             - type: string
@@ -1159,6 +1164,7 @@ components:
       required:
         - meeting_id
         - title
+        - description
         - starts_at
         - timezone
         - place

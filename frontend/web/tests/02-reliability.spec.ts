@@ -166,7 +166,7 @@ test('cancelled invitation sign-in stays on the invitation without an answer', a
   await page.goto(url);
   await page.getByRole('button', { name: 'Войти и ответить' }).click();
   await page.getByRole('link', { name: 'Отменить вход' }).click();
-  await expect(page).toHaveURL(/\/invitations\/.*auth_error=cancelled/);
+  await expect(page).toHaveURL(/\/i\/.*auth_error=cancelled/);
   await expect(page.getByRole('status')).toContainText('Вход отменён');
   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
 });

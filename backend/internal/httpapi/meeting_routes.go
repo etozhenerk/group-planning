@@ -43,7 +43,7 @@ func (h meetingHandlers) actor(w http.ResponseWriter, r *http.Request, mutation 
 }
 
 func (h meetingHandlers) link(token string) string {
-	return h.identity.PublicOrigin() + "/invitations/" + token
+	return h.identity.PublicOrigin() + "/i/" + token
 }
 
 func parseMeetingID(w http.ResponseWriter, r *http.Request) (string, bool) {

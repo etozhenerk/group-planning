@@ -39,6 +39,11 @@ func validSecret(value string) bool {
 	return err == nil && len(data) == 32 && base64.RawURLEncoding.EncodeToString(data) == value
 }
 
+func validInvitationToken(value string) bool {
+	data, err := base64.RawURLEncoding.DecodeString(value)
+	return err == nil && (len(data) == 16 || len(data) == 32) && base64.RawURLEncoding.EncodeToString(data) == value
+}
+
 func uuid() string {
 	var data [16]byte
 	_, _ = rand.Read(data[:])

@@ -14,7 +14,6 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
-	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -22,6 +21,7 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
+	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
 
 // browserProvider is compiled only into Go tests, never cmd/server.
@@ -107,22 +107,12 @@ func TestBrowserFixture(t *testing.T) {
 			return
 		}
 	})
-	static := http.FileServer(http.Dir(directory))
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		clean := filepath.Clean("/" + r.URL.Path)
-		target := filepath.Join(directory, strings.TrimPrefix(clean, "/"))
-		if info, err := os.Stat(target); err == nil && !info.IsDir() {
-			static.ServeHTTP(w, r)
-			return
-		}
+	site, err := webui.New(store, directory, origin)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-		if strings.HasPrefix(r.URL.Path, "/assets/") {
-			http.NotFound(w, r)
-			return
-		}
-
-		http.ServeFile(w, r, filepath.Join(directory, "index.html"))
-	})
+	mux.Handle("/", site)
 	server.Config.Handler = mux
 	server.StartTLS()
 	defer server.Close()

@@ -87,7 +87,7 @@ func (s *Service) Start(ctx context.Context, input StartInput, origin string) (S
 			return Started{}, ValidationError{"return_context"}
 		}
 	} else if input.Context.Kind == "invitation" {
-		if !validSecret(input.Context.Token) {
+		if !validInvitationToken(input.Context.Token) {
 			return Started{}, ValidationError{"return_context"}
 		}
 

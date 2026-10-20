@@ -22,6 +22,7 @@ export type Meeting = MeetingSummary & {
 export type Invitation = {
   meetingId: string;
   title: string;
+  description: string | null;
   startsAt: string | null;
   timezone: string;
   place: string | null;

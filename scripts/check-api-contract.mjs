@@ -42,12 +42,17 @@ for (const fixture of fixtures) {
 }
 const publicCase = fixtures.find(item => item.name === 'public-invitation');
 assert(publicCase);
-for (const key of ['organizer_id', 'participants', 'entries', 'messages', 'description', 'invitation_url']) {
+for (const key of ['organizer_id', 'participants', 'entries', 'messages', 'invitation_url']) {
   assert(!(key in publicCase.body), `Private field ${key} in public fixture`);
+}
+assert.equal(typeof publicCase.body.description, 'string', 'Public invitation description missing');
+for (const length of [22, 43]) {
+  validate('ReturnContext', { kind: 'invitation', token: 'A'.repeat(length) });
 }
 // Negative probes prove that these privacy/precision checks can actually fail.
 for (const [schema, value] of [
   ['InvitationPreview', { ...publicCase.body, messages: [] }],
+  ['ReturnContext', { kind: 'invitation', token: 'A'.repeat(21) }],
   ['InvitationPreview', { ...publicCase.body, starts_at: 'tomorrow' }],
   ['RsvpRequest', { answer: 'yes', expected_revision: '0' }],
   ['RsvpRequest', { answer: 'going', expected_revision: 9007199254740992 }],

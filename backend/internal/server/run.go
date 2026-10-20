@@ -11,6 +11,7 @@ import (
 
 	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
 
 // Serve binds the supplied store to HTTP and drains requests on cancellation.
@@ -30,12 +31,26 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		return err
 	}
 
+	var handler http.Handler = httpapi.NewWithIdentity(store, service, logger)
+	if config.WebDirectory != "" {
+		site, err := webui.New(store, config.WebDirectory, config.WebOrigin)
+		if err != nil {
+			return err
+		}
+
+		mux := http.NewServeMux()
+		mux.Handle("/api/", handler)
+		mux.Handle("/healthz", handler)
+		mux.Handle("/", site)
+		handler = mux
+	}
+
 	cleanupCtx, stopCleanup := context.WithCancel(ctx)
 	cleanupDone := make(chan struct{})
 	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()
 	defer func() { stopCleanup(); <-cleanupDone }()
 	server := &http.Server{
-		Handler: httpapi.NewWithIdentity(store, service, logger), ReadHeaderTimeout: 5 * time.Second,
+		Handler: handler, ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout: 10 * time.Second, WriteTimeout: 15 * time.Second,
 		IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10,
 		// net/http's default panic logger can include raw panic values. The middleware

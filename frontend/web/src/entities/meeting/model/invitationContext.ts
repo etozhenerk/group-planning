@@ -5,7 +5,7 @@ export const storedInvitation = (id: string): string | null => {
       ? sessionStorage.getItem(`somewhere-invitation:${user}:${id}`)
       : null;
 
-    return token && /^[A-Za-z0-9_-]{43}$/.test(token) ? token : null;
+    return token && /^([A-Za-z0-9_-]{22}|[A-Za-z0-9_-]{43})$/.test(token) ? token : null;
   } catch {
     return null;
   }

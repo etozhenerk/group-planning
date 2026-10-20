@@ -40,6 +40,7 @@ export const meetingsSchema = z.object({
 export const previewSchema = z.object({
   meeting_id: uuid,
   title: z.string(),
+  description: z.string().nullable().optional(),
   starts_at: instant.nullable(),
   timezone: z.string(),
   place: z.string().nullable(),

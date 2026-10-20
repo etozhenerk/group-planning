@@ -12,6 +12,7 @@ import (
 type previewResponse struct {
 	MeetingID      string     `json:"meeting_id"`
 	Title          string     `json:"title"`
+	Description    *string    `json:"description"`
 	StartsAt       *time.Time `json:"starts_at"`
 	Timezone       string     `json:"timezone"`
 	Place          *string    `json:"place"`

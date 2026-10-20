@@ -153,13 +153,8 @@ func (s *Service) PreviewForUser(ctx context.Context, token, userID string) (Pub
 			return err
 		}
 
-		result = PublicInvitation{
-			MeetingID: meeting.ID,
-			Title:     meeting.Title,
-			StartsAt:  meeting.StartsAt,
-			Timezone:  meeting.Timezone,
-			Place:     meeting.Place,
-		}
+		result = publicInvitation(meeting)
+
 		if userID != "" {
 			response, err = reader.RSVP(meeting.ID, userID)
 			if errors.Is(err, ErrNotFound) {

@@ -54,11 +54,11 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   const friend = await friendContext.newPage();
   await friend.goto(invitation);
   await expect(friend.getByRole('heading', { name: 'Суббота без спешки' })).toBeVisible();
-  await expect(friend.getByText('Пицца и настольные игры.')).toHaveCount(0);
+  await expect(friend.getByText('Пицца и настольные игры.')).toBeVisible();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
   await friend.getByRole('button', { name: 'Войти и ответить' }).click();
   await friend.getByRole('link', { name: 'Войти как Лена' }).click();
-  await expect(friend).toHaveURL(/\/invitations\//);
+  await expect(friend).toHaveURL(/\/(i|invitations)\//);
   const forbidden = await friend.request.get(`/api/v1/meetings/${id}/feed`);
   expect(forbidden.status()).toBe(403);
   let goingKey = '';

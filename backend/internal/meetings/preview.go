@@ -7,18 +7,19 @@ import (
 )
 
 // PublicInvitation contains only details a holder of the invitation may see.
-// Profiles, descriptions, responses and messages must never be added implicitly.
+// Profiles, responses and messages must never be added implicitly.
 type PublicInvitation struct {
-	MeetingID string
-	Title     string
-	StartsAt  *time.Time
-	Timezone  string
-	Place     string
+	MeetingID   string
+	Title       string
+	Description string
+	StartsAt    *time.Time
+	Timezone    string
+	Place       string
 }
 
 func validInvitationToken(token string) bool {
 	decoded, err := base64.RawURLEncoding.DecodeString(token)
-	return err == nil && len(decoded) == 32 && base64.RawURLEncoding.EncodeToString(decoded) == token
+	return err == nil && (len(decoded) == 16 || len(decoded) == 32) && base64.RawURLEncoding.EncodeToString(decoded) == token
 }
 
 // Preview reads public details from a consistent snapshot without changing RSVP.
@@ -39,13 +40,21 @@ func Preview(ctx context.Context, store Store, token string) (PublicInvitation, 
 			return err
 		}
 
-		preview = PublicInvitation{
-			MeetingID: meeting.ID, Title: meeting.Title,
-			StartsAt: meeting.StartsAt, Timezone: meeting.Timezone, Place: meeting.Place,
-		}
+		preview = publicInvitation(meeting)
 
 		return nil
 	})
 
 	return preview, err
+}
+
+func publicInvitation(meeting Meeting) PublicInvitation {
+	return PublicInvitation{
+		MeetingID:   meeting.ID,
+		Title:       meeting.Title,
+		Description: meeting.Description,
+		StartsAt:    meeting.StartsAt,
+		Timezone:    meeting.Timezone,
+		Place:       meeting.Place,
+	}
 }

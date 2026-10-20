@@ -44,3 +44,11 @@ can_access_feed всегда false. Изменение схемы ошибки �
 Валидаторы и их зависимости закреплены в корневом lock-файле.
 Основа: [Redocly lint](https://redocly.com/docs/cli/commands/lint),
 [Ajv JSON Schema 2020-12](https://ajv.js.org/json-schema.html#draft-2020-12).
+
+## Совместимость приглашений
+
+`InvitationPreview.description` — явно публичное nullable-поле. Профили,
+чужие ответы и переписка остаются вне preview. Новые ссылки используют
+`/i/` и 22-символьный токен; прежние 43-символьные токены и публичный путь
+поддерживаются. Пути JSON API не меняются. Серверные HTML/Open Graph и статическая
+картинка обслуживаются web-обработчиком и описаны в [backend README](../backend/README.md).

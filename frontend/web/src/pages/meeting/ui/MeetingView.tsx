@@ -23,7 +23,7 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
           <h1>Переписка закрыта</h1>
           <p className="muted">Для доступа нужен сохранённый ответ «Приду».</p>
           {view.invitation ? (
-            <Link className="button primary" to={`/invitations/${view.invitation}`}>
+            <Link className="button primary" to={`/i/${view.invitation}`}>
               Открыть приглашение
             </Link>
           ) : (

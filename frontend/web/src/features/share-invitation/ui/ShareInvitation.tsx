@@ -22,7 +22,8 @@ export const ShareInvitation = ({ id }: ShareInvitationProps) => {
       <Dialog open={action.open} title="Приглашение для друзей" onClose={action.close}>
         <div className="stack">
           <p className="muted">
-            По ссылке видны дата и место. Переписка откроется после ответа «Приду».
+            По ссылке видны детали и описание встречи. Переписка откроется после ответа
+            «Приду».
           </p>
           {action.query.isPending && <p role="status">Получаем ссылку…</p>}
           {action.query.error && (

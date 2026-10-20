@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { MeetingTimeFields } from '@/entities/meeting/ui/MeetingTimeFields';
 import type { MeetingDraft } from '@/entities/meeting/model/types';
 
@@ -14,6 +15,8 @@ export const MeetingFields = ({
   disabled = false,
   errors = {},
 }: MeetingFieldsProps) => {
+  const descriptionHint = useId();
+
   return (
     <fieldset className="form-fields" disabled={disabled}>
       <label>
@@ -31,15 +34,19 @@ export const MeetingFields = ({
       {errors.title && (
         <span className="error">Проверьте название: от 1 до 120 символов.</span>
       )}
-      <label>
-        Описание <small>необязательно</small>
-        <textarea
-          maxLength={4000}
-          value={value.description}
-          onChange={(event) => onChange({ ...value, description: event.target.value })}
-          placeholder="Что нужно знать друзьям"
-        />
-      </label>
+      <div className="control-field">
+        <label>
+          Описание <small>необязательно</small>
+          <textarea
+            maxLength={4000}
+            aria-describedby={descriptionHint}
+            value={value.description}
+            onChange={(event) => onChange({ ...value, description: event.target.value })}
+            placeholder="Что нужно знать друзьям"
+          />
+        </label>
+        <small id={descriptionHint}>Описание увидят все, у кого есть приглашение.</small>
+      </div>
       <MeetingTimeFields
         value={value}
         onChange={onChange}

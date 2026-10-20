@@ -10,9 +10,11 @@ export const useAuthReturn = () => {
   const [failed, setFailed] = useState(false);
   const token = params.get('token');
   const invited =
-    params.get('kind') === 'invitation' && token && /^[A-Za-z0-9_-]{43}$/.test(token);
+    params.get('kind') === 'invitation' &&
+    token &&
+    /^([A-Za-z0-9_-]{22}|[A-Za-z0-9_-]{43})$/.test(token);
 
-  const target = invited ? `/invitations/${token}` : '/meetings';
+  const target = invited ? `/i/${token}` : '/meetings';
   const error = params.get('auth_error');
   useEffect(() => {
     const controller = new AbortController();

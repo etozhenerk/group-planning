@@ -37,6 +37,7 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 200, previewResponse{
 		MeetingID:      preview.MeetingID,
 		Title:          preview.Title,
+		Description:    optionalString(preview.Description),
 		StartsAt:       preview.StartsAt,
 		Timezone:       preview.Timezone,
 		Place:          optionalString(preview.Place),
