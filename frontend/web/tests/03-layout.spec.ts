@@ -6,6 +6,7 @@ for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Кто придёт');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(36, 37, 42)');
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'К содержимому' })).toBeFocused();
@@ -14,9 +15,11 @@ for (const width of [320, 390, 768, 1440]) {
       fullPage: true,
     });
     await login(page, 'Саша');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(36, 37, 42)');
     const created = await apiCreate(page, `Раскладка ${width}`);
     await page.goto(`/meetings/${created.meeting.id}`);
     await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(36, 37, 42)');
     const size = await page
       .getByRole('button', { name: 'Отправить сообщение' })
       .boundingBox();
