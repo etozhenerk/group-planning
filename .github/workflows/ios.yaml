@@ -2,9 +2,9 @@ name: iOS
 on:
   push:
     branches: [main]
-    paths: [frontend/ios/**, .github/workflows/ios.yaml]
+    paths: [frontend/ios/**, contracts/fixtures/**, .github/workflows/ios.yaml]
   pull_request:
-    paths: [frontend/ios/**, .github/workflows/ios.yaml]
+    paths: [frontend/ios/**, contracts/fixtures/**, .github/workflows/ios.yaml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,3 +25,5 @@ jobs:
         run: sh frontend/ios/scripts/format.sh --check
       - name: Clean simulator build and analysis
         run: sh frontend/ios/scripts/build.sh
+      - name: Models, transport and session tests
+        run: sh frontend/ios/scripts/test.sh

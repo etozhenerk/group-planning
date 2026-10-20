@@ -2,10 +2,8 @@ import SwiftUI
 
 struct AppRootView: View {
     var body: some View {
-        Text("Somewhere")
-            .font(.largeTitle.weight(.bold))
-            .foregroundStyle(Color("PrimaryText"))
-            .accessibilityAddTraits(.isHeader)
+        BrandWordmark()
+            .padding(24)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("AppBackground").ignoresSafeArea())
     }

@@ -84,5 +84,7 @@ FSD/AST, Prettier и Vitest; `npm run web:build` и `web:test:e2e` провер�
 `npm run agent:check` проверяет обвязку и документы. Реальный Яндекс ID
 отложен; fake-provider используется только в тестах. Основа iOS имеет строгий
 swift-format и clean/build/analyze для симулятора через `scripts/build.sh`.
-Её API и экраны, БД и Android ещё не подключены.
+Swift Testing проверяет её API-модели, URLSession, Keychain и владельцев
+состояния через `scripts/test.sh` на отдельном симуляторе. Экраны iOS,
+БД и Android ещё не подключены.
 Подробные команды — в локальных инструкциях приложений.
