@@ -112,10 +112,11 @@ RSVP, настройки, состав и чат. Они проверены че
 `npm run web:build`, `npm run web:test:e2e`; результаты — в
 [отчёте](openspec/changes/gathering-activity-feed/web-verification.md).
 Компоненты и функции оформлены через `const`, стиль TS/TSX/CSS и Go
-проверяется командами проекта и в CI. Следующий клиент — iOS, затем Android.
+проверяется командами проекта и в CI. Добавлена [основа iOS](frontend/ios/README.md):
+SwiftUI, iOS 17, закреплённый Xcode, swift-format и simulator-сборка в отдельном CI.
+Подключение API и пользовательские экраны iOS — следующие задачи; далее Android.
 Runtime не принимает подставной user ID.
 Backend, web, iOS и Android имеют отдельные задачи.
-Версии, команды сборки, тесты и CI Go/web закреплены; мобильные клиенты
-ещё требуют инициализации.
+Версии и команды Go/web/iOS закреплены; Android ещё требует инициализации.
 Открытые решения собраны в [документе](docs/product/open-questions.md).
 Это самостоятельный процесс пет-проекта, без AIFF.

@@ -1,0 +1,27 @@
+name: iOS
+on:
+  push:
+    branches: [main]
+    paths: [frontend/ios/**, .github/workflows/ios.yaml]
+  pull_request:
+    paths: [frontend/ios/**, .github/workflows/ios.yaml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select pinned Xcode
+        run: echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Swift format and lint
+        run: sh frontend/ios/scripts/format.sh --check
+      - name: Clean simulator build and analysis
+        run: sh frontend/ios/scripts/build.sh
