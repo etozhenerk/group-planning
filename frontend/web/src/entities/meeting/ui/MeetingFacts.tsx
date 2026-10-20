@@ -1,5 +1,5 @@
 import { CalendarDays, MapPin } from 'lucide-react';
-import { timeLabel } from '@/shared/lib/time';
+import { timeLabel, timezoneLabel } from '@/shared/lib/time';
 
 export type MeetingFactsProps = {
   startsAt: string | null;
@@ -17,7 +17,7 @@ export const MeetingFacts = ({ startsAt, timezone, place }: MeetingFactsProps) =
         </dt>
         <dd>
           <span>{timeLabel(startsAt, timezone)}</span>
-          <small>{timezone}</small>
+          <small>{timezoneLabel(timezone)}</small>
         </dd>
       </div>
       <div>

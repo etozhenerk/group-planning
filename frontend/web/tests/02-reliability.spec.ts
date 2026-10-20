@@ -7,6 +7,7 @@ import {
   csrf,
   inviteLink,
   login,
+  setDate,
   writeHeaders,
 } from '@tests/helpers';
 
@@ -35,7 +36,8 @@ test('draft survives an error, back warns and dialog focus returns', async ({ pa
   await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
     'Черновик встречи',
   );
-  await page.getByLabel('Дата и время', { exact: true }).fill('2026-10-24T19:00');
+  await setDate(page, '24.10.2026');
+  await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
   const trigger = page.getByRole('button', { name: 'Пригласить друзей', exact: true });

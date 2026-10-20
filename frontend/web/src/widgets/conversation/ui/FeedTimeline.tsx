@@ -1,5 +1,3 @@
-import type { Meeting } from '@/entities/meeting';
-import { MeetingHero } from '@/widgets/conversation/ui/MeetingHero';
 import type { Session } from '@/entities/session';
 import { useConversation } from '@/entities/meeting';
 import { Status } from '@/shared/ui/status';
@@ -8,9 +6,9 @@ import { SendMessage } from '@/features/send-message';
 import { useViewport } from '@/widgets/conversation/model/useViewport';
 import { FeedRecord } from '@/widgets/conversation/ui/FeedRecord';
 
-export type FeedTimelineProps = { id: string; session: Session; meeting: Meeting };
+export type FeedTimelineProps = { id: string; session: Session };
 
-export const FeedTimeline = ({ id, session, meeting }: FeedTimelineProps) => {
+export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
   const query = useConversation(id, session.user.id);
   const viewport = useViewport(query.data?.entries ?? [], query.loadOlder);
 
@@ -41,7 +39,6 @@ export const FeedTimeline = ({ id, session, meeting }: FeedTimelineProps) => {
   return (
     <>
       <div className="feed-scroll" ref={viewport.ref} onScroll={viewport.scroll}>
-        <MeetingHero meeting={meeting} />
         {query.data.hasOlder && (
           <button
             className="history-button"

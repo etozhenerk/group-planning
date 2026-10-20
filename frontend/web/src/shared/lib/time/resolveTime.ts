@@ -7,7 +7,18 @@ export const resolveTime = (
   zone: string,
   choice: TimeChoice = '',
 ): string => {
-  const plain = Temporal.PlainDateTime.from(local);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,9})?)?$/.test(local)) {
+    throw new Error('Выберите дату и укажите время встречи.');
+  }
+
+  let plain: Temporal.PlainDateTime;
+
+  try {
+    plain = Temporal.PlainDateTime.from(local, { overflow: 'reject' });
+  } catch {
+    throw new Error('Проверьте дату и время встречи.');
+  }
+
   const earlier = plain.toZonedDateTime(zone, { disambiguation: 'earlier' });
   const later = plain.toZonedDateTime(zone, { disambiguation: 'later' });
 

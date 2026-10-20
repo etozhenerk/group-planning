@@ -1,4 +1,4 @@
-import { Link2, Share2 } from 'lucide-react';
+import { Share } from 'lucide-react';
 import { Dialog } from '@/shared/ui/dialog';
 import { errorText } from '@/shared/api';
 import { useShare } from '@/features/share-invitation/model/useShare';
@@ -10,8 +10,13 @@ export const ShareInvitation = ({ id }: ShareInvitationProps) => {
 
   return (
     <>
-      <button type="button" onClick={action.show}>
-        <Link2 aria-hidden="true" size={18} />
+      <button
+        type="button"
+        className="share-invitation-trigger"
+        onClick={action.show}
+        aria-label="Пригласить друзей"
+      >
+        <Share aria-hidden="true" size={20} />
         Пригласить друзей
       </button>
       <Dialog open={action.open} title="Приглашение для друзей" onClose={action.close}>
@@ -41,7 +46,7 @@ export const ShareInvitation = ({ id }: ShareInvitationProps) => {
                 </button>
                 {action.canShare && (
                   <button type="button" onClick={action.share}>
-                    <Share2 size={18} aria-hidden="true" />
+                    <Share size={18} aria-hidden="true" />
                     Поделиться
                   </button>
                 )}

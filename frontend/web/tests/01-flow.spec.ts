@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { inviteLink, login, writeHeaders } from '@tests/helpers';
+import { inviteLink, login, setDate, writeHeaders } from '@tests/helpers';
 import { responseSchema } from '@/shared/api';
 
 test('create, retry, invite, join, chat and revoke across two profiles', async ({
@@ -29,7 +29,8 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   });
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill('Суббота без спешки');
-  await page.getByLabel('Дата и время', { exact: true }).fill('2026-10-24T19:00');
+  await setDate(page, '24.10.2026');
+  await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
@@ -75,7 +76,9 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
-  await expect(page.getByText('Участников: 2', { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Компания · 2', exact: true }),
+  ).toBeVisible();
   await page.getByLabel('Сообщение', { exact: true }).fill('Принесу настолки!');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toBeVisible({
@@ -86,11 +89,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await friend.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByText(plain, { exact: true })).toBeVisible({ timeout: 10_000 });
   expect(await page.locator('.message-bubble img').count()).toBe(0);
-  await friend.getByRole('button', { name: 'Информация о встрече' }).click();
-  await friend
-    .getByRole('dialog')
-    .getByRole('button', { name: 'Возможно', exact: true })
-    .click();
+  await friend.getByRole('button', { name: 'Возможно', exact: true }).click();
   await expect(friend.getByRole('heading', { name: 'Переписка закрыта' })).toBeVisible();
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toHaveCount(0);
   const old = await friend.request.put(

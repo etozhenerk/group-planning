@@ -26,7 +26,34 @@
   flex-shrink: 0;
 }
 
-.conversation-header strong {
+.conversation-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 44px;
+}
+
+.header-share {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-share > .share-invitation-trigger {
+  height: 44px;
+  line-height: 1;
+}
+
+.conversation-header > button svg,
+.conversation-header > .button svg,
+.header-share > .share-invitation-trigger svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.conversation-header h1 {
+  margin: 0;
   display: block;
   line-height: 1.25;
   overflow: hidden;
@@ -38,14 +65,15 @@
 
 .conversation-header small {
   display: block;
-  margin-top: 4px;
+  margin: 0;
+  line-height: 1.25;
 }
 
 .conversation-header > .button {
   display: none;
 }
 
-.header-share button {
+.header-share > .share-invitation-trigger {
   padding: 10px 12px;
   font-size: 12px;
 }
@@ -58,34 +86,6 @@
   padding: 8px 28px 20px;
   scrollbar-gutter: stable;
   overscroll-behavior: contain;
-}
-
-.meeting-hero {
-  max-width: 690px;
-  margin: 0 auto 24px;
-  padding: 16px 0 8px;
-}
-
-.meeting-hero h1 {
-  font-size: 27px;
-  margin-bottom: 10px;
-  overflow-wrap: anywhere;
-}
-
-.meeting-hero p {
-  margin-bottom: 16px;
-}
-
-.meeting-hero .meeting-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.meeting-hero .meeting-facts dd small {
-  display: none;
 }
 
 .feed-timeline {
@@ -301,7 +301,7 @@
     display: inline-flex;
   }
 
-  .conversation-header strong {
+  .conversation-header h1 {
     font-size: 16px;
   }
 
@@ -309,28 +309,19 @@
     font-size: 12px;
   }
 
-  .header-share button {
+  .header-share > .share-invitation-trigger {
     width: 44px;
     font-size: 0;
     padding: 10px;
   }
 
-  .header-share button svg {
+  .header-share > .share-invitation-trigger svg {
     width: 20px;
   }
 
   .feed-scroll {
     padding: 8px 18px 18px;
     scrollbar-gutter: auto;
-  }
-
-  .meeting-hero h1 {
-    font-size: 25px;
-  }
-
-  .meeting-hero .meeting-facts {
-    gap: 10px;
-    font-size: 12px;
   }
 
   .composer-area {

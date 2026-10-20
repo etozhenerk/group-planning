@@ -1,12 +1,12 @@
 import type { Meeting, MeetingDraft, MeetingInput } from '@/entities/meeting/model/types';
-import { editLocalTime, resolveTime } from '@/shared/lib/time';
+import { browserTimezone, editLocalTime, resolveTime } from '@/shared/lib/time';
 
 export const emptyDraft = (): MeetingDraft => {
   return {
     title: '',
     description: '',
     localTime: '',
-    timezone: 'Europe/Moscow',
+    timezone: browserTimezone(),
     place: '',
     timeChoice: '',
   };

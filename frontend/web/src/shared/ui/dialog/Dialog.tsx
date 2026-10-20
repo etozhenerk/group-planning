@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useId } from 'react';
 import { X } from 'lucide-react';
+import { preservePopupEscape } from '@/shared/ui/dialog/preservePopupEscape';
 import { useDialog } from '@/shared/ui/dialog/useDialog';
 
 export type DialogProps = {
@@ -15,7 +16,12 @@ export const Dialog = ({ open, title, onClose, children }: DialogProps) => {
   const heading = useId();
 
   return (
-    <dialog ref={ref} aria-labelledby={heading} onCancel={onClose}>
+    <dialog
+      ref={ref}
+      aria-labelledby={heading}
+      onCancel={onClose}
+      onKeyDownCapture={preservePopupEscape}
+    >
       <div className="dialog-heading">
         <h2 id={heading}>{title}</h2>
         <button

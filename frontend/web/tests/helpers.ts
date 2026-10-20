@@ -10,10 +10,43 @@ export const login = async (page: Page, who: 'Саша' | 'Лена') => {
   await expect(page).toHaveURL(/\/meetings$/);
 };
 
+export const expectDate = async (page: Page, value: string) => {
+  const input = page.getByRole('combobox', { name: 'Дата', exact: true });
+  await expect
+    .poll(async () => (await input.inputValue()).replace(/[\u2066-\u2069]/g, ''))
+    .toBe(value);
+};
+
+export const setDate = async (page: Page, value: string) => {
+  const input = page.getByRole('combobox', { name: 'Дата', exact: true });
+  const platform = await page.evaluate(() => {
+    const browserNavigator = navigator as Navigator & {
+      userAgentData?: { platform: string };
+    };
+
+    return browserNavigator.userAgentData?.platform ?? navigator.platform;
+  });
+
+  const selectAll = /^Mac/i.test(platform) ? 'Meta+a' : 'Control+a';
+  const [day = '', month = '', year = ''] = value.split('.');
+  await input.press(selectAll);
+  await input.press('ArrowLeft');
+  await input.pressSequentially(String(Number(day)));
+  await input.press(selectAll);
+  await input.press('ArrowRight');
+  await input.pressSequentially(String(Number(month)));
+  await input.press(selectAll);
+  await input.press('ArrowRight');
+  await input.press('ArrowRight');
+  await input.pressSequentially(year);
+  await expectDate(page, value);
+};
+
 export const create = async (page: Page, title: string) => {
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill(title);
-  await page.getByLabel('Дата и время', { exact: true }).fill('2026-10-24T19:00');
+  await setDate(page, '24.10.2026');
+  await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();

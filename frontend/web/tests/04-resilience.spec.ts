@@ -1,5 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { apiCreate, apiMeeting, csrf, login, writeHeaders } from '@tests/helpers';
+import {
+  apiCreate,
+  apiMeeting,
+  csrf,
+  expectDate,
+  login,
+  writeHeaders,
+} from '@tests/helpers';
 
 test('an offline message keeps its text and can be retried after reconnecting', async ({
   page,
@@ -97,6 +104,15 @@ test('editing text preserves seconds and the selected DST instant', async ({ pag
   await page.goto(`/meetings/${id}`);
   await page.getByRole('button', { name: 'Изменить настройки', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Настройки встречи' });
+  await expectDate(page, '01.11.2026');
+  await expect(dialog.getByRole('textbox', { name: 'Время', exact: true })).toHaveValue(
+    '01:30',
+  );
+  await dialog.getByRole('button', { name: 'Календарь', exact: true }).click();
+  await expect(page.locator('.meeting-date-popup')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeVisible();
+  await expect(page.locator('.meeting-date-popup')).not.toBeVisible();
   await dialog.getByLabel(/^Описание/).fill('Описание без изменения даты');
   await dialog.getByRole('button', { name: 'Сохранить изменения' }).click();
   await expect(dialog).not.toBeVisible();

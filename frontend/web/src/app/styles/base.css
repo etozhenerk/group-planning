@@ -32,12 +32,12 @@ button {
   cursor: pointer;
 }
 
-button:disabled {
+button:disabled:not(.g-button) {
   cursor: wait;
   opacity: 0.65;
 }
 
-button,
+button:not(.g-button),
 .button {
   min-height: 44px;
   border: 0;
@@ -105,7 +105,7 @@ img {
   display: block;
 }
 
-input,
+input:not(.g-text-input__control),
 textarea,
 select {
   width: 100%;

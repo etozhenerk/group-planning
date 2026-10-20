@@ -40,7 +40,12 @@ export const MeetingFields = ({
           placeholder="Что нужно знать друзьям"
         />
       </label>
-      <MeetingTimeFields value={value} onChange={onChange} errors={errors} />
+      <MeetingTimeFields
+        value={value}
+        onChange={onChange}
+        errors={errors}
+        disabled={disabled}
+      />
       <label>
         Место <small>можно добавить позже</small>
         <input

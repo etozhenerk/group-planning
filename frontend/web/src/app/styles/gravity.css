@@ -1,0 +1,93 @@
+.somewhere-theme {
+  --g-font-family-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --g-text-body-1-font-size: 15px;
+  --g-text-body-2-font-size: 15px;
+  --g-color-base-background: var(--background);
+  --g-color-base-modal: var(--surface);
+  --g-color-base-float: var(--surface);
+  --g-color-base-float-hover: var(--message);
+  --g-color-base-brand: var(--accent);
+  --g-color-base-brand-hover: var(--message-own);
+  --g-color-base-selection: #c5bbd633;
+  --g-color-base-selection-hover: #c5bbd64d;
+  --g-color-text-primary: var(--text);
+  --g-color-text-secondary: var(--muted);
+  --g-color-text-hint: var(--muted);
+  --g-color-text-brand: var(--accent);
+  --g-color-text-brand-contrast: var(--text-own);
+  --g-color-line-generic: var(--line);
+  --g-color-line-focus: var(--focus);
+  --g-border-radius-s: 8px;
+  --g-border-radius-m: 10px;
+  --g-border-radius-l: 12px;
+  --g-border-radius-xl: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.control-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.control-field .g-text-input {
+  --g-text-input-background-color: var(--navigation);
+  --g-text-input-border-radius: 12px;
+  width: 100%;
+}
+
+.control-field .g-text-input__additional-content {
+  color: var(--muted);
+}
+
+.time-fields {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.time-zone-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.meeting-date-popup {
+  --g-popup-border-radius: 14px;
+  max-width: calc(100vw - 16px);
+}
+
+/* The inline popup stays inside native dialog top layers. */
+
+.control-field .g-date-date-picker__popup-anchor {
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* The date trigger and time icon share the same leading slot. */
+
+.somewhere-theme .control-field .g-text-input__additional-content_placement_start,
+.somewhere-theme
+  .control-field
+  .g-date-date-picker__field
+  .g-text-input__additional-content_placement_end {
+  order: -1;
+  flex: 0 0 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+.somewhere-theme .control-field .g-text-input__control {
+  padding-inline: 0 12px;
+}
+
+.somewhere-theme .control-field .g-text-input__clear {
+  margin-inline-end: 8px;
+}
+
+.control-field .g-date-date-picker {
+  display: block;
+  width: 100%;
+}

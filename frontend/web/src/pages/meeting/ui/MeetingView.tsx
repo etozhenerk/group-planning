@@ -65,30 +65,32 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
           <Link to="/meetings" className="button icon ghost" aria-label="К моим встречам">
             <ArrowLeft aria-hidden="true" size={20} />
           </Link>
-          <div className="grow">
-            <strong>{query.data.title}</strong>
-            <small>Участников: {query.data.participantCount}</small>
+          <div className="conversation-title grow">
+            <h1>{query.data.title}</h1>
           </div>
           {query.data.organizerId === session.user.id && (
             <div className="header-share">
               <ShareInvitation id={id} />
             </div>
           )}
-          <button
-            className="icon ghost"
-            type="button"
-            onClick={view.details.show}
-            aria-label="Информация о встрече"
-          >
-            <Info aria-hidden="true" size={22} />
-          </button>
+          {!view.wide && (
+            <button
+              className="icon ghost"
+              type="button"
+              onClick={view.details.show}
+              aria-label="Информация о встрече"
+            >
+              <Info aria-hidden="true" size={20} />
+            </button>
+          )}
         </header>
-        <FeedTimeline id={id} session={session} meeting={query.data} />
+        <FeedTimeline id={id} session={session} />
       </main>
       <MeetingDetails
         meeting={query.data}
         session={session}
         open={view.details.open}
+        wide={view.wide}
         close={view.details.close}
       />
     </Workspace>

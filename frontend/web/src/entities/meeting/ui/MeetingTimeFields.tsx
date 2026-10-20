@@ -1,82 +1,55 @@
 import type { MeetingDraft } from '@/entities/meeting/model/types';
+import { useMeetingTimeFields } from '@/entities/meeting/model/useMeetingTimeFields';
+import { DateInput, TimeInput } from '@/shared/ui/date-time';
+import { SelectInput } from '@/shared/ui/select';
 
 export type MeetingTimeFieldsProps = {
   value: MeetingDraft;
   onChange: (value: MeetingDraft) => void;
   errors: Record<string, string>;
+  disabled?: boolean;
 };
 
 export const MeetingTimeFields = ({
   value,
   onChange,
   errors,
+  disabled = false,
 }: MeetingTimeFieldsProps) => {
+  const fields = useMeetingTimeFields(value, onChange);
+
   return (
-    <>
+    <div className="time-fields">
       <div className="form-time">
-        <label>
-          Дата и время
-          <input
-            type="datetime-local"
-            required
-            value={value.localTime}
-            onChange={(event) =>
-              onChange({ ...value, localTime: event.target.value, timeChoice: '' })
-            }
-            aria-invalid={!!errors.starts_at}
-          />
-        </label>
-        <label>
-          Часовой пояс
-          <select
-            value={value.timezone}
-            onChange={(event) =>
-              onChange({ ...value, timezone: event.target.value, timeChoice: '' })
-            }
-          >
-            {![
-              'Europe/Moscow',
-              'Asia/Yekaterinburg',
-              'Asia/Novosibirsk',
-              'Europe/Berlin',
-              'America/New_York',
-              'UTC',
-            ].includes(value.timezone) && (
-              <option value={value.timezone}>{value.timezone}</option>
-            )}
-            <option value="Europe/Moscow">Москва · UTC+3</option>
-            <option value="Asia/Yekaterinburg">Екатеринбург · UTC+5</option>
-            <option value="Asia/Novosibirsk">Новосибирск · UTC+7</option>
-            <option value="Europe/Berlin">Берлин</option>
-            <option value="America/New_York">Нью-Йорк</option>
-            <option value="UTC">UTC</option>
-          </select>
-        </label>
+        <DateInput
+          value={fields.date}
+          timezone={value.timezone}
+          onChange={fields.changeDate}
+          invalid={!!errors.starts_at}
+          disabled={disabled}
+        />
+        <TimeInput
+          value={fields.time}
+          onChange={fields.changeTime}
+          invalid={!!errors.starts_at}
+          disabled={disabled}
+        />
       </div>
-      {errors.starts_at && <span className="error">Проверьте время и часовой пояс.</span>}
+      <p className="time-zone-note">Время встречи · {fields.zone}</p>
+      {errors.starts_at && <span className="error">Проверьте дату и время встречи.</span>}
       {errors.ambiguous && (
-        <label>
-          Повторяющееся время
-          <select
-            value={value.timeChoice}
-            onChange={(event) =>
-              onChange({
-                ...value,
-                timeChoice:
-                  event.target.value === 'later'
-                    ? 'later'
-                    : event.target.value === 'earlier'
-                      ? 'earlier'
-                      : '',
-              })
-            }
-          >
-            <option value="">Выберите вариант</option>
-            <option value="earlier">Ранний вариант — до перевода часов</option>
-            <option value="later">Поздний вариант — после перевода часов</option>
-          </select>
-        </label>
+        <SelectInput
+          label="Повторяющееся время"
+          value={value.timeChoice}
+          onChange={fields.changeChoice}
+          placeholder="Выберите вариант"
+          options={[
+            { value: 'earlier', content: 'Ранний вариант — до перевода часов' },
+            { value: 'later', content: 'Поздний вариант — после перевода часов' },
+          ]}
+          disabled={disabled}
+        />
       )}
-    </>
+    </div>
   );
 };
