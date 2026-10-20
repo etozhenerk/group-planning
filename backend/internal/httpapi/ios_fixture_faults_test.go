@@ -14,11 +14,18 @@ type iosFixtureFaults struct {
 	posts      int
 	keys       map[string]bool
 	ids        map[string]bool
+	rsvpPosts  int
+	rsvpKeys   map[string]bool
 }
 
 func (f *iosFixtureFaults) handler(api http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		scenario := r.Header.Get("X-Somewhere-Test-Scenario")
+		if scenario == "invite-error" && r.Method == http.MethodPut {
+			f.respondLost(w, r, api)
+			return
+		}
+
 		if scenario == "list-error" && r.Method == http.MethodGet && r.URL.Path == "/api/v1/meetings" {
 			f.mu.Lock()
 			fail := !f.listFailed
@@ -69,10 +76,22 @@ func (f *iosFixtureFaults) handler(api http.Handler) http.Handler {
 	})
 }
 
-func (f *iosFixtureFaults) verify(t *testing.T) {
+func (f *iosFixtureFaults) verify(t *testing.T, scope string) {
 	t.Helper()
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if f.rsvpPosts < 2 || len(f.rsvpKeys) != 1 || f.rsvpKeys[""] {
+		t.Errorf("RSVP retry: posts=%d, keys=%d", f.rsvpPosts, len(f.rsvpKeys))
+	}
+
+	if scope == "invitation" {
+		return
+	}
+
+	if scope != "" {
+		t.Fatalf("unknown fixture scope %q", scope)
+	}
+
 	if !f.listFailed {
 		t.Error("UI did not exercise list error/retry")
 	}
@@ -80,4 +99,29 @@ func (f *iosFixtureFaults) verify(t *testing.T) {
 	if f.posts < 2 || len(f.keys) != 1 || f.keys[""] || len(f.ids) != 1 {
 		t.Errorf("create retry: posts=%d, keys=%d, meeting IDs=%d", f.posts, len(f.keys), len(f.ids))
 	}
+}
+
+func (f *iosFixtureFaults) respondLost(w http.ResponseWriter, r *http.Request, api http.Handler) {
+	reply := httptest.NewRecorder()
+	api.ServeHTTP(reply, r)
+	f.mu.Lock()
+	f.rsvpPosts++
+	first := f.rsvpPosts == 1
+	if f.rsvpKeys == nil {
+		f.rsvpKeys = map[string]bool{}
+	}
+
+	f.rsvpKeys[r.Header.Get("Idempotency-Key")] = true
+	f.mu.Unlock()
+	if first && reply.Code == http.StatusOK {
+		http.Error(w, "fixture response lost after RSVP commit", http.StatusServiceUnavailable)
+		return
+	}
+
+	for name, values := range reply.Header() {
+		w.Header()[name] = values
+	}
+
+	w.WriteHeader(reply.Code)
+	_, _ = w.Write(reply.Body.Bytes())
 }

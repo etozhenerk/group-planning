@@ -5,6 +5,13 @@ sh scripts/check-toolchain.sh
 . ./Config/toolchain.env
 
 somewhere_go=${GO_BIN:-go}
+somewhere_filter=
+somewhere_scope=
+case "${1:-all}" in
+    all) ;;
+    invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|invitation]\n' >&2; exit 2 ;;
+esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
 somewhere_fixture=
@@ -28,7 +35,7 @@ trap 'exit 143' TERM
 somewhere_prepare_simulator
 
 (cd ../../backend && "$somewhere_go" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
-SOMEWHERE_IOS_FIXTURE=1 SOMEWHERE_IOS_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
+SOMEWHERE_IOS_FIXTURE_SCOPE="$somewhere_scope" SOMEWHERE_IOS_FIXTURE=1 SOMEWHERE_IOS_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestIOSFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
 somewhere_fixture=$!
@@ -60,4 +67,4 @@ xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -sche
     -derivedDataPath .build/UITestDerivedData \
     -resultBundlePath ".build/UIResults-$(date -u +%Y%m%dT%H%M%S)-$$.xcresult" \
     -parallel-testing-enabled NO \
-    CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building
+    CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building ${somewhere_filter:+"$somewhere_filter"}

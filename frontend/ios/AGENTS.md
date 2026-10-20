@@ -13,7 +13,10 @@ somewhere для iOS и его платформенные интеграции.
 iOS 17.0, SDK iOS Simulator 26.0. Создана схема `Somewhere` без сторонних пакетов;
 приложение показывает знак слева и название `somewhere`. Реализованы API-адаптер,
 Codable-модели, Keychain-сессия, онбординг, личный список и создание с черновиком.
-Реальный вход отложен, приглашение/RSVP и чат ещё не подключены. Устройство данных — в [ios-data.md](../../openspec/changes/gathering-activity-feed/ios-data.md).
+Реальный вход отложен. Добавлены приглашение, нативный Share, RSVP, состав
+и чтение последних сообщений с отзывом доступа. Полная лента/отправка/история —
+следующая задача. Путь и ограничения ссылок — в
+[ios-invitation.md](../../openspec/changes/gathering-activity-feed/ios-invitation.md). Устройство данных — в [ios-data.md](../../openspec/changes/gathering-activity-feed/ios-data.md).
 Команды и ограничения — в [README.md](README.md).
 
 ## Оформление Swift

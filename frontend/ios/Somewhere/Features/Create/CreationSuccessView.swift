@@ -22,6 +22,7 @@ struct CreationSuccessView: View {
                         .enabled
                     ).foregroundStyle(AppPalette.muted)
                 }
+                InvitationShareButton(url: result.invitationURL, title: result.meeting.title)
                 ActionButton(title: "Открыть встречу", action: open)
                 ActionButton(title: "К моим встречам", primary: false, action: close)
             }.padding(24)

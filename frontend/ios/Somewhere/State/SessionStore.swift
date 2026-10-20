@@ -136,6 +136,12 @@ final class SessionStore {
         }
     }
 
+    func updateMeetingAccess(_ id: UUID, allowed: Bool) {
+        if allowed && !privateData.denied.contains(id) { return }
+        for request in inFlight.values where request.meetingID == id { request.cancel() }
+        if allowed { privateData.allow(id) } else { privateData.revoke(id) }
+    }
+
     func logout() async throws {
         let old = credential
         try await invalidate()
