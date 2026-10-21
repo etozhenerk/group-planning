@@ -10,7 +10,8 @@ somewhere_scope=
 case "${1:-all}" in
     all) ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|invitation]\n' >&2; exit 2 ;;
+    feed) somewhere_filter=-only-testing:SomewhereUITests/FeedUITests; somewhere_scope=feed ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|invitation|feed]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

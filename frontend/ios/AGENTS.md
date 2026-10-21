@@ -14,8 +14,10 @@ iOS 17.0, SDK iOS Simulator 26.0. Создана схема `Somewhere` без �
 приложение показывает знак слева и название `somewhere`. Реализованы API-адаптер,
 Codable-модели, Keychain-сессия, онбординг, личный список и создание с черновиком.
 Реальный вход отложен. Добавлены приглашение, нативный Share, RSVP, состав
-и чтение последних сообщений с отзывом доступа. Полная лента/отправка/история —
-следующая задача. Путь и ограничения ссылок — в
+и лента с отправкой, историей и отзывом доступа; настройки организатора
+сохраняют форму при конфликте. Сценарий и ограничения — в
+[ios-feed.md](../../openspec/changes/gathering-activity-feed/ios-feed.md).
+Путь и ограничения ссылок — в
 [ios-invitation.md](../../openspec/changes/gathering-activity-feed/ios-invitation.md). Устройство данных — в [ios-data.md](../../openspec/changes/gathering-activity-feed/ios-data.md).
 Команды и ограничения — в [README.md](README.md).
 

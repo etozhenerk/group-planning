@@ -4,9 +4,7 @@ struct ParticipantRowView: View {
     let person: Participant
     var body: some View {
         HStack(spacing: 14) {
-            Text(String(person.user.displayName.prefix(1))).font(.headline)
-                .frame(width: 42, height: 42)
-                .background(AppPalette.surface, in: Circle()).accessibilityHidden(true)
+            ParticipantAvatar(user: person.user, size: 40)
             Text(person.user.displayName).font(.body.weight(.medium))
             Spacer(minLength: 10)
             Text(

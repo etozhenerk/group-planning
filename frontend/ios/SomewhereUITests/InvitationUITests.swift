@@ -32,8 +32,13 @@ final class InvitationUITests: XCTestCase {
         add(attachment)
     }
     func choose(_ value: String, confirmation: String, app: XCUIApplication) {
+        if app.buttons["meeting-info-open"].exists && !app.buttons["rsvp-" + value].isHittable {
+            app.buttons["meeting-info-open"].tap()
+        }
         let button = app.buttons["rsvp-" + value]
-        let scroll = app.scrollViews["invitation-screen"].firstMatch
+        let scroll = app.scrollViews[
+            app.scrollViews["meeting-info"].exists ? "meeting-info" : "invitation-screen"
+        ].firstMatch
         for _ in 0..<5 {
             if button.isHittable { break }
             scroll.swipeDown()
@@ -49,10 +54,16 @@ final class InvitationUITests: XCTestCase {
         }
         XCTAssertTrue(save.waitForExistence(timeout: 3))
         save.tap()
+        if value == "going" {
+            let info = app.buttons["meeting-info-open"]
+            XCTAssertTrue(info.waitForExistence(timeout: 10))
+            info.tap()
+        }
         let saved = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "label CONTAINS %@", confirmation),
             object: app.staticTexts["confirmed-rsvp"].firstMatch)
         XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 10), .completed)
+        if value == "going" { app.buttons["meeting-info-close"].tap() }
     }
 
     func testAnonymousColdAndWarmInvitationWithoutPrivateContent() throws {
@@ -83,8 +94,10 @@ final class InvitationUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts[message].exists)
         choose("going", confirmation: "Вы придёте", app: app)
         XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
+        app.buttons["meeting-info-open"].tap()
         XCTAssertEqual(
             app.descendants(matching: .any)["participant-count"].firstMatch.label, "Участники · 2")
+        app.buttons["meeting-info-close"].tap()
         capture("invitation-accepted", app)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)
         XCTAssertFalse(app.staticTexts[message].exists)
@@ -102,7 +115,7 @@ final class InvitationUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts[message].exists)
         choose("going", confirmation: "Вы придёте", app: app)
         XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
-        app.buttons["Закрыть"].tap()
+        app.buttons["feed-back"].tap()
         let card = app.buttons["meeting-card-" + meetingID]
         XCTAssertTrue(card.waitForExistence(timeout: 10))
         card.tap()
@@ -133,6 +146,8 @@ final class InvitationUITests: XCTestCase {
         let card = app.buttons["meeting-card-" + meetingID]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
         card.tap()
+        XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
+        app.buttons["meeting-info-open"].tap()
         let share = app.buttons["share-invitation"]
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         share.tap()

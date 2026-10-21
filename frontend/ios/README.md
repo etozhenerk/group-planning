@@ -5,7 +5,8 @@ SwiftUI-приложение с минимальной iOS 17. Реализов�
 без дубликата. Данные проходят через общий API; TLS и Keychain не заменены
 моками в обычном приложении. Реальный Яндекс ID отложен: «Попробовать» пока
 объясняет, что вход ещё не подключён. Приглашение, Share, RSVP, состав и чтение
-сообщений подключены; полная лента, отправка и история — следующие задачи.
+сообщений подключены. Добавлены полная лента, отправка с повтором, история
+и настройки организатора с обработкой конфликта.
 Сторонних Swift-пакетов нет.
 
 ## Окружение
@@ -44,6 +45,7 @@ sh scripts/build.sh Release
 sh scripts/test.sh
 sh scripts/test-ui.sh
 sh scripts/test-ui.sh invitation
+sh scripts/test-ui.sh feed
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет
@@ -56,7 +58,8 @@ sh scripts/test-ui.sh invitation
 
 Результаты и снимки: [основа приложения](../../openspec/changes/gathering-activity-feed/ios-bootstrap-verification.md),
 [онбординг, список и создание](../../openspec/changes/gathering-activity-feed/ios-entry-verification.md),
-[приглашение, Share и RSVP](../../openspec/changes/gathering-activity-feed/ios-invitation-verification.md).
+[приглашение, Share и RSVP](../../openspec/changes/gathering-activity-feed/ios-invitation-verification.md),
+[лента и настройки](../../openspec/changes/gathering-activity-feed/ios-feed-verification.md).
 
 Открой `Somewhere.xcodeproj`, выбери схему `Somewhere` и доступный iPhone
 с iOS 17 или новее, затем Run. Локально доступен iPhone 17 / iOS 26.0.
@@ -87,7 +90,11 @@ UI-тесты проверяют пустое состояние, ошибку/�
 Go fixture дополнительно проверяет ключи и ID ответов. Набор `invitation`
 запускает только четыре проверки приглашения: публичный экран/ссылки, три
 ответа/новая сессия, повтор после потерянного ответа и системный Share.
-Он проверяет RSVP-ключ; полный прогон также требует создание с одним ID. Результат и снимки —
+Он проверяет RSVP-ключ. Набор `feed` проверяет чтение истории без скачка позиции,
+отправку с потерянным ответом и явным повтором, фон/возврат, черновик, информацию,
+конфликт настроек и повторное редактирование. Go fixture проверяет один ключ
+и ID сообщения, чтение истории и успешный PATCH после конфликта.
+Полный прогон включает все 11 UI-тестов и проверки обеих fixtures. Результат и снимки —
 `.build/UIResults-*.xcresult`. Скрипт завершает только свои процессы; в CI
 он также удаляет свой симулятор. Уже запущенный `web:demo` и его данные не затрагиваются.
 

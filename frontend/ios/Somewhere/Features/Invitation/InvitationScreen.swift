@@ -11,6 +11,38 @@ struct InvitationScreen: View {
     }
 
     var body: some View {
+        Group {
+            if owner.canAccess, let value = owner.preview, let session = owner.session,
+                !session.privateData.denied.contains(value.meetingID)
+            {
+                MeetingFeedScreen(id: value.meetingID, session: session, invitation: owner)
+            } else {
+                invitation
+            }
+        }
+        .refreshable { await owner.load() }
+        .task(id: phase) {
+            guard phase == .active else {
+                owner.suspend()
+                return
+            }
+            if !owner.canAccess { await owner.load() }
+            while !Task.isCancelled, !owner.unavailable {
+                do { try await Task.sleep(for: .seconds(5)) } catch { return }
+                if (!owner.canAccess
+                    || owner.preview.map {
+                        owner.session?.privateData.denied.contains($0.meetingID) == true
+                    } == true)
+                    && !owner.loading && !owner.saving && owner.pending == nil
+                    && owner.choice == owner.answer
+                {
+                    await owner.load()
+                }
+            }
+        }
+        .onDisappear { owner.cancel() }
+    }
+    private var invitation: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 28) {
                 if let value = owner.preview {
@@ -22,12 +54,6 @@ struct InvitationScreen: View {
                         OrganizerInvitationView(owner: owner)
                     } else {
                         RSVPFormView(owner: owner)
-                    }
-                    if owner.canAccess, let session = owner.session,
-                        !session.privateData.denied.contains(value.meetingID)
-                    {
-                        MeetingPeopleView(id: value.meetingID, session: session)
-                        ConversationPreviewView(id: value.meetingID, session: session)
                     }
                     if let problem = owner.problem {
                         Text(problem).foregroundStyle(AppPalette.error)
@@ -46,22 +72,6 @@ struct InvitationScreen: View {
         }
         .background(AppPalette.background).navigationTitle("Встреча")
         .navigationBarTitleDisplayMode(.inline).accessibilityIdentifier("invitation-screen")
-        .refreshable { await owner.load() }
-        .task(id: phase) {
-            guard phase == .active else {
-                owner.suspend()
-                return
-            }
-            await owner.load()
-            while !Task.isCancelled, !owner.unavailable {
-                do { try await Task.sleep(for: .seconds(5)) } catch { return }
-                if !owner.loading && !owner.saving && owner.pending == nil
-                    && owner.choice == owner.answer
-                {
-                    await owner.load()
-                }
-            }
-        }
-        .onDisappear { owner.cancel() }
+
     }
 }

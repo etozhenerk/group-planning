@@ -86,8 +86,11 @@ func TestIOSFixture(t *testing.T) {
 	seedIOSInvitation(t, store, service, owner,
 		"55555555-5555-4555-8555-555555555555", "QkJCQkJCQkJCQkJCQkJCQg", "Проверка повтора",
 		"66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777")
+	feedOwner := iosCredential(t, service, "feed-owner")
+	seedIOSFeed(t, store, service, feedOwner)
 	api := NewWithIdentity(store, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
-	server.Config.Handler = faults.handler(api)
+	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
+	server.Config.Handler = feedFaults.handler(faults.handler(api))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -95,6 +98,7 @@ func TestIOSFixture(t *testing.T) {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
+	config.Cases["feed-owner"] = feedOwner
 	config.Cases["invite-owner"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")
 	config.Cases["invite-rsvp-reentry"] = iosCredential(t, service, "invite-guest-rsvp")
@@ -113,7 +117,14 @@ func TestIOSFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
-	faults.verify(t, os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE"))
+	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
+	if scope != "feed" {
+		faults.verify(t, scope)
+	}
+
+	if scope == "feed" || scope == "" {
+		feedFaults.verify(t)
+	}
 }
 
 func iosCredential(t *testing.T, service *identity.Service, name string) iosFixtureCredential {

@@ -86,7 +86,6 @@ final class InvitationOwner {
         generation = UUID()
         operation?.cancel()
         operation = nil
-        canAccess = false
         loading = false
         saving = false
     }
