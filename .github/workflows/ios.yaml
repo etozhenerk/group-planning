@@ -32,4 +32,13 @@ jobs:
       - name: Models, transport and session tests
         run: sh frontend/ios/scripts/test.sh
       - name: Entry, draft and API retry UI tests
+        id: ui
         run: sh frontend/ios/scripts/test-ui.sh
+      - name: Preserve failed UI test diagnostics
+        if: failure() && steps.ui.outcome == 'failure'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ios-ui-${{ github.run_id }}
+          path: frontend/ios/.build/UIResults-*.xcresult
+          include-hidden-files: true
+          retention-days: 7

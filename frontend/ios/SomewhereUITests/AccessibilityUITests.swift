@@ -75,6 +75,7 @@ final class AccessibilityUITests: XCTestCase {
         reveal(time, in: app.scrollViews["create-form"])
         time.tap()
         XCTAssertTrue(app.buttons["picker-done"].waitForExistence(timeout: 5))
+        waitForTimePicker(app)
         try audit("audit-time-large", app)
     }
 
@@ -98,6 +99,7 @@ final class AccessibilityUITests: XCTestCase {
         app.buttons["picker-done"].tap()
         app.buttons["Время"].tap()
         XCTAssertTrue(app.buttons["picker-done"].waitForExistence(timeout: 5))
+        waitForTimePicker(app)
         try audit("audit-time", app)
         app.buttons["picker-done"].tap()
         app.buttons["Закрыть"].tap()
