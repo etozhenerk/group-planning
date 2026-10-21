@@ -34,11 +34,10 @@ final class AppRuntime {
                 forInfoDictionaryKey: "SomewhereLinkScheme") as? String ?? "group-planning-ios")
         self.drafts = drafts
         bootstrapCredential = credential
-        ready = session == nil
     }
 
     func restore() async {
-        ready = session == nil
+        ready = false
         let version = linkVersion
         if invitation == nil, let token = try? await links.load(), version == linkVersion {
             invitation = .token(token)

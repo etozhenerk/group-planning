@@ -21,12 +21,13 @@ struct MeetingSettingsFields: View {
                     title: MeetingLabels.day(owner.value.day), symbol: "calendar"
                 ) {
                     dateSheet = true
-                }.accessibilityLabel("Дата")
+                }.accessibilityLabel("Дата").accessibilityValue(MeetingLabels.day(owner.value.day))
                 SettingsPickerButton(
                     title: MeetingLabels.clock(owner.value.clock), symbol: "clock"
                 ) {
                     timeSheet = true
-                }.accessibilityLabel("Время")
+                }.accessibilityLabel("Время").accessibilityValue(
+                    MeetingLabels.clock(owner.value.clock))
                 Text("Время встречи · " + owner.value.timezone).font(.caption).foregroundStyle(
                     AppPalette.muted)
             }
@@ -72,12 +73,13 @@ struct MeetingSettingsFields: View {
                 label,
                 text: Binding(
                     get: { owner.value[keyPath: key] },
-                    set: { value in owner.change { $0[keyPath: key] = value } }), axis: .vertical
+                    set: { value in owner.change { $0[keyPath: key] = value } }),
+                prompt: Text(label).foregroundStyle(AppPalette.muted), axis: .vertical
             )
             .font(.system(size: inputSize)).lineLimit(lines).padding(12)
             .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
             .background(Color("SettingsField"), in: RoundedRectangle(cornerRadius: 13))
-            .accessibilityIdentifier(identifier)
+            .accessibilityLabel(label).accessibilityIdentifier(identifier)
         }
     }
 }

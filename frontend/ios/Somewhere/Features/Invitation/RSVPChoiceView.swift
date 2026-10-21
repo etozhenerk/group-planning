@@ -10,6 +10,7 @@ struct RSVPChoiceView: View {
             HStack(spacing: 14) {
                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                     .font(.title3).foregroundStyle(selected ? AppPalette.accent : AppPalette.muted)
+                    .accessibilityHidden(true)
                 Text(RSVPLabels.title(answer)).font(.body.weight(.medium))
                 Spacer(minLength: 8)
             }.foregroundStyle(AppPalette.text).padding(16)

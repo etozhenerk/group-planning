@@ -20,20 +20,10 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $path) {
             MeetingListView(owner: owner, create: openCreate, select: { path.append($0) })
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) { BrandWordmark(compact: true) }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu {
-                            Text(user.displayName)
-                            Button("Выйти из аккаунта", role: .destructive) { owner.logout() }
-                        } label: {
-                            Image(systemName: "person.crop.circle").font(.title2).foregroundStyle(
-                                AppPalette.muted
-                            ).frame(minWidth: 44, minHeight: 44)
-                        }.accessibilityLabel("Профиль: " + user.displayName)
-                    }
+                .toolbar(.hidden, for: .navigationBar)
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    MeetingHomeHeader(user: user, logout: owner.logout)
                 }
-                .toolbarBackground(AppPalette.background, for: .navigationBar)
                 .navigationDestination(for: UUID.self) { id in
                     MeetingSnapshotView(id: id, session: session)
                 }

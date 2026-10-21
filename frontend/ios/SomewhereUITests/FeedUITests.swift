@@ -46,7 +46,11 @@ final class FeedUITests: XCTestCase {
         XCTAssertTrue(card.waitForExistence(timeout: 15))
         card.tap()
         XCTAssertTrue(
-            app.staticTexts["Я захвачу настолки. Пиццу закажем, когда соберёмся?"].waitForExistence(
+            app.staticTexts.matching(
+                NSPredicate(
+                    format: "label CONTAINS %@",
+                    "Я захвачу настолки. Пиццу закажем, когда соберёмся?")
+            ).firstMatch.waitForExistence(
                 timeout: 10))
         XCTAssertTrue(
             app.staticTexts.containing(
@@ -61,7 +65,9 @@ final class FeedUITests: XCTestCase {
             scroll.swipeDown(velocity: .fast)
         }
         XCTAssertTrue(app.buttons["feed-history"].isHittable)
-        let anchor = app.staticTexts["Сообщение 07"]
+        let anchor = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Сообщение 07")
+        ).firstMatch
         let previousY = anchor.frame.minY
         app.buttons["feed-history"].tap()
         XCTAssertTrue(anchor.waitForExistence(timeout: 10))
@@ -70,10 +76,17 @@ final class FeedUITests: XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for: [loaded], timeout: 5), .completed)
         XCTAssertEqual(anchor.frame.minY, previousY, accuracy: 6)
         for _ in 0..<6 {
-            if app.staticTexts["Возьмите настолки, пиццу закажу я."].isHittable { break }
+            if app.staticTexts.matching(
+                NSPredicate(format: "label CONTAINS %@", "Возьмите настолки, пиццу закажу я.")
+            ).firstMatch.isHittable {
+                break
+            }
             scroll.swipeDown()
         }
-        XCTAssertTrue(app.staticTexts["Возьмите настолки, пиццу закажу я."].isHittable)
+        XCTAssertTrue(
+            app.staticTexts.matching(
+                NSPredicate(format: "label CONTAINS %@", "Возьмите настолки, пиццу закажу я.")
+            ).firstMatch.isHittable)
         XCTAssertTrue(header.isHittable)
         XCTAssertEqual(header.frame.minY, headerY, accuracy: 2)
         capture("feed-history", app)
@@ -90,7 +103,13 @@ final class FeedUITests: XCTestCase {
         let confirmed = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: app.buttons["retry-message"])
         XCTAssertEqual(XCTWaiter.wait(for: [confirmed], timeout: 10), .completed)
-        XCTAssertEqual(app.staticTexts.matching(identifier: "Пицца будет к семи").count, 1)
+        XCTAssertEqual(
+            app.staticTexts.matching(
+                NSPredicate(
+                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Вы, ",
+                    "Пицца будет к семи")
+            )
+            .count, 1)
         capture("feed-sent", app)
         input.tap()
         input.typeText("Ещё думаю")

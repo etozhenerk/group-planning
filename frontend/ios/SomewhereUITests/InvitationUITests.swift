@@ -26,7 +26,7 @@ final class InvitationUITests: XCTestCase {
     }
     func capture(_ name: String, _ app: XCUIApplication) {
         RunLoop.current.run(until: Date().addingTimeInterval(0.5))
-        let attachment = XCTAttachment(screenshot: app.screenshot())
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
@@ -70,7 +70,9 @@ final class InvitationUITests: XCTestCase {
         let app = launch("invite-anonymous")
         try open(app)
         XCTAssertTrue(app.staticTexts["Соберёмся в субботу. Принесите любимую игру."].exists)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         XCTAssertFalse(app.descendants(matching: .any)["participant-count"].exists)
         app.buttons["Войти и ответить"].tap()
         XCTAssertTrue(app.alerts["Вход ещё не подключён"].waitForExistence(timeout: 3))
@@ -80,7 +82,9 @@ final class InvitationUITests: XCTestCase {
         app.launch()
         XCTAssertTrue(app.staticTexts["Настолки у Саши"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["Войти и ответить"].exists)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         app.open(try XCTUnwrap(URL(string: "group-planning-ios-ui://i/Q0NDQ0NDQ0NDQ0NDQ0NDQw")))
         XCTAssertTrue(app.staticTexts["Приглашение недоступно"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["Настолки у Саши"].exists)
@@ -91,20 +95,28 @@ final class InvitationUITests: XCTestCase {
     func testThreeResponsesReentryAndMeetingIDWithdrawal() throws {
         let app = launch("invite-rsvp")
         try open(app)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         choose("going", confirmation: "Вы придёте", app: app)
-        XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         XCTAssertEqual(
             app.descendants(matching: .any)["participant-count"].firstMatch.label, "Участники · 2")
         app.buttons["meeting-info-close"].tap()
         capture("invitation-accepted", app)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         XCTAssertFalse(app.descendants(matching: .any)["participant-count"].exists)
         capture("invitation-maybe", app)
         choose("not_going", confirmation: "Вы не сможете прийти", app: app)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         capture("invitation-declined", app)
         app.terminate()
         app.launchEnvironment["SOMEWHERE_UI_REENTRY"] = "1"
@@ -112,16 +124,24 @@ final class InvitationUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["confirmed-rsvp"].waitForExistence(timeout: 10))
         XCTAssertTrue(
             app.staticTexts["confirmed-rsvp"].firstMatch.label.contains("Вы не сможете прийти"))
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         choose("going", confirmation: "Вы придёте", app: app)
-        XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .waitForExistence(timeout: 10))
         app.buttons["feed-back"].tap()
         let card = app.buttons["meeting-card-" + meetingID]
         XCTAssertTrue(card.waitForExistence(timeout: 10))
         card.tap()
-        XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .waitForExistence(timeout: 10))
         choose("not_going", confirmation: "Вы не сможете прийти", app: app)
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         app.navigationBars.buttons.element(boundBy: 0).tap()
         XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
     }
@@ -132,13 +152,17 @@ final class InvitationUITests: XCTestCase {
         app.buttons["rsvp-going"].tap()
         app.buttons["rsvp-save"].tap()
         XCTAssertTrue(app.staticTexts["rsvp-error"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts[message].exists)
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .exists)
         XCTAssertFalse(app.staticTexts["confirmed-rsvp"].exists)
         capture("invitation-retry", app)
         let retry = app.buttons["rsvp-save"]
         XCTAssertEqual(retry.label, "Повторить сохранение")
         retry.tap()
-        XCTAssertTrue(app.staticTexts[message].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
+                .waitForExistence(timeout: 10))
     }
 
     func testOrganizerUsesSystemShare() {

@@ -94,6 +94,10 @@ loopback-порту. Нужен Go 1.27.2; `GO_BIN` может задавать 
 `SomewhereUITestSupport` не включается в обычный target. Не добавляй runtime
 обход входа и не ослабляй production TLS. Fixture проверяет один ID и ключ
 при повторе после потерянного ответа. Снимки находятся в UIResults xcresult.
+`sh scripts/test-ui.sh accessibility` проверяет подписи, traits, фокус текущего
+слайда и раскладку при большом тексте; визуальные замечания сохраняются отдельно
+для ручного разбора. `startup` проверяет загрузку и возврат. Ограничения аудита —
+в [отчёте](../../openspec/changes/gathering-activity-feed/ios-accessibility-verification.md).
 `sh scripts/build.sh Release` проверяет оптимизированную сборку.
 `sh scripts/check-toolchain.sh` проверяет точные инструменты; версия Xcode
 лежит в `.xcode-version`, compiler/formatter/SDK — в `Config/toolchain.env`.

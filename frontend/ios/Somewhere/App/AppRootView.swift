@@ -2,10 +2,18 @@ import SwiftUI
 
 struct AppRootView: View {
     @State private var runtime = AppRuntime.configured()
+    @State private var introductionComplete = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var presentedInvitation: Binding<InvitationTarget?> {
+        Binding(
+            get: { runtime.ready && introductionComplete ? runtime.invitation : nil },
+            set: { runtime.invitation = $0 })
+    }
+
     var body: some View {
         Group {
-            if !runtime.ready {
-                StatusView(title: "Проверяем вход…", loading: true)
+            if !runtime.ready || !introductionComplete {
+                LaunchLoadingView()
             } else if let session = runtime.session, session.status == .authenticated,
                 let user = session.profile
             {
@@ -24,9 +32,17 @@ struct AppRootView: View {
         .background(AppPalette.background.ignoresSafeArea())
         .preferredColorScheme(.dark)
         .environment(\.locale, Locale(identifier: "ru_RU"))
+        .animation(
+            reduceMotion ? nil : .easeOut(duration: 0.2),
+            value: runtime.ready && introductionComplete
+        )
+        .task {
+            do { try await Task.sleep(for: .seconds(BrandMotion.duration)) } catch { return }
+            introductionComplete = true
+        }
         .task(id: runtime.restoreID) { await runtime.restore() }
         .onOpenURL { runtime.open($0) }
-        .sheet(item: $runtime.invitation, onDismiss: runtime.invitationDidDismiss) { target in
+        .sheet(item: presentedInvitation, onDismiss: runtime.invitationDidDismiss) { target in
             NavigationStack {
                 if let api = runtime.api {
                     InvitationRouteView(

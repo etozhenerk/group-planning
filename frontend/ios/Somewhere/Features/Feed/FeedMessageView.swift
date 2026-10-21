@@ -33,5 +33,8 @@ struct FeedMessageView: View {
             }
             if own { ParticipantAvatar(user: user) } else { Spacer(minLength: 24) }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(own ? "Вы" : user.displayName), \(FeedPresentation.time(date)). \(text)")
     }
 }

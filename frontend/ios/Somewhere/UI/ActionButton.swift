@@ -10,7 +10,8 @@ struct ActionButton: View {
         Button(action: action) {
             HStack(spacing: 8) {
                 if let symbol { Image(systemName: symbol).accessibilityHidden(true) }
-                Text(title).fontWeight(.semibold).lineLimit(1).minimumScaleFactor(0.6)
+                Text(title).fontWeight(.semibold).multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, minHeight: 24)
             .padding(.horizontal, 16).padding(.vertical, 12)

@@ -43,6 +43,7 @@ final class OnboardingPagerController: UIViewController, UIScrollViewDelegate {
         for slide in OnboardingSlide.allCases {
             let page = UIHostingController(rootView: OnboardingPageView(slide: slide))
             page.view.backgroundColor = .clear
+            page.view.accessibilityElementsHidden = slide != visible
             addChild(page)
             row.addArrangedSubview(page.view)
             page.view.widthAnchor.constraint(equalTo: scroll.frameLayoutGuide.widthAnchor)
@@ -105,6 +106,9 @@ final class OnboardingPagerController: UIViewController, UIScrollViewDelegate {
         target = nil
         visible = slide
         lastRequest = slide
+        for (index, page) in pages.enumerated() {
+            page.view.accessibilityElementsHidden = index != slide.rawValue
+        }
         settled?(slide)
         moving?(false)
     }

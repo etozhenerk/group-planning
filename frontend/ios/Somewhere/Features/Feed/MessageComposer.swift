@@ -3,6 +3,7 @@ import SwiftUI
 struct MessageComposer: View {
     @Bindable var owner: FeedOwner
     @ScaledMetric(relativeTo: .body) private var textSize = 15.0
+    @Environment(\.dynamicTypeSize) private var typeSize
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             if owner.draft.unicodeScalars.count > 4000 {
@@ -10,10 +11,14 @@ struct MessageComposer: View {
                     .font(.caption).foregroundStyle(AppPalette.error)
             }
             HStack(alignment: .bottom, spacing: 6) {
-                TextField("Написать сообщение…", text: $owner.draft, axis: .vertical)
-                    .font(.system(size: textSize)).lineLimit(1...6)
-                    .padding(.leading, 17).padding(.vertical, 12)
-                    .accessibilityLabel("Сообщение").accessibilityIdentifier("message-input")
+                TextField(
+                    "Сообщение", text: $owner.draft,
+                    prompt: Text(typeSize.isAccessibilitySize ? "Сообщение" : "Написать сообщение…")
+                        .foregroundStyle(AppPalette.muted), axis: .vertical
+                )
+                .font(.system(size: textSize)).lineLimit(1...6)
+                .padding(.leading, 17).padding(.vertical, 12)
+                .accessibilityLabel("Сообщение").accessibilityIdentifier("message-input")
                 Button(action: owner.sendDraft) {
                     Image(systemName: "arrow.up").font(.system(size: 20, weight: .regular))
                         .foregroundStyle(AppPalette.actionText).frame(width: 38, height: 38)

@@ -98,6 +98,11 @@ func TestIOSFixture(t *testing.T) {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
+	config.Cases["audit-guest"] = iosCredential(t, service, "invite-guest-audit")
+	config.Cases["audit-large-create"] = iosCredential(t, service, "audit-large-create")
+	config.Cases["audit-loading"] = feedOwner
+	config.Cases["audit-owner"] = feedOwner
+	config.Cases["audit-empty"] = iosCredential(t, service, "audit-empty")
 	config.Cases["feed-owner"] = feedOwner
 	config.Cases["invite-owner"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")
@@ -118,7 +123,7 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
-	if scope != "feed" {
+	if scope != "feed" && scope != "accessibility" {
 		faults.verify(t, scope)
 	}
 

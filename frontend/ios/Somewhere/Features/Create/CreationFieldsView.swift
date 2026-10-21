@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CreationFieldsView: View {
     let owner: CreationOwner
+    @Environment(\.dynamicTypeSize) private var typeSize
     @FocusState private var focus: Field?
     @State private var dateSheet = false
     @State private var timeSheet = false
@@ -10,16 +11,28 @@ struct CreationFieldsView: View {
         VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Название").font(.subheadline.bold())
-                TextField("Например, вечер настольных игр", text: text(\.title))
+                TextField(
+                    "Название", text: text(\.title),
+                    prompt: Text(
+                        typeSize.isAccessibilitySize ? "" : "Например, вечер настольных игр"
+                    ).foregroundStyle(
+                        AppPalette.muted),
+                    axis: .vertical
+                ).lineLimit(1...3)
                     .accessibilityLabel("Название").accessibilityIdentifier("meeting-title")
                     .focused($focus, equals: .title).meetingField()
             }
             VStack(alignment: .leading, spacing: 8) {
                 Text("Описание · необязательно").font(.subheadline.bold())
-                TextField("Что нужно знать друзьям", text: text(\.description), axis: .vertical)
-                    .accessibilityLabel("Описание").lineLimit(3...6).focused(
-                        $focus, equals: .description
-                    ).meetingField()
+                TextField(
+                    "Описание", text: text(\.description),
+                    prompt: Text(typeSize.isAccessibilitySize ? "" : "Что нужно знать друзьям")
+                        .foregroundStyle(AppPalette.muted),
+                    axis: .vertical
+                )
+                .accessibilityLabel("Описание").lineLimit(3...6).focused(
+                    $focus, equals: .description
+                ).meetingField()
                 Text("Описание увидят все, у кого есть приглашение.").font(.caption)
                     .foregroundStyle(AppPalette.muted)
             }
@@ -59,7 +72,12 @@ struct CreationFieldsView: View {
             }
             VStack(alignment: .leading, spacing: 8) {
                 Text("Место · необязательно").font(.subheadline.bold())
-                TextField("Адрес, название или ориентир", text: text(\.place))
+                TextField(
+                    "Место", text: text(\.place),
+                    prompt: Text(typeSize.isAccessibilitySize ? "" : "Адрес, название или ориентир")
+                        .foregroundStyle(AppPalette.muted),
+                    axis: .vertical
+                ).lineLimit(1...3)
                     .accessibilityLabel("Место").focused($focus, equals: .place).meetingField()
             }
         }

@@ -13,7 +13,7 @@ final class EntryUITests: XCTestCase {
     private func capture(_ name: String, _ app: XCUIApplication) {
         // XCTest idle may precede the end of a UIKit paging/sheet transition.
         RunLoop.current.run(until: Date().addingTimeInterval(0.5))
-        let image = XCTAttachment(screenshot: app.screenshot())
+        let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         image.name = name
         image.lifetime = .keepAlways
         add(image)
@@ -30,10 +30,12 @@ final class EntryUITests: XCTestCase {
         XCTAssertTrue(button.waitForExistence(timeout: 15))
         XCTAssertEqual(app.buttons.matching(identifier: "Создать встречу").count, 1)
         button.tap()
-        XCTAssertTrue(app.textFields["meeting-title"].waitForExistence(timeout: 5))
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch
+                .waitForExistence(timeout: 5))
     }
     private func title(_ text: String, _ app: XCUIApplication) {
-        let field = app.textFields["meeting-title"]
+        let field = app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch
         field.tap()
         field.typeText(text)
         let done = app.buttons["Готово"]
@@ -120,14 +122,18 @@ final class EntryUITests: XCTestCase {
         add(tree)
         XCTAssertTrue(app.buttons["Продолжить редактирование"].waitForExistence(timeout: 3))
         app.buttons["Продолжить редактирование"].tap()
-        XCTAssertEqual(app.textFields["meeting-title"].value as? String, "Черновик встречи")
+        XCTAssertEqual(
+            app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch.value
+                as? String, "Черновик встречи")
         app.buttons["Закрыть"].tap()
         app.buttons["Выйти"].tap()
         XCTAssertTrue(app.scrollViews["meetings-list"].waitForExistence(timeout: 5))
         app.terminate()
         app.launch()
         create(app)
-        XCTAssertEqual(app.textFields["meeting-title"].value as? String, "Черновик встречи")
+        XCTAssertEqual(
+            app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch.value
+                as? String, "Черновик встречи")
         capture("restored-draft", app)
     }
     func testLostCreateResponseRetriesSameMeetingThroughAPI() {
@@ -152,7 +158,9 @@ final class EntryUITests: XCTestCase {
         app.terminate()
         app.launch()
         create(app)
-        XCTAssertFalse(app.textFields["meeting-title"].isEnabled)
+        XCTAssertFalse(
+            app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch
+                .isEnabled)
         let retry = app.buttons["create-submit"]
         reveal(retry, app)
         XCTAssertEqual(retry.label, "Повторить сохранение")

@@ -11,7 +11,9 @@ case "${1:-all}" in
     all) ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
     feed) somewhere_filter=-only-testing:SomewhereUITests/FeedUITests; somewhere_scope=feed ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|invitation|feed]\n' >&2; exit 2 ;;
+    accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
+    startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|invitation|feed|accessibility|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

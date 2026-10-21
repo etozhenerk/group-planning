@@ -10,12 +10,14 @@ struct MeetingPickerSheet<Content: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
-                Text(title).font(.title2.weight(.semibold)).accessibilityAddTraits(.isHeader)
+                Text(title).font(.title2.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
+                    .accessibilityAddTraits(.isHeader)
                 Spacer(minLength: 8)
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "xmark").font(.body.weight(.semibold))
+                    Image(systemName: "xmark").font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(AppPalette.muted).frame(width: 44, height: 44)
                         .background(AppPalette.background.opacity(0.5), in: Circle())
                 }.buttonStyle(.plain).accessibilityLabel("Закрыть выбор")

@@ -46,6 +46,8 @@ sh scripts/test.sh
 sh scripts/test-ui.sh
 sh scripts/test-ui.sh invitation
 sh scripts/test-ui.sh feed
+sh scripts/test-ui.sh accessibility
+sh scripts/test-ui.sh startup
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет
@@ -59,7 +61,8 @@ sh scripts/test-ui.sh feed
 Результаты и снимки: [основа приложения](../../openspec/changes/gathering-activity-feed/ios-bootstrap-verification.md),
 [онбординг, список и создание](../../openspec/changes/gathering-activity-feed/ios-entry-verification.md),
 [приглашение, Share и RSVP](../../openspec/changes/gathering-activity-feed/ios-invitation-verification.md),
-[лента и настройки](../../openspec/changes/gathering-activity-feed/ios-feed-verification.md).
+[лента и настройки](../../openspec/changes/gathering-activity-feed/ios-feed-verification.md),
+[аудит экранов и запуск](../../openspec/changes/gathering-activity-feed/ios-accessibility-verification.md).
 
 Открой `Somewhere.xcodeproj`, выбери схему `Somewhere` и доступный iPhone
 с iOS 17 или новее, затем Run. Локально доступен iPhone 17 / iOS 26.0.
@@ -94,7 +97,12 @@ Go fixture дополнительно проверяет ключи и ID отв
 отправку с потерянным ответом и явным повтором, фон/возврат, черновик, информацию,
 конфликт настроек и повторное редактирование. Go fixture проверяет один ключ
 и ID сообщения, чтение истории и успешный PATCH после конфликта.
-Полный прогон включает все 11 UI-тестов и проверки обеих fixtures. Результат и снимки —
+Набор `accessibility` проверяет обычный и максимальный размер текста, клавиатуру,
+Back, подписи, traits и доступность только текущего слайда. Контраст, обрезание
+текста, Dynamic Type и hit regions сохраняются как диагностические вложения
+для ручного разбора; успешный прогон не означает отсутствия этих замечаний.
+Набор `startup` проверяет загрузку и возврат без повторной заставки.
+Полный прогон включает все 17 UI-тестов и проверки обеих fixtures. Результат и снимки —
 `.build/UIResults-*.xcresult`. Скрипт завершает только свои процессы; в CI
 он также удаляет свой симулятор. Уже запущенный `web:demo` и его данные не затрагиваются.
 
@@ -124,7 +132,11 @@ Xcode автоматически включает файлы внутри син
 
 ## Сервер и первый запуск
 
-При обычном запуске без конфигурации открывается онбординг. Адрес реального
+При холодном запуске системный LaunchScreen переходит в фирменную заставку:
+знак слева делает полный оборот с мягким разгоном и замедлением, название
+остаётся неподвижным. Минимальная длительность — 1,2 с параллельно восстановлению;
+при Reduce Motion знак неподвижен, при возврате из фона заставка не повторяется.
+Без конфигурации затем открывается онбординг. Адрес реального
 HTTPS API задаётся сборочной настройкой `SOMEWHERE_API_ORIGIN`; сессия
 проверяется через `/me`, а при её отсутствии показывается знакомство.
 Не используйте UI-test target для пользовательской сборки. Реальное получение
