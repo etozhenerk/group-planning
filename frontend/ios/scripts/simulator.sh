@@ -6,8 +6,7 @@ somewhere_simulator_lock=
 
 somewhere_release_simulator() {
     if [ "$somewhere_simulator_owned" = true ] && [ -n "$somewhere_simulator" ]; then
-        xcrun simctl shutdown "$somewhere_simulator" >/dev/null 2>&1 || true
-        xcrun simctl delete "$somewhere_simulator" >/dev/null 2>&1 || true
+        python3 ./scripts/ci-simulator.py remove "$somewhere_simulator" || true
     fi
     if [ -n "$somewhere_simulator_lock" ]; then
         rmdir "$somewhere_simulator_lock" 2>/dev/null || true
@@ -38,9 +37,10 @@ print(devices[0]["udid"])
         return 1
     fi
     somewhere_simulator_lock=$somewhere_candidate_lock
-    if [ "$somewhere_simulator_owned" = true ]; then
-        xcrun simctl boot "$somewhere_simulator"
-    fi
     printf 'Testing sequentially on simulator %s\n' "$somewhere_simulator"
-    xcrun simctl bootstatus "$somewhere_simulator" -b
+    if [ "$somewhere_simulator_owned" = true ]; then
+        python3 ./scripts/ci-simulator.py boot "$somewhere_simulator"
+    else
+        xcrun simctl bootstatus "$somewhere_simulator" -b
+    fi
 }
