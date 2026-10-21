@@ -3,7 +3,7 @@ import SwiftUI
 struct LaunchLoadingView: View {
     var body: some View {
         BrandWordmark(loading: true)
-            .dynamicTypeSize(.large).scaleEffect(1.2)
+            .dynamicTypeSize(.large).scaleEffect(1.5)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(AppPalette.background.ignoresSafeArea())
             .accessibilityElement(children: .ignore)
