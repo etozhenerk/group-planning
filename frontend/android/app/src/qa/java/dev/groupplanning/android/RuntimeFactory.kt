@@ -8,10 +8,6 @@ import dev.groupplanning.android.data.api.ApiOrigin
 import dev.groupplanning.android.data.api.OkHttpTransport
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.ApiInstant
-import dev.groupplanning.android.data.drafts.DraftRepository
-import dev.groupplanning.android.data.drafts.FileDraftStorage
-import dev.groupplanning.android.data.session.AndroidCredentials
-import dev.groupplanning.android.data.session.SessionRepository
 import dev.groupplanning.android.data.session.StoredSession
 import java.io.File
 import java.security.KeyStore
@@ -35,7 +31,13 @@ internal object RuntimeFactory {
     fun create(context: Context, intent: Intent): ClientRuntime {
         val scenario = intent.getStringExtra("scenario") ?: "onboarding"
         if (scenario == "onboarding") return ClientRuntime.create(context, origin = null)
-        require(scenario in setOf("empty", "draft", "list-error", "lost-create"))
+        require(
+            scenario in
+                setOf(
+                    "empty", "draft", "list-error", "lost-create", "invite-anonymous",
+                    "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
+                ),
+        )
         val config = apiJson.decodeFromString<Config>(
             File(context.noBackupFilesDir, "ui-fixture.json").readText(),
         )
@@ -63,14 +65,19 @@ internal object RuntimeFactory {
                     ).build(),
                 )
             }.build()
-        val credential = config.cases.getValue(scenario)
-        return ClientRuntime(
-            SessionRepository(
-                ApiClient(origin, OkHttpTransport(http)),
-                AndroidCredentials.create(context, origin),
-            ),
-            DraftRepository(FileDraftStorage(File(context.noBackupFilesDir, "drafts/$scenario"))),
-            StoredSession(credential.token, credential.expiresAt),
+        val credential = config.cases[scenario]
+        if (scenario == "invite-anonymous") {
+            dev.groupplanning.android.data.session.AndroidCredentials.create(
+                context,
+                origin,
+            ).clear()
+        }
+        return ClientRuntime.create(
+            context,
+            origin,
+            ApiClient(origin, OkHttpTransport(http)),
+            credential?.let { StoredSession(it.token, it.expiresAt) },
+            namespace = if (scenario == "invite-rsvp-reentry") "invite-rsvp" else scenario,
         )
     }
 }

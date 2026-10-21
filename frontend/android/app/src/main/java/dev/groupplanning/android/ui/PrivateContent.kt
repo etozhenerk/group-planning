@@ -12,7 +12,7 @@ import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.create.CreationScreen
-import dev.groupplanning.android.ui.meetings.MeetingDetailScreen
+import dev.groupplanning.android.ui.invitation.InvitationScreen
 import dev.groupplanning.android.ui.meetings.MeetingListScreen
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
@@ -24,7 +24,7 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
         when (it) {
             AppRoute.Home -> "home"
             is AppRoute.Create -> it.model
-            is AppRoute.Meeting -> it.id
+            is AppRoute.Invitation -> it.model
         }
     }, transitionSpec = {
         fadeIn(tween(duration)) togetherWith fadeOut(tween(duration))
@@ -40,9 +40,7 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
                 }
             }
             is AppRoute.Create -> CreationScreen(destination.model, model::home, model::created)
-            is AppRoute.Meeting -> MeetingDetailScreen(destination, snapshot.data, model::home) {
-                model.open(destination.id, destination.invitation)
-            }
+            is AppRoute.Invitation -> InvitationScreen(destination.model, model::home)
         }
     }
 }

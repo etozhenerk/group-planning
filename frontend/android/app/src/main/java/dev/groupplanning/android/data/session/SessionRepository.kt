@@ -148,8 +148,11 @@ internal class SessionRepository(
         generation == version && credential != null
     }
 
-    suspend fun updateAccess(id: UUID, allowed: Boolean) {
-        gate.locked { changeAccess(id, allowed) }
+    suspend fun updateAccess(id: UUID, allowed: Boolean, expectedGeneration: Long? = null) {
+        gate.locked {
+            expectedGeneration?.let { requireGeneration(it) }
+            changeAccess(id, allowed)
+        }
     }
 
     suspend fun beginData(update: (PrivateData) -> PrivateData): Long? = gate.locked {

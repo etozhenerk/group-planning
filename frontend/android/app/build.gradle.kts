@@ -18,6 +18,11 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
+        val apiOrigin = providers.gradleProperty("somewhereApiOrigin").orElse("").get()
+        require(apiOrigin.isEmpty() || apiOrigin.matches(Regex("https://[A-Za-z0-9.:-]+/?")))
+        buildConfigField("String", "API_ORIGIN", "\"$apiOrigin\"")
+        buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android\"")
+        manifestPlaceholders["invitationScheme"] = "group-planning-android"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,12 +40,15 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     buildTypes {
         create("qa") {
             initWith(getByName("debug"))
             applicationIdSuffix = ".uitesthost"
+            buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android-qa\"")
+            manifestPlaceholders["invitationScheme"] = "group-planning-android-qa"
             matchingFallbacks += "debug"
         }
         release {

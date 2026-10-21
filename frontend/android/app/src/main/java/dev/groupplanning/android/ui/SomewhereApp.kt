@@ -21,10 +21,13 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import dev.groupplanning.android.data.session.SessionState
+import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.brand.BrandMotion
 import dev.groupplanning.android.ui.brand.BrandWordmark
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.invitation.InvitationScreen
+import dev.groupplanning.android.ui.invitation.LinkProblemDialog
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.motion.rememberMotionEnabled
 import dev.groupplanning.android.ui.onboarding.OnboardingScreen
@@ -36,6 +39,7 @@ internal fun SomewhereApp(model: AppViewModel) {
     val route by model.route.collectAsStateWithLifecycle()
     val elapsed by model.elapsed.collectAsStateWithLifecycle()
     val ready by model.ready.collectAsStateWithLifecycle()
+    val linkProblem by model.linkProblem.collectAsStateWithLifecycle()
     val motion = rememberMotionEnabled()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(model, lifecycle) {
@@ -50,6 +54,7 @@ internal fun SomewhereApp(model: AppViewModel) {
         }
     }
     CompositionLocalProvider(LocalMotionEnabled provides motion) {
+        linkProblem?.let { LinkProblemDialog(it, model::dismissLinkProblem) }
         Surface(Modifier.fillMaxSize(), color = Palette.background) {
             Crossfade(
                 ready && elapsed >= BrandMotion.DURATION_NANOS,
@@ -65,19 +70,30 @@ internal fun SomewhereApp(model: AppViewModel) {
                             BrandWordmark(rotation = { BrandMotion.rotation(elapsed, motion) })
                         }
                     } else {
-                        when (snapshot.session) {
-                            is SessionState.Authenticated -> PrivateContent(model, route, snapshot)
-                            is SessionState.Failed -> Box(
-                                Modifier.padding(24.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                StatusPanel(
-                                    "Не удалось восстановить вход",
-                                    "Проверьте соединение и повторите запрос.",
-                                    model::restore,
+                        if (route is AppRoute.Invitation) {
+                            InvitationScreen(
+                                (route as AppRoute.Invitation).model,
+                                model::home,
+                            )
+                        } else {
+                            when (snapshot.session) {
+                                is SessionState.Authenticated -> PrivateContent(
+                                    model,
+                                    route,
+                                    snapshot,
                                 )
+                                is SessionState.Failed -> Box(
+                                    Modifier.padding(24.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    StatusPanel(
+                                        "Не удалось восстановить вход",
+                                        "Проверьте соединение и повторите запрос.",
+                                        model::restore,
+                                    )
+                                }
+                                else -> OnboardingScreen()
                             }
-                            else -> OnboardingScreen()
                         }
                     }
                 }

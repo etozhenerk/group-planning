@@ -55,5 +55,5 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 "$somewhere_adb" -s "$ANDROID_SERIAL" shell chmod 600 "$somewhere_remote"
 ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
     "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-    -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests \
+    -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.InvitationUiTests \
     :app:connectedQaAndroidTest

@@ -135,8 +135,8 @@ class EntryUiTests {
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
             waitText("Вечер настольных игр")
             compose.waitUntil(10_000) {
-                compose.onAllNodesWithText(
-                    "Скопировать приглашение",
+                compose.onAllNodesWithContentDescription(
+                    "Информация о встрече",
                 ).fetchSemanticsNodes().isNotEmpty()
             }
             screenshot("created")

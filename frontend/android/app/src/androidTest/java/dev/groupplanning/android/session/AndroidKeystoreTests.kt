@@ -124,6 +124,25 @@ class AndroidKeystoreTests {
         assertTrue(directory.listFiles().orEmpty().isEmpty())
     }
 
+    @Test fun invitationContextIsEncryptedBoundToOriginAndRemovedOnClose() {
+        val token = "QUFBQUFBQUFBQUFBQUFBQQ"
+        val cipher = SessionCipher(AndroidSessionKey(alias), "https://example.test/")
+        val storage = dev.groupplanning.android.data.links.FileInvitationStorage(file, cipher)
+        storage.save(token)
+        assertFalse(file.readText().contains(token))
+        assertEquals(
+            token,
+            dev.groupplanning.android.data.links.FileInvitationStorage(file, cipher).load(),
+        )
+        val other = dev.groupplanning.android.data.links.FileInvitationStorage(
+            file,
+            SessionCipher(AndroidSessionKey(alias), "https://other.test/"),
+        )
+        assertThrows(ClientFailure::class.java) { other.load() }
+        storage.save(null)
+        assertNull(storage.load())
+    }
+
     private fun storage(): EncryptedCredentialStorage = EncryptedCredentialStorage(
         file,
         SessionCipher(AndroidSessionKey(alias), "https://example.test/"),

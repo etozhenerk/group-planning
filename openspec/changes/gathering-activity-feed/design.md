@@ -280,6 +280,7 @@ Compose, Gradle wrapper и отдельная проверка CI. Резуль�
 Подробности инфраструктуры iOS и границы задачи 6.2 — в [ios-data.md](ios-data.md).
 Данные, сессия и состояние Android 7.2 — в [android-data.md](android-data.md).
 Экраны и анимация Android 7.4 — в [android-entry.md](android-entry.md).
+Приглашение, Share и RSVP Android 7.5 — в [android-invitation.md](android-invitation.md).
 
 ### 7. Последующие этапы того же MVP
 

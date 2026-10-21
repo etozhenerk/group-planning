@@ -1,6 +1,7 @@
 package dev.groupplanning.android
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
@@ -23,6 +24,12 @@ class MainActivity : ComponentActivity() {
         super.attachBaseContext(newBase.createConfigurationContext(configuration))
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        intent.dataString?.let { ViewModelProvider(this)[AppViewModel::class.java].receiveLink(it) }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
@@ -33,7 +40,10 @@ class MainActivity : ComponentActivity() {
         val factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T = checkNotNull(
                 modelClass.cast(
-                    AppViewModel(RuntimeFactory.create(applicationContext, intent)),
+                    AppViewModel(
+                        RuntimeFactory.create(applicationContext, intent),
+                        intent.dataString,
+                    ),
                 ),
             )
         }
