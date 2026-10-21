@@ -2,23 +2,19 @@
 
 Применяй [общие правила](../../AGENTS.md). Эта область отвечает за приложение
 somewhere для Android и его платформенные интеграции.
-Также применяй [общие соглашения кода](../../docs/development.md).
+Также применяй [общие соглашения кода](../../docs/development.md) и
+[правила структуры файлов и компонентов](docs/code-style.md). Прочитай оба
+документа до редактирования исходников этой платформы.
 
-## Текущее состояние
+## Стек и границы
 
-Выбраны Kotlin и Jetpack Compose. Экраны, навигация и состояние интерфейса
-реализуются в коде Android-приложения, данные и результаты операций приходят
-из API. См. [ADR 0002](../../docs/architecture/0002-client-ui.md). Добавлена
-один модуль app, онбординг, список и создание; Material 3 использует палитру v0.7.
-Закреплены JDK 17, Gradle 8.14.3, AGP 8.13.1, Kotlin/Compose compiler 2.2.20,
-Compose BOM 2025.11.01, compile/target SDK 36, minSdk 26 и Build Tools 36.0.0.
-Версии библиотек — в gradle/libs.versions.toml; wrapper содержит SHA-256.
-Добавлены OkHttp, kotlinx.serialization, Repository, ViewModel/StateFlow и
-зашифрованная сессия через Android Keystore. ClientRuntime собирается с явно
-переданным HTTPS origin. AppViewModel связывает корневые экраны, CreationViewModel
-сохраняет черновик и ключ до отправки. Обычный target остаётся на онбординге до
-подключения Яндекс ID; полный сценарий доступен только test-only QA target.
-Границы — [android-entry.md](../../openspec/changes/gathering-activity-feed/android-entry.md).
+Kotlin и Jetpack Compose. Экраны, навигация и состояние интерфейса находятся
+в клиенте; данные и результаты операций приходят из API. См.
+[ADR 0002](../../docs/architecture/0002-client-ui.md).
+Один модуль `app`; зависимости закреплены в `gradle/libs.versions.toml`,
+wrapper содержит SHA-256. Версии инструментов и запуск — в [README](README.md).
+Production и QA разделены source sets; тестовые настройки входа не входят
+в обычное приложение. Изменения дизайна следуют общим макетам.
 
 ## Оформление Kotlin
 

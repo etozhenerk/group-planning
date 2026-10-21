@@ -12,6 +12,7 @@ const json = (file) => JSON.parse(read(file));
 const requiredFiles = [
   'AGENTS.md', 'backend/AGENTS.md', 'frontend/web/AGENTS.md',
   'frontend/ios/AGENTS.md', 'frontend/android/AGENTS.md',
+  'frontend/ios/docs/code-style.md', 'frontend/android/docs/code-style.md',
   'README.md', 'docs/product/overview.md', 'docs/product/open-questions.md',
   'docs/architecture/decisions.md', 'docs/workflow.md',
   'openspec/config.yaml', '.agents/skills/LICENSE.openspec',
@@ -136,6 +137,8 @@ try {
   const documentation = [
     join(root, 'README.md'), join(root, 'AGENTS.md'),
     ...markdownFiles(join(root, 'docs')),
+    ...markdownFiles(join(root, 'frontend/ios/docs')),
+    ...markdownFiles(join(root, 'frontend/android/docs')),
     ...projectSkills.map((name) => join(root, `.agents/skills/${name}/SKILL.md`)),
     ...['backend', 'frontend/web', 'frontend/ios', 'frontend/android'].map((area) => join(root, area, 'AGENTS.md')),
   ];

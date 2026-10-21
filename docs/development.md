@@ -10,7 +10,7 @@
 
 Общий процесс описан в [workflow.md](workflow.md), подготовка интерфейса —
 в [правилах дизайна](design/README.md). Внешние руководства служат основой;
-конкретные правила Somewhere приведены в инструкциях приложений. Не переноси
+конкретные правила somewhere приведены в инструкциях приложений. Не переноси
 сюда чужой шаблон архитектуры целиком без связи с задачами проекта.
 
 ## Общие соглашения
@@ -43,6 +43,7 @@
 | --- | --- |
 | Этот документ | Общие соглашения для четырёх приложений |
 | Локальный `AGENTS.md` | Правила языка, архитектура приложения и команды проверки |
+| `frontend/{ios,android}/docs/code-style.md` | Организация native-файлов, компонентов, ресурсов и тестов |
 | Конфигурация инструментов в приложении | Форматирование, линтинг, проверки типов и сборки |
 | `design.md` изменения OpenSpec | Решения, специфичные для фичи |
 
@@ -71,34 +72,28 @@
 для ещё не выбранных инструментов. Когда появится CI, он должен использовать
 те же команды, что и локальная проверка.
 
-## Текущее состояние
+## Проверки
 
-Go и веб имеют реальные сборки, линтеры, форматирование и тесты в CI.
-Go: `sh scripts/format.sh --check` из `backend/` проверяет gofumpt и wsl;
-`--write` исправляет оформление. Runtime не зависит от Go-инструментов.
-Веб: `npm run web:check` из корня проверяет типы, ESLint, пустые строки CSS,
-FSD/AST, Prettier и Vitest; `npm run web:build` и `web:test:e2e` проверяют
-сборку и Chromium с настоящим API. Объявления функций и компонентов — `const`.
-Каждый веб-компонент имеет свой одноимённый каталог, TSX и CSS Module, а
-`index.ts` реэкспортирует компонент. Личные `hooks/lib/utils` находятся рядом;
-доменные segments сохраняют границы FSD. Эти правила проверяются автоматически.
+| Область | Команда | Рабочая папка |
+| --- | --- | --- |
+| Документы и OpenSpec | `npm run agent:check` | Корень |
+| HTTP-контракт | `npm run api:test` | Корень |
+| Веб: оформление, типы, FSD, тесты | `npm run web:check` | Корень |
+| Веб: сборка и E2E | `npm run web:build`, `npm run web:test:e2e` | Корень |
+| Go: оформление | `sh scripts/format.sh --check` | `backend` |
+| Go: тесты, анализ, сборка | `go test -race ./...`, `go vet ./...`, `go build ./...` | `backend` |
+| iOS: оформление и сборка | `sh scripts/format.sh --check`, `sh scripts/build.sh` | `frontend/ios` |
+| iOS: unit / UI | `sh scripts/test.sh`, `sh scripts/test-ui.sh` | `frontend/ios` |
+| Android: оформление, сборка, Lint, unit | `sh scripts/check.sh` | `frontend/android` |
+| Android: устройство / UI | `sh scripts/test-device.sh`, `sh scripts/test-ui.sh` | `frontend/android` |
 
-Контракт и реальные HTTP-ответы проверяются через `npm run api:test`.
-`npm run agent:check` проверяет обвязку и документы. Реальный Яндекс ID
-отложен; fake-provider используется только в тестах. Основа iOS имеет строгий
-swift-format и clean/build/analyze для симулятора через `scripts/build.sh`.
-Swift Testing проверяет её API-модели, URLSession, Keychain и владельцев
-состояния через `scripts/test.sh` на уже запущенном симуляторе. Онбординг, список,
-создание, приглашения, RSVP, лента и настройки iOS проверяются через
-`scripts/test-ui.sh` с настоящим Go API и test-only provider в отдельной сборке.
-Unit и UI запускаются последовательно на одном устройстве. Реальный вход,
-БД остаётся отложенной; ручной VoiceOver на устройстве отложен.
-Основа Android использует Gradle wrapper, ktlint и Android Lint; команда
-`sh scripts/check.sh` из frontend/android собирает Debug/Release и проверяет
-оформление, Lint, JVM-тесты контракта/сессии/состояния и сборку instrumentation APK.
-`sh scripts/test-device.sh` проверяет Android Keystore на уже запущенном
-единственном устройстве. `sh scripts/test-ui.sh` проверяет Android-онбординг,
-список и создание с отдельным Go HTTPS API. Реальный вход, RSVP и чат Android
-ещё не подключены. Отчёт по фундаменту данных и ограничения —
-[Android 7.2](../openspec/changes/gathering-activity-feed/android-data-verification.md).
-Подробные команды — в локальных инструкциях приложений.
+Структура и оформление native-кода подробно описаны в
+[правилах iOS](../frontend/ios/docs/code-style.md) и
+[правилах Android](../frontend/android/docs/code-style.md). Форматирование проверяют
+swift-format и ktlint; границы компонентов и размещение файлов дополнительно
+проверяются при ревью. Для веба ограничения FSD и файлов проверяются AST-анализом.
+
+Версии окружения, тестовые targets и ограничения запуска — в локальных
+инструкциях приложений. Unit и UI запускаются последовательно на одном уже
+открытом устройстве каждой платформы. Тестовые API используют отдельные процессы;
+не перезапускай пользовательское демо с хранилищем в памяти.
