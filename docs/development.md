@@ -92,5 +92,8 @@ Swift Testing проверяет её API-модели, URLSession, Keychain и 
 создание, приглашения, RSVP, лента и настройки iOS проверяются через
 `scripts/test-ui.sh` с настоящим Go API и test-only provider в отдельной сборке.
 Unit и UI запускаются последовательно на одном устройстве. Реальный вход,
-БД и Android ещё не подключены; ручной VoiceOver на устройстве отложен.
+БД и сценарии Android ещё не подключены; ручной VoiceOver на устройстве отложен.
+Основа Android использует Gradle wrapper, ktlint и Android Lint; команда
+`sh scripts/check.sh` из frontend/android собирает Debug/Release и проверяет
+оформление. Набор unit-тестов появится с реализацией состояния в 7.2.
 Подробные команды — в локальных инструкциях приложений.
