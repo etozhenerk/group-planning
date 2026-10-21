@@ -144,6 +144,8 @@ AES-GCM key остаётся в Android Keystore. Cookies, redirects, disk cache
 [мобильный онбординг](../../docs/design/mobile-onboarding.md).
 
 Уведомления Lint о новых версиях (`AndroidGradlePluginVersion`, `GradleDependency`,
-`NewerVersionAvailable`) остаются информационными: закреплённый совместимый стек
-обновляется отдельной проверяемой правкой. Остальные предупреждения Lint блокируют
+`NewerVersionAvailable`, `OldTargetApi`) остаются информационными: закреплённый совместимый стек
+обновляется отдельной проверяемой правкой. `targetSdk = 36` меняется вместе
+с проверкой поведения на новой платформе, а не вслед за обновлением образа runner.
+Проверка `ExpiredTargetSdkVersion` и остальные предупреждения Lint блокируют
 сборку. Baseline и подавления ошибок кода не используются.

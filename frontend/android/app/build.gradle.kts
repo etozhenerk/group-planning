@@ -59,11 +59,13 @@ android {
         abortOnError = true
         checkReleaseBuilds = true
         warningsAsErrors = true
-        // Version upgrades are reviewed separately from correctness checks.
+        // Dependency and target SDK upgrades require a separate compatibility review.
+        // Keep OldTargetApi visible; ExpiredTargetSdkVersion remains blocking.
         informational += listOf(
             "AndroidGradlePluginVersion",
             "GradleDependency",
             "NewerVersionAvailable",
+            "OldTargetApi",
         )
     }
 }
