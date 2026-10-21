@@ -22,12 +22,27 @@ android {
     }
 
     sourceSets["test"].resources.srcDir("../../../contracts/fixtures")
+    sourceSets["debug"].java.srcDir("src/production/java")
+    sourceSets["release"].java.srcDir("src/production/java")
+    testBuildType = providers.gradleProperty("somewhereTestBuildType").orElse("debug").get()
+
+    bundle {
+        language {
+            // Russian product copy and native date/time controls must ship together.
+            enableSplit = false
+        }
+    }
 
     buildFeatures {
         compose = true
     }
 
     buildTypes {
+        create("qa") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".uitesthost"
+            matchingFallbacks += "debug"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -61,6 +76,11 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.lifecycle.runtime.compose)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.test)
+    androidTestImplementation(libs.android.test.uiautomator)
+    add("qaImplementation", libs.compose.test.manifest)
     implementation(libs.okhttp)
     implementation(libs.serialization.json)
     implementation(libs.coroutines.android)

@@ -358,6 +358,11 @@ python3 -m http.server 8766 --bind 127.0.0.1 --directory openspec/changes/gather
 и максимального текста, safe area, клавиатуры и навигации. Проверка VoiceOver
 на настоящем устройстве остаётся отложенной.
 
+## Android: экраны и запуск · 7.4
+
+[Android entry](android-entry.md) переносит утверждённые мобильные слайды, список
+и форму; знак на старте делает один оборот, как в iOS.
+
 ## Android: основа · 7.1
 
 [Android bootstrap](android-bootstrap.md) использует существующую подпись

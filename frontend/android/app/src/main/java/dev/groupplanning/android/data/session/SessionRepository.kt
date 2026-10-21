@@ -144,6 +144,10 @@ internal class SessionRepository(
         old?.let { api.sendEmpty(SessionRequests.Logout, it) }
     }
 
+    suspend fun isCurrent(version: Long): Boolean = gate.locked {
+        generation == version && credential != null
+    }
+
     suspend fun updateAccess(id: UUID, allowed: Boolean) {
         gate.locked { changeAccess(id, allowed) }
     }

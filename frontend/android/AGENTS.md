@@ -9,15 +9,16 @@ somewhere для Android и его платформенные интеграци
 Выбраны Kotlin и Jetpack Compose. Экраны, навигация и состояние интерфейса
 реализуются в коде Android-приложения, данные и результаты операций приходят
 из API. См. [ADR 0002](../../docs/architecture/0002-client-ui.md). Добавлена
-основа: один модуль app, статичная подпись бренда и Material 3 с палитрой v0.7.
+один модуль app, онбординг, список и создание; Material 3 использует палитру v0.7.
 Закреплены JDK 17, Gradle 8.14.3, AGP 8.13.1, Kotlin/Compose compiler 2.2.20,
 Compose BOM 2025.11.01, compile/target SDK 36, minSdk 26 и Build Tools 36.0.0.
 Версии библиотек — в gradle/libs.versions.toml; wrapper содержит SHA-256.
 Добавлены OkHttp, kotlinx.serialization, Repository, ViewModel/StateFlow и
 зашифрованная сессия через Android Keystore. ClientRuntime собирается с явно
-переданным HTTPS origin; к корневому экрану пока не подключён. Вход и продуктовые
-экраны — следующие этапы. Границы и проверки —
-в [android-data.md](../../openspec/changes/gathering-activity-feed/android-data.md).
+переданным HTTPS origin. AppViewModel связывает корневые экраны, CreationViewModel
+сохраняет черновик и ключ до отправки. Обычный target остаётся на онбординге до
+подключения Яндекс ID; полный сценарий доступен только test-only QA target.
+Границы — [android-entry.md](../../openspec/changes/gathering-activity-feed/android-entry.md).
 
 ## Оформление Kotlin
 
@@ -83,7 +84,7 @@ UI и data разделены, состояние имеет один источ
 Задай JAVA_HOME на JDK 17 и ANDROID_HOME на SDK с platform 36 / Build Tools 36.0.0.
 Из frontend/android запускай `sh scripts/check.sh`: toolchain, clean,
 formatCheck, Debug/Release APK, lintDebug/lintRelease, testDebugUnitTest и
-сборку instrumentation APK (assembleDebugAndroidTest).
+сборку instrumentation APK (Debug и отдельный QA).
 Отдельные команды и пути APK — в [README.md](README.md).
 `./gradlew --no-daemon formatApply` применяет ktlint 1.5.0; `formatCheck` проверяет
 без записи. Android Studio style, 4 пробела, лимит 100, без wildcard imports;
@@ -92,7 +93,10 @@ JVM-тесты читают общие contracts/fixtures без копии и �
 сериализацию, состояние, 401/403, отмену и ViewModel lifecycle. Команда
 `sh scripts/test-device.sh` проверяет реальный Android Keystore на уже открытом
 устройстве. Она не запускает эмуляторы и отказывается работать, если их несколько.
-CI собирает этот набор, но не выполняет его на устройстве.
+`sh scripts/test-ui.sh` использует отдельный Go HTTPS fixture и QA target с другим
+application ID; проверяет слайды, список, форму, черновик и потерянный ответ.
+Не переносить тестовые credentials/CA/intent-настройки в production source set.
+CI собирает оба тестовых набора, но не выполняет их на устройстве.
 
 Gradle ограничен двумя workers и heap 2 ГБ, без параллельных проектов и постоянного
 daemon. Для локальных UI-проверок используй только один Android-эмулятор:

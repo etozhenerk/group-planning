@@ -8,6 +8,9 @@ import java.util.UUID
 
 internal data class PrivateData(
     val meetings: ResourceState<MeetingsPage> = ResourceState(),
+    val meetingsEpoch: UUID = UUID.randomUUID(),
+    val moreRequest: UUID? = null,
+    val moreError: dev.groupplanning.android.data.api.ClientFailure? = null,
     val details: Map<UUID, ResourceState<Meeting>> = emptyMap(),
     val feeds: Map<UUID, ResourceState<FeedPage>> = emptyMap(),
     val participants: Map<UUID, ResourceState<Participants>> = emptyMap(),

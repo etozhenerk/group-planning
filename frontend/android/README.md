@@ -1,11 +1,13 @@
 # somewhere для Android
 
-Основа приложения на Kotlin + Jetpack Compose, минимум Android 8 / API 26.
-Добавлены API, хранилище сессии и состояние встреч. Видимый интерфейс пока
-содержит статичную подпись бренда: онбординг и экраны подключаются отдельно,
-вход не имитируется. Границы —
-[7.2](../../openspec/changes/gathering-activity-feed/android-data.md), результаты —
-[проверка данных и состояния](../../openspec/changes/gathering-activity-feed/android-data-verification.md).
+Приложение на Kotlin + Jetpack Compose, минимум Android 8 / API 26.
+Реализованы фирменный запуск с одним оборотом знака, пять слайдов онбординга,
+личный список и создание встречи с локальным черновиком и безопасным повтором.
+Общий дизайн повторяет утверждённые мобильные экраны iOS и v0.7.
+Обычная сборка открывает онбординг: Яндекс ID подключается в конце разработки.
+Приватные сценарии проверяются отдельной QA-сборкой с настоящим Go API.
+Границы — [Android 7.4](../../openspec/changes/gathering-activity-feed/android-entry.md),
+результаты и снимки — [отчёт проверки](../../openspec/changes/gathering-activity-feed/android-entry-verification.md).
 
 ## Инструменты
 
@@ -59,11 +61,18 @@ sh scripts/check-toolchain.sh
 ./gradlew --no-daemon :app:assembleDebugAndroidTest
 sh scripts/check.sh
 sh scripts/test-device.sh
+sh scripts/test-ui.sh
 ```
 
 `check.sh` выполняет чистую сборку обеих конфигураций, проверку Kotlin-оформления,
 Lint, JVM-тесты и сборку instrumentation APK. `test-device.sh` выполняет
-пять проверок Android Keystore на уже запущенном устройстве. Команда форматирования без `Apply` не пишет файлы.
+пять проверок Android Keystore на уже запущенном устройстве.
+`test-ui.sh` требует Go 1.27.2 и Python 3: поднимает отдельный HTTPS API из Go-теста,
+запускает Compose UI-тесты и затем останавливает только свой сервер. Живое demo
+не перезапускается. Для fixtures используется отдельный application ID
+`dev.groupplanning.android.uitesthost`; credential и сертификат передаются приватным
+файлом, не аргументами команд. TLS проверяет тестовый CA и имя хоста.
+Сервер проверяет, что потерянный ответ и повтор создали ровно одну встречу. Команда форматирования без `Apply` не пишет файлы.
 Форматтер также проверяет Gradle Kotlin DSL. Файлы имеют отступ 4 пробела,
 не более 100 символов в строке, явные импорты; функции Compose — UpperCamelCase.
 Kotlin warnings и Lint warnings останавливают сборку. JVM-набор проверяет общие
@@ -76,7 +85,9 @@ Release APK: `app/build/outputs/apk/release/app-release-unsigned.apk`;
 R8 и удаление неиспользуемых ресурсов включены, публикационная подпись не настроена.
 Отчёты Lint: `app/build/reports/lint-results-debug.html` и `lint-results-release.html`.
 JVM: `app/build/reports/tests/testDebugUnitTest/index.html`;
-instrumentation: `app/build/reports/androidTests/connected/debug/index.html`.
+instrumentation: `app/build/reports/androidTests/connected/debug/index.html`;
+UI: `app/build/reports/androidTests/connected/qa/index.html`;
+снимки UI: `app/build/outputs/connected_android_test_additional_output/`.
 CI в [android.yaml](../../.github/workflows/android.yaml) выполняет ту же команду
 на Ubuntu 24.04 / Temurin 17, без создания эмуляторов.
 
@@ -97,8 +108,9 @@ adb -s <serial> shell am start -n dev.groupplanning.android/.MainActivity
 На текущем компьютере доступен `Pixel_XL_API_36`. Проверка обычной сборки
 не требует запуска эмулятора. `test-device.sh` использует единственное online
 устройство или явный ANDROID_SERIAL и отказывается работать при нескольких
-эмуляторах. Instrumentation проверяет хранилище, а не пользовательский сценарий;
-онбординг, продуктовые экраны и TalkBack ещё не проверены.
+эмуляторах. `test-device.sh` проверяет хранилище, `test-ui.sh` — интерфейс:
+слайды, Back/пропуск, черновик, date/time panels, крупный текст и ошибки API.
+Ручной TalkBack и физическое Android-устройство остаются отдельной проверкой.
 
 ## Структура
 
@@ -122,10 +134,17 @@ AES-GCM key остаётся в Android Keystore. Cookies, redirects, disk cache
 на настройках не отбирает доступ к чату. После уничтожения процесса профиль
 снова проверяется сервером, приватный кеш не восстанавливается с диска.
 
-Следующие этапы подключат UI, пагинацию, отправку и обновление ленты.
+`state/AppViewModel` связывает сессию и навигацию, `CreationViewModel` — форму.
+`data/drafts` хранит черновик по origin и профилю вне backup, с атомарной записью.
+Запрос с ключом сохраняется до отправки; после неопределённого результата поля
+замораживаются до повтора, включая перезапуск. Пагинация защищена от позднего
+ответа после обновления списка. Выбор даты и времени доступен по всему полю.
+
+Следующие этапы — приглашение/RSVP/Share (7.5), чат и обновления (7.6).
+Календарь списка, опросы, задачи и обложка остаются в группах 9–13.
 Не добавляй сетевые операции внутрь Composable, подставной user ID и debug-обход
 входа в обычный target. Тестовые transport/credential storage находятся только
-в test source sets.
+в test/qa source sets. Debug и Release используют отдельный production RuntimeFactory.
 Правила — [AGENTS.md](AGENTS.md); общий дизайн —
 [v0.7](../../docs/design/foundations.md) и
 [мобильный онбординг](../../docs/design/mobile-onboarding.md).

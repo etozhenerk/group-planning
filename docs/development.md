@@ -92,11 +92,13 @@ Swift Testing проверяет её API-модели, URLSession, Keychain и 
 создание, приглашения, RSVP, лента и настройки iOS проверяются через
 `scripts/test-ui.sh` с настоящим Go API и test-only provider в отдельной сборке.
 Unit и UI запускаются последовательно на одном устройстве. Реальный вход,
-БД и сценарии Android ещё не подключены; ручной VoiceOver на устройстве отложен.
+БД остаётся отложенной; ручной VoiceOver на устройстве отложен.
 Основа Android использует Gradle wrapper, ktlint и Android Lint; команда
 `sh scripts/check.sh` из frontend/android собирает Debug/Release и проверяет
 оформление, Lint, JVM-тесты контракта/сессии/состояния и сборку instrumentation APK.
 `sh scripts/test-device.sh` проверяет Android Keystore на уже запущенном
-единственном устройстве. Отчёт и ограничения —
+единственном устройстве. `sh scripts/test-ui.sh` проверяет Android-онбординг,
+список и создание с отдельным Go HTTPS API. Реальный вход, RSVP и чат Android
+ещё не подключены. Отчёт по фундаменту данных и ограничения —
 [Android 7.2](../openspec/changes/gathering-activity-feed/android-data-verification.md).
 Подробные команды — в локальных инструкциях приложений.

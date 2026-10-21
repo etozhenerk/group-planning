@@ -18,17 +18,22 @@ import kotlinx.serialization.DeserializationStrategy
 internal class MeetingRepository(private val session: SessionRepository) {
     val state = session.state
 
-    suspend fun loadMeetings() = load(
-        MeetingRequests.list(),
-        MeetingsPage.serializer(),
-        read = { it.meetings },
-        write = { data, resource ->
-            val page = resource.value?.let { page ->
-                page.copy(meetings = page.meetings.filter { it.id !in data.denied })
-            }
-            data.copy(meetings = resource.copy(value = page))
-        },
-    )
+    suspend fun loadMeetings() {
+        session.beginData {
+            it.copy(meetingsEpoch = UUID.randomUUID(), moreRequest = null, moreError = null)
+        }
+        load(
+            MeetingRequests.list(),
+            MeetingsPage.serializer(),
+            read = { it.meetings },
+            write = { data, resource ->
+                val page = resource.value?.let { page ->
+                    page.copy(meetings = page.meetings.filter { it.id !in data.denied })
+                }
+                data.copy(meetings = resource.copy(value = page))
+            },
+        )
+    }
 
     suspend fun loadMeeting(id: UUID) = load(
         MeetingRequests.details(id),
@@ -52,6 +57,53 @@ internal class MeetingRepository(private val session: SessionRepository) {
             data.copy(participants = data.participants + (id to resource))
         },
     )
+
+    suspend fun loadMore() {
+        val snapshot = state.value.data
+        val cursor = snapshot.meetings.value?.nextCursor ?: return
+        if (snapshot.moreRequest != null || snapshot.meetings.phase == ResourcePhase.Loading) return
+        val request = UUID.randomUUID()
+        val epoch = snapshot.meetingsEpoch
+        val generation =
+            session.beginData { it.copy(moreRequest = request, moreError = null) } ?: return
+        try {
+            session.authenticated(
+                MeetingRequests.list(cursor),
+                MeetingsPage.serializer(),
+                generation,
+            ) { data, page ->
+                if (data.meetingsEpoch != epoch || data.moreRequest != request) {
+                    data
+                } else {
+                    val combined = (data.meetings.value?.meetings.orEmpty() + page.meetings)
+                        .distinctBy { it.id }.filter { it.id !in data.denied }
+                    data.copy(
+                        meetings = data.meetings.copy(value = page.copy(meetings = combined)),
+                        moreRequest = null,
+                    )
+                }
+            }
+        } catch (cancelled: CancellationException) {
+            withContext(NonCancellable) {
+                session.updateData(generation) {
+                    if (it.moreRequest == request) {
+                        it.copy(moreRequest = null)
+                    } else {
+                        it
+                    }
+                }
+            }
+            throw cancelled
+        } catch (error: ClientFailure) {
+            session.updateData(generation) {
+                if (it.moreRequest == request) {
+                    it.copy(moreRequest = null, moreError = error)
+                } else {
+                    it
+                }
+            }
+        }
+    }
 
     private suspend fun <T> load(
         request: ApiRequest,
