@@ -1,4 +1,4 @@
-package dev.groupplanning.android.ui.create
+package dev.groupplanning.android.ui.meetingform
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,18 +18,18 @@ import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.MeetingDraft
 import dev.groupplanning.android.data.drafts.Repetition
-import dev.groupplanning.android.state.CreationState
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-internal fun CreationFields(
-    state: CreationState,
+internal fun MeetingFields(
+    value: MeetingDraft,
+    editable: Boolean,
+    ambiguous: Boolean,
     change: ((MeetingDraft) -> MeetingDraft) -> Unit,
 ) {
-    val value = state.record.value
     var datePicker by rememberSaveable { mutableStateOf(false) }
     var timePicker by rememberSaveable { mutableStateOf(false) }
     val focus = LocalFocusManager.current
@@ -38,7 +38,7 @@ internal fun CreationFields(
             "Название",
             value.title,
             "Например, вечер настольных игр",
-            state.editable,
+            editable,
         ) { title ->
             change { it.copy(title = title) }
         }
@@ -47,7 +47,7 @@ internal fun CreationFields(
                 "Описание · необязательно",
                 value.description,
                 "Что нужно знать друзьям",
-                state.editable,
+                editable,
                 minLines = 3,
             ) { text ->
                 change { it.copy(description = text) }
@@ -69,7 +69,7 @@ internal fun CreationFields(
                     contentDescription = "Дата"
                 },
                 primary = false,
-                enabled = state.editable,
+                enabled = editable,
                 icon = R.drawable.ic_calendar,
             ) {
                 focus.clearFocus()
@@ -84,7 +84,7 @@ internal fun CreationFields(
                     contentDescription = "Время"
                 },
                 primary = false,
-                enabled = state.editable,
+                enabled = editable,
                 icon = R.drawable.ic_clock,
             ) {
                 focus.clearFocus()
@@ -92,7 +92,7 @@ internal fun CreationFields(
             }
             Text("Время встречи · ${value.timezone}", color = Palette.muted, fontSize = 12.sp)
         }
-        if (state.ambiguous) {
+        if (ambiguous) {
             ActionButton("Ранний — до перевода часов", primary = false) {
                 change { it.copy(repetition = Repetition.Earlier) }
             }
@@ -104,7 +104,7 @@ internal fun CreationFields(
             "Место · необязательно",
             value.place,
             "Адрес, название или ориентир",
-            state.editable,
+            editable,
         ) { place ->
             change { it.copy(place = place) }
         }

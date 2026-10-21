@@ -9,6 +9,9 @@ import dev.groupplanning.android.data.drafts.FileDraftStorage
 import dev.groupplanning.android.data.links.FileInvitationStorage
 import dev.groupplanning.android.data.links.InvitationContext
 import dev.groupplanning.android.data.links.InvitationLinks
+import dev.groupplanning.android.data.outbox.FileMessageStorage
+import dev.groupplanning.android.data.outbox.MessageOutbox
+import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.repository.InvitationRepository
 import dev.groupplanning.android.data.repository.MeetingRepository
 import dev.groupplanning.android.data.session.AndroidCredentials
@@ -26,6 +29,7 @@ internal class ClientRuntime(
     val invitationContext: InvitationContext,
     val invitations: InvitationRepository?,
     val candidate: StoredSession? = null,
+    val feeds: FeedRepository? = null,
 ) {
     val meetings: MeetingRepository? = sessions?.let(::MeetingRepository)
 
@@ -40,8 +44,18 @@ internal class ClientRuntime(
             val identity = (origin?.url?.toString() ?: "unconfigured") + namespace
             val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
                 .joinToString("") { "%02x".format(it) }
+            val outbox = MessageOutbox(
+                FileMessageStorage(
+                    File(context.noBackupFilesDir, "messages-$key.bin"),
+                    SessionCipher(AndroidSessionKey("somewhere.messages.$key"), identity),
+                ),
+            )
             val sessions = if (api != null && origin != null) {
-                SessionRepository(api, AndroidCredentials.create(context, origin))
+                SessionRepository(
+                    api,
+                    AndroidCredentials.create(context, origin),
+                    clearPrivate = outbox::clear,
+                )
             } else {
                 null
             }
@@ -66,6 +80,9 @@ internal class ClientRuntime(
                     null
                 },
                 candidate = candidate,
+                feeds = sessions?.let {
+                    FeedRepository(it, outbox)
+                },
             )
         }
     }

@@ -18,6 +18,7 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     val token = "QUFBQUFBQUFBQUFBQUFBQQ"
 
     fun configure() {
+        checkNotNull(context.getExternalFilesDir(null))
         val path = checkNotNull(InstrumentationRegistry.getArguments().getString("fixturePath"))
         require(path.matches(Regex("/data/local/tmp/somewhere-android-ui-[0-9]+.json")))
         File(context.noBackupFilesDir, "ui-fixture.json").writeText(shell("cat $path"))
@@ -56,7 +57,9 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
             checkNotNull(
                 InstrumentationRegistry.getArguments().getString("additionalTestOutputDir"),
             )
-        val directory = File(output).apply { mkdirs() }
+        val directory = File(output).apply {
+            check(mkdirs() || isDirectory) { "Screenshot directory is unavailable: $output" }
+        }
         check(device.takeScreenshot(File(directory, "$name.png")))
     }
 }

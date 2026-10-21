@@ -26,11 +26,19 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.RsvpAnswer
+import dev.groupplanning.android.data.repository.preview
 import dev.groupplanning.android.data.session.ClientSnapshot
+import dev.groupplanning.android.data.session.SessionState
+import dev.groupplanning.android.state.InvitationIssue
 import dev.groupplanning.android.state.InvitationState
+import dev.groupplanning.android.state.feed.FeedViewModel
+import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.AppIcon
+import dev.groupplanning.android.ui.feed.FeedScreen
+import dev.groupplanning.android.ui.settings.MeetingSettingsSheet
 import dev.groupplanning.android.ui.theme.Palette
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,10 +50,14 @@ internal fun InvitationConversation(
     save: () -> Unit,
     reload: () -> Unit,
     back: () -> Unit,
+    feed: FeedViewModel?,
 ) {
-    val details = state.details ?: return
+    val original = state.details ?: return
+    val current = snapshot.data.details[original.preview.meetingId]?.value
+    val details = current?.let { original.copy(meeting = it, preview = it.preview()) } ?: original
     val id = details.preview.meetingId
     var information by remember(id) { mutableStateOf(false) }
+    val settings = feed?.settings?.collectAsStateWithLifecycle()?.value
     val backLabel = stringResource(R.string.my_meetings)
     val infoLabel = stringResource(R.string.meeting_information)
     Column(Modifier.fillMaxSize().testTag("invitation-conversation")) {
@@ -68,7 +80,10 @@ internal fun InvitationConversation(
             }
         }
         HorizontalDivider(color = Palette.border)
-        InvitationMessages(snapshot.data.feeds[id], snapshot, reload, Modifier.weight(1f))
+        val profile = (snapshot.session as? SessionState.Authenticated)?.profile
+        if (feed != null && profile != null) {
+            FeedScreen(feed, profile, Modifier.weight(1f))
+        }
     }
     if (information) {
         ModalBottomSheet(
@@ -83,6 +98,16 @@ internal fun InvitationConversation(
                 verticalArrangement = Arrangement.spacedBy(26.dp),
             ) {
                 InvitationFacts(details.preview, showTitle = false)
+                if (details.organizer) {
+                    ActionButton(
+                        stringResource(R.string.meeting_settings),
+                        Modifier.testTag("open-settings"),
+                        primary = false,
+                    ) {
+                        details.meeting?.let { feed?.openSettings(it) }
+                        if (feed?.settings?.value != null) information = false
+                    }
+                }
                 if (!details.organizer) {
                     RsvpForm(state, true, choose, save)
                 }
@@ -96,12 +121,23 @@ internal fun InvitationConversation(
                 }
                 if (people?.error != null) {
                     InvitationProblem(
-                        dev.groupplanning.android.state.InvitationIssue.Load,
+                        InvitationIssue.Load,
                         true,
                         reload,
                     )
                 }
             }
         }
+    }
+    settings?.let { model ->
+        MeetingSettingsSheet(
+            model,
+            close = { feed?.closeSettings() },
+            saved = {
+                feed?.closeSettings()
+                reload()
+                feed?.refresh()
+            },
+        )
     }
 }

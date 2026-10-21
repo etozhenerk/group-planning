@@ -6,6 +6,7 @@ import dev.groupplanning.android.data.api.FailureKind
 import java.util.UUID
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -20,6 +21,7 @@ internal data class RequestLease(
 internal class SessionGate(
     private val storage: CredentialStorage,
     private val io: CoroutineDispatcher,
+    private val clearPrivate: suspend (UUID?) -> Unit,
 ) {
     private val mutex = Mutex()
     val snapshot = MutableStateFlow(ClientSnapshot())
@@ -66,22 +68,28 @@ internal class SessionGate(
         requests.values.forEach { (_, job) -> if (job !== except) job.cancel() }
         requests.clear()
         credential = null
-        snapshot.value = ClientSnapshot()
+        snapshot.value = ClientSnapshot(generation = generation)
     }
 
-    fun changeAccess(id: UUID, allowed: Boolean, except: Job? = null) {
+    suspend fun changeAccess(id: UUID, allowed: Boolean, except: Job? = null) {
         snapshot.value = snapshot.value.copy(data = snapshot.value.data.changeAccess(id, allowed))
         requests.values.forEach { (meetingId, job) ->
             if (meetingId == id && job !== except) job.cancel()
         }
+        if (!allowed) withContext(NonCancellable) { clearPrivate(id) }
     }
 
     suspend fun invalidate(except: Job?) {
         reset(except)
         try {
-            storage { clear() }
+            try {
+                storage { clear() }
+            } finally {
+                clearPrivate(null)
+            }
         } catch (error: ClientFailure) {
-            snapshot.value = ClientSnapshot(session = SessionState.Failed(error))
+            snapshot.value =
+                ClientSnapshot(session = SessionState.Failed(error), generation = generation)
             throw error
         }
     }

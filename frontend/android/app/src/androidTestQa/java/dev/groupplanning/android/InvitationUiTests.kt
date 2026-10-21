@@ -15,7 +15,9 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.lifecycle.Lifecycle
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertNotEquals
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -108,8 +110,9 @@ class InvitationUiTests {
                 ).fetchSemanticsNodes().isNotEmpty()
             }
             compose.onNodeWithContentDescription("Пригласить друзей").performClick()
-            fixture.device.waitForIdle(2_000)
-            assertNotEquals(fixture.context.packageName, fixture.device.currentPackageName)
+            assertTrue(
+                fixture.device.wait(Until.hasObject(By.pkg("com.android.intentresolver")), 10_000),
+            )
             fixture.screenshot("invitation-system-share")
             fixture.device.pressBack()
             compose.waitUntil(10_000) { activity.state == Lifecycle.State.RESUMED }

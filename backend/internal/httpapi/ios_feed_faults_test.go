@@ -10,18 +10,24 @@ import (
 )
 
 type iosFeedFaults struct {
-	mu      sync.Mutex
-	posts   int
-	keys    map[string]bool
-	ids     map[string]bool
-	changed bool
-	patched bool
-	history bool
+	scenario string
+	mu       sync.Mutex
+	posts    int
+	keys     map[string]bool
+	ids      map[string]bool
+	changed  bool
+	patched  bool
+	history  bool
 }
 
 func (f *iosFeedFaults) handler(api http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("X-Somewhere-Test-Scenario") != "feed-owner" {
+		scenario := f.scenario
+		if scenario == "" {
+			scenario = "feed-owner"
+		}
+
+		if r.Header.Get("X-Somewhere-Test-Scenario") != scenario {
 			api.ServeHTTP(w, r)
 			return
 		}

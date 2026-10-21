@@ -102,9 +102,9 @@ internal class InvitationRepository(
         return result.invitationUrl
     }
 
-    suspend fun loadPrivate(id: UUID) {
+    suspend fun loadPrivate(id: UUID, includeFeed: Boolean = true) {
         meetings.loadParticipants(id)
-        meetings.loadFeed(id)
+        if (includeFeed) meetings.loadFeed(id)
     }
 
     suspend fun refreshList() = meetings.loadMeetings()

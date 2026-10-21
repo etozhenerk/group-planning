@@ -2,6 +2,11 @@
 set -eu
 cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
+somewhere_scope=${1:-all}
+case "$somewhere_scope" in
+    all|persistence) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|persistence]\n' >&2; exit 2 ;;
+esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
 somewhere_count=$(printf '%s\n' "$somewhere_devices" | awk '$2 == "device" {n++} END {print n+0}')
@@ -36,7 +41,7 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 (cd ../../backend && "${GO_BIN:-go}" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
-SOMEWHERE_ANDROID_FIXTURE=1 SOMEWHERE_ANDROID_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
+SOMEWHERE_ANDROID_FIXTURE=1 SOMEWHERE_ANDROID_FIXTURE_SCOPE="$somewhere_scope" SOMEWHERE_ANDROID_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestAndroidFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
 somewhere_fixture=$!
@@ -53,7 +58,32 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 "$somewhere_adb" -s "$ANDROID_SERIAL" reverse "tcp:$somewhere_port" "tcp:$somewhere_port" >/dev/null
 "$somewhere_adb" -s "$ANDROID_SERIAL" push "$somewhere_temporary/config.json" "$somewhere_remote" >/dev/null
 "$somewhere_adb" -s "$ANDROID_SERIAL" shell chmod 600 "$somewhere_remote"
-./gradlew --no-daemon -PsomewhereTestBuildType=qa \
-    "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-    -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.InvitationUiTests \
-    :app:connectedQaAndroidTest
+if [ "$somewhere_scope" = all ]; then
+    ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
+        "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.FeedUiTests \
+        :app:connectedQaAndroidTest
+fi
+
+# Separate instrumentation processes prove disk restoration, not Activity recreation.
+./gradlew --no-daemon -PsomewhereTestBuildType=qa :app:installQa :app:installQaAndroidTest
+somewhere_package=dev.groupplanning.android.uitesthost
+somewhere_output=/sdcard/Android/data/$somewhere_package/files/process-death
+for somewhere_stage in prepareProcessDeath restoreAfterProcessDeath; do
+    "$somewhere_adb" -s "$ANDROID_SERIAL" shell am instrument -w -r \
+        -e fixturePath "$somewhere_remote" \
+        -e additionalTestOutputDir "$somewhere_output" \
+        -e class "dev.groupplanning.android.FeedPersistenceUiTests#$somewhere_stage" \
+        "$somewhere_package.test/androidx.test.runner.AndroidJUnitRunner" \
+        > "$somewhere_temporary/$somewhere_stage.log"
+    cat "$somewhere_temporary/$somewhere_stage.log"
+    grep -q 'OK (1 test)' "$somewhere_temporary/$somewhere_stage.log"
+    "$somewhere_adb" -s "$ANDROID_SERIAL" shell am force-stop "$somewhere_package"
+    if "$somewhere_adb" -s "$ANDROID_SERIAL" shell pidof "$somewhere_package"; then
+        printf 'QA process remained alive after force-stop.\n' >&2
+        exit 1
+    fi
+done
+mkdir -p app/build/outputs/process-death
+"$somewhere_adb" -s "$ANDROID_SERIAL" pull "$somewhere_output/." app/build/outputs/process-death/ >/dev/null
+"$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -rf "$somewhere_output"

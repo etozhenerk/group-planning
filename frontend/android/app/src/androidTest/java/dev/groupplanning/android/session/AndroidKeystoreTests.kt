@@ -143,6 +143,35 @@ class AndroidKeystoreTests {
         assertNull(storage.load())
     }
 
+    @Test fun messageDraftAndIntentSurviveFreshStorageAndRemainOriginBound() {
+        val cipher = SessionCipher(AndroidSessionKey(alias), "https://example.test/")
+        val store = dev.groupplanning.android.data.outbox.FileMessageStorage(file, cipher)
+        val record = dev.groupplanning.android.data.outbox.MessageRecord(
+            UUID.randomUUID(),
+            UUID.randomUUID(),
+            "Следующий текст",
+            dev.groupplanning.android.data.outbox.PendingMessage(
+                UUID.randomUUID(),
+                "Приватный текст",
+                ApiInstant("2026-10-21T12:00:00Z"),
+            ),
+        )
+        store.save(listOf(record))
+        assertFalse(file.readText().contains("Приватный текст"))
+        assertEquals(
+            listOf(record),
+            dev.groupplanning.android.data.outbox.FileMessageStorage(file, cipher).load(),
+        )
+        val wrongOrigin = dev.groupplanning.android.data.outbox.FileMessageStorage(
+            file,
+            SessionCipher(AndroidSessionKey(alias), "https://other.test/"),
+        )
+        assertThrows(ClientFailure::class.java) { wrongOrigin.load() }
+        store.save(emptyList())
+        assertTrue(store.load().isEmpty())
+        assertFalse(file.exists())
+    }
+
     private fun storage(): EncryptedCredentialStorage = EncryptedCredentialStorage(
         file,
         SessionCipher(AndroidSessionKey(alias), "https://example.test/"),

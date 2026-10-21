@@ -13,6 +13,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -54,7 +55,24 @@ internal fun InvitationScreen(model: InvitationViewModel, back: () -> Unit) {
         }
     }
     if (access) {
-        InvitationConversation(state, snapshot, model::choose, model::save, model::reload, back)
+        val feed = remember(
+            model,
+            details?.preview?.meetingId,
+            profile?.id,
+            snapshot.generation,
+            snapshot.data.accessVersion(details?.preview?.meetingId),
+        ) {
+            details?.preview?.meetingId?.let(model::conversation)
+        }
+        InvitationConversation(
+            state,
+            snapshot,
+            model::choose,
+            model::save,
+            model::reload,
+            back,
+            feed,
+        )
     } else {
         Column(Modifier.fillMaxSize().testTag("invitation-screen")) {
             TextButton(back, Modifier.padding(horizontal = 12.dp)) {

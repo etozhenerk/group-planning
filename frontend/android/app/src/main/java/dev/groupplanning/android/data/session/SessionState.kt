@@ -14,4 +14,5 @@ internal sealed interface SessionState {
 internal data class ClientSnapshot(
     val session: SessionState = SessionState.SignedOut,
     val data: PrivateData = PrivateData(),
+    val generation: Long = 0,
 )

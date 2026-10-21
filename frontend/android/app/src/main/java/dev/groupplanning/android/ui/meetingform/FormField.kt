@@ -1,4 +1,4 @@
-package dev.groupplanning.android.ui.create
+package dev.groupplanning.android.ui.meetingform
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -104,7 +104,9 @@ internal class AppViewModel(private val runtime: ClientRuntime, initialLink: Str
         val repository = runtime.invitations ?: return
         clearRoute()
         mutableRoute.value =
-            AppRoute.Invitation(InvitationViewModel(target, repository, childScope()))
+            AppRoute.Invitation(
+                InvitationViewModel(target, repository, childScope(), runtime.feeds),
+            )
     }
 
     fun dismissLinkProblem() {

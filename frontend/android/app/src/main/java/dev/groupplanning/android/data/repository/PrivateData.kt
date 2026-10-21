@@ -1,5 +1,6 @@
 package dev.groupplanning.android.data.repository
 
+import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
 import dev.groupplanning.android.data.api.models.MeetingsPage
@@ -10,7 +11,7 @@ internal data class PrivateData(
     val meetings: ResourceState<MeetingsPage> = ResourceState(),
     val meetingsEpoch: UUID = UUID.randomUUID(),
     val moreRequest: UUID? = null,
-    val moreError: dev.groupplanning.android.data.api.ClientFailure? = null,
+    val moreError: ClientFailure? = null,
     val details: Map<UUID, ResourceState<Meeting>> = emptyMap(),
     val feeds: Map<UUID, ResourceState<FeedPage>> = emptyMap(),
     val participants: Map<UUID, ResourceState<Participants>> = emptyMap(),

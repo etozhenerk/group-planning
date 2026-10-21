@@ -6,9 +6,12 @@ import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.RsvpRequest
 import dev.groupplanning.android.data.links.InvitationTarget
+import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.repository.InvitationDetails
 import dev.groupplanning.android.data.repository.InvitationRepository
 import dev.groupplanning.android.data.session.SessionState
+import dev.groupplanning.android.state.feed.FeedViewModel
+import java.util.UUID
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +28,7 @@ internal class InvitationViewModel(
     val target: InvitationTarget,
     private val repository: InvitationRepository,
     scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+    private val feeds: FeedRepository? = null,
 ) : ViewModel(scope) {
     private val mutable = MutableStateFlow(InvitationState())
     val state = mutable.asStateFlow()
@@ -40,6 +44,33 @@ internal class InvitationViewModel(
                 if (session !is SessionState.Restoring) reload()
             }
         }
+    }
+
+    private var currentFeed: FeedViewModel? = null
+    private var feedIdentity: Triple<UUID, Pair<UUID?, Long>, Long>? = null
+
+    fun conversation(id: UUID): FeedViewModel? {
+        val snapshot = snapshot.value
+        val identity = Triple(
+            id,
+            ((snapshot.session as? SessionState.Authenticated)?.profile?.id to snapshot.generation),
+            snapshot.data.accessVersion(id),
+        )
+        if (currentFeed == null || feedIdentity != identity) {
+            currentFeed?.stop()
+            feedIdentity = identity
+            currentFeed = feeds?.let {
+                FeedViewModel(
+                    id,
+                    it,
+                    CoroutineScope(
+                        viewModelScope.coroutineContext +
+                            SupervisorJob(viewModelScope.coroutineContext[Job]),
+                    ),
+                )
+            }
+        }
+        return currentFeed
     }
 
     fun choose(answer: RsvpAnswer) {
@@ -77,7 +108,7 @@ internal class InvitationViewModel(
                 shareUrl = state.value.shareUrl.takeIf { details.organizer },
             )
             if (details.canAccess) {
-                repository.loadPrivate(details.preview.meetingId)
+                repository.loadPrivate(details.preview.meetingId, includeFeed = feeds == null)
                 if (details.organizer) loadShare(details)
             }
         } catch (cancelled: CancellationException) {

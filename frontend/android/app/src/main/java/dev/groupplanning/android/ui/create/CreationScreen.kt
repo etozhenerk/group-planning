@@ -32,6 +32,7 @@ import dev.groupplanning.android.state.CreationViewModel
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.meetingform.MeetingFields
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -86,7 +87,7 @@ internal fun CreationScreen(
                     )
                 }
             } else {
-                CreationFields(state, model::change)
+                MeetingFields(state.record.value, state.editable, state.ambiguous, model::change)
                 state.problem?.let {
                     Text(it, Modifier.testTag("create-problem"), color = Palette.error)
                 }

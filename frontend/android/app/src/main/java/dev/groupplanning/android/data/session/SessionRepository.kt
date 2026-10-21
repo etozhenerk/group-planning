@@ -27,8 +27,9 @@ internal class SessionRepository(
     storage: CredentialStorage,
     io: CoroutineDispatcher = Dispatchers.IO,
     private val clock: Clock = Clock.systemUTC(),
+    clearPrivate: suspend (UUID?) -> Unit = {},
 ) {
-    private val gate = SessionGate(storage, io)
+    private val gate = SessionGate(storage, io, clearPrivate)
     val state: StateFlow<ClientSnapshot> = gate.snapshot.asStateFlow()
 
     suspend fun restore(candidate: StoredSession? = null): Unit = coroutineScope {
@@ -36,7 +37,8 @@ internal class SessionRepository(
         val version = gate.locked {
             reset(owner)
             restoreJob = owner
-            snapshot.value = ClientSnapshot(session = SessionState.Restoring)
+            snapshot.value =
+                ClientSnapshot(session = SessionState.Restoring, generation = generation)
             generation
         }
         try {
@@ -62,7 +64,11 @@ internal class SessionRepository(
                     storage { save(fresh) }
                     currentCoroutineContext().ensureActive()
                     credential = fresh
-                    snapshot.value = ClientSnapshot(SessionState.Authenticated(verified.user))
+                    snapshot.value =
+                        ClientSnapshot(
+                            SessionState.Authenticated(verified.user),
+                            generation = generation,
+                        )
                 }
             }
         } catch (cancelled: CancellationException) {
@@ -77,7 +83,8 @@ internal class SessionRepository(
                         if (error.status == 401) {
                             invalidate(owner)
                         } else {
-                            snapshot.value = ClientSnapshot(SessionState.Failed(error))
+                            snapshot.value =
+                                ClientSnapshot(SessionState.Failed(error), generation = generation)
                         }
                     }
                 }
@@ -93,12 +100,14 @@ internal class SessionRepository(
         request: ApiRequest,
         serializer: DeserializationStrategy<T>,
         expectedGeneration: Long? = null,
+        expectedLease: RequestLease? = null,
         apply: (PrivateData, T) -> PrivateData = { data, _ -> data },
     ): T = coroutineScope {
         val owner = currentCoroutineContext().job
         val requestId = UUID.randomUUID()
         val (lease, saved) = gate.locked {
             expectedGeneration?.let { requireGeneration(it) }
+            expectedLease?.let { requireLease(it) }
             val saved = credential ?: throw ClientFailure(FailureKind.Http, 401)
             if (saved.expiresAt.instant <= clock.instant()) {
                 withContext(NonCancellable) { invalidate(owner) }
@@ -142,6 +151,18 @@ internal class SessionRepository(
             }
         }
         old?.let { api.sendEmpty(SessionRequests.Logout, it) }
+    }
+
+    suspend fun meetingAccess(id: UUID): MeetingAccess = gate.locked {
+        val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile
+            ?: throw ClientFailure(FailureKind.Http, 401)
+        MeetingAccess(lease(ApiRequest(emptyList(), meetingId = id)), profile)
+    }
+
+    suspend fun <T> withAccess(access: MeetingAccess, block: suspend () -> T): T = gate.locked {
+        requireLease(access.request)
+        currentCoroutineContext().ensureActive()
+        block()
     }
 
     suspend fun isCurrent(version: Long): Boolean = gate.locked {

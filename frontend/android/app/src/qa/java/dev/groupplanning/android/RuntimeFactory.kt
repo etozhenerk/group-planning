@@ -36,6 +36,7 @@ internal object RuntimeFactory {
                 setOf(
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
+                    "feed-owner", "feed-persistence",
                 ),
         )
         val config = apiJson.decodeFromString<Config>(
