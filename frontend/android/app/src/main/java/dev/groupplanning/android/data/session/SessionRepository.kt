@@ -1,0 +1,164 @@
+package dev.groupplanning.android.data.session
+
+import dev.groupplanning.android.data.api.ApiClient
+import dev.groupplanning.android.data.api.ApiRequest
+import dev.groupplanning.android.data.api.ClientFailure
+import dev.groupplanning.android.data.api.FailureKind
+import dev.groupplanning.android.data.api.models.CurrentSession
+import dev.groupplanning.android.data.api.requests.SessionRequests
+import dev.groupplanning.android.data.repository.PrivateData
+import java.time.Clock
+import java.util.UUID
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.job
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.DeserializationStrategy
+
+internal class SessionRepository(
+    private val api: ApiClient,
+    storage: CredentialStorage,
+    io: CoroutineDispatcher = Dispatchers.IO,
+    private val clock: Clock = Clock.systemUTC(),
+) {
+    private val gate = SessionGate(storage, io)
+    val state: StateFlow<ClientSnapshot> = gate.snapshot.asStateFlow()
+
+    suspend fun restore(candidate: StoredSession? = null): Unit = coroutineScope {
+        val owner = currentCoroutineContext().job
+        val version = gate.locked {
+            reset(owner)
+            restoreJob = owner
+            snapshot.value = ClientSnapshot(session = SessionState.Restoring)
+            generation
+        }
+        try {
+            val saved = gate.locked {
+                requireGeneration(version)
+                candidate ?: storage { load() }
+            }
+            if (saved == null || saved.expiresAt.instant <= clock.instant()) {
+                gate.locked {
+                    requireGeneration(version)
+                    invalidate(owner)
+                }
+                return@coroutineScope
+            }
+            val verified = api.send(SessionRequests.Me, CurrentSession.serializer(), saved)
+            gate.locked {
+                requireGeneration(version)
+                currentCoroutineContext().ensureActive()
+                if (verified.expiresAt.instant <= clock.instant()) {
+                    invalidate(owner)
+                } else {
+                    val fresh = StoredSession(saved.token, verified.expiresAt)
+                    storage { save(fresh) }
+                    currentCoroutineContext().ensureActive()
+                    credential = fresh
+                    snapshot.value = ClientSnapshot(SessionState.Authenticated(verified.user))
+                }
+            }
+        } catch (cancelled: CancellationException) {
+            withContext(NonCancellable) {
+                gate.locked { if (generation == version) reset(owner) }
+            }
+            throw cancelled
+        } catch (error: ClientFailure) {
+            withContext(NonCancellable) {
+                gate.locked {
+                    if (generation == version) {
+                        if (error.status == 401) {
+                            invalidate(owner)
+                        } else {
+                            snapshot.value = ClientSnapshot(SessionState.Failed(error))
+                        }
+                    }
+                }
+            }
+        } finally {
+            withContext(NonCancellable) {
+                gate.locked { if (restoreJob === owner) restoreJob = null }
+            }
+        }
+    }
+
+    suspend fun <T> authenticated(
+        request: ApiRequest,
+        serializer: DeserializationStrategy<T>,
+        expectedGeneration: Long? = null,
+        apply: (PrivateData, T) -> PrivateData = { data, _ -> data },
+    ): T = coroutineScope {
+        val owner = currentCoroutineContext().job
+        val requestId = UUID.randomUUID()
+        val (lease, saved) = gate.locked {
+            expectedGeneration?.let { requireGeneration(it) }
+            val saved = credential ?: throw ClientFailure(FailureKind.Http, 401)
+            if (saved.expiresAt.instant <= clock.instant()) {
+                withContext(NonCancellable) { invalidate(owner) }
+                throw ClientFailure(FailureKind.Http, 401)
+            }
+            val lease = lease(request)
+            requests[requestId] = request.meetingId to owner
+            lease to saved
+        }
+        try {
+            val result = api.send(request, serializer, saved)
+            gate.locked {
+                requireLease(lease)
+                currentCoroutineContext().ensureActive()
+                snapshot.value = snapshot.value.copy(data = apply(snapshot.value.data, result))
+            }
+            result
+        } catch (error: ClientFailure) {
+            withContext(NonCancellable) {
+                gate.locked {
+                    requireLease(lease)
+                    if (error.status == 401) {
+                        invalidate(owner)
+                    } else if (error.status == 403 && request.revokesAccessOnForbidden) {
+                        request.meetingId?.let { changeAccess(it, allowed = false, except = owner) }
+                    }
+                }
+            }
+            throw error
+        } finally {
+            withContext(NonCancellable) { gate.locked { requests.remove(requestId) } }
+        }
+    }
+
+    suspend fun logout() {
+        val old = withContext(NonCancellable) {
+            gate.locked {
+                val old = credential
+                invalidate(null)
+                old
+            }
+        }
+        old?.let { api.sendEmpty(SessionRequests.Logout, it) }
+    }
+
+    suspend fun updateAccess(id: UUID, allowed: Boolean) {
+        gate.locked { changeAccess(id, allowed) }
+    }
+
+    suspend fun beginData(update: (PrivateData) -> PrivateData): Long? = gate.locked {
+        if (snapshot.value.session !is SessionState.Authenticated) return@locked null
+        snapshot.value = snapshot.value.copy(data = update(snapshot.value.data))
+        generation
+    }
+
+    suspend fun updateData(version: Long, update: (PrivateData) -> PrivateData) {
+        gate.locked {
+            if (generation == version && snapshot.value.session is SessionState.Authenticated) {
+                snapshot.value = snapshot.value.copy(data = update(snapshot.value.data))
+            }
+        }
+    }
+}

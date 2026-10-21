@@ -95,5 +95,8 @@ Unit и UI запускаются последовательно на одном
 БД и сценарии Android ещё не подключены; ручной VoiceOver на устройстве отложен.
 Основа Android использует Gradle wrapper, ktlint и Android Lint; команда
 `sh scripts/check.sh` из frontend/android собирает Debug/Release и проверяет
-оформление. Набор unit-тестов появится с реализацией состояния в 7.2.
+оформление, Lint, JVM-тесты контракта/сессии/состояния и сборку instrumentation APK.
+`sh scripts/test-device.sh` проверяет Android Keystore на уже запущенном
+единственном устройстве. Отчёт и ограничения —
+[Android 7.2](../openspec/changes/gathering-activity-feed/android-data-verification.md).
 Подробные команды — в локальных инструкциях приложений.
