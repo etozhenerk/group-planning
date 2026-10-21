@@ -2,10 +2,25 @@ name: iOS
 on:
   push:
     branches: [main]
-    paths: [frontend/ios/**, contracts/fixtures/**, backend/**, .github/workflows/ios.yaml]
+    paths:
+      - 'frontend/ios/**'
+      - 'contracts/fixtures/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/ios.yaml'
   pull_request:
-    paths: [frontend/ios/**, contracts/fixtures/**, backend/**, .github/workflows/ios.yaml]
+    paths:
+      - 'frontend/ios/**'
+      - 'contracts/fixtures/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/ios.yaml'
   workflow_dispatch:
+    inputs:
+      full_diagnostics:
+        description: 'Upload full xcresult bundles (large artifacts)'
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -13,32 +28,122 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    name: Build
     runs-on: macos-15
-    timeout-minutes: 25
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
-      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+      - name: Select pinned Xcode
+        id: ready
+        run: |
+          echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Clean Debug simulator build
+        id: debug
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py debug sh frontend/ios/scripts/build.sh Debug build
+      - name: Clean Release simulator build
+        id: release
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py release sh frontend/ios/scripts/build.sh Release build
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: build
+          steps: ${{ toJSON(steps) }}
+  checkers:
+    name: Checkers
+    runs-on: macos-15
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select pinned Xcode
+        id: ready
+        run: |
+          echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Swift format and lint
+        id: format
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py format sh frontend/ios/scripts/format.sh --check
+      - name: Xcode static analysis
+        id: analysis
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py analysis sh frontend/ios/scripts/build.sh Debug analyze
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: Unit and UI tests
+    runs-on: macos-15
+    timeout-minutes: 35
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version-file: backend/go.mod
           cache: false
       - name: Select pinned Xcode
-        run: echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
-      - name: Swift format and lint
-        run: sh frontend/ios/scripts/format.sh --check
-      - name: Clean simulator build and analysis
-        run: sh frontend/ios/scripts/build.sh
-      - name: Models, transport and session tests
-        run: sh frontend/ios/scripts/test.sh
-      - name: Entry, draft and API retry UI tests
+        id: ready
+        run: |
+          echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Models, transport and Keychain tests
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py unit sh frontend/ios/scripts/test.sh
+      - name: UI scenarios and accessibility
         id: ui
-        run: sh frontend/ios/scripts/test-ui.sh
-      - name: Preserve failed UI test diagnostics
-        if: failure() && steps.ui.outcome == 'failure'
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py ui sh frontend/ios/scripts/test-ui.sh
+      - name: Upload full Xcode diagnostics when requested
+        if: ${{ !cancelled() && inputs.full_diagnostics == true }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: ios-ui-${{ github.run_id }}
-          path: frontend/ios/.build/UIResults-*.xcresult
+          name: ios-xcresult-${{ github.run_attempt }}
+          path: |
+            frontend/ios/.build/TestResults-*.xcresult
+            frontend/ios/.build/UIResults-*.xcresult
           include-hidden-files: true
           retention-days: 7
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [build, checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

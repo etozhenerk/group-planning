@@ -1,0 +1,33 @@
+name: CI stage report
+description: Publish step outcomes and bounded text logs even when checks fail.
+inputs:
+  stage:
+    description: Unique stage name within this workflow
+    required: true
+  steps:
+    description: JSON snapshot of the caller's steps
+    required: true
+outputs:
+  failures:
+    description: Failed steps with compact diagnostic excerpts
+    value: ${{ steps.summary.outputs.failures }}
+runs:
+  using: composite
+  steps:
+    - name: Write stage summary
+      id: summary
+      if: always()
+      shell: bash
+      env:
+        STEPS_JSON: ${{ inputs.steps }}
+        STAGE: ${{ inputs.stage }}
+      run: python3 scripts/ci/report.py stage "$STAGE"
+    - name: Upload text logs
+      if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      with:
+        name: logs-${{ github.workflow }}-${{ inputs.stage }}-${{ github.run_attempt }}
+        path: .ci-results/
+        include-hidden-files: true
+        if-no-files-found: warn
+        retention-days: 7

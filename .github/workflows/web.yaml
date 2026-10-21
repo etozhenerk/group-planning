@@ -1,0 +1,162 @@
+name: Web
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/web/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/web.yaml'
+  pull_request:
+    paths:
+      - 'frontend/web/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/web.yaml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Production bundle
+        id: production
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py production npm run web:build
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: build
+          steps: ${{ toJSON(steps) }}
+  checkers:
+    name: Checkers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: TypeScript
+        id: types
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py types npm run typecheck --workspace @somewhere/web
+      - name: ESLint
+        id: eslint
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py eslint npm run lint --workspace @somewhere/web
+      - name: Component styles
+        id: styles
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py styles npm run styles --workspace @somewhere/web
+      - name: FSD and component structure
+        id: architecture
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py architecture npm run architecture --workspace @somewhere/web
+      - name: Prettier
+        id: format
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py format npm run format:check --workspace @somewhere/web
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Vitest
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py unit npm run test --workspace @somewhere/web
+      - name: Install Chromium
+        id: browser
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py browser npx --no-install playwright install --with-deps chromium
+      - name: Browser scenarios with Go API
+        id: e2e
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py e2e npm run web:test:e2e
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [build, checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

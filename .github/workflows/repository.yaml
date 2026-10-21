@@ -1,0 +1,130 @@
+name: Repository
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'docs/**'
+      - 'openspec/**'
+      - '.agents/**'
+      - 'scripts/**'
+      - '.github/**'
+      - '.gitignore'
+      - 'frontend/*/AGENTS.md'
+      - 'backend/AGENTS.md'
+      - 'frontend/web/package.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'docs/**'
+      - 'openspec/**'
+      - '.agents/**'
+      - 'scripts/**'
+      - '.github/**'
+      - '.gitignore'
+      - 'frontend/*/AGENTS.md'
+      - 'backend/AGENTS.md'
+      - 'frontend/web/package.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: repository-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checkers:
+    name: Repository checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Instructions, links and OpenSpec
+        id: agent
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py agent npm run agent:check
+      - name: GitHub Actions syntax and expressions
+        id: actions
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py actions go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12 -color
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: CI tooling tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Exit codes, logs and failure summaries
+        id: reports
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py reports python3 -m unittest discover -s scripts/ci -p "test_*.py" -v
+      - name: Platform trigger isolation
+        id: routing
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py routing node --test scripts/ci/routing.test.mjs
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

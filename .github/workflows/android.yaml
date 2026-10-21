@@ -2,9 +2,21 @@ name: Android
 on:
   push:
     branches: [main]
-    paths: [frontend/android/**, contracts/fixtures/**, .github/workflows/android.yaml]
+    paths:
+      - 'frontend/android/**'
+      - 'contracts/fixtures/**'
+      - '.github/actions/setup-android/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/android.yaml'
   pull_request:
-    paths: [frontend/android/**, contracts/fixtures/**, .github/workflows/android.yaml]
+    paths:
+      - 'frontend/android/**'
+      - 'contracts/fixtures/**'
+      - '.github/actions/setup-android/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/android.yaml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -13,19 +25,115 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+      - name: Prepare Android toolchain
+        id: ready
+        uses: ./.github/actions/setup-android
+      - name: Clean Debug APK and instrumentation APK
+        id: debug
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py debug ./gradlew --no-daemon clean :app:assembleDebug :app:assembleDebugAndroidTest
+      - name: Release APK
+        id: release
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py release ./gradlew --no-daemon :app:assembleRelease
+      - name: QA host and UI test APK
+        id: qa
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py qa ./gradlew --no-daemon -PsomewhereTestBuildType=qa :app:assembleQa :app:assembleQaAndroidTest
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
         with:
-          distribution: temurin
-          java-version: '17'
-      - name: Install pinned Android SDK packages
-        run: |
-          "${ANDROID_HOME:?}/cmdline-tools/latest/bin/sdkmanager" \
-            --sdk_root="$ANDROID_HOME" 'platforms;android-36' 'build-tools;36.0.0'
-      - name: Kotlin style, clean build, Lint and unit tests
-        run: sh frontend/android/scripts/check.sh
+          stage: build
+          steps: ${{ toJSON(steps) }}
+  checkers:
+    name: Checkers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Prepare Android toolchain
+        id: ready
+        uses: ./.github/actions/setup-android
+      - name: Kotlin and Gradle formatting
+        id: format
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py format ./gradlew --no-daemon formatCheck
+      - name: Android Lint Debug
+        id: lint_debug
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py lint_debug ./gradlew --no-daemon :app:lintDebug
+      - name: Android Lint Release
+        id: lint_release
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py lint_release ./gradlew --no-daemon :app:lintRelease
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: JVM tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Prepare Android toolchain
+        id: ready
+        uses: ./.github/actions/setup-android
+      - name: JVM unit tests
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: frontend/android
+        run: python3 ../../scripts/ci/run.py unit ./gradlew --no-daemon :app:testDebugUnitTest
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [build, checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

@@ -1,0 +1,15 @@
+name: Android toolchain
+description: Install the pinned JDK and SDK packages used by all Android stages.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+      with:
+        distribution: temurin
+        java-version: '17'
+    - name: Install pinned Android SDK packages
+      shell: bash
+      run: |
+        "${ANDROID_HOME:?}/cmdline-tools/latest/bin/sdkmanager" \
+          --sdk_root="$ANDROID_HOME" 'platforms;android-36' 'build-tools;36.0.0'
+        sh frontend/android/scripts/check-toolchain.sh

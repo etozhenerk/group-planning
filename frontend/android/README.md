@@ -85,8 +85,10 @@ JVM: `app/build/reports/tests/testDebugUnitTest/index.html`;
 instrumentation: `app/build/reports/androidTests/connected/debug/index.html`;
 UI: `app/build/reports/androidTests/connected/qa/index.html`;
 снимки UI: `app/build/outputs/connected_android_test_additional_output/`.
-CI в [android.yaml](../../.github/workflows/android.yaml) выполняет ту же команду
-на Ubuntu 24.04 / Temurin 17, без создания эмуляторов.
+CI в [android.yaml](../../.github/workflows/android.yaml) выполняет эти Gradle-задачи
+на Ubuntu 24.04 / Temurin 17 в отдельных jobs сборки, чекеров и JVM-тестов,
+без создания эмуляторов. Итоговая сводка показывает ошибки по этапам;
+подробности — в [правилах CI](../../docs/ci.md).
 
 ## Запуск
 

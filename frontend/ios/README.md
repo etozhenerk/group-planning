@@ -51,6 +51,8 @@ sh scripts/test-ui.sh startup
 4 пробела, строка до 100 символов, не больше одной пустой строки подряд.
 `build.sh` выполняет clean/build/analyze с отключённой подписью на
 `generic/platform=iOS Simulator`; Apple Developer account и секреты не нужны.
+Для отдельных этапов CI используй `sh scripts/build.sh Debug build` и
+`sh scripts/build.sh Debug analyze`; без второго аргумента выполняются все этапы.
 Результаты находятся в игнорируемом `.build/DerivedData`.
 Сборки и тесты ограничены двумя задачами Xcode (`SOMEWHERE_XCODE_JOBS`).
 
@@ -65,8 +67,11 @@ sh scripts/test-ui.sh startup
 Сборка для симулятора не проверяет публикацию и подпись на реальном устройстве.
 Минимум 17 закреплён в бинарнике; отдельный запуск на iOS 17 ещё не проверен.
 
-В [CI](../../.github/workflows/ios.yaml) те же lint, чистая сборка и анализ
-и Swift Testing запускаются при изменениях iOS и общих fixtures. `test.sh` использует
+В [CI](../../.github/workflows/ios.yaml) сборка Debug/Release, чекеры и тесты имеют
+отдельные jobs. Они запускаются при изменениях iOS и общих fixtures.
+Сводки и текстовые логи публикуются после прогона; полный `.xcresult` — только
+при ручном запуске с `full_diagnostics`. Подробности — в [правилах CI](../../docs/ci.md).
+`test.sh` использует
 уже открытый симулятор iOS 26 и запускает `SomewhereTests`.
 Если открыто несколько, задай `SOMEWHERE_SIMULATOR_ID=<UDID>`.
 Локально новые устройства не создаются; скрипт не выключает и не удаляет

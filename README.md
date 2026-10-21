@@ -67,4 +67,5 @@ scripts/             Инструменты репозитория
 - [Архитектурные решения](docs/architecture/decisions.md)
 - [Дизайн и правила соответствия макетам](docs/design/README.md)
 - [Соглашения кода и проверки](docs/development.md)
+- [CI: этапы, фильтры платформ и отчёты](docs/ci.md)
 - [Работа с агентом и OpenSpec](docs/workflow.md)

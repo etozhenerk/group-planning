@@ -1,0 +1,114 @@
+name: Contracts
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'contracts/**'
+      - 'backend/**'
+      - 'scripts/check-api-contract.mjs'
+      - 'scripts/test-api-contract.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/contracts.yaml'
+  pull_request:
+    paths:
+      - 'contracts/**'
+      - 'backend/**'
+      - 'scripts/check-api-contract.mjs'
+      - 'scripts/test-api-contract.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.nvmrc'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/contracts.yaml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: contracts-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checkers:
+    name: OpenAPI checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Lint OpenAPI
+        id: openapi
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py openapi npm run api:lint
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: HTTP contract tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Install dependencies
+        id: ready
+        run: python3 scripts/ci/run.py ready npm ci
+      - name: Validate real HTTP responses
+        id: responses
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py responses node scripts/test-api-contract.mjs
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

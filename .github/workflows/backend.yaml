@@ -1,0 +1,145 @@
+name: Backend
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/backend.yaml'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'scripts/ci/**'
+      - '.github/actions/ci-report/**'
+      - '.github/workflows/backend.yaml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: Compile Go packages
+        id: compile
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py compile go build ./...
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: build
+          steps: ${{ toJSON(steps) }}
+  checkers:
+    name: Checkers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: gofumpt and whitespace
+        id: format
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py format sh scripts/format.sh --check
+      - name: gofmt
+        id: gofmt
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py gofmt sh -c 'files=$(gofmt -l .); if [ -n "$files" ]; then printf "%s\n" "$files"; exit 1; fi'
+      - name: Go vet
+        id: vet
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py vet go vet ./...
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: Go tests with race detector
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py unit go test -race ./...
+      - name: Memory storage scenario
+        id: storage
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: backend
+        run: python3 ../scripts/ci/run.py storage go run ./cmd/storage-demo
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs: [build, checkers, tests]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow
