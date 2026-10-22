@@ -64,10 +64,7 @@ for (const width of [320, 390, 768, 1440]) {
     await share.click();
     const invitation = page.getByRole('dialog', { name: 'Приглашение для друзей' });
     await expect(invitation).toBeVisible();
-    await expect(invitation).toHaveCSS(
-      'animation-name',
-      width < 740 ? /sheet-enter/ : /dialog-enter/,
-    );
+    await expect(invitation).toHaveAttribute('data-motion', 'open');
     const copy = invitation.getByRole('button', { name: 'Скопировать ссылку' });
     await expect(copy).toBeVisible();
     await expect(copy).not.toHaveCSS('font-size', '0px');

@@ -23,7 +23,7 @@ for (const width of [320, 390, 1440]) {
 
     const open = page.getByRole('button', { name: 'Добавить опрос даты' });
     await open.click();
-    const dialog = page.getByRole('dialog', { name: 'Когда встречаемся?' });
+    const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
     const body = dialog.getByTestId('poll-form-scroll');
     const footer = dialog.getByTestId('poll-form-footer');
     const submit = dialog.getByRole('button', { name: 'Создать опрос', exact: true });
@@ -91,6 +91,10 @@ for (const width of [320, 390, 1440]) {
 
     await page.setViewportSize({ width, height: 600 });
     await expect(footer).not.toHaveCSS('box-shadow', 'none');
+    await page.screenshot({
+      path: `test-results/poll-shadow-${width}.png`,
+      animations: 'disabled',
+    });
     const before = await page.evaluate(() => ({ x: scrollX, y: scrollY }));
     const feedBefore = await feed.evaluate((element) => element.scrollTop);
     await page.mouse.move(4, 4);

@@ -17,6 +17,7 @@ button.icon {
   max-height: calc(100dvh - 24px);
   padding: 24px;
   overflow-y: auto;
+  transform: translateY(0);
   overscroll-behavior: contain;
 }
 
@@ -29,6 +30,7 @@ button.icon {
 .dialog::backdrop {
   background: #0009;
   backdrop-filter: blur(5px);
+  opacity: var(--backdrop-opacity, 1);
 }
 
 .dialog-heading {
@@ -44,24 +46,22 @@ button.icon {
   margin: 0;
 }
 
-.dialog[open] {
-  animation: dialog-enter 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.drag-region {
+  flex-shrink: 0;
 }
 
-.dialog[open]::backdrop {
-  animation: backdrop-enter 200ms ease-out both;
+.dialog[data-motion='opening'],
+.dialog[data-motion='closing'],
+.dialog[data-dragging='true'] {
+  will-change: transform, opacity;
 }
 
-@keyframes dialog-enter {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.97);
-  }
+.dialog[data-motion='opening']::backdrop {
+  animation: backdrop-enter 280ms ease-out both;
+}
 
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.dialog[data-motion='closing']::backdrop {
+  animation: backdrop-exit 220ms ease-in both;
 }
 
 @keyframes backdrop-enter {
@@ -74,13 +74,13 @@ button.icon {
   }
 }
 
-@keyframes sheet-enter {
+@keyframes backdrop-exit {
   from {
-    transform: translateY(100%);
+    opacity: var(--backdrop-opacity, 1);
   }
 
   to {
-    transform: none;
+    opacity: 0;
   }
 }
 
@@ -97,7 +97,12 @@ button.icon {
     overscroll-behavior: contain;
   }
 
-  .dialog::before {
+  .drag-region {
+    touch-action: none;
+    user-select: none;
+  }
+
+  .drag-region::before {
     content: '';
     flex-shrink: 0;
     display: block;
@@ -107,10 +112,6 @@ button.icon {
     border-radius: 2px;
     background: var(--muted);
     opacity: 0.5;
-  }
-
-  .dialog[open] {
-    animation: sheet-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 

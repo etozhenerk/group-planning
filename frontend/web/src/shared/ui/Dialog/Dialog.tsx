@@ -7,6 +7,7 @@ import { PortalProvider, DefaultPropsProvider } from '@gravity-ui/uikit';
 import { popupDefaults } from '@/shared/ui/Dialog/lib/popupDefaults';
 import { preservePopupEscape } from '@/shared/ui/Dialog/lib/preservePopupEscape';
 import { useDialog } from '@/shared/ui/Dialog/hooks/useDialog';
+import { useSheetDismiss } from '@/shared/ui/Dialog/hooks/useSheetDismiss';
 
 export type DialogProps = {
   open: boolean;
@@ -23,7 +24,8 @@ export const Dialog = ({
   children,
   contained = false,
 }: DialogProps) => {
-  const ref = useDialog(open);
+  const dialog = useDialog(open, children);
+  const swipe = useSheetDismiss(dialog.ref, onClose);
   const heading = useId();
   const backdrop = useBackdropDismiss(onClose);
 
@@ -34,25 +36,38 @@ export const Dialog = ({
         .join(' ')}
       onPointerDown={backdrop.pointerDown}
       onClick={backdrop.click}
-      ref={ref}
+      ref={dialog.ref}
       aria-labelledby={heading}
-      onCancel={onClose}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
       onKeyDownCapture={preservePopupEscape}
     >
-      <div className={styles['dialog-heading']}>
-        <h2 id={heading}>{title}</h2>
-        <button
-          type="button"
-          className={[styles['icon'], styles['ghost']].join(' ')}
-          onClick={onClose}
-          aria-label="Закрыть"
-        >
-          <X aria-hidden="true" size={20} />
-        </button>
+      <div
+        className={styles['drag-region']}
+        onPointerDown={swipe.start}
+        onPointerMove={swipe.move}
+        onPointerUp={swipe.end}
+        onPointerCancel={swipe.cancel}
+        onLostPointerCapture={swipe.cancel}
+        data-testid="dialog-drag-region"
+      >
+        <div className={styles['dialog-heading']}>
+          <h2 id={heading}>{title}</h2>
+          <button
+            type="button"
+            className={[styles['icon'], styles['ghost']].join(' ')}
+            onClick={onClose}
+            aria-label="Закрыть"
+          >
+            <X aria-hidden="true" size={20} />
+          </button>
+        </div>
       </div>
-      <PortalProvider container={ref}>
+      <PortalProvider container={dialog.ref}>
         <DefaultPropsProvider defaultProps={popupDefaults}>
-          {children}
+          {dialog.content}
         </DefaultPropsProvider>
       </PortalProvider>
     </dialog>

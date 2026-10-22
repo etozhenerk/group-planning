@@ -36,7 +36,7 @@ export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardPro
         <ChartNoAxesColumnIncreasing size={18} aria-hidden="true" />
         Предлагает изменить дату
       </div>
-      <h3>Когда встречаемся?</h3>
+      <h3>Новая дата встречи</h3>
       {poll ? (
         <>
           <p className={styles['note']}>

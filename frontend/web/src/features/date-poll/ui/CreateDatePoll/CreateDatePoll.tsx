@@ -30,7 +30,7 @@ export const CreateDatePoll = ({ id, session }: CreateDatePollProps) => {
       </button>
       <Dialog
         open={open}
-        title="Когда встречаемся?"
+        title="Новая дата встречи"
         contained
         onClose={() => setOpen(false)}
       >
