@@ -14,7 +14,16 @@ for (const width of [390, 1440]) {
     await open.click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     const height = (await dialog.boundingBox())?.height;
-    await dialog.getByRole('button', { name: 'Закрыть', exact: true }).click();
+
+    if (width < 740) {
+      await expect(
+        dialog.getByRole('button', { name: 'Закрыть', exact: true }),
+      ).toHaveCount(0);
+      await page.keyboard.press('Escape');
+    } else {
+      await dialog.getByRole('button', { name: 'Закрыть', exact: true }).click();
+    }
+
     await expect(dialog).toHaveAttribute('data-motion', 'closing');
     await expect(dialog).toBeVisible();
     await expect(
@@ -93,3 +102,54 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expect(dialog).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
 });
+
+for (const width of [320, 390]) {
+  test(`swipe starts at the top edge, handle and side padding at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await login(page, 'Саша');
+    const { meeting } = await apiCreate(page, 'Вся верхняя область шторки');
+    await page.goto(`/meetings/${meeting.id}`);
+    const open = page.getByRole('button', { name: 'Добавить опрос даты' });
+    const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
+    const touch = await page.context().newCDPSession(page);
+    await touch.send('Emulation.setTouchEmulationEnabled', { enabled: true });
+
+    for (const point of [
+      { x: width / 2, y: 3 },
+      { x: width / 2, y: 14 },
+      { x: 8, y: 32 },
+    ]) {
+      await open.click();
+      await expect(dialog).toHaveAttribute('data-motion', 'open');
+      await expect(
+        dialog.getByRole('button', { name: 'Закрыть', exact: true }),
+      ).toHaveCount(0);
+      const bounds = await dialog.boundingBox();
+      const top = bounds?.y ?? 0;
+      const start = { x: point.x, y: top + point.y };
+      await touch.send('Input.dispatchTouchEvent', {
+        type: 'touchStart',
+        touchPoints: [start],
+      });
+      await touch.send('Input.dispatchTouchEvent', {
+        type: 'touchMove',
+        touchPoints: [{ x: start.x, y: start.y + 160 }],
+      });
+      await expect(dialog).toHaveAttribute('data-dragging', 'true');
+      expect((await dialog.boundingBox())?.y).toBeCloseTo(top + 160, 0);
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      await expect(dialog).not.toBeVisible();
+      await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    }
+
+    await touch.detach();
+    await open.click();
+    await expect(dialog).toHaveAttribute('data-motion', 'open');
+    await page.screenshot({
+      path: `test-results/poll-sheet-header-${width}.png`,
+      animations: 'disabled',
+    });
+  });
+}
