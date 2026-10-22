@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
@@ -88,7 +89,7 @@ func TestIOSFixture(t *testing.T) {
 		"66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777")
 	feedOwner := iosCredential(t, service, "feed-owner")
 	seedIOSFeed(t, store, service, feedOwner)
-	api := NewWithIdentity(store, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	server.Config.Handler = feedFaults.handler(faults.handler(api))
 	server.StartTLS()

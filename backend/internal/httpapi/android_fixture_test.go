@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
@@ -67,7 +68,7 @@ func TestAndroidFixture(t *testing.T) {
 		"ffffffff-ffff-4fff-8fff-ffffffffffff", "12121212-1212-4212-8212-121212121212")
 	feed := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	persistence := &iosFeedFaults{scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
-	api := NewWithIdentity(store, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	server.Config.Handler = persistence.handler(feed.handler(faults.handler(api)))
 	server.StartTLS()
 	defer server.Close()

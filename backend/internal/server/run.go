@@ -26,14 +26,15 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		return nil
 	}
 
-	service, err := newIdentity(config.Auth, store)
+	app := meetings.NewService(store, time.Now)
+	service, err := newIdentity(config.Auth, app.InvitationExists)
 	if err != nil {
 		return err
 	}
 
-	var handler http.Handler = httpapi.NewWithIdentity(store, service, logger)
+	var handler http.Handler = httpapi.NewWithIdentity(app, service, logger)
 	if config.WebDirectory != "" {
-		site, err := webui.New(store, config.WebDirectory, config.WebOrigin)
+		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {
 			return err
 		}

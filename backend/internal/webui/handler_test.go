@@ -39,7 +39,7 @@ func fixture(t *testing.T, size int, description string) (http.Handler, string, 
 		t.Fatal(err)
 	}
 
-	site, err := New(store, directory, "https://somewhere.example")
+	site, err := New(meetings.NewService(store, time.Now), directory, "https://somewhere.example")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -113,7 +113,7 @@ func TestLegacyInvalidAndFallback(t *testing.T) {
 
 func TestInvalidWebConfiguration(t *testing.T) {
 	directory := t.TempDir()
-	if _, err := New(memory.New(), directory, "https://somewhere.example"); err == nil {
+	if _, err := New(meetings.NewService(memory.New(), time.Now), directory, "https://somewhere.example"); err == nil {
 		t.Fatal("accepted missing bundle")
 	}
 
@@ -122,7 +122,7 @@ func TestInvalidWebConfiguration(t *testing.T) {
 	}
 
 	for _, origin := range []string{"http://host", "https://host/", "https://host#", "https://host?", "https://user:password@host", "https://host/path"} {
-		if _, err := New(memory.New(), directory, origin); err == nil {
+		if _, err := New(meetings.NewService(memory.New(), time.Now), directory, origin); err == nil {
 			t.Fatal("accepted invalid origin", origin)
 		}
 	}

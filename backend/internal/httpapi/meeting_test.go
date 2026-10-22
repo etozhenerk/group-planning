@@ -73,7 +73,7 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 		t.Fatal(err)
 	}
 
-	h.server.Config.Handler = NewWithIdentity(h.store, service, slog.New(slog.NewJSONHandler(&h.logs, nil)))
+	h.server.Config.Handler = NewWithIdentity(meetings.NewService(h.store, time.Now), service, slog.New(slog.NewJSONHandler(&h.logs, nil)))
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)

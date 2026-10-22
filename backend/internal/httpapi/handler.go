@@ -21,14 +21,14 @@ type previewResponse struct {
 	MyRSVPRevision string     `json:"my_rsvp_revision"`
 }
 
-// New builds public routes and disabled auth endpoints for standalone storage tests.
-func New(store meetings.Store, logger *slog.Logger) http.Handler {
-	return NewWithIdentity(store, nil, logger)
+// New binds meeting operations to public routes with authentication disabled.
+func New(app *meetings.Service, logger *slog.Logger) http.Handler {
+	return NewWithIdentity(app, nil, logger)
 }
 
 // NewWithIdentity binds verified identity to authentication routes. A nil service
 // disables sign-in and never authorizes a user.
-func NewWithIdentity(store meetings.Store, service *identity.Service, logger *slog.Logger) http.Handler {
+func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *slog.Logger) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -39,7 +39,7 @@ func NewWithIdentity(store meetings.Store, service *identity.Service, logger *sl
 			Status string `json:"status"`
 		}{"ok"})
 	})
-	registerMeetings(mux, store, service)
+	registerMeetings(mux, app, service)
 	registerAuth(mux, service)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "not_found", nil)

@@ -80,6 +80,7 @@
 | HTTP-контракт | `npm run api:test` | Корень |
 | Веб: оформление, типы, FSD, тесты | `npm run web:check` | Корень |
 | Веб: сборка и E2E | `npm run web:build`, `npm run web:test:e2e` | Корень |
+| Go: границы модулей | `go run ./cmd/check-dependencies` | `backend` |
 | Go: оформление | `sh scripts/format.sh --check` | `backend` |
 | Go: тесты, анализ, сборка | `go test -race ./...`, `go vet ./...`, `go build ./...` | `backend` |
 | iOS: оформление и сборка | `sh scripts/format.sh --check`, `sh scripts/build.sh` | `frontend/ios` |

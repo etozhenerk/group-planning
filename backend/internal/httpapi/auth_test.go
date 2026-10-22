@@ -72,7 +72,7 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	server.Config.Handler = NewWithIdentity(store, service, slog.New(slog.NewJSONHandler(&logs, nil)))
+	server.Config.Handler = NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewJSONHandler(&logs, nil)))
 	server.StartTLS()
 	defer server.Close()
 	jar, _ := cookiejar.New(nil)
@@ -300,7 +300,7 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 }
 
 func TestAuthDisabledAndUnknownInputs(t *testing.T) {
-	handler := New(memory.New(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	handler := New(meetings.NewService(memory.New(), time.Now), slog.New(slog.NewTextHandler(io.Discard, nil)))
 	for path, status := range map[string]int{
 		"/api/v1/auth/yandex/start":    503,
 		"/api/v1/auth/mobile/exchange": 503,

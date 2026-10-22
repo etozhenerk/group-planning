@@ -2,6 +2,7 @@
 package webui
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -13,16 +14,21 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
+// InvitationReader exposes only the public invitation snapshot, never storage.
+type InvitationReader interface {
+	PublicPreview(context.Context, string) (meetings.PublicInvitation, error)
+}
+
 type handler struct {
-	directory string
-	origin    string
-	store     meetings.Store
-	static    http.Handler
+	directory   string
+	origin      string
+	invitations InvitationReader
+	static      http.Handler
 }
 
 // New serves a prebuilt client. The trusted HTTPS origin supplies canonical URLs.
 // It does not enable authentication or seed any meetings.
-func New(store meetings.Store, directory, origin string) (http.Handler, error) {
+func New(invitations InvitationReader, directory, origin string) (http.Handler, error) {
 	address, err := url.Parse(origin)
 	if err != nil || address.Scheme != "https" || address.Hostname() == "" || address.User != nil || address.Path != "" || address.RawQuery != "" || address.Fragment != "" || address.ForceQuery || origin != "https://"+address.Host {
 		return nil, fmt.Errorf("web origin must be an HTTPS origin without credentials, path, query or fragment")
@@ -37,7 +43,7 @@ func New(store meetings.Store, directory, origin string) (http.Handler, error) {
 		return nil, fmt.Errorf("web directory must contain a built index.html with a head element")
 	}
 
-	return &handler{directory: directory, origin: origin, store: store, static: http.FileServer(http.Dir(directory))}, nil
+	return &handler{directory: directory, origin: origin, invitations: invitations, static: http.FileServer(http.Dir(directory))}, nil
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

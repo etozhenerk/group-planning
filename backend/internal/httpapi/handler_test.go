@@ -71,7 +71,7 @@ type capturedResponse struct {
 func TestOpenAPIResponses(t *testing.T) {
 	var logs bytes.Buffer
 	store := seededStore(t)
-	handler := New(store, slog.New(slog.NewJSONHandler(&logs, nil)))
+	handler := New(meetings.NewService(store, time.Now), slog.New(slog.NewJSONHandler(&logs, nil)))
 	cases := []struct {
 		path, method, operationPath string
 		status                      int
@@ -170,7 +170,7 @@ func (store brokenStore) View(context.Context, func(meetings.Reader) error) erro
 func TestFailuresDoNotExposeDetails(t *testing.T) {
 	for _, panics := range []bool{false, true} {
 		var logs bytes.Buffer
-		handler := New(brokenStore{panicValue: panics}, slog.New(slog.NewJSONHandler(&logs, nil)))
+		handler := New(meetings.NewService(brokenStore{panicValue: panics}, time.Now), slog.New(slog.NewJSONHandler(&logs, nil)))
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, httptest.NewRequest("GET", "/api/v1/invitations/"+invitationToken, nil))
 		if response.Code != 500 || strings.Contains(response.Body.String(), "private-") || strings.Contains(logs.String(), "private-") {
@@ -190,7 +190,7 @@ func TestFailuresDoNotExposeDetails(t *testing.T) {
 
 func TestUnknownRoutesAndHead(t *testing.T) {
 	logger := slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil))
-	handler := New(seededStore(t), logger)
+	handler := New(meetings.NewService(seededStore(t), time.Now), logger)
 	for _, path := range []string{"/unknown", "/api//v1/invitations/secret", "/api/v1/invitations/../secret"} {
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, httptest.NewRequest("GET", path, nil))

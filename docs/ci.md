@@ -42,7 +42,7 @@
 | Платформа | Сборка | Чекеры | Тесты |
 | --- | --- | --- | --- |
 | Web | Production bundle | TypeScript, ESLint, стили, FSD, Prettier | Vitest, затем Playwright с отдельным Go API |
-| Backend | Go packages | gofumpt, whitespace, gofmt, go vet | Race detector и сценарий memory-хранилища |
+| Backend | Go packages | gofumpt, whitespace, gofmt, границы зависимостей, go vet | Race detector и сценарий memory-хранилища |
 | iOS | Чистые Debug и Release для симулятора | swift-format, Xcode analysis | Swift Testing и XCUITest последовательно |
 | Android | Debug, Release, QA и test APK | Kotlin format, Android Lint Debug/Release | JVM unit tests |
 

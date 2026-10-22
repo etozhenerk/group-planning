@@ -95,10 +95,18 @@ web-cookie и native Bearer-сессиями. Вход выключен без �
 go run ./cmd/storage-demo
 go test -race ./...
 go vet ./...
+go run ./cmd/check-dependencies
 go build ./...
 sh scripts/format.sh --check
 gofmt -l .
 ```
+
+Контроллер `go run ./cmd/check-dependencies` проверяет production-файлы,
+включая неактивные build tags и платформенные варианты. Политика находится
+в `internal/architecture/policy.go`; новый модуль или внешняя зависимость
+требуют обновления политики и тестов. Контроллер запрещает обход прикладных
+операций через порты хранения и создание сервисов в transport. Тестовые
+fixtures могут собирать зависимости, production-исключений для них нет.
 
 Обе проверки оформления должны проходить без замечаний. Для исправления —
 `sh scripts/format.sh --write`; `gofmt` сохраняется как дополнительная проверка

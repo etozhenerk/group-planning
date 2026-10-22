@@ -3,7 +3,6 @@ package httpapi
 import (
 	"errors"
 	"net/http"
-	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
@@ -15,8 +14,8 @@ type meetingHandlers struct {
 	auth     authHandlers
 }
 
-func registerMeetings(mux *http.ServeMux, store meetings.Store, service *identity.Service) {
-	h := meetingHandlers{meetings.NewService(store, time.Now), service, authHandlers{service}}
+func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service) {
+	h := meetingHandlers{app, service, authHandlers{service}}
 	mux.HandleFunc("/api/v1/meetings", h.collection)
 	mux.HandleFunc("/api/v1/meetings/{id}", h.details)
 	mux.HandleFunc("/api/v1/meetings/{id}/invitation", h.invitation)

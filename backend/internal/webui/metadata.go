@@ -50,7 +50,7 @@ func (h *handler) invitation(w http.ResponseWriter, r *http.Request) {
 		token = strings.TrimPrefix(r.URL.Path, "/i/")
 	}
 
-	preview, err := meetings.Preview(r.Context(), h.store, token)
+	preview, err := h.invitations.PublicPreview(r.Context(), token)
 	if err != nil {
 		status := http.StatusServiceUnavailable
 		if errors.Is(err, meetings.ErrNotFound) {

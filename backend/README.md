@@ -98,11 +98,17 @@ localhost проверяется через HTTP/HTML и браузер без J
 ```sh
 go test -race ./...
 go vet ./...
+go run ./cmd/check-dependencies
 go build ./...
 sh scripts/format.sh --check
 gofmt -l .
 go run ./cmd/storage-demo
 ```
+
+`go run ./cmd/check-dependencies` проверяет границы пакетов и доступ к портам
+хранения по [ADR 0003](../docs/architecture/0003-modular-monolith.md).
+Команда должна завершиться без нарушений; тот же контроллер запущен отдельным
+шагом Checkers в Backend CI. Правила и тесты — в `internal/architecture`.
 
 `sh scripts/format.sh --check` проверяет gofumpt и wsl (разделение блоков
 пустыми строками); исправление — `sh scripts/format.sh --write`.
