@@ -37,7 +37,7 @@ func compareCursor(a, b listCursor) int {
 }
 
 // List includes created meetings and current going responses, sorted by time/ID.
-// Undated meetings sort last; calendar classification belongs to a later stage.
+// Undated meetings sort last; Calendar provides opt-in section and date filters.
 func (s *Service) List(ctx context.Context, actor Actor, limit int, cursor string) (ListPage, error) {
 	if err := checkActor(actor); err != nil {
 		return ListPage{}, err

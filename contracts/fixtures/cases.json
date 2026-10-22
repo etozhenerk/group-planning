@@ -214,5 +214,94 @@
         }
       }
     }
+  },
+  {
+    "name": "calendar-upcoming",
+    "schema": "MeetingsPage",
+    "body": {
+      "meetings": [
+        {
+          "id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "title": "Настолки",
+          "starts_at": "2026-10-24T16:00:00Z",
+          "timezone": "Europe/Moscow",
+          "place": null,
+          "cover_url": null,
+          "participant_count": 2,
+          "revision": "3",
+          "my_rsvp": "going",
+          "my_rsvp_revision": "1",
+          "local_date": "2026-10-24",
+          "period": "upcoming"
+        }
+      ],
+      "next_cursor": null,
+      "as_of": "2026-10-22T10:00:00Z",
+      "counts": {
+        "upcoming": 2,
+        "past": 1,
+        "undated": 1
+      },
+      "days": [
+        {
+          "date": "2026-10-24",
+          "count": 2
+        }
+      ],
+      "next_transition_at": "2026-10-24T21:00:00Z",
+      "refresh_after_seconds": 5
+    },
+    "path": "/api/v1/meetings",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "calendar-undated",
+    "schema": "MeetingsPage",
+    "body": {
+      "meetings": [
+        {
+          "id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "title": "Настолки",
+          "starts_at": null,
+          "timezone": "Europe/Moscow",
+          "place": null,
+          "cover_url": null,
+          "participant_count": 2,
+          "revision": "3",
+          "my_rsvp": "going",
+          "my_rsvp_revision": "1",
+          "local_date": null,
+          "period": "undated"
+        }
+      ],
+      "next_cursor": null,
+      "as_of": "2026-10-22T10:00:00Z",
+      "counts": {
+        "upcoming": 2,
+        "past": 1,
+        "undated": 1
+      },
+      "days": [],
+      "next_transition_at": "2026-10-24T21:00:00Z",
+      "refresh_after_seconds": 5
+    },
+    "path": "/api/v1/meetings",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "calendar-changed",
+    "schema": "Error",
+    "body": {
+      "error": {
+        "code": "calendar_changed",
+        "field_errors": {},
+        "request_id": "f797282a-5dda-4823-92a2-6ad682f6103f"
+      }
+    },
+    "path": "/api/v1/meetings",
+    "method": "get",
+    "status": 409
   }
 ]

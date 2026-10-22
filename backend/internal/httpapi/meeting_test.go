@@ -45,6 +45,7 @@ type meetingHTTPTest struct {
 	t         *testing.T
 	server    *httptest.Server
 	store     *memory.Store
+	app       *meetings.Service
 	anonymous *http.Client
 	captures  []capturedResponse
 	clock     atomic.Int64
@@ -73,7 +74,8 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 		t.Fatal(err)
 	}
 
-	h.server.Config.Handler = NewWithIdentity(meetings.NewService(h.store, time.Now), service, slog.New(slog.NewJSONHandler(&h.logs, nil)))
+	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) })
+	h.server.Config.Handler = NewWithIdentity(h.app, service, slog.New(slog.NewJSONHandler(&h.logs, nil)))
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)

@@ -16,6 +16,9 @@ type Meeting struct {
 	Timezone            string
 	Place               string
 	Revision            uint64
+	Status              Period
+	ScheduleVersion     uint64
+	PastAt              *time.Time
 	CreatedAt           time.Time
 	CreationRequestID   string
 	CreationRequestHash string

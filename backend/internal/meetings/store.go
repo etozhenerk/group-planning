@@ -26,6 +26,10 @@ type Store interface {
 type Reader interface {
 	Meeting(string) (Meeting, error)
 	Meetings() ([]Meeting, error)
+	TransitionJob(string, uint64) (TransitionJob, error)
+	DueTransitions(time.Time, int) ([]TransitionJob, error)
+	OverdueMeetings(string, time.Time, int) ([]Meeting, error)
+	TransitionStats(time.Time) (TransitionStats, error)
 	InvitationByToken(string) (Invitation, error)
 	InvitationForMeeting(string) (Invitation, error)
 	RSVP(meetingID, userID string) (RSVP, error)
@@ -40,6 +44,7 @@ type Reader interface {
 type Writer interface {
 	Reader
 	SaveMeeting(Meeting) error
+	SaveTransitionJob(TransitionJob) error
 	InsertInvitation(Invitation) error
 	SaveRSVP(RSVP) error
 	AppendEntry(FeedEntry) (FeedEntry, error)

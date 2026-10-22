@@ -65,7 +65,7 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	values, ok := closedQuery(w, r, "limit", "cursor")
+	values, ok := closedQuery(w, r, "limit", "cursor", "period", "from", "to")
 	if !ok {
 		return
 	}
@@ -76,6 +76,16 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if values.Has("cursor") && values.Get("cursor") == "" {
+		writeError(w, 400, "invalid_query", nil)
+		return
+	}
+
+	if values.Has("period") {
+		h.calendar(w, r, actor, values, limit)
+		return
+	}
+
+	if values.Has("from") || values.Has("to") {
 		writeError(w, 400, "invalid_query", nil)
 		return
 	}

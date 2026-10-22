@@ -151,6 +151,12 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 				return err
 			}
 
+			if meeting.Timezone != current.Meeting.Timezone || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) {
+				if err := s.schedule(writer, &meeting); err != nil {
+					return err
+				}
+			}
+
 			if err := writer.SaveMeeting(meeting); err != nil {
 				return err
 			}

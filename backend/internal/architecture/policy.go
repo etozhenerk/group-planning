@@ -80,7 +80,7 @@ func restrictedSymbol(source, imported, symbol string) bool {
 	switch target {
 	case "internal/meetings":
 		switch symbol {
-		case "Store", "Reader", "Writer", "NewService", "Preview":
+		case "Store", "Reader", "Writer", "NewService", "Preview", "TransitionJob", "TransitionWorker", "NewTransitionWorker":
 			return true
 		}
 	case "internal/identity":

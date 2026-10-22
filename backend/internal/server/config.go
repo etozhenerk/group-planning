@@ -6,11 +6,14 @@ import (
 	"net"
 	"strconv"
 	"time"
+
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
+	Transitions     meetings.TransitionOptions
 	Auth            AuthConfig
 	WebDirectory    string
 	WebOrigin       string
@@ -57,6 +60,11 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 
 	if auth.Enabled && config.WebOrigin != "" && config.WebOrigin != auth.Identity.PublicOrigin {
 		return Config{}, fmt.Errorf("web and authentication must use the same public origin")
+	}
+
+	config.Transitions, err = loadTransitionOptions(getenv)
+	if err != nil {
+		return Config{}, err
 	}
 
 	config.Auth = auth

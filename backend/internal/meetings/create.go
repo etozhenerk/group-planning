@@ -96,6 +96,10 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 				Token:     randomToken(),
 				CreatedAt: meeting.CreatedAt,
 			}
+			if err := s.schedule(writer, &meeting); err != nil {
+				return err
+			}
+
 			if err := writer.SaveMeeting(meeting); err != nil {
 				return err
 			}

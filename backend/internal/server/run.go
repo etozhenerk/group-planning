@@ -46,6 +46,21 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		handler = mux
 	}
 
+	options := config.Transitions
+	if options == (meetings.TransitionOptions{}) {
+		options = meetings.DefaultTransitionOptions()
+	}
+
+	worker, err := meetings.NewTransitionWorker(app, options, transitionLogger(logger))
+	if err != nil {
+		return err
+	}
+
+	workerCtx, stopWorker := context.WithCancel(ctx)
+	workerDone := make(chan struct{})
+	go func() { defer close(workerDone); worker.Run(workerCtx) }()
+	defer func() { stopWorker(); <-workerDone }()
+
 	cleanupCtx, stopCleanup := context.WithCancel(ctx)
 	cleanupDone := make(chan struct{})
 	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()

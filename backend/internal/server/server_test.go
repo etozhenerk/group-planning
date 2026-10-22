@@ -139,12 +139,24 @@ type waitingStore struct {
 }
 
 func (store waitingStore) View(ctx context.Context, callback func(meetings.Reader) error) error {
-	close(store.entered)
+	return store.Store.View(ctx, func(reader meetings.Reader) error {
+		return callback(waitingInvitationReader{reader, ctx, store.entered, store.release})
+	})
+}
+
+type waitingInvitationReader struct {
+	meetings.Reader
+	ctx              context.Context
+	entered, release chan struct{}
+}
+
+func (reader waitingInvitationReader) InvitationByToken(token string) (meetings.Invitation, error) {
+	close(reader.entered)
 	select {
-	case <-ctx.Done():
-		return ctx.Err()
-	case <-store.release:
-		return store.Store.View(ctx, callback)
+	case <-reader.ctx.Done():
+		return meetings.Invitation{}, reader.ctx.Err()
+	case <-reader.release:
+		return reader.Reader.InvitationByToken(token)
 	}
 }
 

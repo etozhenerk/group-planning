@@ -475,6 +475,24 @@ paths:
           required: false
           schema:
             type: string
+        - name: period
+          in: query
+          description: Сохранённый раздел; без параметра возвращается прежний общий список.
+          schema:
+            type: string
+            enum: [upcoming, past, undated]
+        - name: from
+          in: query
+          description: Локальная дата включительно. Требует to и датированный period; максимум 42 дня.
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          description: Локальная дата исключительно; всегда передаётся парой с from.
+          schema:
+            type: string
+            format: date
   /api/v1/meetings/{id}:
     parameters:
       - $ref: "#/components/parameters/MeetingID"
@@ -1564,6 +1582,10 @@ components:
         - my_rsvp_revision
       additionalProperties: true
     MeetingsPage:
+      oneOf:
+        - $ref: "#/components/schemas/LegacyMeetingsPage"
+        - $ref: "#/components/schemas/CalendarPage"
+    LegacyMeetingsPage:
       type: object
       properties:
         meetings:
@@ -1578,6 +1600,106 @@ components:
       required:
         - meetings
         - next_cursor
+      additionalProperties: true
+      not:
+        anyOf:
+          - properties:
+              as_of: {}
+            required:
+              - as_of
+          - properties:
+              counts: {}
+            required:
+              - counts
+          - properties:
+              days: {}
+            required:
+              - days
+          - properties:
+              next_transition_at: {}
+            required:
+              - next_transition_at
+          - properties:
+              refresh_after_seconds: {}
+            required:
+              - refresh_after_seconds
+    CalendarMeetingSummary:
+      allOf:
+        - $ref: "#/components/schemas/MeetingSummary"
+        - type: object
+          properties:
+            local_date:
+              anyOf:
+                - &a2
+                  type: string
+                  format: date
+                - type: "null"
+            period:
+              type: string
+              enum:
+                - upcoming
+                - past
+                - undated
+          required:
+            - local_date
+            - period
+    CalendarPage:
+      type: object
+      properties:
+        meetings:
+          type: array
+          items:
+            $ref: "#/components/schemas/CalendarMeetingSummary"
+        next_cursor:
+          anyOf:
+            - type: string
+              minLength: 1
+            - type: "null"
+        as_of:
+          type: string
+          format: date-time
+        counts:
+          type: object
+          properties:
+            upcoming: &a1
+              type: integer
+              minimum: 0
+            past: *a1
+            undated: *a1
+          required:
+            - upcoming
+            - past
+            - undated
+          additionalProperties: false
+        days:
+          type: array
+          items:
+            type: object
+            properties:
+              date: *a2
+              count:
+                type: integer
+                minimum: 1
+            required:
+              - date
+              - count
+            additionalProperties: false
+        next_transition_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        refresh_after_seconds:
+          type: integer
+          const: 5
+      required:
+        - meetings
+        - next_cursor
+        - as_of
+        - counts
+        - days
+        - next_transition_at
+        - refresh_after_seconds
       additionalProperties: true
     FeedEntry:
       type: object

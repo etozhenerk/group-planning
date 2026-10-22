@@ -55,6 +55,12 @@ var preview = meetings.Preview`, "application operations"},
 		{"identity storage", "internal/httpapi/example.go", `package httpapi
 import "MODULE/internal/identity"
 var records identity.Records`, "application operations"},
+		{"worker wiring in transport", "internal/httpapi/example.go", `package httpapi
+import m "MODULE/internal/meetings"
+var build = m.NewTransitionWorker`, "application operations"},
+		{"queue record in transport", "internal/httpapi/example.go", `package httpapi
+import m "MODULE/internal/meetings"
+var job m.TransitionJob`, "application operations"},
 		{"dot import", "internal/httpapi/example.go", `package httpapi
 import . "MODULE/internal/meetings"
 var app *Service`, "explicit usable package name"},

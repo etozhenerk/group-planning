@@ -19,6 +19,7 @@ type state struct {
 	feed        map[string][]meetings.FeedEntry
 	entryIDs    map[string]bool
 	messageIDs  map[messageKey]bool
+	jobs        map[transitionKey]meetings.TransitionJob
 	receipts    map[meetings.RequestKey]meetings.Receipt
 }
 
@@ -31,6 +32,7 @@ func newState() *state {
 		feed:        make(map[string][]meetings.FeedEntry),
 		entryIDs:    make(map[string]bool),
 		messageIDs:  make(map[messageKey]bool),
+		jobs:        make(map[transitionKey]meetings.TransitionJob),
 		receipts:    make(map[meetings.RequestKey]meetings.Receipt),
 	}
 }
@@ -47,6 +49,7 @@ func (s *state) clone() *state {
 	copy.entryIDs = maps.Clone(s.entryIDs)
 	copy.messageIDs = maps.Clone(s.messageIDs)
 	copy.receipts = maps.Clone(s.receipts)
+	copy.jobs = maps.Clone(s.jobs)
 	for id, entries := range s.feed {
 		copy.feed[id] = cloneEntries(entries)
 	}
@@ -58,6 +61,11 @@ func cloneMeeting(meeting meetings.Meeting) meetings.Meeting {
 	if meeting.StartsAt != nil {
 		startsAt := *meeting.StartsAt
 		meeting.StartsAt = &startsAt
+	}
+
+	if meeting.PastAt != nil {
+		pastAt := *meeting.PastAt
+		meeting.PastAt = &pastAt
 	}
 
 	return meeting

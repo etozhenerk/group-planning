@@ -60,4 +60,14 @@ for (const [schema, value] of [
 ]) {
   assert.throws(() => validate(schema, value), `Checker accepted invalid ${schema}`);
 }
+// Opt-in calendar data must not slip through the legacy response branch.
+const calendarCase = fixtures.find(item => item.name === 'calendar-upcoming');
+assert(calendarCase);
+const incompleteCalendar = structuredClone(calendarCase.body);
+delete incompleteCalendar.counts;
+const missingDate = structuredClone(calendarCase.body);
+delete missingDate.meetings[0].local_date;
+for (const invalid of [incompleteCalendar, missingDate, { meetings: [], next_cursor: null, counts: {} }]) {
+  assert.throws(() => validate('MeetingsPage', invalid), 'Accepted incomplete calendar payload');
+}
 console.log(`API contract: ${Object.keys(definitions).length} schemas and ${fixtures.length} fixtures checked.`);
