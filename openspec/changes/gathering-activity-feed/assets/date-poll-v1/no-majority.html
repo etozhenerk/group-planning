@@ -56,7 +56,10 @@
             <h1>Пицца и настолки</h1>
             <p>6 участников</p>
           </div>
-          <a class="icon-button" href="no-time.html" aria-label="Детали встречи"
+          <a
+            class="icon-button"
+            href="#meeting-details"
+            aria-label="Детали встречи"
             ><svg
               aria-hidden="true"
               viewBox="0 0 24 24"
@@ -71,7 +74,7 @@
         </header>
         <main class="feed" aria-label="Разговор">
           <div class="feed-inner">
-            <div class="day">Сегодня, 22 октября</div>
+            <div class="day">23 октября</div>
             <article class="entry">
               <span
                 aria-hidden="true"
@@ -103,19 +106,19 @@
                       <span
                         ><span class="option-date">24 октября</span
                         ><span class="option-day">Суббота</span></span
-                      ><span class="option-count">3 из 6</span>
+                      ><span class="option-count">3 голоса</span>
                     </div>
                     <div class="poll-option chosen" style="--share: 33%">
                       <span
                         ><span class="option-date">25 октября</span
                         ><span class="option-day">Воскресенье</span></span
-                      ><span class="option-count">2 из 6</span>
+                      ><span class="option-count">2 голоса</span>
                     </div>
                     <div class="poll-option" style="--share: 17%">
                       <span
                         ><span class="option-date">26 октября</span
                         ><span class="option-day">Понедельник</span></span
-                      ><span class="option-count">1 из 6</span>
+                      ><span class="option-count">1 голос</span>
                     </div>
                   </div>
                   <div class="poll-bottom">
@@ -124,10 +127,24 @@
                 </section>
               </div>
             </article>
-            <div class="system">
-              Ни один вариант не набрал большинства.<br />Пока встречаемся 24
-              октября.
-            </div>
+            <article class="entry bot-message" aria-label="Сообщение бота">
+              <img
+                class="bot-avatar"
+                src="../../../../../frontend/web/public/somewhere.svg"
+                alt=""
+              />
+              <div class="entry-body">
+                <div class="entry-meta">
+                  <strong>Бот</strong><time>18:00</time>
+                </div>
+                <div class="bubble">
+                  <p>
+                    Ни один вариант не набрал большинства.<br />Пока встречаемся
+                    24 октября.
+                  </p>
+                </div>
+              </div>
+            </article>
           </div>
         </main>
         <footer class="composer">
@@ -170,7 +187,8 @@
           </div>
         </footer>
       </section>
-      <aside class="aside">
+      <aside class="aside" id="meeting-details">
+        <a class="link-button details-close" href="#">Закрыть</a>
         <img
           class="cover"
           src="../friends-cover.png"

@@ -56,7 +56,10 @@
             <h1>Пицца и настолки</h1>
             <p>6 участников</p>
           </div>
-          <a class="icon-button" href="no-time.html" aria-label="Детали встречи"
+          <a
+            class="icon-button"
+            href="#meeting-details"
+            aria-label="Детали встречи"
             ><svg
               aria-hidden="true"
               viewBox="0 0 24 24"
@@ -72,10 +75,24 @@
         <main class="feed" aria-label="Разговор">
           <div class="feed-inner">
             <div class="day">Сегодня, 22 октября</div>
-            <div class="system">Саша создал встречу</div>
-            <div class="system">
-              Встречаемся 24 октября.<br />Осталось договориться, во сколько.
-            </div>
+            <article class="entry bot-message" aria-label="Сообщение бота">
+              <img
+                class="bot-avatar"
+                src="../../../../../frontend/web/public/somewhere.svg"
+                alt=""
+              />
+              <div class="entry-body">
+                <div class="entry-meta">
+                  <strong>Бот</strong><time>13:15</time>
+                </div>
+                <div class="bubble">
+                  <p>
+                    Саша создал встречу на 24 октября. Осталось договориться, во
+                    сколько.
+                  </p>
+                </div>
+              </div>
+            </article>
             <article class="entry">
               <span
                 aria-hidden="true"
@@ -150,7 +167,8 @@
           </div>
         </footer>
       </section>
-      <aside class="aside">
+      <aside class="aside" id="meeting-details">
+        <a class="link-button details-close" href="#">Закрыть</a>
         <img
           class="cover"
           src="../friends-cover.png"
