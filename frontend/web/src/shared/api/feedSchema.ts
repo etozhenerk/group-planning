@@ -14,6 +14,7 @@ export const entrySchema = z.object({
   kind: z.string(),
   payload_version: z.number().int().min(1),
   actor: userSchema,
+  sender: userSchema.extend({ kind: z.enum(['user', 'bot']) }).optional(),
   occurred_at: instant,
   payload: z.record(z.string(), z.unknown()),
   client_request_id: uuid.nullable(),

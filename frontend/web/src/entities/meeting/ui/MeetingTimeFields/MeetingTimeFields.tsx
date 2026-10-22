@@ -27,7 +27,7 @@ export const MeetingTimeFields = ({
           value={fields.date}
           timezone={value.timezone}
           onChange={fields.changeDate}
-          invalid={!!errors.starts_at}
+          invalid={!!errors.starts_at || !!errors.starts_on}
           disabled={disabled}
         />
         <TimeInput
@@ -37,8 +37,10 @@ export const MeetingTimeFields = ({
           disabled={disabled}
         />
       </div>
-      <p className={styles['time-zone-note']}>Время встречи · {fields.zone}</p>
-      {errors.starts_at && (
+      <p className={styles['time-zone-note']}>
+        Время можно уточнить позже · {fields.zone}
+      </p>
+      {(errors.starts_at || errors.starts_on) && (
         <span className={styles['error']}>Проверьте дату и время встречи.</span>
       )}
       {errors.ambiguous && (

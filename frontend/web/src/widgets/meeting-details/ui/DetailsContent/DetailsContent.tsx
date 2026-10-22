@@ -24,6 +24,7 @@ export const DetailsContent = ({
     <div className={[styles['stack'], styles['details-content']].join(' ')}>
       <MeetingFacts
         startsAt={meeting.startsAt}
+        startsOn={meeting.startsOn ?? null}
         timezone={meeting.timezone}
         place={meeting.place}
       />

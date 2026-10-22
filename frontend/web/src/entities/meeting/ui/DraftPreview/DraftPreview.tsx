@@ -1,4 +1,5 @@
 import styles from '@/entities/meeting/ui/DraftPreview/DraftPreview.module.css';
+import { validDay } from '@/shared/lib/time';
 import { Sparkles } from 'lucide-react';
 import type { MeetingDraft } from '@/entities/meeting/model/types';
 import { draftPreview } from '@/entities/meeting/lib/draftPreview';
@@ -17,6 +18,7 @@ export const DraftPreview = ({ draft }: DraftPreviewProps) => {
         <h3>{draft.title.trim() || 'Название встречи'}</h3>
         <MeetingFacts
           startsAt={draftPreview(draft)}
+          startsOn={validDay(draft.localTime.split('T')[0] ?? null)}
           timezone={draft.timezone}
           place={draft.place.trim() || null}
         />

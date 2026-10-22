@@ -87,12 +87,12 @@ func TestDatePollOpenAPIResponses(t *testing.T) {
 		}
 
 		if entry.Kind == "meeting_time_unspecified" {
-			unspecified = entry.Sender.Kind == "bot" && entry.Sender.ID == meetings.BotID
+			unspecified = entry.Sender == nil
 		}
 	}
 
 	if !unspecified {
-		t.Fatal("time reminder missing bot sender")
+		t.Fatal("time reminder must remain a system event")
 	}
 
 	h.clock.Add(60)

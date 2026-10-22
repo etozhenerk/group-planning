@@ -6,22 +6,26 @@ import { timeInputValue } from '@/shared/ui/TimeInput/lib/timeInputValue';
 
 export type TimeInputProps = {
   value: string;
+  label?: string;
   onChange: (value: string) => void;
   disabled?: boolean;
   invalid?: boolean;
+  required?: boolean;
 };
 
 export const TimeInput = ({
   value,
+  label = 'Время',
   onChange,
   disabled = false,
   invalid = false,
+  required = false,
 }: TimeInputProps) => {
   const id = useId();
 
   return (
     <div className={styles['control-field']} data-testid="time-input">
-      <label htmlFor={id}>Время</label>
+      <label htmlFor={id}>{label}</label>
       <TextInput
         id={id}
         type="text"
@@ -36,7 +40,7 @@ export const TimeInput = ({
           inputMode: 'numeric',
           maxLength: 5,
           pattern: '([01][0-9]|2[0-3]):[0-5][0-9]',
-          required: true,
+          required,
         }}
       />
     </div>

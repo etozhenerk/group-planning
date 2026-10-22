@@ -20,7 +20,7 @@ export const ShareInvitation = ({ id, compact = false }: ShareInvitationProps) =
         aria-label="Пригласить друзей"
       >
         <Share aria-hidden="true" size={20} />
-        Пригласить друзей
+        <span className={styles['trigger-label']}>Пригласить друзей</span>
       </button>
       <Dialog open={action.open} title="Приглашение для друзей" onClose={action.close}>
         <div className={styles['stack']}>

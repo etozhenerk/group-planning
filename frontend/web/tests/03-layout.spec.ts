@@ -37,6 +37,30 @@ for (const width of [320, 390, 768, 1440]) {
       expect(center).toBeCloseTo((title?.y ?? 0) + (title?.height ?? 0) / 2, 0);
     }
 
+    const add = page.getByRole('button', { name: 'Добавить опрос даты' });
+    const addBounds = await add.boundingBox();
+    const plus = await add.locator('svg').boundingBox();
+    expect(plus?.width).toBe(24);
+    expect(plus?.height).toBe(24);
+    expect((plus?.x ?? 0) + 12).toBeCloseTo((addBounds?.x ?? 0) + 22, 0);
+    expect((plus?.y ?? 0) + 12).toBeCloseTo((addBounds?.y ?? 0) + 22, 0);
+    const shareIcon = await share.locator('svg').boundingBox();
+    expect(shareIcon?.width).toBe(20);
+    expect(shareIcon?.height).toBe(20);
+
+    if (width < 740) {
+      const shareBounds = await share.boundingBox();
+      expect((shareIcon?.x ?? 0) + 10).toBeCloseTo((shareBounds?.x ?? 0) + 22, 0);
+    }
+
+    const system = page
+      .getByTestId('system-event')
+      .filter({ hasText: 'Саша создал встречу' });
+
+    await expect(system).toHaveCSS('text-align', 'center');
+    await expect(system.locator('img')).toHaveCount(0);
+    await expect(page.getByTestId('feed-message')).toHaveCount(0);
+
     await share.click();
     const invitation = page.getByRole('dialog', { name: 'Приглашение для друзей' });
     await expect(invitation).toBeVisible();

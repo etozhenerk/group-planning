@@ -34,6 +34,7 @@ export const InvitationPage = () => {
             <h1>{query.data.title}</h1>
             <MeetingFacts
               startsAt={query.data.startsAt}
+              startsOn={query.data.startsOn ?? null}
               timezone={query.data.timezone}
               place={query.data.place}
             />

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { pollEvent } from '@/entities/meeting/lib/pollEvent';
 import type { WireEntry, WireFeed } from '@/shared/api';
 import type { FeedEntry, FeedPage } from '@/entities/meeting/model/types';
 
@@ -8,6 +9,7 @@ const updatePayload = z.object({
     title: z.string(),
     description: z.string(),
     starts_at: z.string().nullable(),
+    starts_on: z.string().nullable().optional(),
     timezone: z.string(),
     place: z.string(),
   }),
@@ -15,6 +17,7 @@ const updatePayload = z.object({
     title: z.string(),
     description: z.string(),
     starts_at: z.string().nullable(),
+    starts_on: z.string().nullable().optional(),
     timezone: z.string(),
     place: z.string(),
   }),
@@ -56,6 +59,7 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
         }
 
         if (
+          previous.starts_on !== current.starts_on ||
           previous.starts_at !== current.starts_at ||
           previous.timezone !== current.timezone
         ) {
@@ -81,6 +85,8 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
     }
   }
 
+  const notice = pollEvent(wire);
+
   return {
     id: wire.id,
     meetingId: wire.meeting_id,
@@ -90,8 +96,18 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
     occurredAt: wire.occurred_at,
     clientRequestId: wire.client_request_id,
     text,
-    event,
-    supported,
+    event: notice?.event ?? event,
+    supported: supported || notice !== null,
+    ...(notice?.pollId ? { pollId: notice.pollId } : {}),
+    ...(wire.sender
+      ? {
+          sender: {
+            kind: wire.sender.kind,
+            id: wire.sender.id,
+            displayName: wire.sender.display_name,
+          },
+        }
+      : {}),
   };
 };
 

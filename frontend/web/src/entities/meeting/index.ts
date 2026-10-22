@@ -75,3 +75,17 @@ export type {
 } from '@/entities/meeting/model/calendar';
 
 export { useCalendarCounts } from '@/entities/meeting/model/useCalendarCounts';
+
+export type {
+  DatePoll,
+  PollSettings,
+  PollOption,
+  PollCreate,
+  PollAction,
+} from '@/entities/meeting/model/datePoll';
+
+export { createDatePoll, changeDatePoll } from '@/entities/meeting/api/datePoll';
+
+export { useDatePoll } from '@/entities/meeting/model/useDatePoll';
+
+export { entryPresentation } from '@/entities/meeting/lib/entryPresentation';

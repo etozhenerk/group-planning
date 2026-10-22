@@ -5,6 +5,7 @@ import { useDateInput } from '@/shared/ui/DateInput/hooks/useDateInput';
 
 export type DateInputProps = {
   value: string;
+  label?: string;
   timezone: string;
   onChange: (value: string) => void;
   disabled?: boolean;
@@ -13,6 +14,7 @@ export type DateInputProps = {
 
 export const DateInput = ({
   value,
+  label = 'Дата',
   timezone,
   onChange,
   disabled = false,
@@ -22,7 +24,7 @@ export const DateInput = ({
 
   return (
     <div className={styles['control-field']}>
-      <label htmlFor={field.id}>Дата</label>
+      <label htmlFor={field.id}>{label}</label>
       <div onClick={field.openFromField}>
         <MobileProvider mobile={false}>
           <DatePicker

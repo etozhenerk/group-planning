@@ -3,6 +3,7 @@ import type { Session } from '@/entities/session';
 import { useConversation } from '@/entities/meeting';
 import { Status } from '@/shared/ui/Status';
 import { errorText } from '@/shared/api';
+import { CreateDatePoll } from '@/features/date-poll';
 import { SendMessage } from '@/features/send-message';
 import { useViewport } from '@/widgets/conversation/ui/FeedTimeline/hooks/useViewport';
 import { FeedRecord } from '@/widgets/conversation/ui/FeedRecord';
@@ -61,7 +62,7 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
         ) : null}
         <ol className={styles['feed-timeline']} aria-label="Разговор встречи">
           {query.data.entries.map((entry) => (
-            <FeedRecord key={entry.id} entry={entry} userId={session.user.id} />
+            <FeedRecord key={entry.id} entry={entry} session={session} />
           ))}
         </ol>
         {query.error && (
@@ -79,7 +80,11 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
           Новые сообщения ↓
         </button>
       )}
-      <SendMessage id={id} session={session} />
+      <SendMessage
+        id={id}
+        session={session}
+        extraAction={<CreateDatePoll id={id} session={session} />}
+      />
     </>
   );
 };

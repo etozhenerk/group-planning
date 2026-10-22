@@ -27,24 +27,30 @@ button.primary {
   flex-wrap: wrap;
 }
 
-.share-invitation-trigger.compact {
+button.share-invitation-trigger.compact {
   height: 44px;
+  min-height: 44px;
   line-height: 1;
-}
-
-.share-invitation-trigger.compact {
   padding: 10px 12px;
   font-size: 12px;
+  flex-shrink: 0;
+}
+
+.share-invitation-trigger svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
 }
 
 @media (max-width: 739px) {
-  .share-invitation-trigger.compact {
+  button.share-invitation-trigger.compact {
     width: 44px;
-    font-size: 0;
-    padding: 10px;
+    padding: 0;
+    gap: 0;
   }
 
-  .share-invitation-trigger.compact svg {
-    width: 20px;
+  .compact .trigger-label {
+    display: none;
   }
 }

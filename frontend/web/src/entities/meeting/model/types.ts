@@ -4,6 +4,7 @@ export type MeetingSummary = {
   id: string;
   title: string;
   startsAt: string | null;
+  startsOn?: string | null;
   timezone: string;
   place: string | null;
   coverUrl: string | null;
@@ -24,6 +25,7 @@ export type Invitation = {
   title: string;
   description: string | null;
   startsAt: string | null;
+  startsOn?: string | null;
   timezone: string;
   place: string | null;
   coverUrl: string | null;
@@ -57,6 +59,8 @@ export type FeedEntry = {
   text: string | null;
   event: string;
   supported: boolean;
+  sender?: { kind: 'user' | 'bot'; id: string; displayName: string };
+  pollId?: string;
 };
 
 export type FeedPage = {
@@ -83,7 +87,8 @@ export type MeetingDraft = {
 export type MeetingInput = {
   title: string;
   description: string | null;
-  starts_at: string;
+  starts_at: string | null;
+  starts_on: string;
   timezone: string;
   place: string | null;
 };

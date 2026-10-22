@@ -11,3 +11,10 @@ export const validDay = (value: string | null): string | null => {
     return null;
   }
 };
+
+export const dayLabel = (day: string, weekday = false): string => {
+  return Temporal.PlainDate.from(day).toLocaleString(
+    'ru-RU',
+    weekday ? { weekday: 'long' } : { day: 'numeric', month: 'long' },
+  );
+};

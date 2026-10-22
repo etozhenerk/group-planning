@@ -90,7 +90,7 @@ for (const width of [320, 390, 1440]) {
 test.describe('automatic browser timezone', () => {
   test.use({ timezoneId: 'Asia/Yekaterinburg' });
 
-  test('requires date and time, then sends the selected local instant and actual zone', async ({
+  test('requires a date, then sends the selected local instant and actual zone', async ({
     page,
   }) => {
     await login(page, 'Саша');
@@ -108,11 +108,6 @@ test.describe('automatic browser timezone', () => {
     await expect(page.getByRole('alert')).toContainText('Выберите дату');
     expect(posts).toBe(0);
     await setDate(page, '24.10.2026');
-    await time.fill('');
-    await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-    await expect(time).toBeFocused();
-    expect(posts).toBe(0);
-    await time.fill('19:00');
     const request = page.waitForRequest(
       (value) => value.method() === 'POST' && value.url().endsWith('/api/v1/meetings'),
     );

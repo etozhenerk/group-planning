@@ -29,7 +29,7 @@ export const MeetingCard = ({ meeting }: MeetingCardProps) => {
       </div>
       <div className={styles.info}>
         <h2>{meeting.title}</h2>
-        <p>{timeLabel(meeting.startsAt, meeting.timezone)}</p>
+        <p>{timeLabel(meeting.startsAt, meeting.timezone, meeting.startsOn)}</p>
         <p>
           {meeting.place || 'Место пока не выбрано'} · Участников:{' '}
           {meeting.participantCount}

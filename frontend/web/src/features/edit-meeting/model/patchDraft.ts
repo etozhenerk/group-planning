@@ -1,5 +1,5 @@
 import type { MeetingDraft, MeetingInput } from '@/entities/meeting';
-import { resolveTime } from '@/shared/lib/time';
+import { resolveSchedule } from '@/shared/lib/time';
 
 export const patchDraft = (
   value: MeetingDraft,
@@ -24,7 +24,10 @@ export const patchDraft = (
     value.timezone !== original.timezone ||
     value.timeChoice !== original.timeChoice
   ) {
-    patch.starts_at = resolveTime(value.localTime, value.timezone, value.timeChoice);
+    Object.assign(
+      patch,
+      resolveSchedule(value.localTime, value.timezone, value.timeChoice),
+    );
     patch.timezone = value.timezone;
   }
 

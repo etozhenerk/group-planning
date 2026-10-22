@@ -1,3 +1,4 @@
+import { dayLabel } from '@/shared/lib/time/plainDate';
 import { Temporal } from '@js-temporal/polyfill';
 
 export type TimeChoice = 'earlier' | 'later' | '';
@@ -53,9 +54,13 @@ export const editLocalTime = (stamp: string | null, zone: string): string => {
     .toString({ smallestUnit: 'minute' });
 };
 
-export const timeLabel = (stamp: string | null, zone: string): string => {
+export const timeLabel = (
+  stamp: string | null,
+  zone: string,
+  day?: string | null,
+): string => {
   if (!stamp) {
-    return 'Дата ещё не выбрана';
+    return day ? `${dayLabel(day)} · время пока не выбрано` : 'Дата ещё не выбрана';
   }
 
   return new Intl.DateTimeFormat('ru-RU', {

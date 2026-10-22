@@ -50,6 +50,7 @@ export const CreatedView = ({ session, id }: CreatedViewProps) => {
           <h2>{query.data.title}</h2>
           <MeetingFacts
             startsAt={query.data.startsAt}
+            startsOn={query.data.startsOn ?? null}
             timezone={query.data.timezone}
             place={query.data.place}
           />

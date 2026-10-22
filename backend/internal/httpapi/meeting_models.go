@@ -56,7 +56,7 @@ type feedEntryResponse struct {
 	Kind            string          `json:"kind"`
 	PayloadVersion  uint32          `json:"payload_version"`
 	Actor           userResponse    `json:"actor"`
-	Sender          senderResponse  `json:"sender"`
+	Sender          *senderResponse `json:"sender,omitempty"`
 	OccurredAt      time.Time       `json:"occurred_at"`
 	Payload         json.RawMessage `json:"payload"`
 	ClientRequestID *string         `json:"client_request_id"`

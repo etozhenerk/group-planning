@@ -8,11 +8,13 @@ type senderResponse struct {
 	DisplayName string `json:"display_name"`
 }
 
-func entrySender(entry meetings.FeedEntry) senderResponse {
+func entrySender(entry meetings.FeedEntry) *senderResponse {
 	switch entry.Kind {
-	case "meeting_time_unspecified", "meeting_created", "meeting_updated", "participant_joined", "participant_left", "rsvp_changed", "date_poll_applied", "date_poll_no_majority", "date_poll_choice_required", "date_poll_time_required", "date_poll_cancelled":
-		return senderResponse{Kind: "bot", ID: meetings.BotID, DisplayName: "Бот"}
+	case "date_poll_applied", "date_poll_no_majority", "date_poll_choice_required", "date_poll_time_required", "date_poll_cancelled":
+		return &senderResponse{Kind: "bot", ID: meetings.BotID, DisplayName: "Бот"}
+	case "message", "date_poll_created":
+		return &senderResponse{Kind: "user", ID: entry.ActorID, DisplayName: entry.ActorName}
 	default:
-		return senderResponse{Kind: "user", ID: entry.ActorID, DisplayName: entry.ActorName}
+		return nil
 	}
 }

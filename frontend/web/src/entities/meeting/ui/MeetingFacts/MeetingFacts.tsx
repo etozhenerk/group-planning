@@ -4,11 +4,17 @@ import { timeLabel, timezoneLabel } from '@/shared/lib/time';
 
 export type MeetingFactsProps = {
   startsAt: string | null;
+  startsOn?: string | null;
   timezone: string;
   place: string | null;
 };
 
-export const MeetingFacts = ({ startsAt, timezone, place }: MeetingFactsProps) => {
+export const MeetingFacts = ({
+  startsAt,
+  startsOn,
+  timezone,
+  place,
+}: MeetingFactsProps) => {
   return (
     <dl className={styles['meeting-facts']}>
       <div>
@@ -17,7 +23,7 @@ export const MeetingFacts = ({ startsAt, timezone, place }: MeetingFactsProps) =
           <span className={styles['sr-only']}>Когда</span>
         </dt>
         <dd>
-          <span>{timeLabel(startsAt, timezone)}</span>
+          <span>{timeLabel(startsAt, timezone, startsOn)}</span>
           <small>{timezoneLabel(timezone)}</small>
         </dd>
       </div>
