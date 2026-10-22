@@ -1,4 +1,4 @@
-import { useCalendar } from '@/entities/meeting';
+import { useCalendar, useCalendarCounts } from '@/entities/meeting';
 import { useHomeSelection, useInitialDay } from '@/pages/meetings/model/useHomeSelection';
 import { addDays, monthRange, today } from '@/pages/meetings/lib/calendarDates';
 
@@ -23,15 +23,11 @@ export const useMeetingsView = (user: string) => {
 
   const undated = useCalendar(user, { period: 'undated' }, selection.undated);
   const query = selection.undated ? undated : calendar ? agenda : list;
-  const metadata = [list, month, agenda, undated]
-    .flatMap((result) => (result.data ? [result.data.pages[0]!] : []))
-    .sort((a, b) => b.asOf.localeCompare(a.asOf))[0];
-
-  const counts = metadata?.counts;
+  const counts = useCalendarCounts(user);
   const empty =
     !!counts &&
     counts.upcoming + counts.past + counts.undated === 0 &&
-    query.isSuccess &&
+    !query.isError &&
     !list.isError &&
     !(calendar && month.isError);
 

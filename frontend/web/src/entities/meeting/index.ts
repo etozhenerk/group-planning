@@ -73,3 +73,5 @@ export type {
   CalendarFilter,
   MeetingPeriod,
 } from '@/entities/meeting/model/calendar';
+
+export { useCalendarCounts } from '@/entities/meeting/model/useCalendarCounts';
