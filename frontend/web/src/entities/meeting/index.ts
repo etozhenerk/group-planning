@@ -63,3 +63,13 @@ export { MeetingCard } from '@/entities/meeting/ui/MeetingCard';
 export { DraftPreview } from '@/entities/meeting/ui/DraftPreview';
 
 export { storedInvitation } from '@/entities/meeting/model/invitationContext';
+
+export { useCalendar } from '@/entities/meeting/model/useCalendar';
+
+export type {
+  CalendarMeeting,
+  CalendarPage,
+  CalendarCounts,
+  CalendarFilter,
+  MeetingPeriod,
+} from '@/entities/meeting/model/calendar';

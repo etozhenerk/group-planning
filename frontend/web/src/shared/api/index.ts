@@ -40,3 +40,5 @@ export type {
 export { entrySchema, feedSchema } from '@/shared/api/feedSchema';
 
 export type { WireEntry, WireFeed } from '@/shared/api/feedSchema';
+
+export { calendarSchema } from '@/shared/api/calendarSchema';

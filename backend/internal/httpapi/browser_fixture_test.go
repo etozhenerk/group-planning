@@ -90,7 +90,8 @@ func TestBrowserFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	app := meetings.NewService(store, time.Now)
+	api := NewWithIdentity(app, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)
@@ -107,7 +108,7 @@ func TestBrowserFixture(t *testing.T) {
 			return
 		}
 	})
-	site, err := webui.New(meetings.NewService(store, time.Now), directory, origin)
+	site, err := webui.New(app, directory, origin)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -119,5 +120,17 @@ func TestBrowserFixture(t *testing.T) {
 	fmt.Println("SOMEWHERE_BROWSER_READY=" + origin)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+
+	worker, err := meetings.NewTransitionWorker(app, meetings.DefaultTransitionOptions(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	finished := make(chan struct{})
+	go func() {
+		defer close(finished)
+		worker.Run(ctx)
+	}()
 	<-ctx.Done()
+	<-finished
 }

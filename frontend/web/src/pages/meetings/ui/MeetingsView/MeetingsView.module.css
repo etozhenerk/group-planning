@@ -1,97 +1,80 @@
-.button {
-  min-height: 44px;
-  border: 0;
+.home {
+  width: 100%;
+  min-width: 0;
+  max-width: 1250px;
+  align-self: start;
+  margin: 0 auto;
+  padding: 34px 40px 50px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 29px;
+}
+
+.heading h1 {
+  font-size: 34px;
+  letter-spacing: -1px;
+  margin: 0 0 7px;
+  line-height: 1.15;
+}
+
+.create {
+  min-height: 47px;
   border-radius: 14px;
-  padding: 11px 18px;
-  color: var(--text);
-  background: var(--surface);
+  padding: 12px 18px;
+  color: var(--action-text);
+  background: var(--action);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-weight: 650;
+  white-space: nowrap;
 }
 
-button.primary,
-.button.primary {
-  background: var(--action);
-  color: var(--action-text);
-}
-
-.stack {
-  display: grid;
-  gap: 20px;
-}
-
-.page-content {
-  max-width: 1050px;
-  margin: 0 auto;
-  padding: 40px 28px;
-}
-
-@media (max-width: 739px) {
-  .page-content {
-    padding: 24px 18px;
+@media (max-width: 1180px) {
+  .home {
+    padding: 30px;
   }
 }
 
-.page-content {
-  width: 100%;
-}
-
-.page-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.page-heading h1 {
-  margin: 0;
-}
-
-.meetings-home {
-  max-width: 1000px;
-}
-
-.home-empty {
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
-}
-
-.home-empty > svg {
-  color: var(--accent);
-  padding: 16px;
-  box-sizing: content-box;
-  border-radius: 25px;
-  background: #38333f;
-  margin-bottom: 24px;
-}
-
-.home-empty h2 {
-  margin-bottom: 12px;
-}
-
-.home-empty p {
-  color: var(--muted);
-  max-width: 310px;
-}
-
 @media (max-width: 739px) {
-  .page-heading {
+  .home {
+    padding: 24px 20px 35px;
+  }
+
+  .heading {
     align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 28px;
-    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 24px;
   }
 
-  .page-heading h1 {
-    font-size: 32px;
+  .heading h1 {
+    font-size: 29px;
+    letter-spacing: -0.8px;
+  }
+
+  .create {
+    min-height: 43px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home {
+    padding-inline: 16px;
+  }
+
+  .heading h1 {
+    font-size: 26px;
+  }
+
+  .create {
+    padding-inline: 10px;
   }
 }

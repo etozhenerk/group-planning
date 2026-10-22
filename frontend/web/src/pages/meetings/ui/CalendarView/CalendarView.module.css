@@ -1,0 +1,48 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 276px;
+  align-items: start;
+  gap: 26px;
+}
+
+.month {
+  min-width: 0;
+}
+
+.agenda {
+  background: #303038;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 4px;
+  min-width: 0;
+}
+
+.agenda h3 {
+  font-size: 16px;
+  margin: 0 0 5px;
+  letter-spacing: -0.25px;
+}
+
+.weekday {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+@media (max-width: 1180px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 739px) {
+  .layout {
+    gap: 24px;
+  }
+
+  .agenda {
+    padding: 19px;
+    border-radius: 18px;
+  }
+}

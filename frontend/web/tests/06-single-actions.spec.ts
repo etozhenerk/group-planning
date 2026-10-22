@@ -22,7 +22,17 @@ for (const width of [320, 1440]) {
       } else if (state === 'loaded') {
         await route.continue();
       } else {
-        await route.fulfill({ json: { meetings: [], next_cursor: null } });
+        await route.fulfill({
+          json: {
+            meetings: [],
+            next_cursor: null,
+            as_of: new Date().toISOString(),
+            counts: { upcoming: 0, past: 0, undated: 0 },
+            days: [],
+            next_transition_at: null,
+            refresh_after_seconds: 5,
+          },
+        });
       }
     });
     await page.goto('/meetings');
@@ -44,7 +54,7 @@ for (const width of [320, 1440]) {
     state = 'error';
     await page.reload();
     await expect(
-      page.getByRole('heading', { name: 'Не удалось получить встречи' }),
+      page.getByRole('heading', { name: 'Не удалось загрузить встречи' }),
     ).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();

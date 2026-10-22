@@ -1,0 +1,106 @@
+.calendar {
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 5px 0 20px;
+}
+
+.header h2 {
+  font-size: 22px;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.buttons button {
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  background: #33313a;
+  border-radius: 11px;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 11px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  animation: month-enter 180ms ease-out;
+}
+
+@keyframes month-enter {
+  from {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 739px) {
+  .header {
+    margin-top: 4px;
+    margin-bottom: 18px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .grid {
+    gap: 3px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid {
+    animation: none;
+  }
+}
+
+.buttons button.today {
+  width: auto;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@media (max-width: 360px) {
+  .header {
+    gap: 6px;
+  }
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+  .buttons {
+    gap: 3px;
+  }
+
+  .buttons button.today {
+    padding-inline: 8px;
+  }
+}
