@@ -16,6 +16,14 @@ button.icon {
   width: min(560px, calc(100% - 24px));
   max-height: calc(100dvh - 24px);
   padding: 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialog.contained[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .dialog::backdrop {
@@ -28,7 +36,8 @@ button.icon {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
 }
 
 .dialog-heading h2 {
@@ -90,6 +99,7 @@ button.icon {
 
   .dialog::before {
     content: '';
+    flex-shrink: 0;
     display: block;
     width: 36px;
     height: 4px;

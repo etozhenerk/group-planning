@@ -1,9 +1,10 @@
-import { Plus, X } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { DateInput } from '@/shared/ui/DateInput';
 import styles from '@/features/date-poll/ui/PollDatesFields/PollDatesFields.module.css';
 
 export type PollDatesFieldsProps = {
   dates: string[];
+  errors: string[];
   zone: string;
   change: (index: number, date: string) => void;
   add: () => void;
@@ -13,6 +14,7 @@ export type PollDatesFieldsProps = {
 
 export const PollDatesFields = ({
   dates,
+  errors,
   zone,
   change,
   add,
@@ -21,25 +23,35 @@ export const PollDatesFields = ({
 }: PollDatesFieldsProps) => {
   return (
     <fieldset className={styles['dates']} disabled={disabled}>
-      <legend>Варианты даты</legend>
+      <legend>Даты</legend>
       {dates.map((date, index) => (
-        <div className={styles['row']} key={index}>
+        <div
+          className={[styles['row'], dates.length > 2 ? styles['removable'] : '']
+            .filter(Boolean)
+            .join(' ')}
+          key={index}
+        >
           <DateInput
             label={`Вариант ${index + 1}`}
             value={date}
+            clearable={false}
+            hideLabel
+            error={errors[index] ?? ''}
             timezone={zone}
             onChange={(value) => change(index, value)}
             disabled={disabled}
           />
-          <button
-            type="button"
-            className={styles['remove']}
-            aria-label={`Удалить вариант ${index + 1}`}
-            onClick={() => remove(index)}
-            disabled={disabled || dates.length <= 2}
-          >
-            <X size={18} aria-hidden="true" />
-          </button>
+          {dates.length > 2 && (
+            <button
+              type="button"
+              className={styles['remove']}
+              aria-label={`Удалить вариант ${index + 1}`}
+              onClick={() => remove(index)}
+              disabled={disabled}
+            >
+              <Trash2 size={18} aria-hidden="true" />
+            </button>
+          )}
         </div>
       ))}
       <button

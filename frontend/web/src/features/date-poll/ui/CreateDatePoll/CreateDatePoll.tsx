@@ -28,7 +28,12 @@ export const CreateDatePoll = ({ id, session }: CreateDatePollProps) => {
       >
         <Plus size={24} aria-hidden="true" />
       </button>
-      <Dialog open={open} title="Предложить другую дату" onClose={() => setOpen(false)}>
+      <Dialog
+        open={open}
+        title="Когда встречаемся?"
+        contained
+        onClose={() => setOpen(false)}
+      >
         {meeting.data ? (
           <PollCreateForm
             key={generation}

@@ -66,20 +66,21 @@ test('create with settings and apply live majority in two chats', async ({
   await join(friend, created.invitation_url);
   await page.goto(`/meetings/${id}`);
   await page.getByRole('button', { name: 'Добавить опрос даты' }).click();
-  const form = page.getByRole('dialog', { name: 'Предложить другую дату' });
+  const form = page.getByRole('dialog', { name: 'Когда встречаемся?' });
   await expect(form.getByRole('switch', { name: /Несколько вариантов/ })).toBeChecked();
   await expect(form.getByRole('switch', { name: 'Можно переголосовать' })).toBeChecked();
   await expect(
     form.getByRole('switch', { name: 'Участники могут добавить дату' }),
   ).toBeChecked();
 
+  await expect(form).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+
   for (const toggle of await form.getByRole('switch').all()) {
     const bounds = await toggle.boundingBox();
-    expect(bounds?.width).toBe(42);
-    expect(bounds?.height).toBe(26);
+    expect(bounds?.width).toBeCloseTo(42, 1);
+    expect(bounds?.height).toBeCloseTo(26, 1);
   }
 
-  await expect(form).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
   const dateField = form.locator('.g-text-input').first();
   const dateBounds = await dateField.boundingBox();
 
@@ -101,6 +102,12 @@ test('create with settings and apply live majority in two chats', async ({
   const card = page.getByRole('region', { name: 'Опрос о дате' });
   const other = friend.getByRole('region', { name: 'Опрос о дате' });
   await expect(other).toBeVisible({ timeout: 10000 });
+  await expect(card).toHaveCSS('background-color', 'rgb(224, 220, 232)');
+  await expect(other).toHaveCSS('background-color', 'rgb(51, 52, 58)');
+  await expect(card).toHaveCSS('border-top-left-radius', '20px');
+  await expect(card).toHaveCSS('border-top-right-radius', '6px');
+  await expect(other).toHaveCSS('border-top-left-radius', '6px');
+  await expect(other).toHaveCSS('border-top-right-radius', '20px');
 
   for (const checkbox of await card.getByRole('checkbox').all()) {
     const bounds = await checkbox.boundingBox();
@@ -131,7 +138,22 @@ test('create with settings and apply live majority in two chats', async ({
   await expect(card.getByText('Опрос завершён · дата выбрана')).toBeVisible({
     timeout: 10000,
   });
-  await expect(page.getByText(/Встреча перенесена на 25 октября/)).toBeVisible();
+  await expect(
+    page
+      .getByTestId('system-event')
+      .filter({ hasText: /Встреча перенесена на 25 октября/ }),
+  ).toBeVisible();
+  await expect(page.getByText('Бот', { exact: true })).toHaveCount(0);
+  const notice = page
+    .getByTestId('system-event')
+    .filter({ hasText: /Встреча перенесена на 25 октября/ });
+
+  const noticeTime = await notice.locator('time').boundingBox();
+  const noticeText = await notice.locator('p').boundingBox();
+  expect((noticeTime?.y ?? 0) + (noticeTime?.height ?? 0)).toBeLessThan(
+    noticeText?.y ?? 0,
+  );
+  await expect(notice.locator('time')).toHaveText(/Сегодня · \d{2}:\d{2}/);
   expect((await apiMeeting(page, id)).starts_at).toBe('2026-10-25T16:00:00Z');
   await expect(card.getByRole('button', { name: 'Проголосовать' })).toHaveCount(0);
 

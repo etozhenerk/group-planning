@@ -28,14 +28,14 @@ export const PollDeadline = ({
       <legend>Окончание опроса</legend>
       <div className={styles['fields']}>
         <DateInput
-          label="Дата окончания"
+          label="Дата"
           value={value.split('T')[0] ?? ''}
           timezone={zone}
           onChange={(date) => onChange(`${date}T${value.split('T')[1] ?? ''}`)}
           disabled={disabled}
         />
         <TimeInput
-          label="Время окончания"
+          label="Время"
           value={value.split('T')[1] ?? ''}
           onChange={(hour) => onChange(`${value.split('T')[0] ?? ''}T${hour}`)}
           required

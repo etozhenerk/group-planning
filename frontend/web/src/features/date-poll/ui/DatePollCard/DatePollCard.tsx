@@ -7,9 +7,14 @@ import { PollResolution } from '@/features/date-poll/ui/PollResolution';
 import { pollStatus, pollError } from '@/features/date-poll/model/pollCopy';
 import styles from '@/features/date-poll/ui/DatePollCard/DatePollCard.module.css';
 
-export type DatePollCardProps = { meeting: string; id: string; session: Session };
+export type DatePollCardProps = {
+  meeting: string;
+  id: string;
+  session: Session;
+  outgoing: boolean;
+};
 
-export const DatePollCard = ({ meeting, id, session }: DatePollCardProps) => {
+export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardProps) => {
   const query = useDatePoll(meeting, id, session.user.id);
   const details = useMeeting(meeting, session.user.id);
 
@@ -21,7 +26,12 @@ export const DatePollCard = ({ meeting, id, session }: DatePollCardProps) => {
   const zone = details.data?.timezone ?? 'UTC';
 
   return (
-    <section className={styles['card']} aria-label="Опрос о дате">
+    <section
+      className={[styles['card'], outgoing ? styles['outgoing'] : '']
+        .filter(Boolean)
+        .join(' ')}
+      aria-label="Опрос о дате"
+    >
       <div className={styles['caption']}>
         <ChartNoAxesColumnIncreasing size={18} aria-hidden="true" />
         Предлагает изменить дату

@@ -7,6 +7,7 @@ import type { Meeting, PollSettings } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { useIntent } from '@/shared/lib/intent';
 import { resolveTime, validDay, editLocalTime } from '@/shared/lib/time';
+import { pollDateErrors } from '@/features/date-poll/model/pollDateErrors';
 import { pollError } from '@/features/date-poll/model/pollCopy';
 
 export const usePollForm = (meeting: Meeting, session: Session, done: () => void) => {
@@ -35,6 +36,8 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
     hideResults: false,
   });
 
+  const [attempt, setAttempt] = useState(0);
+  const dateErrors = attempt > 0 ? pollDateErrors(dates) : [];
   const client = useQueryClient();
   const intent = useIntent();
   const access = useAccess(session.user.id, meeting.id);
@@ -75,6 +78,12 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setAttempt((before) => before + 1);
+
+    if (pollDateErrors(dates).some(Boolean)) {
+      return;
+    }
+
     mutation.mutate();
   };
 
@@ -94,6 +103,8 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
 
   return {
     dates,
+    attempt,
+    dateErrors,
     changeDate,
     remove,
     add,

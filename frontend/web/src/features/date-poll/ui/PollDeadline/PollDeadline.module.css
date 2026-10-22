@@ -1,7 +1,7 @@
 .deadline {
   min-width: 0;
   border: 0;
-  margin: 20px 0 0;
+  margin: 16px 0 0;
   padding: 0;
 }
 
@@ -20,4 +20,10 @@
   display: block;
   color: var(--muted);
   margin: 8px 0;
+}
+
+@media (max-width: 359px) {
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

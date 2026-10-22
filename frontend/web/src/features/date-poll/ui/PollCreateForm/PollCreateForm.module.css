@@ -1,22 +1,36 @@
 .form {
   min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.intro {
-  color: var(--muted);
-  margin: 0 0 24px;
+.body {
+  overflow-y: auto;
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 0 4px 8px;
+  margin: 0 -4px;
 }
 
 .error {
   color: var(--error);
+  margin: 0 0 12px;
+  font-size: 13px;
 }
 
 .footer {
-  position: sticky;
-  bottom: -24px;
-  padding: 16px 0 4px;
+  flex-shrink: 0;
+  position: relative;
+  padding: 12px 0 0;
   background: var(--background);
   z-index: 1;
+  transition: box-shadow 160ms;
+}
+
+.footer.overflowing {
+  box-shadow: 0 -14px 18px -14px #000b;
 }
 
 .footer button {

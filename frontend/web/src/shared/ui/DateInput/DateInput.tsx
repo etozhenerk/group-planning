@@ -10,6 +10,9 @@ export type DateInputProps = {
   onChange: (value: string) => void;
   disabled?: boolean;
   invalid?: boolean;
+  clearable?: boolean;
+  hideLabel?: boolean;
+  error?: string;
 };
 
 export const DateInput = ({
@@ -19,12 +22,20 @@ export const DateInput = ({
   onChange,
   disabled = false,
   invalid = false,
+  clearable = true,
+  hideLabel = false,
+  error = '',
 }: DateInputProps) => {
   const field = useDateInput(value, timezone, onChange, disabled);
 
   return (
     <div className={styles['control-field']}>
-      <label htmlFor={field.id}>{label}</label>
+      <label
+        htmlFor={field.id}
+        className={hideLabel ? styles['hidden-label'] : undefined}
+      >
+        {label}
+      </label>
       <div onClick={field.openFromField}>
         <MobileProvider mobile={false}>
           <DatePicker
@@ -39,13 +50,18 @@ export const DateInput = ({
             size="xl"
             placeholder="ДД.ММ.ГГГГ"
             disabled={disabled}
-            {...(invalid ? { validationState: 'invalid' as const } : {})}
+            {...(invalid || error ? { validationState: 'invalid' as const } : {})}
             popupClassName={styles['meeting-date-popup'] ?? ''}
-            disablePortal
-            hasClear
+            hasClear={clearable}
+            {...(error ? { 'aria-describedby': `${field.id}-error` } : {})}
           />
         </MobileProvider>
       </div>
+      {error && (
+        <p className={styles['error']} id={`${field.id}-error`} role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

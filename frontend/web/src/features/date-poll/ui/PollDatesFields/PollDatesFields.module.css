@@ -7,15 +7,19 @@
 
 .dates legend {
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 44px;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
-  align-items: end;
+  align-items: start;
   margin-top: 10px;
+}
+
+.row.removable {
+  grid-template-columns: minmax(0, 1fr) 44px;
 }
 
 button.remove {
@@ -24,6 +28,7 @@ button.remove {
   width: 44px;
   padding: 10px;
   background: transparent;
+  cursor: pointer;
 }
 
 button.add {

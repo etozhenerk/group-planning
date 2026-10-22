@@ -28,7 +28,7 @@ it('keeps ordinary events centered even with an older bot sender', () => {
     expect(entryPresentation({ ...entry, kind })).toBe('system');
   }
 });
-it('only renders supported poll notifications as bot messages', () => {
+it('renders poll notifications as centered system events', () => {
   for (const kind of [
     'date_poll_applied',
     'date_poll_no_majority',
@@ -36,7 +36,7 @@ it('only renders supported poll notifications as bot messages', () => {
     'date_poll_time_required',
     'date_poll_cancelled',
   ]) {
-    expect(entryPresentation({ ...entry, kind })).toBe('notification');
+    expect(entryPresentation({ ...entry, kind })).toBe('system');
   }
 
   expect(entryPresentation({ ...entry, kind: 'future_event', supported: false })).toBe(

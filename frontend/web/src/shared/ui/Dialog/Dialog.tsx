@@ -1,7 +1,10 @@
 import styles from '@/shared/ui/Dialog/Dialog.module.css';
 import type { ReactNode } from 'react';
 import { useId } from 'react';
+import { useBackdropDismiss } from '@/shared/ui/Dialog/hooks/useBackdropDismiss';
 import { X } from 'lucide-react';
+import { PortalProvider, DefaultPropsProvider } from '@gravity-ui/uikit';
+import { popupDefaults } from '@/shared/ui/Dialog/lib/popupDefaults';
 import { preservePopupEscape } from '@/shared/ui/Dialog/lib/preservePopupEscape';
 import { useDialog } from '@/shared/ui/Dialog/hooks/useDialog';
 
@@ -10,15 +13,27 @@ export type DialogProps = {
   title: string;
   onClose: () => void;
   children: ReactNode;
+  contained?: boolean;
 };
 
-export const Dialog = ({ open, title, onClose, children }: DialogProps) => {
+export const Dialog = ({
+  open,
+  title,
+  onClose,
+  children,
+  contained = false,
+}: DialogProps) => {
   const ref = useDialog(open);
   const heading = useId();
+  const backdrop = useBackdropDismiss(onClose);
 
   return (
     <dialog
-      className={styles['dialog']}
+      className={[styles['dialog'], contained ? styles['contained'] : '']
+        .filter(Boolean)
+        .join(' ')}
+      onPointerDown={backdrop.pointerDown}
+      onClick={backdrop.click}
       ref={ref}
       aria-labelledby={heading}
       onCancel={onClose}
@@ -35,7 +50,11 @@ export const Dialog = ({ open, title, onClose, children }: DialogProps) => {
           <X aria-hidden="true" size={20} />
         </button>
       </div>
-      {children}
+      <PortalProvider container={ref}>
+        <DefaultPropsProvider defaultProps={popupDefaults}>
+          {children}
+        </DefaultPropsProvider>
+      </PortalProvider>
     </dialog>
   );
 };

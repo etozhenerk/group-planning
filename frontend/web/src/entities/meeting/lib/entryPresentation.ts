@@ -1,16 +1,6 @@
 import type { FeedEntry } from '@/entities/meeting/model/types';
 
-const pollNotifications = new Set([
-  'date_poll_applied',
-  'date_poll_no_majority',
-  'date_poll_choice_required',
-  'date_poll_time_required',
-  'date_poll_cancelled',
-]);
-
-export const entryPresentation = (
-  entry: FeedEntry,
-): 'message' | 'poll' | 'notification' | 'system' => {
+export const entryPresentation = (entry: FeedEntry): 'message' | 'poll' | 'system' => {
   if (entry.text !== null) {
     return 'message';
   }
@@ -19,5 +9,5 @@ export const entryPresentation = (
     return 'poll';
   }
 
-  return entry.supported && pollNotifications.has(entry.kind) ? 'notification' : 'system';
+  return 'system';
 };

@@ -16,8 +16,7 @@ export const FeedRecord = ({ entry, session }: FeedRecordProps) => {
     return <SystemEvent entry={entry} />;
   }
 
-  const bot = presentation === 'notification';
-  const own = !bot && entry.actor.id === session.user.id;
+  const own = entry.actor.id === session.user.id;
 
   return (
     <li
@@ -26,18 +25,19 @@ export const FeedRecord = ({ entry, session }: FeedRecordProps) => {
         .join(' ')}
       data-testid="feed-message"
     >
-      {bot ? (
-        <img className={styles['bot-avatar']} src="/somewhere.svg" alt="" />
-      ) : (
-        <Avatar name={entry.actor.displayName} own={own} />
-      )}
+      <Avatar name={entry.actor.displayName} own={own} />
       <div className={styles['message-content']}>
         <div className={styles['message-author']}>
-          <strong>{bot ? 'Бот' : entry.actor.displayName}</strong>
+          <strong>{entry.actor.displayName}</strong>
           <time dateTime={entry.occurredAt}>{clockLabel(entry.occurredAt)}</time>
         </div>
         {entry.pollId ? (
-          <DatePollCard meeting={entry.meetingId} id={entry.pollId} session={session} />
+          <DatePollCard
+            meeting={entry.meetingId}
+            id={entry.pollId}
+            session={session}
+            outgoing={own}
+          />
         ) : (
           <p className={styles['message-bubble']} data-testid="message-bubble">
             {entry.text ?? entry.event}

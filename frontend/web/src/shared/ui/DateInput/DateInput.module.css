@@ -46,3 +46,24 @@
   display: block;
   width: 100%;
 }
+
+.error {
+  color: var(--error);
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.hidden-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.meeting-date-popup :global(.g-date-calendar) {
+  --g-date-calendar-day-size: min(42px, calc((100vw - 48px) / 7));
+}

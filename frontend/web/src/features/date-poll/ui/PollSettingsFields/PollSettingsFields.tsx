@@ -13,12 +13,9 @@ export const PollSettingsFields = ({
   disabled,
 }: PollSettingsFieldsProps) => {
   return (
-    <fieldset className={styles['settings']} disabled={disabled}>
-      <legend>Настройки</legend>
+    <fieldset className={styles['settings']} disabled={disabled} aria-label="Настройки">
       <label>
-        <span>
-          Несколько вариантов<small>Можно отметить все подходящие даты</small>
-        </span>
+        <span>Несколько вариантов</span>
         <input
           type="checkbox"
           role="switch"
@@ -45,9 +42,7 @@ export const PollSettingsFields = ({
         />
       </label>
       <label>
-        <span>
-          Анонимные голоса<small>Не показываем, кто за какой вариант</small>
-        </span>
+        <span>Анонимные голоса</span>
         <input
           type="checkbox"
           role="switch"
@@ -56,9 +51,7 @@ export const PollSettingsFields = ({
         />
       </label>
       <label>
-        <span>
-          Скрыть результаты до конца<small>Дату выберем после окончания опроса</small>
-        </span>
+        <span>Скрыть результаты до конца</span>
         <input
           type="checkbox"
           role="switch"
