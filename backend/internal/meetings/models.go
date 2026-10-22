@@ -12,6 +12,7 @@ type Meeting struct {
 	OrganizerID         string
 	Title               string
 	Description         string
+	StartsOn            string
 	StartsAt            *time.Time
 	Timezone            string
 	Place               string

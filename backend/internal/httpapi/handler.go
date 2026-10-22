@@ -13,6 +13,7 @@ type previewResponse struct {
 	MeetingID      string     `json:"meeting_id"`
 	Title          string     `json:"title"`
 	Description    *string    `json:"description"`
+	StartsOn       *string    `json:"starts_on"`
 	StartsAt       *time.Time `json:"starts_at"`
 	Timezone       string     `json:"timezone"`
 	Place          *string    `json:"place"`

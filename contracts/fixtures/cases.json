@@ -303,5 +303,81 @@
     "path": "/api/v1/meetings",
     "method": "get",
     "status": 409
+  },
+  {
+    "name": "invitation-date-without-time",
+    "schema": "InvitationPreview",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Суббота без спешки",
+      "starts_at": null,
+      "timezone": "Europe/Moscow",
+      "place": null,
+      "cover_url": null,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": "Пицца и настольные игры.",
+      "starts_on": "2026-10-24"
+    },
+    "path": "/api/v1/invitations/{token}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "date-only-create",
+    "schema": "CreateMeeting",
+    "body": {
+      "title": "Настолки",
+      "starts_on": "2026-10-24",
+      "starts_at": null,
+      "timezone": "Europe/Moscow"
+    }
+  },
+  {
+    "name": "date-poll-hidden",
+    "schema": "DatePoll",
+    "body": {
+      "id": "d3c50000-0000-4000-8000-000000000001",
+      "meeting_id": "d3c50000-0000-4000-8000-000000000002",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Лена"
+      },
+      "settings": {
+        "multiple_answers": true,
+        "allow_revoting": true,
+        "allow_new_options": true,
+        "anonymous": false,
+        "hide_results": true
+      },
+      "options": [
+        {
+          "id": "d3c50000-0000-4000-8000-000000000003",
+          "date": "2026-10-25",
+          "votes": null,
+          "voters": null
+        },
+        {
+          "id": "d3c50000-0000-4000-8000-000000000004",
+          "date": "2026-10-26",
+          "votes": null,
+          "voters": null
+        }
+      ],
+      "state": "open",
+      "revision": "1",
+      "my_vote_revision": "1",
+      "my_option_ids": [
+        "d3c50000-0000-4000-8000-000000000003"
+      ],
+      "created_at": "2026-10-20T00:00:00Z",
+      "closes_at": "2026-10-21T00:00:00Z",
+      "closed_at": null,
+      "leader_option_ids": [],
+      "applied_option_id": null,
+      "can_vote": true,
+      "can_add_options": true,
+      "can_resolve": false
+    }
   }
 ]

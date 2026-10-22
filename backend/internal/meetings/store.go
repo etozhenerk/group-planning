@@ -25,6 +25,8 @@ type Store interface {
 // Reader returns independent copies. It is valid only for its callback's lifetime.
 type Reader interface {
 	Meeting(string) (Meeting, error)
+	DatePoll(string) (DatePoll, error)
+	DatePolls() ([]DatePoll, error)
 	Meetings() ([]Meeting, error)
 	TransitionJob(string, uint64) (TransitionJob, error)
 	DueTransitions(time.Time, int) ([]TransitionJob, error)
@@ -44,6 +46,7 @@ type Reader interface {
 type Writer interface {
 	Reader
 	SaveMeeting(Meeting) error
+	SaveDatePoll(DatePoll) error
 	SaveTransitionJob(TransitionJob) error
 	InsertInvitation(Invitation) error
 	SaveRSVP(RSVP) error

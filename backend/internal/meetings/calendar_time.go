@@ -7,7 +7,7 @@ const localStartLayout = "2006-01-02T15:04:05.000000000"
 func classify(details Details, ranged bool) (CalendarItem, *time.Time, error) {
 	meeting := details.Meeting
 	item := CalendarItem{Details: details, Period: meeting.Status, position: calendarPosition{ID: meeting.ID}}
-	if meeting.StartsAt == nil {
+	if meeting.StartsAt == nil && meeting.StartsOn == "" {
 		if meeting.Status != Undated {
 			return CalendarItem{}, nil, ErrInvalidRecord
 		}
@@ -24,9 +24,15 @@ func classify(details Details, ranged bool) (CalendarItem, *time.Time, error) {
 		return CalendarItem{}, nil, err
 	}
 
-	local := meeting.StartsAt.In(location)
+	local, err := scheduleStart(meeting, location)
+	if err != nil {
+		return CalendarItem{}, nil, err
+	}
+
 	item.LocalDate = local.Format(time.DateOnly)
-	item.position.StartsAt = meeting.StartsAt
+	// This cursor key may be the start of a date-only day. It is never exposed
+	// as starts_at: the meeting still has no fabricated time.
+	item.position.StartsAt = local
 	if ranged {
 		item.position.LocalStart = local.Format(localStartLayout)
 	}

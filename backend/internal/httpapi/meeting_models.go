@@ -11,6 +11,7 @@ import (
 type meetingSummaryResponse struct {
 	ID               string     `json:"id"`
 	Title            string     `json:"title"`
+	StartsOn         *string    `json:"starts_on"`
 	StartsAt         *time.Time `json:"starts_at"`
 	Timezone         string     `json:"timezone"`
 	Place            *string    `json:"place"`
@@ -55,6 +56,7 @@ type feedEntryResponse struct {
 	Kind            string          `json:"kind"`
 	PayloadVersion  uint32          `json:"payload_version"`
 	Actor           userResponse    `json:"actor"`
+	Sender          senderResponse  `json:"sender"`
 	OccurredAt      time.Time       `json:"occurred_at"`
 	Payload         json.RawMessage `json:"payload"`
 	ClientRequestID *string         `json:"client_request_id"`
@@ -87,6 +89,7 @@ func summaryDTO(details meetings.Details) meetingSummaryResponse {
 	return meetingSummaryResponse{
 		ID:               m.ID,
 		Title:            m.Title,
+		StartsOn:         optionalString(m.StartsOn),
 		StartsAt:         m.StartsAt,
 		Timezone:         m.Timezone,
 		Place:            optionalString(m.Place),
@@ -111,5 +114,5 @@ func rsvpDTO(state meetings.ResponseState) rsvpResponse {
 }
 
 func entryDTO(entry meetings.FeedEntry) feedEntryResponse {
-	return feedEntryResponse{entry.ID, entry.MeetingID, decimal(entry.Sequence), entry.Kind, entry.PayloadVersion, userResponse{entry.ActorID, entry.ActorName}, entry.OccurredAt, entry.Payload, optionalString(entry.ClientRequestID)}
+	return feedEntryResponse{entry.ID, entry.MeetingID, decimal(entry.Sequence), entry.Kind, entry.PayloadVersion, userResponse{entry.ActorID, entry.ActorName}, entrySender(entry), entry.OccurredAt, entry.Payload, optionalString(entry.ClientRequestID)}
 }

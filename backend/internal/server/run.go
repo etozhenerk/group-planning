@@ -61,6 +61,18 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 	go func() { defer close(workerDone); worker.Run(workerCtx) }()
 	defer func() { stopWorker(); <-workerDone }()
 
+	pollWorker, err := meetings.NewDatePollWorker(app, options, func(event meetings.PollObservation) {
+		logger.Error("date poll jobs", "event", event.Event, "poll_id", event.PollID, "error_code", event.ErrorCode, "failed", event.Failed, "oldest_overdue_seconds", event.OldestOverdue.Seconds())
+	})
+	if err != nil {
+		return err
+	}
+
+	pollCtx, stopPollWorker := context.WithCancel(ctx)
+	pollDone := make(chan struct{})
+	go func() { defer close(pollDone); pollWorker.Run(pollCtx) }()
+	defer func() { stopPollWorker(); <-pollDone }()
+
 	cleanupCtx, stopCleanup := context.WithCancel(ctx)
 	cleanupDone := make(chan struct{})
 	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()

@@ -12,6 +12,7 @@ type PublicInvitation struct {
 	MeetingID   string
 	Title       string
 	Description string
+	StartsOn    string
 	StartsAt    *time.Time
 	Timezone    string
 	Place       string
@@ -53,6 +54,7 @@ func publicInvitation(meeting Meeting) PublicInvitation {
 		MeetingID:   meeting.ID,
 		Title:       meeting.Title,
 		Description: meeting.Description,
+		StartsOn:    meeting.StartsOn,
 		StartsAt:    meeting.StartsAt,
 		Timezone:    meeting.Timezone,
 		Place:       meeting.Place,

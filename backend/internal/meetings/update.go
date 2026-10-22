@@ -14,8 +14,8 @@ type Field struct {
 
 // UpdateInput contains only editable settings, with explicit presence per field.
 type UpdateInput struct {
-	Title, Description, StartsAt, Timezone, Place Field
-	ExpectedRevision                              uint64
+	Title, Description, StartsAt, Timezone, Place, StartsOn Field
+	ExpectedRevision                                        uint64
 }
 
 // Update preserves the instant when only the display timezone changes. Expensive
@@ -30,7 +30,7 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 		return Details{}, err
 	}
 
-	if !input.Title.Present && !input.Description.Present && !input.StartsAt.Present && !input.Timezone.Present && !input.Place.Present {
+	if !input.Title.Present && !input.Description.Present && !input.StartsAt.Present && !input.StartsOn.Present && !input.Timezone.Present && !input.Place.Present {
 		return Details{}, ValidationError{map[string]string{"changes": "required"}}
 	}
 
@@ -72,24 +72,13 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 		return Details{}, err
 	}
 
-	timezone := original.Meeting.Timezone
-	if input.Timezone.Present {
-		timezone = input.Timezone.Value
-	}
-
-	location, err := loadZone(timezone)
+	date, instant, timezone, err := updatedSchedule(original.Meeting, input)
 	if err != nil {
 		return Details{}, err
 	}
 
-	var instant time.Time
-	if input.StartsAt.Present {
-		instant, err = parseInstant(input.StartsAt.Value)
-		if err != nil {
-			return Details{}, err
-		}
-
-		input.StartsAt.Value = instant.UTC().Format(time.RFC3339Nano)
+	if input.StartsAt.Present && instant != nil {
+		input.StartsAt.Value = instant.Format(time.RFC3339Nano)
 	}
 
 	hash := requestHash(input)
@@ -119,14 +108,9 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 		}
 
 		meeting := current.Meeting
-		if input.StartsAt.Present {
-			if err := validateOffset(instant, location); err != nil {
-				return err
-			}
-
-			utc := instant.UTC()
-			meeting.StartsAt = &utc
-		}
+		meeting.StartsOn = date
+		meeting.StartsAt = instant
+		meeting.Timezone = timezone
 
 		if input.Title.Present {
 			meeting.Title = input.Title.Value
@@ -144,15 +128,21 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 			meeting.Place = input.Place.Value
 		}
 
-		changed := meeting.Title != current.Meeting.Title || meeting.Description != current.Meeting.Description || meeting.Timezone != current.Meeting.Timezone || meeting.Place != current.Meeting.Place || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt)
+		changed := meeting.Title != current.Meeting.Title || meeting.Description != current.Meeting.Description || meeting.Timezone != current.Meeting.Timezone || meeting.Place != current.Meeting.Place || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) || meeting.StartsOn != current.Meeting.StartsOn
 		if changed {
 			meeting.Revision, err = increment(meeting.Revision)
 			if err != nil {
 				return err
 			}
 
-			if meeting.Timezone != current.Meeting.Timezone || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) {
+			if meeting.Timezone != current.Meeting.Timezone || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) || meeting.StartsOn != current.Meeting.StartsOn {
 				if err := s.schedule(writer, &meeting); err != nil {
+					return err
+				}
+			}
+
+			if (input.StartsOn.Present || input.StartsAt.Present || input.Timezone.Present) && calendarDay(meeting) != calendarDay(current.Meeting) {
+				if err := s.cancelDatePolls(writer, meeting); err != nil {
 					return err
 				}
 			}
@@ -166,6 +156,12 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 				Current  any `json:"current"`
 			}{meetingEvent(current.Meeting), meetingEvent(meeting)}, ""); err != nil {
 				return err
+			}
+
+			if current.Meeting.StartsAt != nil && meeting.StartsAt == nil {
+				if _, err := s.entry(writer, id, "meeting_time_unspecified", botActor(), meetingEvent(meeting), ""); err != nil {
+					return err
+				}
 			}
 		}
 

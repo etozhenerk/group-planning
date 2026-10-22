@@ -10,7 +10,8 @@ import (
 type createMeetingRequest struct {
 	Title       string  `json:"title"`
 	Description *string `json:"description"`
-	StartsAt    string  `json:"starts_at"`
+	StartsOn    string  `json:"starts_on"`
+	StartsAt    *string `json:"starts_at"`
 	Timezone    string  `json:"timezone"`
 	Place       *string `json:"place"`
 }
@@ -51,7 +52,8 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 		result, err := h.app.Create(r.Context(), actor, meetings.CreateInput{
 			Title:       input.Title,
 			Description: stringValue(input.Description),
-			StartsAt:    input.StartsAt,
+			StartsOn:    input.StartsOn,
+			StartsAt:    stringValue(input.StartsAt),
 			Timezone:    input.Timezone,
 			Place:       stringValue(input.Place),
 		}, key)
@@ -110,6 +112,7 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 type updateMeetingRequest struct {
 	Title            json.RawMessage `json:"title"`
 	Description      json.RawMessage `json:"description"`
+	StartsOn         json.RawMessage `json:"starts_on"`
 	StartsAt         json.RawMessage `json:"starts_at"`
 	Timezone         json.RawMessage `json:"timezone"`
 	Place            json.RawMessage `json:"place"`
@@ -141,7 +144,7 @@ func parseUpdate(w http.ResponseWriter, input updateMeetingRequest) (meetings.Up
 		nullable bool
 		target   *meetings.Field
 	}{
-		{"title", input.Title, false, &result.Title}, {"description", input.Description, true, &result.Description}, {"starts_at", input.StartsAt, false, &result.StartsAt}, {"timezone", input.Timezone, false, &result.Timezone}, {"place", input.Place, true, &result.Place},
+		{"title", input.Title, false, &result.Title}, {"description", input.Description, true, &result.Description}, {"starts_at", input.StartsAt, true, &result.StartsAt}, {"starts_on", input.StartsOn, false, &result.StartsOn}, {"timezone", input.Timezone, false, &result.Timezone}, {"place", input.Place, true, &result.Place},
 	} {
 		value, ok := patchField(item.data, item.nullable)
 		if !ok {

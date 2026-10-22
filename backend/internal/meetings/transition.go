@@ -49,7 +49,7 @@ func (s *Service) schedule(writer Writer, meeting *Meeting) error {
 	meeting.ScheduleVersion = version
 	meeting.Status = Undated
 	meeting.PastAt = nil
-	if meeting.StartsAt == nil {
+	if meeting.StartsAt == nil && meeting.StartsOn == "" {
 		return nil
 	}
 
@@ -58,7 +58,13 @@ func (s *Service) schedule(writer Writer, meeting *Meeting) error {
 		return err
 	}
 
-	due := nextLocalDay(meeting.StartsAt.In(location))
+	start, err := scheduleStart(*meeting, location)
+	if err != nil {
+		return err
+	}
+
+	meeting.StartsOn = start.Format(time.DateOnly)
+	due := nextLocalDay(*start)
 	meeting.PastAt = &due
 	meeting.Status = Past
 	if !due.After(s.now()) {

@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-// CreateInput requires an explicit instant and IANA zone for the first slice.
-type CreateInput struct{ Title, Description, StartsAt, Timezone, Place string }
+// CreateInput accepts a calendar date with optional time, or a legacy instant.
+type CreateInput struct{ Title, Description, StartsAt, Timezone, Place, StartsOn string }
 
 // Create commits the meeting, invitation, event and request receipt together.
 func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, key string) (Created, error) {
@@ -36,17 +36,16 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 		return Created{}, err
 	}
 
-	instant, err := parseInstant(input.StartsAt)
+	date, instant, err := parseSchedule(input.StartsOn, input.StartsAt, zone)
 	if err != nil {
 		return Created{}, err
 	}
 
-	if err := validateOffset(instant, zone); err != nil {
-		return Created{}, err
+	input.StartsOn = date
+	if instant != nil {
+		input.StartsAt = instant.Format("2006-01-02T15:04:05.999999999Z07:00")
 	}
 
-	instant = instant.UTC()
-	input.StartsAt = instant.Format("2006-01-02T15:04:05.999999999Z07:00")
 	hash := requestHash(input)
 	var result Created
 	err = s.update(ctx, func(writer Writer) error {
@@ -82,7 +81,8 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 				OrganizerID:         actor.ID,
 				Title:               input.Title,
 				Description:         input.Description,
-				StartsAt:            &instant,
+				StartsOn:            date,
+				StartsAt:            instant,
 				Timezone:            input.Timezone,
 				Place:               input.Place,
 				Revision:            1,
@@ -110,6 +110,12 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 
 			if _, err := s.entry(writer, meeting.ID, "meeting_created", actor, meetingEvent(meeting), ""); err != nil {
 				return err
+			}
+
+			if meeting.StartsAt == nil {
+				if _, err := s.entry(writer, meeting.ID, "meeting_time_unspecified", botActor(), meetingEvent(meeting), ""); err != nil {
+					return err
+				}
 			}
 
 			if err := s.remember(writer, requestKey, hash, meeting.ID); err != nil {
@@ -145,8 +151,9 @@ func meetingEvent(meeting Meeting) any {
 	return struct {
 		Title       string `json:"title"`
 		Description string `json:"description"`
+		StartsOn    string `json:"starts_on"`
 		StartsAt    any    `json:"starts_at"`
 		Timezone    string `json:"timezone"`
 		Place       string `json:"place"`
-	}{meeting.Title, meeting.Description, meeting.StartsAt, meeting.Timezone, meeting.Place}
+	}{meeting.Title, meeting.Description, meeting.StartsOn, meeting.StartsAt, meeting.Timezone, meeting.Place}
 }

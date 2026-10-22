@@ -38,6 +38,7 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 		MeetingID:      preview.MeetingID,
 		Title:          preview.Title,
 		Description:    optionalString(preview.Description),
+		StartsOn:       optionalString(preview.StartsOn),
 		StartsAt:       preview.StartsAt,
 		Timezone:       preview.Timezone,
 		Place:          optionalString(preview.Place),

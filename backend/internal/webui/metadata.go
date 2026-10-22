@@ -90,6 +90,8 @@ func description(preview meetings.PublicInvitation) string {
 		}
 
 		parts = append(parts, preview.StartsAt.In(location).Format("02.01.2006 в 15:04"))
+	} else if day, err := time.Parse(time.DateOnly, preview.StartsOn); err == nil {
+		parts = append(parts, day.Format("02.01.2006")+" · время уточняется")
 	}
 
 	if preview.Place != "" {

@@ -115,6 +115,15 @@ func (s *Service) Respond(ctx context.Context, actor Actor, id, token string, an
 				return err
 			}
 
+			if err := s.updateDatePollMembership(writer, meeting); err != nil {
+				return err
+			}
+
+			meeting, err = writer.Meeting(id)
+			if err != nil {
+				return err
+			}
+
 			details, err = snapshot(writer, meeting, actor.ID)
 			if err != nil {
 				return err

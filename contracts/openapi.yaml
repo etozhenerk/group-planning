@@ -2,10 +2,9 @@ openapi: 3.1.1
 info:
   title: Somewhere API
   version: 0.1.0
-  description: "Контракт первого среза: вход → назначенная встреча → приглашение → RSVP → чат.
-    Зарегистрированы health, preview, OAuth/session и операции встреч с memory.Store.
-    Вход выключен без конфигурации. Реальный Яндекс ID отложен до конца разработки;
-    клиенты ещё не реализованы. x-implemented отмечает маршрут, а не готовность всего сценария."
+  description: "API встреч: вход, приглашения, ответы, чат, календарь и опрос даты. Сервер использует
+    memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный маршрут, а не
+    готовность сценария во всех клиентах."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -480,7 +479,10 @@ paths:
           description: Сохранённый раздел; без параметра возвращается прежний общий список.
           schema:
             type: string
-            enum: [upcoming, past, undated]
+            enum:
+              - upcoming
+              - past
+              - undated
         - name: from
           in: query
           description: Локальная дата включительно. Требует to и датированный period; максимум 42 дня.
@@ -1033,6 +1035,321 @@ paths:
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/date-polls:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    post:
+      operationId: createDatePoll
+      summary: Создать опрос даты
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDatePoll"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/date-polls/{poll_id}:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    get:
+      operationId: getDatePoll
+      summary: Прочитать разрешённые результаты опроса
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/date-polls/{poll_id}/vote:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    put:
+      operationId: voteDatePoll
+      summary: Сохранить свой выбор дат
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatePollVote"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/date-polls/{poll_id}/options:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    post:
+      operationId: addDateOption
+      summary: Добавить дату в опрос
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddDateOption"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/date-polls/{poll_id}/resolve:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    post:
+      operationId: resolveDatePoll
+      summary: Выбрать лидера или уточнить время
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResolveDatePoll"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
 components:
   securitySchemes:
     WebSession:
@@ -1085,6 +1402,12 @@ components:
         minimum: 1
         maximum: 100
         default: 50
+    PollID:
+      name: poll_id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/UUID"
   schemas:
     UUID:
       type: string
@@ -1155,6 +1478,12 @@ components:
             - type: string
               maxLength: 4000
             - type: "null"
+        starts_on:
+          anyOf:
+            - type: string
+              format: date
+            - type: "null"
+          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -1245,9 +1574,14 @@ components:
             - type: string
               maxLength: 4000
             - type: "null"
-        starts_at:
+        starts_on:
           type: string
-          format: date-time
+          format: date
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
         timezone:
           type: string
           minLength: 1
@@ -1258,8 +1592,20 @@ components:
             - type: "null"
       required:
         - title
-        - starts_at
         - timezone
+      anyOf:
+        - required:
+            - starts_on
+          properties:
+            starts_on:
+              type: string
+              format: date
+        - required:
+            - starts_at
+          properties:
+            starts_at:
+              type: string
+              format: date-time
       additionalProperties: false
     UpdateMeeting:
       type: object
@@ -1273,9 +1619,14 @@ components:
             - type: string
               maxLength: 4000
             - type: "null"
-        starts_at:
+        starts_on:
           type: string
-          format: date-time
+          format: date
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
         timezone:
           type: string
           minLength: 1
@@ -1468,6 +1819,12 @@ components:
             - type: string
               maxLength: 4000
             - type: "null"
+        starts_on:
+          anyOf:
+            - type: string
+              format: date
+            - type: "null"
+          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -1540,6 +1897,12 @@ components:
           type: string
           minLength: 1
           maxLength: 120
+        starts_on:
+          anyOf:
+            - type: string
+              format: date
+            - type: "null"
+          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -1630,8 +1993,7 @@ components:
           properties:
             local_date:
               anyOf:
-                - &a2
-                  type: string
+                - type: string
                   format: date
                 - type: "null"
             period:
@@ -1661,11 +2023,15 @@ components:
         counts:
           type: object
           properties:
-            upcoming: &a1
+            upcoming:
               type: integer
               minimum: 0
-            past: *a1
-            undated: *a1
+            past:
+              type: integer
+              minimum: 0
+            undated:
+              type: integer
+              minimum: 0
           required:
             - upcoming
             - past
@@ -1676,7 +2042,9 @@ components:
           items:
             type: object
             properties:
-              date: *a2
+              date:
+                type: string
+                format: date
               count:
                 type: integer
                 minimum: 1
@@ -1729,6 +2097,8 @@ components:
           anyOf:
             - $ref: "#/components/schemas/UUID"
             - type: "null"
+        sender:
+          $ref: "#/components/schemas/FeedSender"
       required:
         - id
         - meeting_id
@@ -1798,6 +2168,219 @@ components:
           additionalProperties: false
       required:
         - error
+      additionalProperties: false
+    FeedSender:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+            - user
+            - bot
+        id:
+          $ref: "#/components/schemas/UUID"
+        display_name:
+          type: string
+      required:
+        - kind
+        - id
+        - display_name
+      additionalProperties: false
+    DatePollSettings:
+      type: object
+      properties:
+        multiple_answers:
+          type: boolean
+        allow_revoting:
+          type: boolean
+        allow_new_options:
+          type: boolean
+        anonymous:
+          type: boolean
+        hide_results:
+          type: boolean
+      required:
+        - multiple_answers
+        - allow_revoting
+        - allow_new_options
+        - anonymous
+        - hide_results
+      additionalProperties: false
+    DatePollOption:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        date:
+          type: string
+          format: date
+        votes:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+        voters:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/User"
+            - type: "null"
+      required:
+        - id
+        - date
+        - votes
+        - voters
+      additionalProperties: false
+    DatePoll:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        author:
+          $ref: "#/components/schemas/User"
+        settings:
+          $ref: "#/components/schemas/DatePollSettings"
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/DatePollOption"
+        state:
+          type: string
+          enum:
+            - open
+            - awaiting_choice
+            - awaiting_time
+            - applied
+            - no_majority
+            - cancelled
+        revision:
+          $ref: "#/components/schemas/Revision"
+        my_vote_revision:
+          $ref: "#/components/schemas/Revision"
+        my_option_ids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UUID"
+        created_at:
+          type: string
+          format: date-time
+        closes_at:
+          type: string
+          format: date-time
+        closed_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        leader_option_ids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UUID"
+        applied_option_id:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+        can_vote:
+          type: boolean
+        can_add_options:
+          type: boolean
+        can_resolve:
+          type: boolean
+      required:
+        - id
+        - meeting_id
+        - author
+        - settings
+        - options
+        - state
+        - revision
+        - my_vote_revision
+        - my_option_ids
+        - created_at
+        - closes_at
+        - closed_at
+        - leader_option_ids
+        - applied_option_id
+        - can_vote
+        - can_add_options
+        - can_resolve
+      additionalProperties: true
+    CreateDatePoll:
+      type: object
+      properties:
+        dates:
+          type: array
+          items:
+            type: string
+            format: date
+          minItems: 2
+          maxItems: 20
+          uniqueItems: true
+        closes_at:
+          type: string
+          format: date-time
+        settings:
+          type: object
+          properties:
+            multiple_answers:
+              type: boolean
+            allow_revoting:
+              type: boolean
+            allow_new_options:
+              type: boolean
+            anonymous:
+              type: boolean
+            hide_results:
+              type: boolean
+          additionalProperties: false
+      required:
+        - dates
+        - closes_at
+      additionalProperties: false
+    DatePollVote:
+      type: object
+      properties:
+        option_ids:
+          type: array
+          items:
+            $ref: "#/components/schemas/UUID"
+          maxItems: 20
+          uniqueItems: true
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - option_ids
+        - expected_revision
+      additionalProperties: false
+    AddDateOption:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - date
+        - expected_revision
+      additionalProperties: false
+    ResolveDatePoll:
+      type: object
+      properties:
+        option_id:
+          $ref: "#/components/schemas/UUID"
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+      required:
+        - option_id
+        - expected_revision
       additionalProperties: false
   responses:
     APIError:
