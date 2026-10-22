@@ -24,7 +24,7 @@ export const MeetingsView = ({ session }: MeetingsViewProps) => {
           {!view.empty && (
             <Link
               className={styles.create}
-              to="/meetings/new"
+              to={view.createPath}
               aria-label="Создать встречу"
             >
               <Plus aria-hidden="true" size={18} />
@@ -40,7 +40,7 @@ export const MeetingsView = ({ session }: MeetingsViewProps) => {
         {view.calendar ? (
           <CalendarView view={view} />
         ) : view.empty ? (
-          <HomeEmpty />
+          <HomeEmpty createPath={view.createPath} />
         ) : (
           <>
             <MeetingsResults

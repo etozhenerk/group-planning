@@ -33,16 +33,13 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
       </div>
       <section aria-label="Встречи выбранного дня" className={styles.agenda}>
         <h3>{view.selection.undated ? 'Без даты' : agendaLabel(view.day)}</h3>
-        {!view.selection.undated && view.query.data && (
+        {!view.selection.undated && (
           <p className={styles.weekday}>
-            {meetingCountLabel(
-              view.query.data?.pages[0]?.days.find((entry) => entry.date === view.day)
-                ?.count ?? 0,
-            )}
+            {view.dayCount === undefined ? '\u00a0' : meetingCountLabel(view.dayCount)}
           </p>
         )}
         {view.empty ? (
-          <HomeEmpty />
+          <HomeEmpty createPath={view.createPath} />
         ) : (
           <MeetingsResults
             query={view.ready ? view.query : view.list}

@@ -31,6 +31,16 @@ export const useMeetingsView = (user: string) => {
     !list.isError &&
     !(calendar && month.isError);
 
+  const dayPage = agenda.data?.pages[0] ?? month.data?.pages[0];
+  const dayCount = dayPage
+    ? (dayPage.days.find((entry) => entry.date === day)?.count ?? 0)
+    : empty
+      ? 0
+      : undefined;
+
+  const createPath =
+    calendar && !selection.undated ? `/meetings/new?date=${day}` : '/meetings/new';
+
   const selectDay = (value: string) =>
     update({ [selection.period]: value, undated: false });
 
@@ -45,6 +55,8 @@ export const useMeetingsView = (user: string) => {
     query,
     counts,
     empty,
+    dayCount,
+    createPath,
     selectDay,
   };
 };

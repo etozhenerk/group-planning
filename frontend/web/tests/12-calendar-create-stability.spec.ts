@@ -27,8 +27,8 @@ for (const width of [320, 1440]) {
           [...record.addedNodes].some(
             (node) =>
               node instanceof Element &&
-              (node.matches('a[href="/meetings/new"]') ||
-                node.querySelector('a[href="/meetings/new"]')),
+              (node.matches('a[href^="/meetings/new"]') ||
+                node.querySelector('a[href^="/meetings/new"]')),
           ),
         );
 

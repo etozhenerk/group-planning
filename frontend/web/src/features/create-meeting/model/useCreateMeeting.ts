@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import type { FormEvent } from 'react';
 import type { Session } from '@/entities/session';
 import { createMeeting, draftInput, emptyDraft } from '@/entities/meeting';
@@ -15,7 +15,12 @@ import {
 import { useUnsaved } from '@/features/create-meeting/model/useUnsaved';
 
 export const useCreateMeeting = (session: Session) => {
-  const [value, setValue] = useState(() => readDraft(session.user.id));
+  const { key } = useLocation();
+  const [params] = useSearchParams();
+  const [value, setValue] = useState(() =>
+    readDraft(session.user.id, params.get('date'), key),
+  );
+
   const [localError, setLocalError] = useState('');
   const [saved, setSaved] = useState(false);
   const [destination, setDestination] = useState<string | null>(null);
@@ -40,6 +45,12 @@ export const useCreateMeeting = (session: Session) => {
   });
 
   useEffect(() => {
+    if (!saved) {
+      storeDraft(session.user.id, value, key);
+    }
+  }, [session.user.id, value, key, saved]);
+
+  useEffect(() => {
     if (destination) {
       void navigate(destination);
     }
@@ -48,7 +59,6 @@ export const useCreateMeeting = (session: Session) => {
   const problem = localError || (mutation.error ? errorText(mutation.error) : '');
   const change = (next: MeetingDraft) => {
     setValue(next);
-    storeDraft(session.user.id, next);
     setLocalError('');
     mutation.reset();
   };
