@@ -27,9 +27,17 @@ func seedIOSInvitation(t *testing.T, store *memory.Store, service *identity.Serv
 
 	err = store.Update(ctx, func(writer meetings.Writer) error {
 		if err := writer.SaveMeeting(meetings.Meeting{
-			ID: id, OrganizerID: principal.User.ID, Title: title,
-			Description: "Соберёмся в субботу. Принесите любимую игру.",
-			StartsAt:    &starts, Timezone: "Europe/Moscow", Place: "У Саши", Revision: 1, CreatedAt: now,
+			ID:              id,
+			OrganizerID:     principal.User.ID,
+			Title:           title,
+			Description:     "Соберёмся в субботу. Принесите любимую игру.",
+			StartsAt:        &starts,
+			Timezone:        "Europe/Moscow",
+			Place:           "У Саши",
+			Revision:        1,
+			CreatedAt:       now,
+			Status:          meetings.Upcoming,
+			ScheduleVersion: 1,
 		}); err != nil {
 			return err
 		}

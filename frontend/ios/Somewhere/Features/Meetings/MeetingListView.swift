@@ -4,52 +4,45 @@ struct MeetingListView: View {
     let owner: MeetingListOwner
     let create: () -> Void
     let select: (UUID) -> Void
-    private var empty: Bool {
-        owner.state.meetings.value?.isEmpty == true && !owner.state.meetings.isLoading
-            && owner.state.meetings.error == nil
-    }
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var scrolled = false
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack(alignment: .firstTextBaseline) {
-                    Text("Мои встречи").font(.largeTitle.bold()).accessibilityAddTraits(.isHeader)
-                    Spacer(minLength: 12)
-                    if !empty {
-                        Button(action: create) {
-                            Image(systemName: "plus").font(.title2).frame(width: 44, height: 44)
-                        }
-                        .accessibilityLabel("Создать встречу")
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    MeetingToolbar(owner: owner)
+                    if owner.selection.display == .calendar {
+                        MeetingCalendarView(owner: owner, create: create, select: select)
+                    } else {
+                        MeetingResultsView(owner: owner, create: create, select: select)
+                        UndatedMeetingsButton(owner: owner)
                     }
                 }
-                if owner.state.meetings.isLoading {
-                    ProgressView("Загружаем встречи…").tint(AppPalette.accent)
-                }
-                if let error = owner.state.meetings.error {
-                    StatusView(
-                        title: "Не удалось получить встречи",
-                        text: error.statusCode == 401
-                            ? "Войдите ещё раз." : "Проверьте соединение и повторите запрос.",
-                        retry: owner.retry)
-                }
-                if empty { EmptyMeetingsView(create: create) }
-                LazyVStack(spacing: 16) {
-                    ForEach(owner.state.meetings.value ?? [], id: \.id) { meeting in
-                        MeetingCardView(meeting: meeting) { select(meeting.id) }
-                    }
-                }
-                if owner.state.meetingsCursor != nil {
-                    ActionButton(
-                        title: owner.state.loadingMore ? "Загружаем…" : "Загрузить ещё",
-                        primary: false,
-                        disabled: owner.state.loadingMore, action: owner.loadMore)
-                }
-                if owner.state.moreError != nil {
-                    Text("Не удалось загрузить остальные встречи. Попробуйте ещё раз.")
-                        .foregroundStyle(AppPalette.error)
+                .frame(maxWidth: .infinity, alignment: .leading).padding(24)
+                .onGeometryChange(for: Bool.self) { geometry in
+                    geometry.frame(in: .scrollView(axis: .vertical)).minY < -1
+                } action: { value in
+                    scrolled = value
                 }
             }
-            .padding(24)
+            .defaultScrollAnchor(.top)
+            .accessibilityIdentifier("meetings-list")
         }
-        .background(AppPalette.background).accessibilityIdentifier("meetings-list")
+        .safeAreaInset(edge: .top, spacing: 0) {
+            VStack(alignment: .leading, spacing: 24) {
+                MeetingListHeading(
+                    empty: owner.selection.display == .list && owner.empty, create: create
+                )
+                .frame(minHeight: 44)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 24).padding(.vertical, 12)
+            .background { MeetingHeadingBackground(scrolled: scrolled) }
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: scrolled)
+            .padding(.bottom, 6)
+            .zIndex(1)
+        }
+        .background(AppPalette.background)
     }
 }

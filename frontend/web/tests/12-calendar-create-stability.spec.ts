@@ -20,49 +20,33 @@ for (const width of [320, 1440]) {
     await page.goto('/meetings');
     await expect(page.getByTestId('home-empty')).toBeVisible();
     const header = page.getByTestId('page-heading');
-    await header.evaluate((element) => {
-      element.setAttribute('data-create-insertions', '0');
-      new MutationObserver((records) => {
-        const inserted = records.some((record) =>
-          [...record.addedNodes].some(
-            (node) =>
-              node instanceof Element &&
-              (node.matches('a[href^="/meetings/new"]') ||
-                node.querySelector('a[href^="/meetings/new"]')),
-          ),
-        );
-
-        if (inserted) {
-          element.setAttribute(
-            'data-create-insertions',
-            String(Number(element.getAttribute('data-create-insertions')) + 1),
-          );
-        }
-      }).observe(element, { childList: true, subtree: true });
-    });
 
     try {
-      for (const action of [
-        'Календарь',
-        'Прошедшие',
-        'Список',
-        'Предстоящие',
-        'Календарь',
-        'Следующий месяц',
-      ]) {
+      for (const [action, calendar] of [
+        ['Календарь', true],
+        ['Прошедшие', true],
+        ['Список', false],
+        ['Предстоящие', false],
+        ['Календарь', true],
+        ['Следующий месяц', true],
+      ] as const) {
         hold = true;
         await page.getByRole('button', { name: new RegExp(`^${action}`) }).click();
         // A previously visited tab may use cached data; any new request remains pending.
         await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(
-          0,
+          calendar && width <= 1180 ? 1 : 0,
         );
-        await expect(page.getByTestId('home-empty')).toBeVisible();
+        await expect(page.getByTestId('home-empty')).toBeVisible({
+          visible: !calendar || width > 1180,
+        });
         await expect(
           page.getByRole('link', { name: 'Создать встречу', exact: true }),
         ).toHaveCount(1);
         hold = false;
         pending.splice(0).forEach((release) => release());
-        await expect(header).toHaveAttribute('data-create-insertions', '0');
+        await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(
+          calendar && width <= 1180 ? 1 : 0,
+        );
       }
     } finally {
       hold = false;

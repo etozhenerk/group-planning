@@ -7,12 +7,16 @@ import { Avatar } from '@/shared/ui/Avatar';
 import { LogoutButton } from '@/features/sign-in';
 import type { Session } from '@/entities/session';
 
-export type NavigationProps = { session: Session };
+export type NavigationProps = { session: Session; sticky?: boolean };
 
-export const Navigation = ({ session }: NavigationProps) => {
+export const Navigation = ({ session, sticky = false }: NavigationProps) => {
   return (
     <nav
-      className={[styles['navigation'], isDemo ? styles['demo'] : '']
+      className={[
+        styles['navigation'],
+        isDemo ? styles['demo'] : '',
+        sticky ? styles.sticky : '',
+      ]
         .filter(Boolean)
         .join(' ')}
       aria-label="Основная навигация"

@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { Navigation } from '@/widgets/navigation';
 import type { Session } from '@/entities/session';
 import { Workspace } from '@/shared/ui/Workspace';
+import { useStickyControls } from '@/pages/meetings/ui/MeetingsView/hooks/useStickyControls';
 import { useMeetingsView } from '@/pages/meetings/ui/MeetingsView/hooks/useMeetingsView';
 import { HomeToolbar } from '@/pages/meetings/ui/HomeToolbar';
 import { HomeEmpty } from '@/pages/meetings/ui/HomeEmpty';
@@ -15,23 +16,32 @@ export type MeetingsViewProps = { session: Session };
 
 export const MeetingsView = ({ session }: MeetingsViewProps) => {
   const view = useMeetingsView(session.user.id);
+  const { sentinelRef, controlsRef, pinned } = useStickyControls();
 
   return (
-    <Workspace navigation={<Navigation session={session} />}>
+    <Workspace navigation={<Navigation session={session} sticky />}>
       <main id="main" className={styles.home}>
-        <header className={styles.heading} data-testid="page-heading">
-          <h1>Мои встречи</h1>
-          {!view.empty && (
-            <Link
-              className={styles.create}
-              to={view.createPath}
-              aria-label="Создать встречу"
-            >
-              <Plus aria-hidden="true" size={18} />
-              Создать
-            </Link>
-          )}
-        </header>
+        <div ref={sentinelRef} className={styles.sentinel} aria-hidden="true" />
+        <div
+          ref={controlsRef}
+          className={styles.controls}
+          data-pinned={pinned}
+          data-testid="meetings-controls"
+        >
+          <header className={styles.heading} data-testid="page-heading">
+            <h1>Мои встречи</h1>
+            {(view.calendar || !view.empty) && (
+              <Link
+                className={`${styles.create} ${view.calendar && view.empty ? styles['empty-calendar-create'] : ''}`}
+                to={view.createPath}
+                aria-label="Создать встречу"
+              >
+                <Plus aria-hidden="true" size={18} />
+                Создать
+              </Link>
+            )}
+          </header>
+        </div>
         <HomeToolbar
           selection={view.selection}
           counts={view.counts}

@@ -9,7 +9,19 @@ for (const width of [320, 390, 1440]) {
     const items = await calendarItems(page);
     await mockCalendar(page, items);
     await page.goto('/meetings');
+    const periods = page.getByRole('navigation', { name: 'Период встреч' });
+    const before = await periods.boundingBox();
     await page.getByRole('button', { name: 'Календарь', exact: true }).click();
+
+    if (width === 1440) {
+      expect((await periods.boundingBox())?.y).toBeCloseTo(before!.y, 0);
+      await expect(page.getByTestId('page-heading')).toHaveCSS(
+        'border-bottom-width',
+        '0px',
+      );
+      await expect(page.getByTestId('page-heading')).toHaveCSS('position', 'static');
+    }
+
     const days = page.getByRole('group', { name: 'Дни месяца' });
     const agenda = page.getByRole('region', { name: 'Встречи выбранного дня' });
     await expect(days.locator('[data-day="2026-10-24"]')).toHaveAttribute(

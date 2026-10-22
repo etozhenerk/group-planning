@@ -41,7 +41,7 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
   expect(update.status()).toBe(200);
   await agenda.getByRole('button', { name: 'Показать ещё' }).click();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(50);
-  await expect(agenda.getByRole('link', { name: /19:00Календарь 1/ })).toHaveCount(0);
+  await expect(agenda.locator(`a[href="/meetings/${first.id}"]`)).toHaveCount(0);
   await agenda.getByRole('button', { name: 'Показать ещё' }).click();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(51);
   await expect(agenda.getByRole('button', { name: 'Показать ещё' })).toHaveCount(0);

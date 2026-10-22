@@ -14,6 +14,7 @@ final class CreationOwner {
     var confirmDiscard = false
     var closeFailed = false
     let session: SessionStore
+    @ObservationIgnored private let initialDay: MeetingDraft.Day?
     @ObservationIgnored private let drafts: DraftRepository
     @ObservationIgnored private let sessionLease: PrivateData.Lease?
     @ObservationIgnored private var draftLease: UUID?
@@ -29,10 +30,11 @@ final class CreationOwner {
 
     init(
         userID: UUID, session: SessionStore, drafts: DraftRepository,
-        timezone: String = TimeZone.current.identifier
+        timezone: String = TimeZone.current.identifier, initialDay: MeetingDraft.Day? = nil
     ) {
         self.session = session
         self.drafts = drafts
+        self.initialDay = initialDay
         sessionLease = try? session.privateData.lease()
         record = DraftRecord(ownerID: userID, value: MeetingDraft(timezone: timezone))
     }
@@ -45,6 +47,13 @@ final class CreationOwner {
             guard current else { return }
             draftLease = lease
             if let saved { record = saved }
+            if let initialDay, record.submission == nil {
+                record.value.day = initialDay
+                record.value.repetition = nil
+                record.requestID = UUID()
+                try await drafts.save(record, lease: lease)
+                guard current else { return }
+            }
             ready = true
             problem =
                 frozen

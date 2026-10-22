@@ -42,6 +42,7 @@ sh scripts/test.sh
 sh scripts/test-ui.sh
 sh scripts/test-ui.sh invitation
 sh scripts/test-ui.sh feed
+sh scripts/test-ui.sh calendar       # календарь, история и создание из выбранного дня
 sh scripts/test-ui.sh accessibility
 sh scripts/test-ui.sh startup
 ```

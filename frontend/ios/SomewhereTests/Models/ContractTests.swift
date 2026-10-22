@@ -15,6 +15,7 @@ struct ContractTests {
             case "RsvpResult": _ = try APICoding.decode(RSVPResult.self, from: data)
             case "Error": _ = try APICoding.decode(APIErrorEnvelope.self, from: data)
             case "FeedEntry": _ = try APICoding.decode(FeedEntry.self, from: data)
+            case "MeetingsPage": _ = try APICoding.decode(CalendarPage.self, from: data)
             case "CreateMeeting": _ = try APICoding.decode(CreateMeeting.self, from: data)
             default: Issue.record("Fixture schema needs an iOS decoder: \(fixture.schema)")
             }

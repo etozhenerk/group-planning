@@ -22,6 +22,33 @@ struct CreationOwnerTests {
             meeting: try Fixtures.meeting(title: "Настолки"), role: "organizer",
             invitationURL: try #require(URL(string: "https://api.example.test/i/example")))
     }
+    @Test func calendarPrefillPreservesDraftAndDoesNotModifyPendingSubmission() async throws {
+        let h = try SessionHarness()
+        try await h.login()
+        let user = try #require(h.session.profile)
+        let storage = MemoryDraftStorage()
+        let draft = MeetingDraftTests.filled()
+        let saved = DraftRecord(ownerID: user.id, value: draft)
+        try storage.save(saved)
+        let day = MeetingDraft.Day(year: 2028, month: 2, day: 29)
+        let owner = CreationOwner(
+            userID: user.id, session: h.session, drafts: DraftRepository(storage: storage),
+            initialDay: day)
+        await owner.load()
+        #expect(
+            owner.value.day == day && owner.value.clock == draft.clock
+                && owner.value.title == draft.title)
+        #expect(owner.value.timezone == draft.timezone)
+        var pending = saved
+        pending.submission = try draft.input()
+        try storage.save(pending)
+        let retry = CreationOwner(
+            userID: user.id, session: h.session, drafts: DraftRepository(storage: storage),
+            initialDay: day)
+        await retry.load()
+        #expect(retry.record == pending)
+    }
+
     @Test func lostResponseRestoresFrozenBodyAndKey() async throws {
         let harness = try SessionHarness()
         let storage = MemoryDraftStorage()

@@ -4,6 +4,7 @@ struct HomeView: View {
     let session: SessionStore
     let user: UserProfile
     let drafts: DraftRepository
+    @Environment(\.scenePhase) private var scenePhase
     @State private var owner: MeetingListOwner
     @State private var path: [UUID] = []
     @State private var showingCreate = false
@@ -27,7 +28,14 @@ struct HomeView: View {
                 .navigationDestination(for: UUID.self) { id in
                     MeetingSnapshotView(id: id, session: session)
                 }
-                .task(id: refreshID) { await owner.load() }
+                .task(
+                    id:
+                        "\(refreshID)-\(owner.selectionID)-\(scenePhase)-\(path.isEmpty)-\(showingCreate)"
+                ) {
+                    if scenePhase == .active && path.isEmpty && !showingCreate {
+                        await owner.observe()
+                    }
+                }
                 .refreshable { await owner.load() }
                 .onDisappear { owner.cancel() }
         }
@@ -39,7 +47,9 @@ struct HomeView: View {
     }
 
     private func openCreate() {
-        creator = CreationOwner(userID: user.id, session: session, drafts: drafts)
+        creator = CreationOwner(
+            userID: user.id, session: session, drafts: drafts,
+            initialDay: owner.selection.creationDay)
         showingCreate = true
     }
 }

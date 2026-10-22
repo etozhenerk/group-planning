@@ -38,9 +38,12 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
             {view.dayCount === undefined ? '\u00a0' : meetingCountLabel(view.dayCount)}
           </p>
         )}
-        {view.empty ? (
-          <HomeEmpty createPath={view.createPath} />
-        ) : (
+        {view.empty && (
+          <div className={styles['desktop-empty']}>
+            <HomeEmpty createPath={view.createPath} />
+          </div>
+        )}
+        <div className={view.empty ? styles['mobile-results'] : undefined}>
           <MeetingsResults
             query={view.ready ? view.query : view.list}
             agenda
@@ -48,7 +51,7 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
               view.selection.undated ? 'Встреч без даты нет.' : 'На этот день встреч нет.'
             }
           />
-        )}
+        </div>
       </section>
     </div>
   );
