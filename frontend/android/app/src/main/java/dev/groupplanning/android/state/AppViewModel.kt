@@ -1,11 +1,13 @@
 package dev.groupplanning.android.state
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.ClientRuntime
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.CreatedMeeting
 import dev.groupplanning.android.data.links.InvitationTarget
+import dev.groupplanning.android.data.repository.CalendarRepository
 import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.ui.brand.BrandMotion
@@ -19,8 +21,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-internal class AppViewModel(private val runtime: ClientRuntime, initialLink: String?) :
-    ViewModel() {
+internal class AppViewModel(
+    private val runtime: ClientRuntime,
+    initialLink: String?,
+    saved: SavedStateHandle = SavedStateHandle(),
+) : ViewModel() {
     val snapshot = runtime.sessions?.state ?: MutableStateFlow(ClientSnapshot())
     private val mutableRoute = MutableStateFlow<AppRoute>(AppRoute.Home)
     val route = mutableRoute.asStateFlow()
@@ -31,6 +36,9 @@ internal class AppViewModel(private val runtime: ClientRuntime, initialLink: Str
     private val mutableLinkProblem = MutableStateFlow<LinkIssue?>(null)
     val linkProblem = mutableLinkProblem.asStateFlow()
     private var navigation: Job? = null
+    val calendar = runtime.sessions?.let {
+        CalendarViewModel(CalendarRepository(it), saved, childScope())
+    }
 
     init {
         viewModelScope.launch {
@@ -114,16 +122,22 @@ internal class AppViewModel(private val runtime: ClientRuntime, initialLink: Str
     }
 
     fun refresh() {
-        viewModelScope.launch { runtime.meetings?.loadMeetings() }
+        calendar?.refresh()
     }
     fun loadMore() {
-        viewModelScope.launch { runtime.meetings?.loadMore() }
+        calendar?.more()
     }
 
     fun create() {
         val user = (snapshot.value.session as? SessionState.Authenticated)?.profile ?: return
         val session = runtime.sessions ?: return
-        val model = CreationViewModel(user.id, session, runtime.drafts, scope = childScope())
+        val model = CreationViewModel(
+            user.id,
+            session,
+            runtime.drafts,
+            scope = childScope(),
+            initialDay = calendar?.selection?.value?.creationDay,
+        )
         mutableRoute.value = AppRoute.Create(model)
         model.load()
     }

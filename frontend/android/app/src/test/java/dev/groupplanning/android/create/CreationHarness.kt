@@ -33,7 +33,7 @@ internal class CreationHarness(private val test: TestScope) {
     val api = SessionHarness(dispatcher)
     val storage = MemoryDrafts()
     val drafts = DraftRepository(storage, dispatcher)
-    fun model(): CreationViewModel = CreationViewModel(
+    fun model(day: java.time.LocalDate? = null): CreationViewModel = CreationViewModel(
         Fixtures.userId,
         api.session,
         drafts,
@@ -42,5 +42,6 @@ internal class CreationHarness(private val test: TestScope) {
             test.backgroundScope.coroutineContext +
                 SupervisorJob(test.backgroundScope.coroutineContext[Job]),
         ),
+        initialDay = day,
     )
 }

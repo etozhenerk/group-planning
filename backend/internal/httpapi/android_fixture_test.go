@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -77,6 +77,12 @@ func TestAndroidFixture(t *testing.T) {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
+	calendarOwner := iosCredential(t, service, "calendar")
+	seedIOSCalendar(t, store, service, calendarOwner)
+	config.Cases["calendar"] = calendarOwner
+	config.Cases["calendar-large"] = calendarOwner
+	config.Cases["calendar-empty"] = iosCredential(t, service, "calendar-empty")
+
 	config.Cases["invite-owner"] = owner
 	config.Cases["feed-owner"] = owner
 	config.Cases["feed-persistence"] = owner
@@ -96,6 +102,10 @@ func TestAndroidFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
+	if scope == "calendar" {
+		return
+	}
+
 	persistence.mu.Lock()
 	if persistence.posts != 2 || len(persistence.keys) != 1 || persistence.keys[""] || len(persistence.ids) != 1 {
 		t.Errorf("Android process restart retry: posts=%d keys=%d IDs=%d", persistence.posts, len(persistence.keys), len(persistence.ids))

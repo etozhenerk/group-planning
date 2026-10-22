@@ -12,6 +12,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.CreationExtras
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.SomewhereApp
 import dev.groupplanning.android.ui.theme.SomewhereTheme
@@ -38,14 +40,16 @@ class MainActivity : ComponentActivity() {
         )
         if (Build.VERSION.SDK_INT >= 31) splashScreen.setOnExitAnimationListener { it.remove() }
         val factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T = checkNotNull(
-                modelClass.cast(
-                    AppViewModel(
-                        RuntimeFactory.create(applicationContext, intent),
-                        intent.dataString,
+            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
+                checkNotNull(
+                    modelClass.cast(
+                        AppViewModel(
+                            RuntimeFactory.create(applicationContext, intent),
+                            intent.dataString,
+                            extras.createSavedStateHandle(),
+                        ),
                     ),
-                ),
-            )
+                )
         }
         val model = ViewModelProvider(this, factory)[AppViewModel::class.java]
         setContent { SomewhereTheme { SomewhereApp(model) } }

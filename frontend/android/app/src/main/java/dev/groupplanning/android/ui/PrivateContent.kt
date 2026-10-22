@@ -7,6 +7,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.AppRoute
@@ -31,13 +37,25 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
     }, label = "route") { destination ->
         when (destination) {
             AppRoute.Home -> Column {
+                val calendar = checkNotNull(model.calendar)
+                val selection by calendar.selection.collectAsStateWithLifecycle()
+                val lifecycle = LocalLifecycleOwner.current.lifecycle
+                LaunchedEffect(calendar, lifecycle) {
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) { calendar.observe() }
+                }
                 MeetingsHeader(
                     (snapshot.session as SessionState.Authenticated).profile.displayName,
                     model::logout,
                 )
-                MeetingListScreen(snapshot.data, model::create, model::refresh, model::loadMore) {
-                    model.open(it)
-                }
+                MeetingListScreen(
+                    snapshot.data.calendar,
+                    selection,
+                    calendar::select,
+                    model::create,
+                    model::refresh,
+                    model::loadMore,
+                    model::open,
+                )
             }
             is AppRoute.Create -> CreationScreen(destination.model, model::home, model::created)
             is AppRoute.Invitation -> InvitationScreen(destination.model, model::home)

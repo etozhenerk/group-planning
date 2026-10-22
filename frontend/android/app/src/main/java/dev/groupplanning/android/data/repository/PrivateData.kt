@@ -8,6 +8,7 @@ import dev.groupplanning.android.data.api.models.Participants
 import java.util.UUID
 
 internal data class PrivateData(
+    val calendar: CalendarData = CalendarData(),
     val meetings: ResourceState<MeetingsPage> = ResourceState(),
     val meetingsEpoch: UUID = UUID.randomUUID(),
     val moreRequest: UUID? = null,
@@ -21,6 +22,11 @@ internal data class PrivateData(
     fun accessVersion(id: UUID?): Long = accessVersions[id] ?: 0
 
     fun changeAccess(id: UUID, allowed: Boolean): PrivateData = copy(
+        calendar = calendar.copy(
+            page = calendar.page?.let { page ->
+                page.copy(meetings = page.meetings.filter { it.id != id })
+            },
+        ),
         details = details - id,
         feeds = feeds - id,
         participants = participants - id,

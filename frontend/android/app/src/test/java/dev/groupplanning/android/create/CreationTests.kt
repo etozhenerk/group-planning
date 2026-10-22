@@ -18,6 +18,34 @@ import org.junit.Test
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class CreationTests {
+    @Test fun calendarDateReplacesOnlyDraftDateAndDoesNotRewritePendingRequest() = runTest {
+        val h = CreationHarness(this)
+        h.api.login()
+        val first = h.model()
+        first.load()
+        runCurrent()
+        first.change { it.copy(title = "Настолки", day = "2026-10-24", time = "19:00") }
+        first.saveAndClose()
+        runCurrent()
+        first.stop()
+        val next = h.model(java.time.LocalDate.parse("2026-10-31"))
+        next.load()
+        runCurrent()
+        assertEquals("2026-10-31", next.state.value.record.value.day)
+        assertEquals("Настолки", next.state.value.record.value.title)
+        assertEquals("19:00", next.state.value.record.value.time)
+        assertEquals("Europe/Moscow", next.state.value.record.value.timezone)
+        h.api.transport.enqueue("meetings", status = 503)
+        next.submit()
+        runCurrent()
+        val pending = next.state.value.record
+        next.stop()
+        val retry = h.model(java.time.LocalDate.parse("2026-11-07"))
+        retry.load()
+        runCurrent()
+        assertEquals(pending, retry.state.value.record)
+    }
+
     @Test fun closeAndReopenRestoresDraft() = runTest {
         val h = CreationHarness(this)
         h.api.login()

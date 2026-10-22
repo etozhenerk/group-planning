@@ -3,6 +3,7 @@ package dev.groupplanning.android.models
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.ApiErrorEnvelope
 import dev.groupplanning.android.data.api.models.ApiInstant
+import dev.groupplanning.android.data.api.models.CalendarPage
 import dev.groupplanning.android.data.api.models.CreateMeeting
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FieldChange
@@ -26,10 +27,11 @@ import org.junit.Test
 class ContractTests {
     @Test fun allSharedFixturesDecode() {
         val fixtures = Fixtures.all()
-        assertEquals(13, fixtures.size)
+        assertEquals(16, fixtures.size)
         for (fixture in fixtures) {
             val body = fixture.body.toString()
             when (fixture.schema) {
+                "MeetingsPage" -> apiJson.decodeFromString<CalendarPage>(body)
                 "InvitationPreview" -> apiJson.decodeFromString<InvitationPreview>(body)
                 "RsvpResult" -> apiJson.decodeFromString<RsvpResult>(body)
                 "Error" -> apiJson.decodeFromString<ApiErrorEnvelope>(body)

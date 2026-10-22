@@ -10,6 +10,7 @@ import dev.groupplanning.android.data.drafts.DraftRecord
 import dev.groupplanning.android.data.drafts.DraftRepository
 import dev.groupplanning.android.data.drafts.MeetingDraft
 import dev.groupplanning.android.data.session.SessionRepository
+import java.time.LocalDate
 import java.time.ZoneId
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
@@ -29,6 +30,7 @@ internal class CreationViewModel(
     private val drafts: DraftRepository,
     timezone: String = ZoneId.systemDefault().id,
     scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+    private val initialDay: LocalDate? = null,
 ) : ViewModel(scope) {
     private val mutable =
         MutableStateFlow(CreationState(DraftRecord(owner, MeetingDraft(timezone))))
@@ -46,8 +48,16 @@ internal class CreationViewModel(
                 val (lease, record) = drafts.open(state.value.record.owner)
                 if (!current()) return@launch
                 draftLease = lease
+                var restored = record ?: state.value.record
+                if (initialDay != null && restored.submission == null) {
+                    restored = restored.copy(
+                        value = restored.value.copy(day = initialDay.toString(), repetition = null),
+                        requestId = UUID.randomUUID(),
+                    )
+                    drafts.save(restored, lease)
+                }
                 mutable.value = state.value.copy(
-                    record = record ?: state.value.record,
+                    record = restored,
                     ready = true,
                     problem = if (record?.submission != null) PENDING_TEXT else null,
                 )

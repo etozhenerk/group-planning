@@ -58,6 +58,7 @@ sh scripts/check-toolchain.sh
 sh scripts/check.sh
 sh scripts/test-device.sh
 sh scripts/test-ui.sh
+sh scripts/test-ui.sh calendar
 ```
 
 `check.sh` выполняет чистую сборку обеих конфигураций, проверку Kotlin-оформления,
@@ -65,7 +66,9 @@ Lint, JVM-тесты и сборку instrumentation APK. `test-device.sh` вы�
 проверки Android Keystore и защищённого контекста приглашения на уже запущенном устройстве.
 `test-ui.sh` требует Go 1.27.2 и Python 3: поднимает отдельный HTTPS API из Go-теста,
 запускает Compose UI-тесты и затем останавливает только свой сервер. Живое demo
-не перезапускается. Для fixtures используется отдельный application ID
+не перезапускается. Аргумент `calendar` запускает только сценарии календаря:
+периоды, месяц, Back, создание из выбранной даты, закреплённую шапку и крупный
+шрифт. Без аргумента выполняется полный UI-набор, включая календарь. Для fixtures используется отдельный application ID
 `dev.groupplanning.android.uitesthost`; credential и сертификат передаются приватным
 файлом, не аргументами команд. TLS проверяет тестовый CA и имя хоста.
 Сервер проверяет, что потерянный ответ и повтор создали ровно одну встречу
