@@ -1,7 +1,7 @@
 # Telegram и внешний HTTPS-мониторинг
 
 Go-модуль эксплуатации, независимый от приложения и его ВМ. Код собирается в
-один source ZIP с vendor и развёртывается как **две закрытые Cloud Functions**
+один source ZIP с локальными зависимостями и развёртывается как **две закрытые Cloud Functions**
 с разными service accounts. [Релиз monitoring](../../docs/releases.md) включает
 архив; секреты и конфигурация добавляются при развёртывании.
 
@@ -86,8 +86,13 @@ Metadata: gce-http-endpoint enabled, aws-v1-http-endpoint disabled.
 ## Локальная проверка
 
 Команды — в [AGENTS.md](AGENTS.md). `sh scripts/package.sh` кладёт source ZIP в
-игнорируемый `build/`; tests, config и CLI preview не входят в архив. Сборка проверяет
-Linux amd64 и vendor; тесты также запускаются на Go 1.23.12 облачного runtime.
+игнорируемый `build/`; tests, config и CLI preview не входят в архив. Сборка переносит
+выбранные `go mod vendor` пакеты вместе с лицензиями в `bundled/`, создаёт локальные
+`replace` и проверяет `go get -d ./...` и Linux amd64 build с пустым module cache,
+`GOPROXY=off` и `GOSUMDB=off`. Это нужно, потому что облачный `go get` не использует
+vendor. В корневом `go.mod` архива нет `go`/`toolchain`: версию плагина задаёт
+сборщик Yandex. Исходный `go.mod` проекта сохраняет закреплённую версию.
+Совместимость пакета можно проверить `GOTOOLCHAIN=go1.23.12 sh scripts/package.sh`.
 `go run ./cmd/preview -output ../local/telegram-preview.png` создаёт демонстрационный
 график на синтетических данных без обращения к Telegram или облаку.
 
@@ -97,3 +102,5 @@ Linux amd64 и vendor; тесты также запускаются на Go 1.23
 [MetricsData write](https://yandex.cloud/ru/docs/monium/api-ref/MetricsData/write),
 [Lockbox payload](https://yandex.cloud/ru/docs/lockbox/api-ref/Payload/get),
 [Telegram Bot API](https://core.telegram.org/bots/api#sendphoto).
+
+Требования к архиву: [зависимости Go в Cloud Functions](https://yandex.cloud/ru/docs/functions/lang/golang/dependencies).
