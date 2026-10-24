@@ -1,5 +1,5 @@
 import styles from '@/features/sign-in/ui/LogoutButton/LogoutButton.module.css';
-import { LogOut } from 'lucide-react';
+import { LogOut, LoaderCircle } from 'lucide-react';
 import type { Session } from '@/entities/session';
 import { useLogout } from '@/features/sign-in/model/useLogout';
 import { errorText } from '@/shared/api';
@@ -17,8 +17,13 @@ export const LogoutButton = ({ session }: LogoutButtonProps) => {
         aria-label="Выйти из аккаунта"
         onClick={() => action.mutate()}
         disabled={action.isPending}
+        aria-busy={action.isPending}
       >
-        <LogOut size={20} aria-hidden="true" />
+        {action.isPending ? (
+          <LoaderCircle size={20} aria-hidden="true" className={styles.spinner} />
+        ) : (
+          <LogOut size={20} aria-hidden="true" />
+        )}
       </button>
       {action.error && (
         <p role="alert" className={styles['error']}>

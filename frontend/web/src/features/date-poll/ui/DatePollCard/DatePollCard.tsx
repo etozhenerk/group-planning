@@ -1,3 +1,4 @@
+import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import { ChartNoAxesColumnIncreasing } from 'lucide-react';
 import { useDatePoll, useMeeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -58,7 +59,7 @@ export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardPro
           )}
         </>
       ) : query.isPending ? (
-        <p role="status">Загружаем опрос…</p>
+        <SkeletonRows label="Загрузка опроса" variant="agenda" />
       ) : null}
       {query.error && (
         <div role="alert">

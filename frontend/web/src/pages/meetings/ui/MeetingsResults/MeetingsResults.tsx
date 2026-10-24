@@ -19,7 +19,7 @@ export const MeetingsResults = ({
   return (
     <div className={styles.results}>
       {query.isPending ? (
-        <MeetingsLoading />
+        <MeetingsLoading agenda={agenda} />
       ) : (
         <>
           {query.error && (

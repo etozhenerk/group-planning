@@ -1,3 +1,4 @@
+import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useMeeting } from '@/entities/meeting';
@@ -51,7 +52,7 @@ export const CreateDatePoll = ({ id, session }: CreateDatePollProps) => {
             action={() => void meeting.refetch()}
           />
         ) : (
-          <Status title="Загружаем встречу…" />
+          <SkeletonDetails label="Загрузка формы" fields />
         )}
       </Dialog>
     </>

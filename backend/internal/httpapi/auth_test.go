@@ -153,7 +153,12 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 	}
 
 	authURL, _ := url.Parse(started.AuthorizationURL)
-	callbackPath := "/api/v1/auth/yandex/callback?" + url.Values{"state": {authURL.Query().Get("state")}, "code": {"private-provider-code"}}.Encode()
+	callbackPath := "/api/v1/auth/yandex/callback?" + url.Values{
+		"state":      {authURL.Query().Get("state")},
+		"code":       {"private-provider-code"},
+		"cid":        {"provider-extension-value"},
+		"return_url": {"https://attacker.example"},
+	}.Encode()
 	request(anonymous, "GET", callbackPath, "/api/v1/auth/yandex/callback", nil, nil, 403)
 	callback := request(web, "GET", callbackPath, "/api/v1/auth/yandex/callback", nil, nil, 303)
 	if len(callback.Cookies()) != 2 {
@@ -172,7 +177,7 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 	}
 
 	destination, _ := url.Parse(callback.Header.Get("Location"))
-	if destination.Query().Get("token") != invitationToken || destination.Query().Has("code") || destination.Query().Has("state") {
+	if destination.Query().Get("token") != invitationToken || destination.Query().Has("code") || destination.Query().Has("state") || destination.Query().Has("cid") {
 		t.Fatal("callback lost invitation or leaked provider parameters")
 	}
 
@@ -296,6 +301,36 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 		if err := os.WriteFile(output+".auth", data, 0o600); err != nil {
 			t.Fatal(err)
 		}
+	}
+}
+
+func TestCallbackQueryExtensionsAndDuplicates(t *testing.T) {
+	for _, test := range []struct {
+		name  string
+		query string
+		valid bool
+	}{
+		{"standard", "state=ok&code=ok", true},
+		{"yandex cid", "state=ok&code=ok&cid=provider-value", true},
+		{"future extension", "state=ok&code=ok&provider_extension=value", true},
+		{"duplicate state", "state=ok&state=other&code=ok", false},
+		{"duplicate code", "state=ok&code=ok&code=other", false},
+		{"duplicate error", "state=ok&error=access_denied&error=other", false},
+		{"duplicate description", "state=ok&error=access_denied&error_description=a&error_description=b", false},
+		{"duplicate extension", "state=ok&code=ok&cid=a&cid=b", false},
+		{"malformed extension", "state=ok&code=ok&cid=%ZZ", false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			request := httptest.NewRequest("GET", "/api/v1/auth/yandex/callback?"+test.query, nil)
+			input, err := parseCallbackQuery(request)
+			if (err == nil) != test.valid {
+				t.Fatalf("valid = %v, error = %v", test.valid, err)
+			}
+
+			if test.valid && (input.State != "ok" || input.Code != "ok" || input.ProviderError != "") {
+				t.Fatal("provider extension changed authentication inputs")
+			}
+		})
 	}
 }
 

@@ -1,11 +1,7 @@
-import styles from '@/pages/meetings/ui/MeetingsLoading/MeetingsLoading.module.css';
+import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 
-export const MeetingsLoading = () => {
-  return (
-    <div role="status" aria-busy="true" className={styles.loading}>
-      <h2>Загружаем встречи…</h2>
-      <div aria-hidden="true" className={styles.skeleton} />
-      <div aria-hidden="true" className={styles.skeleton} />
-    </div>
-  );
-};
+export type MeetingsLoadingProps = { agenda?: boolean };
+
+export const MeetingsLoading = ({ agenda = false }: MeetingsLoadingProps) => (
+  <SkeletonRows label="Загрузка встреч" variant={agenda ? 'agenda' : 'cards'} />
+);

@@ -1,10 +1,20 @@
-import styles from '@/app/ui/RouteLoading/RouteLoading.module.css';
-import { Status } from '@/shared/ui/Status';
+import { useLocation } from 'react-router';
+import { LoadingScreen } from '@/shared/ui/LoadingScreen';
+import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 
 export const RouteLoading = () => {
-  return (
-    <main id="main" className={styles['entry-page']}>
-      <Status title="Открываем Somewhere…" />
-    </main>
-  );
+  const { pathname } = useLocation();
+
+  if (pathname.startsWith('/meetings')) {
+    const layout =
+      pathname === '/meetings'
+        ? 'list'
+        : pathname.endsWith('/new') || pathname.endsWith('/created')
+          ? 'form'
+          : 'conversation';
+
+    return <WorkspaceSkeleton layout={layout} />;
+  }
+
+  return <LoadingScreen />;
 };

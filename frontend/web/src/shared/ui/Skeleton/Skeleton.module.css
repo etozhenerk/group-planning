@@ -1,0 +1,24 @@
+.block {
+  display: block;
+  flex-shrink: 0;
+  max-width: 100%;
+  border-radius: 7px;
+  background: var(--line);
+  animation: breathe 1600ms ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.45;
+  }
+
+  to {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    animation: none;
+  }
+}

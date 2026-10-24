@@ -1,3 +1,4 @@
+import { SkeletonConversation } from '@/shared/ui/SkeletonConversation';
 import styles from '@/widgets/conversation/ui/FeedTimeline/FeedTimeline.module.css';
 import type { Session } from '@/entities/session';
 import { useConversation } from '@/entities/meeting';
@@ -24,7 +25,7 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
   }
 
   if (query.isPending) {
-    return <Status title="Загружаем разговор…" />;
+    return <SkeletonConversation />;
   }
 
   if (!query.data) {

@@ -6,7 +6,11 @@ export const getSession = async (signal?: AbortSignal): Promise<Session | null> 
     const wire = await request(
       sessionSchema,
       '/me',
-      { ...(signal ? { signal } : {}) },
+      {
+        signal: signal
+          ? AbortSignal.any([signal, AbortSignal.timeout(15_000)])
+          : AbortSignal.timeout(15_000),
+      },
       true,
     );
 

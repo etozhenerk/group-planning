@@ -1,3 +1,4 @@
+import { Skeleton } from '@/shared/ui/Skeleton';
 import styles from '@/features/share-invitation/ui/ShareInvitation/ShareInvitation.module.css';
 import { Share } from 'lucide-react';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -28,7 +29,17 @@ export const ShareInvitation = ({ id, compact = false }: ShareInvitationProps) =
             По ссылке видны детали и описание встречи. Переписка откроется после ответа
             «Приду».
           </p>
-          {action.query.isPending && <p role="status">Получаем ссылку…</p>}
+          {action.query.isPending && (
+            <div
+              role="status"
+              aria-label="Загрузка ссылки"
+              aria-busy="true"
+              className={styles.stack}
+            >
+              <Skeleton height={44} />
+              <Skeleton width={190} height={44} />
+            </div>
+          )}
           {action.query.error && (
             <p role="alert" className={styles['error']}>
               {errorText(action.query.error)}

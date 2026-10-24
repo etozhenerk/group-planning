@@ -3,8 +3,27 @@ button.primary {
   color: var(--action-text);
 }
 
+.button:disabled[aria-busy='true'] {
+  opacity: 1;
+}
+
+.button svg {
+  flex-shrink: 0;
+}
+
+.spinner {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .error {
   color: var(--error);
+  margin: 12px 0 0;
 }
 
 .error[role='alert']:empty {
@@ -16,4 +35,20 @@ button.primary {
     padding: 10px 12px;
     gap: 6px;
   }
+}
+
+.button {
+  position: relative;
+}
+
+.button[aria-busy='true'] .label,
+.button[aria-busy='true'] .arrow {
+  visibility: hidden;
+}
+
+.progress {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
 }

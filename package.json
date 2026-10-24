@@ -14,6 +14,7 @@
     "api:lint": "redocly lint --config contracts/redocly.yaml contracts/openapi.yaml",
     "api:check": "npm run api:lint && node scripts/check-api-contract.mjs",
     "api:test": "npm run api:lint && node scripts/test-api-contract.mjs",
+    "auth:local": "node scripts/local-auth.mjs",
     "web:dev": "npm run dev --workspace @somewhere/web",
     "web:check": "npm run check --workspace @somewhere/web",
     "web:build": "npm run build --workspace @somewhere/web",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.3",
+    "@ngrok/ngrok": "1.7.0",
     "@redocly/cli": "2.65.0",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",

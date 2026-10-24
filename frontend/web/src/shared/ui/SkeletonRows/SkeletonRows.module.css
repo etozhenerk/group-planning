@@ -1,0 +1,53 @@
+.rows {
+  display: grid;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-width: 0;
+}
+
+.lines {
+  display: grid;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.picture {
+  width: 36px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 13px;
+}
+
+.rows[data-variant='cards'] .row {
+  padding: 13px;
+  background: var(--surface);
+  border-radius: 19px;
+}
+
+.rows[data-variant='cards'] .picture {
+  width: 95px;
+}
+
+.rows[data-variant='agenda'] .picture {
+  width: 37px;
+}
+
+@media (max-width: 739px) {
+  .rows[data-variant='cards'] .row {
+    padding: 11px;
+    gap: 12px;
+    border-radius: 17px;
+  }
+
+  .rows[data-variant='cards'] .picture {
+    width: 68px;
+    height: 77px;
+  }
+}

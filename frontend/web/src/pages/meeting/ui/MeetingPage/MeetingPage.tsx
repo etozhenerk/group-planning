@@ -1,3 +1,4 @@
+import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import { useParams } from 'react-router';
 import { storedInvitation } from '@/entities/meeting';
 import { SessionGate } from '@/widgets/session-gate';
@@ -8,7 +9,10 @@ export const MeetingPage = () => {
   const token = storedInvitation(id);
 
   return (
-    <SessionGate context={token ? { kind: 'invitation', token } : { kind: 'home' }}>
+    <SessionGate
+      loading={<WorkspaceSkeleton layout="conversation" />}
+      context={token ? { kind: 'invitation', token } : { kind: 'home' }}
+    >
       {(session) => (
         <MeetingView key={`${session.user.id}:${id}`} session={session} id={id} />
       )}

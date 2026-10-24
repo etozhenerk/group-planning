@@ -9,18 +9,23 @@ export const useLogout = (session: Session) => {
   const navigate = useNavigate();
 
   return useMutation({
+    mutationKey: ['logout'],
     mutationFn: () => endSession(session.csrf),
-    onSuccess: () => {
+    onSuccess: async () => {
       resetSession(client);
       resetAccess();
 
-      for (const key of Object.keys(sessionStorage)) {
-        if (key.startsWith('somewhere-')) {
-          sessionStorage.removeItem(key);
+      try {
+        for (const key of Object.keys(sessionStorage)) {
+          if (key.startsWith('somewhere-')) {
+            sessionStorage.removeItem(key);
+          }
         }
+      } catch {
+        // The server session and in-memory cache have already been cleared.
       }
 
-      void navigate('/');
+      await navigate('/', { replace: true });
     },
     retry: false,
   });

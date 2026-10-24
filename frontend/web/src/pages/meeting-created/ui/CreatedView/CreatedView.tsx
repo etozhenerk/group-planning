@@ -1,3 +1,4 @@
+import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import styles from '@/pages/meeting-created/ui/CreatedView/CreatedView.module.css';
 import { Link, Navigate } from 'react-router';
 import { Check } from 'lucide-react';
@@ -16,9 +17,7 @@ export const CreatedView = ({ session, id }: CreatedViewProps) => {
 
   if (query.isPending) {
     return (
-      <main id="main">
-        <Status title="Загружаем встречу…" />
-      </main>
+      <WorkspaceSkeleton layout="form" navigation={<Navigation session={session} />} />
     );
   }
 

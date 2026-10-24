@@ -201,15 +201,16 @@ func uniqueCookie(r *http.Request, name string) (string, bool) {
 	return value, found
 }
 
-// Query names are closed; provider error text is accepted only to discard it.
+// OAuth extensions (including Yandex's cid) are ignored per RFC 6749 section 4.1.2.
+// Malformed encoding and duplicate parameters remain invalid.
 func parseCallbackQuery(r *http.Request) (identity.CallbackInput, error) {
 	values, err := url.ParseQuery(r.URL.RawQuery)
 	if err != nil {
 		return identity.CallbackInput{}, identity.ErrInvalidAttempt
 	}
 
-	for name, items := range values {
-		if len(items) != 1 || (name != "code" && name != "state" && name != "error" && name != "error_description") {
+	for _, items := range values {
+		if len(items) != 1 {
 			err = identity.ErrInvalidAttempt
 		}
 	}

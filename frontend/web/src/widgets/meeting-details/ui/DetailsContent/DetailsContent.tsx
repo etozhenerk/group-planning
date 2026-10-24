@@ -1,3 +1,4 @@
+import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import styles from '@/widgets/meeting-details/ui/DetailsContent/DetailsContent.module.css';
 import type { Meeting } from '@/entities/meeting';
 import { MeetingFacts, useParticipants } from '@/entities/meeting';
@@ -33,7 +34,9 @@ export const DetailsContent = ({
       )}
       <section>
         <h3>Компания · {meeting.participantCount}</h3>
-        {people.isPending && <p role="status">Загружаем ответы…</p>}
+        {people.isPending && (
+          <SkeletonRows label="Загрузка участников" variant="people" />
+        )}
         {people.error && (
           <p className={styles['error']} role="alert">
             Не удалось получить ответы.{' '}

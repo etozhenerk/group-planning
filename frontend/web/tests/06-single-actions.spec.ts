@@ -38,7 +38,7 @@ for (const width of [320, 1440]) {
     await page.goto('/meetings');
     const create = page.getByRole('link', { name: 'Создать встречу', exact: true });
     const header = page.getByTestId('page-heading');
-    await expect(page.getByRole('heading', { name: 'Загружаем встречи…' })).toBeVisible();
+    await expect(page.getByRole('status', { name: 'Загрузка встреч' })).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();
     state = 'empty';

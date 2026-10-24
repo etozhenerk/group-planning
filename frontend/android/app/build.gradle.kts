@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,6 +6,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+}
+
+val localSettings = Properties().apply {
+    val settingsFile = rootProject.file("local.properties")
+    if (settingsFile.isFile) {
+        settingsFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -18,7 +26,9 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
-        val apiOrigin = providers.gradleProperty("somewhereApiOrigin").orElse("").get()
+        val apiOrigin = providers.gradleProperty("somewhereApiOrigin")
+            .orElse(localSettings.getProperty("somewhere.api.origin", ""))
+            .get()
         require(apiOrigin.isEmpty() || apiOrigin.matches(Regex("https://[A-Za-z0-9.:-]+/?")))
         buildConfigField("String", "API_ORIGIN", "\"$apiOrigin\"")
         buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android\"")

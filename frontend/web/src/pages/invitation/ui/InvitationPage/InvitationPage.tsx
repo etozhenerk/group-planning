@@ -1,3 +1,5 @@
+import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
+import { Skeleton } from '@/shared/ui/Skeleton';
 import styles from '@/pages/invitation/ui/InvitationPage/InvitationPage.module.css';
 import { Link, useParams } from 'react-router';
 import { PublicHeader } from '@/widgets/public-header';
@@ -19,7 +21,9 @@ export const InvitationPage = () => {
       <PublicHeader />
       <main id="main" className={styles['invitation-page']}>
         {query.isPending ? (
-          <Status title="Открываем приглашение…" />
+          <div className={styles['invitation-card']}>
+            <SkeletonDetails label="Загрузка приглашения" />
+          </div>
         ) : !query.data ? (
           <Status
             title="Приглашение недоступно"
@@ -42,7 +46,9 @@ export const InvitationPage = () => {
               <p className={styles['meeting-description']}>{query.data.description}</p>
             )}
             {session.isPending ? (
-              <p role="status">Проверяем вход…</p>
+              <div role="status" aria-label="Проверка входа" aria-busy="true">
+                <Skeleton width={220} height={44} />
+              </div>
             ) : session.error ? (
               <Status
                 title="Не удалось проверить вход"

@@ -1,3 +1,4 @@
+import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import { MeetingHeader } from '@/pages/meeting/ui/MeetingHeader';
 import styles from '@/pages/meeting/ui/MeetingView/MeetingView.module.css';
 import { Link } from 'react-router';
@@ -42,9 +43,10 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
 
   if (query.isPending) {
     return (
-      <main id="main">
-        <Status title="Загружаем встречу…" />
-      </main>
+      <WorkspaceSkeleton
+        layout="conversation"
+        navigation={<Navigation session={session} />}
+      />
     );
   }
 
