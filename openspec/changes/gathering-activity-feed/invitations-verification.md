@@ -37,3 +37,46 @@ HTTP-ответа. Общий fixture списка декодируют web, iOS
 Снимки просмотрены визуально: [320 px](assets/invitations-verification/invitations-320.png),
 [390 px](assets/invitations-verification/invitations-390.png),
 [1440 px](assets/invitations-verification/invitations-1440.png).
+
+## iOS и Android — 24–25 октября 2026
+
+В обоих клиентах добавлены вкладки «Встречи» / «Приглашения», карточки `maybe`,
+скелетоны, пустой результат, ошибка с повтором и догрузка. Календарь сохраняет
+выбранный день и раздел. Приглашение использует существующую форму RSVP;
+подтверждённый ответ определяет доступ и положение встречи. Создание из вкладки
+приглашений не подставляет скрытый выбранный день календаря.
+
+Тесты состояния: пагинация с устранением дублей, повторное чтение загруженных
+страниц, сохранение карточек при ошибке, удаление после подтверждённого обновления,
+отмена запроса и поздний ответ после выхода, отклонение некорректного `going`
+в списке приглашений. iOS — 90 unit-тестов; Android — 94 JVM-теста.
+
+Отдельный Go HTTPS fixture и по три новых UI-сценария на iPhone 18 Pro / iOS 27.0
+и Somewhere_API_36 / API 36 проверяют:
+
+- `maybe → going`, исчезновение приглашения и появление встречи;
+- `going → maybe`, закрытие чата и возвращение во вкладку;
+- `maybe → not_going`, пустую вкладку после возврата;
+- ошибку до записи RSVP: прежний ответ и отсутствие преждевременного доступа,
+  затем успешный повтор;
+- ошибку списка и повтор, системный Back/закрытие, сохранение календарного дня;
+- максимальный Dynamic Type и Android font scale 1.8; на Android также
+  пересоздание Activity с сохранением выбранной вкладки.
+
+Прогоны используют тестовый OAuth-provider и реальные операции API; они не
+заменяют реальную приёмку Яндекс ID. Ручной проход VoiceOver/TalkBack здесь
+не выполнялся. Сохранность после перезапуска сервера не проверяется:
+memory.Store по-прежнему теряет данные.
+
+Финальная проверка нативных клиентов 25.10.2026: iOS — строгий swift-format,
+чистые Debug/Release, Analyze, 90 unit-тестов и 3 UI-теста приглашений;
+Android — ktlint, чистые Debug/Release, Android Lint, 94 JVM-теста,
+все 23 UI-теста и обе стадии восстановления после завершения процесса.
+Снимки проверены визуально: на iOS сохранён фон приложения, крупный текст
+не сжимается декоративными иконками; на Android при увеличении шрифта
+названия вкладок располагаются вертикально и не разрываются на части.
+
+| Платформа | Список | Крупный текст | Ошибка списка | Ошибка ответа | Пустая вкладка |
+| --- | --- | --- | --- | --- | --- |
+| iOS | [Снимок](assets/invitations-verification/ios-saved-invitations.png) | [Снимок](assets/invitations-verification/ios-saved-large-text.png) | [Снимок](assets/invitations-verification/ios-saved-list-error.png) | [Снимок](assets/invitations-verification/ios-saved-response-error.png) | [Снимок](assets/invitations-verification/ios-saved-empty.png) |
+| Android | [Снимок](assets/invitations-verification/android-saved-invitations.png) | [Снимок](assets/invitations-verification/android-saved-large-text.png) | [Снимок](assets/invitations-verification/android-saved-list-error.png) | [Снимок](assets/invitations-verification/android-saved-response-error.png) | [Снимок](assets/invitations-verification/android-saved-empty.png) |

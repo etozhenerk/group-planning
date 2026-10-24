@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -69,7 +69,8 @@ func TestAndroidFixture(t *testing.T) {
 	feed := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	persistence := &iosFeedFaults{scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
 	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
-	server.Config.Handler = persistence.handler(feed.handler(faults.handler(api)))
+	savedFaults := &nativeSavedInvitationFaults{}
+	server.Config.Handler = savedFaults.handler(persistence.handler(feed.handler(faults.handler(api))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -82,6 +83,9 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["calendar"] = calendarOwner
 	config.Cases["calendar-large"] = calendarOwner
 	config.Cases["calendar-empty"] = iosCredential(t, service, "calendar-empty")
+	config.Cases["saved-invitations"] = seedNativeSavedInvitation(t, store, service, "saved-invitations")
+	config.Cases["saved-error"] = seedNativeSavedInvitation(t, store, service, "saved-error")
+	config.Cases["saved-empty"] = iosCredential(t, service, "saved-empty")
 	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
 	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
 	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
@@ -110,7 +114,7 @@ func TestAndroidFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope == "calendar" || scope == "auth" || scope == "polls" {
+	if scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
 		return
 	}
 

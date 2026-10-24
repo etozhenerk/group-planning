@@ -9,6 +9,7 @@ import dev.groupplanning.android.data.api.models.CreatedMeeting
 import dev.groupplanning.android.data.auth.AuthContext
 import dev.groupplanning.android.data.links.InvitationTarget
 import dev.groupplanning.android.data.repository.CalendarRepository
+import dev.groupplanning.android.data.repository.SavedInvitationsRepository
 import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.ui.brand.BrandMotion
@@ -47,6 +48,17 @@ internal class AppViewModel(
     }
     val calendar = runtime.sessions?.let {
         CalendarViewModel(CalendarRepository(it), saved, childScope())
+    }
+    val savedInvitations = runtime.sessions?.let {
+        SavedInvitationsViewModel(SavedInvitationsRepository(it), childScope())
+    }
+    private val mutableHomeInvitations = MutableStateFlow(saved["home-invitations"] ?: false)
+    val homeInvitations = mutableHomeInvitations.asStateFlow()
+    private val savedHome = saved
+
+    fun selectHomeInvitations(value: Boolean) {
+        mutableHomeInvitations.value = value
+        savedHome["home-invitations"] = value
     }
 
     init {
@@ -150,7 +162,7 @@ internal class AppViewModel(
     }
 
     fun refresh() {
-        calendar?.refresh()
+        if (homeInvitations.value) savedInvitations?.refresh() else calendar?.refresh()
     }
     fun loadMore() {
         calendar?.more()
@@ -164,7 +176,9 @@ internal class AppViewModel(
             session,
             runtime.drafts,
             scope = childScope(),
-            initialDay = calendar?.selection?.value?.creationDay,
+            initialDay = calendar?.selection?.value?.creationDay.takeUnless {
+                homeInvitations.value
+            },
         )
         mutableRoute.value = AppRoute.Create(model)
         model.load()

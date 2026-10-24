@@ -39,6 +39,7 @@ internal fun MeetingListScreen(
     refresh: () -> Unit,
     more: () -> Unit,
     select: (UUID) -> Unit,
+    tabs: @Composable () -> Unit = {},
 ) {
     val scroll = rememberLazyListState()
     val scrolled by remember {
@@ -51,6 +52,7 @@ internal fun MeetingListScreen(
     val loading = stringResource(R.string.calendar_loading)
     Column(Modifier.fillMaxSize()) {
         MeetingListHeading(selection.calendar || !emptyAccount, scrolled, create)
+        tabs()
         LazyColumn(
             Modifier.weight(1f).fillMaxWidth().testTag("meetings-list"),
             state = scroll,

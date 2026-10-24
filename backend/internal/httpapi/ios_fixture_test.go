@@ -91,7 +91,8 @@ func TestIOSFixture(t *testing.T) {
 	seedIOSFeed(t, store, service, feedOwner)
 	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
-	server.Config.Handler = feedFaults.handler(faults.handler(api))
+	savedFaults := &nativeSavedInvitationFaults{}
+	server.Config.Handler = savedFaults.handler(feedFaults.handler(faults.handler(api)))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -104,6 +105,9 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["calendar"] = calendarOwner
 	config.Cases["calendar-large"] = calendarOwner
 	config.Cases["calendar-empty"] = iosCredential(t, service, "calendar-empty")
+	config.Cases["saved-invitations"] = seedNativeSavedInvitation(t, store, service, "saved-invitations")
+	config.Cases["saved-error"] = seedNativeSavedInvitation(t, store, service, "saved-error")
+	config.Cases["saved-empty"] = iosCredential(t, service, "saved-empty")
 	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
 	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
 	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
@@ -137,7 +141,7 @@ func TestIOSFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 

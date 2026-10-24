@@ -4,6 +4,7 @@ struct MeetingListView: View {
     let owner: MeetingListOwner
     let create: () -> Void
     let select: (UUID) -> Void
+    @Binding var invitations: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var scrolled = false
 
@@ -35,6 +36,7 @@ struct MeetingListView: View {
                     empty: owner.selection.display == .list && owner.empty, create: create
                 )
                 .frame(minHeight: 44)
+                HomeTabs(invitations: $invitations)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 24).padding(.vertical, 12)

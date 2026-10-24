@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithText
@@ -163,7 +165,7 @@ class InvitationUiTests {
     }
 
     private fun respond(answer: String) {
-        compose.onNodeWithText(answer).performScrollTo().performClick()
+        compose.onNode(hasText(answer) and hasClickAction()).performScrollTo().performClick()
         compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
     }
 

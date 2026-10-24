@@ -8,6 +8,7 @@ import dev.groupplanning.android.data.api.models.Participants
 import java.util.UUID
 
 internal data class PrivateData(
+    val invitations: SavedInvitationsData = SavedInvitationsData(),
     val calendar: CalendarData = CalendarData(),
     val meetings: ResourceState<MeetingsPage> = ResourceState(),
     val meetingsEpoch: UUID = UUID.randomUUID(),

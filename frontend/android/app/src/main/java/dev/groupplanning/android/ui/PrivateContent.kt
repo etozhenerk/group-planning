@@ -19,9 +19,11 @@ import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.create.CreationScreen
 import dev.groupplanning.android.ui.invitation.InvitationScreen
+import dev.groupplanning.android.ui.meetings.HomeTabs
 import dev.groupplanning.android.ui.meetings.MeetingListScreen
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
+import dev.groupplanning.android.ui.savedinvitations.SavedInvitationsScreen
 
 @Composable
 internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: ClientSnapshot) {
@@ -39,23 +41,39 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
             AppRoute.Home -> Column {
                 val calendar = checkNotNull(model.calendar)
                 val selection by calendar.selection.collectAsStateWithLifecycle()
+                val invitations by model.homeInvitations.collectAsStateWithLifecycle()
+                val savedInvitations = checkNotNull(model.savedInvitations)
                 val lifecycle = LocalLifecycleOwner.current.lifecycle
-                LaunchedEffect(calendar, lifecycle) {
-                    lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) { calendar.observe() }
+                LaunchedEffect(calendar, lifecycle, invitations) {
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        if (invitations) savedInvitations.observe() else calendar.observe()
+                    }
                 }
                 MeetingsHeader(
                     (snapshot.session as SessionState.Authenticated).profile.displayName,
                     model::logout,
                 )
-                MeetingListScreen(
-                    snapshot.data.calendar,
-                    selection,
-                    calendar::select,
-                    model::create,
-                    model::refresh,
-                    model::loadMore,
-                    model::open,
-                )
+                if (invitations) {
+                    SavedInvitationsScreen(
+                        snapshot.data.invitations,
+                        tabs = { HomeTabs(invitations, model::selectHomeInvitations) },
+                        create = model::create,
+                        refresh = { savedInvitations.refresh() },
+                        more = { savedInvitations.refresh(true) },
+                        select = model::receiveLink,
+                    )
+                } else {
+                    MeetingListScreen(
+                        snapshot.data.calendar,
+                        selection,
+                        calendar::select,
+                        model::create,
+                        model::refresh,
+                        model::loadMore,
+                        model::open,
+                        tabs = { HomeTabs(invitations, model::selectHomeInvitations) },
+                    )
+                }
             }
             is AppRoute.Create -> CreationScreen(destination.model, model::home, model::created)
             is AppRoute.Invitation -> InvitationScreen(destination.model, model::home)
