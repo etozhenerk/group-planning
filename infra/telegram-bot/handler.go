@@ -1,5 +1,5 @@
-// Package function implements the private Monium channel entry point.
-package function
+// Package main implements the private Monium channel entry point.
+package main
 
 import (
 	"context"

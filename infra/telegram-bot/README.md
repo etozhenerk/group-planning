@@ -41,7 +41,8 @@ Telegram: до трёх попыток, общий deadline 30 секунд; 429
 3. Для bot runtime SA назначить `monium.metrics.reader` на каталог и
    `lockbox.payloadViewer` **на конкретный секрет**. Для probe SA —
    `monium.metrics.writer` на каталог, без доступа к Lockbox. Для вызывающих
-   Monium/timer SA — `functions.functionInvoker` только на нужную функцию.
+   Monium SA — `functions.functionInvoker` и `functions.viewer` только на нужную
+   функцию; timer SA — `functions.functionInvoker` только на probe.
    Не делать функции публичными и не назначать editor/admin runtime-аккаунтам.
 4. Заполнить [config.example.json](config.example.json) для `BOT_CONFIG_JSON`:
    folder, instance, environment=`production`, secret, chat и dashboard IDs.
@@ -59,7 +60,11 @@ concurrency 1, async retries не более 1, provisioned instances 0.
 возможностям сервиса при подключении, произвольный TTL 120 секунд не обещается.
 Metadata: gce-http-endpoint enabled, aws-v1-http-endpoint disabled.
 
-В консоли Cloud Functions создать версию закрытой функции: загрузить
+Предпочтительный путь — [Terraform-модуль](../yandex/README.md#telegram-бот-из-релиза):
+он проверяет SHA-256 релиза, создаёт права, закрытую функцию
+и лимиты. Первый apply создаёт функцию и IAM, второй включает async.
+
+Для ручного восстановления в консоли Cloud Functions создать версию закрытой функции: загрузить
 `monitoring-functions.zip`, выбрать runtime/entrypoint/SA и лимиты из этого раздела.
 В environment добавить единственную переменную `BOT_CONFIG_JSON` с содержимым
 локального конфиг-файла. Значение — JSON-строка целиком. Настройки metadata
@@ -89,7 +94,9 @@ Metadata: gce-http-endpoint enabled, aws-v1-http-endpoint disabled.
 игнорируемый `build/`; tests, config и CLI preview не входят в архив. Сборка переносит
 выбранные `go mod vendor` пакеты вместе с лицензиями в `bundled/`, создаёт локальные
 `replace` и проверяет `go get -d ./...` и Linux amd64 build с пустым module cache,
-`GOPROXY=off` и `GOSUMDB=off`. Это нужно, потому что облачный `go get` не использует
+`GOPROXY=off` и `GOSUMDB=off`. Также собирается настоящий Go-плагин с тегом
+`ycf`; обработчики находятся в `package main`, локальная `main()` исключается
+из облачной сборки. Это нужно, потому что облачный `go get` не использует
 vendor. В корневом `go.mod` архива нет `go`/`toolchain`: версию плагина задаёт
 сборщик Yandex. Исходный `go.mod` проекта сохраняет закреплённую версию.
 Совместимость пакета можно проверить `GOTOOLCHAIN=go1.23.12 sh scripts/package.sh`.

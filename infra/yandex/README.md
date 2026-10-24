@@ -3,7 +3,7 @@
 Этот Terraform-модуль создаёт основу выбранного окружения: обычную ВМ Intel
 Ice Lake 2 vCPU 50% / 4 ГБ, SSD 10 ГБ (параметр до 40 ГБ), статический IPv4,
 отдельную группу безопасности и сервисную учётную запись. Также создаются
-приватный S3-бакет копий, три контейнера Lockbox без значений и адресные IAM-права. Используется существующая
+приватный S3-бакет копий, четыре контейнера Lockbox без значений и адресные IAM-права. Используется существующая
 подсеть. Чужие сети и security groups не изменяются.
 
 Установку PostgreSQL, копий и агентов выполняют [скрипты ОС](../host/README.md).
@@ -51,8 +51,8 @@ terraform apply foundation.tfplan
 unset YC_TOKEN
 ```
 
-План создаёт 14 ресурсов: service account, IP, security group, диск, ВМ, S3,
-его IAM-binding, роль записи метрик, три Lockbox и три IAM-member. Базовая
+Базовый план создаёт 15 ресурсов: service account, IP, security group, диск, ВМ, S3,
+его IAM-binding, роль записи метрик, четыре Lockbox и три IAM-member. Базовая
 стоимость ВМ/SSD/IP — 2 363,41 ₽ за 720 ч с НДС по консоли 24.10.2026;
 остальные сервисы входят в отдельные строки общей сметы. Проверить plan на
 отсутствие удаления, замены чужих ресурсов, лишних сервисов и широкого SSH.
@@ -71,6 +71,53 @@ unset YC_TOKEN
 параметры принятой сметы, закрытые порты БД/Go, ограничение SSH, неверный ключ
 и несовпадение зон. Эти тесты не заменяют реальный plan, установку ОС и проверку
 портов снаружи. Токен для validate/test не нужен.
+
+## Telegram-бот из релиза
+
+[telegram.tf](telegram.tf) добавляет восемь ресурсов при `telegram_bot_enabled=true`:
+два отдельных service accounts, четыре адресных IAM-права, закрытую функцию
+и scaling policy. Токен загружается отдельно
+в секрет `telegram_token_secret_id` с ключом `telegram-token`; payload не должен
+попадать в Terraform state, plan, CLI argv или Git.
+
+В игнорируемом файле, например `../local/telegram.tfvars.json`, задать:
+
+```json
+{
+  "telegram_bot_enabled": true,
+  "telegram_async_enabled": false,
+  "telegram_bot": {
+    "chat_id": "CONFIRMED_NUMERIC_CHAT_ID",
+    "release_zip": "../local/releases/MONITORING_TAG/monitoring-functions.zip",
+    "release_sha256": "VERIFIED_SHA256",
+    "dashboards": {"vm": "VM_DASHBOARD_ID", "postgres": "POSTGRES_DASHBOARD_ID"}
+  }
+}
+```
+
+Сначала скачать и проверить весь набор GitHub Release по [инструкции релизов](../../docs/releases.md).
+Первый plan/apply выполняется с `telegram_async_enabled=false`: создаются функция
+и права invoker на неё. Затем установить `true`, повторить plan/apply и проверить
+реальную ACTIVE-версию, один async retry и лимиты по 1 на зону. В каждом plan
+передавать **оба** файла `-var-file`: основу ВМ и Telegram. Потеря bot-настроек
+не является способом отключения: `prevent_destroy` остановит такой план.
+Отключать доставку следует через канал Monium, сохраняя ресурсы и секрет.
+
+Provider 0.239.0 перезаписывает `log_options.folder_id` пустым `log_group_id`
+при формировании запроса. Поэтому блок `log_options` не передаётся: остаётся стандартное журналирование
+Cloud Functions. Отдельный `yandex_logging_group` не создаётся: с 22.10.2026
+Cloud Logging закрыт для новых клиентов; логи переезжают в Monium.
+[Официальное изменение](https://yandex.cloud/ru/docs/logging/migration-to-monium).
+Provider также может вернуть лишь warning при неудаче сборки; проверка
+`yc serverless function version list` обязательна. Наличие function ID
+само по себе не подтверждает выкладку. При обновлении должна появиться новая
+ACTIVE-версия, а не сохраниться прежняя после предупреждения.
+
+Канал Monium выбирает функцию и аккаунт invoker; он не становится каналом
+по умолчанию для всех алертов. Его добавляют к пяти правилам каталога бота,
+сохраняя независимый штатный канал. Инструкция проверки и отката — в
+[модуле бота](../telegram-bot/README.md). Probe подключается отдельно после DNS,
+HTTPS и работающего `/readyz`.
 
 ## Изменения и удаление
 

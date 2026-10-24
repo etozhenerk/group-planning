@@ -13,7 +13,7 @@ output = root / 'build' / 'function.zip'
 output.parent.mkdir(exist_ok=True)
 with tempfile.TemporaryDirectory(prefix='somewhere-bot-') as temporary:
     staging = Path(temporary)
-    paths = [root / name for name in ['go.mod', 'go.sum', 'handler.go', 'probe.go']]
+    paths = [root / name for name in ['go.mod', 'go.sum', 'handler.go', 'probe.go', 'main.go']]
     paths += [p for p in (root / 'internal').rglob('*')
               if p.is_file() and p.suffix in {'.go', '.json'} and not p.name.endswith('_test.go')]
     for source in paths:
@@ -45,6 +45,13 @@ with tempfile.TemporaryDirectory(prefix='somewhere-bot-') as temporary:
                        GOMODCACHE=str(staging / '.module-cache'))
     subprocess.run([go_binary, 'get', '-d', './...'], cwd=staging, env=environment, check=True)
     subprocess.run([go_binary, 'build', '-mod=mod', './...'], cwd=staging, env=environment, check=True)
+    plugin_environment = dict(environment, CGO_ENABLED='1')
+    plugin_environment.pop('GOOS')
+    plugin_environment.pop('GOARCH')
+    plugin = staging / 'validation.so'
+    subprocess.run([go_binary, 'build', '-mod=mod', '-tags=ycf', '-buildmode=plugin',
+                    '-o', str(plugin), '.'], cwd=staging, env=plugin_environment, check=True)
+    plugin.unlink()
     (staging / 'go.mod').write_text(deployment_mod)
     shutil.rmtree(staging / '.module-cache', ignore_errors=True)
     with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
