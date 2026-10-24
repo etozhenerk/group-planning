@@ -12,6 +12,7 @@ type (
 )
 
 type state struct {
+	placePolls  map[string]meetings.PlacePoll
 	polls       map[string]meetings.DatePoll
 	meetings    map[string]meetings.Meeting
 	invitations map[string]meetings.Invitation
@@ -26,6 +27,7 @@ type state struct {
 
 func newState() *state {
 	return &state{
+		placePolls:  make(map[string]meetings.PlacePoll),
 		polls:       make(map[string]meetings.DatePoll),
 		meetings:    make(map[string]meetings.Meeting),
 		invitations: make(map[string]meetings.Invitation),
@@ -47,6 +49,10 @@ func (s *state) clone() *state {
 
 	for id, poll := range s.polls {
 		copy.polls[id] = cloneDatePoll(poll)
+	}
+
+	for id, poll := range s.placePolls {
+		copy.placePolls[id] = clonePlacePoll(poll)
 	}
 
 	copy.invitations = maps.Clone(s.invitations)

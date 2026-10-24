@@ -65,7 +65,8 @@ test('create with settings and apply live majority in two chats', async ({
   const friend = await context.newPage();
   await join(friend, created.invitation_url);
   await page.goto(`/meetings/${id}`);
-  await page.getByRole('button', { name: 'Добавить опрос даты' }).click();
+  await page.getByRole('button', { name: 'Добавить к встрече' }).click();
+  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
   const form = page.getByRole('dialog', { name: 'Новая дата встречи' });
   await expect(form.getByRole('switch', { name: /Несколько вариантов/ })).toBeChecked();
   await expect(form.getByRole('switch', { name: 'Можно переголосовать' })).toBeChecked();

@@ -9,6 +9,7 @@ import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.datepoll.DatePollViewModel
+import dev.groupplanning.android.state.placepoll.PlacePollViewModel
 import dev.groupplanning.android.state.settings.SettingsViewModel
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
@@ -35,6 +36,10 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     val settings = mutableSettings.asStateFlow()
     private val mutablePolls = MutableStateFlow<Map<UUID, DatePollViewModel>>(emptyMap())
     val polls = mutablePolls.asStateFlow()
+    private val mutablePlaces = MutableStateFlow<Map<UUID, PlacePollViewModel>>(emptyMap())
+    val places = mutablePlaces.asStateFlow()
+    private val mutablePlaceCreation = MutableStateFlow<PlacePollViewModel?>(null)
+    val placeCreation = mutablePlaceCreation.asStateFlow()
     private val mutableCreation = MutableStateFlow<DatePollViewModel?>(null)
     val pollCreation = mutableCreation.asStateFlow()
     private var access: MeetingAccess? = null
@@ -185,9 +190,20 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         lease: MeetingAccess,
     ) {
         for (entry in entries) {
-            if (entry.kind != "date_poll_created" || entry.payloadVersion != 1) continue
+            if (entry.kind !in listOf("date_poll_created", "place_poll_created") ||
+                entry.payloadVersion != 1
+            ) {
+                continue
+            }
             val raw = (entry.payload["poll_id"] as? JsonPrimitive)?.content ?: continue
             val poll = runCatching { UUID.fromString(raw) }.getOrNull() ?: continue
+            if (entry.kind == "place_poll_created") {
+                if (poll !in places.value) {
+                    mutablePlaces.value =
+                        places.value + (poll to PlacePollViewModel(repository, lease, childScope()))
+                }
+                continue
+            }
             if (poll !in polls.value) {
                 mutablePolls.value =
                     polls.value + (poll to DatePollViewModel(repository, lease, childScope()))
@@ -213,7 +229,28 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         refresh()
     }
 
+    fun createPlacePoll(meeting: Meeting) {
+        val lease = access ?: return
+        if (placeCreation.value ==
+            null
+        ) {
+            mutablePlaceCreation.value =
+                PlacePollViewModel(repository, lease, childScope(), meeting)
+        }
+    }
+
+    fun closePlaceCreation() {
+        if (placeCreation.value?.state?.value?.pending != null) return
+        placeCreation.value?.stop()
+        mutablePlaceCreation.value = null
+        refresh()
+    }
+
     private fun clearPolls() {
+        places.value.values.forEach { it.stop() }
+        mutablePlaces.value = emptyMap()
+        placeCreation.value?.stop()
+        mutablePlaceCreation.value = null
         polls.value.values.forEach { it.stop() }
         mutablePolls.value = emptyMap()
         pollCreation.value?.stop()

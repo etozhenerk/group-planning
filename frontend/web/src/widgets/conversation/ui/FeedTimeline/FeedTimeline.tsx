@@ -4,7 +4,7 @@ import type { Session } from '@/entities/session';
 import { useConversation } from '@/entities/meeting';
 import { Status } from '@/shared/ui/Status';
 import { errorText } from '@/shared/api';
-import { CreateDatePoll } from '@/features/date-poll';
+import { ConversationActions } from '@/widgets/conversation/ui/ConversationActions';
 import { SendMessage } from '@/features/send-message';
 import { useViewport } from '@/widgets/conversation/ui/FeedTimeline/hooks/useViewport';
 import { FeedRecord } from '@/widgets/conversation/ui/FeedRecord';
@@ -84,7 +84,7 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
       <SendMessage
         id={id}
         session={session}
-        extraAction={<CreateDatePoll id={id} session={session} />}
+        extraAction={<ConversationActions id={id} session={session} />}
       />
     </>
   );

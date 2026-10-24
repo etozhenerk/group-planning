@@ -61,6 +61,7 @@ export type FeedEntry = {
   supported: boolean;
   sender?: { kind: 'user' | 'bot'; id: string; displayName: string };
   pollId?: string;
+  placePollId?: string;
 };
 
 export type FeedPage = {

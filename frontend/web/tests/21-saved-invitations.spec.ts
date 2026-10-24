@@ -8,6 +8,16 @@ for (const width of [320, 390, 1440]) {
   }, info) => {
     await login(page, 'Саша');
     const created = await apiCreate(page, 'Прогулка по приглашению');
+    const scheduled = await page.request.patch(`/api/v1/meetings/${created.meeting.id}`, {
+      headers: await writeHeaders(page),
+      data: {
+        starts_at: null,
+        starts_on: new Date(Date.now() + 172800000).toISOString().slice(0, 10),
+        expected_revision: created.meeting.revision,
+      },
+    });
+
+    expect(scheduled.status()).toBe(200);
     const guestContext = await browser.newContext({
       ignoreHTTPSErrors: true,
       viewport: { width, height: 900 },

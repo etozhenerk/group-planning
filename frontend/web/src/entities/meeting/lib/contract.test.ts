@@ -7,6 +7,7 @@ import {
   responseSchema,
   revision,
   invitationsSchema,
+  placePollSchema,
 } from '@/shared/api';
 import { mapEntry, mergeEntries } from '@/entities/meeting/lib/mapFeed';
 
@@ -29,6 +30,22 @@ const body = (name: string): unknown => {
 };
 
 describe('shared API fixtures', () => {
+  it('decodes place votes, large revisions and every final state', () => {
+    const open = placePollSchema.parse(body('place-poll-open'));
+    expect(open.previous_place).toBeNull();
+    expect(open.my_vote).toBe('for');
+    expect([open.votes_for, open.votes_against]).toEqual([2, 1]);
+    expect(open.revision).toBe('9007199254740993');
+    expect(open.can_vote).toBe(true);
+    expect(open.closed_at).toBeNull();
+
+    for (const state of ['applied', 'rejected', 'cancelled']) {
+      const poll = placePollSchema.parse(body(`place-poll-${state}`));
+      expect(poll.state).toBe(state);
+      expect(poll.can_vote).toBe(false);
+      expect(poll.closed_at).not.toBeNull();
+    }
+  });
   it('decodes saved invitations with only the current maybe answer', () => {
     const page = invitationsSchema.parse(body('saved-invitations'));
     expect(page.invitations[0]?.preview.my_rsvp).toBe('maybe');

@@ -37,7 +37,7 @@ for (const width of [320, 390, 768, 1440]) {
       expect(center).toBeCloseTo((title?.y ?? 0) + (title?.height ?? 0) / 2, 0);
     }
 
-    const add = page.getByRole('button', { name: 'Добавить опрос даты' });
+    const add = page.getByRole('button', { name: 'Добавить к встрече' });
     const addBounds = await add.boundingBox();
     const plus = await add.locator('svg').boundingBox();
     expect(plus?.width).toBe(24);

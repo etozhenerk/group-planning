@@ -2,7 +2,7 @@ import { DateInput } from '@/shared/ui/DateInput';
 import { TimeInput } from '@/shared/ui/TimeInput';
 import { SelectInput } from '@/shared/ui/SelectInput';
 import { timezoneLabel } from '@/shared/lib/time';
-import styles from '@/features/date-poll/ui/PollDeadline/PollDeadline.module.css';
+import styles from '@/entities/meeting/ui/PollDeadline/PollDeadline.module.css';
 
 export type PollDeadlineProps = {
   value: string;

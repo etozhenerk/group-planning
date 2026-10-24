@@ -48,3 +48,7 @@ export { datePollSchema } from '@/shared/api/datePollSchema';
 export { invitationsSchema } from '@/shared/api/invitationsSchema';
 
 export type { WireDatePoll } from '@/shared/api/datePollSchema';
+
+export { placePollSchema } from '@/shared/api/placePollSchema';
+
+export type { WirePlacePoll } from '@/shared/api/placePollSchema';

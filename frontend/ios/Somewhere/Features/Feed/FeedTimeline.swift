@@ -53,6 +53,16 @@ struct FeedTimeline: View {
                                             pollID: pollID, meeting: meeting, entry: entry,
                                             own: entry.actor.id == owner.session.profile?.id,
                                             session: owner.session)
+                                    } else if entry.kind == "place_poll_created",
+                                        entry.payloadVersion == 1,
+                                        case .string(let rawID) = entry.payload["poll_id"],
+                                        let pollID = UUID(uuidString: rawID),
+                                        let meeting = owner.meeting
+                                    {
+                                        PlacePollCard(
+                                            pollID: pollID, meeting: meeting, entry: entry,
+                                            own: entry.actor.id == owner.session.profile?.id,
+                                            session: owner.session)
                                     } else {
                                         FeedRecordView(
                                             entry: entry,

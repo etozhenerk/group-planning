@@ -13,6 +13,8 @@ final class DatePollUITests: XCTestCase {
         XCTAssertTrue(meeting.waitForExistence(timeout: 15))
         XCTAssertTrue(meeting.label.contains("Время пока не выбрано"))
         meeting.tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+        app.buttons["meeting-add"].tap()
         let create = app.buttons["new-date-poll"]
         XCTAssertTrue(create.waitForExistence(timeout: 10))
         create.tap()
@@ -111,7 +113,7 @@ final class DatePollUITests: XCTestCase {
         let card = app.buttons["meeting-card-d3c50000-0000-4000-8000-000000000" + suffix]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
         card.tap()
-        XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
         return app
     }
 

@@ -1,0 +1,35 @@
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.answers > * {
+  flex: 1;
+  min-width: 85px;
+  text-align: center;
+  padding: 10px;
+}
+
+.answers button {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.answers button[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--action);
+  color: var(--action-text);
+}
+
+.note {
+  font-size: 13px;
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.error {
+  color: var(--error);
+  font-size: 13px;
+}

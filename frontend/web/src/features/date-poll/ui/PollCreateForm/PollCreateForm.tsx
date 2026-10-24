@@ -2,7 +2,7 @@ import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { usePollForm } from '@/features/date-poll/model/usePollForm';
 import { PollDatesFields } from '@/features/date-poll/ui/PollDatesFields';
-import { PollDeadline } from '@/features/date-poll/ui/PollDeadline';
+import { PollDeadline } from '@/entities/meeting';
 import { PollSettingsFields } from '@/features/date-poll/ui/PollSettingsFields';
 import { usePollViewport } from '@/features/date-poll/ui/PollCreateForm/hooks/usePollViewport';
 import styles from '@/features/date-poll/ui/PollCreateForm/PollCreateForm.module.css';

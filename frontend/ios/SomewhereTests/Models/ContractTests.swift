@@ -17,6 +17,7 @@ struct ContractTests {
             case "FeedEntry": _ = try APICoding.decode(FeedEntry.self, from: data)
             case "MeetingsPage": _ = try APICoding.decode(CalendarPage.self, from: data)
             case "CreateMeeting": _ = try APICoding.decode(CreateMeeting.self, from: data)
+            case "PlacePoll": _ = try APICoding.decode(PlacePoll.self, from: data)
             case "DatePoll": _ = try APICoding.decode(DatePoll.self, from: data)
             case "InvitationsPage": _ = try APICoding.decode(InvitationsPage.self, from: data)
             default: Issue.record("Fixture schema needs an iOS decoder: \(fixture.schema)")
@@ -37,6 +38,20 @@ struct ContractTests {
         #expect(poll.myOptionIDs.count == 1)
         #expect(poll.leaderOptionIDs.isEmpty)
         #expect(poll.appliedOptionID == nil)
+    }
+
+    @Test func placePollKeepsCountsOwnVoteAndFinalState() throws {
+        let open = try APICoding.decode(PlacePoll.self, from: Fixtures.data("place-poll-open"))
+        #expect(open.previousPlace == nil)
+        #expect(open.myVote == "for")
+        #expect(open.votesFor == 2 && open.votesAgainst == 1)
+        #expect(open.revision.rawValue == "9007199254740993")
+        #expect(open.canVote && open.closedAt == nil)
+        for state in ["applied", "rejected", "cancelled"] {
+            let poll = try APICoding.decode(
+                PlacePoll.self, from: Fixtures.data("place-poll-\(state)"))
+            #expect(poll.state == state && !poll.canVote && poll.closedAt != nil)
+        }
     }
 
     @Test func nullAndMissingDescriptionsRemainAbsent() throws {

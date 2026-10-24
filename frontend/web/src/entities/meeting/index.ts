@@ -93,3 +93,15 @@ export { entryPresentation } from '@/entities/meeting/lib/entryPresentation';
 export { useSavedInvitations } from '@/entities/meeting/model/useSavedInvitations';
 
 export type { SavedInvitation } from '@/entities/meeting/model/savedInvitation';
+
+export type {
+  PlacePoll,
+  PlaceVote,
+  PlaceVoteInput,
+} from '@/entities/meeting/model/placePoll';
+
+export { createPlacePoll, votePlacePoll } from '@/entities/meeting/api/placePoll';
+
+export { usePlacePoll } from '@/entities/meeting/model/usePlacePoll';
+
+export { PollDeadline } from '@/entities/meeting/ui/PollDeadline';

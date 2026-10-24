@@ -24,7 +24,8 @@ class DatePollUiTests {
 
     @Test fun createVoteAndApplyDateWithoutTime() {
         fixture.launch("poll-owner", "UFBQUFBQUFBQUFBQUFBQUA").use {
-            fixture.waitTag("new-date-poll")
+            fixture.waitTag("meeting-add")
+            compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-date-poll").performClick()
             fixture.waitTag("poll-create")
             fixture.screenshot("poll-create")
@@ -85,6 +86,6 @@ class DatePollUiTests {
         val tag = "meeting-d3c50000-0000-4000-8000-000000000$suffix"
         fixture.waitTag(tag)
         compose.onNodeWithTag(tag).performClick()
-        fixture.waitTag("new-date-poll")
+        fixture.waitTag("meeting-add")
     }
 }

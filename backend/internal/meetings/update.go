@@ -147,6 +147,12 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 				}
 			}
 
+			if meeting.Place != current.Meeting.Place {
+				if err := s.cancelPlacePolls(writer, meeting); err != nil {
+					return err
+				}
+			}
+
 			if err := writer.SaveMeeting(meeting); err != nil {
 				return err
 			}

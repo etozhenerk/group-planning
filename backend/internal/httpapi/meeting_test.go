@@ -144,7 +144,7 @@ func (h *meetingHTTPTest) request(client *http.Client, method, path string, body
 			parts[4] = "{token}"
 		}
 
-		if len(parts) >= 7 && parts[3] == "meetings" && parts[5] == "date-polls" {
+		if len(parts) >= 7 && parts[3] == "meetings" && (parts[5] == "date-polls" || parts[5] == "place-polls") {
 			parts[6] = "{poll_id}"
 		}
 

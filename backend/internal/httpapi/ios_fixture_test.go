@@ -92,7 +92,8 @@ func TestIOSFixture(t *testing.T) {
 	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
-	server.Config.Handler = savedFaults.handler(feedFaults.handler(faults.handler(api)))
+	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
+	server.Config.Handler = placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -108,6 +109,10 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["saved-invitations"] = seedNativeSavedInvitation(t, store, service, "saved-invitations")
 	config.Cases["saved-error"] = seedNativeSavedInvitation(t, store, service, "saved-error")
 	config.Cases["saved-empty"] = iosCredential(t, service, "saved-empty")
+	config.Cases["place-owner"] = seedNativePlaceFixture(t, store, service, "owner", 100)
+	config.Cases["place-close"] = seedNativePlaceFixture(t, store, service, "close", 200)
+	config.Cases["place-rejected"] = seedNativePlaceFixture(t, store, service, "rejected", 300)
+	config.Cases["place-cancelled"] = seedNativePlaceFixture(t, store, service, "cancelled", 400)
 	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
 	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
 	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
@@ -137,11 +142,15 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
+	if scope == "places" || scope == "" {
+		verifyNativePlaceFixture(t, store)
+	}
+
 	if scope == "polls" || scope == "" {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 

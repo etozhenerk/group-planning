@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { placePollEvent } from '@/entities/meeting/lib/placePollEvent';
 import { pollEvent } from '@/entities/meeting/lib/pollEvent';
 import type { WireEntry, WireFeed } from '@/shared/api';
 import type { FeedEntry, FeedPage } from '@/entities/meeting/model/types';
@@ -86,6 +87,7 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
   }
 
   const notice = pollEvent(wire);
+  const place = placePollEvent(wire);
 
   return {
     id: wire.id,
@@ -96,8 +98,9 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
     occurredAt: wire.occurred_at,
     clientRequestId: wire.client_request_id,
     text,
-    event: notice?.event ?? event,
-    supported: supported || notice !== null,
+    event: place?.event ?? notice?.event ?? event,
+    supported: supported || notice !== null || place !== null,
+    ...(place?.placePollId ? { placePollId: place.placePollId } : {}),
     ...(notice?.pollId ? { pollId: notice.pollId } : {}),
     ...(wire.sender
       ? {

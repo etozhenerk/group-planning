@@ -16,6 +16,17 @@ internal fun eventText(entry: FeedEntry): String {
     val name = entry.actor.displayName
     return when (entry.kind) {
         "meeting_time_unspecified" -> stringResource(R.string.feed_time_unspecified)
+        "place_poll_cancelled" -> stringResource(R.string.place_poll_cancelled)
+        "place_poll_result" -> {
+            val state = (entry.payload["state"] as? JsonPrimitive)?.content
+            stringResource(
+                when (state) {
+                    "applied" -> R.string.place_poll_result
+                    "rejected" -> R.string.place_poll_unchanged_result
+                    else -> R.string.feed_unknown
+                },
+            )
+        }
         "date_poll_no_majority" -> stringResource(R.string.feed_poll_no_majority)
         "date_poll_choice_required" -> stringResource(R.string.feed_poll_choice)
         "date_poll_time_required" -> stringResource(R.string.feed_poll_time)

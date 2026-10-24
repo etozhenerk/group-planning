@@ -141,7 +141,18 @@ func TestBrowserFixture(t *testing.T) {
 		defer close(pollFinished)
 		pollWorker.Run(ctx)
 	}()
+	placeWorker, err := meetings.NewPlacePollWorker(app, meetings.DefaultTransitionOptions(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	placeFinished := make(chan struct{})
+	go func() {
+		defer close(placeFinished)
+		placeWorker.Run(ctx)
+	}()
 	<-ctx.Done()
 	<-finished
 	<-pollFinished
+	<-placeFinished
 }

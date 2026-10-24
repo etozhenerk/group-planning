@@ -34,8 +34,8 @@ internal fun MessageComposer(
     change: (String) -> Unit,
     send: () -> Unit,
     openPoll: () -> Unit,
+    openPlace: () -> Unit,
 ) {
-    val pollLabel = stringResource(R.string.poll_open)
     val label = stringResource(R.string.message_label)
     val sendLabel = stringResource(R.string.message_send)
     Row(
@@ -46,9 +46,7 @@ internal fun MessageComposer(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        IconButton(openPoll, enabled = state.ready, modifier = Modifier.testTag("new-date-poll")) {
-            Text("+", modifier = Modifier.semantics { contentDescription = pollLabel })
-        }
+        MeetingActions(state.ready, openPoll, openPlace)
         BasicTextField(
             state.draft,
             change,

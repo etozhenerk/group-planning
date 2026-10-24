@@ -21,8 +21,9 @@ for (const width of [320, 390, 1440]) {
       element.scrollTop = 120;
     });
 
-    const open = page.getByRole('button', { name: 'Добавить опрос даты' });
+    const open = page.getByRole('button', { name: 'Добавить к встрече' });
     await open.click();
+    await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
     const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
     const body = dialog.getByTestId('poll-form-scroll');
     const footer = dialog.getByTestId('poll-form-footer');
@@ -153,6 +154,7 @@ for (const width of [320, 390, 1440]) {
     await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
     await expect(open).toBeFocused();
     await open.click();
+    await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
     await expect(first).toHaveValue(/27.*10.*2026/);
     await expect(deadline).toHaveValue(/27.*10.*2026/);
     await page.keyboard.press('Escape');

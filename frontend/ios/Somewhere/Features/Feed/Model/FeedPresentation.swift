@@ -5,6 +5,16 @@ enum FeedPresentation {
         guard entry.payloadVersion == 1 else { return "Событие пока не поддерживается" }
         let name = entry.actor.displayName
         switch entry.kind {
+        case "place_poll_cancelled":
+            return "Опрос отменён: организатор изменил место."
+        case "place_poll_result":
+            guard case .string(let state) = entry.payload["state"],
+                ["applied", "rejected"].contains(state)
+            else {
+                return "Событие пока не поддерживается"
+            }
+            return state == "applied"
+                ? "Большинство выбрало новое место." : "Место осталось прежним."
         case "meeting_time_unspecified":
             return "Осталось договориться, во сколько встречаемся."
         case "date_poll_no_majority":

@@ -10,9 +10,9 @@ type senderResponse struct {
 
 func entrySender(entry meetings.FeedEntry) *senderResponse {
 	switch entry.Kind {
-	case "date_poll_applied", "date_poll_no_majority", "date_poll_choice_required", "date_poll_time_required", "date_poll_cancelled":
+	case "date_poll_applied", "date_poll_no_majority", "date_poll_choice_required", "date_poll_time_required", "date_poll_cancelled", "place_poll_result", "place_poll_cancelled":
 		return &senderResponse{Kind: "bot", ID: meetings.BotID, DisplayName: "Бот"}
-	case "message", "date_poll_created":
+	case "message", "date_poll_created", "place_poll_created":
 		return &senderResponse{Kind: "user", ID: entry.ActorID, DisplayName: entry.ActorName}
 	default:
 		return nil

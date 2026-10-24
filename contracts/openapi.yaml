@@ -2,9 +2,9 @@ openapi: 3.1.1
 info:
   title: Somewhere API
   version: 0.1.0
-  description: "API встреч: вход, приглашения, ответы, чат, календарь и опрос даты. Сервер использует
-    memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный маршрут, а не
-    готовность сценария во всех клиентах."
+  description: "API встреч: вход, приглашения, ответы, чат, календарь и опросы даты/места. Сервер
+    использует memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный
+    маршрут, а не готовность сценария во всех клиентах."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -990,8 +990,7 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не
-                считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1465,6 +1464,191 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ResolveDatePoll"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/place-polls:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    post:
+      operationId: createPlacePoll
+      summary: Создать опрос места
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlacePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlacePoll"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/place-polls/{poll_id}:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    get:
+      operationId: getPlacePoll
+      summary: Прочитать разрешённые результаты опроса
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlacePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/place-polls/{poll_id}/vote:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/PollID"
+    put:
+      operationId: votePlacePoll
+      summary: Сохранить свой выбор дат
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlacePoll"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlacePollVote"
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CSRF"
@@ -2544,6 +2728,102 @@ components:
             - type: "null"
       required:
         - option_id
+        - expected_revision
+      additionalProperties: false
+    PlacePoll:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        author:
+          $ref: "#/components/schemas/User"
+        place:
+          type: string
+          minLength: 1
+          maxLength: 500
+        previous_place:
+          type:
+            - string
+            - "null"
+        state:
+          type: string
+          enum:
+            - open
+            - applied
+            - rejected
+            - cancelled
+        revision:
+          $ref: "#/components/schemas/Revision"
+        my_vote_revision:
+          $ref: "#/components/schemas/Revision"
+        my_vote:
+          anyOf:
+            - type: string
+              enum:
+                - for
+                - against
+            - type: "null"
+        votes_for:
+          type: integer
+          minimum: 0
+        votes_against:
+          type: integer
+          minimum: 0
+        created_at: &a1
+          type: string
+          format: date-time
+        closes_at: *a1
+        closed_at:
+          anyOf:
+            - *a1
+            - type: "null"
+        can_vote:
+          type: boolean
+      required:
+        - id
+        - meeting_id
+        - author
+        - place
+        - previous_place
+        - state
+        - revision
+        - my_vote_revision
+        - my_vote
+        - votes_for
+        - votes_against
+        - created_at
+        - closes_at
+        - closed_at
+        - can_vote
+      additionalProperties: true
+    CreatePlacePoll:
+      type: object
+      properties:
+        place:
+          type: string
+          minLength: 1
+          maxLength: 500
+        closes_at:
+          type: string
+          format: date-time
+      required:
+        - place
+        - closes_at
+      additionalProperties: false
+    PlacePollVote:
+      type: object
+      properties:
+        answer:
+          type: string
+          enum:
+            - for
+            - against
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - answer
         - expected_revision
       additionalProperties: false
   responses:

@@ -56,8 +56,9 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await login(page, 'Саша');
   const { meeting } = await apiCreate(page, 'Свайп шторки');
   await page.goto(`/meetings/${meeting.id}`);
-  const open = page.getByRole('button', { name: 'Добавить опрос даты' });
+  const open = page.getByRole('button', { name: 'Добавить к встрече' });
   await open.click();
+  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   const handle = dialog.getByTestId('dialog-drag-region');
@@ -99,6 +100,7 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await expect(open).toBeFocused();
   await touch.detach();
   await open.click();
+  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expect(dialog).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
 });
@@ -111,7 +113,7 @@ for (const width of [320, 390]) {
     await login(page, 'Саша');
     const { meeting } = await apiCreate(page, 'Вся верхняя область шторки');
     await page.goto(`/meetings/${meeting.id}`);
-    const open = page.getByRole('button', { name: 'Добавить опрос даты' });
+    const open = page.getByRole('button', { name: 'Добавить к встрече' });
     const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
     const touch = await page.context().newCDPSession(page);
     await touch.send('Emulation.setTouchEmulationEnabled', { enabled: true });
@@ -122,6 +124,7 @@ for (const width of [320, 390]) {
       { x: 8, y: 32 },
     ]) {
       await open.click();
+      await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
       await expect(dialog).toHaveAttribute('data-motion', 'open');
       await expect(
         dialog.getByRole('button', { name: 'Закрыть', exact: true }),
@@ -146,6 +149,7 @@ for (const width of [320, 390]) {
 
     await touch.detach();
     await open.click();
+    await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     await page.screenshot({
       path: `test-results/poll-sheet-header-${width}.png`,

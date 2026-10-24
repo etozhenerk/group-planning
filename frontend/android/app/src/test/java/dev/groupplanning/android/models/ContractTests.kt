@@ -10,6 +10,7 @@ import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FieldChange
 import dev.groupplanning.android.data.api.models.InvitationPreview
 import dev.groupplanning.android.data.api.models.InvitationsPage
+import dev.groupplanning.android.data.api.models.PlacePoll
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.RsvpResult
 import dev.groupplanning.android.data.api.models.ServerCounter
@@ -39,6 +40,7 @@ class ContractTests {
                 "Error" -> apiJson.decodeFromString<ApiErrorEnvelope>(body)
                 "FeedEntry" -> apiJson.decodeFromString<FeedEntry>(body)
                 "CreateMeeting" -> apiJson.decodeFromString<CreateMeeting>(body)
+                "PlacePoll" -> apiJson.decodeFromString<PlacePoll>(body)
                 "DatePoll" -> apiJson.decodeFromString<DatePoll>(body)
                 "InvitationsPage" -> apiJson.decodeFromString<InvitationsPage>(body)
                 else -> error("Decoder missing for " + fixture.schema)
@@ -60,6 +62,23 @@ class ContractTests {
         assertEquals(1, poll.myOptionIds.size)
         assertTrue(poll.leaderOptionIds.isEmpty())
         assertNull(poll.appliedOptionId)
+    }
+
+    @Test fun placePollKeepsCountsOwnVoteAndFinalState() {
+        val open = apiJson.decodeFromString<PlacePoll>(Fixtures.json("place-poll-open"))
+        assertNull(open.previousPlace)
+        assertEquals("for", open.myVote)
+        assertEquals(2, open.votesFor)
+        assertEquals(1, open.votesAgainst)
+        assertEquals("9007199254740993", open.revision.value)
+        assertTrue(open.canVote)
+        assertNull(open.closedAt)
+        for (state in listOf("applied", "rejected", "cancelled")) {
+            val poll = apiJson.decodeFromString<PlacePoll>(Fixtures.json("place-poll-$state"))
+            assertEquals(state, poll.state)
+            assertFalse(poll.canVote)
+            assertTrue(poll.closedAt != null)
+        }
     }
 
     @Test fun absentDateAndLegacyDescriptionStayNull() {

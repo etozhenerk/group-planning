@@ -6,44 +6,44 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
-type datePollContext struct {
+type pollCall struct {
 	Actor                  meetings.Actor
 	MeetingID, PollID, Key string
 }
 
-func (h meetingHandlers) pollContext(w http.ResponseWriter, r *http.Request, method string, existing bool) (datePollContext, bool) {
+func (h meetingHandlers) pollContext(w http.ResponseWriter, r *http.Request, method string, existing bool) (pollCall, bool) {
 	if !allowMethods(w, r, method) {
-		return datePollContext{}, false
+		return pollCall{}, false
 	}
 
 	actor, ok := h.actor(w, r, method != http.MethodGet)
 	if !ok {
-		return datePollContext{}, false
+		return pollCall{}, false
 	}
 
 	if _, ok := closedQuery(w, r); !ok {
-		return datePollContext{}, false
+		return pollCall{}, false
 	}
 
 	id, ok := parseMeetingID(w, r)
 	if !ok {
-		return datePollContext{}, false
+		return pollCall{}, false
 	}
 
-	result := datePollContext{Actor: actor, MeetingID: id}
+	result := pollCall{Actor: actor, MeetingID: id}
 	if existing {
 		var err error
 		result.PollID, err = meetings.ParseUUID(r.PathValue("poll_id"))
 		if err != nil {
 			writeError(w, 404, "not_found", nil)
-			return datePollContext{}, false
+			return pollCall{}, false
 		}
 	}
 
 	if method != http.MethodGet {
 		result.Key, ok = requestKey(w, r)
 		if !ok {
-			return datePollContext{}, false
+			return pollCall{}, false
 		}
 	}
 

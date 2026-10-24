@@ -7,6 +7,7 @@ import dev.groupplanning.android.data.api.models.DatePoll
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
+import dev.groupplanning.android.data.api.models.PlacePoll
 import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.api.models.UpdateMeeting
 import dev.groupplanning.android.data.api.requests.FeedRequests
@@ -28,6 +29,16 @@ internal class FeedRepository(
         val poll = session.authenticated(
             request,
             DatePoll.serializer(),
+            expectedLease = access.request,
+        )
+        if (poll.meetingId != access.id) throw ClientFailure(FailureKind.InvalidResponse)
+        return poll
+    }
+
+    suspend fun placePoll(access: MeetingAccess, request: ApiRequest): PlacePoll {
+        val poll = session.authenticated(
+            request,
+            PlacePoll.serializer(),
             expectedLease = access.request,
         )
         if (poll.meetingId != access.id) throw ClientFailure(FailureKind.InvalidResponse)

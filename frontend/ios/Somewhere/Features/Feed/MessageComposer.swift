@@ -11,11 +11,14 @@ struct MessageComposer: View {
                     .font(.caption).foregroundStyle(AppPalette.error)
             }
             HStack(alignment: .bottom, spacing: 6) {
-                Button {
-                    owner.pollPresented = true
+                Menu {
+                    Button("Предложить дату") { owner.pollPresented = true }
+                        .accessibilityIdentifier("new-date-poll")
+                    Button("Предложить место") { owner.placePollPresented = true }
+                        .accessibilityIdentifier("new-place-poll")
                 } label: {
                     Image(systemName: "plus").frame(width: 44, height: 44)
-                }.accessibilityLabel("Создать опрос даты").accessibilityIdentifier("new-date-poll")
+                }.accessibilityLabel("Добавить к встрече").accessibilityIdentifier("meeting-add")
                     .disabled(!owner.loaded || owner.meeting == nil)
                 TextField(
                     "Сообщение", text: $owner.draft,
