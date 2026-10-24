@@ -52,6 +52,13 @@ production-сборку и публикацию. Опубликованный а
 `go get` и не закрепляет версию Go в корневом модуле архива по требованиям Yandex.
 Скачанный набор проверен по manifest и SHA256SUMS; SHA-256 ZIP
 `51969732c55503a1e4692609d1da40f70aff190d753466022eceaa3f902bc73d`.
+RC2 выявил второе требование Cloud Functions: обработчик должен быть в
+`package main`. Выпущен [monitoring/v0.1.0-rc.3](https://github.com/etozhenerk/group-planning/releases/tag/monitoring/v0.1.0-rc.3)
+из `23c51c99822093bbc58bd5ead6e74705010e0746`,
+[workflow 40140431474](https://github.com/etozhenerk/group-planning/actions/runs/40140431474).
+Сборка теперь проверяет настоящий `-tags=ycf -buildmode=plugin`; опубликованный
+ZIP скачан и проверен, SHA-256
+`f70c031b8ddeaba82354cfc1e6d8f6e415dc5c53cac0a591544a68c5c74e0dc3`.
 Результаты настоящего деплоя — в [отчёте бота](../telegram-monitoring-bot/live-verification.md).
 
 ## Limits

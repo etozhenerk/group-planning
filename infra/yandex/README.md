@@ -147,3 +147,5 @@ state. Не применять старый `dashboards.tfplan` и не импо
 При расширении менять только `boot_disk_gib` и проверять plan. Полная процедура
 и ограничения — в [инструкции ОС](../host/README.md). `prevent_destroy` не
 защищает от уменьшения размера через чужой API и не заменяет копию.
+
+Результаты реального подключения и нерешённые ограничения API: [live verification](../../openspec/changes/telegram-monitoring-bot/live-verification.md). При PermissionDenied или ошибке Telegram не присоединять канал к рабочим алертам и не считать apply с предупреждением успешной выкладкой.
