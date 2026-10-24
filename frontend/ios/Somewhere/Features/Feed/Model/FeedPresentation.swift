@@ -4,6 +4,7 @@ enum FeedPresentation {
     static func event(_ entry: FeedEntry) -> String {
         guard entry.payloadVersion == 1 else { return "Событие пока не поддерживается" }
         let name = entry.actor.displayName
+        if let taskEvent = PreparationTaskEvent.text(entry) { return taskEvent }
         switch entry.kind {
         case "place_poll_cancelled":
             return "Опрос отменён: организатор изменил место."

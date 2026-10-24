@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" && scope != "tasks" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -71,7 +71,8 @@ func TestAndroidFixture(t *testing.T) {
 	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
-	server.Config.Handler = placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api)))))
+	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
+	server.Config.Handler = taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api))))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -91,6 +92,11 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["place-close"] = seedNativePlaceFixture(t, store, service, "close", 200)
 	config.Cases["place-rejected"] = seedNativePlaceFixture(t, store, service, "rejected", 300)
 	config.Cases["place-cancelled"] = seedNativePlaceFixture(t, store, service, "cancelled", 400)
+	config.Cases["task-owner"] = seedNativePreparationFixture(t, store, service, "owner", 100)
+	config.Cases["task-recipient"] = seedNativePreparationFixture(t, store, service, "recipient", 200)
+	config.Cases["task-decline"] = seedNativePreparationFixture(t, store, service, "decline", 300)
+	config.Cases["task-cancel"] = seedNativePreparationFixture(t, store, service, "cancel", 400)
+	config.Cases["task-conflict"] = seedNativePreparationFixture(t, store, service, "conflict", 500)
 	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
 	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
 	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
@@ -115,6 +121,10 @@ func TestAndroidFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
+	if scope == "all" || scope == "tasks" {
+		verifyNativePreparationFixture(t, store, taskFaults)
+	}
+
 	if scope == "all" || scope == "places" {
 		verifyNativePlaceFixture(t, store)
 	}
@@ -123,7 +133,7 @@ func TestAndroidFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
+	if scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
 		return
 	}
 

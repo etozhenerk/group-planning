@@ -10,6 +10,8 @@ import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.datepoll.DatePollViewModel
 import dev.groupplanning.android.state.placepoll.PlacePollViewModel
+import dev.groupplanning.android.state.preparation.PreparationFormViewModel
+import dev.groupplanning.android.state.preparation.PreparationTaskViewModel
 import dev.groupplanning.android.state.settings.SettingsViewModel
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
@@ -42,6 +44,10 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     val placeCreation = mutablePlaceCreation.asStateFlow()
     private val mutableCreation = MutableStateFlow<DatePollViewModel?>(null)
     val pollCreation = mutableCreation.asStateFlow()
+    private val mutableTasks = MutableStateFlow<Map<UUID, PreparationTaskViewModel>>(emptyMap())
+    val tasks = mutableTasks.asStateFlow()
+    private val mutableTaskCreation = MutableStateFlow<PreparationFormViewModel?>(null)
+    val taskCreation = mutableTaskCreation.asStateFlow()
     private var access: MeetingAccess? = null
     private var active: CoroutineScope? = null
     private var activeJob: Job? = null
@@ -190,13 +196,25 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         lease: MeetingAccess,
     ) {
         for (entry in entries) {
-            if (entry.kind !in listOf("date_poll_created", "place_poll_created") ||
+            if (entry.kind !in
+                listOf("date_poll_created", "place_poll_created", "preparation_task_created") ||
                 entry.payloadVersion != 1
             ) {
                 continue
             }
-            val raw = (entry.payload["poll_id"] as? JsonPrimitive)?.content ?: continue
+            val field = if (entry.kind == "preparation_task_created") "task_id" else "poll_id"
+            val raw = (entry.payload[field] as? JsonPrimitive)?.content ?: continue
             val poll = runCatching { UUID.fromString(raw) }.getOrNull() ?: continue
+            if (entry.kind == "preparation_task_created") {
+                if (poll !in
+                    tasks.value
+                ) {
+                    mutableTasks.value =
+                        tasks.value +
+                        (poll to PreparationTaskViewModel(repository, lease, childScope()))
+                }
+                continue
+            }
             if (entry.kind == "place_poll_created") {
                 if (poll !in places.value) {
                     mutablePlaces.value =
@@ -246,7 +264,28 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         refresh()
     }
 
+    fun createPreparationTask() {
+        val lease = access ?: return
+        if (taskCreation.value ==
+            null
+        ) {
+            mutableTaskCreation.value =
+                PreparationFormViewModel(repository, lease, childScope())
+        }
+    }
+
+    fun closeTaskCreation() {
+        if (taskCreation.value?.operation?.state?.value?.pending != null) return
+        taskCreation.value?.stop()
+        mutableTaskCreation.value = null
+        refresh()
+    }
+
     private fun clearPolls() {
+        tasks.value.values.forEach { it.stop() }
+        mutableTasks.value = emptyMap()
+        taskCreation.value?.stop()
+        mutableTaskCreation.value = null
         places.value.values.forEach { it.stop() }
         mutablePlaces.value = emptyMap()
         placeCreation.value?.stop()

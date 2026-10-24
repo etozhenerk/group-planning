@@ -13,6 +13,7 @@ case "${1:-all}" in
     auth) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAndLoginFailure; somewhere_auth_filter=-only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent; somewhere_scope=auth ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
     saved) somewhere_filter=-only-testing:SomewhereUITests/SavedInvitationsUITests; somewhere_scope=saved ;;
+    tasks) somewhere_filter=-only-testing:SomewhereUITests/PreparationTaskUITests; somewhere_scope=tasks ;;
     places) somewhere_filter=-only-testing:SomewhereUITests/PlacePollUITests; somewhere_scope=places ;;
     polls) somewhere_filter=-only-testing:SomewhereUITests/DatePollUITests; somewhere_scope=polls ;;
     calendar) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests; somewhere_scope=calendar ;;
@@ -20,7 +21,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|auth|invitation|feed|calendar|polls|places|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|auth|invitation|feed|calendar|polls|places|tasks|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

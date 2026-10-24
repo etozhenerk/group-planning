@@ -513,5 +513,212 @@
     "path": "/api/v1/meetings/{id}/place-polls/{poll_id}",
     "method": "get",
     "status": 200
+  },
+  {
+    "name": "preparation-task-offered",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000001",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "assignee": null,
+      "updated_by": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "state": "offered",
+      "revision": "1",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": true,
+      "can_decline": true,
+      "can_cancel": false,
+      "can_complete": false
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "preparation-task-general",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000002",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": null,
+      "assignee": null,
+      "updated_by": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "state": "offered",
+      "revision": "1",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": true,
+      "can_decline": false,
+      "can_cancel": true,
+      "can_complete": false
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "preparation-task-accepted",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000003",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "assignee": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "updated_by": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "state": "accepted",
+      "revision": "2",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": false,
+      "can_decline": true,
+      "can_cancel": false,
+      "can_complete": true
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "preparation-task-completed",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000004",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "assignee": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "updated_by": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "state": "completed",
+      "revision": "9007199254740993",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": false,
+      "can_decline": false,
+      "can_cancel": false,
+      "can_complete": false
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "preparation-task-declined",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000005",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "assignee": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "updated_by": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "state": "declined",
+      "revision": "2",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": false,
+      "can_decline": false,
+      "can_cancel": false,
+      "can_complete": false
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "preparation-task-cancelled",
+    "schema": "PreparationTask",
+    "body": {
+      "id": "d3c70000-0000-4000-8000-000000000006",
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Заказать пиццу",
+      "author": {
+        "id": "6a63b1d2-2ff0-446b-8c90-a51a75762daa",
+        "display_name": "Саша"
+      },
+      "recipient": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "assignee": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "updated_by": {
+        "id": "b739a4ef-bd4a-47a7-8b6c-ea373074eacf",
+        "display_name": "Лена"
+      },
+      "state": "cancelled",
+      "revision": "2",
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T13:00:00Z",
+      "can_accept": false,
+      "can_decline": false,
+      "can_cancel": false,
+      "can_complete": false
+    },
+    "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
+    "method": "get",
+    "status": 200
   }
 ]

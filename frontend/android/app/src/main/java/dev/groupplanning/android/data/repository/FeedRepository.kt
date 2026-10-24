@@ -7,7 +7,10 @@ import dev.groupplanning.android.data.api.models.DatePoll
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
+import dev.groupplanning.android.data.api.models.Participant
+import dev.groupplanning.android.data.api.models.Participants
 import dev.groupplanning.android.data.api.models.PlacePoll
+import dev.groupplanning.android.data.api.models.PreparationTask
 import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.api.models.UpdateMeeting
 import dev.groupplanning.android.data.api.requests.FeedRequests
@@ -44,6 +47,22 @@ internal class FeedRepository(
         if (poll.meetingId != access.id) throw ClientFailure(FailureKind.InvalidResponse)
         return poll
     }
+
+    suspend fun preparationTask(access: MeetingAccess, request: ApiRequest): PreparationTask {
+        val task = session.authenticated(
+            request,
+            PreparationTask.serializer(),
+            expectedLease = access.request,
+        )
+        if (task.meetingId != access.id) throw ClientFailure(FailureKind.InvalidResponse)
+        return task
+    }
+
+    suspend fun taskParticipants(access: MeetingAccess): List<Participant> = session.authenticated(
+        MeetingRequests.participants(access.id),
+        Participants.serializer(),
+        expectedLease = access.request,
+    ).participants
 
     suspend fun open(id: UUID): MeetingAccess = session.meetingAccess(id)
 

@@ -62,6 +62,7 @@ export type FeedEntry = {
   sender?: { kind: 'user' | 'bot'; id: string; displayName: string };
   pollId?: string;
   placePollId?: string;
+  taskId?: string;
 };
 
 export type FeedPage = {

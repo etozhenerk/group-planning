@@ -23,6 +23,8 @@ import dev.groupplanning.android.ui.datepoll.CreateDatePollSheet
 import dev.groupplanning.android.ui.datepoll.DatePollRoute
 import dev.groupplanning.android.ui.placepoll.CreatePlacePollSheet
 import dev.groupplanning.android.ui.placepoll.PlacePollRoute
+import dev.groupplanning.android.ui.preparation.CreatePreparationTaskSheet
+import dev.groupplanning.android.ui.preparation.PreparationTaskRoute
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.UUID
 import kotlinx.serialization.json.JsonPrimitive
@@ -36,6 +38,8 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
     val creation by model.pollCreation.collectAsStateWithLifecycle()
     val places by model.places.collectAsStateWithLifecycle()
     val placeCreation by model.placeCreation.collectAsStateWithLifecycle()
+    val tasks by model.tasks.collectAsStateWithLifecycle()
+    val taskCreation by model.taskCreation.collectAsStateWithLifecycle()
     val meeting = snapshot.data.details[model.id]?.value
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(model, lifecycle) {
@@ -44,6 +48,7 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
     if (state.revoked) return
     creation?.let { CreateDatePollSheet(it, model::closePollCreation) }
     placeCreation?.let { CreatePlacePollSheet(it, model::closePlaceCreation) }
+    taskCreation?.let { CreatePreparationTaskSheet(it, model::closeTaskCreation) }
     Column(modifier.imePadding()) {
         FeedTimeline(
             state,
@@ -53,11 +58,15 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
             model.sender::retry,
             model.sender::recoverRejected,
             poll = { entry ->
-                val raw = (entry.payload["poll_id"] as? JsonPrimitive)?.content
+                val field = if (entry.kind == "preparation_task_created") "task_id" else "poll_id"
+                val raw = (entry.payload[field] as? JsonPrimitive)?.content
                 val id = raw?.let { runCatching { UUID.fromString(it) }.getOrNull() }
                 val poll = polls[id]
                 val place = places[id]
-                if (place != null &&
+                val task = tasks[id]
+                if (task != null && id != null && entry.kind == "preparation_task_created") {
+                    PreparationTaskRoute(id, task, entry, entry.actor.id == profile.id)
+                } else if (place != null &&
                     meeting != null &&
                     id != null &&
                     entry.kind == "place_poll_created"
@@ -93,6 +102,7 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
                 model.sender::send,
                 openPoll = { meeting?.let(model::createPoll) },
                 openPlace = { meeting?.let(model::createPlacePoll) },
+                openTask = model::createPreparationTask,
             )
         }
     }

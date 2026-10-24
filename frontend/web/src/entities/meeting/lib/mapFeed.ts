@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { preparationTaskEvent } from '@/entities/meeting/lib/preparationTaskEvent';
 import { placePollEvent } from '@/entities/meeting/lib/placePollEvent';
 import { pollEvent } from '@/entities/meeting/lib/pollEvent';
 import type { WireEntry, WireFeed } from '@/shared/api';
@@ -88,6 +89,7 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
 
   const notice = pollEvent(wire);
   const place = placePollEvent(wire);
+  const task = preparationTaskEvent(wire);
 
   return {
     id: wire.id,
@@ -98,8 +100,9 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
     occurredAt: wire.occurred_at,
     clientRequestId: wire.client_request_id,
     text,
-    event: place?.event ?? notice?.event ?? event,
-    supported: supported || notice !== null || place !== null,
+    event: task?.event ?? place?.event ?? notice?.event ?? event,
+    supported: supported || notice !== null || place !== null || task !== null,
+    ...(task?.taskId ? { taskId: task.taskId } : {}),
     ...(place?.placePollId ? { placePollId: place.placePollId } : {}),
     ...(notice?.pollId ? { pollId: notice.pollId } : {}),
     ...(wire.sender

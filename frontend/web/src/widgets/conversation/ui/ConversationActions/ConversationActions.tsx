@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useMeeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { PollCreateForm } from '@/features/date-poll';
-import { PlacePollForm } from '@/features/place-poll';
+import { ConversationActionForms } from '@/widgets/conversation/ui/ConversationActionForms';
+import { actionTitle } from '@/widgets/conversation/model/actionKind';
+import type { ConversationActionKind } from '@/widgets/conversation/model/actionKind';
 import { Dialog } from '@/shared/ui/Dialog';
 import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
 import { Status } from '@/shared/ui/Status';
@@ -13,8 +14,7 @@ export type ConversationActionsProps = { id: string; session: Session };
 
 export const ConversationActions = ({ id, session }: ConversationActionsProps) => {
   const [open, setOpen] = useState(false);
-  const [kind, setKind] = useState<'menu' | 'date' | 'place'>('menu');
-  const [generation, setGeneration] = useState(0);
+  const [kind, setKind] = useState<ConversationActionKind>('menu');
   const meeting = useMeeting(id, session.user.id);
 
   if (meeting.access.denied) {
@@ -23,7 +23,6 @@ export const ConversationActions = ({ id, session }: ConversationActionsProps) =
 
   const done = () => {
     setOpen(false);
-    setGeneration((value) => value + 1);
   };
 
   return (
@@ -41,13 +40,7 @@ export const ConversationActions = ({ id, session }: ConversationActionsProps) =
       </button>
       <Dialog
         open={open}
-        title={
-          kind === 'date'
-            ? 'Новая дата встречи'
-            : kind === 'place'
-              ? 'Предложить место'
-              : 'Добавить к встрече'
-        }
+        title={actionTitle(kind)}
         contained
         onClose={() => setOpen(false)}
       >
@@ -58,26 +51,18 @@ export const ConversationActions = ({ id, session }: ConversationActionsProps) =
           <button type="button" onClick={() => setKind('place')}>
             Предложить место
           </button>
+          <button type="button" onClick={() => setKind('task')}>
+            Предложить задачу
+          </button>
         </div>
         {meeting.data ? (
-          <>
-            <div className={styles.form} hidden={kind !== 'date'}>
-              <PollCreateForm
-                key={`date-${generation}`}
-                meeting={meeting.data}
-                session={session}
-                done={done}
-              />
-            </div>
-            <div className={styles.form} hidden={kind !== 'place'}>
-              <PlacePollForm
-                key={`place-${generation}`}
-                meeting={meeting.data}
-                session={session}
-                done={done}
-              />
-            </div>
-          </>
+          <ConversationActionForms
+            kind={kind}
+            open={open}
+            meeting={meeting.data}
+            session={session}
+            done={done}
+          />
         ) : kind !== 'menu' ? (
           meeting.error ? (
             <Status

@@ -44,7 +44,17 @@ struct FeedTimeline: View {
                                         .padding(.top, 12)
                                 }
                                 Group {
-                                    if entry.kind == "date_poll_created", entry.payloadVersion == 1,
+                                    if entry.kind == "preparation_task_created",
+                                        entry.payloadVersion == 1,
+                                        case .string(let rawID) = entry.payload["task_id"],
+                                        let taskID = UUID(uuidString: rawID)
+                                    {
+                                        PreparationTaskCard(
+                                            taskID: taskID, entry: entry,
+                                            own: entry.actor.id == owner.session.profile?.id,
+                                            session: owner.session)
+                                    } else if entry.kind == "date_poll_created",
+                                        entry.payloadVersion == 1,
                                         case .string(let rawID) = entry.payload["poll_id"],
                                         let pollID = UUID(uuidString: rawID),
                                         let meeting = owner.meeting

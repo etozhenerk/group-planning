@@ -41,6 +41,9 @@ struct MeetingFeedScreen: View {
                     CreatePlacePollScreen(meeting: meeting, session: owner.session)
                 }
             }
+            .sheet(isPresented: $owner.preparationTaskPresented, onDismiss: owner.reload) {
+                CreatePreparationTaskScreen(meetingID: owner.id, session: owner.session)
+            }
             .task(id: phase) {
                 guard phase == .active else {
                     owner.suspend()

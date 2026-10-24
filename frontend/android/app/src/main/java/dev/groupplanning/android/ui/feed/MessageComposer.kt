@@ -35,6 +35,7 @@ internal fun MessageComposer(
     send: () -> Unit,
     openPoll: () -> Unit,
     openPlace: () -> Unit,
+    openTask: () -> Unit,
 ) {
     val label = stringResource(R.string.message_label)
     val sendLabel = stringResource(R.string.message_send)
@@ -46,7 +47,7 @@ internal fun MessageComposer(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        MeetingActions(state.ready, openPoll, openPlace)
+        MeetingActions(state.ready, openPoll, openPlace, openTask)
         BasicTextField(
             state.draft,
             change,

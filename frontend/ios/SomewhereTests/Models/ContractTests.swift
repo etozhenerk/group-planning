@@ -17,6 +17,7 @@ struct ContractTests {
             case "FeedEntry": _ = try APICoding.decode(FeedEntry.self, from: data)
             case "MeetingsPage": _ = try APICoding.decode(CalendarPage.self, from: data)
             case "CreateMeeting": _ = try APICoding.decode(CreateMeeting.self, from: data)
+            case "PreparationTask": _ = try APICoding.decode(PreparationTask.self, from: data)
             case "PlacePoll": _ = try APICoding.decode(PlacePoll.self, from: data)
             case "DatePoll": _ = try APICoding.decode(DatePoll.self, from: data)
             case "InvitationsPage": _ = try APICoding.decode(InvitationsPage.self, from: data)
@@ -38,6 +39,26 @@ struct ContractTests {
         #expect(poll.myOptionIDs.count == 1)
         #expect(poll.leaderOptionIDs.isEmpty)
         #expect(poll.appliedOptionID == nil)
+    }
+
+    @Test func preparationTasksSeparateProposalFromAcceptance() throws {
+        let offered = try APICoding.decode(
+            PreparationTask.self, from: Fixtures.data("preparation-task-offered"))
+        #expect(
+            offered.assignee == nil && offered.recipient?.displayName == "Лена" && offered.canAccept
+        )
+        let general = try APICoding.decode(
+            PreparationTask.self, from: Fixtures.data("preparation-task-general"))
+        #expect(general.recipient == nil && general.canAccept)
+        for state in ["accepted", "completed", "declined", "cancelled"] {
+            let task = try APICoding.decode(
+                PreparationTask.self, from: Fixtures.data("preparation-task-\(state)"))
+            #expect(task.state == state && task.assignee?.displayName == "Лена")
+            #expect(task.canComplete == (state == "accepted"))
+        }
+        let completed = try APICoding.decode(
+            PreparationTask.self, from: Fixtures.data("preparation-task-completed"))
+        #expect(completed.revision.rawValue == "9007199254740993")
     }
 
     @Test func placePollKeepsCountsOwnVoteAndFinalState() throws {

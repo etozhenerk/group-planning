@@ -13,6 +13,7 @@ import kotlinx.serialization.json.JsonPrimitive
 @Composable
 internal fun eventText(entry: FeedEntry): String {
     if (entry.payloadVersion != 1) return stringResource(R.string.feed_unknown)
+    preparationTaskEvent(entry)?.let { return it }
     val name = entry.actor.displayName
     return when (entry.kind) {
         "meeting_time_unspecified" -> stringResource(R.string.feed_time_unspecified)

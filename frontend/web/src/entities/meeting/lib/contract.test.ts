@@ -8,6 +8,7 @@ import {
   revision,
   invitationsSchema,
   placePollSchema,
+  preparationTaskSchema,
 } from '@/shared/api';
 import { mapEntry, mergeEntries } from '@/entities/meeting/lib/mapFeed';
 
@@ -30,6 +31,25 @@ const body = (name: string): unknown => {
 };
 
 describe('shared API fixtures', () => {
+  it('keeps proposal separate from acceptance and decodes every task outcome', () => {
+    const offered = preparationTaskSchema.parse(body('preparation-task-offered'));
+    expect(offered.assignee).toBeNull();
+    expect(offered.recipient?.display_name).toBe('Лена');
+    expect(offered.can_accept).toBe(true);
+    const general = preparationTaskSchema.parse(body('preparation-task-general'));
+    expect(general.recipient).toBeNull();
+
+    for (const state of ['accepted', 'completed', 'declined', 'cancelled']) {
+      const task = preparationTaskSchema.parse(body(`preparation-task-${state}`));
+      expect(task.state).toBe(state);
+      expect(task.assignee?.display_name).toBe('Лена');
+      expect(task.can_complete).toBe(state === 'accepted');
+    }
+
+    expect(preparationTaskSchema.parse(body('preparation-task-completed')).revision).toBe(
+      '9007199254740993',
+    );
+  });
   it('decodes place votes, large revisions and every final state', () => {
     const open = placePollSchema.parse(body('place-poll-open'));
     expect(open.previous_place).toBeNull();

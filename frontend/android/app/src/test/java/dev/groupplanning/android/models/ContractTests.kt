@@ -11,6 +11,7 @@ import dev.groupplanning.android.data.api.models.FieldChange
 import dev.groupplanning.android.data.api.models.InvitationPreview
 import dev.groupplanning.android.data.api.models.InvitationsPage
 import dev.groupplanning.android.data.api.models.PlacePoll
+import dev.groupplanning.android.data.api.models.PreparationTask
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.RsvpResult
 import dev.groupplanning.android.data.api.models.ServerCounter
@@ -40,12 +41,38 @@ class ContractTests {
                 "Error" -> apiJson.decodeFromString<ApiErrorEnvelope>(body)
                 "FeedEntry" -> apiJson.decodeFromString<FeedEntry>(body)
                 "CreateMeeting" -> apiJson.decodeFromString<CreateMeeting>(body)
+                "PreparationTask" -> apiJson.decodeFromString<PreparationTask>(body)
                 "PlacePoll" -> apiJson.decodeFromString<PlacePoll>(body)
                 "DatePoll" -> apiJson.decodeFromString<DatePoll>(body)
                 "InvitationsPage" -> apiJson.decodeFromString<InvitationsPage>(body)
                 else -> error("Decoder missing for " + fixture.schema)
             }
         }
+    }
+
+    @Test fun preparationTasksSeparateProposalFromAcceptance() {
+        val offered = apiJson.decodeFromString<PreparationTask>(
+            Fixtures.json("preparation-task-offered"),
+        )
+        assertNull(offered.assignee)
+        assertEquals("Лена", offered.recipient?.displayName)
+        assertTrue(offered.canAccept)
+        val general = apiJson.decodeFromString<PreparationTask>(
+            Fixtures.json("preparation-task-general"),
+        )
+        assertNull(general.recipient)
+        for (state in listOf("accepted", "completed", "declined", "cancelled")) {
+            val task = apiJson.decodeFromString<PreparationTask>(
+                Fixtures.json("preparation-task-$state"),
+            )
+            assertEquals(state, task.state)
+            assertEquals("Лена", task.assignee?.displayName)
+            assertEquals(state == "accepted", task.canComplete)
+        }
+        val completed = apiJson.decodeFromString<PreparationTask>(
+            Fixtures.json("preparation-task-completed"),
+        )
+        assertEquals("9007199254740993", completed.revision.value)
     }
 
     @Test fun dateOnlyCreationAndHiddenPollPreserveContract() {

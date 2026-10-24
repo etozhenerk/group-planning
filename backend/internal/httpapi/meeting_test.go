@@ -148,6 +148,10 @@ func (h *meetingHTTPTest) request(client *http.Client, method, path string, body
 			parts[6] = "{poll_id}"
 		}
 
+		if len(parts) >= 7 && parts[3] == "meetings" && parts[5] == "preparation-tasks" {
+			parts[6] = "{task_id}"
+		}
+
 		route = strings.Join(parts, "/")
 	}
 

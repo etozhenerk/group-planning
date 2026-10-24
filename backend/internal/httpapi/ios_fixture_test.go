@@ -93,7 +93,9 @@ func TestIOSFixture(t *testing.T) {
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
-	server.Config.Handler = placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api))))
+	// iOS reads participants while opening invitation metadata, before showing the task form.
+	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now), peopleFailAt: 2}
+	server.Config.Handler = taskFaults.handler(placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api)))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -113,6 +115,11 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["place-close"] = seedNativePlaceFixture(t, store, service, "close", 200)
 	config.Cases["place-rejected"] = seedNativePlaceFixture(t, store, service, "rejected", 300)
 	config.Cases["place-cancelled"] = seedNativePlaceFixture(t, store, service, "cancelled", 400)
+	config.Cases["task-owner"] = seedNativePreparationFixture(t, store, service, "owner", 100)
+	config.Cases["task-recipient"] = seedNativePreparationFixture(t, store, service, "recipient", 200)
+	config.Cases["task-decline"] = seedNativePreparationFixture(t, store, service, "decline", 300)
+	config.Cases["task-cancel"] = seedNativePreparationFixture(t, store, service, "cancel", 400)
+	config.Cases["task-conflict"] = seedNativePreparationFixture(t, store, service, "conflict", 500)
 	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
 	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
 	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
@@ -142,6 +149,10 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
+	if scope == "tasks" || scope == "" {
+		verifyNativePreparationFixture(t, store, taskFaults)
+	}
+
 	if scope == "places" || scope == "" {
 		verifyNativePlaceFixture(t, store)
 	}
@@ -150,7 +161,7 @@ func TestIOSFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 

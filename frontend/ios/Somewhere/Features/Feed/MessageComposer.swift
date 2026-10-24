@@ -16,6 +16,8 @@ struct MessageComposer: View {
                         .accessibilityIdentifier("new-date-poll")
                     Button("Предложить место") { owner.placePollPresented = true }
                         .accessibilityIdentifier("new-place-poll")
+                    Button("Предложить задачу") { owner.preparationTaskPresented = true }
+                        .accessibilityIdentifier("new-preparation-task")
                 } label: {
                     Image(systemName: "plus").frame(width: 44, height: 44)
                 }.accessibilityLabel("Добавить к встрече").accessibilityIdentifier("meeting-add")

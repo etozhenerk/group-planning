@@ -12,37 +12,43 @@ type (
 )
 
 type state struct {
-	placePolls  map[string]meetings.PlacePoll
-	polls       map[string]meetings.DatePoll
-	meetings    map[string]meetings.Meeting
-	invitations map[string]meetings.Invitation
-	inviteIDs   map[string]bool
-	responses   map[responseKey]meetings.RSVP
-	feed        map[string][]meetings.FeedEntry
-	entryIDs    map[string]bool
-	messageIDs  map[messageKey]bool
-	jobs        map[transitionKey]meetings.TransitionJob
-	receipts    map[meetings.RequestKey]meetings.Receipt
+	preparationTasks map[string]meetings.PreparationTask
+	placePolls       map[string]meetings.PlacePoll
+	polls            map[string]meetings.DatePoll
+	meetings         map[string]meetings.Meeting
+	invitations      map[string]meetings.Invitation
+	inviteIDs        map[string]bool
+	responses        map[responseKey]meetings.RSVP
+	feed             map[string][]meetings.FeedEntry
+	entryIDs         map[string]bool
+	messageIDs       map[messageKey]bool
+	jobs             map[transitionKey]meetings.TransitionJob
+	receipts         map[meetings.RequestKey]meetings.Receipt
 }
 
 func newState() *state {
 	return &state{
-		placePolls:  make(map[string]meetings.PlacePoll),
-		polls:       make(map[string]meetings.DatePoll),
-		meetings:    make(map[string]meetings.Meeting),
-		invitations: make(map[string]meetings.Invitation),
-		inviteIDs:   make(map[string]bool),
-		responses:   make(map[responseKey]meetings.RSVP),
-		feed:        make(map[string][]meetings.FeedEntry),
-		entryIDs:    make(map[string]bool),
-		messageIDs:  make(map[messageKey]bool),
-		jobs:        make(map[transitionKey]meetings.TransitionJob),
-		receipts:    make(map[meetings.RequestKey]meetings.Receipt),
+		preparationTasks: make(map[string]meetings.PreparationTask),
+		placePolls:       make(map[string]meetings.PlacePoll),
+		polls:            make(map[string]meetings.DatePoll),
+		meetings:         make(map[string]meetings.Meeting),
+		invitations:      make(map[string]meetings.Invitation),
+		inviteIDs:        make(map[string]bool),
+		responses:        make(map[responseKey]meetings.RSVP),
+		feed:             make(map[string][]meetings.FeedEntry),
+		entryIDs:         make(map[string]bool),
+		messageIDs:       make(map[messageKey]bool),
+		jobs:             make(map[transitionKey]meetings.TransitionJob),
+		receipts:         make(map[meetings.RequestKey]meetings.Receipt),
 	}
 }
 
 func (s *state) clone() *state {
 	copy := newState()
+	for id, task := range s.preparationTasks {
+		copy.preparationTasks[id] = clonePreparationTask(task)
+	}
+
 	for id, meeting := range s.meetings {
 		copy.meetings[id] = cloneMeeting(meeting)
 	}

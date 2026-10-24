@@ -39,6 +39,7 @@ internal object RuntimeFactory {
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
                     "feed-owner", "feed-persistence",
                     "calendar", "calendar-large", "calendar-empty",
+                    "task-owner", "task-recipient", "task-decline", "task-cancel", "task-conflict",
                     "place-owner", "place-close", "place-rejected", "place-cancelled",
                     "poll-owner", "poll-tie", "poll-time", "poll-hidden",
                     "saved-invitations", "saved-error", "saved-empty",

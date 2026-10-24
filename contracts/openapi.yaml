@@ -2,9 +2,7 @@ openapi: 3.1.1
 info:
   title: Somewhere API
   version: 0.1.0
-  description: "API встреч: вход, приглашения, ответы, чат, календарь и опросы даты/места. Сервер
-    использует memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный
-    маршрут, а не готовность сценария во всех клиентах."
+  description: "API встреч: вход, приглашения, ответы, чат, календарь и опросы даты/места. Сервер использует memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный маршрут, а не готовность сценария во всех клиентах."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -1652,6 +1650,386 @@ paths:
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/preparation-tasks:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    post:
+      operationId: createPreparationTask
+      summary: Предложить задачу подготовки
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePreparationTask"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/preparation-tasks/{task_id}:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/TaskID"
+    get:
+      operationId: readPreparationTask
+      summary: Прочитать задачу подготовки
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/preparation-tasks/{task_id}/accept:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/TaskID"
+    post:
+      operationId: acceptPreparationTask
+      summary: Принять задачу
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreparationTaskAction"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/preparation-tasks/{task_id}/decline:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/TaskID"
+    post:
+      operationId: declinePreparationTask
+      summary: Отказаться от задачи
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreparationTaskAction"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/preparation-tasks/{task_id}/cancel:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/TaskID"
+    post:
+      operationId: cancelPreparationTask
+      summary: Отменить задачу
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreparationTaskAction"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/preparation-tasks/{task_id}/complete:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - $ref: "#/components/parameters/TaskID"
+    post:
+      operationId: completePreparationTask
+      summary: Отметить выполнение задачи
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparationTask"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreparationTaskAction"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CSRF"
 components:
   securitySchemes:
     WebSession:
@@ -1685,8 +2063,7 @@ components:
       schema:
         type: string
         format: uuid
-      description: Один UUID на намерение; сообщение использует client_request_id. TTL receipt 30 дней в
-        пределах процесса. Другое тело с тем же ключом — 409.
+      description: Один UUID на намерение; сообщение использует client_request_id. TTL receipt 30 дней в пределах процесса. Другое тело с тем же ключом — 409.
     CSRF:
       name: X-CSRF-Token
       in: header
@@ -1710,6 +2087,13 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/UUID"
+    TaskID:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/UUID"
+      description: Идентификатор задачи подготовки.
   schemas:
     UUID:
       type: string
@@ -2824,6 +3208,93 @@ components:
           $ref: "#/components/schemas/Revision"
       required:
         - answer
+        - expected_revision
+      additionalProperties: false
+    PreparationTask:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        meeting_id:
+          $ref: "#/components/schemas/UUID"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        author:
+          $ref: "#/components/schemas/User"
+        recipient:
+          anyOf:
+            - $ref: "#/components/schemas/User"
+            - type: "null"
+        assignee:
+          anyOf:
+            - $ref: "#/components/schemas/User"
+            - type: "null"
+        updated_by:
+          $ref: "#/components/schemas/User"
+        state:
+          type: string
+          enum:
+            - offered
+            - accepted
+            - completed
+            - declined
+            - cancelled
+        revision:
+          $ref: "#/components/schemas/Revision"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        can_accept:
+          type: boolean
+        can_decline:
+          type: boolean
+        can_cancel:
+          type: boolean
+        can_complete:
+          type: boolean
+      required:
+        - id
+        - meeting_id
+        - title
+        - author
+        - recipient
+        - assignee
+        - updated_by
+        - state
+        - revision
+        - created_at
+        - updated_at
+        - can_accept
+        - can_decline
+        - can_cancel
+        - can_complete
+      additionalProperties: true
+    CreatePreparationTask:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        recipient_id:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+      required:
+        - title
+        - recipient_id
+      additionalProperties: false
+    PreparationTaskAction:
+      type: object
+      properties:
+        expected_revision:
+          $ref: "#/components/schemas/Revision"
+      required:
         - expected_revision
       additionalProperties: false
   responses:

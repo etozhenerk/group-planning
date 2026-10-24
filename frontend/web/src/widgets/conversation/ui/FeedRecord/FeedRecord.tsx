@@ -1,5 +1,6 @@
 import styles from '@/widgets/conversation/ui/FeedRecord/FeedRecord.module.css';
 import type { Session } from '@/entities/session';
+import { TaskCard } from '@/features/preparation-task';
 import { PlacePollCard } from '@/features/place-poll';
 import { DatePollCard } from '@/features/date-poll';
 import { entryPresentation } from '@/entities/meeting';
@@ -32,7 +33,14 @@ export const FeedRecord = ({ entry, session }: FeedRecordProps) => {
           <strong>{entry.actor.displayName}</strong>
           <time dateTime={entry.occurredAt}>{clockLabel(entry.occurredAt)}</time>
         </div>
-        {entry.placePollId ? (
+        {entry.taskId ? (
+          <TaskCard
+            meeting={entry.meetingId}
+            id={entry.taskId}
+            session={session}
+            outgoing={own}
+          />
+        ) : entry.placePollId ? (
           <PlacePollCard
             meeting={entry.meetingId}
             id={entry.placePollId}

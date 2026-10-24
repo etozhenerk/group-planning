@@ -18,7 +18,12 @@ import androidx.compose.ui.semantics.semantics
 import dev.groupplanning.android.R
 
 @Composable
-internal fun MeetingActions(enabled: Boolean, date: () -> Unit, place: () -> Unit) {
+internal fun MeetingActions(
+    enabled: Boolean,
+    date: () -> Unit,
+    place: () -> Unit,
+    task: () -> Unit,
+) {
     var open by rememberSaveable { mutableStateOf(false) }
     val label = stringResource(R.string.meeting_add)
     Box {
@@ -42,6 +47,13 @@ internal fun MeetingActions(enabled: Boolean, date: () -> Unit, place: () -> Uni
                 },
                 modifier = Modifier.testTag("new-place-poll"),
             )
+            DropdownMenuItem(text = {
+                Text(stringResource(R.string.preparation_propose))
+            }, onClick = {
+                open =
+                    false
+                task()
+            }, modifier = Modifier.testTag("new-preparation-task"))
         }
     }
 }

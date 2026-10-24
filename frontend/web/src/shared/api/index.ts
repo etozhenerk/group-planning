@@ -52,3 +52,7 @@ export type { WireDatePoll } from '@/shared/api/datePollSchema';
 export { placePollSchema } from '@/shared/api/placePollSchema';
 
 export type { WirePlacePoll } from '@/shared/api/placePollSchema';
+
+export { preparationTaskSchema } from '@/shared/api/preparationTaskSchema';
+
+export type { WirePreparationTask } from '@/shared/api/preparationTaskSchema';

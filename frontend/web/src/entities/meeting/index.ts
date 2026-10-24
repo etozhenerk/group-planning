@@ -105,3 +105,17 @@ export { createPlacePoll, votePlacePoll } from '@/entities/meeting/api/placePoll
 export { usePlacePoll } from '@/entities/meeting/model/usePlacePoll';
 
 export { PollDeadline } from '@/entities/meeting/ui/PollDeadline';
+
+export type {
+  PreparationTask,
+  PreparationTaskCreate,
+  PreparationAction,
+  PreparationActionInput,
+} from '@/entities/meeting/model/preparationTask';
+
+export {
+  createPreparationTask,
+  actOnPreparationTask,
+} from '@/entities/meeting/api/preparationTask';
+
+export { usePreparationTask } from '@/entities/meeting/model/usePreparationTask';

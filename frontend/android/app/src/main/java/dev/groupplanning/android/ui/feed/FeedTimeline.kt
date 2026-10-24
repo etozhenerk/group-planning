@@ -81,7 +81,8 @@ internal fun FeedTimeline(
                         entry.actor.id == profile.id,
                         Modifier.testTag("feed-entry-${entry.sequence.value}"),
                     )
-                } else if (entry.kind in listOf("date_poll_created", "place_poll_created") &&
+                } else if (entry.kind in
+                    listOf("date_poll_created", "place_poll_created", "preparation_task_created") &&
                     entry.payloadVersion == 1
                 ) {
                     poll(entry)

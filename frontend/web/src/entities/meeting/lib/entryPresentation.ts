@@ -5,7 +5,7 @@ export const entryPresentation = (entry: FeedEntry): 'message' | 'poll' | 'syste
     return 'message';
   }
 
-  if (entry.pollId || entry.placePollId) {
+  if (entry.pollId || entry.placePollId || entry.taskId) {
     return 'poll';
   }
 
