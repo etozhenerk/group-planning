@@ -15,6 +15,16 @@ val localSettings = Properties().apply {
     }
 }
 
+val storeRelease = providers.gradleProperty("somewhereStoreRelease").orElse("false").get() == "true"
+val releaseVersion = providers.gradleProperty("somewhereReleaseVersion").orElse("0.1.0").get()
+val releaseBuild = providers.gradleProperty("somewhereReleaseBuild").orElse("1").get().toInt()
+require(releaseVersion.matches(Regex("[0-9]+\\.[0-9]+\\.[0-9]+")))
+require(releaseBuild in 1..9999)
+
+fun signingSecret(name: String): String = providers.environmentVariable(name).orNull
+    ?.takeIf { it.isNotBlank() }
+    ?: error("Missing Android signing setting: $name")
+
 android {
     namespace = "dev.groupplanning.android"
     compileSdk = 36
@@ -24,12 +34,15 @@ android {
         applicationId = "dev.groupplanning.android"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = releaseBuild
+        versionName = releaseVersion
         val apiOrigin = providers.gradleProperty("somewhereApiOrigin")
             .orElse(localSettings.getProperty("somewhere.api.origin", ""))
             .get()
         require(apiOrigin.isEmpty() || apiOrigin.matches(Regex("https://[A-Za-z0-9.:-]+/?")))
+        require(!storeRelease || apiOrigin.isNotEmpty()) {
+            "Store release requires an HTTPS API origin"
+        }
         buildConfigField("String", "API_ORIGIN", "\"$apiOrigin\"")
         buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android\"")
         manifestPlaceholders["invitationScheme"] = "group-planning-android"
@@ -63,6 +76,15 @@ android {
         buildConfig = true
     }
 
+    if (storeRelease) {
+        signingConfigs.create("store") {
+            storeFile = file(signingSecret("ANDROID_KEYSTORE_PATH"))
+            storePassword = signingSecret("ANDROID_STORE_PASSWORD")
+            keyAlias = signingSecret("ANDROID_KEY_ALIAS")
+            keyPassword = signingSecret("ANDROID_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         create("qa") {
             initWith(getByName("debug"))
@@ -72,6 +94,7 @@ android {
             matchingFallbacks += "debug"
         }
         release {
+            if (storeRelease) signingConfig = signingConfigs.getByName("store")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))

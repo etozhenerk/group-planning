@@ -1,0 +1,62 @@
+[
+  {
+    "id": "somewhere-cpu",
+    "title": "CPU",
+    "unit": "%",
+    "query": "200 * \"sys.system.UsefulTime\"{service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"} / (\"sys.system.UsefulTime\"{service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"} + \"sys.system.IdleTime\"{service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"})",
+    "warning": 70,
+    "alarm": 90,
+    "comparison": ">",
+    "window_minutes": 10,
+    "dashboard": "vm",
+    "action": "Проверьте процессы, запросы и I/O."
+  },
+  {
+    "id": "somewhere-memory",
+    "title": "Память",
+    "unit": "%",
+    "query": "100 * (\"sys.memory.MemTotal\"{service=\"custom\",host=\"__INSTANCE_ID__\"} - \"sys.memory.MemAvailable\"{service=\"custom\",host=\"__INSTANCE_ID__\"}) / \"sys.memory.MemTotal\"{service=\"custom\",host=\"__INSTANCE_ID__\"}",
+    "warning": 80,
+    "alarm": 90,
+    "comparison": ">",
+    "window_minutes": 5,
+    "dashboard": "vm",
+    "action": "Проверьте RSS, OOM и лимиты процессов."
+  },
+  {
+    "id": "somewhere-disk-free",
+    "title": "Свободное место",
+    "unit": "ГиБ",
+    "query": "\"sys.filesystem.FreeB\"{service=\"custom\",host=\"__INSTANCE_ID__\",mountpoint=\"/\"} / 1073741824",
+    "warning": 3,
+    "alarm": 2,
+    "comparison": "<",
+    "window_minutes": 5,
+    "dashboard": "vm",
+    "action": "Проверьте копию и расширьте диск до заполнения."
+  },
+  {
+    "id": "somewhere-postgres-up",
+    "title": "PostgreSQL",
+    "unit": "доступность",
+    "query": "\"somewhere_postgres_up\"{service=\"custom\",host=\"__INSTANCE_ID__\"}",
+    "warning": 0.9,
+    "alarm": 0.5,
+    "comparison": "<",
+    "window_minutes": 2,
+    "dashboard": "postgres",
+    "action": "Проверьте PostgreSQL, место и журнал службы."
+  },
+  {
+    "id": "somewhere-backup-age",
+    "title": "Возраст копии",
+    "unit": "ч",
+    "query": "\"somewhere_backup_age_seconds\"{service=\"custom\",host=\"__INSTANCE_ID__\"} / 3600",
+    "warning": 25,
+    "alarm": 26,
+    "comparison": ">",
+    "window_minutes": 5,
+    "dashboard": "postgres",
+    "action": "Проверьте timer, S3, IAM и место; повторите копию."
+  }
+]

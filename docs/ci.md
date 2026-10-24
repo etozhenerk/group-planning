@@ -94,3 +94,21 @@ go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 [фильтры путей](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows),
 [зависимости jobs](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-jobs),
 [сводки шагов](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions).
+
+
+## Релизы компонентов
+
+[Component releases](../.github/workflows/releases.yaml) запускается только по
+тегам пяти компонентов или вручную с существующим тегом. В нём последовательные
+Validate → Build → Publish и общий Summary; это отдельный поток от независимых
+платформенных проверок по путям. Подпись, состав файлов, Secrets и откат описаны
+в [руководстве релизов](releases.md). Он не выполняет автоматический деплой.
+
+[Telegram bot](../.github/workflows/telegram-bot.yaml) проверяет изменения
+`infra/telegram-bot/**`: Go format/vet/race, сборку, runtime Go 1.23.12 и vendored ZIP.
+Общие изменения `scripts/ci/**` запускают и этот workflow.
+Дополнительная проверка релизной обвязки:
+
+```sh
+python3 -m unittest discover -s scripts/release -p 'test_*.py' -v
+```

@@ -1,0 +1,157 @@
+name: Telegram monitoring bot
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - infra/telegram-bot/**
+      - scripts/ci/**
+      - .github/actions/ci-report/**
+      - .github/workflows/telegram-bot.yaml
+  pull_request:
+    paths:
+      - infra/telegram-bot/**
+      - scripts/ci/**
+      - .github/actions/ci-report/**
+      - .github/workflows/telegram-bot.yaml
+  workflow_dispatch: null
+permissions:
+  contents: read
+concurrency:
+  group: telegram-bot-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version-file: infra/telegram-bot/tools/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: Compile Go packages
+        id: compile
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py compile go build ./...
+      - name: Package Cloud Function
+        id: package
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py package sh scripts/package.sh
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: build
+          steps: ${{ toJSON(steps) }}
+  checkers:
+    name: Checkers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version-file: infra/telegram-bot/tools/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: gofumpt and whitespace
+        id: format
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py format sh scripts/format.sh --check
+      - name: gofmt
+        id: gofmt
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py gofmt sh -c 'files=$(gofmt -l .); if [ -n
+          "$files" ]; then printf "%s\n" "$files"; exit 1; fi'
+      - name: Go vet
+        id: vet
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py vet go vet ./...
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: checkers
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version-file: infra/telegram-bot/tools/go.mod
+          cache: false
+      - name: Verify Go toolchain
+        id: ready
+        run: python3 scripts/ci/run.py ready go version
+      - name: Go tests with race detector
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        run: python3 ../../scripts/ci/run.py unit go test -race ./...
+      - name: Go 1.23 runtime compatibility
+        id: compatibility
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        working-directory: infra/telegram-bot
+        env:
+          GOTOOLCHAIN: go1.23.12
+        run: python3 ../../scripts/ci/run.py compatibility go test ./...
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: tests
+          steps: ${{ toJSON(steps) }}
+  summary:
+    name: Run summary
+    if: always()
+    needs:
+      - build
+      - checkers
+      - tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Publish results and failure excerpts
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci/report.py workflow

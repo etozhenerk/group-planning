@@ -102,6 +102,10 @@ jobs:
         id: reports
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py reports python3 -m unittest discover -s scripts/ci -p "test_*.py" -v
+      - name: Release integrity and signing failure tests
+        id: releases
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py releases python3 -m unittest discover -s scripts/release -p "test_*.py" -v
       - name: Platform trigger isolation
         id: routing
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}

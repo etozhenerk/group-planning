@@ -27,7 +27,7 @@ const matchesPath = (file, pattern) => {
 
 const triggered = (files, event) => [...workflows]
   .filter(([, workflow]) => files.some((file) =>
-    workflow.on[event].paths.some((pattern) => matchesPath(file, pattern))))
+    (workflow.on[event]?.paths ?? []).some((pattern) => matchesPath(file, pattern))))
   .map(([name]) => name)
   .sort();
 
@@ -43,7 +43,9 @@ const cases = [
   ['Node dependency lock', ['package-lock.json'], ['contracts', 'repository', 'web']],
   ['Android workflow', ['.github/workflows/android.yaml'], ['android', 'repository']],
   ['iOS workflow', ['.github/workflows/ios.yaml'], ['ios', 'repository']],
-  ['Common reporter', ['scripts/ci/report.py'], ['android', 'backend', 'contracts', 'ios', 'repository', 'web']],
+  ['Common reporter', ['scripts/ci/report.py'], ['android', 'backend', 'contracts', 'ios', 'repository', 'telegram-bot', 'web']],
+  ['Telegram bot', ['infra/telegram-bot/handler.go'], ['telegram-bot']],
+  ['Telegram workflow', ['.github/workflows/telegram-bot.yaml'], ['repository', 'telegram-bot']],
 ];
 
 for (const event of ['push', 'pull_request']) {
@@ -65,7 +67,7 @@ test('Every workflow supports manual runs and reports all stages after failures'
 });
 
 test('Platform build, checkers and tests are independent; failures are never ignored', () => {
-  for (const name of ['web', 'backend', 'ios', 'android']) {
+  for (const name of ['web', 'backend', 'ios', 'android', 'telegram-bot']) {
     for (const stage of ['build', 'checkers', 'tests']) {
       const job = workflows.get(name).jobs[stage];
       assert.ok(job, `${name}/${stage}`);
@@ -76,4 +78,16 @@ test('Platform build, checkers and tests are independent; failures are never ign
       for (const step of job.steps) assert.equal(step['continue-on-error'], undefined);
     }
   }
+});
+
+
+test('Release tags route exactly five independent components without branch deployment', () => {
+  const release = workflows.get('releases');
+  assert.deepEqual(release.on.push.tags, ['backend/v*', 'web/v*', 'monitoring/v*', 'android/v*', 'ios/v*']);
+  assert.equal(release.on.push.branches, undefined);
+  assert.equal(release.on.pull_request, undefined);
+  assert.equal(release.permissions.contents, 'read');
+  assert.equal(release.jobs.publish.permissions.contents, 'write');
+  assert.deepEqual(release.jobs.publish.needs, ['metadata', 'build']);
+  assert.equal(release.concurrency['cancel-in-progress'], false);
 });

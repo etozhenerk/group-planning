@@ -48,6 +48,7 @@ docs/                Продукт, архитектура, дизайн и п�
 openspec/specs/      Спецификации продукта
 openspec/changes/    Проектирование, задачи и отчёты изменений
 .agents/skills/      Навыки агента
+infra/               Yandex Cloud, мониторинг и Telegram-уведомления
 scripts/             Инструменты репозитория
 .github/workflows/   CI
 ```
@@ -74,3 +75,5 @@ scripts/             Инструменты репозитория
 - [Соглашения кода и проверки](docs/development.md)
 - [CI: этапы, фильтры платформ и отчёты](docs/ci.md)
 - [Работа с агентом и OpenSpec](docs/workflow.md)
+- [Независимые релизы и подпись приложений](docs/releases.md)
+- [Метрики и уведомления эксплуатации](infra/monitoring/metrics.md)
