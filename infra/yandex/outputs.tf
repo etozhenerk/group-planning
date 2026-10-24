@@ -14,3 +14,10 @@ output "disk_id" {
 output "runtime_service_account_id" {
   value = yandex_iam_service_account.runtime.id
 }
+output "operations_bucket" {
+  value = yandex_storage_bucket.operations.bucket
+}
+
+output "configuration_secret_ids" {
+  value = { for name, secret in yandex_lockbox_secret.configuration : name => secret.id }
+}

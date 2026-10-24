@@ -1,0 +1,153 @@
+{
+  "operations": {
+    "title": "somewhere — Эксплуатация",
+    "description": "Пробелы в графике не равны нулю. Пять алертов используют No data при потере метрик и email владельца. Облачный бюджет: 3 950 ₽/месяц, пороги 50/80/100%; фактические расходы смотреть в Billing. Общий бюджет с внешними платежами 5 000 ₽. Логи приложения и независимая HTTPS-проверка ещё не подключены.",
+    "charts": [
+      {
+        "title": "Очередь Unified Agent",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.backlog\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}"
+        ]
+      },
+      {
+        "title": "Буфер агента, байты",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.total_storages_size\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}"
+        ]
+      },
+      {
+        "title": "Ошибки агента",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.errors\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.disk_io_ops_failed\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}"
+        ]
+      },
+      {
+        "title": "Потеря телеметрии",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.metrics_lost\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"ua.messages_lost\",service=\"custom\",host=\"__INSTANCE_ID__\",scope=\"health\"}"
+        ]
+      }
+    ]
+  },
+  "overview": {
+    "title": "somewhere — Обзор",
+    "description": "Инфраструктура подготовлена. Приложение ещё не выпущено: HTTP отвечает 503. RPS, p95, 5xx, worker и внешняя HTTPS-проверка появятся после постоянного адаптера БД и домена. Здоровая PostgreSQL не означает доступность приложения.",
+    "charts": [
+      {
+        "title": "PostgreSQL доступна (1 / 0)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_up\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Возраст успешной копии, часы",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_backup_age_seconds\",service=\"custom\",host=\"__INSTANCE_ID__\"} / 3600"
+        ]
+      }
+    ]
+  },
+  "postgres": {
+    "title": "somewhere — PostgreSQL",
+    "description": "PostgreSQL 16 на Unix socket; агрегаты без SQL и персональных данных. Максимум 30 соединений. Прикладные ожидания пула и worker пока не подключены. Копия ежедневно в 03:00 UTC + до 10 минут; Warning >25 ч, Alarm >26 ч.",
+    "charts": [
+      {
+        "title": "Доступность (1 / 0)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_up\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Соединения к кластеру, всего",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_connections\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Размер БД, МиБ",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_database_bytes\",service=\"custom\",host=\"__INSTANCE_ID__\"} / 1048576"
+        ]
+      },
+      {
+        "title": "Возраст копии, часы",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_backup_age_seconds\",service=\"custom\",host=\"__INSTANCE_ID__\"} / 3600"
+        ]
+      },
+      {
+        "title": "Commit / rollback, накопленные счётчики",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_commits_total\",service=\"custom\",host=\"__INSTANCE_ID__\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_rollbacks_total\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Deadlock, накопленный счётчик",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_postgres_deadlocks_total\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      }
+    ]
+  },
+  "vm": {
+    "title": "somewhere — ВМ",
+    "description": "2 vCPU с гарантией 50%, 4 ГБ RAM. CPU нормализован к гарантированной доле и может превышать 100%. Диск стартует с 10 ГБ; расширить при остатке <3 ГБ либо занятости >70%. Сеть и I/O показаны отдельно от заполнения диска.",
+    "charts": [
+      {
+        "title": "CPU, % гарантированной доли",
+        "queries": [
+          "200 * {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.system.UsefulTime\",service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"} / ({project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.system.UsefulTime\",service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"} + {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.system.IdleTime\",service=\"custom\",host=\"__INSTANCE_ID__\",cpu=\"-\"})"
+        ]
+      },
+      {
+        "title": "RAM, % (без доступного cache)",
+        "queries": [
+          "100 * ({project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.memory.MemTotal\",service=\"custom\",host=\"__INSTANCE_ID__\"} - {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.memory.MemAvailable\",service=\"custom\",host=\"__INSTANCE_ID__\"}) / {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.memory.MemTotal\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Свободное место /, ГиБ",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.filesystem.FreeB\",service=\"custom\",host=\"__INSTANCE_ID__\",mountpoint=\"/\"} / 1073741824"
+        ]
+      },
+      {
+        "title": "Занятые inode /, %",
+        "queries": [
+          "100 * ({project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.filesystem.INodeTotal\",service=\"custom\",host=\"__INSTANCE_ID__\",mountpoint=\"/\"} - {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.filesystem.INodeFree\",service=\"custom\",host=\"__INSTANCE_ID__\",mountpoint=\"/\"}) / {project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.filesystem.INodeTotal\",service=\"custom\",host=\"__INSTANCE_ID__\",mountpoint=\"/\"}"
+        ]
+      },
+      {
+        "title": "Диск: чтение и запись, байт/с",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.ReadBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.WriteBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}"
+        ]
+      },
+      {
+        "title": "Диск: операции/с",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.Reads\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.Writes\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}"
+        ]
+      },
+      {
+        "title": "Диск: ожидание чтения/записи, мс",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.ReadWaitMillisecAvg\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.io.Disks.WriteWaitMillisecAvg\",service=\"custom\",host=\"__INSTANCE_ID__\",disk=\"vda\"}"
+        ]
+      },
+      {
+        "title": "Сеть eth0: RX / TX, байт/с",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.net.Ifs.RxBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",intf=\"eth0\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.net.Ifs.TxBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",intf=\"eth0\"}"
+        ]
+      }
+    ]
+  }
+}

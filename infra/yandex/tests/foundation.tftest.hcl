@@ -2,7 +2,7 @@ mock_provider "yandex" {
   mock_data "yandex_vpc_subnet" {
     defaults = {
       network_id = "test-network"
-      zone       = "ru-central1-a"
+      zone       = "ru-central1-d"
     }
   }
 }
@@ -25,7 +25,7 @@ run "foundation_plan" {
       yandex_compute_instance.app.resources[0].core_fraction == 50 &&
       yandex_compute_instance.app.resources[0].memory == 4 &&
       !yandex_compute_instance.app.scheduling_policy[0].preemptible &&
-      yandex_compute_disk.boot.size == 40 &&
+      yandex_compute_disk.boot.size == 10 &&
       yandex_compute_disk.boot.type == "network-ssd"
     )
     error_message = "Конфигурация должна соответствовать принятой смете A."
@@ -50,6 +50,29 @@ run "foundation_plan" {
     )
     error_message = "Нельзя удалять диск вместе с ВМ или включать парольный/root-вход."
   }
+
+  assert {
+    condition = (
+      !one(yandex_storage_bucket.operations.anonymous_access_flags).read &&
+      !one(yandex_storage_bucket.operations.anonymous_access_flags).list &&
+      !yandex_storage_bucket.operations.force_destroy &&
+      yandex_storage_bucket.operations.disabled_statickey_auth &&
+      yandex_storage_bucket.operations.lifecycle_rule[0].expiration[0].days == 7 &&
+      yandex_storage_bucket_iam_binding.backup_upload.role == "storage.uploader" &&
+      yandex_resourcemanager_folder_iam_member.metrics_write.role == "monium.metrics.writer"
+    )
+    error_message = "Копии должны быть приватными, с IAM-доступом и retention; runtime не получает права администратора."
+  }
+}
+
+run "reject_disk_below_image_minimum" {
+  command = plan
+
+  variables {
+    boot_disk_gib = 8
+  }
+
+  expect_failures = [var.boot_disk_gib]
 }
 
 run "reject_public_ssh" {
@@ -76,7 +99,7 @@ run "reject_wrong_zone" {
   command = plan
 
   variables {
-    zone = "ru-central1-d"
+    zone = "ru-central1-a"
   }
 
   expect_failures = [yandex_compute_instance.app]

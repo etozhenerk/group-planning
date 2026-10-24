@@ -9,9 +9,20 @@ variable "folder_id" {
 }
 
 variable "zone" {
-  description = "Зона с подтверждённой квотой SSD не менее 40 ГБ."
+  description = "Зона с подтверждённой квотой SSD для boot_disk_gib."
   type        = string
-  default     = "ru-central1-a"
+  default     = "ru-central1-d"
+}
+
+variable "boot_disk_gib" {
+  description = "SSD: 10 ГБ для старта; расширение до 40 ГБ после проверки свободного места и плана без замены диска."
+  type        = number
+  default     = 10
+
+  validation {
+    condition     = var.boot_disk_gib >= 10 && var.boot_disk_gib <= 40 && floor(var.boot_disk_gib) == var.boot_disk_gib
+    error_message = "Нужен целый размер 10–40 ГБ: минимум образа Ubuntu и предел принятой сметы."
+  }
 }
 
 variable "subnet_id" {

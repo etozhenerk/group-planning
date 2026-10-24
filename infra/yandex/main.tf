@@ -68,7 +68,7 @@ resource "yandex_compute_disk" "boot" {
   zone      = var.zone
   image_id  = var.image_id
   type      = "network-ssd"
-  size      = 40
+  size      = var.boot_disk_gib
   labels    = local.labels
 
   lifecycle {
