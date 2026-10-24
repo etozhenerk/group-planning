@@ -16,6 +16,7 @@ internal fun OnboardingControls(
     page: Int,
     enabled: Boolean,
     choose: (Int) -> Unit,
+    busy: Boolean = false,
     next: () -> Unit,
 ) {
     val expanded = LocalDensity.current.fontScale > 1.3f
@@ -26,7 +27,7 @@ internal fun OnboardingControls(
     ) {
         OnboardingProgress(page, enabled, choose)
         if (expanded) {
-            OnboardingNextButton(page == 4, enabled, expanded = true, onClick = next)
+            OnboardingNextButton(page == 4, enabled, expanded = true, busy = busy, onClick = next)
             OnboardingQuietButton("Назад", page > 0, enabled, back = true) { choose(page - 1) }
         } else {
             Row(
@@ -35,7 +36,7 @@ internal fun OnboardingControls(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 OnboardingQuietButton("Назад", page > 0, enabled, back = true) { choose(page - 1) }
-                OnboardingNextButton(page == 4, enabled, onClick = next)
+                OnboardingNextButton(page == 4, enabled, busy = busy, onClick = next)
             }
         }
     }

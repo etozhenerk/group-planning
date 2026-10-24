@@ -79,12 +79,21 @@ func (p *Provider) Verify(ctx context.Context, code, verifier string) (identity.
 		return identity.Profile{}, identity.ErrUnavailable
 	}
 
-	request, err = http.NewRequestWithContext(ctx, http.MethodGet, "https://login.yandex.ru/info?format=json", nil)
+	return p.VerifyToken(ctx, token.AccessToken)
+}
+
+// VerifyToken checks an SDK token with Yandex; client-provided profile data is never trusted.
+func (p *Provider) VerifyToken(ctx context.Context, token string) (identity.Profile, error) {
+	if token == "" || len(token) > 4096 || strings.ContainsAny(token, "\r\n\t ") {
+		return identity.Profile{}, identity.ErrInvalidAttempt
+	}
+
+	request, err := http.NewRequestWithContext(ctx, http.MethodGet, "https://login.yandex.ru/info?format=json", nil)
 	if err != nil {
 		return identity.Profile{}, identity.ErrUnavailable
 	}
 
-	request.Header.Set("Authorization", "OAuth "+token.AccessToken)
+	request.Header.Set("Authorization", "OAuth "+token)
 	request.Header.Set("Accept", "application/json")
 	var profile struct {
 		ID          string `json:"id"`

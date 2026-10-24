@@ -52,6 +52,10 @@ func (fakeAuthProvider) Verify(context.Context, string, string) (identity.Profil
 	return identity.Profile{Subject: "123", DisplayName: "Лена"}, nil
 }
 
+func (fakeAuthProvider) VerifyToken(context.Context, string) (identity.Profile, error) {
+	return identity.Profile{Subject: "123", DisplayName: "Лена"}, nil
+}
+
 func TestAuthOpenAPIResponses(t *testing.T) {
 	store := seededStore(t)
 	var logs safeAuthLogs
@@ -190,6 +194,38 @@ func TestAuthOpenAPIResponses(t *testing.T) {
 
 	if err := json.Unmarshal(data, &profile); err != nil || profile.CSRFToken == nil {
 		t.Fatal("missing profile/CSRF", err)
+	}
+
+	for _, kind := range []string{"ios", "android"} {
+		verifier := strings.Repeat("v", 43)
+		sum := sha256.Sum256([]byte(verifier))
+		body := map[string]any{
+			"client_kind": kind, "return_context": map[string]string{"kind": "home"},
+			"app_challenge": base64.RawURLEncoding.EncodeToString(sum[:]),
+		}
+		response := request(anonymous, "POST", "/api/v1/auth/yandex/start", "/api/v1/auth/yandex/start", body, nil, 200)
+		var attempt authStartedResponse
+		if err := json.NewDecoder(response.Body).Decode(&attempt); err != nil {
+			t.Fatal(err)
+		}
+
+		exchange := map[string]string{"attempt_id": attempt.AttemptID, "app_verifier": verifier, "oauth_token": "private-sdk-token"}
+		response = request(anonymous, "POST", "/api/v1/auth/mobile/sdk/exchange", "/api/v1/auth/mobile/sdk/exchange", exchange, nil, 200)
+		var session exchangeResponse
+		if err := json.NewDecoder(response.Body).Decode(&session); err != nil {
+			t.Fatal(err)
+		}
+
+		response = request(anonymous, "GET", "/api/v1/me", "/api/v1/me", nil, map[string]string{"Authorization": "Bearer " + session.SessionToken}, 200)
+		var sdkProfile meResponse
+		if err := json.NewDecoder(response.Body).Decode(&sdkProfile); err != nil || sdkProfile.User.ID != profile.User.ID {
+			t.Fatal("SDK identity differs from web", err)
+		}
+
+		request(anonymous, "POST", "/api/v1/auth/mobile/sdk/exchange", "/api/v1/auth/mobile/sdk/exchange", exchange, nil, 400)
+		if strings.Contains(logs.String(), "private-sdk-token") || strings.Contains(logs.String(), session.SessionToken) {
+			t.Fatal("SDK secrets in logs")
+		}
 	}
 
 	if err := store.View(context.Background(), func(reader meetings.Reader) error {

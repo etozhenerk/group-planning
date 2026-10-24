@@ -59,6 +59,7 @@ sh scripts/check.sh
 sh scripts/test-device.sh
 sh scripts/test-ui.sh
 sh scripts/test-ui.sh calendar
+sh scripts/test-ui.sh auth
 ```
 
 `check.sh` выполняет чистую сборку обеих конфигураций, проверку Kotlin-оформления,
@@ -107,7 +108,7 @@ adb -s <serial> shell am start -n dev.groupplanning.android/.MainActivity
 По договорённости используется **только один Android-эмулятор**. Сначала проверь
 `adb devices`, затем список существующих AVD. Переиспользуй уже запущенный;
 если его нет, запускай один существующий. Не создавай клоны и не сбрасывай данные.
-На текущем компьютере доступен `Pixel_XL_API_36`. Проверка обычной сборки
+Проверка обычной сборки
 не требует запуска эмулятора. `test-device.sh` использует единственное online
 устройство или явный ANDROID_SERIAL и отказывается работать при нескольких
 эмуляторах. `test-device.sh` проверяет хранилище, `test-ui.sh` — интерфейс:
@@ -194,3 +195,22 @@ AES-GCM key остаётся в Android Keystore. Cookies, redirects, disk cache
 с проверкой поведения на новой платформе, а не вслед за обновлением образа runner.
 Проверка `ExpiredTargetSdkVersion` и остальные предупреждения Lint блокируют
 сборку. Baseline и подавления ошибок кода не используются.
+
+## Локальный вход через Яндекс
+
+`npm run auth:local` из корня записывает HTTPS API в `local.properties`.
+Официальный LoginSDK 3.1.3 подключён из Maven Central и использует Activity Result.
+Client ID берётся из `somewhere.yandex.client.id` или `-PsomewhereYandexClientId`,
+по умолчанию — публичный ID somewhere. Секрет OAuth в APK не включается.
+Для SDK в кабинете Яндекса нужны package name и SHA-256 устанавливаемой подписи;
+[настройки OAuth](../../backend/docs/auth.md#регистрация-мобильных-платформ--loginsdk).
+
+Для локальной проверки подходит ARM-образ Android 36 с аппаратной графикой и
+компактным экраном. Одновременно запускай только один AVD. Если Android 37 сообщает
+`forcing software rendering for GLES`, используй образ 36: смена модели без смены
+образа не устраняет программный рендеринг.
+
+`sh scripts/test-ui.sh auth` проверяет ошибку входа и сохранение приглашения
+в QA-приложении без реального аккаунта. Полный вход в обычной сборке проверяется
+отдельно. Если Chrome при первом запуске предлагает Google-аккаунт или сохранение
+пароля, это настройка браузера: для somewhere нужен только вход на странице Яндекса.

@@ -4,6 +4,8 @@ import android.content.Context
 import dev.groupplanning.android.BuildConfig
 import dev.groupplanning.android.data.api.ApiClient
 import dev.groupplanning.android.data.api.ApiOrigin
+import dev.groupplanning.android.data.auth.FileAuthAttemptStorage
+import dev.groupplanning.android.data.auth.YandexAuthRepository
 import dev.groupplanning.android.data.drafts.DraftRepository
 import dev.groupplanning.android.data.drafts.FileDraftStorage
 import dev.groupplanning.android.data.links.FileInvitationStorage
@@ -30,6 +32,7 @@ internal class ClientRuntime(
     val invitations: InvitationRepository?,
     val candidate: StoredSession? = null,
     val feeds: FeedRepository? = null,
+    val auth: YandexAuthRepository? = null,
 ) {
     val meetings: MeetingRepository? = sessions?.let(::MeetingRepository)
 
@@ -80,6 +83,18 @@ internal class ClientRuntime(
                     null
                 },
                 candidate = candidate,
+                auth = if (api != null && sessions != null) {
+                    YandexAuthRepository(
+                        api,
+                        sessions,
+                        FileAuthAttemptStorage(
+                            File(context.noBackupFilesDir, "auth-$key.bin"),
+                            SessionCipher(AndroidSessionKey("somewhere.auth.$key"), identity),
+                        ),
+                    )
+                } else {
+                    null
+                },
                 feeds = sessions?.let {
                     FeedRepository(it, outbox)
                 },

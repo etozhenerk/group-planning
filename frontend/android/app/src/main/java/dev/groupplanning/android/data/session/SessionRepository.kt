@@ -32,6 +32,11 @@ internal class SessionRepository(
     private val gate = SessionGate(storage, io, clearPrivate)
     val state: StateFlow<ClientSnapshot> = gate.snapshot.asStateFlow()
 
+    suspend fun accept(candidate: StoredSession) {
+        gate.locked { storage { save(candidate) } }
+        restore()
+    }
+
     suspend fun restore(candidate: StoredSession? = null): Unit = coroutineScope {
         val owner = currentCoroutineContext().job
         val version = gate.locked {

@@ -96,3 +96,23 @@ func TestProviderRejectsNetworkRedirectAndInvalidProfile(t *testing.T) {
 		})
 	}
 }
+
+func TestSDKTokenRequiresOurClientAndVerifiedSubject(t *testing.T) {
+	for _, client := range []string{"client", "other-client"} {
+		p := New("client", "secret", "https://somewhere.example/callback", transportFunc(func(r *http.Request) (*http.Response, error) {
+			if r.URL.String() != "https://login.yandex.ru/info?format=json" || r.Header.Get("Authorization") != "OAuth sdk-token" {
+				t.Fatal("SDK token sent to unexpected endpoint")
+			}
+
+			return response(200, `{"id":"123","client_id":"`+client+`","display_name":"Лена"}`), nil
+		}))
+		profile, err := p.VerifyToken(context.Background(), "sdk-token")
+		if client == "client" && (err != nil || profile.Subject != "123") {
+			t.Fatal("valid SDK token rejected", err)
+		}
+
+		if client != "client" && err == nil {
+			t.Fatal("foreign client token accepted")
+		}
+	}
+}

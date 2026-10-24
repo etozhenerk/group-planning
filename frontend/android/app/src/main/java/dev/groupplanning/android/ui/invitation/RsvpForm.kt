@@ -5,15 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -35,8 +29,9 @@ internal fun RsvpForm(
     authenticated: Boolean,
     choose: (RsvpAnswer) -> Unit,
     save: () -> Unit,
+    authenticating: Boolean = false,
+    signIn: () -> Unit = {},
 ) {
-    var loginNotice by remember { mutableStateOf(false) }
     Surface(shape = RoundedCornerShape(24.dp), color = Palette.surface) {
         Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(
@@ -92,18 +87,12 @@ internal fun RsvpForm(
                 }
             } else {
                 Text(stringResource(R.string.invitation_login_hint), color = Palette.muted)
-                ActionButton(stringResource(R.string.invitation_login)) { loginNotice = true }
+                ActionButton(
+                    stringResource(R.string.invitation_login),
+                    busy = authenticating,
+                    onClick = signIn,
+                )
             }
         }
-    }
-    if (loginNotice) {
-        AlertDialog(
-            onDismissRequest = { loginNotice = false },
-            title = { Text(stringResource(R.string.login_unavailable)) },
-            text = { Text(stringResource(R.string.invitation_login_unavailable_hint)) },
-            confirmButton = {
-                TextButton({ loginNotice = false }) { Text(stringResource(R.string.understood)) }
-            },
-        )
     }
 }

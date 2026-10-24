@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -102,7 +102,7 @@ func TestAndroidFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
-	if scope == "calendar" {
+	if scope == "calendar" || scope == "auth" {
 		return
 	}
 

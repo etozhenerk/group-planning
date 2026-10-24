@@ -37,7 +37,7 @@ class InvitationUiTests {
             compose.onAllNodesWithText("Лена").assertCountEquals(0)
             fixture.screenshot("invitation-anonymous")
             compose.onNodeWithText("Войти и ответить").performScrollTo().performClick()
-            compose.onNodeWithText("Вход ещё не подключён").assertIsDisplayed()
+            fixture.waitText("Не удалось войти")
             compose.onNodeWithText("Понятно").performClick()
             activity.recreate()
             fixture.waitText("Настолки у Саши")

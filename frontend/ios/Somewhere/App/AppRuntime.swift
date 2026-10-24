@@ -4,6 +4,8 @@ import Observation
 @MainActor @Observable
 final class AppRuntime {
     let session: SessionStore?
+    let signIn: YandexSignIn?
+    @ObservationIgnored private var pendingAuthURL: URL?
     let drafts: DraftRepository
     let api: APIClient?
     let linkScheme: String
@@ -19,9 +21,10 @@ final class AppRuntime {
     init(
         session: SessionStore?, drafts: DraftRepository, credential: StoredSession? = nil,
         api: APIClient? = nil, links: PendingInvitationStore? = nil,
-        linkScheme: String? = nil
+        linkScheme: String? = nil, signIn: YandexSignIn? = nil
     ) {
         self.session = session
+        self.signIn = signIn
         self.api = api ?? session?.api
         self.links =
             links
@@ -47,10 +50,35 @@ final class AppRuntime {
         } else {
             await session?.restore()
         }
-        if !Task.isCancelled { ready = true }
+        if !Task.isCancelled {
+            ready = true
+            if let url = pendingAuthURL {
+                pendingAuthURL = nil
+                _ = signIn?.resume(url)
+            }
+        }
+    }
+
+    func startSignIn() {
+        if case .token(let token) = invitation {
+            signIn?.start(.invitation(token))
+        } else {
+            signIn?.start(.home)
+        }
+    }
+
+    func completeSignIn() {
+        if case .invitation(let token) = signIn?.completedContext {
+            invitation = .token(token)
+            persist(token)
+        }
     }
 
     func open(_ url: URL) {
+        if signIn?.matches(url) == true {
+            if ready { _ = signIn?.resume(url) } else { pendingAuthURL = url }
+            return
+        }
         guard let token = InvitationURL.token(from: url, origin: api?.origin, scheme: linkScheme)
         else { return }
         invitation = .token(token)
@@ -95,9 +123,17 @@ final class AppRuntime {
             else { return AppRuntime(session: nil, drafts: drafts) }
             let api = APIClient(origin: origin)
             let credentials = CredentialStore(storage: KeychainCredentialStorage(origin: origin))
-            return AppRuntime(
-                session: SessionStore(
-                    api: api, credentials: credentials, privateData: PrivateData()), drafts: drafts)
+            let session = SessionStore(
+                api: api, credentials: credentials, privateData: PrivateData())
+            let clientID =
+                Bundle.main.object(forInfoDictionaryKey: "SomewhereYandexClientID") as? String ?? ""
+            let webOnly =
+                Bundle.main.object(forInfoDictionaryKey: "SomewhereYandexWebOnly") as? String
+                == "YES"
+            let signIn = YandexSignIn(
+                api: api, session: session, storage: KeychainAuthAttemptStorage(origin: origin),
+                provider: YandexLoginAdapter(clientID: clientID, webOnly: webOnly))
+            return AppRuntime(session: session, drafts: drafts, signIn: signIn)
         #endif
     }
 }

@@ -4,10 +4,17 @@ struct InvitationScreen: View {
     @State private var owner: InvitationOwner
     @Environment(\.scenePhase) private var phase
     var warning: String?
+    var authenticating: Bool
+    var signIn: () -> Void
 
-    init(target: InvitationTarget, api: APIClient, session: SessionStore?, warning: String? = nil) {
+    init(
+        target: InvitationTarget, api: APIClient, session: SessionStore?, warning: String? = nil,
+        authenticating: Bool = false, signIn: @escaping () -> Void = {}
+    ) {
         _owner = State(initialValue: InvitationOwner(target: target, api: api, session: session))
         self.warning = warning
+        self.authenticating = authenticating
+        self.signIn = signIn
     }
 
     var body: some View {
@@ -53,7 +60,7 @@ struct InvitationScreen: View {
                     if owner.organizer {
                         OrganizerInvitationView(owner: owner)
                     } else {
-                        RSVPFormView(owner: owner)
+                        RSVPFormView(owner: owner, authenticating: authenticating, signIn: signIn)
                     }
                     if let problem = owner.problem {
                         Text(problem).foregroundStyle(AppPalette.error)

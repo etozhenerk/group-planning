@@ -16,7 +16,6 @@ enum UITestBootstrap {
         let directory = URL.applicationSupportDirectory.appendingPathComponent(
             "UITestDrafts/" + scenario)
         let drafts = DraftRepository(storage: FileDraftStorage(directory: directory))
-        guard scenario != "onboarding" else { return AppRuntime(session: nil, drafts: drafts) }
         do {
             let file = URL.temporaryDirectory.appendingPathComponent("ui-fixture.json")
             let config = try JSONDecoder().decode(Config.self, from: Data(contentsOf: file))
@@ -33,8 +32,16 @@ enum UITestBootstrap {
             let links = PendingInvitationStore(
                 file: URL.applicationSupportDirectory
                     .appendingPathComponent("UITestLinks/" + scenario))
-            if scenario == "invite-anonymous" {
-                return AppRuntime(session: nil, drafts: drafts, api: api, links: links)
+            if scenario == "invite-anonymous" || scenario == "onboarding" {
+                let session = SessionStore(
+                    api: api, credentials: credentials, privateData: PrivateData())
+                let signIn = YandexSignIn(
+                    api: api, session: session,
+                    storage: KeychainAuthAttemptStorage(
+                        origin: origin, service: "dev.groupplanning.ui.auth." + scenario),
+                    provider: UITestLoginProvider())
+                return AppRuntime(
+                    session: session, drafts: drafts, api: api, links: links, signIn: signIn)
             }
             let credentialCase =
                 scenario == "invite-rsvp"

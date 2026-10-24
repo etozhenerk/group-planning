@@ -29,7 +29,12 @@ import dev.groupplanning.android.ui.components.AppIcon
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun InvitationScreen(model: InvitationViewModel, back: () -> Unit) {
+internal fun InvitationScreen(
+    model: InvitationViewModel,
+    back: () -> Unit,
+    authenticating: Boolean = false,
+    signIn: () -> Unit = {},
+) {
     val state by model.state.collectAsStateWithLifecycle()
     val snapshot by model.snapshot.collectAsStateWithLifecycle()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -85,7 +90,14 @@ internal fun InvitationScreen(model: InvitationViewModel, back: () -> Unit) {
             ) {
                 details?.let {
                     InvitationFacts(it.preview)
-                    RsvpForm(state, authenticated, model::choose, model::save)
+                    RsvpForm(
+                        state,
+                        authenticated,
+                        model::choose,
+                        model::save,
+                        authenticating,
+                        signIn,
+                    )
                 }
                 state.issue?.let {
                     InvitationProblem(it, !state.loading && !state.saving, model::reload)

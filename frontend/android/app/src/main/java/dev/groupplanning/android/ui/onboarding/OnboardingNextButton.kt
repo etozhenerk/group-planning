@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -37,8 +41,10 @@ internal fun OnboardingNextButton(
     final: Boolean,
     enabled: Boolean,
     expanded: Boolean = false,
+    busy: Boolean = false,
     onClick: () -> Unit,
 ) {
+    val busyLabel = stringResource(R.string.auth_busy)
     val style = TextStyle(fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
     val measure = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -68,35 +74,50 @@ internal fun OnboardingNextButton(
     ) {
         Surface(
             onClick = onClick,
-            enabled = enabled,
+            enabled = enabled && !busy,
             shape = CircleShape,
             color = background,
             contentColor = foreground,
             modifier = if (expanded) Modifier.fillMaxWidth() else Modifier,
         ) {
-            Row(
-                Modifier.padding(horizontal = 23.dp, vertical = 16.dp)
-                    .clearAndSetSemantics {
-                        contentDescription = if (final) "Попробовать" else "Далее"
-                    },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
-            ) {
-                Box(Modifier.width(short + (long - short) * progress).height(titleHeight)) {
-                    Text(
-                        "Далее",
-                        Modifier.requiredWidth(short).align(Alignment.Center).alpha(
-                            1 - progress,
-                        ),
-                        style = style,
-                    )
-                    Text(
-                        "Попробовать",
-                        Modifier.requiredWidth(long).align(Alignment.Center).alpha(progress),
-                        style = style,
+            Box(contentAlignment = Alignment.Center) {
+                Row(
+                    Modifier.alpha(
+                        if (busy) 0f else 1f,
+                    ).padding(horizontal = 23.dp, vertical = 16.dp)
+                        .clearAndSetSemantics {
+                            contentDescription = if (final) "Попробовать" else "Далее"
+                            stateDescription = if (busy) busyLabel else ""
+                        },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        12.dp,
+                        Alignment.CenterHorizontally,
+                    ),
+                ) {
+                    Box(Modifier.width(short + (long - short) * progress).height(titleHeight)) {
+                        Text(
+                            "Далее",
+                            Modifier.requiredWidth(short).align(Alignment.Center).alpha(
+                                1 - progress,
+                            ),
+                            style = style,
+                        )
+                        Text(
+                            "Попробовать",
+                            Modifier.requiredWidth(long).align(Alignment.Center).alpha(progress),
+                            style = style,
+                        )
+                    }
+                    AppIcon(R.drawable.ic_arrow, tint = foreground)
+                }
+                if (busy) {
+                    CircularProgressIndicator(
+                        Modifier.size(22.dp),
+                        color = foreground,
+                        strokeWidth = 2.dp,
                     )
                 }
-                AppIcon(R.drawable.ic_arrow, tint = foreground)
             }
         }
     }

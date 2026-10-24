@@ -31,6 +31,11 @@ final class SessionStore {
 
     func establish(_ credential: StoredSession) async { await restore(candidate: credential) }
 
+    func accept(_ credential: StoredSession) async throws {
+        try await credentials.save(credential, generation: generation)
+        await restore()
+    }
+
     private func restore(candidate: StoredSession?) async {
         reset()
         let version = generation

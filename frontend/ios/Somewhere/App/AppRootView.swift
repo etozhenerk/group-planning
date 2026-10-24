@@ -24,7 +24,8 @@ struct AppRootView: View {
                     text: "Проверьте соединение и попробуйте ещё раз.",
                     retry: { runtime.restoreID = UUID() })
             } else {
-                OnboardingView()
+                OnboardingView(
+                    authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -42,12 +43,20 @@ struct AppRootView: View {
         }
         .task(id: runtime.restoreID) { await runtime.restore() }
         .onOpenURL { runtime.open($0) }
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+            if let url = activity.webpageURL { runtime.open(url) }
+        }
+        .onChange(of: runtime.signIn?.completedContext) { runtime.completeSignIn() }
+        .modifier(
+            SignInProblemModifier(signIn: runtime.signIn, active: runtime.invitation == nil)
+        )
         .sheet(item: presentedInvitation, onDismiss: runtime.invitationDidDismiss) { target in
             NavigationStack {
                 if let api = runtime.api {
                     InvitationRouteView(
                         target: target, api: api, session: runtime.session,
-                        warning: runtime.linkWarning, close: runtime.closeInvitation)
+                        warning: runtime.linkWarning, close: runtime.closeInvitation,
+                        authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn)
                 } else {
                     StatusView(
                         title: "Сервер ещё не настроен",
@@ -60,7 +69,9 @@ struct AppRootView: View {
                         }
                     }
                 }
-            }.preferredColorScheme(.dark).presentationDragIndicator(.visible)
+            }
+            .modifier(SignInProblemModifier(signIn: runtime.signIn))
+            .preferredColorScheme(.dark).presentationDragIndicator(.visible)
         }
     }
 }

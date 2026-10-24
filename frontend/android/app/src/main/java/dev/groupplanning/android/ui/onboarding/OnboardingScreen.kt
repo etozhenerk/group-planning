@@ -9,15 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,13 +27,12 @@ import kotlin.math.abs
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun OnboardingScreen() {
+internal fun OnboardingScreen(authenticating: Boolean = false, signIn: () -> Unit = {}) {
     val pager = rememberPagerState { OnboardingSlide.entries.size }
     val scope = rememberCoroutineScope()
     val motion = LocalMotionEnabled.current
     var requested by remember { mutableStateOf(false) }
-    var login by rememberSaveable { mutableStateOf(false) }
-    val moving = requested || pager.isScrollInProgress
+    val moving = requested || pager.isScrollInProgress || authenticating
     val selected = pager.settledPage
     val go: (Int) -> Unit = { target ->
         if (!moving) {
@@ -70,7 +65,11 @@ internal fun OnboardingScreen() {
                 OnboardingQuietButton("Пропустить", selected < 4, !moving) { go(4) }
             }
         }
-        HorizontalPager(pager, Modifier.weight(1f).testTag("onboarding-pager")) { page ->
+        HorizontalPager(
+            pager,
+            Modifier.weight(1f).testTag("onboarding-pager"),
+            userScrollEnabled = !authenticating,
+        ) { page ->
             OnboardingPage(
                 OnboardingSlide.entries[page],
                 Modifier.graphicsLayer {
@@ -82,16 +81,8 @@ internal fun OnboardingScreen() {
                 },
             )
         }
-        OnboardingControls(selected, !moving, go) {
-            if (selected < 4) go(selected + 1) else login = true
+        OnboardingControls(selected, !moving, go, busy = authenticating) {
+            if (selected < 4) go(selected + 1) else signIn()
         }
-    }
-    if (login) {
-        AlertDialog(
-            onDismissRequest = { login = false },
-            title = { Text("Вход ещё не подключён") },
-            text = { Text("Яндекс ID подключим на заключительном этапе разработки.") },
-            confirmButton = { TextButton(onClick = { login = false }) { Text("Понятно") } },
-        )
     }
 }

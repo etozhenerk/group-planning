@@ -33,6 +33,16 @@ android {
         buildConfigField("String", "API_ORIGIN", "\"$apiOrigin\"")
         buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android\"")
         manifestPlaceholders["invitationScheme"] = "group-planning-android"
+        val yandexClientId = providers.gradleProperty("somewhereYandexClientId")
+            .orElse(
+                localSettings.getProperty(
+                    "somewhere.yandex.client.id",
+                    "43a1ba4507214901a5c08a0d090c6e30",
+                ),
+            )
+            .get()
+        require(yandexClientId.matches(Regex("[a-f0-9]{32}")))
+        manifestPlaceholders["YANDEX_CLIENT_ID"] = yandexClientId
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -96,6 +106,8 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.yandex.auth)
+    implementation(libs.kotlin.parcelize.runtime)
     implementation(libs.lifecycle.runtime.compose)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.test)

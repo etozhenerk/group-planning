@@ -21,6 +21,10 @@ final class FixtureTransport: HTTPTransport {
     }
     deinit { session.invalidateAndCancel() }
     func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        if request.url?.path == "/api/v1/auth/yandex/start" {
+            try await Task.sleep(for: .milliseconds(300))
+            throw URLError(.notConnectedToInternet)
+        }
         if scenario == "audit-loading", request.url?.path == "/api/v1/me" {
             try await Task.sleep(for: .seconds(7))
         }

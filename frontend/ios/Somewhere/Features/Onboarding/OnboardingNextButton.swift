@@ -4,6 +4,7 @@ import UIKit
 struct OnboardingNextButton: View {
     let final: Bool
     var expanded = false
+    var busy = false
     let action: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ScaledMetric(relativeTo: .body) private var fontSize = 17.0
@@ -21,17 +22,22 @@ struct OnboardingNextButton: View {
                 .frame(width: expanded ? nil : (final ? trialWidth : nextWidth))
                 Image(systemName: "arrow.right").font(.system(size: 17, weight: .semibold))
             }
+            .opacity(busy ? 0 : 1)
             .frame(maxWidth: expanded ? .infinity : nil)
             .foregroundStyle(final ? AppPalette.actionText : AppPalette.text)
             .padding(.horizontal, 23).padding(.vertical, 16)
             .background(final ? AppPalette.action : AppPalette.surface, in: Capsule())
+            .overlay {
+                if busy { ProgressView().tint(AppPalette.actionText).accessibilityHidden(true) }
+            }
             .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: final)
             // Reserve the final width so the footer never reflows during the morph.
             .frame(width: expanded ? nil : trialWidth + 75, alignment: .trailing)
             .accessibilityElement(children: .ignore)
         }
         .accessibilityLabel(final ? "Попробовать" : "Далее")
-        .buttonStyle(OnboardingPressStyle())
+        .buttonStyle(OnboardingPressStyle()).disabled(busy)
+        .accessibilityValue(busy ? "Выполняется вход" : "")
     }
 
     private func title(_ text: String) -> some View {

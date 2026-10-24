@@ -48,7 +48,7 @@ final class EntryUITests: XCTestCase {
         }
         XCTAssertTrue(button.isHittable)
     }
-    func testOnboardingAndDeferredLogin() {
+    func testOnboardingAndLoginFailure() {
         let app = launch("onboarding")
         XCTAssertTrue(
             app.staticTexts["Назначьте встречу.\nОтправьте ссылку."].waitForExistence(timeout: 5))
@@ -76,8 +76,9 @@ final class EntryUITests: XCTestCase {
         app.swipeLeft()
         expectSlide(5, app)
         app.buttons["Попробовать"].tap()
-        XCTAssertTrue(app.alerts["Вход ещё не подключён"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.alerts["Не удалось войти"].waitForExistence(timeout: 3))
         app.buttons["Понятно"].tap()
+        XCTAssertTrue(app.buttons["Попробовать"].isEnabled)
         XCTAssertFalse(app.buttons["Войти как Саша"].exists)
     }
     func testOnboardingAtLargeText() {

@@ -142,6 +142,8 @@ const main = async () => {
   settings.SOMEWHERE_WEB_DIST = resolve(root, 'frontend/web/dist');
   updateSetting(resolve(root, 'frontend/ios/Config/Local.xcconfig'), 'SOMEWHERE_API_ORIGIN', origin.replace('://', ':/$()/'), ' = ');
   updateSetting(resolve(root, 'frontend/android/local.properties'), 'somewhere.api.origin', origin);
+  updateSetting(resolve(root, 'frontend/ios/Config/Local.xcconfig'), 'SOMEWHERE_YANDEX_CLIENT_ID', settings.SOMEWHERE_YANDEX_CLIENT_ID, ' = ');
+  updateSetting(resolve(root, 'frontend/android/local.properties'), 'somewhere.yandex.client.id', settings.SOMEWHERE_YANDEX_CLIENT_ID);
   const serverEnvironment = { ...process.env, ...settings };
   delete serverEnvironment.NGROK_AUTHTOKEN;
   start(resolve(stateDirectory, 'server'), [], 'server', { env: serverEnvironment });

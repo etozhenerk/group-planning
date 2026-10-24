@@ -10,16 +10,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.yandex.authsdk.YandexAuthLoginOptions
+import com.yandex.authsdk.YandexAuthOptions
+import com.yandex.authsdk.YandexAuthResult
+import com.yandex.authsdk.YandexAuthSdk
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.SomewhereApp
 import dev.groupplanning.android.ui.theme.SomewhereTheme
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
     override fun attachBaseContext(newBase: Context) {
         val configuration = Configuration(newBase.resources.configuration)
         configuration.setLocale(Locale.forLanguageTag("ru"))
@@ -52,6 +61,24 @@ class MainActivity : ComponentActivity() {
                 )
         }
         val model = ViewModelProvider(this, factory)[AppViewModel::class.java]
+        val sdk = YandexAuthSdk.create(YandexAuthOptions(this))
+        val launcher = registerForActivityResult(sdk.contract) { result ->
+            when (result) {
+                is YandexAuthResult.Success -> model.signInResult(result.token.value)
+                is YandexAuthResult.Failure -> model.signInResult(null)
+                YandexAuthResult.Cancelled -> model.signInResult(null, cancelled = true)
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.signIn.state.collect { state ->
+                    if (state.launchSDK) {
+                        model.signIn.launched()
+                        launcher.launch(YandexAuthLoginOptions())
+                    }
+                }
+            }
+        }
         setContent { SomewhereTheme { SomewhereApp(model) } }
     }
 }

@@ -21,5 +21,5 @@ xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" \
     -derivedDataPath .build/TestDerivedData \
     -resultBundlePath ".build/TestResults-$(date -u +%Y%m%dT%H%M%S)-$$.xcresult" \
     -parallel-testing-enabled NO \
-    CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual \
+    ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual \
     test

@@ -10,6 +10,7 @@ import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.ApiInstant
 import dev.groupplanning.android.data.session.StoredSession
 import java.io.File
+import java.io.IOException
 import java.security.KeyStore
 import java.security.cert.CertificateFactory
 import java.util.Base64
@@ -60,6 +61,9 @@ internal object RuntimeFactory {
         val ssl = SSLContext.getInstance("TLS").apply { init(null, arrayOf(trust), null) }
         val http = OkHttpClient.Builder().sslSocketFactory(ssl.socketFactory, trust)
             .addInterceptor { chain ->
+                if (chain.request().url.encodedPath == "/api/v1/auth/yandex/start") {
+                    throw IOException("Offline authentication fixture")
+                }
                 chain.proceed(
                     chain.request().newBuilder().header(
                         "X-Somewhere-Test-Scenario",

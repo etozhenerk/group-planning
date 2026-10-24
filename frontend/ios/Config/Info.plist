@@ -3,8 +3,16 @@
 <plist version="1.0"><dict>
     <key>SomewhereAPIOrigin</key><string>$(SOMEWHERE_API_ORIGIN)</string>
     <key>SomewhereLinkScheme</key><string>$(SOMEWHERE_LINK_SCHEME)</string>
+    <key>SomewhereYandexClientID</key><string>$(SOMEWHERE_YANDEX_CLIENT_ID)</string>
+    <key>SomewhereYandexWebOnly</key><string>$(SOMEWHERE_YANDEX_WEB_ONLY)</string>
+    <key>LSApplicationQueriesSchemes</key><array>
+        <string>primaryyandexloginsdk</string><string>secondaryyandexloginsdk</string>
+    </array>
     <key>CFBundleURLTypes</key><array><dict>
         <key>CFBundleURLName</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
         <key>CFBundleURLSchemes</key><array><string>$(SOMEWHERE_LINK_SCHEME)</string></array>
+    </dict><dict>
+        <key>CFBundleURLName</key><string>YandexLoginSDK</string>
+        <key>CFBundleURLSchemes</key><array><string>yx$(SOMEWHERE_YANDEX_CLIENT_ID)</string></array>
     </dict></array>
 </dict></plist>

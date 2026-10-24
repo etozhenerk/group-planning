@@ -36,6 +36,7 @@ func registerAuth(mux *http.ServeMux, service *identity.Service) {
 	mux.HandleFunc("/api/v1/auth/yandex/start", handlers.start)
 	mux.HandleFunc("/api/v1/auth/yandex/callback", handlers.callback)
 	mux.HandleFunc("/api/v1/auth/mobile/exchange", handlers.exchange)
+	mux.HandleFunc("/api/v1/auth/mobile/sdk/exchange", handlers.exchangeSDK)
 	mux.HandleFunc("/api/v1/me", handlers.me)
 	mux.HandleFunc("/api/v1/auth/logout", handlers.logout)
 }

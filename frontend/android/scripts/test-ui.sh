@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_scope=${1:-all}
 case "$somewhere_scope" in
-    all|persistence|calendar) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|persistence|calendar]\n' >&2; exit 2 ;;
+    all|persistence|calendar|auth) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|persistence|calendar|auth]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -65,10 +65,14 @@ if [ "$somewhere_scope" = all ]; then
         :app:connectedQaAndroidTest
 fi
 
-if [ "$somewhere_scope" = calendar ]; then
+if [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ]; then
+    somewhere_classes=dev.groupplanning.android.CalendarUiTests
+    if [ "$somewhere_scope" = auth ]; then
+        somewhere_classes='dev.groupplanning.android.EntryUiTests#onboardingSlidesBackSkipAndLogin,dev.groupplanning.android.InvitationUiTests#publicInvitationPersistsWithoutLoginOrAutomaticResponse'
+    fi
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.CalendarUiTests \
+        "-Pandroid.testInstrumentationRunnerArguments.class=$somewhere_classes" \
         :app:connectedQaAndroidTest
     exit 0
 fi

@@ -68,7 +68,7 @@ class EntryUiTests {
             compose.onNodeWithText("Пропустить").performClick()
             compose.waitForIdle()
             compose.onNodeWithContentDescription("Попробовать").performClick()
-            compose.onNodeWithText("Вход ещё не подключён").assertIsDisplayed()
+            waitText("Не удалось войти")
             compose.onNodeWithText("Понятно").performClick()
             compose.waitForIdle()
             device.waitForIdle(2_000)

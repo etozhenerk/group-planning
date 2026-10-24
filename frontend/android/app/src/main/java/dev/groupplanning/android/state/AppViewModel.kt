@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.ClientRuntime
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.CreatedMeeting
+import dev.groupplanning.android.data.auth.AuthContext
 import dev.groupplanning.android.data.links.InvitationTarget
 import dev.groupplanning.android.data.repository.CalendarRepository
 import dev.groupplanning.android.data.session.ClientSnapshot
@@ -36,6 +37,14 @@ internal class AppViewModel(
     private val mutableLinkProblem = MutableStateFlow<LinkIssue?>(null)
     val linkProblem = mutableLinkProblem.asStateFlow()
     private var navigation: Job? = null
+    private var restoration: Job? = null
+    val signIn = SignInViewModel(runtime.auth, childScope()) { context ->
+        context.token?.let { token ->
+            val target = InvitationTarget.Token(token)
+            runtime.invitationContext.save(target)
+            showInvitation(target)
+        }
+    }
     val calendar = runtime.sessions?.let {
         CalendarViewModel(CalendarRepository(it), saved, childScope())
     }
@@ -50,7 +59,9 @@ internal class AppViewModel(
                 }
             }
         }
+        restore()
         navigation = viewModelScope.launch {
+            restoration?.join()
             try {
                 if (initialLink != null) {
                     acceptLink(initialLink)
@@ -61,7 +72,24 @@ internal class AppViewModel(
                 mutableLinkProblem.value = LinkIssue.Storage
             }
         }
-        restore()
+    }
+
+    fun signInResult(token: String?, cancelled: Boolean = false) {
+        signIn.result(token, cancelled, restoration)
+    }
+
+    fun startSignIn() {
+        val target = (route.value as? AppRoute.Invitation)?.model?.target
+        signIn.start(
+            if (target is InvitationTarget.Token) {
+                AuthContext(
+                    "invitation",
+                    target.value,
+                )
+            } else {
+                AuthContext()
+            },
+        )
     }
 
     fun advanceIntro(delta: Long) {
@@ -71,7 +99,7 @@ internal class AppViewModel(
 
     fun restore() {
         mutableReady.value = false
-        viewModelScope.launch {
+        restoration = viewModelScope.launch {
             try {
                 runtime.sessions?.restore(runtime.candidate)
             } finally {

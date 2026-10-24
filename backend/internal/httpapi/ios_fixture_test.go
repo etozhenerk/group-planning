@@ -129,7 +129,7 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
-	if scope != "feed" && scope != "accessibility" && scope != "calendar" {
+	if scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 
