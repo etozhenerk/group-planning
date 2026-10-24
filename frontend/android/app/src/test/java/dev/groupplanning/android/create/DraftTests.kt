@@ -21,12 +21,15 @@ class DraftTests {
     @Test fun requiredFieldsAndOptionalNullsMatchContract() {
         assertEquals(DraftIssue.Title, valid.copy(title = "  ").validate().issue)
         assertEquals(DraftIssue.Day, valid.copy(day = null).validate().issue)
-        assertEquals(DraftIssue.Time, valid.copy(time = null).validate().issue)
+        val dateOnly = checkNotNull(valid.copy(time = null).validate().input)
+        assertNull(dateOnly.startsAt)
+        assertEquals("2026-10-24", dateOnly.startsOn)
+        assertEquals(DraftIssue.Day, valid.copy(day = "2026-02-30", time = null).validate().issue)
         val input = checkNotNull(valid.validate().input)
         assertEquals("Встреча", input.title)
         assertNull(input.description)
         assertNull(input.place)
-        assertEquals("2026-10-24T19:00:00+03:00", input.startsAt.value)
+        assertEquals("2026-10-24T19:00:00+03:00", input.startsAt?.value)
         assertEquals(DraftIssue.Title, valid.copy(title = "а".repeat(121)).validate().issue)
         assertNotNull(valid.copy(title = "🍕".repeat(120)).validate().input)
         assertEquals(

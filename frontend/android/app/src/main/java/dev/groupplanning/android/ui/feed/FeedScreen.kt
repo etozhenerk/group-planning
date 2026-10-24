@@ -19,17 +19,26 @@ import androidx.lifecycle.repeatOnLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.state.feed.FeedViewModel
+import dev.groupplanning.android.ui.datepoll.CreateDatePollSheet
+import dev.groupplanning.android.ui.datepoll.DatePollRoute
 import dev.groupplanning.android.ui.theme.Palette
+import java.util.UUID
+import kotlinx.serialization.json.JsonPrimitive
 
 @Composable
 internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Modifier = Modifier) {
     val state by model.state.collectAsStateWithLifecycle()
     val messages by model.sender.state.collectAsStateWithLifecycle()
+    val snapshot by model.repository.snapshot.collectAsStateWithLifecycle()
+    val polls by model.polls.collectAsStateWithLifecycle()
+    val creation by model.pollCreation.collectAsStateWithLifecycle()
+    val meeting = snapshot.data.details[model.id]?.value
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(model, lifecycle) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) { model.runActive() }
     }
     if (state.revoked) return
+    creation?.let { CreateDatePollSheet(it, model::closePollCreation) }
     Column(modifier.imePadding()) {
         FeedTimeline(
             state,
@@ -38,7 +47,15 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
             model::history,
             model.sender::retry,
             model.sender::recoverRejected,
-            Modifier.weight(1f),
+            poll = { entry ->
+                val raw = (entry.payload["poll_id"] as? JsonPrimitive)?.content
+                val id = raw?.let { runCatching { UUID.fromString(it) }.getOrNull() }
+                val poll = polls[id]
+                if (poll != null && meeting != null && id != null) {
+                    DatePollRoute(id, poll, meeting, entry, entry.actor.id == profile.id)
+                }
+            },
+            modifier = Modifier.weight(1f),
         )
         if (state.loadError || messages.storageError) {
             TextButton(model::refresh, Modifier.padding(horizontal = 16.dp)) {
@@ -58,7 +75,9 @@ internal fun FeedScreen(model: FeedViewModel, profile: UserProfile, modifier: Mo
             Modifier.padding(horizontal = 16.dp).padding(bottom = 12.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            MessageComposer(messages, model.sender::edit, model.sender::send)
+            MessageComposer(messages, model.sender::edit, model.sender::send) {
+                meeting?.let(model::createPoll)
+            }
         }
     }
 }

@@ -11,11 +11,14 @@ struct InvitationPreview: Codable, Equatable, Sendable {
     let myRSVP: RSVPAnswer?
     let myRSVPRevision: ServerCounter
 
+    var startsOn: String?
+
     enum CodingKeys: String, CodingKey {
         case meetingID = "meeting_id"
         case title
         case description
         case startsAt = "starts_at"
+        case startsOn = "starts_on"
         case timezone
         case place
         case coverURL = "cover_url"

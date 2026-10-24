@@ -29,7 +29,13 @@ import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun MessageComposer(state: MessageState, change: (String) -> Unit, send: () -> Unit) {
+internal fun MessageComposer(
+    state: MessageState,
+    change: (String) -> Unit,
+    send: () -> Unit,
+    openPoll: () -> Unit,
+) {
+    val pollLabel = stringResource(R.string.poll_open)
     val label = stringResource(R.string.message_label)
     val sendLabel = stringResource(R.string.message_send)
     Row(
@@ -40,6 +46,9 @@ internal fun MessageComposer(state: MessageState, change: (String) -> Unit, send
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
+        IconButton(openPoll, enabled = state.ready, modifier = Modifier.testTag("new-date-poll")) {
+            Text("+", modifier = Modifier.semantics { contentDescription = pollLabel })
+        }
         BasicTextField(
             state.draft,
             change,

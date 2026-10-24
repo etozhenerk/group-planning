@@ -45,7 +45,7 @@ struct CreationFieldsView: View {
                     focus = nil
                     dateSheet = true
                 }.accessibilityLabel("Дата").accessibilityValue(MeetingLabels.day(owner.value.day))
-                Text("Время").font(.subheadline.bold()).padding(.top, 12)
+                Text("Время · необязательно").font(.subheadline.bold()).padding(.top, 12)
                 ActionButton(
                     title: MeetingLabels.clock(owner.value.clock), symbol: "clock", primary: false,
                     disabled: !owner.editable
@@ -54,8 +54,17 @@ struct CreationFieldsView: View {
                     timeSheet = true
                 }.accessibilityLabel("Время").accessibilityValue(
                     MeetingLabels.clock(owner.value.clock))
-                Text("Время встречи · " + owner.value.timezone).font(.caption).foregroundStyle(
-                    AppPalette.muted)
+                if owner.value.clock != nil {
+                    Button("Убрать время") {
+                        owner.change {
+                            $0.clock = nil
+                            $0.repetition = nil
+                        }
+                    }.frame(minHeight: 44).accessibilityIdentifier("clear-meeting-time")
+                }
+                Text("Время необязательно · \(owner.value.timezone)").font(.caption)
+                    .foregroundStyle(
+                        AppPalette.muted)
             }
             if owner.needsTimeChoice {
                 Picker(

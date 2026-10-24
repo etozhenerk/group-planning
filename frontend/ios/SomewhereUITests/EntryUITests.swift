@@ -107,7 +107,7 @@ final class EntryUITests: XCTestCase {
     }
     func testListErrorAndRetry() {
         let app = launch("list-error")
-        XCTAssertTrue(app.staticTexts["Не удалось получить встречи"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["Не удалось загрузить встречи"].waitForExistence(timeout: 15))
         app.buttons["Попробовать ещё раз"].tap()
         XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
     }

@@ -17,14 +17,20 @@ internal data class UpdateMeeting(
     val expectedRevision: ServerCounter,
     val title: String? = null,
     val description: FieldChange<String> = FieldChange.Unchanged,
-    val startsAt: ApiInstant? = null,
+    val startsAt: FieldChange<ApiInstant> = FieldChange.Unchanged,
+    val startsOn: String? = null,
     val timezone: String? = null,
     val place: FieldChange<String> = FieldChange.Unchanged,
 ) {
     fun json(): JsonObject = buildJsonObject {
         put("expected_revision", expectedRevision.value)
         title?.let { put("title", it) }
-        startsAt?.let { put("starts_at", it.value) }
+        when (startsAt) {
+            FieldChange.Unchanged -> Unit
+            FieldChange.Clear -> put("starts_at", JsonNull)
+            is FieldChange.Value -> put("starts_at", startsAt.value.value)
+        }
+        startsOn?.let { put("starts_on", it) }
         timezone?.let { put("timezone", it) }
         description.jsonValue()?.let { put("description", it) }
         place.jsonValue()?.let { put("place", it) }

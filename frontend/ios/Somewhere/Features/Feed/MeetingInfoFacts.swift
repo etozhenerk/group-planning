@@ -9,7 +9,8 @@ struct MeetingInfoFacts: View {
             Text(meeting.title).font(.system(size: titleSize, weight: .bold))
                 .accessibilityAddTraits(.isHeader)
             Label(
-                MeetingLabels.time(meeting.startsAt, timezone: meeting.timezone),
+                MeetingLabels.time(
+                    meeting.startsAt, timezone: meeting.timezone, startsOn: meeting.startsOn),
                 systemImage: "calendar")
             Label(meeting.place ?? "Место пока не выбрано", systemImage: "mappin.and.ellipse")
             if let text = meeting.description, !text.isEmpty {

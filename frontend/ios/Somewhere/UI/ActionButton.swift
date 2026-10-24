@@ -29,7 +29,7 @@ struct ActionButton: View {
                 }
             }
         }
-        .accessibilityLabel(title).accessibilityValue(busy ? "Выполняется вход" : "")
+        .accessibilityLabel(title).accessibilityValue(busy ? "Выполняется" : "")
         .buttonStyle(.plain).disabled(disabled || busy).opacity(disabled && !busy ? 0.6 : 1)
     }
 }

@@ -21,4 +21,5 @@ internal data class Meeting(
     @SerialName("organizer_id") val organizerId: UUID,
     val description: String? = null,
     @SerialName("created_at") val createdAt: ApiInstant,
+    @SerialName("starts_on") val startsOn: String? = null,
 )

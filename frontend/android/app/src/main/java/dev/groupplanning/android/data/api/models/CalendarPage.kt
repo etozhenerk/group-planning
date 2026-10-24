@@ -53,10 +53,10 @@ internal data class CalendarPage(
             require(runCatching { ZoneId.of(it.timezone) }.isSuccess)
             require(it.period != null)
             if (it.period == MeetingPeriod.Undated) {
-                require(it.localDate == null && it.startsAt == null)
+                require(it.localDate == null && it.startsAt == null && it.startsOn == null)
             } else {
                 require(runCatching { LocalDate.parse(requireNotNull(it.localDate)) }.isSuccess)
-                require(it.startsAt != null)
+                require(it.startsAt != null || it.startsOn == it.localDate)
             }
         }
     }

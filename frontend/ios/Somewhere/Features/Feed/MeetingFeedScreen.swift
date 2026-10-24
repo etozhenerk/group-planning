@@ -31,6 +31,11 @@ struct MeetingFeedScreen: View {
                 if owner.current { MeetingFeedHeader(owner: owner) }
             }
             .sheet(isPresented: $owner.infoPresented) { MeetingInfoScreen(owner: owner) }
+            .sheet(isPresented: $owner.pollPresented, onDismiss: owner.reload) {
+                if let meeting = owner.meeting {
+                    CreateDatePollScreen(meeting: meeting, session: owner.session)
+                }
+            }
             .task(id: phase) {
                 guard phase == .active else {
                     owner.suspend()

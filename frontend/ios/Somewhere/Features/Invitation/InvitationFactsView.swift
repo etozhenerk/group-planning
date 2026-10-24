@@ -7,7 +7,8 @@ struct InvitationFactsView: View {
             Text(value.title).font(.largeTitle.bold()).accessibilityAddTraits(.isHeader)
             VStack(alignment: .leading, spacing: 18) {
                 Label(
-                    MeetingLabels.time(value.startsAt, timezone: value.timezone),
+                    MeetingLabels.time(
+                        value.startsAt, timezone: value.timezone, startsOn: value.startsOn),
                     systemImage: "calendar")
                 Label(value.place ?? "Место пока не выбрано", systemImage: "mappin.and.ellipse")
             }.foregroundStyle(AppPalette.muted)

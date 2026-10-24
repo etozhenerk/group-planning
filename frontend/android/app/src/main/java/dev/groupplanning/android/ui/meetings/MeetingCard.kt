@@ -47,7 +47,7 @@ internal fun MeetingCard(meeting: MeetingSummary, onClick: () -> Unit) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(meeting.title, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 Text(
-                    meetingTime(meeting.startsAt, meeting.timezone),
+                    meetingTime(meeting.startsAt, meeting.timezone, meeting.startsOn),
                     color = Palette.muted,
                     fontSize = 14.sp,
                 )

@@ -104,6 +104,10 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["calendar"] = calendarOwner
 	config.Cases["calendar-large"] = calendarOwner
 	config.Cases["calendar-empty"] = iosCredential(t, service, "calendar-empty")
+	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
+	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
+	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
+	config.Cases["poll-hidden"] = seedNativePollBoundary(t, store, service, "hidden", 400)
 	config.Cases["audit-guest"] = iosCredential(t, service, "invite-guest-audit")
 	config.Cases["audit-large-create"] = iosCredential(t, service, "audit-large-create")
 	config.Cases["audit-loading"] = feedOwner
@@ -129,7 +133,11 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
-	if scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope == "polls" || scope == "" {
+		verifyNativePollFixture(t, store)
+	}
+
+	if scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 

@@ -10,6 +10,9 @@ enum MeetingSettingsDraft {
             draft.day = LocalMeetingTime.day(date, zone: zone)
             draft.clock = LocalMeetingTime.clock(date, zone: zone)
         }
+        if draft.day == nil, let day = meeting.startsOn, let date = CalendarDate.parse(day) {
+            draft.day = LocalMeetingTime.day(date, zone: .gmt)
+        }
         return draft
     }
 
@@ -28,7 +31,9 @@ enum MeetingSettingsDraft {
             input.place = draft.place.isEmpty ? .clear : .value(draft.place)
         }
         if draft.day != original.day || draft.clock != original.clock || draft.repetition != nil {
-            input.startsAt = try draft.input().startsAt
+            let date = try draft.input()
+            input.startsAt = date.startsAt.map { .value($0) } ?? .clear
+            input.startsOn = date.startsOn
         }
         return input
     }

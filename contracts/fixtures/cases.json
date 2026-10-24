@@ -379,5 +379,31 @@
       "can_add_options": true,
       "can_resolve": false
     }
+  },
+  {
+    "name": "saved-invitations",
+    "schema": "InvitationsPage",
+    "path": "/api/v1/invitations",
+    "method": "get",
+    "status": 200,
+    "body": {
+      "invitations": [
+        {
+          "invitation_url": "https://somewhere.test/i/AAAAAAAAAAAAAAAAAAAAAA",
+          "preview": {
+            "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+            "title": "Суббота без спешки",
+            "starts_at": "2026-10-24T19:00:00+03:00",
+            "timezone": "Europe/Moscow",
+            "place": null,
+            "cover_url": null,
+            "my_rsvp": "maybe",
+            "my_rsvp_revision": "2",
+            "description": "Пицца и настольные игры."
+          }
+        }
+      ],
+      "next_cursor": null
+    }
   }
 ]

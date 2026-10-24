@@ -17,9 +17,26 @@ struct ContractTests {
             case "FeedEntry": _ = try APICoding.decode(FeedEntry.self, from: data)
             case "MeetingsPage": _ = try APICoding.decode(CalendarPage.self, from: data)
             case "CreateMeeting": _ = try APICoding.decode(CreateMeeting.self, from: data)
+            case "DatePoll": _ = try APICoding.decode(DatePoll.self, from: data)
+            case "InvitationsPage": _ = try APICoding.decode(InvitationsPage.self, from: data)
             default: Issue.record("Fixture schema needs an iOS decoder: \(fixture.schema)")
             }
         }
+    }
+
+    @Test func dateOnlyCreationAndHiddenPollPreserveContract() throws {
+        let creation = try APICoding.decode(
+            CreateMeeting.self, from: Fixtures.data("date-only-create"))
+        #expect(creation.startsAt == nil)
+        #expect(creation.startsOn == "2026-10-24")
+        #expect(
+            try APICoding.decode(CreateMeeting.self, from: APICoding.encode(creation)) == creation)
+        let poll = try APICoding.decode(DatePoll.self, from: Fixtures.data("date-poll-hidden"))
+        #expect(poll.settings.hideResults)
+        #expect(poll.options.allSatisfy { $0.votes == nil && $0.voters == nil })
+        #expect(poll.myOptionIDs.count == 1)
+        #expect(poll.leaderOptionIDs.isEmpty)
+        #expect(poll.appliedOptionID == nil)
     }
 
     @Test func nullAndMissingDescriptionsRemainAbsent() throws {

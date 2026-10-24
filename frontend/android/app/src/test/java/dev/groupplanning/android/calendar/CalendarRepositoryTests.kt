@@ -26,6 +26,22 @@ class CalendarRepositoryTests {
     private val filter = CalendarFilter(MeetingPeriod.Upcoming)
     private val sample = apiJson.decodeFromString<CalendarPage>(Fixtures.json("calendar-upcoming"))
 
+    @Test fun calendarLoadsMeetingWithDayAndNoTime() = runTest {
+        val h = SessionHarness(StandardTestDispatcher(testScheduler))
+        h.login()
+        val repository = CalendarRepository(h.session)
+        val meeting = sample.meetings.single().copy(
+            startsAt = null,
+            startsOn = sample.meetings.single().localDate,
+        )
+        val page = sample.copy(meetings = listOf(meeting))
+        h.transport.enqueue("meetings", apiJson.encodeToString(page))
+        repository.load(filter, null)
+        val loaded = h.session.state.value.data.calendar
+        assertNull(loaded.error)
+        assertEquals(meeting, loaded.page?.meetings?.single())
+    }
+
     @Test fun paginationConflictDropsOldPagesAndPreservesFilter() = runTest {
         val h = SessionHarness(StandardTestDispatcher(testScheduler))
         h.login()

@@ -15,7 +15,7 @@ internal fun Meeting.settingsDraft(): MeetingDraft {
         title,
         description.orEmpty(),
         place.orEmpty(),
-        date?.toLocalDate()?.toString(),
+        date?.toLocalDate()?.toString() ?: startsOn,
         date?.format(DateTimeFormatter.ofPattern("HH:mm")),
     )
 }
@@ -41,13 +41,19 @@ internal fun settingsPatch(original: Meeting, draft: MeetingDraft): SettingsVali
         else -> null
     }
     if (issue != null) return SettingsValidation(issue = issue)
+    val date = if (changedTime) draft.validate().input else null
     return SettingsValidation(
         UpdateMeeting(
             expectedRevision = original.revision,
             title = title.takeIf { it != before.title },
             description = fieldChange(before.description, draft.description),
             place = fieldChange(before.place, draft.place),
-            startsAt = if (changedTime) draft.validate().input?.startsAt else null,
+            startsAt = if (changedTime) {
+                date?.startsAt?.let { FieldChange.Value(it) } ?: FieldChange.Clear
+            } else {
+                FieldChange.Unchanged
+            },
+            startsOn = date?.startsOn,
             timezone = original.timezone.takeIf { changedTime },
         ),
     )

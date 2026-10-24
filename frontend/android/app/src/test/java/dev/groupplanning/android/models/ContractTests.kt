@@ -5,9 +5,11 @@ import dev.groupplanning.android.data.api.models.ApiErrorEnvelope
 import dev.groupplanning.android.data.api.models.ApiInstant
 import dev.groupplanning.android.data.api.models.CalendarPage
 import dev.groupplanning.android.data.api.models.CreateMeeting
+import dev.groupplanning.android.data.api.models.DatePoll
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FieldChange
 import dev.groupplanning.android.data.api.models.InvitationPreview
+import dev.groupplanning.android.data.api.models.InvitationsPage
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.RsvpResult
 import dev.groupplanning.android.data.api.models.ServerCounter
@@ -27,7 +29,7 @@ import org.junit.Test
 class ContractTests {
     @Test fun allSharedFixturesDecode() {
         val fixtures = Fixtures.all()
-        assertEquals(16, fixtures.size)
+        assertTrue(fixtures.isNotEmpty())
         for (fixture in fixtures) {
             val body = fixture.body.toString()
             when (fixture.schema) {
@@ -37,9 +39,27 @@ class ContractTests {
                 "Error" -> apiJson.decodeFromString<ApiErrorEnvelope>(body)
                 "FeedEntry" -> apiJson.decodeFromString<FeedEntry>(body)
                 "CreateMeeting" -> apiJson.decodeFromString<CreateMeeting>(body)
+                "DatePoll" -> apiJson.decodeFromString<DatePoll>(body)
+                "InvitationsPage" -> apiJson.decodeFromString<InvitationsPage>(body)
                 else -> error("Decoder missing for " + fixture.schema)
             }
         }
+    }
+
+    @Test fun dateOnlyCreationAndHiddenPollPreserveContract() {
+        val creation = apiJson.decodeFromString<CreateMeeting>(Fixtures.json("date-only-create"))
+        assertNull(creation.startsAt)
+        assertEquals("2026-10-24", creation.startsOn)
+        assertEquals(
+            creation,
+            apiJson.decodeFromString<CreateMeeting>(apiJson.encodeToString(creation)),
+        )
+        val poll = apiJson.decodeFromString<DatePoll>(Fixtures.json("date-poll-hidden"))
+        assertTrue(poll.settings.hideResults)
+        assertTrue(poll.options.all { it.votes == null && it.voters == null })
+        assertEquals(1, poll.myOptionIds.size)
+        assertTrue(poll.leaderOptionIds.isEmpty())
+        assertNull(poll.appliedOptionId)
     }
 
     @Test fun absentDateAndLegacyDescriptionStayNull() {

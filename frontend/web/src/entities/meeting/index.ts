@@ -89,3 +89,7 @@ export { createDatePoll, changeDatePoll } from '@/entities/meeting/api/datePoll'
 export { useDatePoll } from '@/entities/meeting/model/useDatePoll';
 
 export { entryPresentation } from '@/entities/meeting/lib/entryPresentation';
+
+export { useSavedInvitations } from '@/entities/meeting/model/useSavedInvitations';
+
+export type { SavedInvitation } from '@/entities/meeting/model/savedInvitation';

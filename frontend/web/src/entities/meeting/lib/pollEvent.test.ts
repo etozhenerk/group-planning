@@ -61,3 +61,19 @@ it('only creates an interactive card for a supported poll creation payload', () 
     ).supported,
   ).toBe(false);
 });
+
+it('confirms the original day without claiming that the meeting moved', () => {
+  const entry = mapEntry(
+    entrySchema.parse({
+      ...base,
+      kind: 'date_poll_applied',
+      payload: {
+        poll_id: base.id,
+        previous: { starts_on: '2026-10-25' },
+        current: { starts_on: '2026-10-25' },
+      },
+    }),
+  );
+
+  expect(entry.event).toBe('Дату подтвердили: встречаемся 25 октября.');
+});

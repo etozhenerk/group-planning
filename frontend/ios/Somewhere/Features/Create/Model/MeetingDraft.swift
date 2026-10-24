@@ -27,6 +27,16 @@ struct MeetingDraft: Codable, Equatable, Sendable {
         guard (1...120).contains(title.unicodeScalars.count) else { throw DraftIssue.title }
         guard description.unicodeScalars.count <= 4000 else { throw DraftIssue.description }
         guard place.unicodeScalars.count <= 500 else { throw DraftIssue.place }
+        guard let day else { throw DraftIssue.day }
+        let startsOn = String(format: "%04d-%02d-%02d", day.year, day.month, day.day)
+        guard CalendarDate.parse(startsOn) != nil else { throw DraftIssue.day }
+        _ = try LocalMeetingTime.zone(timezone)
+        if clock == nil {
+            return CreateMeeting(
+                title: title, description: description.isEmpty ? nil : description,
+                startsAt: nil, timezone: timezone, place: place.isEmpty ? nil : place,
+                startsOn: startsOn)
+        }
         let date = try LocalMeetingTime.resolve(self)
         let zone = try LocalMeetingTime.zone(timezone)
         let format = Date.ISO8601FormatStyle(timeZoneSeparator: .colon, timeZone: zone)

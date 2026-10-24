@@ -72,7 +72,8 @@ extension InvitationOwner {
             preview = InvitationPreview(
                 meetingID: id, title: meeting.title, description: meeting.description,
                 startsAt: meeting.startsAt, timezone: meeting.timezone, place: meeting.place,
-                coverURL: meeting.coverURL, myRSVP: answer, myRSVPRevision: revision)
+                coverURL: meeting.coverURL, myRSVP: answer, myRSVPRevision: revision,
+                startsOn: meeting.startsOn)
             canAccess = organizer || answer == .going
             guard canAccess else {
                 session.updateMeetingAccess(id, allowed: false)

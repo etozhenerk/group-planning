@@ -975,6 +975,67 @@ paths:
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CSRF"
+  /api/v1/invitations:
+    get:
+      operationId: listSavedInvitations
+      summary: Приглашения с собственным ответом Возможно
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvitationsPage"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/UUID"
   /api/v1/invitations/{token}:
     parameters:
       - $ref: "#/components/parameters/Token"
@@ -1720,6 +1781,33 @@ components:
       required:
         - text
         - client_request_id
+      additionalProperties: false
+    SavedInvitation:
+      type: object
+      properties:
+        invitation_url:
+          type: string
+          format: uri
+        preview:
+          $ref: "#/components/schemas/InvitationPreview"
+      required:
+        - invitation_url
+        - preview
+      additionalProperties: false
+    InvitationsPage:
+      type: object
+      properties:
+        invitations:
+          type: array
+          items:
+            $ref: "#/components/schemas/SavedInvitation"
+        next_cursor:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+      required:
+        - invitations
+        - next_cursor
       additionalProperties: false
     InvitationLink:
       type: object

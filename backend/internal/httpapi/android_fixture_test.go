@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -82,6 +82,10 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["calendar"] = calendarOwner
 	config.Cases["calendar-large"] = calendarOwner
 	config.Cases["calendar-empty"] = iosCredential(t, service, "calendar-empty")
+	config.Cases["poll-owner"] = seedNativePollFixture(t, store, service)
+	config.Cases["poll-tie"] = seedNativePollBoundary(t, store, service, "tie", 200)
+	config.Cases["poll-time"] = seedNativePollBoundary(t, store, service, "time", 300)
+	config.Cases["poll-hidden"] = seedNativePollBoundary(t, store, service, "hidden", 400)
 
 	config.Cases["invite-owner"] = owner
 	config.Cases["feed-owner"] = owner
@@ -102,7 +106,11 @@ func TestAndroidFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
-	if scope == "calendar" || scope == "auth" {
+	if scope == "all" || scope == "polls" {
+		verifyNativePollFixture(t, store)
+	}
+
+	if scope == "calendar" || scope == "auth" || scope == "polls" {
 		return
 	}
 

@@ -28,8 +28,17 @@ struct MeetingSettingsFields: View {
                     timeSheet = true
                 }.accessibilityLabel("Время").accessibilityValue(
                     MeetingLabels.clock(owner.value.clock))
-                Text("Время встречи · " + owner.value.timezone).font(.caption).foregroundStyle(
-                    AppPalette.muted)
+                if owner.value.clock != nil {
+                    Button("Убрать время") {
+                        owner.change {
+                            $0.clock = nil
+                            $0.repetition = nil
+                        }
+                    }.frame(minHeight: 44).accessibilityIdentifier("clear-meeting-time")
+                }
+                Text("Время необязательно · \(owner.value.timezone)").font(.caption)
+                    .foregroundStyle(
+                        AppPalette.muted)
             }
             if owner.needsTimeChoice {
                 Picker(

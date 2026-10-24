@@ -1,16 +1,23 @@
 import Foundation
 
 enum MeetingLabels {
-    static func time(_ instant: APIInstant?, timezone: String) -> String {
-        guard let instant else { return "Дата ещё выбирается" }
+    static func time(_ instant: APIInstant?, timezone: String, startsOn: String? = nil) -> String {
+        guard let instant else {
+            guard let startsOn else { return String(localized: "Дата ещё выбирается") }
+            let day = CalendarDate.label(startsOn, format: "d MMMM yyyy")
+            return String(localized: "\(day) · Время пока не выбрано")
+        }
         guard let zone = TimeZone(identifier: timezone) else { return instant.rawValue }
         var style = Date.FormatStyle(date: .abbreviated, time: .shortened).locale(
             Locale(identifier: "ru_RU"))
         style.timeZone = zone
         return instant.date.formatted(style)
     }
-    static func clock(_ instant: APIInstant?, timezone: String) -> String {
-        guard let instant, let zone = TimeZone(identifier: timezone) else { return "Без даты" }
+    static func clock(_ instant: APIInstant?, timezone: String, startsOn: String? = nil) -> String {
+        guard let instant, let zone = TimeZone(identifier: timezone) else {
+            return startsOn == nil
+                ? String(localized: "Без даты") : String(localized: "Без времени")
+        }
         var style = Date.FormatStyle(date: .omitted, time: .shortened).locale(
             Locale(identifier: "ru_RU"))
         style.timeZone = zone

@@ -15,10 +15,13 @@ struct Meeting: Codable, Equatable, Sendable {
     let description: String?
     let createdAt: APIInstant
 
+    var startsOn: String?
+
     enum CodingKeys: String, CodingKey {
         case id
         case title
         case startsAt = "starts_at"
+        case startsOn = "starts_on"
         case timezone
         case place
         case coverURL = "cover_url"

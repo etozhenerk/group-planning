@@ -78,6 +78,7 @@ export const applyResponse = (
     revision: result.revision,
   });
   void client.invalidateQueries({ queryKey: ['meetings', user] });
+  void client.invalidateQueries({ queryKey: ['saved-invitations', user] });
   void client.invalidateQueries({ queryKey: ['invitation'] });
 
   return true;

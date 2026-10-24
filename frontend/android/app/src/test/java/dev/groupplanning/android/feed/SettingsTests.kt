@@ -29,10 +29,30 @@ class SettingsTests {
         )
         val draft = original.settingsDraft().copy(description = "", place = "")
         val patch = checkNotNull(settingsPatch(original, draft).input)
-        assertNull(patch.startsAt)
+        assertFalse(patch.json().containsKey("starts_at"))
         assertNull(patch.timezone)
         assertEquals("null", patch.json()["description"].toString())
         assertEquals("null", patch.json()["place"].toString())
+    }
+
+    @Test fun clearingTimePreservesDayAndDateOnlyDraftDoesNotAcquireMidnight() {
+        val original = Fixtures.meeting().copy(
+            startsAt = ApiInstant("2026-11-01T01:30:00-05:00"),
+            timezone = "America/New_York",
+        )
+        val draft = original.settingsDraft().copy(time = null)
+        val patch = checkNotNull(settingsPatch(original, draft).input).json()
+        assertEquals("null", patch["starts_at"].toString())
+        assertEquals("\"2026-11-01\"", patch["starts_on"].toString())
+        val dateOnly = original.copy(startsAt = null, startsOn = "2026-11-01")
+        val restored = dateOnly.settingsDraft()
+        assertEquals(draft.day, restored.day)
+        assertNull(restored.time)
+        val unchanged = checkNotNull(settingsPatch(dateOnly, restored).input).json()
+        assertFalse(unchanged.containsKey("starts_at"))
+        assertFalse(unchanged.containsKey("starts_on"))
+        val timed = checkNotNull(settingsPatch(dateOnly, restored.copy(time = "19:00")).input)
+        assertEquals("\"2026-11-01T19:00:00-05:00\"", timed.json()["starts_at"].toString())
     }
 
     @Test fun conflictPreservesFormUntilExplicitReloadAndMutation403KeepsConversation() = runTest {

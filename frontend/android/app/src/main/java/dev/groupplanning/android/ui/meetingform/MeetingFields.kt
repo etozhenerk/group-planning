@@ -3,6 +3,7 @@ package dev.groupplanning.android.ui.meetingform
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -77,7 +80,11 @@ internal fun MeetingFields(
             }
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Время", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+            Text(
+                stringResource(R.string.meeting_optional_time),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
             ActionButton(
                 value.time ?: "Выберите время",
                 Modifier.semantics {
@@ -90,7 +97,18 @@ internal fun MeetingFields(
                 focus.clearFocus()
                 timePicker = true
             }
-            Text("Время встречи · ${value.timezone}", color = Palette.muted, fontSize = 12.sp)
+            if (value.time != null) {
+                TextButton(
+                    onClick = { change { it.copy(time = null, repetition = null) } },
+                    modifier = Modifier.testTag("clear-meeting-time"),
+                    enabled = editable,
+                ) { Text(stringResource(R.string.meeting_clear_time)) }
+            }
+            Text(
+                stringResource(R.string.meeting_timezone, value.timezone),
+                color = Palette.muted,
+                fontSize = 12.sp,
+            )
         }
         if (ambiguous) {
             ActionButton("Ранний — до перевода часов", primary = false) {

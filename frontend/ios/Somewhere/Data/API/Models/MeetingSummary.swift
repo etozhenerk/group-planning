@@ -12,10 +12,13 @@ struct MeetingSummary: Codable, Equatable, Sendable {
     let myRSVP: RSVPAnswer?
     let myRSVPRevision: ServerCounter
 
+    var startsOn: String?
+
     enum CodingKeys: String, CodingKey {
         case id
         case title
         case startsAt = "starts_at"
+        case startsOn = "starts_on"
         case timezone
         case place
         case coverURL = "cover_url"

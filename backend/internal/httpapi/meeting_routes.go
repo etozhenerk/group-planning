@@ -28,6 +28,7 @@ func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identi
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls/{poll_id}/vote", h.voteDatePoll)
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls/{poll_id}/options", h.addDateOption)
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls/{poll_id}/resolve", h.resolveDatePoll)
+	mux.HandleFunc("/api/v1/invitations", h.savedInvitations)
 	mux.HandleFunc("/api/v1/invitations/{token}", h.preview)
 	mux.HandleFunc("/api/v1/invitations/{token}/rsvp", h.respond)
 }

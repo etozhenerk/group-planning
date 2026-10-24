@@ -11,6 +11,12 @@ struct MessageComposer: View {
                     .font(.caption).foregroundStyle(AppPalette.error)
             }
             HStack(alignment: .bottom, spacing: 6) {
+                Button {
+                    owner.pollPresented = true
+                } label: {
+                    Image(systemName: "plus").frame(width: 44, height: 44)
+                }.accessibilityLabel("Создать опрос даты").accessibilityIdentifier("new-date-poll")
+                    .disabled(!owner.loaded || owner.meeting == nil)
                 TextField(
                     "Сообщение", text: $owner.draft,
                     prompt: Text(typeSize.isAccessibilitySize ? "Сообщение" : "Написать сообщение…")

@@ -39,18 +39,29 @@ internal data class MeetingDraft(
             null
         }
             ?: return DraftValidation(DraftIssue.Day)
+        val zone = try {
+            ZoneId.of(timezone)
+        } catch (_: DateTimeException) {
+            null
+        } ?: return DraftValidation(DraftIssue.Timezone)
+        if (time == null) {
+            return DraftValidation(
+                input = CreateMeeting(
+                    title = name,
+                    description = description.ifEmpty { null },
+                    startsAt = null,
+                    timezone = timezone,
+                    place = place.ifEmpty { null },
+                    startsOn = date.toString(),
+                ),
+            )
+        }
         val clock = try {
             time?.let(LocalTime::parse)
         } catch (_: DateTimeException) {
             null
         }
             ?: return DraftValidation(DraftIssue.Time)
-        val zone = try {
-            ZoneId.of(timezone)
-        } catch (_: DateTimeException) {
-            null
-        }
-            ?: return DraftValidation(DraftIssue.Timezone)
         val local = date.atTime(clock.withSecond(0).withNano(0))
         val offsets = zone.rules.getValidOffsets(local)
         if (offsets.isEmpty()) return DraftValidation(DraftIssue.Nonexistent)

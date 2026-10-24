@@ -9,7 +9,8 @@ enum FieldPatch<Value: Encodable & Sendable>: Sendable {
 struct UpdateMeeting: Encodable, Sendable {
     let expectedRevision: ServerCounter
     var title: String?
-    var startsAt: APIInstant?
+    var startsAt: FieldPatch<APIInstant> = .unchanged
+    var startsOn: String?
     var timezone: String?
     var description: FieldPatch<String> = .unchanged
     var place: FieldPatch<String> = .unchanged
@@ -17,6 +18,7 @@ struct UpdateMeeting: Encodable, Sendable {
     enum CodingKeys: String, CodingKey {
         case title, timezone, description, place
         case startsAt = "starts_at"
+        case startsOn = "starts_on"
         case expectedRevision = "expected_revision"
     }
 
@@ -24,14 +26,15 @@ struct UpdateMeeting: Encodable, Sendable {
         var values = encoder.container(keyedBy: CodingKeys.self)
         try values.encode(expectedRevision, forKey: .expectedRevision)
         try values.encodeIfPresent(title, forKey: .title)
-        try values.encodeIfPresent(startsAt, forKey: .startsAt)
+        try encode(startsAt, key: .startsAt, into: &values)
+        try values.encodeIfPresent(startsOn, forKey: .startsOn)
         try values.encodeIfPresent(timezone, forKey: .timezone)
         try encode(description, key: .description, into: &values)
         try encode(place, key: .place, into: &values)
     }
 
-    private func encode(
-        _ patch: FieldPatch<String>, key: CodingKeys,
+    private func encode<Value: Encodable & Sendable>(
+        _ patch: FieldPatch<Value>, key: CodingKeys,
         into values: inout KeyedEncodingContainer<CodingKeys>
     ) throws {
         switch patch {

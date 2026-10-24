@@ -22,8 +22,12 @@ struct CalendarMeetingRow: View {
     }
 
     private var clock: some View {
-        Text(MeetingLabels.clock(item.meeting.startsAt, timezone: item.meeting.timezone))
-            .font(.subheadline.weight(.semibold)).foregroundStyle(AppPalette.accent)
+        Text(
+            MeetingLabels.clock(
+                item.meeting.startsAt, timezone: item.meeting.timezone,
+                startsOn: item.meeting.startsOn)
+        )
+        .font(.subheadline.weight(.semibold)).foregroundStyle(AppPalette.accent)
     }
 
     private var details: some View {

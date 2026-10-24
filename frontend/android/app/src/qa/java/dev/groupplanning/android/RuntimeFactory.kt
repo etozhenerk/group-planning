@@ -39,6 +39,7 @@ internal object RuntimeFactory {
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
                     "feed-owner", "feed-persistence",
                     "calendar", "calendar-large", "calendar-empty",
+                    "poll-owner", "poll-tie", "poll-time", "poll-hidden",
                 ),
         )
         val config = apiJson.decodeFromString<Config>(

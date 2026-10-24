@@ -6,6 +6,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.ApiInstant
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.ui.components.meetingTime
+import dev.groupplanning.android.ui.datepoll.pollDayLabel
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -14,6 +15,24 @@ internal fun eventText(entry: FeedEntry): String {
     if (entry.payloadVersion != 1) return stringResource(R.string.feed_unknown)
     val name = entry.actor.displayName
     return when (entry.kind) {
+        "meeting_time_unspecified" -> stringResource(R.string.feed_time_unspecified)
+        "date_poll_no_majority" -> stringResource(R.string.feed_poll_no_majority)
+        "date_poll_choice_required" -> stringResource(R.string.feed_poll_choice)
+        "date_poll_time_required" -> stringResource(R.string.feed_poll_time)
+        "date_poll_cancelled" -> stringResource(R.string.feed_poll_cancelled)
+        "date_poll_applied" -> {
+            val current = entry.payload["current"] as? JsonObject
+            val previous = entry.payload["previous"] as? JsonObject
+            val day = current?.text("starts_on") ?: return stringResource(R.string.feed_unknown)
+            stringResource(
+                if (previous?.text("starts_on") == day) {
+                    R.string.feed_poll_confirmed
+                } else {
+                    R.string.feed_poll_applied
+                },
+                pollDayLabel(day),
+            )
+        }
         "meeting_created" -> stringResource(R.string.feed_created, name)
         "participant_joined" -> stringResource(R.string.feed_joined, name)
         "participant_left", "rsvp_changed" -> {
@@ -38,17 +57,19 @@ internal fun eventText(entry: FeedEntry): String {
                 "place" to R.string.field_place,
             )
             val changes = labels.filter { (key, _) ->
-                previous[key] != current[key]
+                previous[key] != current[key] ||
+                    key == "starts_at" &&
+                    previous["starts_on"] != current["starts_on"]
             }.map { (key, label) ->
                 var value = current.text(key)
-                if (key == "starts_at" && value != null) {
+                if (key == "starts_at") {
+                    val instant = value?.let { runCatching { ApiInstant(it) }.getOrNull() }
                     value =
-                        runCatching {
-                            meetingTime(
-                                ApiInstant(value),
-                                current.text("timezone") ?: "UTC",
-                            )
-                        }.getOrNull()
+                        meetingTime(
+                            instant,
+                            current.text("timezone") ?: "UTC",
+                            current.text("starts_on"),
+                        )
                 }
                 stringResource(
                     R.string.feed_change,

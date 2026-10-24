@@ -82,8 +82,11 @@ export const InvitationPage = () => {
             )}
           </div>
         )}
-        <Link to="/" className={[styles['button'], styles['ghost']].join(' ')}>
-          О Somewhere
+        <Link
+          to={session.data ? '/invitations' : '/'}
+          className={[styles['button'], styles['ghost']].join(' ')}
+        >
+          {session.data ? 'К приглашениям' : 'О somewhere'}
         </Link>
       </main>
     </div>

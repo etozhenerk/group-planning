@@ -25,7 +25,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 internal fun CalendarMeetingRow(meeting: MeetingSummary, open: () -> Unit) {
     val clock = meeting.startsAt?.instant?.atZone(ZoneId.of(meeting.timezone))
-        ?.format(DateTimeFormatter.ofPattern("HH:mm")).orEmpty()
+        ?.format(DateTimeFormatter.ofPattern("HH:mm"))
+        ?: stringResource(R.string.meeting_without_time)
     val details: @Composable () -> Unit = {
         Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
             Text(meeting.title, fontWeight = FontWeight.SemiBold)

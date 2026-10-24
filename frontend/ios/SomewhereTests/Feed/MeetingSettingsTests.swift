@@ -26,6 +26,34 @@ struct MeetingSettingsTests {
         #expect(object["description"] is NSNull && object["place"] is NSNull)
         #expect(object["expected_revision"] as? String == "1")
     }
+    @Test func clearingTimePreservesCivilDayAndDateOnlyDraftRestores() throws {
+        let baseline = try meeting()
+        var draft = MeetingSettingsDraft.make(baseline)
+        draft.clock = nil
+        let body = try APICoding.encode(MeetingSettingsDraft.patch(draft, from: baseline))
+        let object = try #require(JSONSerialization.jsonObject(with: body) as? [String: Any])
+        #expect(object["starts_at"] is NSNull)
+        #expect(object["starts_on"] as? String == "2026-11-01")
+        var json = try #require(
+            JSONSerialization.jsonObject(with: APICoding.encode(baseline)) as? [String: Any])
+        json["starts_at"] = NSNull()
+        json["starts_on"] = "2026-11-01"
+        let dateOnly = try APICoding.decode(
+            Meeting.self, from: JSONSerialization.data(withJSONObject: json))
+        let restored = MeetingSettingsDraft.make(dateOnly)
+        #expect(restored.clock == nil)
+        #expect(restored.day == draft.day)
+        #expect(dateOnly.invitationPreview.startsOn == "2026-11-01")
+        let unchanged = try APICoding.encode(MeetingSettingsDraft.patch(restored, from: dateOnly))
+        let fields = try #require(JSONSerialization.jsonObject(with: unchanged) as? [String: Any])
+        #expect(fields["starts_at"] == nil && fields["starts_on"] == nil)
+        #expect(
+            MeetingLabels.time(nil, timezone: "Pacific/Honolulu", startsOn: "2026-11-01")
+                .contains("1 ноября"))
+        #expect(
+            MeetingLabels.clock(nil, timezone: "Pacific/Honolulu", startsOn: "2026-11-01")
+                == "Без времени")
+    }
     @Test func conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() async throws {
         let harness = try SessionHarness()
         try await harness.login()

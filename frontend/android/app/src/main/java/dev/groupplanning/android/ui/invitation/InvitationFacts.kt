@@ -37,7 +37,7 @@ internal fun InvitationFacts(value: InvitationPreview, showTitle: Boolean = true
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AppIcon(R.drawable.ic_calendar)
-            Text(meetingTime(value.startsAt, value.timezone), color = Palette.muted)
+            Text(meetingTime(value.startsAt, value.timezone, value.startsOn), color = Palette.muted)
         }
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),

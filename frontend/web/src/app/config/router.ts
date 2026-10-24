@@ -21,6 +21,12 @@ export const router = createBrowserRouter([
         }),
       },
       {
+        path: '/invitations',
+        lazy: async () => ({
+          Component: (await import('@/pages/invitations')).InvitationsPage,
+        }),
+      },
+      {
         path: '/meetings/new',
         lazy: async () => ({
           Component: (await import('@/pages/meeting-create')).CreatePage,

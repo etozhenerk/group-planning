@@ -17,6 +17,7 @@ final class FeedOwner {
     var problem: String?
     var historyProblem: String?
     var infoPresented = false
+    var pollPresented = false
     var cursor: ServerCounter?
     @ObservationIgnored var generation = UUID()
     @ObservationIgnored var historyTask: Task<Void, Never>?
@@ -62,6 +63,7 @@ final class FeedOwner {
         outgoing.removeAll()
         draft = ""
         infoPresented = false
+        pollPresented = false
     }
 
     func merge(_ entries: [FeedEntry]) throws {

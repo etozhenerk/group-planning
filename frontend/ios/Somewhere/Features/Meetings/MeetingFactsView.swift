@@ -5,7 +5,8 @@ struct MeetingFactsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Label(
-                MeetingLabels.time(meeting.startsAt, timezone: meeting.timezone),
+                MeetingLabels.time(
+                    meeting.startsAt, timezone: meeting.timezone, startsOn: meeting.startsOn),
                 systemImage: "calendar")
             Label(meeting.place ?? "Место пока не выбрано", systemImage: "mappin.and.ellipse")
             if let description = meeting.description, !description.isEmpty {

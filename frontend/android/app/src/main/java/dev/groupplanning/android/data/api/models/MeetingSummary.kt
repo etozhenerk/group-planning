@@ -20,4 +20,5 @@ internal data class MeetingSummary(
     @SerialName("my_rsvp_revision") val myRsvpRevision: ServerCounter,
     @SerialName("local_date") val localDate: String? = null,
     val period: MeetingPeriod? = null,
+    @SerialName("starts_on") val startsOn: String? = null,
 )

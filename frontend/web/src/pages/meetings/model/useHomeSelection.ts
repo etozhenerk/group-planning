@@ -8,6 +8,9 @@ import { today } from '@/pages/meetings/lib/calendarDates';
 export const useHomeSelection = (user: string) => {
   const [params, setParams] = useSearchParams();
   const selection = useMemo(() => readSelection(user, params), [user, params]);
+  useEffect(() => {
+    saveSelection(user, selection);
+  }, [user, selection]);
   const update = useCallback(
     (patch: Partial<HomeSelection>) => {
       setParams(saveSelection(user, { ...selection, ...patch }), { replace: true });

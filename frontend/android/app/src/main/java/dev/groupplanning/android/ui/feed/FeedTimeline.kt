@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.R
+import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.state.feed.FeedState
 import dev.groupplanning.android.state.feed.MessageState
@@ -39,6 +40,7 @@ internal fun FeedTimeline(
     history: () -> Unit,
     retry: () -> Unit,
     recover: () -> Unit,
+    poll: @Composable (FeedEntry) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val list = rememberLazyListState()
@@ -79,6 +81,8 @@ internal fun FeedTimeline(
                         entry.actor.id == profile.id,
                         Modifier.testTag("feed-entry-${entry.sequence.value}"),
                     )
+                } else if (entry.kind == "date_poll_created" && entry.payloadVersion == 1) {
+                    poll(entry)
                 } else {
                     FeedEvent(entry)
                 }

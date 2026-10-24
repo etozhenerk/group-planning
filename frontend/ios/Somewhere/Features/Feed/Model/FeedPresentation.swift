@@ -5,6 +5,30 @@ enum FeedPresentation {
         guard entry.payloadVersion == 1 else { return "Событие пока не поддерживается" }
         let name = entry.actor.displayName
         switch entry.kind {
+        case "meeting_time_unspecified":
+            return "Осталось договориться, во сколько встречаемся."
+        case "date_poll_no_majority":
+            return "Ни одна дата не набрала большинства. Пока оставляем прежнюю."
+        case "date_poll_choice_required":
+            return "Несколько дат набрали одинаковое большинство. Выбор за организатором."
+        case "date_poll_time_required":
+            return "Дату выбрали. Из-за перевода часов нужно уточнить время встречи."
+        case "date_poll_cancelled":
+            return "Организатор изменил дату встречи. Предыдущий опрос завершён."
+        case "date_poll_applied":
+            guard case .object(let current) = entry.payload["current"],
+                case .string(let day) = current["starts_on"]
+            else {
+                return "Дату встречи выбрали."
+            }
+            let label = CalendarDate.label(day, format: "d MMMM")
+            if case .object(let previous) = entry.payload["previous"],
+                previous["starts_on"] == current["starts_on"]
+            {
+                return String(localized: "Дату подтвердили: встречаемся \(label).")
+            }
+            return String(
+                localized: "Встреча перенесена на \(label) — эту дату выбрало большинство.")
         case "meeting_created": return name + " создаёт встречу"
         case "participant_joined": return name + " присоединяется к встрече"
         case "participant_left", "rsvp_changed":
@@ -23,6 +47,17 @@ enum FeedPresentation {
                 ("timezone", "Часовой пояс"), ("place", "Место"),
             ]
             let changes = labels.compactMap { key, label -> String? in
+                if key == "starts_at" {
+                    guard before[key] != after[key] || before["starts_on"] != after["starts_on"]
+                    else { return nil }
+                    let instant: APIInstant? =
+                        if case .string(let raw) = after[key] { try? APIInstant(raw) } else { nil }
+                    let day: String? =
+                        if case .string(let raw) = after["starts_on"] { raw } else { nil }
+                    let zone: String =
+                        if case .string(let raw) = after["timezone"] { raw } else { "UTC" }
+                    return label + ": " + MeetingLabels.time(instant, timezone: zone, startsOn: day)
+                }
                 guard before[key] != after[key] else { return nil }
                 guard case .string(let value) = after[key], !value.isEmpty else {
                     return label + ": убрано"

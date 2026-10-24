@@ -15,7 +15,11 @@ struct MeetingCardView: View {
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text(meeting.title).font(.headline).foregroundStyle(AppPalette.text)
-                    Text(MeetingLabels.time(meeting.startsAt, timezone: meeting.timezone)).font(
+                    Text(
+                        MeetingLabels.time(
+                            meeting.startsAt, timezone: meeting.timezone, startsOn: meeting.startsOn
+                        )
+                    ).font(
                         .subheadline)
                     Text(meeting.place ?? "Место пока не выбрано").font(.subheadline)
                     Text("Участников: \(meeting.participantCount)").font(.caption)

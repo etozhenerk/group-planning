@@ -33,7 +33,7 @@ internal fun ActionButton(
     busy: Boolean = false,
     onClick: () -> Unit,
 ) {
-    val busyLabel = stringResource(R.string.auth_busy)
+    val busyLabel = stringResource(R.string.action_busy)
     Surface(
         onClick = onClick,
         enabled = enabled && !busy,

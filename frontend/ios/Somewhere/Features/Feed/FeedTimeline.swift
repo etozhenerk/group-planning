@@ -43,9 +43,22 @@ struct FeedTimeline: View {
                                         )
                                         .padding(.top, 12)
                                 }
-                                FeedRecordView(
-                                    entry: entry, own: entry.actor.id == owner.session.profile?.id
-                                )
+                                Group {
+                                    if entry.kind == "date_poll_created", entry.payloadVersion == 1,
+                                        case .string(let rawID) = entry.payload["poll_id"],
+                                        let pollID = UUID(uuidString: rawID),
+                                        let meeting = owner.meeting
+                                    {
+                                        DatePollCard(
+                                            pollID: pollID, meeting: meeting, entry: entry,
+                                            own: entry.actor.id == owner.session.profile?.id,
+                                            session: owner.session)
+                                    } else {
+                                        FeedRecordView(
+                                            entry: entry,
+                                            own: entry.actor.id == owner.session.profile?.id)
+                                    }
+                                }
                                 .id(entry.id)
                                 .background {
                                     GeometryReader { row in

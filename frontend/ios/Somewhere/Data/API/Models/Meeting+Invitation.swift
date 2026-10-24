@@ -5,6 +5,6 @@ extension Meeting {
         InvitationPreview(
             meetingID: id, title: title, description: description,
             startsAt: startsAt, timezone: timezone, place: place, coverURL: coverURL,
-            myRSVP: myRSVP, myRSVPRevision: myRSVPRevision)
+            myRSVP: myRSVP, myRSVPRevision: myRSVPRevision, startsOn: startsOn)
     }
 }

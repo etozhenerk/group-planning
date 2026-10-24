@@ -11,16 +11,17 @@ struct MeetingDraftTests {
         draft.clock = .init(hour: 19, minute: 0)
         return draft
     }
-    @Test func dateAndTimeMustBeChosenAndOffsetIsPreserved() throws {
+    @Test func dateIsRequiredAndOptionalTimePreservesOffset() throws {
         var draft = MeetingDraft(timezone: "Europe/Moscow")
         #expect(throws: DraftIssue.title) { try draft.input() }
         draft.title = "Встреча"
         #expect(throws: DraftIssue.day) { try draft.input() }
         draft.day = .init(year: 2026, month: 10, day: 24)
-        #expect(throws: DraftIssue.clock) { try draft.input() }
+        let dateOnly = try draft.input()
+        #expect(dateOnly.startsAt == nil && dateOnly.startsOn == "2026-10-24")
         let input = try Self.filled().input()
         #expect(input.title == "Настолки")
-        #expect(input.startsAt.rawValue == "2026-10-24T19:00:00+03:00")
+        #expect(input.startsAt?.rawValue == "2026-10-24T19:00:00+03:00")
         #expect(input.description == nil && input.place == nil)
     }
     @Test func missingAndRepeatedHoursDoNotMoveSilently() throws {
@@ -35,12 +36,16 @@ struct MeetingDraftTests {
         let early = try draft.input()
         draft.repetition = .later
         let late = try draft.input()
-        #expect(late.startsAt.date.timeIntervalSince(early.startsAt.date) == 3600)
+        #expect(
+            try #require(late.startsAt).date.timeIntervalSince(#require(early.startsAt).date)
+                == 3600)
     }
     @Test func invalidCalendarAndUnicodeScalarLimits() throws {
         var draft = Self.filled()
         draft.day = .init(year: 2026, month: 2, day: 30)
-        #expect(throws: DraftIssue.nonexistent) { try draft.input() }
+        #expect(throws: DraftIssue.day) { try draft.input() }
+        draft.clock = nil
+        #expect(throws: DraftIssue.day) { try draft.input() }
         draft = Self.filled()
         draft.title = String(repeating: "🙂", count: 120)
         #expect(throws: Never.self) { try draft.input() }

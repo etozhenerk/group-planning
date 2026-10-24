@@ -12,5 +12,5 @@ internal data class InvitationDetails(
 }
 
 internal fun Meeting.preview(): InvitationPreview = InvitationPreview(
-    id, title, startsAt, timezone, place, coverUrl, myRsvp, myRsvpRevision, description,
+    id, title, startsAt, timezone, place, coverUrl, myRsvp, myRsvpRevision, description, startsOn,
 )

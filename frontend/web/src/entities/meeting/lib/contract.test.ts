@@ -1,7 +1,13 @@
 import fs from 'node:fs';
 import { z } from 'zod';
 import { describe, expect, it } from 'vitest';
-import { entrySchema, previewSchema, responseSchema, revision } from '@/shared/api';
+import {
+  entrySchema,
+  previewSchema,
+  responseSchema,
+  revision,
+  invitationsSchema,
+} from '@/shared/api';
 import { mapEntry, mergeEntries } from '@/entities/meeting/lib/mapFeed';
 
 const raw: unknown = JSON.parse(
@@ -23,6 +29,11 @@ const body = (name: string): unknown => {
 };
 
 describe('shared API fixtures', () => {
+  it('decodes saved invitations with only the current maybe answer', () => {
+    const page = invitationsSchema.parse(body('saved-invitations'));
+    expect(page.invitations[0]?.preview.my_rsvp).toBe('maybe');
+    expect(page.next_cursor).toBeNull();
+  });
   it('keeps missing date, place and own answer as null', () => {
     const data = previewSchema.parse(body('undated-invitation'));
     expect(data.starts_at).toBeNull();

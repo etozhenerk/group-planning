@@ -1,0 +1,36 @@
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--surface);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.tabs a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.tabs a[aria-current='page'] {
+  color: var(--action-text);
+  background: var(--action);
+}
+
+@media (max-width: 400px) {
+  .tabs {
+    width: 100%;
+  }
+
+  .tabs a {
+    flex: 1;
+    padding-inline: 10px;
+  }
+}

@@ -1,7 +1,9 @@
 package dev.groupplanning.android.data.repository
 
+import dev.groupplanning.android.data.api.ApiRequest
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.FailureKind
+import dev.groupplanning.android.data.api.models.DatePoll
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
@@ -21,6 +23,16 @@ internal class FeedRepository(
     private val outbox: MessageOutbox,
 ) {
     val snapshot = session.state
+
+    suspend fun poll(access: MeetingAccess, request: ApiRequest): DatePoll {
+        val poll = session.authenticated(
+            request,
+            DatePoll.serializer(),
+            expectedLease = access.request,
+        )
+        if (poll.meetingId != access.id) throw ClientFailure(FailureKind.InvalidResponse)
+        return poll
+    }
 
     suspend fun open(id: UUID): MeetingAccess = session.meetingAccess(id)
 

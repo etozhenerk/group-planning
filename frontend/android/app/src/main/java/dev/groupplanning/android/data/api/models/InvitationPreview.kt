@@ -17,4 +17,5 @@ internal data class InvitationPreview(
     @SerialName("my_rsvp") val myRsvp: RsvpAnswer?,
     @SerialName("my_rsvp_revision") val myRsvpRevision: ServerCounter,
     val description: String? = null,
+    @SerialName("starts_on") val startsOn: String? = null,
 )
