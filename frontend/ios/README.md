@@ -7,10 +7,11 @@
 
 ## Окружение
 
-- macOS с Xcode **26.0.1**, build **17A400**.
-- Компилятор **Swift 6.2**, языковой режим **Swift 6** и complete concurrency checks.
-- **swift-format 6.2.0** из Xcode, отдельная установка не требуется.
-- Сборочный SDK — **iOS Simulator 26.0**, deployment target — **17.0**.
+- macOS с Xcode **27.1**, build **27A9275**.
+- Компилятор **Swift 6.4**, языковой режим **Swift 6** и complete concurrency checks.
+- **swift-format** из этой сборки Xcode (`--version` выводит `main`), отдельная установка не требуется.
+- Сборочный SDK — **iOS Simulator 27.1**, тестовый runtime — **iOS 27.0**,
+  deployment target — **17.0**.
 - Схема и target — **Somewhere**, bundle ID — `dev.groupplanning.ios`.
 
 Xcode закреплён в `.xcode-version`, остальные инструменты — в
@@ -24,8 +25,16 @@ Xcode закреплён в `.xcode-version`, остальные инструм�
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer sh scripts/check-toolchain.sh
 ```
 
-В CI используется `macos-15` с `/Applications/Xcode_26.0.1.app` из
-[официального набора runner-images](https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md).
+В CI используется preview-образ `xcode-27` с `/Applications/Xcode_27.1.app` из
+[официального набора runner-images](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md).
+Образ содержит ту же сборку Xcode и runtime iOS 27.0; статус preview может
+влиять на доступность runner. Локально runtime устанавливается командой:
+
+```sh
+xcodebuild -downloadPlatform iOS -buildVersion 27.0 -architectureVariant arm64
+```
+
+Перед тестами открой одно устройство с iOS 27.0 в Simulator.
 Обновлять инструменты следует отдельным изменением вместе с локальной проверкой.
 Поддержку SDK и deployment target описывает [Apple](https://developer.apple.com/xcode/system-requirements).
 
@@ -64,7 +73,8 @@ sh scripts/test-ui.sh startup
 [аудит экранов и запуск](../../openspec/changes/gathering-activity-feed/ios-accessibility-verification.md).
 
 Открой `Somewhere.xcodeproj`, выбери схему `Somewhere` и доступный iPhone
-с iOS 17 или новее, затем Run. Локально доступен iPhone 17 / iOS 26.0.
+с iOS 17 или новее, затем Run. Для локальных тестов нужен один открытый iPhone
+с runtime iOS 27.0; тестовые скрипты сами устройства не создают.
 Сборка для симулятора не проверяет публикацию и подпись на реальном устройстве.
 Минимум 17 закреплён в бинарнике; отдельный запуск на iOS 17 ещё не проверен.
 
@@ -73,7 +83,7 @@ sh scripts/test-ui.sh startup
 Сводки и текстовые логи публикуются после прогона; полный `.xcresult` — только
 при ручном запуске с `full_diagnostics`. Подробности — в [правилах CI](../../docs/ci.md).
 `test.sh` использует
-уже открытый симулятор iOS 26 и запускает `SomewhereTests`.
+уже открытый симулятор iOS 27.0 и запускает `SomewhereTests`.
 Если открыто несколько, задай `SOMEWHERE_SIMULATOR_ID=<UDID>`.
 Локально новые устройства не создаются; скрипт не выключает и не удаляет
 пользовательский симулятор. Unit и UI запускаются последовательно; общий

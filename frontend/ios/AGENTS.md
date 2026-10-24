@@ -23,7 +23,7 @@ Swift и SwiftUI, Swift 6 concurrency. Экраны, навигация и со�
   `UpperCamelCase`, свойства и методы — `lowerCamelCase`; используй содержательные
   метки аргументов и минимально необходимую видимость.
 - Для форматирования используем [swift-format](https://github.com/swiftlang/swift-format).
-  Используй закреплённый swift-format 6.2.0 из Xcode и `.swift-format`:
+  Используй swift-format из закреплённой сборки Xcode и `.swift-format`:
   4 пробела, до 100 символов в строке. Не заменяй его другим SwiftFormat.
 - Предпочитай `let` и типы-значения, если не нужна общая изменяемая идентичность.
   Обрабатывай optional, ошибки и отмену явно. Не используй принудительное
@@ -74,7 +74,7 @@ Swift и SwiftUI, Swift 6 concurrency. Экраны, навигация и со�
 
 Из `frontend/ios` запускай `sh scripts/format.sh --check` и
 `sh scripts/build.sh`: строгий swift-format, чистая simulator-сборка и анализ.
-`sh scripts/test.sh` выполняет Swift Testing на уже запущенном симуляторе iOS 26:
+`sh scripts/test.sh` выполняет Swift Testing на уже запущенном симуляторе iOS 27.0:
 контрактные fixtures, URLSession/отмена, настоящий Keychain, 401/403 и гонки
 сессии. Локальные тесты не создают и не удаляют устройства. Для выбора среди нескольких
 запущенных задай `SOMEWHERE_SIMULATOR_ID=<UDID>`. Запускай unit и UI строго
@@ -101,7 +101,9 @@ loopback-порту. Нужен Go 1.27.2; `GO_BIN` может задавать 
 Сборка использует схему `Somewhere`, `generic/platform=iOS Simulator`,
 отключённую подпись и игнорируемый `.build/DerivedData`.
 
-CI выполняет те же команды на `macos-15` с выбранным Xcode 26.0.1.
+CI выполняет те же команды на preview-образе `xcode-27` с выбранным Xcode 27.1
+(27A9275), SDK 27.1 и runtime iOS 27.0. Версия встроенного swift-format — `main`;
+точность инструмента дополнительно обеспечивается проверкой сборки Xcode.
 Тесты моделей/сессии находятся в `SomewhereTests`; общие fixtures включены
 из `contracts/fixtures/cases.json` ссылкой в проекте, без копирования исходника.
 UI и жизненный цикл проверяй вместе с соответствующими экранами. Текущий

@@ -29,7 +29,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: macos-15
+    runs-on: xcode-27
     timeout-minutes: 20
     outputs:
       failures: ${{ steps.report.outputs.failures }}
@@ -59,7 +59,7 @@ jobs:
           steps: ${{ toJSON(steps) }}
   checkers:
     name: Checkers
-    runs-on: macos-15
+    runs-on: xcode-27
     timeout-minutes: 20
     outputs:
       failures: ${{ steps.report.outputs.failures }}
@@ -89,7 +89,7 @@ jobs:
           steps: ${{ toJSON(steps) }}
   tests:
     name: Unit and UI tests
-    runs-on: macos-15
+    runs-on: xcode-27
     timeout-minutes: 35
     outputs:
       failures: ${{ steps.report.outputs.failures }}
