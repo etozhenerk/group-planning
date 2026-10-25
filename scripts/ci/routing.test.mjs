@@ -38,6 +38,7 @@ const cases = [
   ['Backend source', ['backend/internal/httpapi/router.go'], ['backend', 'contracts']],
   ['Mixed native change', ['frontend/ios/.swift-format', 'frontend/android/app/build.gradle.kts'], ['android', 'ios']],
   ['Product docs', ['docs/product/overview.md'], ['repository']],
+  ['Host metrics', ['infra/host/postgres-metrics.py'], ['repository']],
   ['OpenAPI schema', ['contracts/openapi.yaml'], ['contracts']],
   ['Shared native fixtures', ['contracts/fixtures/cases.json'], ['android', 'contracts', 'ios']],
   ['Node dependency lock', ['package-lock.json'], ['contracts', 'repository', 'web']],

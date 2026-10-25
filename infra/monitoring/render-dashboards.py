@@ -43,4 +43,4 @@ for key, definition in catalog.items():
     payload = {'title': definition['title'], 'description': definition['description'],
                'parametrization': None, 'eventSources': None, 'widgets': widgets, 'presetItems': []}
     (destination / (key + '.json')).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
-print('Rendered four Monium dashboard JSON files.')
+print(f'Rendered {len(catalog)} Monium dashboard JSON files.')

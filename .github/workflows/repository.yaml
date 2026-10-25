@@ -9,6 +9,7 @@ on:
       - 'openspec/**'
       - '.agents/**'
       - 'scripts/**'
+      - 'infra/host/**'
       - '.github/**'
       - '.gitignore'
       - 'frontend/*/AGENTS.md'
@@ -25,6 +26,7 @@ on:
       - 'openspec/**'
       - '.agents/**'
       - 'scripts/**'
+      - 'infra/host/**'
       - '.github/**'
       - '.gitignore'
       - 'frontend/*/AGENTS.md'
@@ -106,6 +108,10 @@ jobs:
         id: releases
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py releases python3 -m unittest discover -s scripts/release -p "test_*.py" -v
+      - name: Private host metrics tests
+        id: host_metrics
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py host_metrics python3 -m unittest discover -s infra/host -p "test_*.py" -v
       - name: Platform trigger isolation
         id: routing
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}

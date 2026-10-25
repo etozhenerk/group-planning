@@ -39,6 +39,7 @@ def build(tag, number, destination):
         check('go-vet', 'go', 'vet', './...', cwd=folder)
         check('go-race', 'go', 'test', '-race', './...', cwd=folder)
         if component == 'backend':
+            check('host-metrics-tests', 'python3', '-m', 'unittest', 'discover', '-s', 'infra/host', '-p', 'test_*.py')
             check('dependency-boundaries', 'go', 'run', './cmd/check-dependencies', cwd=folder)
             check('api-contract', 'npm', 'run', 'api:test')
         else:

@@ -2,9 +2,37 @@
 """Закрытый exporter: только агрегаты PostgreSQL и возраст копии, без запросов/PII."""
 import http.server
 import json
+import math
 from pathlib import Path
 import subprocess
 import time
+
+
+BUSINESS_FIELDS = frozenset({
+    'users', 'meetings', 'chats', 'chats_with_messages', 'messages',
+    'logins_total', 'logins_today', 'tracking_started_timestamp_seconds',
+})
+
+
+def collect_business():
+    """Read only the aggregate view; missing data must not turn into zero users."""
+    values = {'somewhere_business_collection_success': 0}
+    try:
+        result = subprocess.run(
+            ['psql', '-XAt', '-d', 'somewhere', '-v', 'ON_ERROR_STOP=1', '-c',
+             'SELECT json_object_agg(metric, value) FROM observability.business_metrics'],
+            capture_output=True, text=True, timeout=3, check=True)
+        metrics = json.loads(result.stdout)
+        if not isinstance(metrics, dict) or set(metrics) != BUSINESS_FIELDS:
+            return values
+        if any(type(value) not in (int, float) or not math.isfinite(value) or value < 0
+               for value in metrics.values()):
+            return values
+        values.update({f'somewhere_business_{name}': value for name, value in metrics.items()})
+        values['somewhere_business_collection_success'] = 1
+    except (subprocess.SubprocessError, ValueError, OSError):
+        pass
+    return values
 
 
 def collect():
@@ -23,6 +51,7 @@ def collect():
         values['somewhere_postgres_up'] = 1
     except (subprocess.SubprocessError, ValueError, OSError):
         pass
+    values.update(collect_business())
     try:
         manifest = json.loads(Path('/var/lib/somewhere-backup/latest.json').read_text())
         values['somewhere_backup_last_success_timestamp'] = manifest['completed_at']

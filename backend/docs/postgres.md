@@ -69,3 +69,37 @@ GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go test -c \
 копию, восстановить, сверить данные, сменить DSN и проверить readiness.
 После новых записей в новой БД простой возврат DSN запрещён: потребуется
 обратный перенос изменений или восстановление с явно согласованным RPO.
+
+
+## Необязательные бизнес-метрики
+
+Новый backend-релиз содержит `somewhere-migrate -business-metrics`. Обычный запуск
+миграций этот модуль не включает. Перед включением проверить его на изолированной
+`somewhere_integration`: `TestBusinessMetricsPersistenceAndPrivacy` не должен быть
+пропущен. Нужны уже существующие роли `somewhere` и `somewhere_metrics`.
+
+После установки проверенного релиза выполнить на ВМ под DDL-ролью:
+
+```sh
+sudo -u somewhere_migrator env \
+  SOMEWHERE_DATABASE_URL='host=/var/run/postgresql dbname=somewhere user=somewhere_migrator sslmode=disable' \
+  /opt/somewhere/backend/current/somewhere-migrate -business-metrics
+```
+
+Схема `observability` содержит checksum установки, суммарные входы по дням UTC,
+триггер новых сессий и агрегирующее представление. Прикладная схема остаётся
+версии 1: предыдущий API может работать с ней и обновлять счётчик через триггер.
+Повторное включение проверяет checksum и не сбрасывает числа. Изменение установленного
+SQL требует отдельной миграции, подмена checksum запрещена.
+
+После этого заменить `postgres-metrics.py` проверенной версией, перезапустить
+`somewhere-postgres-metrics.service`, проверить локальный `/metrics` и девять
+`somewhere_business_*` в Monium. Экспортёр имеет SELECT только на представление,
+не на профили или сессии. При сбое чтения он не публикует вымышленные нули.
+Счётчик не восстанавливает историю до включения; её начало хранится отдельно.
+
+Обычный pg_dump включает observability, триггер и ACL. В restore drill сверить
+входы и начало истории, владельца функции, права exporter; проверить новый login
+после восстановления. При восстановлении с `--no-acl` восстановить разрешения
+явно: USAGE на схему и SELECT на представление для `somewhere_metrics`.
+Откат API не требует удаления observability и не обнуляет накопленные входы.

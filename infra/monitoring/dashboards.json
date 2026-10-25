@@ -33,7 +33,7 @@
   },
   "overview": {
     "title": "somewhere — Обзор",
-    "description": "Инфраструктура подготовлена. Приложение ещё не выпущено: HTTP отвечает 503. RPS, p95, 5xx, worker и внешняя HTTPS-проверка появятся после постоянного адаптера БД и домена. Здоровая PostgreSQL не означает доступность приложения.",
+    "description": "API и web выпущены на https://smwhere.ru с PostgreSQL. Прикладные RPS, p95, 5xx и worker пока не подключены. Графики внешней HTTPS-проверки подготовлены; функция ещё не запущена. Пропуски данных не равны успеху.",
     "charts": [
       {
         "title": "PostgreSQL доступна (1 / 0)",
@@ -45,6 +45,45 @@
         "title": "Возраст успешной копии, часы",
         "queries": [
           "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_backup_age_seconds\",service=\"custom\",host=\"__INSTANCE_ID__\"} / 3600"
+        ]
+      },
+      {
+        "title": "HTTPS /readyz: успех (1 / 0)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_success\",service=\"custom\",environment=\"production\",probe=\"api\"}"
+        ]
+      },
+      {
+        "title": "HTTPS /readyz: HTTP-статус",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_status_code\",service=\"custom\",environment=\"production\",probe=\"api\"}"
+        ]
+      },
+      {
+        "title": "Внешняя проверка: полное время и TTFB, секунды",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_duration_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_ttfb_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}"
+        ]
+      },
+      {
+        "title": "Внешняя проверка: DNS / TCP / TLS, секунды",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_dns_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_tcp_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_tls_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}"
+        ]
+      },
+      {
+        "title": "Сертификат: осталось дней",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_certificate_days\",service=\"custom\",environment=\"production\",probe=\"api\"}"
+        ]
+      },
+      {
+        "title": "Последний запуск проверки, Unix timestamp (секунды)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_probe_last_run_timestamp_seconds\",service=\"custom\",environment=\"production\",probe=\"api\"}"
         ]
       }
     ]
@@ -146,6 +185,61 @@
         "queries": [
           "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.net.Ifs.RxBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",intf=\"eth0\"}",
           "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"sys.net.Ifs.TxBytes\",service=\"custom\",host=\"__INSTANCE_ID__\",intf=\"eth0\"}"
+        ]
+      }
+    ]
+  },
+  "business": {
+    "title": "somewhere — Бизнес",
+    "description": "Агрегаты без персональных данных. Источник ожидает отдельного включения на ВМ: отсутствие точек не означает ноль. Чат — лента встречи, включая пустую; чаты с сообщениями показаны отдельно. Вход — создание сессии после успешной авторизации. История входов начинается с включения учёта, день — UTC. Тестовый аккаунт владельца включён.",
+    "charts": [
+      {
+        "title": "Зарегистрированные пользователи",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_users\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Встречи — все состояния",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_meetings\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Чаты / чаты с сообщениями",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_chats\",service=\"custom\",host=\"__INSTANCE_ID__\"}",
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_chats_with_messages\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Сообщения пользователей",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_messages\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Успешные входы с начала учёта",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_logins_total\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Успешные входы за сегодня, UTC",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_logins_today\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Сбор бизнес-метрик исправен (1 / 0)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_collection_success\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
+        ]
+      },
+      {
+        "title": "Начало учёта входов, Unix timestamp (секунды)",
+        "queries": [
+          "{project=\"folder____FOLDER_ID__\",cluster=\"default\",name=\"somewhere_business_tracking_started_timestamp_seconds\",service=\"custom\",host=\"__INSTANCE_ID__\"}"
         ]
       }
     ]
