@@ -18,7 +18,9 @@
   ограничения, файлы с размерами. Секреты в карточку не включаются.
 - Web получает встроенную идентичность и `build-info.json` из одного
   проверенного объекта. Сокращения SemVer и fallback из package.json нет.
-  Футер показывает полный номер, справка — тот же номер и отдельную сборку.
+  Футер только десктопного онбординга показывает полный номер, справка на всех
+  размерах экрана — тот же номер и отдельную сборку. Внутренние страницы и
+  mobile web не содержат видимого футера; native-футер не добавляется.
   Dev/demo имеют собственные подписи. Запрос к API за версией не выполняется.
 - Проверка архива сравнивает его идентичность с manifest даже при корректно
   пересчитанных SHA256. Отдельный browser smoke открывает распакованный bundle.
@@ -31,9 +33,9 @@
 | --- | --- |
 | `python3 -m unittest discover -s scripts/release -p 'test_*.py'` | 28 passed: реальные временные Git-репозитории, RC/финал/rerun Android/iOS, порядок и независимость тегов, карточка/SHA, полный набор всех пяти компонентов, подмена версии/карточки, неизменяемость публикации, безопасная распаковка |
 | `vitest run scripts/build-identity.test.ts` | 4 passed: strict metadata, stable/RC/dev/demo/неполные данные, посторонняя VITE_APP_VERSION, разделение версии и сборки |
-| `validate_web_builds.py --output .cache/release-policy-ui-4` | Три сборки TypeScript/Vite; 3 browser tests passed |
+| `validate_web_builds.py --output .cache/release-policy-ui-8` | Три сборки TypeScript/Vite; 4 browser tests passed по UX v2 |
 | Локальное сравнение артефактов | Кандидат `0.1.0-rc.3`, предыдущий `0.1.0-rc.2`, длинный `0.12.34-rc.123`; совпали manifest/build-info/отрисованный номер; открытая вкладка сохранила старый номер, reload сменил его, возврат архива восстановил предыдущий |
-| Доступность версии | API заблокирован, вход не выполнен; 320/390/1280 px, 200% текста, фокус и Enter на ссылке версии; горизонтального переполнения нет |
+| Доступность версии | API заблокирован, вход не выполнен; справка 320/390/1280 px и 200% текста; footer на desktop onboarding, скрыт на 320/390/739 и на touch-телефоне 844×390, виден с 740 при hover/fine pointer; фокус/Enter по версии ведут в справку без footer |
 | `npm run agent:check`, strict validation обоих связанных changes, `git diff --check` | Passed |
 | Полный `npm run web:check` | Passed: TypeScript, ESLint, CSS spacing, FSD/AST, Prettier, 72 Vitest tests в 22 файлах |
 | Основной E2E | По отчёту соседнего web-агента: штатный прогон 116 passed, 1 skipped (нужны native-клиенты). `frontend/web/test-results/.last-run.json` подтверждает passed/пустой failedTests. После финальной типографики выполняется прицельная повторная проверка |
@@ -44,11 +46,19 @@
 `not_for_publication`. SHA базового HEAD не доказывает чистоту такого fixture;
 реальная сборка отдельно требует чистый checkout существующего тега.
 
+После нового решения владельца размещение пересмотрено в UX v2: footer только
+на desktop onboarding. Артефактная проверка выявила старый брендовый footer
+LandingPage рядом с ServiceFooter; web-агент удалил дубль. Повторный прогон
+подтвердил единственный footer на `/` в desktop-компоновке, его скрытие на
+mobile web (включая touch landscape 844×390) и отсутствие на `/about`. Поиск использования компонента в исходниках
+подтвердил единственное место включения: `Root`, только `pathname === '/'`.
+
 Снимки: [320 px](assets/release-identity/version-320.png),
 [390 px](assets/release-identity/version-390.png),
 [1280 px](assets/release-identity/version-1280.png),
 [200% текста](assets/release-identity/version-320-large-text.png),
-[длинный RC](assets/release-identity/version-long-320.png).
+[длинный RC](assets/release-identity/version-long-320.png),
+[футер десктопного онбординга](assets/release-identity/version-onboarding-1280.png).
 Это доказательство отображения номера; полный визуальный аудит приложения
 остаётся в `meeting-experience-refresh`.
 
