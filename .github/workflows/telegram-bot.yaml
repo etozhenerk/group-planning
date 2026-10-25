@@ -85,8 +85,7 @@ jobs:
         id: gofmt
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         working-directory: infra/telegram-bot
-        run: python3 ../../scripts/ci/run.py gofmt sh -c 'files=$(gofmt -l .); if [ -n
-          "$files" ]; then printf "%s\n" "$files"; exit 1; fi'
+        run: python3 ../../scripts/ci/run.py gofmt sh ../../scripts/ci/check-gofmt.sh
       - name: Go vet
         id: vet
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
