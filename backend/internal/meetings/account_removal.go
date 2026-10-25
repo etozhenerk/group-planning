@@ -88,6 +88,26 @@ func (s *Service) removeMeetingAccount(writer Writer, meeting Meeting, userID st
 		return err
 	}
 
+	items, err := writer.MeetingMedia(meeting.ID)
+	if err != nil {
+		return err
+	}
+
+	for _, item := range items {
+		if item.UploadedBy.ID == userID {
+			if item.Status != "published" {
+				if err := writer.DeleteMedia(item.ID); err != nil {
+					return err
+				}
+			} else {
+				item.UploadedBy.Name = RemovedAccountName
+				if err := writer.SaveMedia(item); err != nil {
+					return err
+				}
+			}
+		}
+	}
+
 	if err := s.removeAccountTasks(writer, meeting, userID); err != nil {
 		return err
 	}

@@ -9,6 +9,10 @@ func (tx *transaction) RemoveUser(id string) error {
 		return err
 	}
 
+	if _, err := tx.exec("DELETE FROM message_reactions WHERE user_id=$1", id); err != nil {
+		return err
+	}
+
 	_, err := tx.exec("DELETE FROM request_receipts WHERE user_id=$1", id)
 
 	return err

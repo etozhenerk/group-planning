@@ -12,6 +12,7 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/storage/files"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
@@ -19,11 +20,17 @@ import (
 // Serve binds the supplied store to HTTP and drains requests on cancellation.
 // The caller owns the listener; Serve closes it on return.
 func Serve(ctx context.Context, listener net.Listener, store meetings.Store, config Config, logger *slog.Logger) error {
-	return ServeWithStorage(ctx, listener, store, memory.NewIdentity(), nil, config, logger)
+	content, err := files.NewMedia()
+	if err != nil {
+		return err
+	}
+	defer content.Close()
+
+	return ServeWithStorage(ctx, listener, store, memory.NewIdentity(), nil, config, logger, meetings.WithMediaContent(content))
 }
 
 // ServeWithStorage binds both persistent stores and a dependency readiness check.
-func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, ready func(context.Context) error, config Config, logger *slog.Logger) error {
+func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, ready func(context.Context) error, config Config, logger *slog.Logger, appOptions ...meetings.Option) error {
 	defer listener.Close()
 	if config.ShutdownTimeout < time.Second || config.ShutdownTimeout > 30*time.Second {
 		return fmt.Errorf("invalid shutdown timeout")
@@ -33,7 +40,7 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return nil
 	}
 
-	app := meetings.NewService(store, time.Now)
+	app := meetings.NewService(store, time.Now, appOptions...)
 	service, err := newIdentity(config.Auth, identities, app.InvitationExists)
 	if err != nil {
 		return err
@@ -44,7 +51,12 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return err
 	}
 
-	var handler http.Handler = httpapi.NewWithIdentity(app, service, logger, deletion)
+	feedback, err := newSupport(config)
+	if err != nil {
+		return err
+	}
+
+	var handler http.Handler = httpapi.NewWithSupport(app, service, feedback, logger, deletion)
 	if config.WebDirectory != "" {
 		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {
@@ -118,6 +130,14 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 	go func() { defer close(placeDone); placeWorker.Run(placeCtx) }()
 	defer func() { stopPlaceWorker(); <-placeDone }()
 
+	mediaCtx, stopMediaCleanup := context.WithCancel(ctx)
+	supportCtx, stopSupport := context.WithCancel(ctx)
+	supportDone := make(chan struct{})
+	go func() { defer close(supportDone); deliverSupport(supportCtx, feedback, logger) }()
+	defer func() { stopSupport(); <-supportDone }()
+	mediaDone := make(chan struct{})
+	go func() { defer close(mediaDone); cleanupMedia(mediaCtx, app, logger) }()
+	defer func() { stopMediaCleanup(); <-mediaDone }()
 	cleanupCtx, stopCleanup := context.WithCancel(ctx)
 	cleanupDone := make(chan struct{})
 	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()

@@ -7,16 +7,20 @@ import (
 )
 
 // PublicInvitation contains only details a holder of the invitation may see.
-// Profiles, responses and messages must never be added implicitly.
+// Only the organizer's public identity may be resolved; contacts and chat stay private.
 type PublicInvitation struct {
-	MeetingID    string
-	Title        string
-	Description  string
-	StartsOn     string
-	StartsAt     *time.Time
-	Timezone     string
-	Place        string
-	CoverVersion string
+	OrganizerID        string
+	MeetingID          string
+	Title              string
+	Description        string
+	StartsOn           string
+	StartsAt           *time.Time
+	Timezone           string
+	Place              string
+	CoverVersion       string
+	JoinClosesAt       *time.Time
+	CanJoin            bool
+	JoinDisabledReason string
 }
 
 func validInvitationToken(token string) bool {
@@ -52,6 +56,7 @@ func Preview(ctx context.Context, store Store, token string) (PublicInvitation, 
 
 func publicInvitation(meeting Meeting) PublicInvitation {
 	return PublicInvitation{
+		OrganizerID:  meeting.OrganizerID,
 		MeetingID:    meeting.ID,
 		Title:        meeting.Title,
 		Description:  meeting.Description,
@@ -60,5 +65,35 @@ func publicInvitation(meeting Meeting) PublicInvitation {
 		Timezone:     meeting.Timezone,
 		Place:        meeting.Place,
 		CoverVersion: meeting.CoverVersion,
+		CanJoin:      true,
 	}
+}
+
+func (s *Service) invitationAvailability(meeting Meeting, response RSVP, userID string) PublicInvitation {
+	preview := publicInvitation(meeting)
+	if meeting.StartsAt != nil {
+		closes := meeting.StartsAt.Add(-time.Hour)
+		preview.JoinClosesAt = &closes
+	}
+
+	if meeting.OrganizerID == userID || response.Answer == Going {
+		return preview
+	}
+
+	preview.JoinDisabledReason = joinDisabledReason(meeting, s.now())
+	preview.CanJoin = preview.JoinDisabledReason == ""
+
+	return preview
+}
+
+func joinDisabledReason(meeting Meeting, now time.Time) string {
+	if meeting.Status == Past {
+		return "meeting_past"
+	}
+
+	if meeting.StartsAt != nil && !now.Before(meeting.StartsAt.Add(-time.Hour)) {
+		return "join_closed"
+	}
+
+	return ""
 }

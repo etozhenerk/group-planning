@@ -74,12 +74,9 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 			return ErrInvalidAttempt
 		}
 
-		user, exists := records.UserBySubject("yandex:" + profile.Subject)
-		if !exists {
-			user = User{ID: uuid(), DisplayName: profile.DisplayName, CreatedAt: s.now()}
-			if err := records.PutUser("yandex:"+profile.Subject, user); err != nil {
-				return err
-			}
+		user, err := s.saveProfile(records, profile)
+		if err != nil {
+			return err
 		}
 
 		current.ProviderVerifier = ""

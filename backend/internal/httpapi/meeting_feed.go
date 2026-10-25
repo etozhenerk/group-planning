@@ -28,6 +28,28 @@ func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ids := []string{}
+	seen := map[string]bool{}
+	for _, entry := range result.Entries {
+		if !seen[entry.ActorID] {
+			ids = append(ids, entry.ActorID)
+			seen[entry.ActorID] = true
+		}
+
+		for _, item := range entry.Attachments {
+			if !seen[item.UploadedBy.ID] {
+				ids = append(ids, item.UploadedBy.ID)
+				seen[item.UploadedBy.ID] = true
+			}
+		}
+	}
+
+	users, err := h.identity.Users(r.Context(), ids)
+	if err != nil {
+		h.writeMeetingError(w, err)
+		return
+	}
+
 	response := feedPageResponse{
 		Entries:          []feedEntryResponse{},
 		HasMore:          result.HasMore,
@@ -38,7 +60,7 @@ func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 		LatestSequence:   decimal(result.LatestSequence),
 	}
 	for _, entry := range result.Entries {
-		response.Entries = append(response.Entries, entryDTO(entry))
+		response.Entries = append(response.Entries, entryDTO(entry, users))
 	}
 
 	writeJSON(w, 200, response)

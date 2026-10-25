@@ -20,8 +20,9 @@ type exchangeResponse struct {
 	ReturnContext authContextResponse `json:"return_context"`
 }
 type userResponse struct {
-	ID          string `json:"id"`
-	DisplayName string `json:"display_name"`
+	ID          string  `json:"id"`
+	DisplayName string  `json:"display_name"`
+	AvatarURL   *string `json:"avatar_url,omitempty"`
 }
 type meResponse struct {
 	User      userResponse `json:"user"`
@@ -77,7 +78,7 @@ func (h authHandlers) me(w http.ResponseWriter, r *http.Request) {
 		csrf = &principal.CSRF
 	}
 
-	writeJSON(w, 200, meResponse{userResponse{principal.User.ID, principal.User.DisplayName}, principal.ExpiresAt, csrf})
+	writeJSON(w, 200, meResponse{publicUserDTO(principal.User), principal.ExpiresAt, csrf})
 }
 
 func (h authHandlers) logout(w http.ResponseWriter, r *http.Request) {

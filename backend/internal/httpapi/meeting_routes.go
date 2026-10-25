@@ -16,6 +16,11 @@ type meetingHandlers struct {
 
 func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service) {
 	h := meetingHandlers{app, service, authHandlers{service: service}}
+	mux.HandleFunc("/api/v1/meetings/{id}/media/limits", h.mediaLimits)
+	mux.HandleFunc("/api/v1/meetings/{id}/media/uploads", h.prepareMedia)
+	mux.HandleFunc("/api/v1/meetings/{id}/media/{media_id}/content", h.mediaContent)
+	mux.HandleFunc("/api/v1/meetings/{id}/media/{media_id}/publish", h.publishMedia)
+	mux.HandleFunc("/api/v1/meetings/{id}/memories", h.memories)
 	mux.HandleFunc("/api/v1/meetings/{id}/cover", h.readCover)
 	mux.HandleFunc("/api/v1/invitations/{token}/cover", h.readInvitationCover)
 	mux.HandleFunc("/api/v1/meetings", h.collection)
@@ -25,6 +30,8 @@ func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identi
 	mux.HandleFunc("/api/v1/meetings/{id}/rsvp", h.respond)
 	mux.HandleFunc("/api/v1/meetings/{id}/feed", h.feed)
 	mux.HandleFunc("/api/v1/meetings/{id}/messages", h.message)
+	mux.HandleFunc("/api/v1/meetings/{id}/reactions", h.reactions)
+	mux.HandleFunc("/api/v1/meetings/{id}/messages/{entry_id}/reactions", h.setReaction)
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls", h.createDatePoll)
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls/{poll_id}", h.readDatePoll)
 	mux.HandleFunc("/api/v1/meetings/{id}/date-polls/{poll_id}/vote", h.voteDatePoll)
@@ -127,6 +134,8 @@ func (h meetingHandlers) writeMeetingError(w http.ResponseWriter, err error) {
 		}
 
 		writeJSON(w, 409, errorBody{detail})
+	case errors.Is(err, meetings.ErrMediaUnavailable):
+		writeError(w, 503, "media_unavailable", nil)
 	case errors.Is(err, meetings.ErrIdempotencyConflict):
 		writeError(w, 409, "idempotency_key_reused", nil)
 	case errors.Is(err, meetings.ErrNotFound):

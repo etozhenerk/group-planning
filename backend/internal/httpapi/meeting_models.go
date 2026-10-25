@@ -5,25 +5,30 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
 type meetingSummaryResponse struct {
-	ID               string     `json:"id"`
-	Title            string     `json:"title"`
-	StartsOn         *string    `json:"starts_on"`
-	StartsAt         *time.Time `json:"starts_at"`
-	Timezone         string     `json:"timezone"`
-	Place            *string    `json:"place"`
-	CoverURL         *string    `json:"cover_url"`
-	ParticipantCount int        `json:"participant_count"`
-	Revision         string     `json:"revision"`
-	MyRSVP           *string    `json:"my_rsvp"`
-	MyRSVPRevision   string     `json:"my_rsvp_revision"`
+	MemoryPhotoCount   int             `json:"memory_photo_count"`
+	MemoryPreview      []mediaResponse `json:"memory_preview"`
+	OrganizerID        string          `json:"organizer_id"`
+	Period             meetings.Period `json:"period"`
+	ParticipantPreview []userResponse  `json:"participant_preview"`
+	ID                 string          `json:"id"`
+	Title              string          `json:"title"`
+	StartsOn           *string         `json:"starts_on"`
+	StartsAt           *time.Time      `json:"starts_at"`
+	Timezone           string          `json:"timezone"`
+	Place              *string         `json:"place"`
+	CoverURL           *string         `json:"cover_url"`
+	ParticipantCount   int             `json:"participant_count"`
+	Revision           string          `json:"revision"`
+	MyRSVP             *string         `json:"my_rsvp"`
+	MyRSVPRevision     string          `json:"my_rsvp_revision"`
 }
 type meetingResponse struct {
 	meetingSummaryResponse
-	OrganizerID string    `json:"organizer_id"`
 	Description *string   `json:"description"`
 	CreatedAt   time.Time `json:"created_at"`
 }
@@ -83,11 +88,29 @@ func optionalString(value string) *string {
 	return &value
 }
 
-func (h meetingHandlers) summaryDTO(details meetings.Details) meetingSummaryResponse {
+func (h meetingHandlers) summaryDTO(details meetings.Details, users ...map[string]identity.User) meetingSummaryResponse {
 	m := details.Meeting
+	mediaPreview := []mediaResponse{}
+	var profiles map[string]identity.User
+	if len(users) > 0 {
+		profiles = users[0]
+	}
+
+	for _, item := range details.MemoryPreview {
+		mediaPreview = append(mediaPreview, mediaDTO(item, profiles))
+	}
+
+	preview := []userResponse{}
+	if len(users) > 0 {
+		for _, id := range details.ParticipantIDs {
+			preview = append(preview, publicUserDTO(users[0][id]))
+		}
+	}
 
 	return meetingSummaryResponse{
-		ID:               m.ID,
+		MemoryPhotoCount: details.MemoryPhotoCount, MemoryPreview: mediaPreview,
+		ID:          m.ID,
+		OrganizerID: m.OrganizerID, Period: m.Status, ParticipantPreview: preview,
 		Title:            m.Title,
 		StartsOn:         optionalString(m.StartsOn),
 		StartsAt:         m.StartsAt,
@@ -101,10 +124,9 @@ func (h meetingHandlers) summaryDTO(details meetings.Details) meetingSummaryResp
 	}
 }
 
-func (h meetingHandlers) meetingDTO(details meetings.Details) meetingResponse {
+func (h meetingHandlers) meetingDTO(details meetings.Details, users ...map[string]identity.User) meetingResponse {
 	return meetingResponse{
-		meetingSummaryResponse: h.summaryDTO(details),
-		OrganizerID:            details.Meeting.OrganizerID,
+		meetingSummaryResponse: h.summaryDTO(details, users...),
 		Description:            optionalString(details.Meeting.Description),
 		CreatedAt:              details.Meeting.CreatedAt,
 	}
@@ -114,6 +136,31 @@ func rsvpDTO(state meetings.ResponseState) rsvpResponse {
 	return rsvpResponse{state.MeetingID, optionalString(string(state.Answer)), decimal(state.Revision), state.CanAccessFeed, decimal(state.MeetingRevision)}
 }
 
-func entryDTO(entry meetings.FeedEntry) feedEntryResponse {
-	return feedEntryResponse{entry.ID, entry.MeetingID, decimal(entry.Sequence), entry.Kind, entry.PayloadVersion, userResponse{entry.ActorID, entry.ActorName}, entrySender(entry), entry.OccurredAt, entry.Payload, optionalString(entry.ClientRequestID)}
+func entryDTO(entry meetings.FeedEntry, profiles ...map[string]identity.User) feedEntryResponse {
+	var users map[string]identity.User
+	if len(profiles) > 0 {
+		users = profiles[0]
+	}
+
+	actor := userResponse{ID: entry.ActorID, DisplayName: entry.ActorName, AvatarURL: optionalString(users[entry.ActorID].AvatarURL)}
+	if len(entry.Attachments) > 0 {
+		var payload map[string]json.RawMessage
+		if json.Unmarshal(entry.Payload, &payload) == nil {
+			attachments := make([]mediaResponse, 0, len(entry.Attachments))
+			for _, item := range entry.Attachments {
+				attachments = append(attachments, mediaDTO(item, users))
+			}
+
+			raw, err := json.Marshal(attachments)
+			if err == nil {
+				delete(payload, "media_ids")
+				payload["attachments"] = raw
+				if value, err := json.Marshal(payload); err == nil {
+					entry.Payload = value
+				}
+			}
+		}
+	}
+
+	return feedEntryResponse{entry.ID, entry.MeetingID, decimal(entry.Sequence), entry.Kind, entry.PayloadVersion, actor, entrySender(entry), entry.OccurredAt, entry.Payload, optionalString(entry.ClientRequestID)}
 }

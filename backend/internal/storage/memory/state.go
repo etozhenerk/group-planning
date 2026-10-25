@@ -12,7 +12,9 @@ type (
 )
 
 type state struct {
+	media            map[string]meetings.Media
 	removedUsers     map[string]bool
+	reactions        map[meetings.Reaction]meetings.Reaction
 	covers           map[string]meetings.Cover
 	preparationTasks map[string]meetings.PreparationTask
 	placePolls       map[string]meetings.PlacePoll
@@ -30,7 +32,9 @@ type state struct {
 
 func newState() *state {
 	return &state{
+		media:            make(map[string]meetings.Media),
 		removedUsers:     make(map[string]bool),
+		reactions:        make(map[meetings.Reaction]meetings.Reaction),
 		covers:           make(map[string]meetings.Cover),
 		preparationTasks: make(map[string]meetings.PreparationTask),
 		placePolls:       make(map[string]meetings.PlacePoll),
@@ -49,7 +53,9 @@ func newState() *state {
 
 func (s *state) clone() *state {
 	copy := newState()
+	copy.media = maps.Clone(s.media)
 	copy.removedUsers = maps.Clone(s.removedUsers)
+	copy.reactions = maps.Clone(s.reactions)
 	// Payloads stay immutable inside storage; reads/writes clone the bytes.
 	// Snapshotting unrelated meeting data only copies this index.
 	copy.covers = maps.Clone(s.covers)

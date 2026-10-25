@@ -76,6 +76,12 @@ func (s *Service) Respond(ctx context.Context, actor Actor, id, token string, an
 		}
 
 		if details.MyResponse.Answer != answer {
+			if answer == Going {
+				if reason := joinDisabledReason(meeting, s.now()); reason != "" {
+					return &Conflict{Code: reason}
+				}
+			}
+
 			revision, err := increment(details.MyResponse.Revision)
 			if err != nil {
 				return err
@@ -162,16 +168,14 @@ func (s *Service) PreviewForUser(ctx context.Context, token, userID string) (Pub
 			return err
 		}
 
-		result = publicInvitation(meeting)
-
 		if userID != "" {
 			response, err = reader.RSVP(meeting.ID, userID)
-			if errors.Is(err, ErrNotFound) {
-				return nil
+			if err != nil && !errors.Is(err, ErrNotFound) {
+				return err
 			}
-
-			return err
 		}
+
+		result = s.invitationAvailability(meeting, response, userID)
 
 		return nil
 	})

@@ -87,7 +87,7 @@ func TestCrossPlatformFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	api := NewWithIdentity(meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent())), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)

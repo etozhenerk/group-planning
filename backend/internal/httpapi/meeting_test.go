@@ -38,7 +38,9 @@ func (meetingTestProvider) Verify(_ context.Context, code, _ string) (identity.P
 		return identity.Profile{}, errors.New("unknown test profile")
 	}
 
-	return identity.Profile{Subject: code, DisplayName: name}, nil
+	email, phone, avatar := code+"@example.test", "+79991234567", "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+
+	return identity.Profile{Subject: code, DisplayName: name, Email: &email, Phone: &phone, AvatarURL: &avatar}, nil
 }
 
 type meetingHTTPTest struct {
@@ -75,8 +77,8 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 		t.Fatal(err)
 	}
 
-	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) })
-	h.server.Config.Handler = NewWithIdentity(h.app, service, slog.New(slog.NewJSONHandler(&h.logs, nil)), testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
+	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) }, meetings.WithMediaContent(memory.NewMediaContent()))
+	h.server.Config.Handler = NewWithSupport(h.app, service, fixtureSupport(), slog.New(slog.NewJSONHandler(&h.logs, nil)), testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)
@@ -153,6 +155,14 @@ func (h *meetingHTTPTest) request(client *http.Client, method, path string, body
 			parts[6] = "{task_id}"
 		}
 
+		if len(parts) >= 8 && parts[3] == "meetings" && parts[5] == "media" {
+			parts[6] = "{media_id}"
+		}
+
+		if len(parts) >= 8 && parts[3] == "meetings" && parts[5] == "messages" {
+			parts[6] = "{entry_id}"
+		}
+
 		route = strings.Join(parts, "/")
 	}
 
@@ -211,6 +221,7 @@ func testKey(n string) string {
 
 func TestMeetingOpenAPIResponses(t *testing.T) {
 	h := newMeetingHTTPTest(t)
+	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
 	ownerClient := h.client(true)
 	guestClient := h.client(true)
 	otherClient := h.client(true)

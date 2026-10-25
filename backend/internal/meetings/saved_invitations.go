@@ -73,7 +73,7 @@ func (s *Service) SavedInvitations(ctx context.Context, actor Actor, limit int, 
 			}
 
 			result.Invitations = append(result.Invitations, SavedInvitation{
-				Preview: publicInvitation(meeting), Response: response, Token: invitation.Token,
+				Preview: s.invitationAvailability(meeting, response, actor.ID), Response: response, Token: invitation.Token,
 			})
 		}
 

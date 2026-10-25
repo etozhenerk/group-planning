@@ -46,7 +46,7 @@ func datePollDTO(view meetings.DatePollView) datePollResponse {
 	result := datePollResponse{
 		ID:              view.ID,
 		MeetingID:       view.MeetingID,
-		Author:          userResponse{view.Author.ID, view.Author.Name},
+		Author:          userResponse{ID: view.Author.ID, DisplayName: view.Author.Name},
 		Settings:        pollSettingsResponse{settings.MultipleAnswers, settings.AllowRevoting, settings.AllowNewOptions, settings.Anonymous, settings.HideResults},
 		Options:         []pollOptionResponse{},
 		State:           view.State,
@@ -67,7 +67,7 @@ func datePollDTO(view meetings.DatePollView) datePollResponse {
 		if option.Voters != nil {
 			item.Voters = []userResponse{}
 			for _, voter := range option.Voters {
-				item.Voters = append(item.Voters, userResponse{voter.ID, voter.Name})
+				item.Voters = append(item.Voters, userResponse{ID: voter.ID, DisplayName: voter.Name})
 			}
 		}
 

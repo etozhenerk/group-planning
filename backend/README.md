@@ -56,6 +56,11 @@ ngrok и поля регистрации — в [docs/auth.md](docs/auth.md#ло
 | `PUT /invitations/{token}/rsvp` | Вошедший гость по ссылке. |
 | `PUT /meetings/{id}/rsvp` | Изменение собственного сохранённого ответа. |
 | `GET /meetings/{id}/feed`, `POST /meetings/{id}/messages` | Организатор или текущий going. |
+| `GET /me/profile` | Личный профиль; контакты доступны только владельцу. |
+| `POST /support/feedback` | Публичное идемпотентное обращение; локальная очередь, [доставка и ограничения](docs/support.md). |
+| `GET /meetings/{id}/reactions`, `PUT /meetings/{id}/messages/{entry_id}/reactions` | Подтверждённые реакции текущих участников. |
+| `GET /meetings/{id}/media/limits`, `POST /meetings/{id}/media/uploads`, `PUT /meetings/{id}/media/{media_id}/content`, `POST /meetings/{id}/media/{media_id}/publish` | Выбор, проверка и публикация приватного вложения. |
+| `GET /meetings/{id}/media/{media_id}/content`, `GET /meetings/{id}/memories` | Приватные файлы и альбом прошедшей встречи. |
 | `POST /meetings/{id}/place-polls`, `GET /meetings/{id}/place-polls/{poll_id}`, `PUT /meetings/{id}/place-polls/{poll_id}/vote` | Организатор или текущий going. |
 
 Также зарегистрированы POST auth/yandex/start, GET auth/yandex/callback,
@@ -63,6 +68,11 @@ POST auth/mobile/exchange, GET me и POST auth/logout. Вход не созда�
 Тела, заголовки идемпотентности, ревизии и ошибки описаны в
 [OpenAPI](../contracts/README.md). Событие и данные операции сохраняются вместе;
 поздний повтор сообщения/создания не создаёт второй ресурс даже после TTL receipt.
+
+Новое «Приду» закрывается за час до точного начала; дата без времени не получает
+выдуманной отсечки. Повтор текущего подтверждённого участия сохраняет доступ.
+Приглашение возвращает причину закрытия и `join_closes_at` для интерфейса.
+Хранение, ограничения и очистка вложений — в [media.md](docs/media.md).
 
 Сервер запускается **пустым**. Случайное приглашение даёт JSON 404, приватные
 операции без сессии — 401. Публичного seed-endpoint и обхода входа нет.

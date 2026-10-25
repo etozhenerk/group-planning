@@ -51,13 +51,24 @@ func (h meetingHandlers) calendar(w http.ResponseWriter, r *http.Request, actor 
 		return
 	}
 
+	details := make([]meetings.Details, 0, len(page.Meetings))
+	for _, item := range page.Meetings {
+		details = append(details, item.Details)
+	}
+
+	users, err := h.summaryUsers(r.Context(), details)
+	if err != nil {
+		h.writeMeetingError(w, err)
+		return
+	}
+
 	response := calendarPageResponse{
 		Meetings: []calendarSummaryResponse{}, NextCursor: optionalString(page.NextCursor),
 		AsOf: page.AsOf, RefreshAfterSeconds: 5, Counts: calendarCountsResponse{page.Counts.Upcoming, page.Counts.Past, page.Counts.Undated},
 		Days: []calendarDayResponse{}, NextTransitionAt: page.NextTransitionAt,
 	}
 	for _, item := range page.Meetings {
-		response.Meetings = append(response.Meetings, calendarSummaryResponse{h.summaryDTO(item.Details), optionalString(item.LocalDate), item.Period})
+		response.Meetings = append(response.Meetings, calendarSummaryResponse{h.summaryDTO(item.Details, users), optionalString(item.LocalDate), item.Period})
 	}
 
 	for _, day := range page.Days {

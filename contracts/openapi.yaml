@@ -2,7 +2,10 @@ openapi: 3.1.1
 info:
   title: Somewhere API
   version: 0.1.0
-  description: "API встреч: вход, приглашения, ответы, чат, календарь и опросы даты/места. Сервер использует memory.Store; вход требует настройки Яндекс ID. x-implemented отмечает серверный маршрут, а не готовность сценария во всех клиентах."
+  description: "API встреч: вход, приглашения, ответы, чат, календарь и опросы
+    даты/места. Сервер использует memory.Store; вход требует настройки Яндекс
+    ID. x-implemented отмечает серверный маршрут, а не готовность сценария во
+    всех клиентах."
 servers:
   - url: http://127.0.0.1:8080
     description: Локальная разработка без OAuth; реальный вход требует единого HTTPS origin.
@@ -27,7 +30,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -78,7 +82,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -135,7 +140,8 @@ paths:
           description: Операция завершена
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -144,7 +150,8 @@ paths:
                 type: string
                 const: no-store
             Location:
-              description: Только заранее разрешённый адрес возврата; никогда не секрет сессии.
+              description: Только заранее разрешённый адрес возврата; никогда не секрет
+                сессии.
               schema:
                 type: string
                 format: uri-reference
@@ -203,7 +210,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -260,7 +268,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -319,7 +328,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -363,10 +373,10 @@ paths:
       description: >-
         Первый запрос требует действующую сессию и web Origin/CSRF.
         X-Deletion-Token — сохранённые клиентом 32 случайных байта base64url.
-        Повтор с тем же ключом в течение 24 часов подтверждает прежний успех
-        без сессии; для web квитанции нужен прежний Origin.
-        Организация переходит первому вступившему текущему going; встречи
-        без преемника удаляются целиком. Общая история обезличивается.
+        Повтор с тем же ключом в течение 24 часов подтверждает прежний успех без
+        сессии; для web квитанции нужен прежний Origin. Организация переходит
+        первому вступившему текущему going; встречи без преемника удаляются
+        целиком. Общая история обезличивается.
       tags:
         - auth
       security:
@@ -379,7 +389,8 @@ paths:
           description: Операция завершена
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -418,7 +429,8 @@ paths:
         - name: X-Deletion-Token
           in: header
           required: true
-          description: Секрет операции; сохраняется до подтверждённого результата и не используется повторно для другого аккаунта.
+          description: Секрет операции; сохраняется до подтверждённого результата и не
+            используется повторно для другого аккаунта.
           schema:
             type: string
             minLength: 43
@@ -439,7 +451,8 @@ paths:
           description: Операция завершена
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -490,7 +503,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -551,7 +565,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -607,7 +622,8 @@ paths:
               - undated
         - name: from
           in: query
-          description: Локальная дата включительно. Требует to и датированный period; максимум 42 дня.
+          description: Локальная дата включительно. Требует to и датированный period;
+            максимум 42 дня.
           schema:
             type: string
             format: date
@@ -634,7 +650,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -686,7 +703,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -750,7 +768,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -805,7 +824,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -869,7 +889,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -924,7 +945,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -993,7 +1015,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1055,7 +1078,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1115,7 +1139,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1170,7 +1195,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1234,7 +1260,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1299,7 +1326,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1355,7 +1383,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1420,7 +1449,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1485,7 +1515,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1549,7 +1580,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1614,7 +1646,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1670,7 +1703,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1734,7 +1768,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1799,7 +1834,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1855,7 +1891,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1920,7 +1957,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -1985,7 +2023,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -2050,7 +2089,8 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -2109,7 +2149,7 @@ paths:
     get:
       operationId: readMeetingCover
       summary: Обложка встречи с проверкой текущего доступа к разговору
-      tags: [meetings]
+      tags: [ meetings ]
       security:
         - WebSession: []
         - NativeSession: []
@@ -2160,7 +2200,7 @@ paths:
     head:
       operationId: headMeetingCover
       summary: Обложка встречи с проверкой текущего доступа к разговору
-      tags: [meetings]
+      tags: [ meetings ]
       security:
         - WebSession: []
         - NativeSession: []
@@ -2211,7 +2251,7 @@ paths:
     get:
       operationId: readInvitationCover
       summary: Обложка по действующей ссылке приглашения
-      tags: [meetings]
+      tags: [ meetings ]
       x-implemented: true
       security: []
       responses:
@@ -2260,7 +2300,7 @@ paths:
     head:
       operationId: headInvitationCover
       summary: Обложка по действующей ссылке приглашения
-      tags: [meetings]
+      tags: [ meetings ]
       x-implemented: true
       security: []
       responses:
@@ -2297,18 +2337,712 @@ paths:
           $ref: "#/components/responses/APIError"
         "default":
           $ref: "#/components/responses/APIError"
+  /api/v1/me/profile:
+    get:
+      operationId: getProfile
+      summary: Личный профиль и необязательные данные Яндекс ID
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/reactions:
+    get:
+      operationId: getReactions
+      summary: Реакции видимых сообщений
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReactionsPage"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: entry_id
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            minItems: 1
+            maxItems: 50
+            uniqueItems: true
+            items:
+              $ref: "#/components/schemas/UUID"
+  /api/v1/meetings/{id}/messages/{entry_id}/reactions:
+    put:
+      operationId: setReaction
+      summary: Установить или снять свою реакцию
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageReactions"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: entry_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetReaction"
+  /api/v1/meetings/{id}/media/limits:
+    get:
+      operationId: getMediaLimits
+      summary: Ограничения вложений для участника
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaLimits"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+  /api/v1/meetings/{id}/media/uploads:
+    post:
+      operationId: prepareMediaUpload
+      summary: Начать загрузку одного файла
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "201":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaResult"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: &a3
+            $ref: "#/components/schemas/UUID"
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: *a3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MediaUploadRequest"
+  /api/v1/meetings/{id}/media/{media_id}/publish:
+    post:
+      operationId: publishMedia
+      summary: Опубликовать загруженный файл
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaPublished"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: &a3
+            $ref: "#/components/schemas/UUID"
+        - name: media_id
+          in: path
+          required: true
+          schema: *a3
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: *a3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MediaPublishRequest"
+  /api/v1/meetings/{id}/media/{media_id}/content:
+    get:
+      operationId: readMediaContent
+      summary: Получить приватное вложение
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - &a4
+          name: id
+          in: path
+          required: true
+          schema: &a3
+            $ref: "#/components/schemas/UUID"
+        - &a5
+          name: media_id
+          in: path
+          required: true
+          schema: *a3
+    put:
+      operationId: uploadMediaContent
+      summary: Передать байты выбранного файла
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaResult"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - *a4
+        - *a5
+      requestBody:
+        required: true
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+          image/webp:
+            schema:
+              type: string
+              format: binary
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+          text/plain:
+            schema:
+              type: string
+              format: binary
+          application/zip:
+            schema:
+              type: string
+              format: binary
+  /api/v1/meetings/{id}/memories:
+    get:
+      operationId: getMemories
+      summary: Альбом прошедшей встречи
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoriesPage"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+  /api/v1/support/feedback:
+    post:
+      operationId: submitSupportFeedback
+      summary: Принять явно отправленное обращение
+      tags:
+        - support
+      security: []
+      x-implemented: true
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupportFeedbackInput"
+      responses:
+        "201":
+          description: Обращение записано. Повтор с тем же содержимым и ключом возвращает
+            тот же номер.
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не
+                считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportReceipt"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
 components:
   securitySchemes:
     DeletionReceipt:
       type: apiKey
       in: header
       name: X-Deletion-Token
-      description: Только повтор уже завершённого удаления в течение 24 часов; не авторизует первый запрос и не даёт доступа к данным.
+      description: Только повтор уже завершённого удаления в течение 24 часов; не
+        авторизует первый запрос и не даёт доступа к данным.
     WebSession:
       type: apiKey
       in: cookie
       name: __Host-somewhere_session
-      description: Secure, HttpOnly, SameSite=Lax, Path=/; для мутаций Origin + X-CSRF-Token.
+      description: Secure, HttpOnly, SameSite=Lax, Path=/; для мутаций Origin +
+        X-CSRF-Token.
     NativeSession:
       type: http
       scheme: bearer
@@ -2335,7 +3069,8 @@ components:
       schema:
         type: string
         format: uuid
-      description: Один UUID на намерение; сообщение использует client_request_id. TTL receipt 30 дней в пределах процесса. Другое тело с тем же ключом — 409.
+      description: Один UUID на намерение; сообщение использует client_request_id. TTL
+        receipt 30 дней в пределах процесса. Другое тело с тем же ключом — 409.
     CSRF:
       name: X-CSRF-Token
       in: header
@@ -2343,7 +3078,8 @@ components:
       schema:
         type: string
         minLength: 1
-      description: Обязателен для мутации с web-cookie вместе с точным Origin; Bearer не использует CSRF.
+      description: Обязателен для мутации с web-cookie вместе с точным Origin; Bearer
+        не использует CSRF.
     Limit:
       name: limit
       in: query
@@ -2387,6 +3123,11 @@ components:
         display_name:
           type: string
           minLength: 1
+        avatar_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
       required:
         - id
         - display_name
@@ -2441,7 +3182,8 @@ components:
             - type: string
               format: date
             - type: "null"
-          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
+          description: Календарный день в часовом поясе встречи; null только для прежних
+            записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -2466,6 +3208,24 @@ components:
             - type: "null"
         my_rsvp_revision:
           $ref: "#/components/schemas/Revision"
+        join_closes_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        can_join:
+          type: boolean
+        join_disabled_reason:
+          anyOf:
+            - type: string
+              enum:
+                - join_closed
+                - meeting_past
+            - type: "null"
+        organizer:
+          $ref: "#/components/schemas/User"
+          description: Необязательное публичное имя организатора только в авторизованном
+            списке сохранённых приглашений; без email/phone.
       required:
         - meeting_id
         - title
@@ -2521,18 +3281,19 @@ components:
         - meeting_revision
       additionalProperties: true
     CoverInput:
-      description: JPEG/PNG до 5 MiB и 16 миллионов пикселей. Сервер проверяет и повторно кодирует изображение.
+      description: JPEG/PNG до 5 MiB и 16 миллионов пикселей. Сервер проверяет и
+        повторно кодирует изображение.
       type: object
       properties:
         media_type:
           type: string
-          enum: [image/jpeg, image/png]
+          enum: [ image/jpeg, image/png ]
         data:
           type: string
           minLength: 4
           maxLength: 6990508
           pattern: '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
-      required: [media_type, data]
+      required: [ media_type, data ]
       additionalProperties: false
     CreateMeeting:
       type: object
@@ -2850,7 +3611,8 @@ components:
             - type: string
               format: date
             - type: "null"
-          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
+          description: Календарный день в часовом поясе встречи; null только для прежних
+            записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -2883,6 +3645,25 @@ components:
         created_at:
           type: string
           format: date-time
+        period:
+          type: string
+          enum:
+            - upcoming
+            - past
+            - undated
+        participant_preview:
+          type: array
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/User"
+        memory_photo_count:
+          type: integer
+          minimum: 0
+        memory_preview:
+          type: array
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/Media"
       required:
         - id
         - organizer_id
@@ -2928,7 +3709,8 @@ components:
             - type: string
               format: date
             - type: "null"
-          description: Календарный день в часовом поясе встречи; null только для прежних записей без даты.
+          description: Календарный день в часовом поясе встречи; null только для прежних
+            записей без даты.
         starts_at:
           anyOf:
             - type: string
@@ -2958,6 +3740,27 @@ components:
             - type: "null"
         my_rsvp_revision:
           $ref: "#/components/schemas/Revision"
+        period:
+          type: string
+          enum:
+            - upcoming
+            - past
+            - undated
+        organizer_id:
+          $ref: "#/components/schemas/UUID"
+        participant_preview:
+          type: array
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/User"
+        memory_photo_count:
+          type: integer
+          minimum: 0
+        memory_preview:
+          type: array
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/Media"
       required:
         - id
         - title
@@ -3108,7 +3911,8 @@ components:
         kind:
           type: string
           minLength: 1
-          description: "Открытая строка: неизвестный тип сохраняется как безопасная заглушка."
+          description: "Открытая строка: неизвестный тип сохраняется как безопасная
+            заглушка."
         payload_version:
           type: integer
           minimum: 1
@@ -3591,12 +4395,389 @@ components:
       required:
         - expected_revision
       additionalProperties: false
+    Profile:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        display_name:
+          type: string
+          minLength: 1
+        avatar_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
+        email:
+          anyOf:
+            - &a2
+              type: string
+            - type: "null"
+        phone:
+          anyOf:
+            - *a2
+            - type: "null"
+        provider:
+          type: string
+          const: yandex
+      required:
+        - id
+        - display_name
+        - avatar_url
+        - email
+        - phone
+        - provider
+      additionalProperties: true
+    Reaction:
+      type: object
+      properties:
+        emoji:
+          type: string
+          minLength: 1
+          maxLength: 128
+        count:
+          type: integer
+          minimum: 1
+        mine:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+      required:
+        - emoji
+        - count
+        - mine
+        - users
+      additionalProperties: true
+    MessageReactions:
+      type: object
+      properties:
+        entry_id:
+          $ref: "#/components/schemas/UUID"
+        reactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reaction"
+      required:
+        - entry_id
+        - reactions
+      additionalProperties: true
+    ReactionsPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/MessageReactions"
+      required:
+        - entries
+      additionalProperties: true
+    SetReaction:
+      type: object
+      properties:
+        emoji:
+          type: string
+          minLength: 1
+          maxLength: 128
+        active:
+          type: boolean
+      required:
+        - emoji
+        - active
+      additionalProperties: false
+    Media:
+      type: object
+      properties:
+        id: &a3
+          $ref: "#/components/schemas/UUID"
+        meeting_id: *a3
+        file_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        content_type:
+          type: string
+        size_bytes:
+          type: integer
+          minimum: 1
+          maximum: 20971520
+        kind:
+          type: string
+          enum:
+            - photo
+            - file
+        purpose:
+          type: string
+          enum:
+            - message
+            - memory
+        status:
+          type: string
+          enum:
+            - pending
+            - uploaded
+            - published
+        download_url:
+          anyOf:
+            - type: string
+              pattern: ^/api/v1/meetings/
+            - type: "null"
+        thumbnail_url:
+          anyOf:
+            - type: string
+              pattern: ^/api/v1/meetings/
+            - type: "null"
+        created_at:
+          type: string
+          format: date-time
+        uploaded_by:
+          $ref: "#/components/schemas/User"
+      required:
+        - id
+        - meeting_id
+        - file_name
+        - content_type
+        - size_bytes
+        - kind
+        - purpose
+        - status
+        - download_url
+        - thumbnail_url
+        - created_at
+        - uploaded_by
+      additionalProperties: true
+    MediaResult:
+      type: object
+      properties:
+        media:
+          $ref: "#/components/schemas/Media"
+      required:
+        - media
+      additionalProperties: true
+    MediaPublished:
+      type: object
+      properties:
+        media:
+          $ref: "#/components/schemas/Media"
+        entry:
+          anyOf:
+            - $ref: "#/components/schemas/FeedEntry"
+            - type: "null"
+      required:
+        - media
+        - entry
+      additionalProperties: true
+    MemoriesPage:
+      type: object
+      properties:
+        photos:
+          type: array
+          items:
+            $ref: "#/components/schemas/Media"
+        next_cursor:
+          anyOf:
+            - type: string
+            - type: "null"
+      required:
+        - photos
+        - next_cursor
+      additionalProperties: true
+    MediaLimits:
+      type: object
+      properties:
+        max_photo_bytes:
+          type: integer
+          minimum: 1
+        max_file_bytes:
+          type: integer
+          minimum: 1
+        max_files:
+          type: integer
+          minimum: 1
+        photo_types:
+          type: array
+          items: &a3
+            type: string
+        file_types:
+          type: array
+          items: *a3
+      required:
+        - max_photo_bytes
+        - max_file_bytes
+        - max_files
+        - photo_types
+        - file_types
+      additionalProperties: true
+    MediaUploadRequest:
+      type: object
+      properties:
+        client_request_id:
+          $ref: "#/components/schemas/UUID"
+        file_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        content_type:
+          type: string
+          enum:
+            - image/jpeg
+            - image/png
+            - image/webp
+            - application/pdf
+            - text/plain
+            - application/zip
+        size_bytes:
+          type: integer
+          minimum: 1
+          maximum: 20971520
+        purpose:
+          type: string
+          enum:
+            - message
+            - memory
+      required:
+        - client_request_id
+        - file_name
+        - content_type
+        - size_bytes
+        - purpose
+      additionalProperties: false
+    MediaPublishRequest:
+      type: object
+      properties: {}
+      required: []
+      additionalProperties: false
+    SupportScreenshot:
+      type: object
+      properties:
+        file_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        content_type:
+          type: string
+          enum:
+            - image/png
+            - image/jpeg
+            - image/webp
+        data_base64:
+          type: string
+          maxLength: 6990508
+          description: Base64 одного выбранного изображения не более 5 MiB; проверяется и
+            очищается от метаданных.
+      required:
+        - file_name
+        - content_type
+        - data_base64
+      additionalProperties: false
+    SupportDiagnostics:
+      type: object
+      properties:
+        client_version:
+          type: string
+          minLength: 1
+          maxLength: 80
+        platform:
+          type: string
+          enum:
+            - web
+            - ios
+            - android
+        os:
+          type: string
+          maxLength: 120
+        browser:
+          type: string
+          maxLength: 512
+        viewport:
+          type: object
+          properties:
+            width:
+              type: integer
+              minimum: 1
+              maximum: 16000
+            height:
+              type: integer
+              minimum: 1
+              maximum: 16000
+          required:
+            - width
+            - height
+          additionalProperties: false
+      required:
+        - client_version
+        - platform
+      additionalProperties: false
+    SupportFeedbackInput:
+      type: object
+      properties:
+        client_request_id:
+          $ref: "#/components/schemas/UUID"
+        kind:
+          type: string
+          enum:
+            - problem
+            - idea
+            - question
+        description:
+          type: string
+          minLength: 10
+          maxLength: 3000
+        screen:
+          type: string
+          enum:
+            - meetings
+            - calendar
+            - invitation
+            - meeting_chat
+            - profile
+            - memories
+            - sign_in
+            - other
+        email:
+          anyOf:
+            - type: string
+              maxLength: 320
+            - type: "null"
+        screenshot:
+          anyOf:
+            - $ref: "#/components/schemas/SupportScreenshot"
+            - type: "null"
+        diagnostics:
+          anyOf:
+            - $ref: "#/components/schemas/SupportDiagnostics"
+            - type: "null"
+      required:
+        - client_request_id
+        - kind
+        - description
+        - screen
+      additionalProperties: false
+    SupportReceipt:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        reference:
+          type: string
+          pattern: ^SW-[0-9A-F]{12}$
+        status:
+          type: string
+          const: accepted
+      required:
+        - id
+        - reference
+        - status
+      additionalProperties: false
   responses:
     APIError:
       description: Ошибка согласно api.md; детали реализации не раскрываются.
       headers:
         X-Request-ID:
-          description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+          description: Сгенерированный сервером ID запроса. Входящий заголовок не
+            считается доверенным.
           schema:
             $ref: "#/components/schemas/UUID"
         Cache-Control:

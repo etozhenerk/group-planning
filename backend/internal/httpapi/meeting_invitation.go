@@ -35,16 +35,19 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, 200, previewResponse{
-		MeetingID:      preview.MeetingID,
-		Title:          preview.Title,
-		Description:    optionalString(preview.Description),
-		StartsOn:       optionalString(preview.StartsOn),
-		StartsAt:       preview.StartsAt,
-		Timezone:       preview.Timezone,
-		Place:          optionalString(preview.Place),
-		CoverURL:       h.coverURL("invitations/"+r.PathValue("token"), preview.CoverVersion),
-		MyRSVP:         optionalString(string(response.Answer)),
-		MyRSVPRevision: decimal(response.Revision),
+		MeetingID:          preview.MeetingID,
+		Title:              preview.Title,
+		Description:        optionalString(preview.Description),
+		StartsOn:           optionalString(preview.StartsOn),
+		StartsAt:           preview.StartsAt,
+		Timezone:           preview.Timezone,
+		Place:              optionalString(preview.Place),
+		CoverURL:           h.coverURL("invitations/"+r.PathValue("token"), preview.CoverVersion),
+		MyRSVP:             optionalString(string(response.Answer)),
+		MyRSVPRevision:     decimal(response.Revision),
+		JoinClosesAt:       preview.JoinClosesAt,
+		CanJoin:            preview.CanJoin,
+		JoinDisabledReason: optionalString(preview.JoinDisabledReason),
 	})
 }
 
@@ -172,7 +175,7 @@ func (h meetingHandlers) participants(w http.ResponseWriter, r *http.Request) {
 	}{Participants: []participantResponse{}}
 	for _, participant := range participants {
 		user := users[participant.UserID]
-		result.Participants = append(result.Participants, participantResponse{userResponse{user.ID, user.DisplayName}, participant.Role, optionalString(string(participant.Answer)), decimal(participant.Revision)})
+		result.Participants = append(result.Participants, participantResponse{publicUserDTO(user), participant.Role, optionalString(string(participant.Answer)), decimal(participant.Revision)})
 	}
 
 	writeJSON(w, 200, result)

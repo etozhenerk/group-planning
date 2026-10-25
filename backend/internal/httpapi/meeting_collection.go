@@ -69,7 +69,13 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		writeJSON(w, 201, createdMeetingResponse{h.meetingDTO(result.Details), "organizer", h.link(result.InvitationToken)})
+		users, err := h.summaryUsers(r.Context(), []meetings.Details{result.Details})
+		if err != nil {
+			h.writeMeetingError(w, err)
+			return
+		}
+
+		writeJSON(w, 201, createdMeetingResponse{h.meetingDTO(result.Details, users), "organizer", h.link(result.InvitationToken)})
 
 		return
 	}
@@ -105,12 +111,18 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	users, err := h.summaryUsers(r.Context(), result.Meetings)
+	if err != nil {
+		h.writeMeetingError(w, err)
+		return
+	}
+
 	response := meetingsPageResponse{
 		Meetings:   []meetingSummaryResponse{},
 		NextCursor: optionalString(result.NextCursor),
 	}
 	for _, details := range result.Meetings {
-		response.Meetings = append(response.Meetings, h.summaryDTO(details))
+		response.Meetings = append(response.Meetings, h.summaryDTO(details, users))
 	}
 
 	writeJSON(w, 200, response)
@@ -229,5 +241,11 @@ func (h meetingHandlers) details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	writeJSON(w, 200, h.meetingDTO(details))
+	users, err := h.summaryUsers(r.Context(), []meetings.Details{details})
+	if err != nil {
+		h.writeMeetingError(w, err)
+		return
+	}
+
+	writeJSON(w, 200, h.meetingDTO(details, users))
 }

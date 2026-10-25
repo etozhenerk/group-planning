@@ -27,7 +27,7 @@ type placePollResponse struct {
 func placePollDTO(view meetings.PlacePollView) placePollResponse {
 	return placePollResponse{
 		ID: view.ID, MeetingID: view.MeetingID,
-		Author: userResponse{view.Author.ID, view.Author.Name},
+		Author: userResponse{ID: view.Author.ID, DisplayName: view.Author.Name},
 		Place:  view.Place, PreviousPlace: optionalString(view.PreviousPlace), State: view.State,
 		Revision: decimal(view.Revision), MyVoteRevision: decimal(view.MyVoteRevision),
 		MyVote: optionalString(string(view.MyVote)), VotesFor: view.VotesFor, VotesAgainst: view.VotesAgainst,

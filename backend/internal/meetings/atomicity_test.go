@@ -38,7 +38,7 @@ func TestReceiptFailureRollsBackEveryOperation(t *testing.T) {
 		return err
 	}))
 	f := setup(t)
-	broken := meetings.NewService(failedReceiptStore{f.store}, time.Now)
+	broken := meetings.NewService(failedReceiptStore{f.store}, func() time.Time { return time.Unix(f.clock.Load(), 0) })
 	id := f.created.Details.Meeting.ID
 	_, err = broken.Respond(ctx, guest, "", f.created.InvitationToken, meetings.Going, 0, key(2))
 	assertError(t, err, receiptFailure)

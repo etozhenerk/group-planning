@@ -95,13 +95,7 @@ func (p *Provider) VerifyToken(ctx context.Context, token string) (identity.Prof
 
 	request.Header.Set("Authorization", "OAuth "+token)
 	request.Header.Set("Accept", "application/json")
-	var profile struct {
-		ID          string `json:"id"`
-		ClientID    string `json:"client_id"`
-		DisplayName string `json:"display_name"`
-		RealName    string `json:"real_name"`
-		Login       string `json:"login"`
-	}
+	var profile providerProfile
 	if err := p.json(request, &profile); err != nil || profile.ID == "" || len(profile.ID) > 256 || profile.ClientID != p.clientID {
 		return identity.Profile{}, identity.ErrUnavailable
 	}
@@ -119,7 +113,7 @@ func (p *Provider) VerifyToken(ctx context.Context, token string) (identity.Prof
 		return identity.Profile{}, identity.ErrUnavailable
 	}
 
-	return identity.Profile{Subject: profile.ID, DisplayName: name}, nil
+	return profile.optionalFields(identity.Profile{Subject: profile.ID, DisplayName: name}), nil
 }
 
 func (p *Provider) json(request *http.Request, target any) error {

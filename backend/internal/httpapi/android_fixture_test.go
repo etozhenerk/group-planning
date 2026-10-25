@@ -69,7 +69,9 @@ func TestAndroidFixture(t *testing.T) {
 		"ffffffff-ffff-4fff-8fff-ffffffffffff", "12121212-1212-4212-8212-121212121212")
 	feed := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	persistence := &iosFeedFaults{scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
-	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	seedNativeMemoryFixture(t, store, service, app, owner)
+	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
@@ -78,6 +80,7 @@ func TestAndroidFixture(t *testing.T) {
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
+	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
@@ -106,6 +109,7 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["poll-hidden"] = seedNativePollBoundary(t, store, service, "hidden", 400)
 
 	config.Cases["invite-owner"] = owner
+	config.Cases["memories"] = owner
 	config.Cases["feed-owner"] = owner
 	config.Cases["feed-persistence"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")

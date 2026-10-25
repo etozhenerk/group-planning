@@ -15,7 +15,10 @@ var initialSchema string
 //go:embed migrations/002_account_deletion.sql
 var accountDeletionSchema string
 
-var migrations = []string{initialSchema, accountDeletionSchema}
+//go:embed migrations/003_meeting_experience.sql
+var meetingExperienceSchema string
+
+var migrations = []string{initialSchema, accountDeletionSchema, meetingExperienceSchema}
 
 func migrationChecksum(version int) string {
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(migrations[version-1])))

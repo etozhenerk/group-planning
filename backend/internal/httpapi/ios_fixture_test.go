@@ -90,7 +90,9 @@ func TestIOSFixture(t *testing.T) {
 		"66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777")
 	feedOwner := iosCredential(t, service, "feed-owner")
 	seedIOSFeed(t, store, service, feedOwner)
-	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	seedNativeMemoryFixture(t, store, service, app, feedOwner)
+	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
@@ -101,6 +103,7 @@ func TestIOSFixture(t *testing.T) {
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
+	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
@@ -132,6 +135,7 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["audit-loading"] = feedOwner
 	config.Cases["audit-owner"] = feedOwner
 	config.Cases["audit-empty"] = iosCredential(t, service, "audit-empty")
+	config.Cases["memories"] = feedOwner
 	config.Cases["feed-owner"] = feedOwner
 	config.Cases["invite-owner"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")

@@ -29,8 +29,8 @@ func (h meetingHandlers) preparationTaskDTO(ctx context.Context, view meetings.P
 	task := view.Task
 	result := preparationTaskResponse{
 		ID: task.ID, MeetingID: task.MeetingID, Title: task.Title,
-		Author:    userResponse{task.Author.ID, task.Author.Name},
-		UpdatedBy: userResponse{task.UpdatedBy.ID, task.UpdatedBy.Name},
+		Author:    userResponse{ID: task.Author.ID, DisplayName: task.Author.Name},
+		UpdatedBy: userResponse{ID: task.UpdatedBy.ID, DisplayName: task.UpdatedBy.Name},
 		State:     task.State, Revision: decimal(task.Revision), CreatedAt: task.CreatedAt, UpdatedAt: task.UpdatedAt,
 		CanAccept: view.CanAccept, CanDecline: view.CanDecline, CanCancel: view.CanCancel, CanComplete: view.CanComplete,
 	}
@@ -41,11 +41,12 @@ func (h meetingHandlers) preparationTaskDTO(ctx context.Context, view meetings.P
 		}
 
 		user := users[task.RecipientID]
-		result.Recipient = &userResponse{user.ID, user.DisplayName}
+		public := publicUserDTO(user)
+		result.Recipient = &public
 	}
 
 	if task.Assignee != nil {
-		result.Assignee = &userResponse{task.Assignee.ID, task.Assignee.Name}
+		result.Assignee = &userResponse{ID: task.Assignee.ID, DisplayName: task.Assignee.Name}
 	}
 
 	return result, nil

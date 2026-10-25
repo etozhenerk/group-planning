@@ -61,12 +61,9 @@ func (s *Service) ExchangeSDK(ctx context.Context, id, verifier, providerToken s
 			return ErrInvalidAttempt
 		}
 
-		user, exists := records.UserBySubject("yandex:" + profile.Subject)
-		if !exists {
-			user = User{ID: uuid(), DisplayName: profile.DisplayName, CreatedAt: s.now()}
-			if err := records.PutUser("yandex:"+profile.Subject, user); err != nil {
-				return err
-			}
+		user, err := s.saveProfile(records, profile)
+		if err != nil {
+			return err
 		}
 
 		session := s.newSession(user.ID, attempt.ClientKind, token)

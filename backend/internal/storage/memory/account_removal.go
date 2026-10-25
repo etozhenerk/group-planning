@@ -28,6 +28,12 @@ func (tx *transaction) RemoveUser(id string) error {
 	}
 
 	tx.data.removedUsers[id] = true
+	for key, value := range tx.data.reactions {
+		if value.UserID == id {
+			delete(tx.data.reactions, key)
+		}
+	}
+
 	for key := range tx.data.receipts {
 		if key.UserID == id {
 			delete(tx.data.receipts, key)
@@ -73,6 +79,19 @@ func (tx *transaction) DeleteMeeting(id string) error {
 	}
 
 	resources := map[string]bool{id: true}
+	for key, value := range tx.data.media {
+		if value.MeetingID == id {
+			resources[key] = true
+			delete(tx.data.media, key)
+		}
+	}
+
+	for key, value := range tx.data.reactions {
+		if value.MeetingID == id {
+			delete(tx.data.reactions, key)
+		}
+	}
+
 	for key, task := range tx.data.preparationTasks {
 		if task.MeetingID == id {
 			resources[key] = true

@@ -91,8 +91,8 @@ func TestBrowserFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	app := meetings.NewService(store, time.Now)
-	api := NewWithIdentity(app, service, slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)

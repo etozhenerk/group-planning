@@ -54,6 +54,7 @@ type RSVP struct {
 
 // FeedEntry contains a message or a versioned domain event.
 type FeedEntry struct {
+	Attachments     []Media `json:"-"`
 	ID              string
 	MeetingID       string
 	Sequence        uint64

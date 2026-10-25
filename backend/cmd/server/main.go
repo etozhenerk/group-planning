@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/server"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/postgres"
@@ -66,5 +67,5 @@ func runPersistent(ctx context.Context, config server.Config, logger *slog.Logge
 
 	logger.Info("server_started", "storage", "postgres", "data_survives_restart", true, "authentication_enabled", config.Auth.Enabled)
 
-	return server.ServeWithStorage(ctx, listener, db.Meetings(), db.Identity(), db.Check, config, logger)
+	return server.ServeWithStorage(ctx, listener, db.Meetings(), db.Identity(), db.Check, config, logger, meetings.WithMediaContent(db.MediaContent()))
 }

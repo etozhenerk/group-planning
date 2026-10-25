@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"slices"
 	"time"
 )
 
 var (
+	ErrMediaUnavailable    = errors.New("media storage unavailable")
 	ErrForbidden           = errors.New("meeting access denied")
 	ErrUnauthenticated     = errors.New("actor required")
 	ErrIdempotencyConflict = errors.New("idempotency key reused")
@@ -39,6 +41,9 @@ type Details struct {
 	Meeting          Meeting
 	MyResponse       RSVP
 	ParticipantCount int
+	ParticipantIDs   []string
+	MemoryPhotoCount int
+	MemoryPreview    []Media
 }
 
 // Created includes the original invitation for a newly created or retried meeting.
@@ -79,12 +84,18 @@ type ListPage struct {
 // Service coordinates meeting operations against the injected transactional store.
 type Service struct {
 	store Store
+	media MediaContent
 	now   func() time.Time
 }
 
 // NewService builds application operations without depending on HTTP or identity.
-func NewService(store Store, now func() time.Time) *Service {
-	return &Service{store: store, now: now}
+func NewService(store Store, now func() time.Time, options ...Option) *Service {
+	s := &Service{store: store, now: now}
+	for _, option := range options {
+		option(s)
+	}
+
+	return s
 }
 
 func (s *Service) update(ctx context.Context, callback func(Writer) error) error {
@@ -106,7 +117,7 @@ func checkActor(actor Actor) error {
 }
 
 func snapshot(reader Reader, meeting Meeting, userID string) (Details, error) {
-	result := Details{Meeting: meeting, ParticipantCount: 1}
+	result := Details{Meeting: meeting, ParticipantCount: 1, ParticipantIDs: []string{meeting.OrganizerID}}
 	responses, err := reader.RSVPs(meeting.ID)
 	if err != nil {
 		return Details{}, err
@@ -119,6 +130,20 @@ func snapshot(reader Reader, meeting Meeting, userID string) (Details, error) {
 
 		if response.Answer == Going && response.UserID != meeting.OrganizerID {
 			result.ParticipantCount++
+			result.ParticipantIDs = append(result.ParticipantIDs, response.UserID)
+		}
+	}
+
+	if !allowed(result, userID) {
+		result.ParticipantIDs = nil
+	} else {
+		if err := mediaSummary(reader, &result); err != nil {
+			return Details{}, err
+		}
+
+		slices.Sort(result.ParticipantIDs[1:])
+		if len(result.ParticipantIDs) > 3 {
+			result.ParticipantIDs = result.ParticipantIDs[:3]
 		}
 	}
 

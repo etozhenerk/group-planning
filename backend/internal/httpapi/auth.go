@@ -46,6 +46,7 @@ func registerAuth(mux *http.ServeMux, service *identity.Service, deletion ...*ac
 	mux.HandleFunc("/api/v1/auth/mobile/exchange", handlers.exchange)
 	mux.HandleFunc("/api/v1/auth/mobile/sdk/exchange", handlers.exchangeSDK)
 	mux.HandleFunc("/api/v1/me", handlers.me)
+	mux.HandleFunc("/api/v1/me/profile", handlers.profile)
 	mux.HandleFunc("/api/v1/auth/logout", handlers.logout)
 }
 

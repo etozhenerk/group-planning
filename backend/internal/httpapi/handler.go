@@ -8,19 +8,24 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/accounts"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/support"
 )
 
 type previewResponse struct {
-	MeetingID      string     `json:"meeting_id"`
-	Title          string     `json:"title"`
-	Description    *string    `json:"description"`
-	StartsOn       *string    `json:"starts_on"`
-	StartsAt       *time.Time `json:"starts_at"`
-	Timezone       string     `json:"timezone"`
-	Place          *string    `json:"place"`
-	CoverURL       *string    `json:"cover_url"`
-	MyRSVP         *string    `json:"my_rsvp"`
-	MyRSVPRevision string     `json:"my_rsvp_revision"`
+	Organizer          *userResponse `json:"organizer,omitempty"`
+	MeetingID          string        `json:"meeting_id"`
+	Title              string        `json:"title"`
+	Description        *string       `json:"description"`
+	StartsOn           *string       `json:"starts_on"`
+	StartsAt           *time.Time    `json:"starts_at"`
+	Timezone           string        `json:"timezone"`
+	Place              *string       `json:"place"`
+	CoverURL           *string       `json:"cover_url"`
+	MyRSVP             *string       `json:"my_rsvp"`
+	MyRSVPRevision     string        `json:"my_rsvp_revision"`
+	JoinClosesAt       *time.Time    `json:"join_closes_at"`
+	CanJoin            bool          `json:"can_join"`
+	JoinDisabledReason *string       `json:"join_disabled_reason"`
 }
 
 // New binds meeting operations to public routes with authentication disabled.
@@ -31,6 +36,11 @@ func New(app *meetings.Service, logger *slog.Logger) http.Handler {
 // NewWithIdentity binds verified identity to authentication routes. A nil service
 // disables sign-in and never authorizes a user.
 func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *slog.Logger, deletion ...*accounts.Service) http.Handler {
+	return NewWithSupport(app, service, nil, logger, deletion...)
+}
+
+// NewWithSupport exposes feedback only when an acceptance store is configured.
+func NewWithSupport(app *meetings.Service, service *identity.Service, feedback *support.Service, logger *slog.Logger, deletion ...*accounts.Service) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -43,6 +53,7 @@ func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *s
 	})
 	registerMeetings(mux, app, service)
 	registerAuth(mux, service, deletion...)
+	registerSupport(mux, feedback)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "not_found", nil)
 	})

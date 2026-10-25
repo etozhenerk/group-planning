@@ -23,7 +23,7 @@ func seedIOSInvitation(t *testing.T, store *memory.Store, service *identity.Serv
 	}
 
 	now := time.Now().UTC()
-	starts := time.Date(2026, time.October, 24, 16, 0, 0, 0, time.UTC)
+	starts := now.Add(48 * time.Hour).Truncate(time.Minute)
 
 	err = store.Update(ctx, func(writer meetings.Writer) error {
 		if err := writer.SaveMeeting(meetings.Meeting{

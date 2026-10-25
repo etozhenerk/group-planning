@@ -64,13 +64,25 @@ func checkObject(decoder *json.Decoder, typ reflect.Type) error {
 		}
 
 		seen[name] = true
+		nullable := fieldType.Kind() == reflect.Pointer
 		for fieldType.Kind() == reflect.Pointer {
 			fieldType = fieldType.Elem()
 		}
 
 		// Nested DTOs must use named structs, not maps of arbitrary user-controlled keys.
 		if fieldType.Kind() == reflect.Struct {
-			if err := checkObject(decoder, fieldType); err != nil {
+			var value json.RawMessage
+			if err := decoder.Decode(&value); err != nil {
+				return errJSONShape
+			}
+
+			if nullable && bytes.Equal(bytes.TrimSpace(value), []byte("null")) {
+				continue
+			}
+
+			nested := json.NewDecoder(bytes.NewReader(value))
+			nested.UseNumber()
+			if err := checkObject(nested, fieldType); err != nil {
 				return err
 			}
 		} else {

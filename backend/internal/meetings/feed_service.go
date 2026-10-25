@@ -59,7 +59,7 @@ func (s *Service) Feed(ctx context.Context, actor Actor, id string, query FeedQu
 			}
 		}
 
-		return nil
+		return hydrateMediaEntries(reader, result.Entries)
 	})
 
 	return result, err

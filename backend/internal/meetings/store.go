@@ -25,6 +25,10 @@ type Store interface {
 // Reader returns independent copies. It is valid only for its callback's lifetime.
 type Reader interface {
 	UserRemoved(string) (bool, error)
+	Reactions(string) ([]Reaction, error)
+	Media(string) (Media, error)
+	MeetingMedia(string) ([]Media, error)
+	AllMedia() ([]Media, error)
 	Cover(string) (Cover, error)
 	PreparationTask(string) (PreparationTask, error)
 	PreparationTasks(string) ([]PreparationTask, error)
@@ -52,6 +56,9 @@ type Reader interface {
 type Writer interface {
 	Reader
 	RemoveUser(string) error
+	SaveReaction(Reaction, bool) error
+	SaveMedia(Media) error
+	DeleteMedia(string) error
 	DeleteMeeting(string) error
 	DeleteRSVP(string, string) error
 	AnonymizeFeed(string, string, string) error

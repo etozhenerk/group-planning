@@ -14,6 +14,7 @@ import (
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
+	Support          SupportConfig
 	Storage          string
 	DatabaseURL      string
 	Transitions      meetings.TransitionOptions
@@ -82,6 +83,11 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 	}
 
 	config.Auth = auth
+	config.Support, err = loadSupportConfig(getenv)
+	if err != nil {
+		return Config{}, err
+	}
+
 	config.LinkAssociations, err = loadLinkAssociations(getenv)
 	if err != nil {
 		return Config{}, err
