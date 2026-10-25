@@ -11,11 +11,19 @@ struct InvitationPreview: Codable, Equatable, Sendable {
     let myRSVP: RSVPAnswer?
     let myRSVPRevision: ServerCounter
 
+    var organizer: UserProfile?
     var startsOn: String?
+    var joinClosesAt: APIInstant?
+    var canJoin: Bool?
+    var joinDisabledReason: String?
 
     enum CodingKeys: String, CodingKey {
         case meetingID = "meeting_id"
         case title
+        case organizer
+        case joinClosesAt = "join_closes_at"
+        case canJoin = "can_join"
+        case joinDisabledReason = "join_disabled_reason"
         case description
         case startsAt = "starts_at"
         case startsOn = "starts_on"

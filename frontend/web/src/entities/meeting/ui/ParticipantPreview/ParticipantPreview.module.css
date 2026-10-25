@@ -1,0 +1,70 @@
+.people {
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+.person {
+  position: relative;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px #0002;
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.person + .person {
+  margin-left: -8px;
+}
+
+.person:nth-child(2) {
+  transition-delay: 20ms;
+}
+
+.person:nth-child(3) {
+  transition-delay: 40ms;
+}
+
+.crown {
+  position: absolute;
+  top: -7px;
+  right: -3px;
+  color: #cab4d7;
+}
+
+.remaining {
+  min-width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #474852;
+  color: #e5e2ec;
+  font-size: 10px;
+  font-weight: 600;
+  margin-left: -8px;
+  border: 2px solid var(--background);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .people:hover .person:nth-child(1) {
+    transform: translate(-7px, -1px);
+  }
+
+  .people:hover .person:nth-child(2) {
+    transform: translate(-4px, -2px);
+  }
+
+  .people:hover .person:nth-child(3) {
+    transform: translate(-2px, -1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person {
+    transition: none;
+  }
+
+  .people:hover .person {
+    transform: none;
+  }
+}

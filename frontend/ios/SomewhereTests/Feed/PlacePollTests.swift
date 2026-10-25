@@ -93,6 +93,36 @@ struct PlacePollTests {
             poll.meetingID, place: "У Саши", deadline: Date())
         let body = try APICoding.decode([String: JSONValue].self, from: #require(request.body))
         #expect(body["place"] == .string("У Саши"))
+        #expect(body["explanation"] == nil)
         #expect(request.expectedStatus == 201)
+    }
+
+    @Test func explanationIsPrivateOptionalAndPreservedOnRetry() async throws {
+        let poll = try fixture(["explanation": .string("Рядом с метро")])
+        #expect(poll.explanation == "Рядом с метро")
+        #expect(try fixture().explanation == nil)
+        let h = try SessionHarness()
+        try await h.login()
+        let owner = PlacePollOwner(meetingID: poll.meetingID, session: h.session)
+        let path = "/api/v1/" + PlacePollRequests.path(poll.meetingID).joined(separator: "/")
+        let request = try PlacePollRequests.create(
+            poll.meetingID, place: poll.place, deadline: Date(), explanation: "  Рядом с метро \n")
+        await h.transport.enqueue(path, status: 503)
+        await owner.submit(request)
+        #expect(owner.pending != nil)
+        await h.transport.enqueue(path, data: try APICoding.encode(poll), status: 201)
+        await owner.retry()
+        let sent = await h.transport.requests.filter {
+            $0.httpMethod == "POST" && $0.url?.path == path
+        }
+        #expect(sent.count == 2)
+        let body = try APICoding.decode(
+            [String: JSONValue].self, from: #require(sent.first?.httpBody))
+        #expect(body["explanation"] == .string("Рядом с метро"))
+        #expect(sent.first?.httpBody == sent.last?.httpBody)
+        #expect(
+            sent.first?.value(forHTTPHeaderField: "Idempotency-Key")
+                == sent.last?.value(forHTTPHeaderField: "Idempotency-Key"))
+        #expect(owner.poll?.explanation == "Рядом с метро")
     }
 }

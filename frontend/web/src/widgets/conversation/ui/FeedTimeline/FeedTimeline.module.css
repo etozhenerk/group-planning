@@ -7,23 +7,14 @@
 }
 
 .feed-scroll {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
   flex: 1;
-  padding: 8px 28px 20px;
-  scrollbar-gutter: stable;
+  padding: 24px 28px;
   overscroll-behavior: contain;
-}
-
-.feed-timeline {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 22px;
-  max-width: 690px;
 }
 
 .history-button {
@@ -43,7 +34,9 @@
 
 @media (max-width: 739px) {
   .feed-scroll {
-    padding: 8px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 16px;
     scrollbar-gutter: auto;
   }
 

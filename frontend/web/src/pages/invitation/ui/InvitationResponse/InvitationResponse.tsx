@@ -1,3 +1,4 @@
+import { useJoinDeadline } from '@/pages/invitation/ui/InvitationResponse/hooks/useJoinDeadline';
 import { Link } from 'react-router';
 import type { Invitation } from '@/entities/meeting';
 import { useInvitationOrganizer } from '@/entities/meeting';
@@ -19,6 +20,7 @@ export const InvitationResponse = ({
   invitation,
   token,
 }: InvitationResponseProps) => {
+  const disabledReason = useJoinDeadline(invitation);
   const organizer = useInvitationOrganizer(invitation.meetingId, session.user.id);
 
   if (organizer.isPending) {
@@ -58,6 +60,7 @@ export const InvitationResponse = ({
       token={token}
       expected={invitation.myRsvpRevision}
       current={invitation.myRsvp}
+      joinDisabledReason={disabledReason}
     />
   );
 };

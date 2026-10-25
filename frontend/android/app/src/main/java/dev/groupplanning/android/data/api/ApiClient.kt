@@ -36,17 +36,31 @@ internal class ApiClient(
     suspend fun image(request: ApiRequest, credential: StoredSession? = null): ByteArray =
         load(request, credential, image = true).bytes
 
+    suspend fun content(request: ApiRequest, credential: StoredSession): ByteArray =
+        load(request, credential, binary = true).bytes
+
     private suspend fun load(
         request: ApiRequest,
         credential: StoredSession?,
         image: Boolean = false,
+        binary: Boolean = false,
     ): WireResponse {
         currentCoroutineContext().ensureActive()
         val wire = Request.Builder().url(origin.resolve(request))
-            .header("Accept", if (image) "image/jpeg, image/png" else "application/json")
+            .header(
+                "Accept",
+                if (binary) {
+                    "application/octet-stream"
+                } else if (image) {
+                    "image/jpeg, image/png"
+                } else {
+                    "application/json"
+                },
+            )
             .header("Cache-Control", "no-store")
         val body = if (request.method in setOf("POST", "PUT", "PATCH")) {
-            request.body.orEmpty().toRequestBody("application/json".toMediaType())
+            request.binary?.toRequestBody(request.contentType.toMediaType())
+                ?: request.body.orEmpty().toRequestBody("application/json".toMediaType())
         } else {
             null
         }
@@ -67,7 +81,18 @@ internal class ApiClient(
             throw ClientFailure(FailureKind.Http, response.status, problem)
         }
         val mediaType = response.contentType?.substringBefore(';')?.trim()?.lowercase()
-        val validType = if (image) {
+        val validType = if (binary) {
+            mediaType in
+                setOf(
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "application/pdf",
+                    "text/plain",
+                    "application/zip",
+                    "application/octet-stream",
+                )
+        } else if (image) {
             mediaType in setOf("image/jpeg", "image/png")
         } else {
             mediaType ==

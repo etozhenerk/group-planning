@@ -110,16 +110,15 @@ test('chat and sheet follow the visible viewport without creating a second page 
     .toBeLessThanOrEqual(512);
   await expectFitsWidth(page.locator('html'));
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
-  await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
+  await page.getByRole('button', { name: 'Информация о встрече' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expectFitsWidth(dialog);
   const bounds = await dialog.boundingBox();
   expect((bounds?.y ?? 0) + (bounds?.height ?? 0)).toBeLessThanOrEqual(512);
   expect(bounds?.y).toBeGreaterThanOrEqual(12);
   await expect(
-    page.getByRole('button', { name: 'Создать опрос', exact: true }),
+    dialog.getByRole('heading', { name: 'Детали встречи', exact: true }),
   ).toBeInViewport();
   await page.screenshot({
     path: `test-results/mobile-keyboard-${test.info().project.name}.png`,
@@ -149,12 +148,19 @@ test('closing a mobile sheet restores the background position and permits normal
   }
 
   await page.goto('/meetings');
-  await page.getByRole('button', { name: /Прошедшие/ }).click();
+  await page.getByRole('button', { name: /Предстоящие/ }).click();
   await expect(page.getByRole('link', { name: new RegExp(`${title} 4`) })).toBeVisible();
   await page.evaluate(() => scrollTo(0, 200));
-  await page.locator('summary[aria-label^="Профиль:"]').click();
+  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
+  await page.evaluate(() => scrollTo(0, 200));
+  await expect(
+    page.getByRole('heading', { name: 'Мой профиль', exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole('button', { name: 'Удалить аккаунт', exact: true })
+    .evaluate((element) => element.scrollIntoView({ block: 'center' }));
   const before = await page.evaluate(() => scrollY);
-  const profile = page.locator('summary[aria-label^="Профиль:"]');
+  const profile = page.getByRole('link', { name: 'Профиль', exact: true });
   const profileBefore = await profile.boundingBox();
   expect(before).toBeGreaterThan(0);
   await page.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();

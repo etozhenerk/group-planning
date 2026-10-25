@@ -1,7 +1,9 @@
 import type { PreparedCover } from '@/entities/meeting/model/cover';
+import type { Media } from '@/shared/api';
 import type { Answer } from '@/shared/api';
 
 export type MeetingSummary = {
+  period?: 'upcoming' | 'past' | 'undated';
   id: string;
   title: string;
   startsAt: string | null;
@@ -9,6 +11,14 @@ export type MeetingSummary = {
   timezone: string;
   place: string | null;
   coverUrl: string | null;
+  organizerId?: string;
+  participantPreview?: {
+    id: string;
+    display_name: string;
+    avatar_url?: string | null | undefined;
+  }[];
+  memoryPhotoCount?: number;
+  memoryPreview?: Media[];
   participantCount: number;
   revision: string;
   myRsvp: Answer | null;
@@ -22,6 +32,10 @@ export type Meeting = MeetingSummary & {
 };
 
 export type Invitation = {
+  organizer?: { id: string; displayName: string };
+  joinClosesAt?: string | null;
+  canJoin?: boolean;
+  joinDisabledReason?: string | null;
   meetingId: string;
   title: string;
   description: string | null;
@@ -50,6 +64,7 @@ export type ResponseState = {
 };
 
 export type FeedEntry = {
+  attachments?: Media[];
   id: string;
   meetingId: string;
   sequence: string;

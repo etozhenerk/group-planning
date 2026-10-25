@@ -4,7 +4,6 @@ import { Sparkles } from 'lucide-react';
 import { useSession } from '@/entities/session';
 import { SignInButton } from '@/features/sign-in';
 import { PublicHeader } from '@/widgets/public-header';
-import { Brand } from '@/shared/ui/Brand';
 import { HeroConversation } from '@/pages/landing/ui/HeroConversation';
 import { ExampleCard } from '@/pages/landing/ui/ExampleCard';
 
@@ -82,9 +81,6 @@ export const LandingPage = () => {
           <SignInButton context={{ kind: 'home' }} label="Попробовать" />
         </div>
       </main>
-      <footer>
-        <Brand />
-      </footer>
     </div>
   );
 };

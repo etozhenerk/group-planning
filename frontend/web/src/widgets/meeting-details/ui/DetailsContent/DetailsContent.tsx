@@ -1,16 +1,19 @@
-import { SkeletonRows } from '@/shared/ui/SkeletonRows';
+import { Link } from 'react-router';
 import styles from '@/widgets/meeting-details/ui/DetailsContent/DetailsContent.module.css';
 import type { Meeting } from '@/entities/meeting';
-import { MeetingFacts, MeetingCover, useParticipants } from '@/entities/meeting';
+import { MeetingFacts, MeetingCover } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { ResponseButtons } from '@/features/respond';
-import { ParticipantRow } from '@/widgets/meeting-details/ui/ParticipantRow';
+import { ParticipantList } from '@/widgets/meeting-details/ui/ParticipantList';
+import { Images } from 'lucide-react';
 
 export type DetailsContentProps = {
   meeting: Meeting;
   session: Session;
   close: () => void;
   edit: () => void;
+  compact?: boolean;
+  showAll?: () => void;
 };
 
 export const DetailsContent = ({
@@ -18,19 +21,23 @@ export const DetailsContent = ({
   session,
   close,
   edit,
+  compact = false,
+  showAll,
 }: DetailsContentProps) => {
-  const people = useParticipants(meeting.id, session.user.id);
-
   return (
     <div className={[styles['stack'], styles['details-content']].join(' ')}>
       {meeting.coverUrl && (
-        <MeetingCover
-          url={meeting.coverUrl}
-          meeting={meeting.id}
-          user={session.user.id}
-        />
+        <div className={compact ? styles.cover : undefined}>
+          <MeetingCover
+            url={meeting.coverUrl}
+            meeting={meeting.id}
+            user={session.user.id}
+            fill={compact}
+          />
+        </div>
       )}
       <MeetingFacts
+        compact
         startsAt={meeting.startsAt}
         startsOn={meeting.startsOn ?? null}
         timezone={meeting.timezone}
@@ -39,47 +46,36 @@ export const DetailsContent = ({
       {meeting.description && (
         <p className={styles['meeting-description']}>{meeting.description}</p>
       )}
-      <section>
-        <h3>Компания · {meeting.participantCount}</h3>
-        {people.isPending && (
-          <SkeletonRows label="Загрузка участников" variant="people" />
-        )}
-        {people.error && (
-          <p className={styles['error']} role="alert">
-            Не удалось получить ответы.{' '}
-            <button type="button" onClick={() => void people.refetch()}>
-              Повторить
-            </button>
-          </p>
-        )}
-        {people.data && (
-          <ul className={styles['participants']}>
-            {people.data.map((participant) => (
-              <ParticipantRow
-                key={participant.user.id}
-                participant={participant}
-                userId={session.user.id}
-              />
-            ))}
-          </ul>
-        )}
-      </section>
-      {meeting.organizerId === session.user.id ? (
-        <button type="button" onClick={edit}>
-          Изменить настройки
-        </button>
-      ) : (
-        <section>
-          <h3>Ваш ответ</h3>
-          <ResponseButtons
-            session={session}
-            id={meeting.id}
-            expected={meeting.myRsvpRevision}
-            current={meeting.myRsvp}
-            onSaved={close}
-          />
-        </section>
+      <ParticipantList
+        meeting={meeting}
+        user={session.user.id}
+        compact={compact}
+        showAll={showAll}
+      />
+      {compact && meeting.period === 'past' && (
+        <Link to={`/meetings/${meeting.id}/memories?from=chat`}>
+          <Images size={18} />
+          Фото встречи
+        </Link>
       )}
+      {!compact &&
+        (meeting.organizerId === session.user.id ? (
+          <button type="button" onClick={edit}>
+            Изменить настройки
+          </button>
+        ) : (
+          <section>
+            <h3>Ваш ответ</h3>
+            <ResponseButtons
+              session={session}
+              id={meeting.id}
+              expected={meeting.myRsvpRevision}
+              current={meeting.myRsvp}
+              onSaved={close}
+            />
+          </section>
+        ))}
+      {!compact && <Link to="/support?screen=meeting_chat">Сообщить о проблеме</Link>}
     </div>
   );
 };

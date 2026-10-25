@@ -86,6 +86,11 @@ internal class PlacePollViewModel(
             mutable.value = state.value.copy(issue = PlacePollIssue.Place)
             return
         }
+        val explanation = draft.explanation.trim()
+        if (explanation.codePointCount(0, explanation.length) > 2000) {
+            mutable.value = state.value.copy(issue = PlacePollIssue.Explanation)
+            return
+        }
         if (place == draft.previousPlace) {
             mutable.value = state.value.copy(issue = PlacePollIssue.Unchanged)
             return
@@ -100,7 +105,7 @@ internal class PlacePollViewModel(
             mutable.value = state.value.copy(issue = PlacePollIssue.Deadline)
             return
         }
-        submit(PlacePollRequests.create(access.id, place, deadline.value))
+        submit(PlacePollRequests.create(access.id, place, deadline.value, explanation))
     }
 
     fun retry() {

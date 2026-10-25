@@ -111,8 +111,9 @@ final class CalendarUITests: XCTestCase {
         let toggleY = app.buttons["Календарь"].frame.minY
         app.scrollViews.firstMatch.swipeUp()
         XCTAssertLessThan(app.buttons["Календарь"].frame.minY, toggleY)
-        XCTAssertTrue(create.isHittable)
         capture("ios-calendar-empty")
+        top(app)
+        XCTAssertTrue(create.isHittable)
         create.tap()
         let date = app.buttons["Дата"]
         XCTAssertTrue(date.waitForExistence(timeout: 5))

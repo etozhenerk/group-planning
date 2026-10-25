@@ -47,13 +47,21 @@ internal fun RsvpForm(
                 fontWeight = FontWeight.Bold,
                 color = if (authenticated && state.answer != null) Palette.accent else Palette.text,
             )
+            if (state.joinClosed) {
+                Text(stringResource(R.string.join_closed_title), fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.join_closed_body), color = Palette.muted)
+            }
             if (authenticated) {
                 Column(
                     Modifier.selectableGroup(),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     RsvpAnswer.entries.forEach { answer ->
-                        RsvpChoice(answer, state.choice == answer, state.editable) {
+                        RsvpChoice(
+                            answer,
+                            state.choice == answer,
+                            state.editable && !(state.joinClosed && answer == RsvpAnswer.Going),
+                        ) {
                             choose(answer)
                         }
                     }

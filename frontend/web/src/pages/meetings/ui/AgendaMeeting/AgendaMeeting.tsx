@@ -1,23 +1,19 @@
-import { Link } from 'react-router';
+import { MeetingCard } from '@/entities/meeting';
 import type { CalendarMeeting } from '@/entities/meeting';
-import { meetingClock, meetingZone } from '@/pages/meetings/lib/meetingLabels';
-import styles from '@/pages/meetings/ui/AgendaMeeting/AgendaMeeting.module.css';
+import { useSession } from '@/entities/session';
 
 export type AgendaMeetingProps = { meeting: CalendarMeeting };
 
 export const AgendaMeeting = ({ meeting }: AgendaMeetingProps) => {
+  const session = useSession();
+
   return (
-    <Link
-      to={`/meetings/${meeting.id}`}
-      className={styles.meeting}
-      data-testid="agenda-meeting"
-    >
-      <time dateTime={meeting.startsAt ?? undefined}>{meetingClock(meeting)}</time>
-      <div>
-        <strong>{meeting.title}</strong>
-        <small>{meeting.place || 'Место пока не выбрано'}</small>
-        {meetingZone(meeting) && <small>{meetingZone(meeting)}</small>}
-      </div>
-    </Link>
+    <div data-testid="agenda-meeting">
+      <MeetingCard
+        meeting={meeting}
+        user={session.data?.user.id ?? ''}
+        past={meeting.period === 'past'}
+      />
+    </div>
   );
 };

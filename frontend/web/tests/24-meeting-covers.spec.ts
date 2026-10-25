@@ -87,6 +87,7 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await login(page, 'Саша');
     await page.goto('/meetings/new');
+    await page.getByText('Обложка', { exact: true }).click();
     await page.getByLabel('Название', { exact: true }).fill(`Встреча с фото ${width}`);
     await setDate(page, '29.02.2028');
     const file = page.getByLabel('Выбрать фото', { exact: true });
@@ -114,8 +115,8 @@ for (const width of [320, 390, 1440]) {
       fullPage: true,
     });
     await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
-    const id = page.url().split('/').at(-2) ?? '';
+    await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+    const id = page.url().split('/').at(-1) ?? '';
     const invitation = await inviteLink(page);
     await page.goto(invitation);
     const pixels = await imageColor(page);
@@ -160,6 +161,7 @@ test('lost creation response preserves the prepared photo and key after reload',
 }) => {
   await login(page, 'Саша');
   await page.goto('/meetings/new');
+  await page.getByText('Обложка', { exact: true }).click();
   await page.getByLabel('Название', { exact: true }).fill('Фото без дубля');
   await setDate(page, '29.02.2028');
   await page.getByLabel('Выбрать фото').setInputFiles(await photo(page, '#a13932'));
@@ -193,7 +195,7 @@ test('lost creation response preserves the prepared photo and key after reload',
   await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
   await expect(page.getByLabel('Название', { exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Повторить отправку' }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   expect(keys[1]).toBe(keys[0]);
   expect(bodies[1]).toBe(bodies[0]);
 });
@@ -274,7 +276,10 @@ test('two meeting cards retain their own pixels and a blank meeting has no photo
   }
 
   await expect(
-    page.getByTestId('meeting-card').filter({ hasText: 'Без фото' }).getByRole('img'),
+    page
+      .getByTestId('meeting-card')
+      .filter({ hasText: 'Без фото' })
+      .getByRole('img', { name: 'Обложка встречи' }),
   ).toHaveCount(0);
 });
 
@@ -318,6 +323,7 @@ test('late private photo cannot reappear after RSVP revokes access', async ({
     await guest.goto(`/meetings/${created.meeting.id}`);
     await started;
     await expect(guest.getByRole('status', { name: 'Загрузка фото' })).toBeVisible();
+    await guest.getByRole('button', { name: 'Информация о встрече' }).click();
     await guest.getByRole('button', { name: 'Возможно', exact: true }).click();
     await expect(
       guest.getByRole('textbox', { name: 'Сообщение', exact: true }),

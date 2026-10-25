@@ -99,10 +99,10 @@ def main():
                 ios_args = ["xcodebuild", "-jobs", "2", "-xctestrun", str(run_path), "-destination",
                             f"platform=iOS Simulator,id={udid}", "-parallel-testing-enabled", "NO",
                             "test-without-building"]
-                print("Общая встреча с обложкой создана в web; iOS вступает и отправляет сообщение.", flush=True)
+                print("Web создал встречу, отправил файл с подписью и фото, добавил снимок в общий альбом. iOS проверяет вложения и ставит реакцию.", flush=True)
                 command(ios_args + ["-only-testing:SomewhereUITests/CrossPlatformUITests/testJoinAndSend"],
                         results / "ios-join.log", IOS)
-                print("iOS готов; Android читает ту же встречу и отвечает.", flush=True)
+                print("iOS готов; Android проверяет вложения, реакцию, общий альбом и отвечает.", flush=True)
                 command(adb_args + ["shell", "am", "instrument", "-w", "-r", "-e", "fixturePath", remote,
                         "-e", "crossToken", token, "-e", "additionalTestOutputDir",
                         "/sdcard/Android/data/dev.groupplanning.android.uitesthost/files/cross",
@@ -112,7 +112,7 @@ def main():
                 if "OK (1 test)" not in (results / "android.log").read_text():
                     raise RuntimeError("Не прошёл межплатформенный сценарий Android")
                 ready(Path(str(progress) + ".messages"), browser)
-                print("Три сообщения видны в web; iOS меняет ответ и теряет доступ к чату.", flush=True)
+                print("Web получил сообщения и реакции обеих платформ; iOS меняет ответ и теряет доступ к чату.", flush=True)
                 command(ios_args + ["-only-testing:SomewhereUITests/CrossPlatformUITests/testReceiveAndroidAndWithdraw"],
                         results / "ios-withdraw.log", IOS)
                 browser.wait(timeout=60)

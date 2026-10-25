@@ -1,80 +1,76 @@
+import { useFilePicker } from '@/shared/lib/file-picker';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Plus } from 'lucide-react';
+import { ActionMenu } from '@/widgets/conversation/ui/ActionMenu';
 import { useMeeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { ConversationActionForms } from '@/widgets/conversation/ui/ConversationActionForms';
-import { actionTitle } from '@/widgets/conversation/model/actionKind';
+import { useUploadSelection } from '@/features/upload-media';
 import type { ConversationActionKind } from '@/widgets/conversation/model/actionKind';
-import { Dialog } from '@/shared/ui/Dialog';
-import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
-import { Status } from '@/shared/ui/Status';
+import { useActionMenu } from '@/widgets/conversation/ui/ConversationActions/hooks/useActionMenu';
 import styles from '@/widgets/conversation/ui/ConversationActions/ConversationActions.module.css';
 
-export type ConversationActionsProps = { id: string; session: Session };
+export type ConversationActionsProps = {
+  id: string;
+  session: Session;
+  menu: boolean;
+  toggle: () => void;
+  close: () => void;
+};
 
-export const ConversationActions = ({ id, session }: ConversationActionsProps) => {
-  const [open, setOpen] = useState(false);
+export const ConversationActions = ({
+  id,
+  session,
+  menu,
+  toggle,
+  close,
+}: ConversationActionsProps) => {
   const [kind, setKind] = useState<ConversationActionKind>('menu');
+  const navigate = useNavigate();
+  const upload = useUploadSelection(session.user.id, id);
+  const picker = useFilePicker((files) =>
+    upload.begin({
+      files,
+      photo: kind === 'photo',
+      purpose: 'message',
+      returnTo: `/meetings/${id}`,
+    }),
+  );
+
   const meeting = useMeeting(id, session.user.id);
+  const ref = useActionMenu(menu, close);
+  const select = (value: ConversationActionKind) => {
+    ref.current?.querySelector('button')?.focus({ preventScroll: true });
+    setKind(value);
+
+    if (value === 'photo' || value === 'file') {
+      picker.choose(value === 'photo');
+    } else {
+      void navigate(`/meetings/${id}?action=${value}`, {
+        state: { meetingAction: true },
+      });
+    }
+
+    close();
+  };
 
   if (meeting.access.denied) {
     return null;
   }
 
-  const done = () => {
-    setOpen(false);
-  };
-
   return (
-    <>
+    <div className={styles.wrapper} ref={ref}>
+      <input {...picker.inputProps} />
       <button
         type="button"
         className={styles.add}
         aria-label="Добавить к встрече"
-        onClick={() => {
-          setKind('menu');
-          setOpen(true);
-        }}
+        aria-expanded={menu}
+        onClick={toggle}
       >
         <Plus size={24} aria-hidden="true" />
       </button>
-      <Dialog
-        open={open}
-        title={actionTitle(kind)}
-        contained
-        onClose={() => setOpen(false)}
-      >
-        <div className={styles.actions} hidden={kind !== 'menu'}>
-          <button type="button" onClick={() => setKind('date')}>
-            Предложить дату
-          </button>
-          <button type="button" onClick={() => setKind('place')}>
-            Предложить место
-          </button>
-          <button type="button" onClick={() => setKind('task')}>
-            Предложить задачу
-          </button>
-        </div>
-        {meeting.data ? (
-          <ConversationActionForms
-            kind={kind}
-            open={open}
-            meeting={meeting.data}
-            session={session}
-            done={done}
-          />
-        ) : kind !== 'menu' ? (
-          meeting.error ? (
-            <Status
-              title="Не удалось загрузить встречу"
-              error
-              action={() => void meeting.refetch()}
-            />
-          ) : (
-            <SkeletonDetails label="Загрузка формы" fields />
-          )
-        ) : null}
-      </Dialog>
-    </>
+      {menu && <ActionMenu select={select} />}
+    </div>
   );
 };

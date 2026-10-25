@@ -57,10 +57,20 @@ final class InvitationOwner {
         return session?.status != .authenticated
     }
     var editable: Bool { authenticated && !loading && !saving && pending == nil && !organizer }
-    var canSave: Bool { editable && choice != nil && choice != answer }
+    var joinClosed: Bool { joinClosed(at: Date()) }
+    func joinClosed(at now: Date) -> Bool {
+        guard answer != .going, !organizer else { return false }
+        if preview?.canJoin == false { return true }
+        let cutoff =
+            preview?.joinClosesAt?.date ?? preview?.startsAt?.date.addingTimeInterval(-3600)
+        return cutoff.map { now >= $0 } ?? false
+    }
+    var canSave: Bool {
+        editable && choice != nil && choice != answer && !(choice == .going && joinClosed)
+    }
 
     func choose(_ value: RSVPAnswer) {
-        guard editable else { return }
+        guard editable, !(value == .going && joinClosed) else { return }
         choice = value
         responseProblem = nil
     }

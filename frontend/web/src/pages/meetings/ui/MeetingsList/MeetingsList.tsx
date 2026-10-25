@@ -17,6 +17,7 @@ export const MeetingsList = ({ meetings }: MeetingsListProps) => {
           <MeetingCard
             key={meeting.id}
             meeting={meeting}
+            past={meeting.period === 'past'}
             user={session.data?.user.id ?? ''}
           />
         ))}

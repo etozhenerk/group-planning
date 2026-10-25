@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { mediaSchema } from '@/shared/api/mediaSchema';
 import {
   answerSchema,
   instant,
@@ -15,6 +16,11 @@ export const summarySchema = z.object({
   timezone: z.string(),
   place: z.string().nullable(),
   cover_url: z.url().nullable(),
+  period: z.enum(['upcoming', 'past', 'undated']).optional(),
+  organizer_id: uuid.optional(),
+  participant_preview: z.array(userSchema).optional(),
+  memory_photo_count: z.number().int().min(0).optional(),
+  memory_preview: z.array(mediaSchema).optional(),
   participant_count: z.number().int().min(1),
   revision,
   my_rsvp: answerSchema.nullable(),
@@ -39,7 +45,11 @@ export const meetingsSchema = z.object({
 });
 
 export const previewSchema = z.object({
+  organizer: userSchema.nullable().optional(),
   meeting_id: uuid,
+  join_closes_at: instant.nullable().optional(),
+  can_join: z.boolean().optional(),
+  join_disabled_reason: z.string().nullable().optional(),
   title: z.string(),
   description: z.string().nullable().optional(),
   starts_at: instant.nullable(),

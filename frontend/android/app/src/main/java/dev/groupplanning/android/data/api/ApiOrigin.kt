@@ -19,6 +19,7 @@ internal class ApiOrigin(value: String) {
         }
         return url.newBuilder().addPathSegments("api/v1").apply {
             request.path.forEach { addPathSegment(it) }
+            request.repeatedQuery.forEach { (name, value) -> addQueryParameter(name, value) }
             request.query.forEach { (name, value) -> addQueryParameter(name, value) }
         }.build()
     }

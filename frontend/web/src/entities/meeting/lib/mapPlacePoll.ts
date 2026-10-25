@@ -5,6 +5,7 @@ export const mapPlacePoll = (wire: WirePlacePoll): PlacePoll => ({
   id: wire.id,
   meetingId: wire.meeting_id,
   place: wire.place,
+  explanation: wire.explanation,
   previousPlace: wire.previous_place,
   state: wire.state,
   revision: wire.revision,

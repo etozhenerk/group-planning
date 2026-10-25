@@ -1,11 +1,12 @@
 package dev.groupplanning.android.ui.meetings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -40,10 +42,14 @@ internal fun CalendarMonthControls(
     val controls: @Composable () -> Unit = {
         Surface(
             onClick = { change(selection.select(LocalDate.now())) },
-            shape = RoundedCornerShape(12.dp),
-            color = Palette.message,
+            shape = RoundedCornerShape(9.dp),
+            color = Color(0x08ffffff),
         ) {
-            Text(stringResource(R.string.calendar_today), Modifier.padding(12.dp))
+            Text(
+                stringResource(R.string.calendar_today),
+                Modifier.heightIn(min = 36.dp).padding(horizontal = 9.dp, vertical = 7.dp),
+                fontSize = 11.sp,
+            )
         }
         listOf(-1L, 1L).forEach { delta ->
             val previous = delta < 0
@@ -56,12 +62,12 @@ internal fun CalendarMonthControls(
             )
             IconButton(
                 onClick = { change(selection.shiftMonth(delta)) },
-                modifier = Modifier.background(Palette.message, RoundedCornerShape(12.dp))
+                modifier = Modifier.size(32.dp, 36.dp)
                     .semantics { contentDescription = label },
             ) {
                 AppIcon(
                     R.drawable.ic_back,
-                    Modifier.rotate(if (previous) 0f else 180f),
+                    Modifier.size(18.dp).rotate(if (previous) 0f else 180f),
                     Palette.text,
                 )
             }
@@ -70,19 +76,19 @@ internal fun CalendarMonthControls(
 
     if (LocalDensity.current.fontScale > 1.3f) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(month, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(month, fontSize = 19.sp, fontWeight = FontWeight.Bold)
             Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(0.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) { controls() }
         }
     } else {
         Row(
             Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(0.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(month, Modifier.weight(1f), fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(month, Modifier.weight(1f), fontSize = 19.sp, fontWeight = FontWeight.Bold)
             controls()
         }
     }

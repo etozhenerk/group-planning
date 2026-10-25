@@ -11,6 +11,14 @@ export const login = async (page: Page, who: 'Саша' | 'Лена') => {
 };
 
 export const expectDate = async (page: Page, value: string) => {
+  const compact = page.getByRole('button', { name: 'Дата', exact: true });
+
+  if (await compact.isVisible()) {
+    await expect(compact).toHaveAttribute('data-date', value);
+
+    return;
+  }
+
   const input = page.getByRole('combobox', { name: 'Дата', exact: true });
   await expect
     .poll(async () => (await input.inputValue()).replace(/[\u2066-\u2069]/g, ''))
@@ -18,7 +26,18 @@ export const expectDate = async (page: Page, value: string) => {
 };
 
 export const setDate = async (page: Page, value: string) => {
-  const input = page.getByRole('combobox', { name: 'Дата', exact: true });
+  const compact = page.getByRole('button', { name: 'Дата', exact: true });
+  const mobile = await compact.isVisible();
+
+  if (mobile) {
+    await compact.click();
+  }
+
+  const input = page.getByRole(mobile ? 'textbox' : 'combobox', {
+    name: 'Дата',
+    exact: true,
+  });
+
   const platform = await page.evaluate(() => {
     const browserNavigator = navigator as Navigator & {
       userAgentData?: { platform: string };
@@ -39,6 +58,11 @@ export const setDate = async (page: Page, value: string) => {
   await input.press('ArrowRight');
   await input.press('ArrowRight');
   await input.pressSequentially(year);
+
+  if (mobile) {
+    await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  }
+
   await expectDate(page, value);
 };
 
@@ -49,19 +73,20 @@ export const create = async (
 ) => {
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill(title);
-  await setDate(page, '24.10.2026');
+  await setDate(page, '24.10.2099');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
 
   if (cover) {
+    await page.getByText('Обложка', { exact: true }).click();
     await page.getByLabel('Выбрать фото', { exact: true }).setInputFiles(cover);
     await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
   }
 
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
-  const id = page.url().split('/').at(-2);
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+  const id = page.url().split('/').at(-1);
 
   if (!id) {
     throw new Error('Missing meeting ID');
@@ -71,12 +96,15 @@ export const create = async (
 };
 
 export const inviteLink = async (page: Page): Promise<string> => {
-  await page.getByRole('button', { name: 'Пригласить друзей', exact: true }).click();
+  await page
+    .getByRole('button', { name: 'Пригласить друзей', exact: true })
+    .first()
+    .click();
   const field = page.getByLabel('Ссылка приглашения');
   await expect(field).toBeVisible();
   const url = await field.inputValue();
   await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).not.toBeVisible();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 
   return url;
 };
@@ -108,10 +136,14 @@ export const apiMeeting = async (page: Page, id: string) => {
   return meetingSchema.parse(raw);
 };
 
-export const apiCreate = async (page: Page, title: string) => {
+export const apiCreate = async (
+  page: Page,
+  title: string,
+  startsAt = '2099-10-24T19:00:00+03:00',
+) => {
   const response = await page.request.post('/api/v1/meetings', {
     headers: await writeHeaders(page),
-    data: { title, starts_at: '2026-10-24T19:00:00+03:00', timezone: 'Europe/Moscow' },
+    data: { title, starts_at: startsAt, timezone: 'Europe/Moscow' },
   });
 
   const raw: unknown = await response.json();

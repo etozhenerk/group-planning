@@ -1,9 +1,12 @@
 package dev.groupplanning.android.ui.brand
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.FirstBaseline
@@ -25,19 +28,44 @@ internal fun BrandWordmark(
     compact: Boolean = false,
     rotation: () -> Float = { 0f },
 ) {
-    val fontSize = if (compact) 24f else 37.5f
+    if (compact) {
+        Row(
+            modifier,
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_brand_compact),
+                null,
+                Modifier.size(34.dp),
+                tint = Palette.text,
+            )
+            Text(
+                "somewhere",
+                fontSize = 21.sp,
+                letterSpacing = (-1).sp,
+                lineHeight = 31.5.sp,
+                fontWeight = FontWeight.ExtraBold,
+            )
+        }
+        return
+    }
+    val fontSize = if (compact) 21f else 37.5f
     val density = LocalDensity.current
     val scale = density.fontScale.coerceAtMost(1.3f)
     val size = fontSize * scale
     val xHeight = with(density) { (size * 0.53f).dp.toPx() }
-    val gap = with(density) { (if (compact) 9.dp else 13.5.dp).roundToPx() }
+    val gap = with(density) { (if (compact) 5.dp else 13.5.dp).roundToPx() }
     Layout(
         modifier = modifier.semantics(mergeDescendants = true) { contentDescription = "somewhere" },
         content = {
             Icon(
                 painterResource(R.drawable.ic_brand_mark),
                 null,
-                Modifier.size((size * 1.2f).dp).graphicsLayer { rotationZ = rotation() },
+                Modifier.size(if (compact) 34.dp else (size * 1.2f).dp).graphicsLayer {
+                    rotationZ =
+                        rotation()
+                },
                 tint = Palette.text,
             )
             Text(

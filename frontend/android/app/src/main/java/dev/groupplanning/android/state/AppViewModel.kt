@@ -29,6 +29,16 @@ internal class AppViewModel(
     saved: SavedStateHandle = SavedStateHandle(),
 ) : ViewModel() {
     val covers = runtime.covers
+    val emoji = runtime.emoji?.let { EmojiViewModel(it, childScope()) }
+    val profile = runtime.service?.let { ProfileViewModel(it, childScope()) }
+    val support = runtime.service?.let { SupportViewModel(it, saved, childScope()) }
+    private val mutableHomeTab = MutableStateFlow(saved.get<Int>("home-tab") ?: 0)
+    val homeTab = mutableHomeTab.asStateFlow()
+    fun selectHomeTab(value: Int) {
+        mutableHomeTab.value = value
+        savedHome["home-tab"] = value
+        selectHomeInvitations(value == 1)
+    }
     val snapshot = runtime.sessions?.state ?: MutableStateFlow(ClientSnapshot())
     private val mutableRoute = MutableStateFlow<AppRoute>(AppRoute.Home)
     val route = mutableRoute.asStateFlow()
@@ -84,7 +94,14 @@ internal class AppViewModel(
                 if (initialLink != null) {
                     acceptLink(initialLink)
                 } else {
-                    runtime.invitationContext.load()?.let(::showInvitation)
+                    val meeting = savedHome.get<String>("open-meeting")?.let {
+                        runCatching { UUID.fromString(it) }.getOrNull()
+                    }
+                    if (meeting != null && snapshot.value.session is SessionState.Authenticated) {
+                        showInvitation(InvitationTarget.Meeting(meeting))
+                    } else {
+                        runtime.invitationContext.load()?.let(::showInvitation)
+                    }
                 }
             } catch (_: ClientFailure) {
                 mutableLinkProblem.value = LinkIssue.Storage
@@ -158,6 +175,7 @@ internal class AppViewModel(
     private fun showInvitation(target: InvitationTarget) {
         val repository = runtime.invitations ?: return
         clearRoute()
+        savedHome["open-meeting"] = (target as? InvitationTarget.Meeting)?.id?.toString()
         mutableRoute.value =
             AppRoute.Invitation(
                 InvitationViewModel(target, repository, childScope(), runtime.feeds),
@@ -197,6 +215,7 @@ internal class AppViewModel(
             previous?.join()
             try {
                 runtime.invitationContext.save(null)
+                savedHome.remove<String>("open-meeting")
                 clearRoute()
                 refresh()
             } catch (_: ClientFailure) {

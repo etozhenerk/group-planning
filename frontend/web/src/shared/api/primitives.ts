@@ -13,7 +13,11 @@ export const answerSchema = z.enum(['going', 'maybe', 'not_going']);
 
 export type Answer = z.infer<typeof answerSchema>;
 
-export const userSchema = z.object({ id: uuid, display_name: z.string() });
+export const userSchema = z.object({
+  id: uuid,
+  display_name: z.string(),
+  avatar_url: z.string().nullable().optional(),
+});
 
 export const sessionSchema = z.object({
   user: userSchema,

@@ -15,46 +15,41 @@ export const PollSettingsFields = ({
   return (
     <fieldset className={styles['settings']} disabled={disabled} aria-label="Настройки">
       <label>
-        <span>Несколько вариантов</span>
+        <span>Можно выбрать несколько дат</span>
         <input
           type="checkbox"
-          role="switch"
           checked={value.multipleAnswers}
           onChange={(event) => onChange('multipleAnswers', event.target.checked)}
         />
       </label>
       <label>
-        <span>Можно переголосовать</span>
+        <span>Можно изменить голос</span>
         <input
           type="checkbox"
-          role="switch"
           checked={value.allowRevoting}
           onChange={(event) => onChange('allowRevoting', event.target.checked)}
         />
       </label>
       <label>
-        <span>Участники могут добавить дату</span>
+        <span>Можно добавить дату</span>
         <input
           type="checkbox"
-          role="switch"
           checked={value.allowNewOptions}
           onChange={(event) => onChange('allowNewOptions', event.target.checked)}
         />
       </label>
       <label>
-        <span>Анонимные голоса</span>
+        <span>Анонимное голосование</span>
         <input
           type="checkbox"
-          role="switch"
           checked={value.anonymous}
           onChange={(event) => onChange('anonymous', event.target.checked)}
         />
       </label>
       <label>
-        <span>Скрыть результаты до конца</span>
+        <span>Скрывать результаты до завершения</span>
         <input
           type="checkbox"
-          role="switch"
           checked={value.hideResults}
           onChange={(event) => onChange('hideResults', event.target.checked)}
         />

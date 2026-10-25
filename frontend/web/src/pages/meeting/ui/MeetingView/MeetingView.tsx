@@ -1,10 +1,11 @@
 import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
-import { MeetingHeader } from '@/pages/meeting/ui/MeetingHeader';
 import styles from '@/pages/meeting/ui/MeetingView/MeetingView.module.css';
 import { Link } from 'react-router';
 import type { Session } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
-import { FeedTimeline } from '@/widgets/conversation';
+import { useMeetingAction } from '@/pages/meeting/ui/MeetingView/hooks/useMeetingAction';
+import { MeetingConversation } from '@/pages/meeting/ui/MeetingConversation';
+import { ConversationActionScreen } from '@/widgets/conversation';
 import { MeetingDetails } from '@/widgets/meeting-details';
 import { Workspace } from '@/shared/ui/Workspace';
 import { Status } from '@/shared/ui/Status';
@@ -14,6 +15,7 @@ import { useMeetingView } from '@/pages/meeting/ui/MeetingView/hooks/useMeetingV
 export type MeetingViewProps = { id: string; session: Session };
 
 export const MeetingView = ({ id, session }: MeetingViewProps) => {
+  const action = useMeetingAction(id);
   const view = useMeetingView(id, session.user.id);
   const query = view.query;
 
@@ -64,24 +66,30 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
   }
 
   return (
-    <Workspace navigation={<Navigation session={session} />} conversation>
-      <main id="main" className={styles['conversation']}>
-        <MeetingHeader
-          id={id}
-          title={query.data.title}
-          organizer={query.data.organizerId === session.user.id}
-          wide={view.wide}
-          showDetails={view.details.show}
-        />
-        <FeedTimeline id={id} session={session} />
-      </main>
-      <MeetingDetails
+    <Workspace navigation={<Navigation session={session} />} conversation={!action.open}>
+      <MeetingConversation
         meeting={query.data}
         session={session}
-        open={view.details.open}
-        wide={view.wide}
-        close={view.details.close}
+        hidden={action.open}
+        showDetails={view.details.show}
       />
+      <ConversationActionScreen
+        meeting={query.data}
+        session={session}
+        kind={action.kind}
+        open={action.open}
+        done={action.close}
+      />
+      {!action.open && (
+        <MeetingDetails
+          meeting={query.data}
+          session={session}
+          open={view.details.open}
+          wide={view.wide}
+          close={view.details.close}
+          show={view.details.show}
+        />
+      )}
     </Workspace>
   );
 };

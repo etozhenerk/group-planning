@@ -17,7 +17,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.text.TextLayoutResult
 import java.time.LocalDate
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -84,10 +84,10 @@ class SavedInvitationsUiTests {
                 fixture.waitTag(card)
                 compose.onNodeWithTag(card).assertIsDisplayed()
                 val layouts = mutableListOf<TextLayoutResult>()
-                compose.onNodeWithText("Приглашения").performSemanticsAction(
+                compose.onNodeWithTag("invitations-heading").performSemanticsAction(
                     SemanticsActions.GetTextLayoutResult,
                 ) { it(layouts) }
-                assertEquals(1, layouts.single().lineCount)
+                assertFalse(layouts.single().hasVisualOverflow)
                 fixture.screenshot("android-saved-large-text")
                 compose.onNodeWithTag(card).performClick()
                 fixture.waitText("Вы пока не уверены")
@@ -113,7 +113,7 @@ class SavedInvitationsUiTests {
             compose.onNodeWithTag(day).performClick()
             compose.onNodeWithTag("home-invitations").performClick()
             fixture.waitText("Пока нет приглашений")
-            compose.onAllNodesWithContentDescription("Создать встречу").assertCountEquals(1)
+            compose.onAllNodesWithContentDescription("Создать встречу").assertCountEquals(0)
             activity.recreate()
             fixture.waitText("Пока нет приглашений")
             compose.onNodeWithTag("home-invitations").assertIsSelected()

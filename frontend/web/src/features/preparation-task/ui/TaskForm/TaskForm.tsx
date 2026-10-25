@@ -18,12 +18,11 @@ export const TaskForm = ({ meeting, session, done, active }: TaskFormProps) => {
     <form onSubmit={form.submit} className={styles.form}>
       <div className={styles.body}>
         <label className={styles.field}>
-          Что нужно сделать
-          <textarea
+          Что сделать
+          <input
             value={form.title}
             onChange={(event) => form.setTitle(event.target.value)}
             disabled={form.locked}
-            rows={2}
             required
           />
         </label>

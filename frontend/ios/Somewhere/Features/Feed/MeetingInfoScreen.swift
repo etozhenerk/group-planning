@@ -36,6 +36,7 @@ struct MeetingInfoScreen: View {
                             RSVPFormView(owner: owner.invitation)
                         }
                         MeetingPeopleView(id: owner.id, session: owner.session)
+                        ServiceLinks(api: owner.session.api, screen: "meeting_chat")
                     }.padding(24)
                 }
             }.background(AppPalette.surface).accessibilityIdentifier("meeting-info")

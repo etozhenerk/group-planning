@@ -20,16 +20,19 @@ struct MeetingListHeading: View {
     }
 
     private var title: some View {
-        Text("Мои встречи").font(.system(size: titleSize, weight: .bold))
+        Text("Мои встречи").font(.system(size: titleSize, weight: .bold)).tracking(-0.9)
             .accessibilityAddTraits(.isHeader)
     }
 
     @ViewBuilder private var action: some View {
         if !empty {
             Button(action: create) {
-                Label("Создать", systemImage: "plus").font(.subheadline.weight(.semibold))
-                    .padding(.horizontal, 14).frame(minHeight: 44)
-                    .background(AppPalette.action, in: RoundedRectangle(cornerRadius: 14))
+                HStack(spacing: 9) {
+                    ExperienceIcon(kind: .plus)
+                    Text("Создать")
+                }.font(.system(size: 13, weight: .semibold))
+                    .padding(.horizontal, 13).frame(minHeight: 44)
+                    .background(AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
                     .foregroundStyle(AppPalette.actionText)
             }.buttonStyle(.plain).accessibilityLabel("Создать встречу")
         }

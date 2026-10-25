@@ -59,6 +59,19 @@ internal fun InvitationScreen(
             }
         }
     }
+    LaunchedEffect(details?.preview?.startsAt, details?.preview?.joinClosesAt) {
+        val boundary = details?.preview?.joinClosesAt?.instant
+            ?: details?.preview?.startsAt?.instant?.minusSeconds(3600)
+        if (boundary != null && boundary.isAfter(java.time.Instant.now())) {
+            delay(
+                java.time.Duration.between(
+                    java.time.Instant.now(),
+                    boundary,
+                ).toMillis().coerceAtLeast(0),
+            )
+            model.refreshIfIdle()
+        }
+    }
     if (access) {
         val feed = remember(
             model,

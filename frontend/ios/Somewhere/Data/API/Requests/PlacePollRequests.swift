@@ -11,10 +11,15 @@ enum PlacePollRequests {
             path: path(meeting, poll), meetingID: meeting, invalidatesMeetingOnForbidden: true)
     }
 
-    static func create(_ meeting: UUID, place: String, deadline: Date) throws -> APIRequest {
-        try .json(
+    static func create(_ meeting: UUID, place: String, deadline: Date, explanation: String = "")
+        throws -> APIRequest
+    {
+        var body = ["place": place, "closes_at": deadline.ISO8601Format()]
+        let detail = explanation.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !detail.isEmpty { body["explanation"] = detail }
+        return try .json(
             path: path(meeting), method: .post,
-            body: ["place": place, "closes_at": deadline.ISO8601Format()],
+            body: body,
             key: UUID(), status: 201, meetingID: meeting, invalidatesMeetingOnForbidden: true)
     }
 

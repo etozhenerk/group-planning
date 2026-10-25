@@ -1,7 +1,7 @@
 .rows {
   display: grid;
-  gap: 12px;
-  padding: 12px 0;
+  gap: 24px;
+  padding: 20px 0;
 }
 
 .row {
@@ -25,29 +25,42 @@
   border-radius: 13px;
 }
 
-.rows[data-variant='cards'] .row {
-  padding: 13px;
+.date {
+  position: absolute;
+  left: 18px;
+  top: -12px;
+  padding: 4px 9px;
+  background: var(--surface);
+  border-radius: 9px;
+}
+
+.rows:not([data-variant='people']) .row {
+  position: relative;
+  min-height: 150px;
+  padding: 34px 18px 28px;
   background: var(--surface);
   border-radius: 19px;
 }
 
-.rows[data-variant='cards'] .picture {
-  width: 95px;
+.rows:not([data-variant='people']) .picture {
+  order: 2;
+  width: 100px;
+  transform: rotate(5deg);
 }
 
-.rows[data-variant='agenda'] .picture {
-  width: 37px;
+@media (min-width: 1000px) {
+  .rows[data-variant='cards'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 739px) {
-  .rows[data-variant='cards'] .row {
-    padding: 11px;
-    gap: 12px;
-    border-radius: 17px;
+  .rows:not([data-variant='people']) .picture {
+    width: 78px;
+    height: 88px;
   }
 
-  .rows[data-variant='cards'] .picture {
-    width: 68px;
-    height: 77px;
+  .row {
+    gap: 12px;
   }
 }

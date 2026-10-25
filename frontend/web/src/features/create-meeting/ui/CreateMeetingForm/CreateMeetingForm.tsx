@@ -1,7 +1,8 @@
+import { Link } from 'react-router';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import styles from '@/features/create-meeting/ui/CreateMeetingForm/CreateMeetingForm.module.css';
 import type { Session } from '@/entities/session';
-import { MeetingFields, DraftPreview, CoverEditor } from '@/entities/meeting';
+import { MeetingFields, CoverEditor } from '@/entities/meeting';
 import { useCreateMeeting } from '@/features/create-meeting/model/useCreateMeeting';
 import { DiscardDialog } from '@/features/create-meeting/ui/DiscardDialog';
 
@@ -12,7 +13,7 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
 
   return (
     <>
-      <div className={styles['create-layout']}>
+      <div>
         <form onSubmit={form.submit} className={styles['stack']}>
           <MeetingFields
             value={form.value}
@@ -20,34 +21,40 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
             disabled={form.locked}
             errors={form.errors}
           />
-          <CoverEditor
-            value={form.value.cover}
-            onChange={(cover) => form.change({ ...form.value, cover })}
-            onBusy={form.setPreparing}
-            disabled={form.locked}
-            invalid={!!form.errors.cover}
-          />
+          <details className={styles.cover} open={!!form.value.cover || undefined}>
+            <summary>Обложка</summary>
+            <CoverEditor
+              value={form.value.cover}
+              onChange={(cover) => form.change({ ...form.value, cover })}
+              onBusy={form.setPreparing}
+              disabled={form.locked}
+              invalid={!!form.errors.cover}
+            />
+          </details>
           <p className={styles['error']} role="alert">
             {form.problem}
           </p>
-          <button
-            type="submit"
-            className={styles['primary']}
-            disabled={form.pending || form.preparing}
-            aria-label={form.uncertain ? 'Повторить отправку' : 'Создать встречу'}
-            aria-busy={form.pending}
-          >
-            {form.pending ? (
-              <ButtonSpinner />
-            ) : form.uncertain ? (
-              'Повторить отправку'
-            ) : (
-              'Создать встречу'
-            )}
-          </button>
-          <p className={styles['muted']}>После создания появится ссылка для друзей.</p>
+          <div className={styles.actions}>
+            <Link to="/meetings" className={styles.cancel}>
+              Отмена
+            </Link>
+            <button
+              type="submit"
+              className={styles['primary']}
+              disabled={form.pending || form.preparing}
+              aria-label={form.uncertain ? 'Повторить отправку' : 'Создать встречу'}
+              aria-busy={form.pending}
+            >
+              {form.pending ? (
+                <ButtonSpinner />
+              ) : form.uncertain ? (
+                'Повторить отправку'
+              ) : (
+                'Создать встречу'
+              )}
+            </button>
+          </div>
         </form>
-        <DraftPreview draft={form.value} />
       </div>
       <DiscardDialog
         open={form.unsaved.blocked}

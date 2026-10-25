@@ -4,43 +4,72 @@ struct MessageComposer: View {
     @Bindable var owner: FeedOwner
     @ScaledMetric(relativeTo: .body) private var textSize = 15.0
     @Environment(\.dynamicTypeSize) private var typeSize
+    @State private var selection = NSRange(location: 0, length: 0)
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             if owner.draft.unicodeScalars.count > 4000 {
                 Text("В сообщении должно быть не больше 4000 символов.")
                     .font(.caption).foregroundStyle(AppPalette.error)
             }
-            HStack(alignment: .bottom, spacing: 6) {
-                Menu {
-                    Button("Предложить дату") { owner.pollPresented = true }
-                        .accessibilityIdentifier("new-date-poll")
-                    Button("Предложить место") { owner.placePollPresented = true }
-                        .accessibilityIdentifier("new-place-poll")
-                    Button("Предложить задачу") { owner.preparationTaskPresented = true }
-                        .accessibilityIdentifier("new-preparation-task")
+            HStack(alignment: .bottom, spacing: 3) {
+                Button {
+                    owner.panel = owner.panel == .actions ? nil : .actions
                 } label: {
-                    Image(systemName: "plus").frame(width: 44, height: 44)
+                    ExperienceIcon(kind: owner.panel == .actions ? .close : .plus).frame(
+                        width: 44, height: 44)
                 }.accessibilityLabel("Добавить к встрече").accessibilityIdentifier("meeting-add")
                     .disabled(!owner.loaded || owner.meeting == nil)
-                TextField(
-                    "Сообщение", text: $owner.draft,
-                    prompt: Text(typeSize.isAccessibilitySize ? "Сообщение" : "Написать сообщение…")
-                        .foregroundStyle(AppPalette.muted), axis: .vertical
+                ComposerTextView(
+                    text: $owner.draft, selection: $selection, focused: $owner.composerFocused
                 )
-                .font(.system(size: textSize)).lineLimit(1...6)
-                .padding(.leading, 17).padding(.vertical, 12)
-                .accessibilityLabel("Сообщение").accessibilityIdentifier("message-input")
+                .overlay(alignment: .topLeading) {
+                    if owner.draft.isEmpty {
+                        Text("Сообщение").designFont(15).foregroundStyle(AppPalette.muted).padding(
+                            .leading, 5
+                        ).padding(.top, 12)
+                            .allowsHitTesting(false).accessibilityHidden(true)
+                    }
+                }
+                Button {
+                    owner.panel = owner.panel == .emoji ? nil : .emoji
+                } label: {
+                    ExperienceIcon(kind: .smile).frame(width: 44, height: 44).contentShape(
+                        Rectangle())
+                }.accessibilityLabel("Добавить эмодзи")
                 Button(action: owner.sendDraft) {
-                    Image(systemName: "arrow.up").font(.system(size: 20, weight: .regular))
-                        .foregroundStyle(AppPalette.actionText).frame(width: 38, height: 38)
+                    ExperienceIcon(kind: .send)
+                        .foregroundStyle(AppPalette.actionText).frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                         .background(AppPalette.action, in: Circle()).frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                         .contentShape(Rectangle())
                 }.buttonStyle(OnboardingPressStyle()).disabled(!owner.canSend)
                     .accessibilityLabel("Отправить сообщение").accessibilityIdentifier(
                         "message-send")
-            }.padding(.trailing, 2).background(
-                Color("ComposerBackground"), in: RoundedRectangle(cornerRadius: 25))
-        }.padding(.horizontal, 14).padding(.top, 9).padding(.bottom, 10).background(
-            AppPalette.background)
+            }.padding(7).background(
+                AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
+        }.padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 12).background(
+            AppPalette.background
+        )
+        .overlay(alignment: .bottomLeading) {
+            if owner.panel == .actions {
+                ComposerMenu(owner: owner) { owner.panel = nil }.offset(x: 12, y: -88)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if owner.panel == .emoji {
+                EmojiPicker(
+                    privateData: owner.session.privateData, close: { owner.panel = nil }
+                ) { emoji in
+                    ComposerInsertion.insert(emoji, into: &owner.draft, selection: &selection)
+                    owner.composerFocused = true
+                }.padding(.horizontal, 12).offset(y: -88)
+            }
+        }.zIndex(10)
+        .onChange(of: owner.current) { _, current in
+            if !current {
+                owner.panel = nil
+            }
+        }
     }
 }

@@ -59,7 +59,7 @@ final class SavedInvitationsUITests: XCTestCase {
         app.buttons["rsvp-save"].tap()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["feed-back"].tap()
-        XCTAssertTrue(app.staticTexts["Пока нет приглашений"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
         app.buttons["Встречи"].tap()
         let meeting = app.buttons["meeting-card-22222222-2222-4222-8222-222222222222"]
         XCTAssertTrue(meeting.waitForExistence(timeout: 10))
@@ -81,7 +81,7 @@ final class SavedInvitationsUITests: XCTestCase {
             object: app.staticTexts["confirmed-rsvp"])
         XCTAssertEqual(XCTWaiter.wait(for: [declined], timeout: 10), .completed)
         app.buttons["Закрыть"].tap()
-        XCTAssertTrue(app.staticTexts["Пока нет приглашений"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
         capture("ios-saved-empty")
     }
 
@@ -118,9 +118,9 @@ final class SavedInvitationsUITests: XCTestCase {
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
         selected.tap()
         app.buttons["Приглашения"].tap()
-        XCTAssertTrue(app.staticTexts["Пока нет приглашений"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.buttons.matching(identifier: "Создать встречу").count, 1)
-        app.buttons["Встречи"].tap()
+        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["К моим встречам"].exists)
+        app.buttons["К моим встречам"].tap()
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
         XCTAssertTrue(selected.isSelected)
     }

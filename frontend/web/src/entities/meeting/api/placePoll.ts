@@ -17,7 +17,16 @@ export const createPlacePoll = async (
     await request(
       placePollSchema,
       `/meetings/${meeting}/place-polls`,
-      writeOptions('POST', csrf, { place: input.place, closes_at: input.closesAt }, key),
+      writeOptions(
+        'POST',
+        csrf,
+        {
+          place: input.place,
+          closes_at: input.closesAt,
+          ...(input.explanation ? { explanation: input.explanation } : {}),
+        },
+        key,
+      ),
     ),
   );
 

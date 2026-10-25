@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { mediaSchema } from '@/shared/api';
 import { preparationTaskEvent } from '@/entities/meeting/lib/preparationTaskEvent';
 import { placePollEvent } from '@/entities/meeting/lib/placePollEvent';
 import { pollEvent } from '@/entities/meeting/lib/pollEvent';
@@ -28,6 +29,7 @@ const updatePayload = z.object({
 export const answerLabels = { going: 'Приду', maybe: 'Возможно', not_going: 'Не смогу' };
 
 export const mapEntry = (wire: WireEntry): FeedEntry => {
+  const media = z.object({ attachments: z.array(mediaSchema) }).safeParse(wire.payload);
   let text: string | null = null;
   let event = 'Эта запись пока не поддерживается.';
   let supported = false;
@@ -92,6 +94,9 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
   const task = preparationTaskEvent(wire);
 
   return {
+    ...(media.success && wire.kind === 'message'
+      ? { attachments: media.data.attachments }
+      : {}),
     id: wire.id,
     meetingId: wire.meeting_id,
     sequence: wire.sequence,

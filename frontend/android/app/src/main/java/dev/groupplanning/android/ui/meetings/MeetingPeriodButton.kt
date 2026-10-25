@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,6 +21,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingPeriod
 import dev.groupplanning.android.ui.theme.Palette
@@ -41,26 +44,26 @@ internal fun MeetingPeriodButton(
 
     Surface(
         onClick = choose,
-        modifier = modifier.semantics { selected = active },
+        modifier = modifier.width(IntrinsicSize.Max).semantics { selected = active },
         color = Palette.background,
     ) {
         Column {
             Row(
-                Modifier.padding(vertical = 10.dp),
+                Modifier.padding(vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 Text(
                     title,
                     Modifier.weight(1f, fill = false),
                     color = if (active) Palette.text else Palette.muted,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
                 )
                 Text(
                     count?.toString() ?: "—",
                     color = Palette.muted,
-                    modifier = Modifier.background(Palette.surface, RoundedCornerShape(20.dp))
-                        .padding(horizontal = 7.dp, vertical = 3.dp),
+                    fontSize = 12.sp,
                 )
             }
             Box(

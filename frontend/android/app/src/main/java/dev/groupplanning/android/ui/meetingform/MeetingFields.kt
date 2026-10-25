@@ -2,6 +2,8 @@ package dev.groupplanning.android.ui.meetingform
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -13,9 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
@@ -36,79 +35,33 @@ internal fun MeetingFields(
     var datePicker by rememberSaveable { mutableStateOf(false) }
     var timePicker by rememberSaveable { mutableStateOf(false) }
     val focus = LocalFocusManager.current
-    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-        FormField(
-            "Название",
-            value.title,
-            "Например, вечер настольных игр",
-            editable,
-        ) { title ->
+    Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        FormField("Название", value.title, "Например, вечер настольных игр", editable) { title ->
             change { it.copy(title = title) }
         }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            FormField(
-                "Описание · необязательно",
-                value.description,
-                "Что нужно знать друзьям",
-                editable,
-                minLines = 3,
-            ) { text ->
-                change { it.copy(description = text) }
-            }
-            Text(
-                "Описание увидят все, у кого есть приглашение.",
-                color = Palette.muted,
-                fontSize = 12.sp,
-            )
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Дата", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
-            ActionButton(
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            DateTimeField(
+                "Дата",
                 value.day?.let {
                     LocalDate.parse(it).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                }
-                    ?: "Выберите дату",
-                Modifier.semantics {
-                    contentDescription = "Дата"
-                },
-                primary = false,
-                enabled = editable,
-                icon = R.drawable.ic_calendar,
+                } ?: stringResource(R.string.meeting_date_placeholder),
+                R.drawable.ic_calendar,
+                editable,
+                Modifier.weight(1f),
             ) {
                 focus.clearFocus()
                 datePicker = true
             }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                stringResource(R.string.meeting_optional_time),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-            ActionButton(
-                value.time ?: "Выберите время",
-                Modifier.semantics {
-                    contentDescription = "Время"
-                },
-                primary = false,
-                enabled = editable,
-                icon = R.drawable.ic_clock,
+            DateTimeField(
+                "Время",
+                value.time ?: stringResource(R.string.meeting_time_placeholder),
+                R.drawable.ic_clock,
+                editable,
+                Modifier.weight(1f),
             ) {
                 focus.clearFocus()
                 timePicker = true
             }
-            if (value.time != null) {
-                TextButton(
-                    onClick = { change { it.copy(time = null, repetition = null) } },
-                    modifier = Modifier.testTag("clear-meeting-time"),
-                    enabled = editable,
-                ) { Text(stringResource(R.string.meeting_clear_time)) }
-            }
-            Text(
-                stringResource(R.string.meeting_timezone, value.timezone),
-                color = Palette.muted,
-                fontSize = 12.sp,
-            )
         }
         if (ambiguous) {
             ActionButton("Ранний — до перевода часов", primary = false) {
@@ -118,14 +71,30 @@ internal fun MeetingFields(
                 change { it.copy(repetition = Repetition.Later) }
             }
         }
-        FormField(
-            "Место · необязательно",
-            value.place,
-            "Адрес, название или ориентир",
-            editable,
-        ) { place ->
+        FormField("Место", value.place, "Адрес, название или ориентир", editable) { place ->
             change { it.copy(place = place) }
         }
+        FormField(
+            "Описание",
+            value.description,
+            "Что стоит знать друзьям",
+            editable,
+            minLines = 3,
+        ) { text -> change { it.copy(description = text) } }
+        if (value.time != null) {
+            TextButton(
+                onClick = { change { it.copy(time = null, repetition = null) } },
+                modifier = Modifier.testTag("clear-meeting-time"),
+                enabled = editable,
+            ) {
+                Text(stringResource(R.string.meeting_clear_time), fontSize = 12.sp)
+            }
+        }
+        Text(
+            stringResource(R.string.meeting_timezone, value.timezone),
+            color = Palette.muted,
+            fontSize = 12.sp,
+        )
     }
     if (datePicker) {
         MeetingDateDialog(value, { datePicker = false }) { day ->

@@ -22,6 +22,8 @@ export const useMeetings = (user: string) => {
 export const useInvitation = (token: string, user: string) => {
   return useQuery({
     queryKey: ['invitation', user, token],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
     queryFn: ({ signal }) => getInvitation(token, signal),
     retry: false,
   });

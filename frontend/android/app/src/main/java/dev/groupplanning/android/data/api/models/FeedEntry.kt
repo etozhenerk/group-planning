@@ -2,9 +2,11 @@
 
 package dev.groupplanning.android.data.api.models
 
+import dev.groupplanning.android.data.api.apiJson
 import java.util.UUID
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -20,6 +22,20 @@ internal data class FeedEntry(
     val payload: JsonObject,
     @SerialName("client_request_id") val clientRequestId: UUID?,
 ) {
+    val attachments: List<MeetingMedia>
+        get() = if (kind == "message" && payloadVersion == 1) {
+            payload["attachments"]?.let { value ->
+                runCatching {
+                    apiJson.decodeFromJsonElement(
+                        ListSerializer(MeetingMedia.serializer()),
+                        value,
+                    )
+                }.getOrNull()
+            }.orEmpty()
+        } else {
+            emptyList()
+        }
+
     val messageText: String?
         get() = if (kind == "message" && payloadVersion == 1) {
             (payload["text"] as? JsonPrimitive)?.takeIf { it.isString }?.content

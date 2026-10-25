@@ -59,3 +59,12 @@ export { preparationTaskSchema } from '@/shared/api/preparationTaskSchema';
 export type { WirePreparationTask } from '@/shared/api/preparationTaskSchema';
 
 export { preparedCoverSchema } from '@/shared/api/coverSchema';
+
+export {
+  mediaSchema,
+  mediaResultSchema,
+  memoriesSchema,
+  mediaLimitsSchema,
+} from '@/shared/api/mediaSchema';
+
+export type { Media, MediaLimits } from '@/shared/api/mediaSchema';

@@ -3,7 +3,7 @@ import type { WireEntry } from '@/shared/api';
 
 const payload = z.object({ task_id: z.uuid(), title: z.string() });
 const labels: Record<string, string> = {
-  preparation_task_created: 'Предложение задачи',
+  preparation_task_created: 'Новая задача',
   preparation_task_accepted: 'Задача принята',
   preparation_task_declined: 'Отказ от задачи',
   preparation_task_cancelled: 'Задача отменена',

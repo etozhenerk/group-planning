@@ -11,6 +11,9 @@ internal class ApiRequest(
     val query: Map<String, String> = emptyMap(),
     val meetingId: UUID? = null,
     val revokesAccessOnForbidden: Boolean = false,
+    val binary: ByteArray? = null,
+    val contentType: String = "application/json",
+    val repeatedQuery: List<Pair<String, String>> = emptyList(),
     val deletionToken: String? = null,
 ) {
     override fun toString(): String = "ApiRequest(redacted)"

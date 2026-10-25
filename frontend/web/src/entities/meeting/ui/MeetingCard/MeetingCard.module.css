@@ -1,107 +1,251 @@
 .card {
-  display: flex;
-  align-items: center;
-  gap: 17px;
-  padding: 13px;
-  border-radius: 19px;
-  background: #303138;
+  position: relative;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  border-radius: 22px;
+  background: #38313d;
+  border: 1px solid #ffffff0a;
+  box-shadow: 0 8px 20px #0000000b;
   min-width: 0;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
 }
 
-.card:hover {
-  background: #383840;
+.link {
+  position: relative;
+  display: block;
+  min-height: 146px;
+  padding: 29px 21px 30px;
+}
+
+.date {
+  position: absolute;
+  left: 17px;
+  top: -12px;
+  background: #57475e;
+  color: #ede0f1;
+  border: 1px solid #ffffff09;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 600;
+  max-width: calc(100% - 34px);
+  box-shadow: 0 3px 7px #0002;
+  z-index: 2;
+  transition: transform 0.22s ease;
+}
+
+.cover {
+  position: absolute;
+  right: 18px;
+  top: -11px;
+  width: 118px;
+  height: 112px;
+  border: 3px solid #5e4f63;
+  border-radius: 16px;
+  overflow: hidden;
+  transform: rotate(5deg);
+  box-shadow: 0 5px 14px #0004;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.28s ease;
+}
+
+.card:has(.cover) .info {
+  padding-right: 137px;
 }
 
 .info {
-  min-width: 0;
-  flex: 1;
+  min-height: 75px;
 }
 
 .info h2 {
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.25;
-  letter-spacing: -0.4px;
-  margin: 0 0 7px;
+  letter-spacing: -0.45px;
+  margin: 0 0 8px;
+  max-width: 350px;
   overflow-wrap: anywhere;
 }
 
 .info p {
-  margin: 4px 0;
+  margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: start;
+  gap: 6px;
   overflow-wrap: anywhere;
+  max-width: 290px;
 }
 
-.cover,
-.emblem {
-  width: 95px;
-  height: 88px;
-  border-radius: 13px;
+.info p svg {
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
-.cover {
-  object-fit: cover;
-  object-position: center 25%;
+.info h2 svg {
+  margin-left: 7px;
+  color: #cab4d7;
 }
 
-.emblem {
-  display: grid;
-  place-items: center;
-  background: #45404c;
-  color: var(--accent);
+.people {
+  position: absolute;
+  bottom: -15px;
+  right: 21px;
+  z-index: 3;
 }
 
-.date {
-  width: 40px;
-  flex-shrink: 0;
-  text-align: center;
-}
-
-.date strong {
-  display: block;
-  font-size: 24px;
-  line-height: 1.1;
-}
-
-.date small {
-  display: block;
-  margin-top: 4px;
+.album {
+  position: absolute;
+  bottom: -15px;
+  left: 19px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 4px 10px;
+  background: #42414c;
+  border: 2px solid var(--background);
+  border-radius: 20px;
   font-size: 11px;
   color: var(--muted);
+  max-width: 65%;
 }
 
-.arrow {
-  color: var(--muted);
-  margin-right: 8px;
-  flex-shrink: 0;
+.sparkle {
+  position: absolute;
+  left: 22px;
+  bottom: 12px;
+  color: #c1a8d475;
+  transform: rotate(16deg);
+}
+
+.card:has(.album) .sparkle {
+  display: none;
+}
+
+.card[data-weekend='true'] {
+  background: #2e3938;
+}
+
+.card[data-weekend='true'] .date {
+  background: #425653;
+  color: #dcece5;
+}
+
+.card[data-weekend='true'] .cover {
+  border-color: #4b615b;
+  transform: rotate(-4deg);
+}
+
+.card[data-weekend='true'] .sparkle {
+  color: #a8cbbd75;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 13px 30px #0003;
+    border-color: #d6cce92a;
+    background: #403649;
+  }
+
+  .card[data-weekend='true']:hover {
+    background: #344440;
+  }
+
+  .card:hover .cover {
+    transform: translateY(-4px) rotate(2deg);
+  }
+
+  .card[data-weekend='true']:hover .cover {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+
+  .card:hover .date {
+    transform: translateY(-2px) rotate(-1deg);
+  }
 }
 
 @media (max-width: 739px) {
   .card {
-    padding: 11px;
-    gap: 12px;
-    align-items: flex-start;
-    border-radius: 17px;
+    border-radius: 20px;
+    margin-bottom: 17px;
   }
 
-  .cover,
-  .emblem {
-    width: 68px;
-    height: 77px;
-    border-radius: 11px;
-  }
-
-  .date,
-  .arrow {
-    display: none;
+  .link {
+    min-height: 145px;
+    padding: 26px 17px 29px;
   }
 
   .info h2 {
-    font-size: 16px;
+    font-size: 19px;
+  }
+
+  .cover {
+    width: 102px;
+    height: 101px;
+    right: 13px;
+    top: -10px;
+  }
+
+  .card:has(.cover) .info {
+    padding-right: 112px;
+  }
+
+  .date {
+    left: 14px;
+    font-size: 10px;
+    top: -11px;
+  }
+
+  .card:has(.cover) .date {
+    max-width: calc(100% - 95px);
+  }
+
+  .people {
+    right: 13px;
   }
 
   .info p {
-    font-size: 11px;
+    font-size: 12px;
   }
+
+  .sparkle {
+    left: 18px;
+    bottom: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cover,
+  .date {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .date {
+    transform: none;
+  }
+
+  .card:hover .cover {
+    transform: rotate(5deg);
+  }
+
+  .card[data-weekend='true']:hover .cover {
+    transform: rotate(-4deg);
+  }
+}
+
+.date {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

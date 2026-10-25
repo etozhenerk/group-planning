@@ -1,0 +1,104 @@
+.intro {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  margin: 0 0 35px;
+  padding: 26px;
+  background: var(--surface);
+  border-radius: 22px;
+}
+
+.intro > span {
+  font-size: 65px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.intro h2 {
+  font-size: 22px;
+  margin: 0 0 10px;
+}
+
+.intro p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.copy {
+  max-width: 800px;
+}
+
+.copy section {
+  margin-bottom: 35px;
+}
+
+.copy h2 {
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+
+.copy p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #b8b3c1;
+  margin: 0 0 13px;
+}
+
+.copy a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.table {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.table > div {
+  display: grid;
+  grid-template-columns: 135px 1fr 120px;
+  gap: 16px;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+
+.table strong {
+  font-size: 12px;
+}
+
+.table p {
+  font-size: 12px;
+  margin: 0;
+}
+
+.table span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.copy .caption {
+  font-size: 11px;
+}
+
+.copy .unfilled {
+  color: #baa6ca;
+}
+
+@media (max-width: 739px) {
+  .intro {
+    padding: 20px;
+  }
+
+  .table > div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

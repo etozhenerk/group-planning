@@ -16,8 +16,34 @@ final class PreparationTaskUITests: XCTestCase {
         app.launch()
         let card = app.buttons["meeting-card-d3c70000-0000-4000-8000-000000000\(suffix)"]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
+        for _ in 0..<6 {
+            if card.frame.midY < app.buttons["home-tab-calendar"].frame.minY - 20 { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
         card.tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+        if scenario != "task-owner" {
+            let task = app.buttons.matching(
+                NSPredicate(format: "identifier BEGINSWITH %@", "preparation-task-")
+            ).firstMatch
+            XCTAssertTrue(task.waitForExistence(timeout: 10))
+            let loaded = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label CONTAINS %@", "Заказать пиццу"), object: task)
+            XCTAssertEqual(XCTWaiter.wait(for: [loaded], timeout: 10), .completed)
+            for _ in 0..<6 {
+                if task.frame.midY > app.buttons["feed-back"].frame.maxY + 20,
+                    task.frame.midY < app.buttons["meeting-add"].frame.minY - 20
+                {
+                    break
+                }
+                if task.frame.midY <= app.buttons["feed-back"].frame.maxY + 20 {
+                    app.scrollViews["feed-timeline"].swipeDown()
+                } else {
+                    app.scrollViews["feed-timeline"].swipeUp()
+                }
+            }
+            task.tap()
+        }
         return app
     }
 
@@ -39,6 +65,14 @@ final class PreparationTaskUITests: XCTestCase {
         app.buttons["preparation-create"].tap()
         XCTAssertTrue(app.staticTexts["preparation-error"].waitForExistence(timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
+        app.buttons["action-form-back"].tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        app.buttons["meeting-add"].tap()
+        app.buttons["new-preparation-task"].tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
+        XCTAssertEqual(app.buttons["preparation-recipient"].value as? String, "Лена")
+        XCTAssertEqual(app.buttons["preparation-create"].label, "Повторить")
         capture("ios-task-create-error")
         XCUIDevice.shared.press(.home)
         app.activate()
@@ -88,6 +122,7 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(app.buttons["preparation-cancel"].waitForExistence(timeout: 10))
         app.buttons["preparation-cancel"].tap()
         XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 10))
+        app.buttons["Готово"].tap()
         XCTAssertTrue(
             app.staticTexts["Задача отменена · Саша · «Заказать пиццу»"].waitForExistence(
                 timeout: 10))

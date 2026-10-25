@@ -8,63 +8,26 @@ struct CreationFieldsView: View {
     @State private var timeSheet = false
     private enum Field: Hashable { case title, description, place }
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Название").font(.subheadline.bold())
+                Text("Название")
                 TextField(
-                    "Название", text: text(\.title),
-                    prompt: Text(
-                        typeSize.isAccessibilitySize ? "" : "Например, вечер настольных игр"
-                    ).foregroundStyle(
-                        AppPalette.muted),
-                    axis: .vertical
-                ).lineLimit(1...3)
-                    .accessibilityLabel("Название").accessibilityIdentifier("meeting-title")
-                    .focused($focus, equals: .title).meetingField()
-            }
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Описание · необязательно").font(.subheadline.bold())
-                TextField(
-                    "Описание", text: text(\.description),
-                    prompt: Text(typeSize.isAccessibilitySize ? "" : "Что нужно знать друзьям")
-                        .foregroundStyle(AppPalette.muted),
+                    "Название", text: text(\.title), prompt: Text("Например, ужин в пятницу"),
                     axis: .vertical
                 )
-                .accessibilityLabel("Описание").lineLimit(3...6).focused(
-                    $focus, equals: .description
-                ).meetingField()
-                Text("Описание увидят все, у кого есть приглашение.").font(.caption)
-                    .foregroundStyle(AppPalette.muted)
+                .lineLimit(1...3).focused($focus, equals: .title).meetingField()
+                .accessibilityLabel("Название").accessibilityIdentifier("meeting-title")
             }
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Дата").font(.subheadline.bold())
-                ActionButton(
-                    title: MeetingLabels.day(owner.value.day), symbol: "calendar", primary: false,
-                    disabled: !owner.editable
-                ) {
-                    focus = nil
-                    dateSheet = true
-                }.accessibilityLabel("Дата").accessibilityValue(MeetingLabels.day(owner.value.day))
-                Text("Время · необязательно").font(.subheadline.bold()).padding(.top, 12)
-                ActionButton(
-                    title: MeetingLabels.clock(owner.value.clock), symbol: "clock", primary: false,
-                    disabled: !owner.editable
-                ) {
-                    focus = nil
-                    timeSheet = true
-                }.accessibilityLabel("Время").accessibilityValue(
-                    MeetingLabels.clock(owner.value.clock))
-                if owner.value.clock != nil {
-                    Button("Убрать время") {
-                        owner.change {
-                            $0.clock = nil
-                            $0.repetition = nil
-                        }
-                    }.frame(minHeight: 44).accessibilityIdentifier("clear-meeting-time")
+            if typeSize.isAccessibilitySize {
+                VStack(alignment: .leading, spacing: 18) {
+                    day
+                    clock
                 }
-                Text("Время необязательно · \(owner.value.timezone)").font(.caption)
-                    .foregroundStyle(
-                        AppPalette.muted)
+            } else {
+                HStack(alignment: .top, spacing: 14) {
+                    day
+                    clock
+                }
             }
             if owner.needsTimeChoice {
                 Picker(
@@ -80,41 +43,89 @@ struct CreationFieldsView: View {
                 }.pickerStyle(.menu)
             }
             VStack(alignment: .leading, spacing: 8) {
-                Text("Место · необязательно").font(.subheadline.bold())
+                Text("Место")
                 TextField(
-                    "Место", text: text(\.place),
-                    prompt: Text(typeSize.isAccessibilitySize ? "" : "Адрес, название или ориентир")
-                        .foregroundStyle(AppPalette.muted),
+                    "Место", text: text(\.place), prompt: Text("Адрес, название или ориентир"),
                     axis: .vertical
-                ).lineLimit(1...3)
-                    .accessibilityLabel("Место").focused($focus, equals: .place).meetingField()
+                )
+                .lineLimit(1...3).focused($focus, equals: .place).meetingField().accessibilityLabel(
+                    "Место")
             }
-        }
-        .disabled(!owner.editable)
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Готово") { focus = nil }
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Описание")
+                TextField(
+                    "Описание", text: text(\.description), prompt: Text("Что стоит знать друзьям"),
+                    axis: .vertical
+                )
+                .lineLimit(3...6).focused($focus, equals: .description)
+                .frame(minHeight: 72, alignment: .topLeading).meetingField()
+                .accessibilityLabel("Описание")
             }
-        }
-        .sheet(isPresented: $dateSheet) {
-            MeetingDateSheet(draft: owner.value) { date in
-                owner.change {
-                    $0.day = LocalMeetingTime.day(
-                        date, zone: TimeZone(identifier: owner.value.timezone) ?? .gmt)
+        }.designFont(13).disabled(!owner.editable)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Готово") {
+                        focus = nil
+                        SystemKeyboard.dismiss()
+                    }.accessibilityIdentifier("creation-keyboard-done")
                 }
             }
-        }
-        .sheet(isPresented: $timeSheet) {
-            MeetingTimeSheet(draft: owner.value) { date in
-                owner.change {
-                    $0.clock = LocalMeetingTime.clock(
-                        date, zone: TimeZone(identifier: owner.value.timezone) ?? .gmt)
+            .sheet(isPresented: $dateSheet) {
+                MeetingDateSheet(draft: owner.value) { date in
+                    owner.change {
+                        $0.day = LocalMeetingTime.day(
+                            date, zone: TimeZone(identifier: owner.value.timezone) ?? .gmt)
+                    }
                 }
+            }.sheet(isPresented: $timeSheet) {
+                MeetingTimeSheet(draft: owner.value) { date in
+                    owner.change {
+                        $0.clock = LocalMeetingTime.clock(
+                            date, zone: TimeZone(identifier: owner.value.timezone) ?? .gmt)
+                    }
+                }
+            }
+    }
+    private var day: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Дата")
+            Button {
+                focus = nil
+                dateSheet = true
+            } label: {
+                HStack {
+                    Text(MeetingLabels.day(owner.value.day)).lineLimit(1)
+                    Spacer(minLength: 4)
+                    ExperienceIcon(kind: .calendar, size: 13)
+                }.frame(maxWidth: .infinity, alignment: .leading).meetingField()
+            }.accessibilityLabel("Дата").accessibilityValue(MeetingLabels.day(owner.value.day))
+        }
+    }
+    private var clock: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Время")
+            Button {
+                focus = nil
+                timeSheet = true
+            } label: {
+                HStack {
+                    Text(MeetingLabels.clock(owner.value.clock)).lineLimit(1)
+                    Spacer(minLength: 4)
+                    Image(systemName: "clock").font(.system(size: 13))
+                }.frame(maxWidth: .infinity, alignment: .leading).meetingField()
+            }.accessibilityLabel("Время").accessibilityValue(MeetingLabels.clock(owner.value.clock))
+            if owner.value.clock != nil {
+                Button("Убрать время") {
+                    owner.change {
+                        $0.clock = nil
+                        $0.repetition = nil
+                    }
+                }
+                .frame(minHeight: 44).accessibilityIdentifier("clear-meeting-time")
             }
         }
     }
-
     private func text(_ key: WritableKeyPath<MeetingDraft, String>) -> Binding<String> {
         Binding(
             get: { owner.value[keyPath: key] },

@@ -14,15 +14,14 @@
   color: var(--muted);
 }
 
-.control-field.control-field :global(.g-text-input__additional-content_placement_start) {
-  order: -1;
+.control-field.control-field :global(.g-text-input__additional-content_placement_end) {
   flex: 0 0 44px;
   padding: 0;
   justify-content: center;
 }
 
 .control-field.control-field :global(.g-text-input__control) {
-  padding-inline: 0 12px;
+  padding-inline: 14px 0;
 }
 
 .control-field.control-field :global(.g-text-input__clear) {
@@ -33,4 +32,9 @@
   .control-field.control-field :global(.g-text-input__control) {
     font-size: max(16px, 1em);
   }
+}
+
+.control-field > label {
+  font-weight: var(--field-label-weight, 650);
+  font-size: var(--field-label-size, inherit);
 }

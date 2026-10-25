@@ -1,0 +1,36 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 47px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--navigation);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.button svg {
+  flex-shrink: 0;
+}
+
+.button[aria-invalid='true'] {
+  outline: 1px solid var(--error);
+}
+
+.popup {
+  --g-popup-border-radius: 14px;
+  max-width: calc(100vw - 16px);
+}
+
+@media (max-width: 359px) {
+  .button {
+    padding-inline: 8px;
+    gap: 4px;
+    font-size: 12px;
+  }
+}

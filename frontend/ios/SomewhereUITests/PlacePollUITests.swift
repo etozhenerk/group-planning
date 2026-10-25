@@ -30,13 +30,31 @@ final class PlacePollUITests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText("Кафе у парка")
+        app.buttons["action-keyboard-done"].tap()
+        let explanation = app.descendants(matching: .any)["place-poll-explanation"].firstMatch
+        explanation.tap()
+        explanation.typeText("Рядом с метро")
+        app.buttons["action-keyboard-done"].tap()
+        app.buttons["action-form-back"].tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        app.buttons["meeting-add"].tap()
+        app.buttons["new-place-poll"].tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        XCTAssertTrue((field.value as? String)?.contains("Кафе у парка") == true)
+        XCTAssertTrue((explanation.value as? String)?.contains("Рядом с метро") == true)
+        for _ in 0..<5 {
+            if app.buttons["place-poll-create"].isHittable { break }
+            app.scrollViews["action-form-scroll"].swipeUp()
+        }
         app.buttons["place-poll-create"].tap()
         XCTAssertTrue(app.staticTexts["place-poll-error"].waitForExistence(timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Кафе у парка") == true)
+        XCTAssertTrue((explanation.value as? String)?.contains("Рядом с метро") == true)
         capture("ios-place-create-error")
         app.buttons["place-poll-create"].tap()
         let yes = app.buttons["place-vote-for"]
         XCTAssertTrue(yes.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["Рядом с метро"].exists)
         yes.tap()
         XCTAssertTrue(app.staticTexts["Не удалось сохранить голос."].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["Ваш голос: За"].exists)

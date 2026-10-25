@@ -14,6 +14,7 @@ internal fun placeIssueText(issue: PlacePollIssue): String = stringResource(
         PlacePollIssue.Closed -> R.string.place_poll_finished
         PlacePollIssue.Active -> R.string.place_poll_active
         PlacePollIssue.Place -> R.string.place_poll_invalid
+        PlacePollIssue.Explanation -> R.string.place_poll_explanation_invalid
         PlacePollIssue.Unchanged -> R.string.place_poll_unchanged
         PlacePollIssue.Deadline -> R.string.place_poll_deadline
         PlacePollIssue.Rejected -> R.string.place_poll_rejected

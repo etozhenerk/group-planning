@@ -2,12 +2,9 @@ package dev.groupplanning.android.ui.meetings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -51,57 +47,56 @@ internal fun CalendarDayCell(
         if (today) stringResource(R.string.calendar_today_accessible) else "",
     )
     val scale = LocalDensity.current.fontScale
+    val accent = if (day.dayOfWeek.value >= 6) Color(0xff567464) else Color(0xff695573)
     val foreground = when {
-        active -> Palette.actionText
+        active -> Color.White
         YearMonth.from(day) != YearMonth.from(selection) -> Palette.muted
         else -> Palette.text
     }
+    val weekend = day.dayOfWeek.value >= 6
+    val surface = when {
+        active -> accent
+        count > 0 -> if (weekend) Color(0xff354e46) else Color(0xff46394d)
+        else -> Color.Transparent
+    }
     Surface(
         onClick = choose,
-        modifier = modifier.testTag("day-$day")
-            .alpha(if (YearMonth.from(day) == YearMonth.from(selection)) 1f else 0.5f),
-        shape = RoundedCornerShape(14.dp),
-        color = Color.Transparent,
+        modifier = modifier.testTag("day-$day"),
+        shape = RoundedCornerShape(13.dp),
+        color = surface,
+        border = if (active || today) {
+            androidx.compose.foundation.BorderStroke(
+                1.dp,
+                if (weekend) Color(0x95bdd7c7) else Color(0x75d5c0e4),
+            )
+        } else {
+            null
+        },
     ) {
-        Column(
+        Box(
             Modifier.fillMaxSize().clearAndSetSemantics {
                 contentDescription = label
                 selected = active
             },
-            horizontalAlignment = Alignment.CenterHorizontally,
+            contentAlignment = Alignment.Center,
         ) {
-            Box(
-                Modifier.size(36.dp)
-                    .background(
-                        if (active) Palette.action else Color.Transparent,
-                        RoundedCornerShape(10.dp),
-                    )
-                    .then(
-                        if (today &&
-                            !active
-                        ) {
-                            Modifier.border(1.dp, Palette.accent, RoundedCornerShape(10.dp))
-                        } else {
-                            Modifier
-                        },
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    day.dayOfMonth.toString(),
-                    color = foreground,
-                    fontSize = (minOf(16f * scale, 22f) / scale).sp,
-                    fontWeight = if (active || today) FontWeight.Bold else FontWeight.Normal,
+            Text(
+                day.dayOfMonth.toString(),
+                color = if (active) {
+                    Color.White
+                } else if (weekend) {
+                    Color(0xffb6d0c3)
+                } else {
+                    foreground
+                },
+                fontSize = (minOf(13f * scale, 22f) / scale).sp,
+                fontWeight = if (active || today) FontWeight.Bold else FontWeight.Normal,
+            )
+            if (count > 0) {
+                Box(
+                    Modifier.align(Alignment.BottomCenter).padding(bottom = 6.dp)
+                        .size(4.dp).background(foreground, CircleShape),
                 )
-            }
-            Row(
-                Modifier.height(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(3.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                repeat(minOf(count, 3)) {
-                    Box(Modifier.size(4.dp).background(Palette.accent, CircleShape))
-                }
             }
         }
     }

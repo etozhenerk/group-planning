@@ -9,6 +9,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+val emojiAssets = tasks.register<Sync>("prepareEmojiAssets") {
+    from(rootProject.file("../../contracts/emoji")) { include("emoji-ru.json", "LICENSE") }
+    into(layout.buildDirectory.dir("generated/emoji-assets"))
+}
+
 val localSettings = Properties().apply {
     val settingsFile = rootProject.file("local.properties")
     if (settingsFile.isFile) {
@@ -75,6 +80,8 @@ android {
             enableSplit = false
         }
     }
+
+    sourceSets.getByName("main").assets.srcDir(layout.buildDirectory.dir("generated/emoji-assets"))
 
     buildFeatures {
         compose = true
@@ -159,3 +166,5 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     debugImplementation(libs.compose.tooling)
 }
+
+tasks.named("preBuild").configure { dependsOn(emojiAssets) }

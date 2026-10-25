@@ -37,6 +37,7 @@ extension FeedOwner {
                 }
                 guard current, generation == version else { return }
             } while more
+            await reactions.refresh()
             if infoPresented { await MeetingRepository(session: session).loadParticipants(id) }
             if !current { clear() }
         } catch { failed(error, version: version) }

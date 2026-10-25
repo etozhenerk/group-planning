@@ -16,3 +16,5 @@ export {
 } from '@/entities/session/model/deletion';
 
 export type { PendingDeletion } from '@/entities/session/model/deletion';
+
+export { useProfile } from '@/entities/session/model/useProfile';

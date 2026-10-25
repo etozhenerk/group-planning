@@ -25,9 +25,10 @@ export const PollDeadline = ({
 }: PollDeadlineProps) => {
   return (
     <fieldset className={styles['deadline']} disabled={disabled}>
-      <legend>Окончание опроса</legend>
+      <legend>Опрос завершится</legend>
       <div className={styles['fields']}>
         <DateInput
+          compact
           label="Дата"
           value={value.split('T')[0] ?? ''}
           timezone={zone}

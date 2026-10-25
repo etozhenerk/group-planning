@@ -1,11 +1,9 @@
 package dev.groupplanning.android.ui.meetings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,10 +34,7 @@ internal fun CalendarAgenda(
     val page = data.page.takeIf { data.filter == selection.filter }
     val loading = stringResource(R.string.calendar_loading)
     Column(
-        Modifier.fillMaxWidth().background(
-            Palette.surface,
-            RoundedCornerShape(18.dp),
-        ).padding(19.dp),
+        Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
@@ -57,7 +52,7 @@ internal fun CalendarAgenda(
                     heading()
                 },
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = 20.sp,
             )
             if (!selection.undated) {
                 val count =

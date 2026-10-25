@@ -3,6 +3,7 @@ import Observation
 
 @MainActor @Observable
 final class PrivateData {
+    var recentEmoji: [String] = []
     var meetings = ResourceState<[MeetingSummary]>()
     var meetingsCursor: String?
     var loadingMore = false
@@ -52,6 +53,7 @@ final class PrivateData {
     }
 
     func clear() {
+        recentEmoji = []
         generation = UUID()
         meetings = ResourceState()
         meetingsCursor = nil

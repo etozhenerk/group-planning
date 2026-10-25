@@ -24,6 +24,7 @@ export const MeetingTimeFields = ({
     <div className={styles['time-fields']}>
       <div className={styles['form-time']}>
         <DateInput
+          compact
           value={fields.date}
           timezone={value.timezone}
           onChange={fields.changeDate}

@@ -1,18 +1,26 @@
+import { InvitePrompt } from '@/widgets/conversation/ui/InvitePrompt';
 import { SkeletonConversation } from '@/shared/ui/SkeletonConversation';
 import styles from '@/widgets/conversation/ui/FeedTimeline/FeedTimeline.module.css';
 import type { Session } from '@/entities/session';
-import { useConversation } from '@/entities/meeting';
+import { useConversation, useReactions } from '@/entities/meeting';
 import { Status } from '@/shared/ui/Status';
 import { errorText } from '@/shared/api';
-import { ConversationActions } from '@/widgets/conversation/ui/ConversationActions';
-import { SendMessage } from '@/features/send-message';
+import { ConversationComposer } from '@/widgets/conversation/ui/ConversationComposer';
 import { useViewport } from '@/widgets/conversation/ui/FeedTimeline/hooks/useViewport';
-import { FeedRecord } from '@/widgets/conversation/ui/FeedRecord';
+import { FeedRecords } from '@/widgets/conversation/ui/FeedRecords';
 
-export type FeedTimelineProps = { id: string; session: Session };
+export type FeedTimelineProps = { id: string; session: Session; organizer?: boolean };
 
-export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
+export const FeedTimeline = ({ id, session, organizer = false }: FeedTimelineProps) => {
   const query = useConversation(id, session.user.id);
+  const reactions = useReactions(
+    id,
+    session.user.id,
+    query.data?.entries
+      .filter((entry) => entry.kind === 'message')
+      .map((entry) => entry.id) ?? [],
+  );
+
   const viewport = useViewport(query.data?.entries ?? [], query.loadOlder);
 
   if (query.access.denied) {
@@ -61,11 +69,18 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
             Не удалось загрузить историю. Попробуйте ещё раз.
           </p>
         ) : null}
-        <ol className={styles['feed-timeline']} aria-label="Разговор встречи">
-          {query.data.entries.map((entry) => (
-            <FeedRecord key={entry.id} entry={entry} session={session} />
-          ))}
-        </ol>
+        <FeedRecords
+          error={!!reactions.error}
+          retry={() => void reactions.refetch()}
+          entries={query.data.entries}
+          session={session}
+          reactions={reactions.data ?? []}
+        />
+        {organizer &&
+          query.data.participantCount === 1 &&
+          !query.data.entries.some((entry) => entry.kind === 'message') && (
+            <InvitePrompt id={id} />
+          )}
         {query.error && (
           <p className={styles['error']} role="status">
             Не удалось обновить разговор. Повторим запрос.
@@ -81,11 +96,7 @@ export const FeedTimeline = ({ id, session }: FeedTimelineProps) => {
           Новые сообщения ↓
         </button>
       )}
-      <SendMessage
-        id={id}
-        session={session}
-        extraAction={<ConversationActions id={id} session={session} />}
-      />
+      <ConversationComposer id={id} session={session} />
     </>
   );
 };

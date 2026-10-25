@@ -13,7 +13,9 @@ export const LogoutButton = ({ session, showLabel = false }: LogoutButtonProps) 
     <div>
       <button
         type="button"
-        className={[showLabel ? '' : styles['icon'], styles['ghost']].join(' ')}
+        className={[showLabel ? styles.labelled : styles['icon'], styles['ghost']].join(
+          ' ',
+        )}
         aria-label="Выйти из аккаунта"
         onClick={() => action.mutate()}
         disabled={action.isPending}
@@ -21,10 +23,11 @@ export const LogoutButton = ({ session, showLabel = false }: LogoutButtonProps) 
       >
         {action.isPending ? (
           <LoaderCircle size={20} aria-hidden="true" className={styles.spinner} />
-        ) : (
+        ) : !showLabel ? (
           <LogOut size={20} aria-hidden="true" />
+        ) : (
+          'Выйти'
         )}
-        {showLabel && 'Выйти из аккаунта'}
       </button>
       {action.error && (
         <p role="alert" className={styles['error']}>

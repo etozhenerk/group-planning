@@ -4,6 +4,7 @@ import dev.groupplanning.android.data.api.ApiRequest
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.FailureKind
 import dev.groupplanning.android.data.api.models.DatePoll
+import dev.groupplanning.android.data.api.models.EntryReactions
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
@@ -11,6 +12,8 @@ import dev.groupplanning.android.data.api.models.Participant
 import dev.groupplanning.android.data.api.models.Participants
 import dev.groupplanning.android.data.api.models.PlacePoll
 import dev.groupplanning.android.data.api.models.PreparationTask
+import dev.groupplanning.android.data.api.models.ReactionIntent
+import dev.groupplanning.android.data.api.models.ReactionsPage
 import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.api.models.UpdateMeeting
 import dev.groupplanning.android.data.api.requests.FeedRequests
@@ -21,12 +24,50 @@ import dev.groupplanning.android.data.outbox.PendingMessage
 import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionRepository
 import java.util.UUID
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 
 internal class FeedRepository(
     private val session: SessionRepository,
     private val outbox: MessageOutbox,
+    val media: MediaRepository? = null,
 ) {
     val snapshot = session.state
+
+    suspend fun reactions(access: MeetingAccess, ids: List<UUID>): List<EntryReactions> =
+        session.authenticated(
+            ApiRequest(
+                listOf("meetings", access.id.toString(), "reactions"),
+                repeatedQuery = ids.take(50).map { "entry_id" to it.toString() },
+                meetingId = access.id,
+                revokesAccessOnForbidden = true,
+            ),
+            ReactionsPage.serializer(),
+            expectedLease = access.request,
+        ).entries
+
+    suspend fun react(access: MeetingAccess, intent: ReactionIntent): EntryReactions =
+        session.authenticated(
+            ApiRequest(
+                listOf(
+                    "meetings",
+                    access.id.toString(),
+                    "messages",
+                    intent.entry.toString(),
+                    "reactions",
+                ),
+                "PUT",
+                buildJsonObject {
+                    put("emoji", JsonPrimitive(intent.emoji))
+                    put("active", JsonPrimitive(intent.active))
+                }.toString(),
+                intent.key,
+                meetingId = access.id,
+                revokesAccessOnForbidden = true,
+            ),
+            EntryReactions.serializer(),
+            expectedLease = access.request,
+        )
 
     suspend fun poll(access: MeetingAccess, request: ApiRequest): DatePoll {
         val poll = session.authenticated(

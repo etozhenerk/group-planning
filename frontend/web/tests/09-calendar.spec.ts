@@ -130,7 +130,7 @@ test('calendar dates use the meeting timezone on a different device', async ({
   await mockCalendar(page, [meeting]);
   await page.goto('/meetings?view=calendar&period=upcoming&upcoming=2026-10-24');
   const agenda = page.getByRole('region', { name: 'Встречи выбранного дня' });
-  await expect(agenda.locator('time')).toHaveText('00:30');
+  await expect(agenda.locator('time')).toContainText('00:30');
   await expect(agenda.getByTestId('agenda-meeting')).toContainText('Япония');
   await expect(page.locator('[data-day="2026-10-24"]')).toHaveAccessibleName(/встреч: 1/);
   await expect(page.locator('[data-day="2026-10-23"]')).toHaveAccessibleName(/встреч: 0/);

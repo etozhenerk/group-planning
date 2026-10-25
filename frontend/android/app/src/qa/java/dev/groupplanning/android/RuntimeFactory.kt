@@ -39,7 +39,7 @@ internal object RuntimeFactory {
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
                     "cover-create", "cover-edit", "cover-large", "cover-system",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
-                    "feed-owner", "feed-persistence",
+                    "feed-owner", "feed-persistence", "memories", "design",
                     "calendar", "calendar-large", "calendar-empty",
                     "task-owner", "task-recipient", "task-decline", "task-cancel", "task-conflict",
                     "place-owner", "place-close", "place-rejected", "place-cancelled",

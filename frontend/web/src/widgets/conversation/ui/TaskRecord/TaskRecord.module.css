@@ -1,0 +1,29 @@
+.system {
+  text-align: center;
+  font-size: 11px;
+  color: #a7a6b0;
+  padding: 4px 0;
+}
+
+.message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  max-width: 86%;
+  min-width: 0;
+}
+
+.message > section {
+  max-width: calc(100% - 40px);
+}
+
+@media (max-width: 739px) {
+  .message {
+    max-width: 94%;
+    gap: 7px;
+  }
+
+  .message > section {
+    max-width: calc(100% - 32px);
+  }
+}

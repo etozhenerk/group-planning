@@ -3,6 +3,7 @@ set -eu
 
 cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
+sh scripts/check-emoji.sh
 . ./Config/toolchain.env
 
 . ./scripts/simulator.sh

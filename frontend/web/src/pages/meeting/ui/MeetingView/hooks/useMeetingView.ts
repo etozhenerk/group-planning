@@ -5,7 +5,7 @@ import { useDisclosure } from '@/shared/lib/disclosure';
 export const useMeetingView = (id: string, user: string) => {
   const query = useMeeting(id, user);
   const details = useDisclosure();
-  const wide = useMediaQuery('(min-width: 1170px)');
+  const wide = useMediaQuery('(min-width: 1101px)');
   let invitation: string | null = null;
 
   try {

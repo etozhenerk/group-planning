@@ -23,6 +23,14 @@ struct FeedEntry: Codable, Equatable, Sendable {
         case clientRequestID = "client_request_id"
     }
 
+    var attachments: [MeetingMedia] {
+        guard kind == "message", payloadVersion == 1, let value = payload["attachments"],
+            let data = try? APICoding.encode(value),
+            let media = try? APICoding.decode([MeetingMedia].self, from: data)
+        else { return [] }
+        return media.filter { $0.meetingID == meetingID && $0.status == "published" }
+    }
+
     var messageText: String? {
         guard kind == "message", payloadVersion == 1,
             case .string(let text) = payload["text"]

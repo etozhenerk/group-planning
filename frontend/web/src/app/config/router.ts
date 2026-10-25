@@ -21,6 +21,18 @@ export const router = createBrowserRouter([
         }),
       },
       {
+        path: '/support',
+        lazy: async () => ({ Component: (await import('@/pages/support')).SupportPage }),
+      },
+      {
+        path: '/profile',
+        lazy: async () => ({ Component: (await import('@/pages/profile')).ProfilePage }),
+      },
+      ...['/about', '/help', '/privacy', '/cookies'].map((path) => ({
+        path,
+        lazy: async () => ({ Component: (await import('@/pages/service')).ServicePage }),
+      })),
+      {
         path: '/invitations',
         lazy: async () => ({
           Component: (await import('@/pages/invitations')).InvitationsPage,
@@ -36,6 +48,24 @@ export const router = createBrowserRouter([
         path: '/meetings/:id/created',
         lazy: async () => ({
           Component: (await import('@/pages/meeting-created')).CreatedPage,
+        }),
+      },
+      {
+        path: '/meetings/:id/share',
+        lazy: async () => ({
+          Component: (await import('@/pages/meeting-share')).SharePage,
+        }),
+      },
+      {
+        path: '/meetings/:id/upload',
+        lazy: async () => ({
+          Component: (await import('@/pages/meeting-upload')).UploadPage,
+        }),
+      },
+      {
+        path: '/meetings/:id/memories',
+        lazy: async () => ({
+          Component: (await import('@/pages/memories')).MemoriesPage,
         }),
       },
       {

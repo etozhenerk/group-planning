@@ -166,9 +166,9 @@ final class EntryUITests: XCTestCase {
         reveal(retry, app)
         XCTAssertEqual(retry.label, "Повторить сохранение")
         retry.tap()
-        XCTAssertTrue(app.scrollViews["meeting-created"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 15))
         capture("created", app)
-        app.buttons["К моим встречам"].tap()
+        app.buttons["feed-back"].tap()
         XCTAssertTrue(
             app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "meeting-card-"))
                 .firstMatch.waitForExistence(timeout: 10))

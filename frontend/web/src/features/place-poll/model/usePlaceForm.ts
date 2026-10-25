@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 import { Temporal } from '@js-temporal/polyfill';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPlacePoll, guarded, accessEpoch, useAccess } from '@/entities/meeting';
-import type { Meeting } from '@/entities/meeting';
+import type { Meeting, PlacePollCreate } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { useIntent } from '@/shared/lib/intent';
 import { resolveTime } from '@/shared/lib/time';
@@ -11,6 +11,7 @@ import { placePollError } from '@/features/place-poll/model/placePollCopy';
 
 export const usePlaceForm = (meeting: Meeting, session: Session, done: () => void) => {
   const [place, setPlace] = useState('');
+  const [explanation, setExplanation] = useState('');
   const [validation, setValidation] = useState('');
   const [deadline, setDeadline] = useState(() =>
     Temporal.Now.zonedDateTimeISO(meeting.timezone)
@@ -24,7 +25,7 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
   const intent = useIntent();
   const access = useAccess(session.user.id, meeting.id);
   const action = useMutation({
-    mutationFn: (input: { place: string; closesAt: string }) =>
+    mutationFn: (input: PlacePollCreate) =>
       guarded(client, session.user.id, meeting.id, access.epoch, () =>
         createPlacePoll(meeting.id, input, session.csrf, intent(input)),
       ),
@@ -44,6 +45,8 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
   return {
     place,
     setPlace,
+    explanation,
+    setExplanation,
     deadline,
     setDeadline: (value: string) => {
       setDeadline(value);
@@ -74,7 +77,15 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
           throw new Error('Выберите время окончания позже текущего.');
         }
 
-        action.mutate({ place: trimmed, closesAt });
+        if ([...explanation.trim()].length > 2000) {
+          throw new Error('Сократите пояснение до 2000 символов.');
+        }
+
+        action.mutate({
+          place: trimmed,
+          closesAt,
+          ...(explanation.trim() ? { explanation: explanation.trim() } : {}),
+        });
       } catch (error) {
         setValidation(
           error instanceof Error ? error.message : 'Проверьте введённые данные.',

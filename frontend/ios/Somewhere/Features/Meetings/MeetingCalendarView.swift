@@ -6,7 +6,7 @@ struct MeetingCalendarView: View {
     let select: (UUID) -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 34) {
             MeetingCalendarGrid(owner: owner)
             if owner.month.error != nil {
                 StatusView(
@@ -15,23 +15,23 @@ struct MeetingCalendarView: View {
             }
             UndatedMeetingsButton(owner: owner)
             VStack(alignment: .leading, spacing: 16) {
-                VStack(alignment: .leading, spacing: 5) {
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text(
                         owner.selection.undated
                             ? "Без даты"
-                            : CalendarDate.heading(owner.selection.day, format: "EEEE, d MMMM")
+                            : CalendarDate.heading(owner.selection.day, format: "d MMMM")
                     )
-                    .font(.headline).accessibilityAddTraits(.isHeader)
+                    .designFont(20, weight: .bold).accessibilityAddTraits(.isHeader)
                     .accessibilityIdentifier("calendar-agenda-title")
                     if !owner.selection.undated {
-                        Text(owner.dayCount.map { "Встреч: \($0)" } ?? " ")
+                        Spacer()
+                        Text(owner.dayCount.map { ExperienceDate.meetingCount($0) } ?? " ")
                             .font(.caption).foregroundStyle(AppPalette.muted)
                     }
                 }
                 MeetingResultsView(owner: owner, create: create, select: select)
             }
-            .padding(19).frame(maxWidth: .infinity, alignment: .leading)
-            .background(AppPalette.surface, in: RoundedRectangle(cornerRadius: 18))
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

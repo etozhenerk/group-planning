@@ -3,12 +3,14 @@ package dev.groupplanning.android.state.feed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.api.ClientFailure
+import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.datepoll.DatePollViewModel
+import dev.groupplanning.android.state.media.MediaViewModel
 import dev.groupplanning.android.state.placepoll.PlacePollViewModel
 import dev.groupplanning.android.state.preparation.PreparationFormViewModel
 import dev.groupplanning.android.state.preparation.PreparationTaskViewModel
@@ -31,6 +33,10 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     ViewModel(scope) {
     private val mutable = MutableStateFlow(FeedState())
     val state = mutable.asStateFlow()
+    val media = repository.media?.let {
+        MediaViewModel(id, it, childScope())
+    }
+    val reactions = ReactionController(repository, viewModelScope)
     val sender = MessageSender(repository, viewModelScope) {
         mutable.value = state.value.merge(listOf(it))
     }
@@ -48,6 +54,9 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     val tasks = mutableTasks.asStateFlow()
     private val mutableTaskCreation = MutableStateFlow<PreparationFormViewModel?>(null)
     val taskCreation = mutableTaskCreation.asStateFlow()
+    private var savedPollCreation: DatePollViewModel? = null
+    private var savedPlaceCreation: PlacePollViewModel? = null
+    private var savedTaskCreation: PreparationFormViewModel? = null
     private var access: MeetingAccess? = null
     private var active: CoroutineScope? = null
     private var activeJob: Job? = null
@@ -66,6 +75,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
                     activeJob?.cancel()
                     access = null
                     sender.revoke()
+                    reactions.revoke()
                     closeSettings()
                     clearPolls()
                     mutable.value = FeedState(revoked = true)
@@ -81,6 +91,8 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
             if (access == null) {
                 access = repository.open(id)
                 sender.open(checkNotNull(access))
+                media?.open()
+                reactions.open(checkNotNull(access))
             }
             var wait = 3_000L
             while (true) {
@@ -131,6 +143,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
                 refreshDetails(lease, page)
                 // Initial has_more describes older history, not unread newer pages.
             } while (!first && page.hasMore)
+            reactions.refresh()
             return true
         } catch (cancelled: CancellationException) {
             throw cancelled
@@ -191,10 +204,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         mutableSettings.value = null
     }
 
-    private fun registerPolls(
-        entries: List<dev.groupplanning.android.data.api.models.FeedEntry>,
-        lease: MeetingAccess,
-    ) {
+    private fun registerPolls(entries: List<FeedEntry>, lease: MeetingAccess) {
         for (entry in entries) {
             if (entry.kind !in
                 listOf("date_poll_created", "place_poll_created", "preparation_task_created") ||
@@ -236,13 +246,17 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     fun createPoll(meeting: Meeting) {
         val lease = access ?: return
         if (pollCreation.value == null) {
-            mutableCreation.value = DatePollViewModel(repository, lease, childScope(), meeting)
+            mutableCreation.value = savedPollCreation
+                ?: DatePollViewModel(repository, lease, childScope(), meeting)
+            savedPollCreation = null
         }
     }
 
     fun closePollCreation() {
         if (pollCreation.value?.state?.value?.pending != null) return
-        pollCreation.value?.stop()
+        pollCreation.value?.let { model ->
+            if (model.state.value.poll == null) savedPollCreation = model else model.stop()
+        }
         mutableCreation.value = null
         refresh()
     }
@@ -252,14 +266,17 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         if (placeCreation.value ==
             null
         ) {
-            mutablePlaceCreation.value =
-                PlacePollViewModel(repository, lease, childScope(), meeting)
+            mutablePlaceCreation.value = savedPlaceCreation
+                ?: PlacePollViewModel(repository, lease, childScope(), meeting)
+            savedPlaceCreation = null
         }
     }
 
     fun closePlaceCreation() {
         if (placeCreation.value?.state?.value?.pending != null) return
-        placeCreation.value?.stop()
+        placeCreation.value?.let { model ->
+            if (model.state.value.poll == null) savedPlaceCreation = model else model.stop()
+        }
         mutablePlaceCreation.value = null
         refresh()
     }
@@ -269,19 +286,28 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         if (taskCreation.value ==
             null
         ) {
-            mutableTaskCreation.value =
-                PreparationFormViewModel(repository, lease, childScope())
+            mutableTaskCreation.value = savedTaskCreation
+                ?: PreparationFormViewModel(repository, lease, childScope())
+            savedTaskCreation = null
         }
     }
 
     fun closeTaskCreation() {
         if (taskCreation.value?.operation?.state?.value?.pending != null) return
-        taskCreation.value?.stop()
+        taskCreation.value?.let { model ->
+            if (model.operation.state.value.task == null) savedTaskCreation = model else model.stop()
+        }
         mutableTaskCreation.value = null
         refresh()
     }
 
     private fun clearPolls() {
+        savedPollCreation?.stop()
+        savedPollCreation = null
+        savedPlaceCreation?.stop()
+        savedPlaceCreation = null
+        savedTaskCreation?.stop()
+        savedTaskCreation = null
         tasks.value.values.forEach { it.stop() }
         mutableTasks.value = emptyMap()
         taskCreation.value?.stop()

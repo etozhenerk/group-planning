@@ -1,53 +1,175 @@
 .card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 19px;
-  background: var(--surface);
+  position: relative;
+  display: block;
+  min-height: 146px;
+  padding: 29px 21px 30px;
+  margin: 12px 0 16px;
+  border-radius: 22px;
+  background: #38313d;
+  border: 1px solid #ffffff0a;
+  box-shadow: 0 8px 20px #0000000b;
   min-width: 0;
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease;
 }
 
-.card:hover {
-  background: var(--surface-hover, #383840);
+.date {
+  position: absolute;
+  left: 17px;
+  top: -12px;
+  padding: 4px 10px;
+  border: 1px solid #ffffff09;
+  border-radius: 8px;
+  background: #57475e;
+  color: #ede0f1;
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 600;
+  box-shadow: 0 3px 7px #0002;
+  z-index: 2;
+  max-width: calc(100% - 34px);
 }
 
-.icon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 72px;
-  border-radius: 13px;
-  background: #45404c;
-  color: var(--accent);
-  flex-shrink: 0;
+.cover {
+  position: absolute;
+  right: 18px;
+  top: -11px;
+  width: 118px;
+  height: 112px;
+  border: 3px solid #5e4f63;
+  border-radius: 16px;
+  overflow: hidden;
+  transform: rotate(5deg);
+  box-shadow: 0 5px 14px #0004;
 }
 
-.info {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
+.card:has(.cover) .info {
+  padding-right: 137px;
 }
 
 .info h2 {
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: -0.45px;
   margin: 0 0 8px;
-  font-size: 19px;
+  overflow-wrap: anywhere;
 }
 
 .info p {
-  margin: 4px 0;
+  margin: 0;
+  display: flex;
+  align-items: start;
+  gap: 6px;
   color: var(--muted);
   font-size: 13px;
+  line-height: 1.45;
 }
 
-@media (max-width: 400px) {
+.info p svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.answer {
+  position: absolute;
+  bottom: -12px;
+  right: 18px;
+  padding: 3px 9px;
+  background: #41424b;
+  border: 2px solid var(--background);
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.sparkle {
+  position: absolute;
+  left: 22px;
+  bottom: 12px;
+  color: #c1a8d475;
+  transform: rotate(16deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    background: #403649;
+  }
+}
+
+@media (max-width: 739px) {
   .card {
-    gap: 12px;
-    padding: 12px;
+    min-height: 145px;
+    padding: 26px 17px 29px;
+    border-radius: 20px;
   }
 
-  .icon {
-    width: 40px;
-    height: 56px;
+  .date {
+    left: 14px;
+    font-size: 10px;
+    top: -11px;
   }
+
+  .card:has(.cover) .date {
+    max-width: calc(100% - 95px);
+  }
+
+  .cover {
+    width: 102px;
+    height: 101px;
+    right: 13px;
+    top: -10px;
+  }
+
+  .card:has(.cover) .info {
+    padding-right: 112px;
+  }
+
+  .info h2 {
+    font-size: 19px;
+  }
+
+  .info p {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+
+.author {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.card:has(.author) .sparkle {
+  display: none;
+}
+
+.card[data-weekend='true'] {
+  background: #2e3938;
+}
+
+.card[data-weekend='true'] .date {
+  background: #425653;
+  color: #dcece5;
+}
+
+.card[data-weekend='true'] .cover {
+  border-color: #4b615b;
+  transform: rotate(-4deg);
+}
+
+.date {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

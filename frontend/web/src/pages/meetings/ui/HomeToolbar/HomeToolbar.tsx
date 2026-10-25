@@ -1,4 +1,4 @@
-import { CalendarDays, List } from 'lucide-react';
+import { Calendar, List } from 'lucide-react';
 import type { CalendarCounts, MeetingPeriod } from '@/entities/meeting';
 import type { HomeSelection } from '@/pages/meetings/model/selection';
 import styles from '@/pages/meetings/ui/HomeToolbar/HomeToolbar.module.css';
@@ -39,7 +39,7 @@ export const HomeToolbar = ({ selection, counts, update }: HomeToolbarProps) => 
           aria-pressed={selection.view === 'calendar'}
           onClick={() => update({ view: 'calendar' })}
         >
-          <CalendarDays size={17} aria-hidden="true" />
+          <Calendar size={17} aria-hidden="true" />
           Календарь
         </button>
       </nav>

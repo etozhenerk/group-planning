@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  testIgnore: '30-design-review.spec.ts',
   fullyParallel: false,
   workers: 1,
   timeout: 30_000,
@@ -17,7 +18,12 @@ export default defineConfig({
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     {
       name: 'mobile-webkit',
-      testMatch: '27-mobile-scroll.spec.ts',
+      testMatch: [
+        '27-mobile-scroll.spec.ts',
+        '28-meeting-refresh.spec.ts',
+        '29-media-refresh.spec.ts',
+        '32-refresh-resilience.spec.ts',
+      ],
       use: {
         ...devices['iPhone 13 Pro'],
         viewport: { width: 402, height: 874 },

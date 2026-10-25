@@ -56,7 +56,7 @@ internal fun MeetingListHeading(showCreate: Boolean, scrolled: Boolean, create: 
                     bottomStart = if (scrolled) 18.dp else 0.dp,
                     bottomEnd = if (scrolled) 18.dp else 0.dp,
                 ),
-            ).padding(horizontal = 20.dp, vertical = 14.dp),
+            ).padding(start = 20.dp, end = 20.dp, top = 28.dp, bottom = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -65,26 +65,31 @@ internal fun MeetingListHeading(showCreate: Boolean, scrolled: Boolean, create: 
             Modifier.weight(1f).semantics { heading() },
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            letterSpacing = (-0.6).sp,
+            letterSpacing = (-0.9).sp,
+            lineHeight = 32.2.sp,
         )
         if (showCreate) {
             Surface(
                 onClick = create,
-                modifier = Modifier.defaultMinSize(48.dp, 48.dp).semantics {
+                modifier = Modifier.defaultMinSize(44.dp, 44.dp).semantics {
                     contentDescription = label
                 },
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(13.dp),
                 color = Palette.action,
                 contentColor = Palette.actionText,
             ) {
                 Row(
-                    Modifier.padding(14.dp),
+                    Modifier.padding(horizontal = 13.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(9.dp),
                 ) {
                     AppIcon(R.drawable.ic_plus, tint = Palette.actionText)
                     if (LocalDensity.current.fontScale < 1.5f) {
-                        Text(stringResource(R.string.meetings_create), fontWeight = FontWeight.Bold)
+                        Text(
+                            stringResource(R.string.meetings_create),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.SemiBold,
+                        )
                     }
                 }
             }

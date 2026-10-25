@@ -23,6 +23,7 @@ internal enum class PlacePollIssue {
     Closed,
     Active,
     Place,
+    Explanation,
     Unchanged,
     Deadline,
     Rejected,

@@ -1,44 +1,30 @@
 package dev.groupplanning.android.ui.savedinvitations
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import dev.groupplanning.android.R
+import dev.groupplanning.android.data.api.models.MeetingSummary
 import dev.groupplanning.android.data.api.models.SavedInvitation
-import dev.groupplanning.android.state.covers.CoverSource
-import dev.groupplanning.android.ui.components.meetingTime
-import dev.groupplanning.android.ui.covers.CoverImage
-import dev.groupplanning.android.ui.theme.Palette
+import dev.groupplanning.android.data.api.models.ServerCounter
+import dev.groupplanning.android.ui.meetings.MeetingCard
 
 @Composable
 internal fun SavedInvitationCard(item: SavedInvitation, select: () -> Unit) {
-    Surface(
-        onClick = select,
-        modifier = Modifier.fillMaxWidth().testTag("saved-invitation-${item.preview.meetingId}"),
-        shape = RoundedCornerShape(19.dp),
-        color = Palette.surface,
-    ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            item.preview.coverUrl?.let {
-                CoverImage(CoverSource.Remote(it, item.preview.meetingId), thumbnail = true)
-            }
-            Text(item.preview.title, fontWeight = FontWeight.Bold)
-            Text(
-                meetingTime(item.preview.startsAt, item.preview.timezone, item.preview.startsOn),
-                color = Palette.muted,
-            )
-            item.preview.place?.let { Text(it, color = Palette.muted) }
-            Text(stringResource(R.string.saved_invitation_answer), color = Palette.muted)
-        }
+    val preview = item.preview
+    val meeting = MeetingSummary(
+        id = preview.meetingId, title = preview.title,
+        startsAt = preview.startsAt, startsOn = preview.startsOn, timezone = preview.timezone,
+        place = preview.place, coverUrl = preview.coverUrl, participantCount = 0,
+        revision = ServerCounter.Zero, myRsvp = preview.myRsvp,
+        myRsvpRevision = preview.myRsvpRevision,
+    )
+    Box(Modifier.testTag("saved-invitation-${preview.meetingId}")) {
+        MeetingCard(
+            meeting,
+            inviter = preview.organizer?.displayName,
+            invitation = true,
+            onClick = select,
+        )
     }
 }

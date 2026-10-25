@@ -28,6 +28,8 @@ export const CalendarDay = ({
       className={styles.day}
       data-outside={day.slice(0, 7) !== selected.slice(0, 7)}
       data-today={day === today}
+      data-weekend={[0, 6].includes(new Date(`${day}T12:00:00Z`).getUTCDay())}
+      data-event={!!count}
       aria-pressed={day === selected}
       tabIndex={day === selected ? 0 : -1}
       aria-current={day === today ? 'date' : undefined}

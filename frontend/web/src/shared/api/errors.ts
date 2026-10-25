@@ -43,6 +43,18 @@ export const errorText = (error: unknown): string => {
       return 'Встреча или приглашение не найдены.';
     }
 
+    if (error.code === 'join_closed') {
+      return 'Участие закрыто за час до начала встречи.';
+    }
+
+    if (error.code === 'meeting_past') {
+      return 'Встреча уже прошла. Присоединиться нельзя.';
+    }
+
+    if (error.status === 429) {
+      return 'Слишком много запросов. Попробуйте немного позже.';
+    }
+
     if (error.status === 409) {
       return 'Данные изменились. Проверьте актуальное состояние перед сохранением.';
     }

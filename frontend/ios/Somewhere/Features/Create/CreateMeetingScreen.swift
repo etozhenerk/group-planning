@@ -4,29 +4,9 @@ struct CreateMeetingScreen: View {
     @Bindable var owner: CreationOwner
     let openMeeting: (UUID) -> Void
     @Environment(\.dismiss) private var dismiss
-    @ToolbarContentBuilder
-    private var closeToolbar: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            if owner.created == nil {
-                Button {
-                    owner.requestClose()
-                } label: {
-                    Label("Закрыть", systemImage: "xmark")
-                }
-                .disabled(owner.busy || owner.preparingCover)
-            }
-        }
-    }
     private var content: some View {
         Group {
-            if let created = owner.created {
-                CreationSuccessView(
-                    result: created, close: { dismiss() },
-                    open: {
-                        openMeeting(created.meeting.id)
-                        dismiss()
-                    })
-            } else if !owner.ready {
+            if !owner.ready {
                 if let problem = owner.problem {
                     StatusView(title: problem, retry: { owner.retryLoad() })
                 } else {
@@ -42,9 +22,9 @@ struct CreateMeetingScreen: View {
             content
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppPalette.background)
-                .navigationTitle(owner.created == nil ? "Новая встреча" : "Готово")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { closeToolbar }
+                .toolbar(.hidden, for: .navigationBar)
+                .safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
+
         }
         .foregroundStyle(AppPalette.text).tint(AppPalette.accent).preferredColorScheme(.dark)
         .interactiveDismissDisabled(!owner.value.isEmpty || owner.busy)
@@ -60,7 +40,17 @@ struct CreateMeetingScreen: View {
         } message: {
             Text("При закрытии формы последние изменения могут потеряться.")
         }
-        .onChange(of: owner.dismissed) { _, closed in if closed { dismiss() } }
+        .onChange(of: owner.created?.meeting.id) { _, id in
+            if let id {
+                dismiss()
+                openMeeting(id)
+            }
+        }
+        .onChange(of: owner.dismissed) { _, closed in
+            if closed {
+                dismiss()
+            }
+        }
         .task { await owner.load() }
         .onDisappear { owner.cancel() }
     }

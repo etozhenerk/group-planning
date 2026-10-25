@@ -53,7 +53,7 @@ for (const width of [320, 1440]) {
       await expect(agenda.getByText('0 встреч', { exact: true })).toBeVisible();
 
       if (width <= 1180) {
-        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.evaluate(() => window.scrollTo(0, 340));
         await expect(controls).toHaveAttribute('data-pinned', 'true');
         const bounds = await controls.boundingBox();
         expect(bounds!.x).toBe(0);
@@ -142,5 +142,5 @@ test('header creation uses the calendar day but list and undated creation do not
   await page.getByLabel('Название', { exact: true }).fill('Пицца в субботу');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('18:30');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 });

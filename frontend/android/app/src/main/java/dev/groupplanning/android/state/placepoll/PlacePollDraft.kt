@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 
 internal data class PlacePollDraft(
     val place: String = "",
+    val explanation: String = "",
     val previousPlace: String?,
     val deadline: MeetingDraft,
 ) {

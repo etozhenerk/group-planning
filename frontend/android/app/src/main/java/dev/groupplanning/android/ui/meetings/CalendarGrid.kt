@@ -28,22 +28,22 @@ internal fun CalendarGrid(
 ) {
     val scale = LocalDensity.current.fontScale
     val counts = days.associate { it.date to it.count }
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Row(Modifier.fillMaxWidth().padding(bottom = 6.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(Modifier.fillMaxWidth().padding(bottom = 9.dp)) {
             DayOfWeek.entries.forEach { day ->
                 Text(
                     day.getDisplayName(TextStyle.SHORT, Locale.forLanguageTag("ru")),
                     Modifier.weight(1f),
                     textAlign = TextAlign.Center,
                     color = Palette.muted,
-                    fontSize = (minOf(14f * scale, 16f) / scale).sp,
+                    fontSize = (minOf(11f * scale, 16f) / scale).sp,
                 )
             }
         }
         selection.grid.chunked(7).forEach { week ->
             Row(
-                Modifier.fillMaxWidth().height(48.dp),
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                Modifier.fillMaxWidth().height(42.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 week.forEach { day ->
                     CalendarDayCell(

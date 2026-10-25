@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,12 +35,12 @@ internal fun MeetingToolbar(
             change(selection.copy(calendar = calendar))
         }
     }
-    val group = Modifier.background(colorResource(R.color.navigation), RoundedCornerShape(16.dp))
-        .padding(5.dp)
+    val group = Modifier.background(colorResource(R.color.navigation), RoundedCornerShape(12.dp))
+        .padding(4.dp)
 
-    Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
         if (large) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(23.dp)) {
                 period(MeetingPeriod.Upcoming, Modifier.fillMaxWidth())
                 period(MeetingPeriod.Past, Modifier.fillMaxWidth())
             }
@@ -50,13 +49,13 @@ internal fun MeetingToolbar(
                 display(true, Modifier.fillMaxWidth())
             }
         } else {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                period(MeetingPeriod.Upcoming, Modifier.weight(1f))
-                period(MeetingPeriod.Past, Modifier.weight(1f))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(23.dp)) {
+                period(MeetingPeriod.Upcoming, Modifier)
+                period(MeetingPeriod.Past, Modifier)
             }
-            Row(Modifier.widthIn(max = 320.dp).then(group)) {
-                display(false, Modifier.weight(1f))
-                display(true, Modifier.weight(1f))
+            Row(group, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                display(false, Modifier)
+                display(true, Modifier)
             }
         }
     }

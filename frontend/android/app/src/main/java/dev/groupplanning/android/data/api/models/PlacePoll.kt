@@ -23,4 +23,5 @@ internal data class PlacePoll(
     @SerialName("closes_at") val closesAt: ApiInstant,
     @SerialName("closed_at") val closedAt: ApiInstant?,
     @SerialName("can_vote") val canVote: Boolean,
+    val explanation: String? = null,
 )

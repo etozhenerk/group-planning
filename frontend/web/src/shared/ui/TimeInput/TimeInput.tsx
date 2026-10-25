@@ -35,7 +35,7 @@ export const TimeInput = ({
         placeholder="19:00"
         disabled={disabled}
         {...(invalid ? { validationState: 'invalid' as const } : {})}
-        startContent={<Clock size={18} aria-hidden="true" />}
+        endContent={<Clock size={18} aria-hidden="true" />}
         controlProps={{
           inputMode: 'numeric',
           maxLength: 5,

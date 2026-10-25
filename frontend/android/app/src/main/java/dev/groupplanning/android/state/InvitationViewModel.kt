@@ -179,7 +179,14 @@ internal class InvitationViewModel(
                 mutable.value = state.value.copy(saving = false, pending = null)
                 load(version)
                 if (epoch == version) {
-                    mutable.value = state.value.copy(issue = InvitationIssue.Conflict)
+                    mutable.value =
+                        state.value.copy(
+                            issue = if (error.problem?.code == "join_closed") {
+                                InvitationIssue.JoinClosed
+                            } else {
+                                InvitationIssue.Conflict
+                            },
+                        )
                 }
             }
             400, 403, 404, 422 -> mutable.value = state.value.copy(

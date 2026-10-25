@@ -1,0 +1,120 @@
+.draft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  background: #ccb8e20b;
+  border: 1px solid #ccb8e21a;
+  border-radius: 12px;
+  margin-bottom: 34px;
+}
+
+.draft > span {
+  font-size: 10px;
+  white-space: nowrap;
+  color: #d4c1e2;
+  background: #ceb7e410;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.draft p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 175px minmax(0, 1fr);
+  gap: 40px;
+}
+
+.toc {
+  display: grid;
+  gap: 15px;
+  align-content: start;
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+  font-size: 12px;
+  color: #b9afc7;
+}
+
+.toc a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.copy {
+  max-width: 730px;
+  min-width: 0;
+}
+
+.copy section {
+  scroll-margin-top: 24px;
+  margin-bottom: 35px;
+}
+
+.copy h2 {
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+
+.copy p {
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 0 0 13px;
+  color: #b8b3c1;
+}
+
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .toc {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+}
+
+@media (max-width: 739px) {
+  .draft {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+  }
+}
+
+.fields {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 0 0 18px;
+}
+
+.fields > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.fields dd {
+  margin: 0;
+  color: #c7b4d8;
+}
+
+.copy p.unfilled {
+  color: #baa6ca;
+}

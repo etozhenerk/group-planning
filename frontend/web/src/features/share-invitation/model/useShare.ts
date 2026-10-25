@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getInvitationLink } from '@/entities/meeting';
 
-export const useShare = (id: string) => {
+export const useShare = (id: string, visible = false) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [failed, setFailed] = useState(false);
   const query = useQuery({
     queryKey: ['invitation-link', id],
     queryFn: ({ signal }) => getInvitationLink(id, signal),
-    enabled: open,
+    enabled: open || visible,
     retry: false,
     gcTime: 0,
   });

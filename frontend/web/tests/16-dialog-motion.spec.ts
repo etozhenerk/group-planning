@@ -9,8 +9,8 @@ for (const width of [390, 1440]) {
     await login(page, 'Саша');
     const { meeting } = await apiCreate(page, 'Проверка анимации');
     await page.goto(`/meetings/${meeting.id}`);
-    const open = page.getByRole('button', { name: 'Пригласить друзей', exact: true });
-    const dialog = page.getByRole('dialog', { name: 'Приглашение для друзей' });
+    const open = page.getByRole('button', { name: 'Информация о встрече', exact: true });
+    const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
     await open.click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     const height = (await dialog.boundingBox())?.height;
@@ -26,9 +26,7 @@ for (const width of [390, 1440]) {
 
     await expect(dialog).toHaveAttribute('data-motion', 'closing');
     await expect(dialog).toBeVisible();
-    await expect(
-      dialog.getByText('По ссылке видны детали', { exact: false }),
-    ).toBeVisible();
+    await expect(dialog.getByRole('heading', { name: 'Кто придёт · 1' })).toBeVisible();
     expect((await dialog.boundingBox())?.height).toBeCloseTo(height ?? 0, -1);
     await expect(page.locator('body')).toHaveCSS('position', 'fixed');
     await expect(dialog).not.toBeVisible();
@@ -56,10 +54,9 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await login(page, 'Саша');
   const { meeting } = await apiCreate(page, 'Свайп шторки');
   await page.goto(`/meetings/${meeting.id}`);
-  const open = page.getByRole('button', { name: 'Добавить к встрече' });
+  const open = page.getByRole('button', { name: 'Информация о встрече' });
   await open.click();
-  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
+  const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   const handle = dialog.getByTestId('dialog-drag-region');
   await expect(handle).toHaveCSS('touch-action', 'none');
@@ -100,7 +97,6 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await expect(open).toBeFocused();
   await touch.detach();
   await open.click();
-  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expect(dialog).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
 });
@@ -113,8 +109,8 @@ for (const width of [320, 390]) {
     await login(page, 'Саша');
     const { meeting } = await apiCreate(page, 'Вся верхняя область шторки');
     await page.goto(`/meetings/${meeting.id}`);
-    const open = page.getByRole('button', { name: 'Добавить к встрече' });
-    const dialog = page.getByRole('dialog', { name: 'Новая дата встречи' });
+    const open = page.getByRole('button', { name: 'Информация о встрече' });
+    const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
     const touch = await page.context().newCDPSession(page);
     await touch.send('Emulation.setTouchEmulationEnabled', { enabled: true });
 
@@ -124,7 +120,6 @@ for (const width of [320, 390]) {
       { x: 8, y: 32 },
     ]) {
       await open.click();
-      await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
       await expect(dialog).toHaveAttribute('data-motion', 'open');
       await expect(
         dialog.getByRole('button', { name: 'Закрыть', exact: true }),
@@ -149,7 +144,6 @@ for (const width of [320, 390]) {
 
     await touch.detach();
     await open.click();
-    await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     await page.screenshot({
       path: `test-results/poll-sheet-header-${width}.png`,

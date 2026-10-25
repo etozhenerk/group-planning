@@ -4,6 +4,7 @@ struct CoverImageView: View {
     let source: CoverImageSource
     let session: SessionStore?
     let thumbnail: Bool
+    let thumbnailSize: CGFloat
     @State private var owner: CoverImageOwner
 
     private struct LoadKey: Hashable {
@@ -13,11 +14,12 @@ struct CoverImageView: View {
 
     init(
         source: CoverImageSource, api: APIClient? = nil, session: SessionStore? = nil,
-        thumbnail: Bool = false
+        thumbnail: Bool = false, thumbnailSize: CGFloat = 64
     ) {
         self.source = source
         self.session = session
         self.thumbnail = thumbnail
+        self.thumbnailSize = thumbnailSize
         _owner = State(initialValue: CoverImageOwner(api: api, session: session))
     }
 
@@ -51,7 +53,7 @@ struct CoverImageView: View {
             }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
         }
         .aspectRatio(thumbnail ? 1 : 16.0 / 9.0, contentMode: .fit)
-        .frame(width: thumbnail ? 64 : nil, height: thumbnail ? 64 : nil)
+        .frame(width: thumbnail ? thumbnailSize : nil, height: thumbnail ? thumbnailSize : nil)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .task(id: key) { await owner.load(source) }
         .onDisappear { owner.clear() }

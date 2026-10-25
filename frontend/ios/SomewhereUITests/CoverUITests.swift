@@ -16,8 +16,19 @@ final class CoverUITests: XCTestCase {
     }
     private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
         for _ in 0..<10 {
-            if element.isHittable { return }
-            app.scrollViews.firstMatch.swipeUp()
+            let nav = app.buttons.matching(identifier: "home-tab-calendar").allElementsBoundByIndex
+                .first { $0.isHittable }
+            let bottom = nav?.frame.minY ?? app.frame.height - 44
+            if element.isHittable, element.frame.midY > 70, element.frame.midY < bottom - 10 {
+                return
+            }
+            let form = app.scrollViews["create-form"]
+            let scroll = form.exists ? form : app.scrollViews.firstMatch
+            if element.exists && element.frame.midY < 70 {
+                scroll.swipeDown()
+            } else {
+                scroll.swipeUp()
+            }
         }
         XCTAssertTrue(element.isHittable)
     }
@@ -34,11 +45,20 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText(title)
-        if app.buttons["Готово"].exists { app.buttons["Готово"].tap() }
+        let keyboardDone = app.buttons["creation-keyboard-done"]
+        if keyboardDone.waitForExistence(timeout: 3) {
+            ExperienceScreenshot.save("ios-cover-keyboard", test: self)
+            keyboardDone.tap()
+            let hidden = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "exists == false"), object: app.keyboards.firstMatch)
+            XCTAssertEqual(XCTWaiter.wait(for: [hidden], timeout: 5), .completed)
+        }
         reveal(app.buttons["Дата"], app)
         app.buttons["Дата"].tap()
         XCTAssertTrue(app.staticTexts["Дата встречи"].waitForExistence(timeout: 5))
         app.buttons["Готово"].tap()
+        reveal(app.buttons["create-cover-expand"], app)
+        app.buttons["create-cover-expand"].tap()
         reveal(app.buttons["cover-select"], app)
     }
     func testSelectionFailureCancellationAndLostResponseSurviveRelaunch() {
@@ -70,8 +90,7 @@ final class CoverUITests: XCTestCase {
         reveal(app.buttons["create-submit"], app)
         XCTAssertEqual(app.buttons["create-submit"].label, "Повторить сохранение")
         app.buttons["create-submit"].tap()
-        XCTAssertTrue(app.buttons["Открыть встречу"].waitForExistence(timeout: 10))
-        app.buttons["Открыть встречу"].tap()
+        XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))

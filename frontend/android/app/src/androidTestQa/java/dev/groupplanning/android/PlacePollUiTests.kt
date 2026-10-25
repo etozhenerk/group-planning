@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
@@ -37,12 +38,16 @@ class PlacePollUiTests {
             compose.onNodeWithTag("new-place-poll").performClick()
             fixture.waitTag("place-poll-place")
             compose.onNodeWithTag("place-poll-place").performTextInput("Кафе у парка")
-            compose.onNodeWithTag("place-poll-create").performClick()
+            compose.onNodeWithTag("place-poll-explanation").performScrollTo()
+                .performTextInput("Есть стол на всех и тихий зал")
+            fixture.device.pressBack()
+            compose.onNodeWithTag("place-poll-create").performScrollTo().performClick()
             fixture.waitTag("place-poll-error")
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             fixture.screenshot("android-place-create-error")
-            compose.onNodeWithTag("place-poll-create").performClick()
+            compose.onNodeWithTag("place-poll-create").performScrollTo().performClick()
             fixture.waitTag("place-vote-for")
+            compose.onNodeWithText("Есть стол на всех и тихий зал").assertExists()
             compose.onNodeWithTag("place-vote-for").performClick()
             fixture.waitTag("place-poll-error")
             compose.onNodeWithText("Ваш голос: За").assertDoesNotExist()

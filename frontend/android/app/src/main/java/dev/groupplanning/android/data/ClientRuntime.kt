@@ -12,12 +12,17 @@ import dev.groupplanning.android.data.drafts.FileDraftStorage
 import dev.groupplanning.android.data.links.FileInvitationStorage
 import dev.groupplanning.android.data.links.InvitationContext
 import dev.groupplanning.android.data.links.InvitationLinks
+import dev.groupplanning.android.data.media.MediaSelection
+import dev.groupplanning.android.data.media.MediaStorage
 import dev.groupplanning.android.data.outbox.FileMessageStorage
 import dev.groupplanning.android.data.outbox.MessageOutbox
 import dev.groupplanning.android.data.repository.CoverRepository
+import dev.groupplanning.android.data.repository.EmojiRepository
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.repository.InvitationRepository
+import dev.groupplanning.android.data.repository.MediaRepository
 import dev.groupplanning.android.data.repository.MeetingRepository
+import dev.groupplanning.android.data.repository.ServiceRepository
 import dev.groupplanning.android.data.session.AndroidCredentials
 import dev.groupplanning.android.data.session.AndroidSessionKey
 import dev.groupplanning.android.data.session.SessionCipher
@@ -36,6 +41,9 @@ internal class ClientRuntime(
     val feeds: FeedRepository? = null,
     val auth: YandexAuthRepository? = null,
     val covers: CoverRepository? = null,
+    val emoji: EmojiRepository? = null,
+    val media: MediaRepository? = null,
+    val service: ServiceRepository? = null,
 ) {
     val meetings: MeetingRepository? = sessions?.let(::MeetingRepository)
 
@@ -57,18 +65,46 @@ internal class ClientRuntime(
                     SessionCipher(AndroidSessionKey("somewhere.messages.$key"), identity),
                 ),
             )
+            val mediaStorage = MediaStorage(
+                File(context.noBackupFilesDir, "media-$key"),
+                SessionCipher(AndroidSessionKey("somewhere.media.$key"), identity),
+            )
+            val selection = MediaSelection(context)
             val sessions = if (api != null && origin != null) {
                 SessionRepository(
                     api,
                     AndroidCredentials.create(context, origin),
-                    clearPrivate = outbox::clear,
+                    clearPrivate = { owner ->
+                        outbox.clear(owner)
+                        mediaStorage.clear(owner)
+                    },
                 )
             } else {
                 null
             }
+            val media = sessions?.let {
+                MediaRepository(
+                    it,
+                    mediaStorage,
+                    selection,
+                )
+            }
             val links = InvitationLinks(origin, BuildConfig.INVITATION_SCHEME)
             return ClientRuntime(
                 sessions = sessions,
+                media = media,
+                emoji = EmojiRepository(context),
+                service = api?.let {
+                    ServiceRepository(
+                        it,
+                        sessions,
+                        selection,
+                        dev.groupplanning.android.data.support.SupportDraftStorage(
+                            File(context.noBackupFilesDir, "support-$key.bin"),
+                            SessionCipher(AndroidSessionKey("somewhere.support.$key"), identity),
+                        ),
+                    )
+                },
                 covers = sessions?.let { CoverRepository(context, it, coverSelection) },
                 drafts = DraftRepository(
                     FileDraftStorage(File(context.noBackupFilesDir, "drafts/$key")),
@@ -101,7 +137,7 @@ internal class ClientRuntime(
                     null
                 },
                 feeds = sessions?.let {
-                    FeedRepository(it, outbox)
+                    FeedRepository(it, outbox, media)
                 },
             )
         }

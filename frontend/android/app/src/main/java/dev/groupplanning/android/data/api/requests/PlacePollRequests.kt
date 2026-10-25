@@ -13,12 +13,18 @@ internal object PlacePollRequests {
     fun read(meeting: UUID, poll: UUID): ApiRequest =
         ApiRequest(path(meeting, poll), meetingId = meeting, revokesAccessOnForbidden = true)
 
-    fun create(meeting: UUID, place: String, deadline: String): ApiRequest = ApiRequest(
+    fun create(
+        meeting: UUID,
+        place: String,
+        deadline: String,
+        explanation: String = "",
+    ): ApiRequest = ApiRequest(
         path(meeting),
         method = "POST",
         body = JsonObject(
             mapOf(
                 "place" to JsonPrimitive(place),
+                "explanation" to JsonPrimitive(explanation),
                 "closes_at" to JsonPrimitive(deadline),
             ),
         ).toString(),

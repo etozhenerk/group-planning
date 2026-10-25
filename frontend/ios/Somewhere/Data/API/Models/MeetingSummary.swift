@@ -12,11 +12,21 @@ struct MeetingSummary: Codable, Equatable, Sendable {
     let myRSVP: RSVPAnswer?
     let myRSVPRevision: ServerCounter
 
+    var period: String?
     var startsOn: String?
+    var organizerID: UUID?
+    var participantPreview: [UserProfile]?
+    var memoryPhotoCount: Int?
+    var memoryPreview: [MeetingMedia]?
 
     enum CodingKeys: String, CodingKey {
         case id
+        case organizerID = "organizer_id"
+        case participantPreview = "participant_preview"
+        case memoryPhotoCount = "memory_photo_count"
+        case memoryPreview = "memory_preview"
         case title
+        case period
         case startsAt = "starts_at"
         case startsOn = "starts_on"
         case timezone

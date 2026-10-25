@@ -1,0 +1,93 @@
+.stack {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 900px;
+  height: clamp(460px, 65dvh, 700px);
+  margin: 0 auto;
+  touch-action: pan-y;
+  user-select: none;
+  outline-offset: 5px;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 86%;
+  height: 76%;
+  border: 7px solid #e4ded4;
+  border-radius: 15px;
+  background: #e4ded4;
+  overflow: hidden;
+  box-shadow: 0 20px 50px #0005;
+  transform: translate(calc(-50% + var(--drag)), -50%)
+    rotate(calc(var(--depth) * 8deg - 9deg));
+  opacity: 0.85;
+}
+
+.card[data-front='true'] {
+  z-index: 2;
+  opacity: 1;
+  transform: translate(calc(-50% + var(--drag)), -50%) rotate(calc(-1.5deg + var(--tilt)));
+  transition: transform 260ms ease;
+  cursor: grab;
+}
+
+.card[data-portrait='true'] {
+  height: 88%;
+  width: auto;
+  aspect-ratio: 2/3;
+  max-width: 76%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 24px;
+}
+
+.cell {
+  height: 310px;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+@media (max-width: 739px) {
+  .stack {
+    height: clamp(340px, 51dvh, 500px);
+    margin: 0 -4px;
+    width: calc(100% + 8px);
+  }
+
+  .card {
+    width: 88%;
+    height: 77%;
+    border-width: 5px;
+    border-radius: 12px;
+  }
+
+  .card[data-portrait='true'] {
+    max-width: 78%;
+  }
+
+  .cell {
+    height: 220px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card[data-front='true'] {
+    transition: none;
+  }
+}
+
+.stack[data-dragging='true'] .card[data-front='true'] {
+  transition: none;
+  cursor: grabbing;
+}

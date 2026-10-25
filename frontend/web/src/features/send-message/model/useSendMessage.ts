@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { usePendingMessages } from '@/features/send-message/model/usePendingMessages';
+import { useMessageDraft } from '@/features/send-message/model/useMessageDraft';
+import { useEffect, useRef } from 'react';
 import type { FormEvent, KeyboardEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { Session } from '@/entities/session';
@@ -15,8 +17,8 @@ import type { PendingMessage } from '@/features/send-message/model/types';
 export const useSendMessage = (id: string, session: Session) => {
   const client = useQueryClient();
   const access = useAccess(session.user.id, id);
-  const [text, setText] = useState('');
-  const [pending, setPending] = useState<PendingMessage[]>([]);
+  const { text, setText } = useMessageDraft(session.user.id, id, access.epoch);
+  const { pending, setPending } = usePendingMessages(session.user.id, id, access.epoch);
   const controllers = useRef(new Set<AbortController>());
   const disposed = useRef(false);
   useEffect(() => {
@@ -50,7 +52,7 @@ export const useSendMessage = (id: string, session: Session) => {
           : values,
       );
     });
-  }, [client, id, session.user.id, access.epoch]);
+  }, [client, id, session.user.id, access.epoch, setPending]);
   const deliver = async (message: PendingMessage) => {
     const controller = new AbortController();
     controllers.current.add(controller);

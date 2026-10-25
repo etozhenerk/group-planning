@@ -5,6 +5,7 @@ struct PlacePoll: Codable, Equatable, Sendable, Identifiable {
     let meetingID: UUID
     let author: UserProfile
     let place: String
+    var explanation: String? = nil
     let previousPlace: String?
     let state: String
     let revision: ServerCounter
@@ -18,7 +19,7 @@ struct PlacePoll: Codable, Equatable, Sendable, Identifiable {
     let canVote: Bool
 
     enum CodingKeys: String, CodingKey {
-        case id, author, place, state, revision
+        case id, author, place, explanation, state, revision
         case meetingID = "meeting_id"
         case previousPlace = "previous_place"
         case myVoteRevision = "my_vote_revision"

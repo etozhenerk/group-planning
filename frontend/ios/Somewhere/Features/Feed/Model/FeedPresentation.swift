@@ -88,6 +88,9 @@ enum FeedPresentation {
         date.formatted(.dateTime.hour().minute().locale(Locale(identifier: "ru_RU")))
     }
     static func date(_ date: Date) -> String {
-        date.formatted(.dateTime.day().month(.wide).year().locale(Locale(identifier: "ru_RU")))
+        if Calendar.current.isDateInToday(date) { return "Сегодня" }
+        if Calendar.current.isDateInYesterday(date) { return "Вчера" }
+        return date.formatted(
+            .dateTime.day().month(.wide).year().locale(Locale(identifier: "ru_RU")))
     }
 }

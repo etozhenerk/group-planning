@@ -6,10 +6,18 @@ final class FeedOwner {
     let id: UUID
     let session: SessionStore
     let invitation: InvitationOwner
+    let media: MediaTransferOwner
+    let memories: MemoriesOwner
+    let reactions: ReactionOwner
+    let actionDrafts: MeetingActionDrafts
+    var panel: ConversationPanel?
+    var mediaPresented = false
+    var photoSelection = false
     let lease: PrivateData.Lease?
     var records: [FeedEntry] = []
     var outgoing: [OutgoingMessage] = []
     var draft = ""
+    var composerFocused = false
     var loading = false
     var loadingHistory = false
     var loaded = false
@@ -30,6 +38,10 @@ final class FeedOwner {
         self.id = id
         self.session = session
         self.invitation = invitation
+        media = MediaTransferOwner(id: id, session: session, purpose: "message")
+        memories = MemoriesOwner(id: id, session: session)
+        reactions = ReactionOwner(id: id, session: session)
+        actionDrafts = MeetingActionDrafts(meetingID: id, session: session)
         lease = try? session.privateData.lease(for: id)
     }
 
@@ -45,6 +57,9 @@ final class FeedOwner {
     }
 
     func suspend() {
+        media.suspend()
+        memories.transfer.suspend()
+        reactions.suspend()
         generation = UUID()
         loading = false
         loadingHistory = false
@@ -60,10 +75,14 @@ final class FeedOwner {
     }
 
     func clear() {
+        actionDrafts.clear()
+        panel = nil
         suspend()
         records.removeAll()
         outgoing.removeAll()
         draft = ""
+        mediaPresented = false
+        memories.clear()
         infoPresented = false
         pollPresented = false
         placePollPresented = false

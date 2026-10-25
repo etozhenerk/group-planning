@@ -8,6 +8,7 @@ export type MeetingCoverProps = {
   meeting: string;
   user?: string;
   thumbnail?: boolean;
+  fill?: boolean;
 };
 
 export const MeetingCover = ({
@@ -15,12 +16,13 @@ export const MeetingCover = ({
   meeting,
   user = '',
   thumbnail = false,
+  fill = false,
 }: MeetingCoverProps) => {
   const image = useCoverImage(url, meeting, user);
 
   return (
     <div
-      className={thumbnail ? styles.thumbnail : styles.cover}
+      className={fill ? styles.fill : thumbnail ? styles.thumbnail : styles.cover}
       data-testid="meeting-cover"
       aria-busy={image.loading}
     >

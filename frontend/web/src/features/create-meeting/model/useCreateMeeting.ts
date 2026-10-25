@@ -54,7 +54,7 @@ export const useCreateMeeting = (session: Session) => {
       removeDraft(session.user.id);
       setSaved(true);
       void client.invalidateQueries({ queryKey: ['meetings', session.user.id] });
-      setDestination(`/meetings/${result.meeting.id}/created`);
+      setDestination(`/meetings/${result.meeting.id}`);
     },
     onError: (error) => {
       if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
@@ -72,7 +72,7 @@ export const useCreateMeeting = (session: Session) => {
 
   useEffect(() => {
     if (destination) {
-      void navigate(destination);
+      void navigate(destination, { replace: true });
     }
   }, [destination, navigate]);
   const uncertain = !!attempt && !mutation.isPending && !saved;

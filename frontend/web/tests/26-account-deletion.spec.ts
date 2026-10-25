@@ -3,7 +3,7 @@ import { login } from '@tests/helpers';
 import type { Page } from '@playwright/test';
 
 const openDeletion = async (page: Page) => {
-  await page.locator('summary[aria-label^="Профиль:"]').click();
+  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await page.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();
 
   return page.getByRole('dialog', { name: 'Удалить аккаунт?' });

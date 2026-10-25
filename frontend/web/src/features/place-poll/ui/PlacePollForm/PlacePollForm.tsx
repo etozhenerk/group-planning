@@ -15,12 +15,20 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
       <div className={styles.body}>
         <label className={styles.field}>
           Новое место
-          <textarea
+          <input
             value={form.place}
             onChange={(event) => form.setPlace(event.target.value)}
             disabled={form.pending}
-            rows={2}
             required
+          />
+        </label>
+        <label className={styles.field}>
+          Почему здесь
+          <textarea
+            value={form.explanation}
+            onChange={(event) => form.setExplanation(event.target.value)}
+            disabled={form.pending}
+            rows={3}
           />
         </label>
         <PollDeadline

@@ -18,4 +18,15 @@ internal data class InvitationPreview(
     @SerialName("my_rsvp_revision") val myRsvpRevision: ServerCounter,
     val description: String? = null,
     @SerialName("starts_on") val startsOn: String? = null,
-)
+    @SerialName("join_closes_at") val joinClosesAt: ApiInstant? = null,
+    @SerialName("can_join") val canJoin: Boolean = true,
+    @SerialName("join_disabled_reason") val joinDisabledReason: String? = null,
+    val organizer: UserProfile? = null,
+) {
+    fun canJoinAt(now: java.time.Instant): Boolean {
+        if (myRsvp == RsvpAnswer.Going) return true
+        if (!canJoin) return false
+        val boundary = joinClosesAt?.instant ?: startsAt?.instant?.minusSeconds(3600)
+        return boundary == null || now.isBefore(boundary)
+    }
+}

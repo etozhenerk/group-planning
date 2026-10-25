@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 import { Plus } from 'lucide-react';
 import { Navigation } from '@/widgets/navigation';
-import { HomeTabs } from '@/widgets/home-tabs';
 import type { Session } from '@/entities/session';
 import { Workspace } from '@/shared/ui/Workspace';
 import { useStickyControls } from '@/pages/meetings/ui/MeetingsView/hooks/useStickyControls';
@@ -42,7 +41,6 @@ export const MeetingsView = ({ session }: MeetingsViewProps) => {
               </Link>
             )}
           </header>
-          <HomeTabs />
         </div>
         <HomeToolbar
           selection={view.selection}

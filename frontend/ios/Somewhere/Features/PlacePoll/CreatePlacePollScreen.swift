@@ -1,85 +1,48 @@
 import SwiftUI
 
 struct CreatePlacePollScreen: View {
-    let meeting: Meeting
-    @State private var owner: PlacePollOwner
-    @State private var place = ""
-    @State private var deadline = Date().addingTimeInterval(86_400)
+    let form: PlacePollFormOwner
+    let completed: () -> Void
     @Environment(\.dismiss) private var dismiss
-
-    init(meeting: Meeting, session: SessionStore) {
-        self.meeting = meeting
-        _owner = State(initialValue: PlacePollOwner(meetingID: meeting.id, session: session))
-    }
+    private var meeting: Meeting { form.meeting }
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section("Новое место") {
-                    TextField("Новое место", text: $place, axis: .vertical)
-                        .lineLimit(2...5).accessibilityIdentifier("place-poll-place")
-                }
-                Section {
-                    DatePicker(
-                        "Окончание опроса", selection: $deadline,
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                    .environment(\.timeZone, TimeZone(identifier: meeting.timezone) ?? .gmt)
-                    Text(meeting.timezone).font(.caption).foregroundStyle(AppPalette.muted)
-                }
+        @Bindable var form = form
+        let owner = form.operation
+        ActionFormPage(title: "Предложить место", dismissDisabled: owner.busy) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Место").frame(minHeight: 19.5)
+                TextField("Название или адрес", text: $form.place, axis: .vertical)
+                    .lineLimit(1...4).actionField().accessibilityIdentifier("place-poll-place")
             }.disabled(!owner.editable)
-                .safeAreaInset(edge: .bottom) {
-                    VStack(spacing: 10) {
-                        if let problem = owner.problem {
-                            Text(problem).font(.footnote).foregroundStyle(AppPalette.error)
-                                .accessibilityIdentifier("place-poll-error")
-                        }
-                        ActionButton(
-                            title: owner.pending == nil ? "Создать опрос" : "Повторить",
-                            busy: owner.busy
-                        ) {
-                            Task { await submit() }
-                        }.accessibilityIdentifier("place-poll-create")
-                    }.padding(16).background(AppPalette.background)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Почему здесь").frame(minHeight: 19.5)
+                TextField("Что стоит знать друзьям", text: $form.explanation, axis: .vertical)
+                    .lineLimit(3...8).frame(minHeight: 72, alignment: .topLeading).actionField()
+                    .accessibilityIdentifier("place-poll-explanation")
+            }.disabled(!owner.editable)
+            ActionDateField(
+                title: "Опрос завершится", selection: $form.deadline, includeTime: true,
+                zone: TimeZone(identifier: meeting.timezone) ?? .gmt
+            ).disabled(!owner.editable)
+            if let problem = owner.problem {
+                Text(problem).designFont(13).foregroundStyle(AppPalette.error)
+                    .accessibilityIdentifier("place-poll-error")
+            }
+            ActionFormButton(
+                title: owner.pending == nil ? "Предложить место" : "Повторить", busy: owner.busy
+            ) {
+                SystemKeyboard.dismiss()
+                Task {
+                    if await form.submit() { completed(); dismiss() }
                 }
-                .navigationTitle("Предложить место").navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Отмена") { dismiss() }.disabled(owner.pending != nil)
-                    }
-                }
-                .onChange(of: owner.current) { _, current in
-                    if !current {
-                        owner.clear()
-                        dismiss()
-                    }
-                }
-        }.interactiveDismissDisabled(owner.pending != nil)
-            .environment(\.locale, Locale(identifier: "ru_RU"))
+            }.designFont(14).accessibilityIdentifier("place-poll-create")
+        }.onChange(of: owner.current) { _, current in
+            if !current {
+                form.clear()
+                dismiss()
+            }
+        }.environment(\.locale, Locale(identifier: "ru_RU"))
     }
 
-    private func submit() async {
-        if owner.pending != nil {
-            await owner.retry()
-        } else {
-            let trimmed = place.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard (1...500).contains(trimmed.unicodeScalars.count) else {
-                owner.problem = "Введите новое место: от 1 до 500 символов."
-                return
-            }
-            guard trimmed != meeting.place else {
-                owner.problem = "Предложите другое место."
-                return
-            }
-            guard deadline > Date() else {
-                owner.problem = "Выберите время окончания позже текущего."
-                return
-            }
-            do {
-                await owner.submit(
-                    try PlacePollRequests.create(meeting.id, place: trimmed, deadline: deadline))
-            } catch { owner.problem = "Не удалось подготовить опрос." }
-        }
-        if owner.current, owner.poll != nil { dismiss() }
-    }
 }

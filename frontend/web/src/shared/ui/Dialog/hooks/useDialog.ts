@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { animateDialog } from '@/shared/ui/Dialog/lib/dialogMotion';
-import { lockBackgroundScroll } from '@/shared/ui/Dialog/lib/lockBackgroundScroll';
+import { lockBackgroundScroll } from '@/shared/lib/lockBackgroundScroll';
 import { useVisualViewport } from '@/shared/lib/viewport';
 
 export const useDialog = (open: boolean, children: ReactNode) => {

@@ -12,7 +12,7 @@ test('organizer opens own invitation after login without RSVP or duplicate membe
       responses++;
     }
   });
-  await page.locator('summary[aria-label^="Профиль:"]').click();
+  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await expect(page.getByRole('button', { name: 'Войти', exact: true })).toBeVisible();
   await page.goto(created.invitation_url);

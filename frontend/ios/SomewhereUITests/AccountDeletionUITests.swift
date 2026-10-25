@@ -12,11 +12,15 @@ final class AccountDeletionUITests: XCTestCase {
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
         ]
         app.launch()
-        let profile = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Профиль:"))
-            .firstMatch
+        let profile = app.buttons["home-tab-person.crop.circle"]
         XCTAssertTrue(profile.waitForExistence(timeout: 15))
         profile.tap()
-        app.buttons["Удалить аккаунт"].tap()
+        let delete = app.buttons["Удалить аккаунт"]
+        for _ in 0..<8 {
+            if delete.isHittable { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
+        delete.tap()
         XCTAssertTrue(app.navigationBars["Удалить аккаунт?"].waitForExistence(timeout: 5))
         let submit = app.buttons["Удалить аккаунт"]
         for _ in 0..<6 {
@@ -34,16 +38,23 @@ final class AccountDeletionUITests: XCTestCase {
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "account"
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
         app.launch()
-        let profile = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Профиль:"))
-            .firstMatch
+        let profile = app.buttons["home-tab-person.crop.circle"]
         XCTAssertTrue(profile.waitForExistence(timeout: 15))
         profile.tap()
+        for _ in 0..<8 {
+            if app.buttons["Удалить аккаунт"].isHittable { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
         app.buttons["Удалить аккаунт"].tap()
         XCTAssertTrue(app.navigationBars["Удалить аккаунт?"].waitForExistence(timeout: 5))
         capture("account-confirmation")
         app.buttons["Отмена"].tap()
         XCTAssertTrue(profile.waitForExistence(timeout: 5))
         profile.tap()
+        for _ in 0..<8 {
+            if app.buttons["Удалить аккаунт"].isHittable { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
         app.buttons["Удалить аккаунт"].tap()
         XCTAssertTrue(app.navigationBars["Удалить аккаунт?"].waitForExistence(timeout: 5))
         app.buttons["Удалить аккаунт"].tap()

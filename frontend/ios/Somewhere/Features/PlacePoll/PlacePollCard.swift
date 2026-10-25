@@ -27,6 +27,10 @@ struct PlacePollCard: View {
                 Text(own ? "Предлагаете новое место" : "Предлагает новое место").font(.caption)
                 if owner.current, let poll = owner.poll {
                     Text(poll.place).font(.headline)
+                    if let explanation = poll.explanation, !explanation.isEmpty {
+                        Text(explanation).designFont(13)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     Text(PlacePollCopy.status(poll, timezone: meeting.timezone)).font(.caption)
                     PlacePollBallot(owner: owner, poll: poll)
                 } else if owner.current && owner.problem == nil {

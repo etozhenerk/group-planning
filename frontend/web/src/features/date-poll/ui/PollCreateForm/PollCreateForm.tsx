@@ -1,3 +1,4 @@
+import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { usePollForm } from '@/features/date-poll/model/usePollForm';
@@ -35,11 +36,6 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             remove={form.remove}
             disabled={form.pending}
           />
-          <PollSettingsFields
-            value={form.settings}
-            onChange={form.changeSetting}
-            disabled={form.pending}
-          />
           <PollDeadline
             value={form.deadline}
             onChange={form.setDeadline}
@@ -47,6 +43,11 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             choice={form.choice}
             onChoice={form.setChoice}
             ambiguous={form.problem.includes('дважды')}
+            disabled={form.pending}
+          />
+          <PollSettingsFields
+            value={form.settings}
+            onChange={form.changeSetting}
             disabled={form.pending}
           />
         </div>
@@ -62,8 +63,13 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             {form.problem}
           </p>
         )}
-        <button type="submit" disabled={form.pending}>
-          {form.pending ? 'Публикуем…' : 'Создать опрос'}
+        <button
+          type="submit"
+          disabled={form.pending}
+          aria-busy={form.pending}
+          aria-label="Создать опрос"
+        >
+          {form.pending ? <ButtonSpinner /> : 'Создать опрос'}
         </button>
       </div>
     </form>

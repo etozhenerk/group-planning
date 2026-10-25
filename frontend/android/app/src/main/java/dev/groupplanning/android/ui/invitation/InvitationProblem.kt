@@ -22,6 +22,7 @@ internal fun InvitationProblem(issue: InvitationIssue, enabled: Boolean, retry: 
                     InvitationIssue.Unconfirmed -> R.string.rsvp_unconfirmed
                     InvitationIssue.Conflict -> R.string.rsvp_conflict
                     InvitationIssue.Rejected -> R.string.rsvp_rejected
+                    InvitationIssue.JoinClosed -> R.string.join_closed_title
                     InvitationIssue.Share -> R.string.invitation_share_error
                 },
             ),

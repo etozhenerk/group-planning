@@ -102,6 +102,7 @@ test('editing text preserves seconds and the selected DST instant', async ({ pag
   expect(changeTime.status()).toBe(200);
   const original = await apiMeeting(page, id);
   await page.goto(`/meetings/${id}`);
+  await page.getByRole('button', { name: 'Информация о встрече' }).click();
   await page.getByRole('button', { name: 'Изменить настройки', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Настройки встречи' });
   await expectDate(page, '01.11.2026');

@@ -5,9 +5,9 @@ import { placePollSchema } from '@/shared/api';
 
 const openForm = async (page: Page) => {
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-  await page.getByRole('button', { name: 'Предложить место', exact: true }).click();
+  await page.getByRole('menuitem', { name: 'Предложить место', exact: true }).click();
 
-  return page.getByRole('dialog', { name: 'Предложить место', exact: true });
+  return page.getByRole('main', { name: 'Предложить место', exact: true });
 };
 
 const seed = async (page: Page, meeting: string, seconds = 60) => {
@@ -35,6 +35,7 @@ for (const width of [320, 390, 1440]) {
     await page.goto(`/meetings/${meeting.id}`);
     const form = await openForm(page);
     await form.getByLabel('Новое место').fill('Кафе у парка');
+    await form.getByLabel('Почему здесь').fill('Там тихо и есть большой стол');
     const keys: (string | undefined)[] = [];
     const payloads: string[] = [];
     await page.route(`**${base}/place-polls`, async (route) => {
@@ -65,6 +66,7 @@ for (const width of [320, 390, 1440]) {
     expect(payloads[1]).toBe(payloads[0]);
     const card = page.getByRole('region', { name: 'Опрос о месте' });
     await expect(card.getByRole('heading', { name: 'Кафе у парка' })).toBeVisible();
+    await expect(card.getByText('Там тихо и есть большой стол')).toBeVisible();
     await expect(card).toHaveCSS('background-color', 'rgb(224, 220, 232)');
     await card.getByRole('button', { name: 'За · 0', exact: true }).click();
     await expect(card.getByText('Ваш голос: За', { exact: true })).toBeVisible();

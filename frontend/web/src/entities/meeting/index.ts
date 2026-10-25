@@ -93,10 +93,13 @@ export { entryPresentation } from '@/entities/meeting/lib/entryPresentation';
 
 export { useSavedInvitations } from '@/entities/meeting/model/useSavedInvitations';
 
+export { cardLabels } from '@/entities/meeting/lib/cardLabels';
+
 export type { SavedInvitation } from '@/entities/meeting/model/savedInvitation';
 
 export type {
   PlacePoll,
+  PlacePollCreate,
   PlaceVote,
   PlaceVoteInput,
 } from '@/entities/meeting/model/placePoll';
@@ -126,3 +129,25 @@ export { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 export { CoverEditor } from '@/entities/meeting/ui/CoverEditor';
 
 export { preparedCoverSchema } from '@/entities/meeting/model/cover';
+
+export {
+  getMediaLimits,
+  reserveMedia,
+  publishMedia,
+  uploadMedia,
+  readMedia,
+} from '@/entities/meeting/api/media';
+
+export { useMediaImage } from '@/entities/meeting/model/useMediaImage';
+
+export { useMemories } from '@/entities/meeting/model/useMemories';
+
+export { MediaPhoto } from '@/entities/meeting/ui/MediaPhoto';
+
+export { useReactions, setReaction } from '@/entities/meeting/model/useReactions';
+
+export type { Reaction } from '@/entities/meeting/model/reactions';
+
+export { LazyMediaPhoto } from '@/entities/meeting/ui/LazyMediaPhoto';
+
+export { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';

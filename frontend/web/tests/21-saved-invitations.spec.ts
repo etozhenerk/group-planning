@@ -7,7 +7,7 @@ for (const width of [320, 390, 1440]) {
     browser,
   }, info) => {
     await login(page, 'Саша');
-    const created = await apiCreate(page, 'Прогулка по приглашению');
+    const created = await apiCreate(page, `Прогулка по приглашению ${width}`);
     const scheduled = await page.request.patch(`/api/v1/meetings/${created.meeting.id}`, {
       headers: await writeHeaders(page),
       data: {
@@ -38,7 +38,7 @@ for (const width of [320, 390, 1440]) {
       await expect(card).toBeVisible();
       await expect(
         guest
-          .getByRole('navigation', { name: 'Раздел встреч' })
+          .getByRole('navigation', { name: 'Основная навигация' })
           .getByRole('link', { name: 'Приглашения' }),
       ).toHaveAttribute('aria-current', 'page');
       await expect(guest.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
@@ -107,12 +107,12 @@ test('invitations distinguish skeleton, error and empty state and preserve calen
   });
   await page.goto('/invitations');
   await expect(page.getByRole('status', { name: 'Загрузка приглашений' })).toBeVisible();
-  await expect(page.getByText('Пока нет приглашений')).toHaveCount(0);
+  await expect(page.getByText('Пока ничего нет')).toHaveCount(0);
   gate.release();
   await expect(page.getByText('Не удалось загрузить приглашения')).toBeVisible();
   await page.unroute('**/api/v1/invitations?*');
   await page.getByRole('button', { name: 'Попробовать снова' }).click();
-  await expect(page.getByText('Пока нет приглашений')).toBeVisible();
+  await expect(page.getByText('Пока ничего нет')).toBeVisible();
   await page.goto('/meetings?view=calendar&period=past&past=2026-09-03');
   await expect(page.locator('[data-day="2026-09-03"]')).toHaveAttribute(
     'aria-pressed',

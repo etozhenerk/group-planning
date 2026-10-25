@@ -26,9 +26,20 @@ export const TaskCard = ({ meeting, id, session, outgoing }: TaskCardProps) => {
     >
       {query.data ? (
         <>
-          <h3>{query.data.title}</h3>
-          <p className={styles.note}>{taskStatus(query.data, session.user.id)}</p>
-          <TaskActions task={query.data} session={session} />
+          {query.data.state === 'offered' || query.data.state === 'accepted' ? (
+            <details className={styles.details}>
+              <summary aria-label={`Действия задачи «${query.data.title}»`}>
+                <h3>{query.data.title}</h3>
+                <p className={styles.note}>{taskStatus(query.data, session.user.id)}</p>
+              </summary>
+              <TaskActions task={query.data} session={session} />
+            </details>
+          ) : (
+            <>
+              <h3>{query.data.title}</h3>
+              <p className={styles.note}>{taskStatus(query.data, session.user.id)}</p>
+            </>
+          )}
         </>
       ) : query.isPending ? (
         <SkeletonRows label="Загрузка задачи" variant="agenda" />

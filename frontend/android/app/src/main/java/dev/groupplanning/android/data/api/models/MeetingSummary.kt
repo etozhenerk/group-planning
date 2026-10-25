@@ -21,4 +21,8 @@ internal data class MeetingSummary(
     @SerialName("local_date") val localDate: String? = null,
     val period: MeetingPeriod? = null,
     @SerialName("starts_on") val startsOn: String? = null,
+    @SerialName("organizer_id") val organizerId: UUID? = null,
+    @SerialName("participant_preview") val participantPreview: List<UserProfile> = emptyList(),
+    @SerialName("memory_photo_count") val memoryPhotoCount: Int = 0,
+    @SerialName("memory_preview") val memoryPreview: List<MeetingMedia> = emptyList(),
 )

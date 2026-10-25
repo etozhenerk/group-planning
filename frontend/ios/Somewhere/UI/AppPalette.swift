@@ -1,6 +1,10 @@
 import SwiftUI
 
 enum AppPalette {
+    static let weekdayCard = Color("WeekdayCard")
+    static let weekendCard = Color("WeekendCard")
+    static let weekdayBadge = Color("WeekdayBadge")
+    static let weekendBadge = Color("WeekendBadge")
     static let background = Color("AppBackground")
     static let text = Color("PrimaryText")
     static let navigation = Color("NavigationBackground")

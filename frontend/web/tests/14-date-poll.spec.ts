@@ -37,11 +37,11 @@ test('create a meeting without an hour, then reload the unchanged date and syste
   await page.getByLabel('Название', { exact: true }).fill('Только день');
   await setDate(page, '25.10.2026');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
-  const id = page.url().split('/').at(-2) ?? '';
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+  const id = page.url().split('/').at(-1) ?? '';
   expect((await apiMeeting(page, id)).starts_at).toBeNull();
   expect((await apiMeeting(page, id)).starts_on).toBe('2026-10-25');
-  await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+
   await expect(page).toHaveURL(`/meetings/${id}`);
   await page.reload();
   await expect(page.getByText(/Осталось договориться о времени/)).toBeVisible();
@@ -66,20 +66,23 @@ test('create with settings and apply live majority in two chats', async ({
   await join(friend, created.invitation_url);
   await page.goto(`/meetings/${id}`);
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-  await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
-  const form = page.getByRole('dialog', { name: 'Новая дата встречи' });
-  await expect(form.getByRole('switch', { name: /Несколько вариантов/ })).toBeChecked();
-  await expect(form.getByRole('switch', { name: 'Можно переголосовать' })).toBeChecked();
+  await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
+  const form = page.getByRole('main', { name: 'Предложить дату' });
   await expect(
-    form.getByRole('switch', { name: 'Участники могут добавить дату' }),
+    form.getByRole('checkbox', { name: /Можно выбрать несколько дат/ }),
   ).toBeChecked();
+  await expect(
+    form.getByRole('checkbox', { name: 'Можно изменить голос' }),
+  ).toBeChecked();
+  await expect(form.getByRole('checkbox', { name: 'Можно добавить дату' })).toBeChecked();
 
-  await expect(form).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+  await expect(form).toHaveCSS('transform', 'none');
 
-  for (const toggle of await form.getByRole('switch').all()) {
+  for (const toggle of await form.getByRole('checkbox').all()) {
     const bounds = await toggle.boundingBox();
-    expect(bounds?.width).toBeCloseTo(42, 1);
-    expect(bounds?.height).toBeCloseTo(26, 1);
+    expect(bounds?.width).toBeCloseTo(16, 1);
+    expect(bounds?.height).toBeCloseTo(16, 1);
+    expect((await toggle.locator('..').boundingBox())?.height).toBeGreaterThanOrEqual(44);
   }
 
   const dateField = form.locator('.g-text-input').first();
@@ -155,7 +158,7 @@ test('create with settings and apply live majority in two chats', async ({
     noticeText?.y ?? 0,
   );
   await expect(notice.locator('time')).toHaveText(/Сегодня · \d{2}:\d{2}/);
-  expect((await apiMeeting(page, id)).starts_at).toBe('2026-10-25T16:00:00Z');
+  expect((await apiMeeting(page, id)).starts_at).toBe('2099-10-25T16:00:00Z');
   await expect(card.getByRole('button', { name: 'Проголосовать' })).toHaveCount(0);
 
   for (const width of [320, 1440]) {

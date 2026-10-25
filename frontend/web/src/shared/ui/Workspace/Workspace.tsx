@@ -1,3 +1,4 @@
+import { Brand } from '@/shared/ui/Brand';
 import styles from '@/shared/ui/Workspace/Workspace.module.css';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
@@ -30,7 +31,16 @@ export const Workspace = ({
         .join(' ')}
     >
       <div className={styles['navigation-slot']}>{navigation}</div>
-      {children}
+      <div
+        className={[styles.content, conversation ? styles.conversationContent : ''].join(
+          ' ',
+        )}
+      >
+        <div className={styles.mobileBrand}>
+          <Brand variant="header" />
+        </div>
+        {children}
+      </div>
     </div>
   );
 };

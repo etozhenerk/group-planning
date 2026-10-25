@@ -5,9 +5,9 @@ import { preparationTaskSchema, sessionSchema } from '@/shared/api';
 
 const openForm = async (page: Page) => {
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-  await page.getByRole('button', { name: 'Предложить задачу', exact: true }).click();
+  await page.getByRole('menuitem', { name: 'Предложить задачу', exact: true }).click();
 
-  return page.getByRole('dialog', { name: 'Предложить задачу', exact: true });
+  return page.getByRole('main', { name: 'Предложить задачу', exact: true });
 };
 
 const propose = async (
@@ -47,12 +47,12 @@ for (const width of [320, 390, 1440]) {
     const { meeting } = await apiCreate(page, 'Подготовка вечера');
     await page.goto(`/meetings/${meeting.id}`);
     const form = await openForm(page);
-    await form.getByLabel('Что нужно сделать').fill('Заказать пиццу');
+    await form.getByLabel('Что сделать').fill('Заказать пиццу');
     await form.getByLabel('Кому предложить').selectOption({ label: 'Вы' });
     await page.keyboard.press('Escape');
     await expect(page.getByRole('button', { name: 'Добавить к встрече' })).toBeFocused();
     await openForm(page);
-    await expect(form.getByLabel('Что нужно сделать')).toHaveValue('Заказать пиццу');
+    await expect(form.getByLabel('Что сделать')).toHaveValue('Заказать пиццу');
     const keys: (string | undefined)[] = [];
     const bodies: (string | null)[] = [];
     await page.route(`**/meetings/${meeting.id}/preparation-tasks`, async (route) => {
@@ -67,7 +67,7 @@ for (const width of [320, 390, 1440]) {
     });
     await form.getByRole('button', { name: 'Предложить задачу' }).click();
     await expect(form.getByRole('alert')).toContainText('Не удалось предложить задачу');
-    await expect(form.getByLabel('Что нужно сделать')).toBeDisabled();
+    await expect(form.getByLabel('Что сделать')).toBeDisabled();
     await page.screenshot({
       path: `test-results/task-form-error-${width}.png`,
       animations: 'disabled',
@@ -78,12 +78,13 @@ for (const width of [320, 390, 1440]) {
     expect(keys[1]).toBe(keys[0]);
     expect(bodies[1]).toBe(bodies[0]);
     const card = page.getByRole('region', { name: 'Задача подготовки' });
+    await card.locator('summary').click();
     await expect(card.getByText('Предложено вам')).toBeVisible();
     await expect(card.getByRole('button', { name: 'Отметить выполнение' })).toHaveCount(
       0,
     );
     await card.getByRole('button', { name: 'Принять задачу' }).click();
-    await expect(card.getByText('Задача у вас')).toBeVisible();
+    await expect(card.getByText('Исполняет Саша')).toBeVisible();
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.screenshot({
       path: `test-results/task-accepted-${width}.png`,
@@ -139,12 +140,13 @@ test('addressed task waits for its recipient and preserves uncertain acceptance'
     });
     await friend.goto(`/meetings/${created.meeting.id}`);
     const card = friend.getByRole('region', { name: 'Задача подготовки' });
+    await card.locator('summary').click();
     await card.getByRole('button', { name: 'Принять задачу' }).click();
     await expect(card.getByRole('alert')).toContainText('Не удалось сохранить действие');
     await expect(card.getByText('Предложено вам')).toBeVisible();
     await expect(card.getByRole('button', { name: 'Отказаться' })).toBeDisabled();
     await card.getByRole('button', { name: 'Повторить действие' }).click();
-    await expect(card.getByText('Задача у вас')).toBeVisible();
+    await expect(card.getByText('Исполняет Лена')).toBeVisible();
     expect(keys[1]).toBe(keys[0]);
     await expect(authorCard.getByText('Исполняет Лена')).toBeVisible({ timeout: 10000 });
     await card.getByRole('button', { name: 'Отказаться' }).click();
@@ -174,6 +176,7 @@ test('a conflicting general acceptance refreshes the assignee without taking the
     await join(friend, created.invitation_url);
     await friend.goto(`/meetings/${created.meeting.id}`);
     const card = friend.getByRole('region', { name: 'Задача подготовки' });
+    await card.locator('summary').click();
     await expect(card.getByRole('button', { name: 'Взять на себя' })).toBeVisible();
     await friend.route(`**/preparation-tasks/${task.id}/accept`, async (route) => {
       const accepted = await page.request.post(
@@ -215,15 +218,16 @@ test('participant loading failure keeps the draft and task read failures retain 
     route.abort('failed'),
   );
   const form = await openForm(page);
-  await form.getByLabel('Что нужно сделать').fill('Купить напитки');
+  await form.getByLabel('Что сделать').fill('Купить напитки');
   await expect(form.getByText('Не удалось загрузить участников.')).toBeVisible();
   await expect(form.getByRole('button', { name: 'Предложить задачу' })).toBeDisabled();
   await page.unroute(`**/meetings/${meeting.id}/participants`);
   await form.getByRole('button', { name: 'Повторить', exact: true }).click();
   await form.getByLabel('Кому предложить').selectOption({ label: 'Любой участник' });
-  await expect(form.getByLabel('Что нужно сделать')).toHaveValue('Купить напитки');
+  await expect(form.getByLabel('Что сделать')).toHaveValue('Купить напитки');
   await form.getByRole('button', { name: 'Предложить задачу' }).click();
   const card = page.getByRole('region', { name: 'Задача подготовки' });
+  await card.locator('summary').click();
   await expect(card.getByText('Пока никто не взял задачу')).toBeVisible();
   await page.route(`**/meetings/${meeting.id}/preparation-tasks/*`, (route) =>
     route.abort('failed'),
@@ -265,6 +269,7 @@ test('pending acceptance shows only a spinner and its late response cannot resto
     });
     await friend.goto(`/meetings/${created.meeting.id}`);
     const card = friend.getByRole('region', { name: 'Задача подготовки' });
+    await card.locator('summary').click();
     const button = card.getByRole('button', { name: 'Взять на себя' });
     await button.click();
     await expect.poll(() => held).toBe(true);

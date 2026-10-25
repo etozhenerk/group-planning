@@ -8,7 +8,7 @@ struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var owner: MeetingListOwner
     @State private var savedInvitations: SavedInvitationsOwner
-    @State private var invitations = false
+    @State private var section: HomeSection = .meetings
     @State private var path: [UUID] = []
     @State private var showingCreate = false
     @State private var creator: CreationOwner?
@@ -29,29 +29,37 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $path) {
             Group {
-                if invitations {
+                if section == .profile {
+                    ProfileScreen(
+                        session: session, logout: owner.logout, deleteAccount: deleteAccount)
+                } else if section == .invitations {
                     SavedInvitationsView(
-                        owner: savedInvitations, invitations: $invitations, create: openCreate)
+                        owner: savedInvitations, invitations: invitations, create: openCreate)
                 } else {
                     MeetingListView(
                         owner: owner, create: openCreate, select: { path.append($0) },
-                        invitations: $invitations
+                        invitations: invitations
                     )
                     .refreshable { await owner.load() }
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top, spacing: 0) {
-                MeetingHomeHeader(user: user, logout: owner.logout, deleteAccount: deleteAccount)
+                HStack {
+                    BrandWordmark(compact: true).dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+                    Spacer()
+                }.padding(.horizontal, 20).padding(.top, 17)
+                    .background(AppPalette.background)
             }
+            .overlay(alignment: .bottom) { HomeNavigation(selection: $section) }
             .navigationDestination(for: UUID.self) { id in
                 MeetingSnapshotView(id: id, session: session)
             }
             .task(
                 id:
-                    "\(refreshID)-\(owner.selectionID)-\(scenePhase)-\(path.isEmpty)-\(showingCreate)-\(invitations)"
+                    "\(refreshID)-\(owner.selectionID)-\(scenePhase)-\(path.isEmpty)-\(showingCreate)-\(section.rawValue)"
             ) {
-                if scenePhase == .active && path.isEmpty && !showingCreate && !invitations {
+                if scenePhase == .active && path.isEmpty && !showingCreate && section == .meetings {
                     await owner.observe()
                 }
             }
@@ -64,10 +72,14 @@ struct HomeView: View {
         .tint(AppPalette.accent)
     }
 
+    private var invitations: Binding<Bool> {
+        Binding(get: { section == .invitations }, set: { section = $0 ? .invitations : .meetings })
+    }
+
     private func openCreate() {
         creator = CreationOwner(
             userID: user.id, session: session, drafts: drafts,
-            initialDay: invitations ? nil : owner.selection.creationDay)
+            initialDay: section == .meetings ? owner.selection.creationDay : nil)
         showingCreate = true
     }
 }

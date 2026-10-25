@@ -87,7 +87,8 @@ func TestCrossPlatformFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	api := NewWithIdentity(meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent())), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	api := NewWithIdentity(app, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)
@@ -128,6 +129,7 @@ func TestCrossPlatformFixture(t *testing.T) {
 			"invite-error": iosCredential(t, service, "android"),
 		},
 	}
+	seedCrossPlatformMemoryFixture(t, store, service, app, config.Cases)
 	data, err := json.Marshal(config)
 	if err != nil {
 		t.Fatal(err)

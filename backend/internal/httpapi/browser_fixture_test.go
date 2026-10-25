@@ -79,7 +79,15 @@ func TestBrowserFixture(t *testing.T) {
 	origin := "https://" + listener.Addr().String()
 	store := memory.New()
 	identities := memory.NewIdentity()
-	service, err := identity.New(identity.Config{PublicOrigin: origin, SessionTTL: time.Hour}, identities, browserProvider{origin}, time.Now, func(ctx context.Context, token string) (bool, error) {
+	config := identity.Config{PublicOrigin: origin, SessionTTL: time.Hour}
+	var provider identity.Provider = browserProvider{origin}
+	visual := os.Getenv("SOMEWHERE_BROWSER_DESIGN") == "1"
+	if visual {
+		provider = browserDesignProvider{browserProvider{origin}}
+		config.NativeCallbacks = map[string]string{"ios": "group-planning-ios://auth/callback"}
+	}
+
+	service, err := identity.New(config, identities, provider, time.Now, func(ctx context.Context, token string) (bool, error) {
 		_, err := meetings.Preview(ctx, store, token)
 		if errors.Is(err, meetings.ErrNotFound) {
 			return false, nil
@@ -92,6 +100,10 @@ func TestBrowserFixture(t *testing.T) {
 	}
 
 	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	if visual {
+		seedNativeDesignFixture(t, store, identities, service, app)
+	}
+
 	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)

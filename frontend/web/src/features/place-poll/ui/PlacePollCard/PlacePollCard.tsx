@@ -35,6 +35,7 @@ export const PlacePollCard = ({ meeting, id, session, outgoing }: PlacePollCardP
       {poll ? (
         <>
           <h3>{poll.place}</h3>
+          {poll.explanation && <p>{poll.explanation}</p>}
           <p className={styles.note}>
             {placePollStatus(poll, details.data?.timezone ?? 'UTC')}
           </p>

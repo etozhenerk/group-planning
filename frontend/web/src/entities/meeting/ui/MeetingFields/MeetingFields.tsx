@@ -1,5 +1,4 @@
 import styles from '@/entities/meeting/ui/MeetingFields/MeetingFields.module.css';
-import { useId } from 'react';
 import { MeetingTimeFields } from '@/entities/meeting/ui/MeetingTimeFields';
 import type { MeetingDraft } from '@/entities/meeting/model/types';
 
@@ -16,8 +15,6 @@ export const MeetingFields = ({
   disabled = false,
   errors = {},
 }: MeetingFieldsProps) => {
-  const descriptionHint = useId();
-
   return (
     <fieldset className={styles['form-fields']} disabled={disabled}>
       <label>
@@ -35,19 +32,6 @@ export const MeetingFields = ({
       {errors.title && (
         <span className={styles['error']}>Проверьте название: от 1 до 120 символов.</span>
       )}
-      <div className={styles['control-field']}>
-        <label>
-          Описание <small>необязательно</small>
-          <textarea
-            maxLength={4000}
-            aria-describedby={descriptionHint}
-            value={value.description}
-            onChange={(event) => onChange({ ...value, description: event.target.value })}
-            placeholder="Что нужно знать друзьям"
-          />
-        </label>
-        <small id={descriptionHint}>Описание увидят все, у кого есть приглашение.</small>
-      </div>
       <MeetingTimeFields
         value={value}
         onChange={onChange}
@@ -55,7 +39,7 @@ export const MeetingFields = ({
         disabled={disabled}
       />
       <label>
-        Место <small>можно добавить позже</small>
+        Место
         <input
           maxLength={500}
           value={value.place}
@@ -63,6 +47,17 @@ export const MeetingFields = ({
           placeholder="Адрес, название или ориентир"
         />
       </label>
+      <div className={styles['control-field']}>
+        <label>
+          Описание
+          <textarea
+            maxLength={4000}
+            value={value.description}
+            onChange={(event) => onChange({ ...value, description: event.target.value })}
+            placeholder="Что стоит знать друзьям"
+          />
+        </label>
+      </div>
     </fieldset>
   );
 };

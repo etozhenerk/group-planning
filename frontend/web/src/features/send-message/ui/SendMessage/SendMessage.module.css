@@ -27,18 +27,18 @@ button.icon {
 }
 
 .composer-area {
-  padding: 12px 28px 20px;
+  padding: 12px 24px 22px;
   flex-shrink: 0;
 }
 
 .composer {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
-  background: var(--message);
+  gap: 7px;
+  background: transparent;
   border-radius: 24px;
-  padding: 6px;
-  max-width: 690px;
+  padding: 0;
+  max-width: none;
   margin: auto;
 }
 
@@ -49,7 +49,7 @@ button.icon {
   resize: none;
   min-height: 44px;
   max-height: 140px;
-  padding: 8px 12px;
+  padding: 12px 2px;
   display: block;
   margin: 0;
 }
@@ -63,25 +63,42 @@ button.icon {
 .pending-messages {
   max-height: 180px;
   overflow: auto;
-  max-width: 690px;
+  max-width: none;
   margin: 0 auto;
 }
 
 @media (max-width: 739px) {
   .composer-area {
-    padding: 10px 12px max(12px, env(safe-area-inset-bottom));
+    padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
   }
 }
 
 .composer-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  max-width: 690px;
+  gap: 7px;
+  background: var(--surface);
+  padding: 7px;
+  border-radius: 22px;
+  min-height: 58px;
+  max-width: none;
   margin: auto;
 }
 
 .composer {
   flex: 1;
   min-width: 0;
+}
+
+.composer-area {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  bottom: 100%;
+  right: 24px;
+  width: 338px;
+  max-width: calc(100% - 40px);
+  z-index: 4;
 }

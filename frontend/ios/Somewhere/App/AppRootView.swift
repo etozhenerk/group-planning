@@ -3,6 +3,7 @@ import SwiftUI
 struct AppRootView: View {
     @State private var runtime = AppRuntime.configured()
     @State private var introductionComplete = false
+    @State private var servicePresented = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private var presentedInvitation: Binding<InvitationTarget?> {
         Binding(
@@ -33,7 +34,16 @@ struct AppRootView: View {
                     retry: { runtime.restoreID = UUID() })
             } else {
                 OnboardingView(
-                    authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn)
+                    authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn
+                )
+                .overlay(alignment: .topTrailing) {
+                    Button {
+                        servicePresented = true
+                    } label: {
+                        Image(systemName: "questionmark.circle").frame(width: 44, height: 44)
+                    }.accessibilityLabel("Помощь и документы").padding(.trailing, 16).padding(
+                        .top, 4)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -83,6 +93,16 @@ struct AppRootView: View {
                 AccountDeletionScreen(
                     session: session, submit: runtime.deleteAccount,
                     cancel: { runtime.confirmDeletion = false }, leave: runtime.leaveDeletion)
+            }
+        }
+        .sheet(isPresented: $servicePresented) {
+            if let api = runtime.api {
+                NavigationStack {
+                    ScrollView { ServiceLinks(api: api, screen: "sign_in").padding(24) }
+                        .navigationTitle("somewhere").toolbar {
+                            Button("Готово") { servicePresented = false }
+                        }
+                }
             }
         }
         .sheet(item: presentedInvitation, onDismiss: runtime.invitationDidDismiss) { target in

@@ -10,6 +10,14 @@ struct SavedInvitationsView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
+                Text("Приглашения").designFont(28, weight: .bold).tracking(-0.9).padding(
+                    .bottom, 4)
+                Text(
+                    "Здесь сохранены приглашения, на которые вы ответили «Возможно». Когда определитесь, откройте приглашение и измените ответ."
+                )
+                .designFont(13).lineSpacing(5).foregroundStyle(AppPalette.muted).padding(
+                    .bottom, 16)
+
                 if owner.page.value == nil && owner.page.error == nil {
                     SavedInvitationsLoading()
                 } else {
@@ -20,9 +28,23 @@ struct SavedInvitationsView: View {
                                 : "Не удалось обновить приглашения", retry: { owner.refresh() })
                     }
                     if owner.items.isEmpty && owner.page.error == nil {
-                        StatusView(
-                            title: "Пока нет приглашений",
-                            text: "Здесь будут встречи, на которые вы ответили «Возможно».")
+                        VStack(spacing: 14) {
+                            ExperienceIcon(kind: .envelope, size: 22)
+                            Text("Пока ничего нет").designFont(22, weight: .bold)
+                            Button {
+                                invitations = false
+                            } label: {
+                                Text("К моим встречам").designFont(14, weight: .semibold)
+                                    .padding(.horizontal, 18).frame(minHeight: 47)
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 13).stroke(
+                                            .white.opacity(0.125), lineWidth: 1)
+                                    }
+                            }
+                        }.padding(.horizontal, 20).padding(.vertical, 55)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                .white.opacity(0.012), in: RoundedRectangle(cornerRadius: 22))
                     }
                     ForEach(owner.items) { item in
                         SavedInvitationCard(item: item, api: owner.session.api) {
@@ -35,16 +57,10 @@ struct SavedInvitationsView: View {
                         ) { owner.refresh(more: true) }
                     }
                 }
-            }.padding(24)
+            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 110)
         }
         .accessibilityIdentifier("saved-invitations-list")
         .background(AppPalette.background)
-        .safeAreaInset(edge: .top, spacing: 0) {
-            VStack(spacing: 16) {
-                MeetingListHeading(empty: false, create: create)
-                HomeTabs(invitations: $invitations)
-            }.padding(.horizontal, 24).padding(.vertical, 12).background(AppPalette.background)
-        }
         .refreshable { await owner.load() }
         .task(id: "\(phase)-\(target?.id ?? "")") {
             if phase == .active && target == nil { await owner.load() }

@@ -131,6 +131,9 @@ internal class SessionRepository(
     suspend fun image(request: ApiRequest, lease: RequestLease): ByteArray =
         perform(request, lease.generation, lease) { saved -> api.image(request, saved) }
 
+    suspend fun content(request: ApiRequest, lease: RequestLease): ByteArray =
+        perform(request, lease.generation, lease) { saved -> api.content(request, saved) }
+
     private suspend fun <T> perform(
         request: ApiRequest,
         expectedGeneration: Long?,

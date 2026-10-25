@@ -1,17 +1,10 @@
 package dev.groupplanning.android.ui.datepoll
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.DatePollSettings
+import dev.groupplanning.android.ui.components.DesignCheckbox
 
 @Composable
 internal fun DatePollSettingsFields(
@@ -38,14 +31,6 @@ internal fun DatePollSettingsFields(
     )
     settings.forEach { (resource, selected, update) ->
         val label = stringResource(resource)
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(label, Modifier.weight(1f))
-            Switch(
-                selected,
-                { change(update(it)) },
-                enabled = enabled,
-                modifier = Modifier.semantics { contentDescription = label },
-            )
-        }
+        DesignCheckbox(label, selected, enabled) { change(update(it)) }
     }
 }

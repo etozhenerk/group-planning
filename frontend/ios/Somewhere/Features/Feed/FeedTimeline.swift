@@ -12,86 +12,106 @@ struct FeedTimeline: View {
         GeometryReader { geometry in
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
-                    LazyVStack(spacing: 20) {
-                        if owner.hasHistory {
-                            Button(owner.loadingHistory ? "Загружаем…" : "Предыдущие сообщения") {
-                                historyAnchor =
-                                    visibleFrames
-                                    .filter {
-                                        $0.value.minY >= 0 && $0.value.minY < geometry.size.height
-                                    }
-                                    .min { $0.value.minY < $1.value.minY }
-                                    .map { FeedScrollAnchor(id: $0.key, frame: $0.value) }
-                                owner.loadHistory()
-                            }.disabled(owner.loadingHistory).frame(minHeight: 44)
-                                .accessibilityIdentifier("feed-history")
-                        }
-                        if let problem = owner.historyProblem {
-                            Text(problem).font(.footnote).foregroundStyle(AppPalette.error)
-                        }
-                        ForEach(Array(entries.enumerated()), id: \.element.id) {
-                            index, entry in
-                            VStack(spacing: 14) {
-                                if index == 0
-                                    || !Calendar.current.isDate(
-                                        entry.occurredAt.date,
-                                        inSameDayAs: entries[index - 1].occurredAt.date)
+                    VStack(spacing: 0) {
+                        LazyVStack(spacing: 20) {
+                            if owner.hasHistory {
+                                Button(owner.loadingHistory ? "Загружаем…" : "Предыдущие сообщения")
                                 {
-                                    Text(FeedPresentation.date(entry.occurredAt.date))
-                                        .font(.caption.weight(.medium)).foregroundStyle(
-                                            AppPalette.muted
-                                        )
-                                        .padding(.top, 12)
-                                }
-                                Group {
-                                    if entry.kind == "preparation_task_created",
-                                        entry.payloadVersion == 1,
-                                        case .string(let rawID) = entry.payload["task_id"],
-                                        let taskID = UUID(uuidString: rawID)
+                                    historyAnchor =
+                                        visibleFrames
+                                        .filter {
+                                            $0.value.minY >= 0
+                                                && $0.value.minY < geometry.size.height
+                                        }
+                                        .min { $0.value.minY < $1.value.minY }
+                                        .map { FeedScrollAnchor(id: $0.key, frame: $0.value) }
+                                    owner.loadHistory()
+                                }.disabled(owner.loadingHistory).frame(minHeight: 44)
+                                    .accessibilityIdentifier("feed-history")
+                            }
+                            if let problem = owner.historyProblem {
+                                Text(problem).font(.footnote).foregroundStyle(AppPalette.error)
+                            }
+                            ForEach(Array(entries.enumerated()), id: \.element.id) {
+                                index, entry in
+                                VStack(spacing: 20) {
+                                    if index == 0
+                                        || !Calendar.current.isDate(
+                                            entry.occurredAt.date,
+                                            inSameDayAs: entries[index - 1].occurredAt.date)
                                     {
-                                        PreparationTaskCard(
-                                            taskID: taskID, entry: entry,
-                                            own: entry.actor.id == owner.session.profile?.id,
-                                            session: owner.session)
-                                    } else if entry.kind == "date_poll_created",
-                                        entry.payloadVersion == 1,
-                                        case .string(let rawID) = entry.payload["poll_id"],
-                                        let pollID = UUID(uuidString: rawID),
-                                        let meeting = owner.meeting
-                                    {
-                                        DatePollCard(
-                                            pollID: pollID, meeting: meeting, entry: entry,
-                                            own: entry.actor.id == owner.session.profile?.id,
-                                            session: owner.session)
-                                    } else if entry.kind == "place_poll_created",
-                                        entry.payloadVersion == 1,
-                                        case .string(let rawID) = entry.payload["poll_id"],
-                                        let pollID = UUID(uuidString: rawID),
-                                        let meeting = owner.meeting
-                                    {
-                                        PlacePollCard(
-                                            pollID: pollID, meeting: meeting, entry: entry,
-                                            own: entry.actor.id == owner.session.profile?.id,
-                                            session: owner.session)
-                                    } else {
-                                        FeedRecordView(
-                                            entry: entry,
-                                            own: entry.actor.id == owner.session.profile?.id)
+                                        Text(FeedPresentation.date(entry.occurredAt.date))
+                                            .font(.system(size: 11)).foregroundStyle(
+                                                AppPalette.muted
+                                            )
+                                            .frame(minHeight: 16.5).padding(.vertical, 4)
                                     }
-                                }
-                                .id(entry.id)
-                                .background {
-                                    GeometryReader { row in
-                                        Color.clear.preference(
-                                            key: FeedRowFrames.self,
-                                            value: [entry.id: row.frame(in: .named("timeline"))])
+                                    Group {
+                                        if entry.kind == "preparation_task_created",
+                                            entry.payloadVersion == 1,
+                                            case .string(let rawID) = entry.payload["task_id"],
+                                            let taskID = UUID(uuidString: rawID)
+                                        {
+                                            PreparationTaskCard(
+                                                taskID: taskID, entry: entry,
+                                                own: entry.actor.id == owner.session.profile?.id,
+                                                session: owner.session)
+                                        } else if entry.kind == "date_poll_created",
+                                            entry.payloadVersion == 1,
+                                            case .string(let rawID) = entry.payload["poll_id"],
+                                            let pollID = UUID(uuidString: rawID),
+                                            let meeting = owner.meeting
+                                        {
+                                            DatePollCard(
+                                                pollID: pollID, meeting: meeting, entry: entry,
+                                                own: entry.actor.id == owner.session.profile?.id,
+                                                session: owner.session)
+                                        } else if entry.kind == "place_poll_created",
+                                            entry.payloadVersion == 1,
+                                            case .string(let rawID) = entry.payload["poll_id"],
+                                            let pollID = UUID(uuidString: rawID),
+                                            let meeting = owner.meeting
+                                        {
+                                            PlacePollCard(
+                                                pollID: pollID, meeting: meeting, entry: entry,
+                                                own: entry.actor.id == owner.session.profile?.id,
+                                                session: owner.session)
+                                        } else if entry.kind == "message", entry.payloadVersion == 1
+                                        {
+                                            MessageWithActions(
+                                                entry: entry, owner: owner,
+                                                own: entry.actor.id == owner.session.profile?.id)
+                                        } else {
+                                            FeedRecordView(
+                                                entry: entry,
+                                                own: entry.actor.id == owner.session.profile?.id)
+                                        }
+                                    }
+                                    .id(entry.id)
+                                    .background {
+                                        GeometryReader { row in
+                                            Color.clear.preference(
+                                                key: FeedRowFrames.self,
+                                                value: [entry.id: row.frame(in: .named("timeline"))]
+                                            )
+                                        }
                                     }
                                 }
                             }
+                            if !entries.contains(where: { $0.kind == "message" }),
+                                owner.invitation.organizer,
+                                let url = owner.invitation.shareURL
+                            {
+                                VStack(spacing: 12) {
+                                    Text("Позовём остальных?").font(.headline)
+                                    ShareLink("Пригласить друзей", item: url).frame(minHeight: 44)
+                                }.padding(24)
+                            }
+                            ForEach(owner.pending) { value in
+                                OutgoingMessageView(value: value, owner: owner).id(value.id)
+                            }
                         }
-                        ForEach(owner.pending) { value in
-                            OutgoingMessageView(value: value, owner: owner).id(value.id)
-                        }
+                        Spacer(minLength: 0)
                         Color.clear.frame(height: 1).id("latest")
                             .background(
                                 GeometryReader { marker in
@@ -99,12 +119,23 @@ struct FeedTimeline: View {
                                         key: FeedBottomPreference.self,
                                         value: marker.frame(in: .named("timeline")).maxY)
                                 })
-                    }.padding(.horizontal, 14).padding(.bottom, 12)
+                    }.frame(minHeight: max(0, geometry.size.height - 36), alignment: .top)
+                        .padding(.horizontal, 16).padding(.vertical, 18)
                 }.coordinateSpace(name: "timeline").defaultScrollAnchor(.bottom)
                     .scrollDismissesKeyboard(.interactively).accessibilityIdentifier(
                         "feed-timeline"
                     )
-                    .onPreferenceChange(FeedRowFrames.self) { visibleFrames = $0 }
+                    .onPreferenceChange(FeedRowFrames.self) { frames in
+                        visibleFrames = frames
+                        let visible = Set(
+                            frames.filter {
+                                $0.value.maxY > 0 && $0.value.minY < geometry.size.height
+                            }.map(\.key))
+                        owner.reactions.updateVisible(
+                            entries.filter {
+                                $0.kind == "message" && visible.contains($0.id)
+                            }.map(\.id))
+                    }
                     .onChange(of: owner.entries.first?.id) { old, new in
                         guard old != new, let anchor = historyAnchor else { return }
                         historyAnchor = nil
@@ -128,6 +159,15 @@ struct FeedTimeline: View {
                             }
                         } else {
                             hasUnread = true
+                        }
+                    }
+                    .onChange(of: owner.mediaPresented) { old, presented in
+                        if old && !presented && !owner.media.entries.isEmpty {
+                            Task {
+                                await Task.yield()
+                                proxy.scrollTo("latest", anchor: .bottom)
+                                hasUnread = false
+                            }
                         }
                     }
                     .onChange(of: owner.pending.count) { old, new in

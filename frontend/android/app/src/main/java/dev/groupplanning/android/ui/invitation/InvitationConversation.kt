@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,12 +22,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.RsvpAnswer
@@ -38,8 +42,12 @@ import dev.groupplanning.android.state.feed.FeedViewModel
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.feed.FeedScreen
+import dev.groupplanning.android.ui.service.ServiceEntry
 import dev.groupplanning.android.ui.settings.MeetingSettingsSheet
 import dev.groupplanning.android.ui.theme.Palette
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,27 +70,59 @@ internal fun InvitationConversation(
     val infoLabel = stringResource(R.string.meeting_information)
     Column(Modifier.fillMaxSize().testTag("invitation-conversation")) {
         Row(
-            Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            Modifier.heightIn(min = 88.dp).padding(horizontal = 14.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             IconButton(
                 back,
-                Modifier.semantics {
+                Modifier.size(39.dp).semantics {
                     contentDescription = backLabel
                 },
             ) { AppIcon(R.drawable.ic_back) }
-            Text(details.preview.title, Modifier.weight(1f), fontWeight = FontWeight.Bold)
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                Text(
+                    details.preview.title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    lineHeight = 20.7.sp,
+                    letterSpacing = (-.6).sp,
+                )
+                val time = details.preview.startsAt?.instant?.atZone(
+                    ZoneId.of(details.preview.timezone),
+                )
+                    ?.format(
+                        DateTimeFormatter.ofPattern("d MMMM · HH:mm", Locale.forLanguageTag("ru")),
+                    )
+                val people = stringResource(
+                    R.string.experience_participants_count,
+                    details.meeting?.participantCount ?: 0,
+                )
+                Text(
+                    if (time == null) people else "$people · $time",
+                    fontSize = 12.sp,
+                    lineHeight = 18.sp,
+                    color = Palette.muted,
+                )
+            }
             if (details.organizer) state.shareUrl?.let { InvitationShare(it) }
             IconButton({
                 information = true
-            }, Modifier.semantics { contentDescription = infoLabel }) {
-                AppIcon(R.drawable.ic_info)
+            }, Modifier.size(39.dp).semantics { contentDescription = infoLabel }) {
+                AppIcon(R.drawable.ic_more)
             }
         }
-        HorizontalDivider(color = Palette.border)
+        HorizontalDivider(color = Color(0x12ffffff))
         val profile = (snapshot.session as? SessionState.Authenticated)?.profile
         if (feed != null && profile != null) {
-            FeedScreen(feed, profile, Modifier.weight(1f))
+            FeedScreen(
+                feed,
+                profile,
+                Modifier.weight(1f),
+                state.shareUrl.takeIf {
+                    details.organizer
+                },
+            )
         }
     }
     if (information) {
@@ -98,6 +138,7 @@ internal fun InvitationConversation(
                 verticalArrangement = Arrangement.spacedBy(26.dp),
             ) {
                 InvitationFacts(details.preview, showTitle = false)
+                ServiceEntry("meeting_chat")
                 if (details.organizer) {
                     ActionButton(
                         stringResource(R.string.meeting_settings),

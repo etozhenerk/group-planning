@@ -1,0 +1,50 @@
+.menu {
+  position: absolute;
+  bottom: 66px;
+  left: -7px;
+  width: 268px;
+  max-width: calc(100vw - 24px);
+  padding: 8px;
+  background: #36373f;
+  border: 1px solid #ffffff14;
+  border-radius: 19px;
+  box-shadow: 0 20px 60px #0005;
+  z-index: 5;
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  width: 100%;
+  min-height: 48px;
+  text-align: left;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.menu button:hover,
+.menu button:focus-visible {
+  background: #ffffff0a;
+}
+
+.menu button svg {
+  color: var(--accent);
+}
+
+.menu button:nth-child(2) {
+  margin-bottom: 13px;
+}
+
+.menu button:nth-child(3)::before {
+  content: '';
+  position: absolute;
+  height: 1px;
+  background: var(--line);
+  left: 18px;
+  right: 18px;
+  margin-top: -65px;
+}

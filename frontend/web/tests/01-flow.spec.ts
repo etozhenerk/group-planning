@@ -35,7 +35,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   });
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill('Суббота без спешки');
-  await setDate(page, '24.10.2026');
+  await setDate(page, '24.10.2099');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
@@ -46,10 +46,10 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   );
   await expect(page.getByLabel('Название', { exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   expect(creates).toBe(2);
   expect(keys[0]).toBe(keys[1]);
-  const id = page.url().split('/').at(-2);
+  const id = page.url().split('/').at(-1);
   expect(id).toBeTruthy();
   const invitation = await inviteLink(page);
   const friendContext = await browser.newContext({
@@ -82,9 +82,8 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await expect(friend.getByRole('status')).toContainText('Вы ответили «Приду»');
   await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
-  await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Компания · 2', exact: true }),
+    page.getByRole('heading', { name: 'Кто придёт · 2', exact: true }),
   ).toBeVisible();
   await page.getByLabel('Сообщение', { exact: true }).fill('Принесу настолки!');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
@@ -113,6 +112,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
 
   await page.setViewportSize({ width: 1440, height: 900 });
   await friend.setViewportSize({ width: 1440, height: 900 });
+  await friend.getByRole('button', { name: 'Информация о встрече' }).click();
   await friend.getByRole('button', { name: 'Возможно', exact: true }).click();
   await expect(friend.getByRole('heading', { name: 'Переписка закрыта' })).toBeVisible();
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toHaveCount(0);

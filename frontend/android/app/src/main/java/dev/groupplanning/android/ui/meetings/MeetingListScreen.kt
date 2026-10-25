@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -18,16 +18,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingPeriod
 import dev.groupplanning.android.data.repository.CalendarData
 import dev.groupplanning.android.state.CalendarSelection
 import dev.groupplanning.android.ui.components.ActionButton
+import dev.groupplanning.android.ui.components.ExperienceSkeleton
 import dev.groupplanning.android.ui.components.StatusPanel
 import dev.groupplanning.android.ui.theme.Palette
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.UUID
 
 @Composable
@@ -56,14 +61,14 @@ internal fun MeetingListScreen(
         LazyColumn(
             Modifier.weight(1f).fillMaxWidth().testTag("meetings-list"),
             state = scroll,
-            contentPadding = PaddingValues(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 110.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item(key = "toolbar") { MeetingToolbar(selection, data.counts, change) }
             if (selection.calendar) {
                 item(key = "calendar") { MeetingCalendar(selection, data.days, change) }
             }
-            if ((data.counts?.undated ?: 0) > 0 || selection.undated) {
+            if (selection.calendar && ((data.counts?.undated ?: 0) > 0 || selection.undated)) {
                 item(key = "undated") {
                     TextButton(onClick = { change(selection.copy(undated = !selection.undated)) }) {
                         Text(
@@ -91,10 +96,7 @@ internal fun MeetingListScreen(
             }
             if (!selection.calendar && page == null && data.error == null) {
                 item(key = "loading") {
-                    CircularProgressIndicator(
-                        Modifier.semantics { contentDescription = loading },
-                        color = Palette.accent,
-                    )
+                    ExperienceSkeleton()
                 }
             }
             if (emptyAccount && !selection.calendar) {
@@ -115,16 +117,62 @@ internal fun MeetingListScreen(
                     )
                 }
             }
-            items(
+            itemsIndexed(
                 page?.meetings.orEmpty().takeIf {
                     !selection.calendar
                 }.orEmpty(),
-                key = { it.id },
-            ) { meeting ->
+                key = { _, item -> item.id },
+            ) { index, meeting ->
                 if (selection.calendar && !selection.undated) {
                     CalendarMeetingRow(meeting) { select(meeting.id) }
                 } else {
-                    MeetingCard(meeting) { select(meeting.id) }
+                    Column {
+                        val formatter = DateTimeFormatter.ofPattern(
+                            "LLLL",
+                            Locale.forLanguageTag("ru"),
+                        )
+                        val month = meeting.startsAt?.instant?.atZone(ZoneId.of(meeting.timezone))
+                            ?.format(formatter) ?: meeting.startsOn?.let {
+                            LocalDate.parse(it).format(formatter)
+                        }
+                        val previous = page?.meetings?.getOrNull(index - 1)?.let {
+                            it.startsAt?.instant?.atZone(ZoneId.of(it.timezone))?.format(formatter)
+                                ?: it.startsOn?.let { day ->
+                                    LocalDate.parse(day).format(formatter)
+                                }
+                        }
+                        if (index == 0 || month != previous) {
+                            Text(
+                                (
+                                    month ?: stringResource(
+                                        R.string.meeting_without_time,
+                                    )
+                                    ).uppercase(),
+                                Modifier.padding(top = 10.dp, bottom = 12.dp),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                letterSpacing = .84.sp,
+                                color = Palette.muted,
+                            )
+                        }
+                        MeetingCard(meeting) { select(meeting.id) }
+                    }
+                }
+            }
+            if (!selection.calendar && ((data.counts?.undated ?: 0) > 0 || selection.undated)) {
+                item(key = "undated-list") {
+                    TextButton(onClick = { change(selection.copy(undated = !selection.undated)) }) {
+                        Text(
+                            stringResource(
+                                if (selection.undated) {
+                                    R.string.calendar_back_to_days
+                                } else {
+                                    R.string.calendar_undated
+                                },
+                                data.counts?.undated ?: 0,
+                            ),
+                        )
+                    }
                 }
             }
             if (!selection.calendar && page?.nextCursor != null) {

@@ -12,6 +12,7 @@ export type MeetingDetailsProps = {
   open: boolean;
   wide: boolean;
   close: () => void;
+  show: () => void;
 };
 
 export const MeetingDetails = ({
@@ -20,6 +21,7 @@ export const MeetingDetails = ({
   open,
   wide,
   close,
+  show,
 }: MeetingDetailsProps) => {
   const editing = useDisclosure();
 
@@ -37,16 +39,26 @@ export const MeetingDetails = ({
 
   return (
     <>
-      {wide ? (
-        <aside className={styles['details-sidebar']} data-testid="details-sidebar">
+      {wide && (
+        <aside
+          className={styles['details-sidebar']}
+          data-testid="details-sidebar"
+          aria-hidden={open || editing.open}
+        >
           <h2>Детали встречи</h2>
-          {content}
+          <DetailsContent
+            meeting={meeting}
+            session={session}
+            close={close}
+            edit={editing.show}
+            compact
+            showAll={show}
+          />
         </aside>
-      ) : (
-        <Dialog open={open} title="Детали встречи" onClose={close}>
-          {open && content}
-        </Dialog>
       )}
+      <Dialog open={open} title="Детали встречи" onClose={close}>
+        {open && content}
+      </Dialog>
       <Dialog
         open={editing.open}
         title="Настройки встречи"

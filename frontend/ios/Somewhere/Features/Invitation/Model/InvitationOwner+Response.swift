@@ -39,7 +39,9 @@ extension InvitationOwner {
                 saving = false
                 await load()
                 responseProblem =
-                    "Ответ уже изменился. Проверьте актуальные данные и выберите ответ снова."
+                    joinClosed
+                    ? "Присоединиться уже нельзя: запись закрыта."
+                    : "Ответ уже изменился. Проверьте актуальные данные и выберите ответ снова."
             } else if let status = (error as? ClientFailure)?.statusCode,
                 [400, 403, 404, 422].contains(status)
             {

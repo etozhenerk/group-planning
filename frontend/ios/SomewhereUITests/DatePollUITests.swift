@@ -20,6 +20,23 @@ final class DatePollUITests: XCTestCase {
         create.tap()
         let submit = app.buttons["poll-create"]
         XCTAssertTrue(submit.waitForExistence(timeout: 5))
+        let multiple = app.buttons["Можно выбрать несколько дат"]
+        for _ in 0..<5 {
+            if multiple.isHittable { break }
+            app.scrollViews["action-form-scroll"].swipeUp()
+        }
+        multiple.tap()
+        let changed = multiple.value as? String
+        for _ in 0..<5 {
+            if app.buttons["action-form-back"].isHittable { break }
+            app.scrollViews["action-form-scroll"].swipeDown()
+        }
+        app.buttons["action-form-back"].tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        app.buttons["meeting-add"].tap()
+        app.buttons["new-date-poll"].tap()
+        XCTAssertTrue(submit.waitForExistence(timeout: 5))
+        XCTAssertEqual(multiple.value as? String, changed)
         capture("poll-create")
         for _ in 0..<6 {
             if submit.isHittable { break }

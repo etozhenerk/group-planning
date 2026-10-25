@@ -83,7 +83,7 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
     page.getByRole('heading', { name: 'Детали без повторов', exact: true }),
   ).toHaveCount(1);
   await expect(page.getByTestId('details-sidebar')).toBeVisible();
-  await expect(info).toHaveCount(0);
+  await expect(info).toBeVisible();
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 390, height: 900 });
   await expect(page.getByTestId('details-sidebar')).toHaveCount(0);
@@ -92,13 +92,15 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await expect(dialog).toBeVisible();
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(dialog).not.toBeVisible();
-  await expect(info).toHaveCount(0);
-  await expect(page.getByTestId('details-sidebar')).toBeVisible();
+  await expect(dialog).toBeVisible();
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 390, height: 900 });
   await expect(dialog).toBeVisible();
   await expect(when).toHaveCount(1);
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(info).toBeVisible();
+  await expect(page.getByTestId('details-sidebar')).toBeVisible();
+  await expect(when).toHaveCount(1);
 });

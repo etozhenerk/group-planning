@@ -126,6 +126,13 @@ final class SessionStore {
         }
     }
 
+    func media(_ request: APIRequest) async throws -> Data {
+        let api = self.api
+        return try await perform(request) { credential in
+            try await api.media(request, credential: credential)
+        }
+    }
+
     private func perform<Value: Sendable>(
         _ request: APIRequest,
         operation: @escaping @Sendable (StoredSession) async throws -> Value

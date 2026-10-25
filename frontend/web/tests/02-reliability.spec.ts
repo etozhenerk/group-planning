@@ -12,7 +12,9 @@ import {
   writeHeaders,
 } from '@tests/helpers';
 
-test('draft survives an error, back warns and dialog focus returns', async ({ page }) => {
+test('draft survives an error, back warns and sharing returns to the chat', async ({
+  page,
+}) => {
   await login(page, 'Саша');
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill('Черновик встречи');
@@ -40,11 +42,23 @@ test('draft survives an error, back warns and dialog focus returns', async ({ pa
   await setDate(page, '24.10.2026');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
-  const trigger = page.getByRole('button', { name: 'Пригласить друзей', exact: true });
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+  const trigger = page
+    .getByRole('button', { name: 'Пригласить друзей', exact: true })
+    .first();
+
+  await page
+    .getByLabel('Сообщение', { exact: true })
+    .fill('Черновик сохраняется после приглашения');
   await trigger.click();
+  await expect(
+    page.getByRole('heading', { name: 'Пригласить друзей', exact: true }),
+  ).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(trigger).toBeFocused();
+  await expect(trigger).toBeVisible();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
+    'Черновик сохраняется после приглашения',
+  );
   await page.evaluate(() => {
     Object.defineProperty(navigator, 'clipboard', {
       value: { writeText: () => Promise.reject(new Error('clipboard disabled')) },
@@ -53,7 +67,7 @@ test('draft survives an error, back warns and dialog focus returns', async ({ pa
   });
   await trigger.click();
   await page.getByRole('button', { name: 'Скопировать ссылку' }).click();
-  await expect(page.getByRole('dialog')).toContainText('Скопируйте вручную', {
+  await expect(page.getByRole('main')).toContainText('Скопируйте вручную', {
     ignoreCase: true,
   });
   await expect(page.getByLabel('Ссылка приглашения')).toBeEditable({ editable: false });
@@ -64,7 +78,6 @@ test('message retry after a lost response keeps its ID and confirms once', async
 }) => {
   await login(page, 'Саша');
   const id = await create(page, 'Проверка отправки');
-  await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   let posts = 0;
   const keys: string[] = [];
   await page.route(`**/api/v1/meetings/${id}/messages`, async (route) => {
@@ -120,6 +133,7 @@ test('history and a stale settings form preserve authoritative state', async ({
   await expect(page.getByText('Запись истории 0', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Предыдущие записи' }).click();
   await expect(page.getByText('Запись истории 0', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Информация о встрече' }).click();
   await page.getByRole('button', { name: 'Изменить настройки', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Настройки встречи' });
   await dialog.getByLabel('Название', { exact: true }).fill('Старая правка');
@@ -174,7 +188,7 @@ test('cancelled invitation sign-in stays on the invitation without an answer', a
   await login(page, 'Саша');
   await create(page, 'Отмена входа');
   const url = await inviteLink(page);
-  await page.locator('summary[aria-label^="Профиль:"]').click();
+  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await page.goto(url);
   await page.getByRole('button', { name: 'Войти и ответить' }).click();

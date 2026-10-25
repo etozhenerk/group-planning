@@ -37,6 +37,10 @@ internal class OkHttpTransport(client: OkHttpClient = OkHttpClient()) : HttpTran
                         val result = response.use {
                             val source = it.body?.source()
                             val limit = if (request.header("Accept") ==
+                                "application/octet-stream"
+                            ) {
+                                20L * 1024 * 1024
+                            } else if (request.header("Accept") ==
                                 "image/jpeg, image/png"
                             ) {
                                 5L * 1024 * 1024

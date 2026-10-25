@@ -10,9 +10,7 @@ export const taskStatus = (task: PreparationTask, user: string) => {
           : `Кому предложено: ${task.recipient.displayName}`
         : 'Пока никто не взял задачу';
     case 'accepted':
-      return task.assignee?.id === user
-        ? 'Задача у вас'
-        : `Исполняет ${task.assignee?.displayName ?? 'участник'}`;
+      return `Исполняет ${task.assignee?.displayName ?? 'участник'}`;
     case 'completed':
       return `Выполнено · ${task.updatedBy.displayName}`;
     case 'declined':

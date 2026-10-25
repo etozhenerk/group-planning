@@ -1,6 +1,7 @@
 package dev.groupplanning.android.ui.feed
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,18 +31,21 @@ internal fun FeedMessage(
     text: String,
     own: Boolean,
     modifier: Modifier = Modifier,
+    react: (() -> Unit)? = null,
     status: @Composable () -> Unit = {},
+    body: @Composable (() -> Unit)? = null,
 ) {
+    val reactionLabel = stringResource(R.string.reaction_add)
     Row(
         modifier.fillMaxWidth().padding(
-            start = if (own) 28.dp else 0.dp,
-            end = if (own) 0.dp else 28.dp,
+            start = if (own) 20.dp else 0.dp,
+            end = if (own) 0.dp else 18.dp,
         ),
         horizontalArrangement = Arrangement.spacedBy(
-            10.dp,
+            7.dp,
             if (own) Alignment.End else Alignment.Start,
         ),
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.Bottom,
     ) {
         if (!own) FeedAvatar(author.displayName)
         Column(
@@ -54,9 +58,11 @@ internal fun FeedMessage(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    if (own) stringResource(R.string.feed_you) else author.displayName,
+                    author.displayName,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 13.sp,
+                    fontSize = 11.sp,
+                    lineHeight = 16.5.sp,
+                    color = Palette.muted,
                     modifier = Modifier.weight(1f, false),
                 )
                 Text(
@@ -65,22 +71,40 @@ internal fun FeedMessage(
                     ).format(DateTimeFormatter.ofPattern("HH:mm")),
                     color = Palette.muted,
                     fontSize = 11.sp,
+                    lineHeight = 16.5.sp,
                 )
             }
-            Text(
-                text,
-                Modifier.background(
+            Column(
+                Modifier.then(
+                    if (react != null) {
+                        Modifier.combinedClickable(
+                            onClick = {},
+                            onLongClickLabel = reactionLabel,
+                            onLongClick = react,
+                        )
+                    } else {
+                        Modifier
+                    },
+                ).background(
                     if (own) colorResource(R.color.own_message) else Palette.message,
                     RoundedCornerShape(
-                        topStart = if (own) 20.dp else 6.dp,
-                        topEnd = if (own) 6.dp else 20.dp,
-                        bottomEnd = 20.dp,
-                        bottomStart = 20.dp,
+                        topStart = 18.dp,
+                        topEnd = 18.dp,
+                        bottomEnd = if (own) 5.dp else 18.dp,
+                        bottomStart = if (own) 20.dp else 5.dp,
                     ),
-                ).padding(horizontal = 14.dp, vertical = 10.dp),
-                color = if (own) Palette.actionText else Palette.text,
-                fontSize = 15.sp,
-            )
+                ).padding(horizontal = 13.dp, vertical = 10.dp),
+            ) {
+                body?.invoke()
+                if (text.isNotEmpty()) {
+                    Text(
+                        text,
+                        color = if (own) Palette.actionText else Palette.text,
+                        fontSize = 14.sp,
+                        lineHeight = 22.4.sp,
+                    )
+                }
+            }
             status()
         }
         if (own) FeedAvatar(author.displayName)

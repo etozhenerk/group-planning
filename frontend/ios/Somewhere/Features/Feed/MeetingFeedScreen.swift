@@ -9,6 +9,7 @@ struct MeetingFeedScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             if owner.current {
+                if owner.meeting?.period == "past" { MemoriesBanner(owner: owner.memories) }
                 if let problem = owner.problem {
                     HStack {
                         Text(problem).font(.footnote)
@@ -30,19 +31,57 @@ struct MeetingFeedScreen: View {
             .safeAreaInset(edge: .top, spacing: 0) {
                 if owner.current { MeetingFeedHeader(owner: owner) }
             }
+            .fullScreenCover(
+                isPresented: $owner.mediaPresented,
+                onDismiss: {
+                    owner.composerFocused = true
+                    owner.reload()
+                }
+            ) {
+                MediaPickerPanel(owner: owner.media, photosOnly: owner.photoSelection)
+            }
+            .onChange(of: owner.media.entries.count) { _, _ in
+                do { try owner.merge(owner.media.entries) } catch {
+                    owner.problem = "Не удалось обновить вложения."
+                }
+            }
             .sheet(isPresented: $owner.infoPresented) { MeetingInfoScreen(owner: owner) }
-            .sheet(isPresented: $owner.pollPresented, onDismiss: owner.reload) {
+            .fullScreenCover(
+                isPresented: $owner.pollPresented,
+                onDismiss: {
+                    owner.composerFocused = true
+                    owner.reload()
+                }
+            ) {
                 if let meeting = owner.meeting {
-                    CreateDatePollScreen(meeting: meeting, session: owner.session)
+                    CreateDatePollScreen(
+                        form: owner.actionDrafts.date(meeting: meeting),
+                        completed: owner.actionDrafts.clearDate)
                 }
             }
-            .sheet(isPresented: $owner.placePollPresented, onDismiss: owner.reload) {
+            .fullScreenCover(
+                isPresented: $owner.placePollPresented,
+                onDismiss: {
+                    owner.composerFocused = true
+                    owner.reload()
+                }
+            ) {
                 if let meeting = owner.meeting {
-                    CreatePlacePollScreen(meeting: meeting, session: owner.session)
+                    CreatePlacePollScreen(
+                        form: owner.actionDrafts.place(meeting: meeting),
+                        completed: owner.actionDrafts.clearPlace)
                 }
             }
-            .sheet(isPresented: $owner.preparationTaskPresented, onDismiss: owner.reload) {
-                CreatePreparationTaskScreen(meetingID: owner.id, session: owner.session)
+            .fullScreenCover(
+                isPresented: $owner.preparationTaskPresented,
+                onDismiss: {
+                    owner.composerFocused = true
+                    owner.reload()
+                }
+            ) {
+                CreatePreparationTaskScreen(
+                    form: owner.actionDrafts.preparation(),
+                    completed: owner.actionDrafts.clearPreparation)
             }
             .task(id: phase) {
                 guard phase == .active else {

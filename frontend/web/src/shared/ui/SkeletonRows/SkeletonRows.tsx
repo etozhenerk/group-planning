@@ -21,10 +21,15 @@ export const SkeletonRows = ({
   >
     {Array.from({ length: count }, (_, index) => (
       <div className={styles.row} key={index}>
+        {variant !== 'people' && (
+          <div className={styles.date}>
+            <Skeleton width={132} height={20} />
+          </div>
+        )}
         <div className={styles.picture}>
           <Skeleton
             width="100%"
-            height={variant === 'cards' ? 88 : 36}
+            height={variant === 'people' ? 36 : 100}
             round={variant === 'people'}
           />
         </div>

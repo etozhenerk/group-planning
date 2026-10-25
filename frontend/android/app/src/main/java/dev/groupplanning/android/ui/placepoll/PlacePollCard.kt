@@ -75,6 +75,7 @@ internal fun PlacePollCard(
                 val poll = state.poll
                 if (poll != null) {
                     Text(poll.place, fontWeight = FontWeight.Bold)
+                    poll.explanation?.takeIf(String::isNotBlank)?.let { Text(it) }
                     val status = when (poll.state) {
                         "applied" -> R.string.place_poll_applied
                         "rejected" -> R.string.place_poll_unchanged_result

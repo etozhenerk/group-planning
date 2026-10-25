@@ -31,7 +31,17 @@ struct APIClient: Sendable {
         return data
     }
 
-    private func load(_ request: APIRequest, credential: StoredSession?, image: Bool = false)
+    func media(_ request: APIRequest, credential: StoredSession? = nil) async throws -> Data {
+        let data = try await load(request, credential: credential, binary: true)
+        guard !data.isEmpty, data.count <= 20 * 1024 * 1024 else {
+            throw ClientFailure.invalidResponse
+        }
+        return data
+    }
+
+    private func load(
+        _ request: APIRequest, credential: StoredSession?, image: Bool = false, binary: Bool = false
+    )
         async throws -> Data
     {
         try Task.checkCancellation()
@@ -41,9 +51,10 @@ struct APIClient: Sendable {
         wire.cachePolicy = .reloadIgnoringLocalCacheData
         wire.httpShouldHandleCookies = false
         wire.setValue(
-            image ? "image/jpeg, image/png" : "application/json", forHTTPHeaderField: "Accept")
+            image ? "image/jpeg, image/png" : (binary ? "*/*" : "application/json"),
+            forHTTPHeaderField: "Accept")
         if request.body != nil {
-            wire.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            wire.setValue(request.contentType, forHTTPHeaderField: "Content-Type")
         }
         if let credential {
             wire.setValue("Bearer " + credential.token, forHTTPHeaderField: "Authorization")
@@ -68,7 +79,9 @@ struct APIClient: Sendable {
             throw ClientFailure.http(response.statusCode, problem)
         }
         let allowed = image ? ["image/jpeg", "image/png"] : ["application/json"]
-        if response.statusCode != 204, !allowed.contains(response.mimeType?.lowercased() ?? "") {
+        if !binary, response.statusCode != 204,
+            !allowed.contains(response.mimeType?.lowercased() ?? "")
+        {
             throw ClientFailure.invalidResponse
         }
         return data

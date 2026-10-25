@@ -13,6 +13,7 @@ struct APIRequest: Sendable {
     var method: Method = .get
     var deletionToken: String?
     var body: Data?
+    var contentType = "application/json"
     var idempotencyKey: UUID?
     var query: [URLQueryItem] = []
     var expectedStatus: Int = 200

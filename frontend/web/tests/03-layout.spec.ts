@@ -26,12 +26,16 @@ for (const width of [320, 390, 768, 1440]) {
 
     expect(size?.width).toBeGreaterThanOrEqual(44);
     expect(size?.height).toBeGreaterThanOrEqual(44);
+    expect((size?.y ?? 0) + (size?.height ?? 0)).toBeLessThanOrEqual(900);
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     const title = await page.getByTestId('conversation-title').boundingBox();
-    const share = page.getByRole('button', { name: 'Пригласить друзей', exact: true });
+    const share = page
+      .locator('header')
+      .getByRole('button', { name: 'Пригласить друзей', exact: true });
+
     const info = page.getByRole('button', { name: 'Информация о встрече' });
 
-    for (const action of width >= 1170 ? [share] : [share, info]) {
+    for (const action of [share, info]) {
       const bounds = await action.boundingBox();
       const center = (bounds?.y ?? 0) + (bounds?.height ?? 0) / 2;
       expect(center).toBeCloseTo((title?.y ?? 0) + (title?.height ?? 0) / 2, 0);
@@ -62,9 +66,9 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.getByTestId('feed-message')).toHaveCount(0);
 
     await share.click();
-    const invitation = page.getByRole('dialog', { name: 'Приглашение для друзей' });
+    const invitation = page.getByRole('main');
+    await expect(page.getByRole('heading', { name: 'Пригласить друзей' })).toBeVisible();
     await expect(invitation).toBeVisible();
-    await expect(invitation).toHaveAttribute('data-motion', 'open');
     const copy = invitation.getByRole('button', { name: 'Скопировать ссылку' });
     await expect(copy).toBeVisible();
     await expect(copy).not.toHaveCSS('font-size', '0px');
@@ -73,14 +77,10 @@ for (const width of [320, 390, 768, 1440]) {
       fullPage: true,
       animations: 'disabled',
     });
-    const panel = await invitation.boundingBox();
-
-    if (width < 740) {
-      expect((panel?.y ?? 0) + (panel?.height ?? 0)).toBeCloseTo(900, 0);
-    }
+    await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
 
     await page.keyboard.press('Escape');
-    await expect(share).toBeFocused();
+    await expect(share).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 
     if (width < 1170) {
@@ -92,9 +92,16 @@ for (const width of [320, 390, 768, 1440]) {
       await page.keyboard.press('Escape');
       await expect(info).toBeFocused();
     } else {
-      await expect(info).toHaveCount(0);
+      await expect(info).toBeVisible();
       await expect(page.getByTestId('details-sidebar')).toBeVisible();
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(1);
+      await page.getByRole('button', { name: 'Все участники встречи' }).click();
+      const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole('button', { name: 'Изменить настройки' }),
+      ).toBeVisible();
+      await page.keyboard.press('Escape');
     }
 
     await page.screenshot({ path: `test-results/meeting-${width}.png`, fullPage: true });

@@ -1,7 +1,6 @@
-import { Link } from 'react-router';
-import { Plus, LoaderCircle } from 'lucide-react';
+import { InvitationEmpty } from '@/pages/invitations/ui/InvitationEmpty';
+import { LoaderCircle } from 'lucide-react';
 import { Navigation } from '@/widgets/navigation';
-import { HomeTabs } from '@/widgets/home-tabs';
 import { Workspace } from '@/shared/ui/Workspace';
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import { Status } from '@/shared/ui/Status';
@@ -27,17 +26,12 @@ export const InvitationsView = ({ session }: InvitationsViewProps) => {
       <main id="main" className={styles.home}>
         <div className={styles.controls}>
           <header className={styles.heading}>
-            <h1>Мои встречи</h1>
-            <Link
-              to="/meetings/new"
-              className={styles.create}
-              aria-label="Создать встречу"
-            >
-              <Plus size={18} aria-hidden="true" />
-              Создать
-            </Link>
+            <h1>Приглашения</h1>
           </header>
-          <HomeTabs />
+          <p>
+            Здесь сохранены приглашения, на которые вы ответили «Возможно». Когда
+            определитесь, откройте приглашение и измените ответ.
+          </p>
         </div>
         {query.isPending ? (
           <SkeletonRows label="Загрузка приглашений" />
@@ -58,12 +52,7 @@ export const InvitationsView = ({ session }: InvitationsViewProps) => {
                 }
               />
             )}
-            {!query.error && !items.length && (
-              <Status
-                title="Пока нет приглашений"
-                text="Здесь будут встречи, на которые вы ответили «Возможно»."
-              />
-            )}
+            {!query.error && !items.length && <InvitationEmpty />}
             <div className={styles.items}>
               {items.map((item) => (
                 <InvitationCard key={item.preview.meetingId} item={item} />

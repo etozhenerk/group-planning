@@ -1,0 +1,42 @@
+.attachment {
+  max-width: 380px;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.open {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+}
+
+.file {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 64px;
+}
+
+.file span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.file small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.full {
+  height: min(65dvh, 620px);
+}

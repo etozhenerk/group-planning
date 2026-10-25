@@ -12,6 +12,7 @@ export type ResponseButtonsProps = {
   token?: string;
   expected: string;
   current: Answer | null;
+  joinDisabledReason?: string | null;
   onSaved?: () => void;
 };
 
@@ -22,6 +23,7 @@ export const ResponseButtons = ({
   expected,
   current,
   onSaved,
+  joinDisabledReason = null,
 }: ResponseButtonsProps) => {
   const action = useRespond(session, id, token, expected);
   const confirmed = action.saved ?? current;
@@ -35,7 +37,10 @@ export const ResponseButtons = ({
             type="button"
             className={answer === 'going' ? styles['primary'] : ''}
             aria-pressed={confirmed === answer}
-            disabled={action.mutation.isPending}
+            disabled={
+              action.mutation.isPending ||
+              (answer === 'going' && confirmed !== 'going' && !!joinDisabledReason)
+            }
             onClick={() =>
               action.mutation.mutate(answer, { onSuccess: () => onSaved?.() })
             }
@@ -59,7 +64,10 @@ export const ResponseButtons = ({
           Открыть встречу
         </Link>
       )}
-      {confirmed !== 'going' && (
+      {joinDisabledReason && confirmed !== 'going' && (
+        <p role="status">{joinDisabledReason}</p>
+      )}
+      {confirmed !== 'going' && !joinDisabledReason && (
         <p className={styles['muted']}>После ответа «Приду» откроется общий чат.</p>
       )}
     </div>

@@ -49,12 +49,68 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   });
 
   const invitation = await inviteLink(page);
-  await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await page.getByLabel('Сообщение', { exact: true }).fill('Hello from web');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByText('Hello from web', { exact: true })).toBeVisible();
-  await writeFile(progressPath, JSON.stringify({ id, invitation }), { mode: 0o600 });
-  console.log('WEB: meeting created and first message sent');
+  await page.getByRole('button', { name: 'Добавить к встрече' }).click();
+  const documentChooser = page.waitForEvent('filechooser');
+  await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+  await (
+    await documentChooser
+  ).setFiles({
+    name: 'rules.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('Правила встречи на трёх платформах'),
+  });
+  await page.getByLabel('Подпись к rules.txt').fill('Правила встречи от web');
+  await page.getByRole('button', { name: 'Отправить', exact: true }).click();
+  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(
+    page.getByTestId('feed-message').filter({ hasText: 'rules.txt' }),
+  ).toContainText('Правила встречи от web');
+  await page.getByRole('button', { name: 'Добавить к встрече' }).click();
+  const photoChooser = page.waitForEvent('filechooser');
+  await page.getByRole('menuitem', { name: 'Фото', exact: true }).click();
+  await (
+    await photoChooser
+  ).setFiles({
+    name: 'cross-chat.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(pixels, 'base64'),
+  });
+  await page.getByRole('button', { name: 'Отправить', exact: true }).click();
+  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await page.getByRole('link', { name: 'К моим встречам' }).click();
+  await page.getByRole('button', { name: /^Прошедшие/ }).click();
+  const past = page.getByTestId('meeting-card').filter({
+    hasText: 'Вайб трёх платформ',
+  });
+
+  await past.getByRole('link', { name: 'Добавить фото встречи', exact: true }).click();
+  await expect(page).toHaveURL(/\/meetings\/[^/]+\/memories$/);
+  const albumId = new URL(page.url()).pathname.split('/')[2];
+  expect(albumId).toBeTruthy();
+  const memoryChooser = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: 'Добавить фото', exact: true }).click();
+  await (
+    await memoryChooser
+  ).setFiles({
+    name: 'cross-memory.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(pixels, 'base64'),
+  });
+  await page.getByRole('button', { name: 'Добавить в альбом', exact: true }).click();
+  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(page.getByText('1 / 1', { exact: true })).toBeVisible();
+  await page.goto(`/meetings/${id}`);
+  await expect(page.getByText('Hello from web', { exact: true })).toBeVisible();
+  await writeFile(progressPath, JSON.stringify({ id, invitation, albumId }), {
+    mode: 0o600,
+  });
+  console.log('WEB: UI uploaded file with caption, chat photo and shared album photo');
 
   await expect(page.getByText('Hello from iOS', { exact: true })).toBeVisible({
     timeout: 240_000,
@@ -63,8 +119,15 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   await expect(page.getByText('Hello from Android', { exact: true })).toBeVisible({
     timeout: 240_000,
   });
-  await expect(page.getByRole('heading', { name: 'Компания · 3' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Кто придёт · 3' })).toBeVisible();
   console.log('WEB: Android message and three participants received without reload');
+  const hello = page.getByTestId('feed-message').filter({ hasText: 'Hello from web' });
+  await expect(hello.getByRole('button', { name: '❤️: 1', exact: true })).toBeVisible({
+    timeout: 240_000,
+  });
+  await expect(hello.getByRole('button', { name: '👍: 1', exact: true })).toBeVisible({
+    timeout: 240_000,
+  });
   await writeFile(`${progressPath}.messages`, 'ok');
 
   const client = await playwright.request.newContext({
@@ -79,7 +142,13 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
         timeout: 240_000,
       })
       .toBe(403);
-    await expect(page.getByText('Не смогу', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Информация о встрече' }).click();
+    await expect(
+      page
+        .getByRole('dialog', { name: 'Детали встречи' })
+        .getByText('Не смогу', { exact: true }),
+    ).toBeVisible();
+    await page.keyboard.press('Escape');
     await expect(page.getByText('Hello from iOS', { exact: true })).toBeVisible();
     console.log('WEB: withdrawal updated; former participant API returns 403');
   } finally {

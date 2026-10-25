@@ -6,6 +6,7 @@ export const placePollSchema = z.object({
   meeting_id: uuid,
   author: userSchema,
   place: z.string(),
+  explanation: z.string().nullable().optional().default(null),
   previous_place: z.string().nullable(),
   state: z.enum(['open', 'applied', 'rejected', 'cancelled']),
   revision,

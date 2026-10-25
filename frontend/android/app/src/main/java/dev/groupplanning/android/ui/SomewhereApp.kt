@@ -32,13 +32,17 @@ import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.account.AccountDeletionDialog
 import dev.groupplanning.android.ui.brand.BrandMotion
 import dev.groupplanning.android.ui.brand.BrandWordmark
+import dev.groupplanning.android.ui.components.LocalViewer
 import dev.groupplanning.android.ui.components.StatusPanel
 import dev.groupplanning.android.ui.covers.LocalCovers
+import dev.groupplanning.android.ui.feed.LocalEmoji
 import dev.groupplanning.android.ui.invitation.InvitationScreen
 import dev.groupplanning.android.ui.invitation.LinkProblemDialog
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.motion.rememberMotionEnabled
 import dev.groupplanning.android.ui.onboarding.OnboardingScreen
+import dev.groupplanning.android.ui.service.LocalSupport
+import dev.groupplanning.android.ui.service.ServiceEntry
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -67,6 +71,10 @@ internal fun SomewhereApp(model: AppViewModel) {
     CompositionLocalProvider(
         LocalMotionEnabled provides motion,
         LocalCovers provides model.covers,
+        LocalEmoji provides model.emoji,
+        LocalSupport provides model.support,
+        LocalViewer provides
+            (snapshot.session as? SessionState.Authenticated)?.profile?.id,
     ) {
         if (deletionPrompt || snapshot.session is SessionState.Deleting) {
             AccountDeletionDialog(
@@ -118,6 +126,8 @@ internal fun SomewhereApp(model: AppViewModel) {
                                     model::restore,
                                 )
                             }
+                        } else if (snapshot.session is SessionState.Authenticated) {
+                            PrivateContent(model, route, snapshot)
                         } else if (route is AppRoute.Invitation) {
                             InvitationScreen(
                                 (route as AppRoute.Invitation).model,
@@ -139,6 +149,10 @@ internal fun SomewhereApp(model: AppViewModel) {
                                             signIn = model::startSignIn,
                                         )
                                     }
+                                    ServiceEntry(
+                                        "sign_in",
+                                        help = true,
+                                    )
                                     if (snapshot.session is SessionState.Deleted) {
                                         Surface(
                                             Modifier.align(Alignment.CenterHorizontally)

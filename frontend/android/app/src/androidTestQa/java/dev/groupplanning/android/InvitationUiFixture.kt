@@ -39,6 +39,13 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         compose.waitForIdle()
     }
 
+    fun waitAbsent(tag: String) {
+        compose.waitUntil(15_000) {
+            compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isEmpty()
+        }
+        compose.waitForIdle()
+    }
+
     fun waitText(text: String) {
         compose.waitUntil(15_000) {
             compose.onAllNodes(hasText(text)).fetchSemanticsNodes().isNotEmpty()
@@ -51,8 +58,11 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     ).bufferedReader().use { it.readText() }
 
     fun screenshot(name: String) {
+        compose.mainClock.advanceTimeBy(300)
         compose.waitForIdle()
         device.waitForIdle(2_000)
+        instrumentation.waitForIdleSync()
+        Thread.sleep(500)
         val output =
             checkNotNull(
                 InstrumentationRegistry.getArguments().getString("additionalTestOutputDir"),
