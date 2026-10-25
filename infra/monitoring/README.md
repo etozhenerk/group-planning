@@ -16,7 +16,7 @@ python3 infra/monitoring/render-dashboards.py \
 
 Terraform provider 0.239.0 при создании через прежний Dashboard API вернул
 `expected operation response ... Dashboard, but got ''`; панелей в списке не
-появилось. Текущие четыре панели созданы UI; их IDs есть в отчёте развёртывания.
+появилось. Пять панелей созданы UI; их IDs есть в отчётах развёртывания.
 В Terraform state они не включены. Повторять неудачный apply или считать
 локальный JSON подтверждением создания нельзя.
 
@@ -67,15 +67,16 @@ Terraform provider 0.239.0 при создании через прежний Das
 настроены. Доставка из облачной функции пока не работает: `telegram transport failed`;
 успешная локальная отправка не закрывает облачную проверку. Штатный канал через
 `@YandexCloudNotify_bot` также не считается подключённым без проверки владельцем.
-HTTPS-probe и его Terraform подготовлены; применение остановилось до создания
-ресурсов из-за сетевого таймаута API. Grafana остаётся
+HTTPS-probe развёрнут отдельной закрытой Cloud Function с минутным таймером;
+результаты и ограничения проверки — в [отчёте](../../openspec/changes/deployment-and-store-release/monitoring-live-verification.md). Grafana остаётся
 необязательным расширением, платные ВМ для неё не создавались.
 
 ## Границы готовности
 
-Системные и PostgreSQL-метрики поступают раз в минуту; в каталоге наблюдалось
-116 рядов / 102 имени (24.10.2026), без пользовательских меток. Состояние после
-добавления приложения нужно измерить снова. В «Обзор» сохранены PG, копия и графики HTTPS-probe; источник probe ещё не запущен.
+Системные, PostgreSQL- и бизнес-метрики поступают раз в минуту. После подключения
+probe в custom наблюдалось 470 рядов / 426 имён (25.10.2026), без пользовательских
+меток. До добавления API-метрик нужно ограничить системный набор, сохранив общий
+предел 500 рядов. В «Обзор» поступают PG, копия и результаты HTTPS-probe.
 RPS/p95/5xx/worker также не подключены. Их отсутствие
 не равно нормальному состоянию. Логи в Monium/OTel Collector, retention облачных
 данных и прогнозный бюджет остаются непроверенными; journald на ВМ ограничен
@@ -88,8 +89,8 @@ RPS/p95/5xx/worker также не подключены. Их отсутстви
 
 ## Бизнес-панель
 
-25.10.2026 создана закрытая [панель somewhere — Бизнес](https://monium.yandex.cloud/projects/folder__b1g8siv8ve2si1qp04nm/dashboards/fbekle0imi8geuvpah9a).
-Её источник ещё не включён на ВМ: графики показывают «Нет данных». Определения
+Закрытая [панель somewhere — Бизнес](https://monium.yandex.cloud/projects/folder__b1g8siv8ve2si1qp04nm/dashboards/fbekle0imi8geuvpah9a)
+получает девять рядов из PostgreSQL через exporter и Unified Agent. Определения
 счётчиков и ограничения истории — в [каталоге метрик](metrics.md).
 Процедура включения — [PostgreSQL](../../backend/docs/postgres.md), проверки и
-незавершённые шаги — [отчёт](../../openspec/changes/deployment-and-store-release/monitoring-followup-verification.md).
+незавершённые шаги — [отчёт](../../openspec/changes/deployment-and-store-release/monitoring-live-verification.md).
