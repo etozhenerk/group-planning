@@ -1,5 +1,6 @@
 """Сборка отдельных backend/web/monitoring артефактов без развёртывания."""
 import gzip
+import json
 import os
 from pathlib import Path
 import shutil
@@ -7,6 +8,7 @@ import tarfile
 import tempfile
 
 from common import ROOT, run
+from web_identity import build_info
 
 
 def tar_directory(source, destination):
@@ -26,7 +28,7 @@ def tar_directory(source, destination):
                         archive.addfile(info)
 
 
-def build(component, directory):
+def build(component, directory, meta):
     if component == 'backend':
         with tempfile.TemporaryDirectory() as temporary:
             stage = Path(temporary)
@@ -43,7 +45,8 @@ def build(component, directory):
         return {'platform': 'linux/amd64', 'storage': 'postgres', 'migration': 'somewhere-migrate',
                 'note': 'Миграции применяются отдельной ролью перед запуском; runtime проверяет схему.'}
     if component == 'web':
-        run('npm', 'run', 'web:build')
+        run('npm', 'run', 'web:build', env=dict(os.environ,
+            SOMEWHERE_RELEASE_BUILD='1', SOMEWHERE_BUILD_INFO=json.dumps(build_info(meta))))
         tar_directory(ROOT / 'frontend/web/dist', directory / 'web.tar.gz')
         return {'api_origin': 'same-origin', 'serving': 'static web directory; API released separately'}
     run('sh', 'scripts/package.sh', cwd=ROOT / 'infra/telegram-bot')

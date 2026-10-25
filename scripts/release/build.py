@@ -8,6 +8,7 @@ import tempfile
 import android
 import ios
 import package_cloud
+import check_web
 from common import ROOT, finalize, metadata, run
 
 
@@ -65,9 +66,16 @@ def build(tag, number, destination):
             details = ios.build(stage, meta, api_origin())
             checks.extend(['distribution-archive', 'codesign', 'ipa-export-and-version', 'dsym'])
         else:
-            details = package_cloud.build(component, stage)
+            details = package_cloud.build(component, stage, meta)
             checks.append('artifact-build')
         finalize(stage, meta, checks, details)
+        if component == 'web':
+            check_web.check(stage)
+            checks.append('web-release-browser-identity')
+            # The archive is unchanged; regenerate metadata after the artifact smoke check.
+            (stage / 'manifest.json').unlink()
+            (stage / 'SHA256SUMS').unlink()
+            finalize(stage, meta, checks, details)
         stage.rename(destination)
     print('Release artifacts:', destination)
 

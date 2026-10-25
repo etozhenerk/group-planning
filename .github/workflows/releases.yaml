@@ -141,6 +141,7 @@ jobs:
           ARTIFACT_NAME: release-${{ needs.metadata.outputs.component }}-${{ github.run_attempt }}
         run: |
           gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT_NAME" --dir "$RUNNER_TEMP/release-artifacts"
+          git fetch --tags origin main
           python3 scripts/release/publish.py --directory "$RUNNER_TEMP/release-artifacts"
   summary:
     name: Run summary
