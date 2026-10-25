@@ -40,7 +40,9 @@ func (meetingTestProvider) Verify(_ context.Context, code, _ string) (identity.P
 
 	email, phone, avatar := code+"@example.test", "+79991234567", "https://avatars.yandex.net/get-yapic/1/a/islands-200"
 
-	return identity.Profile{Subject: code, DisplayName: name, Email: &email, Phone: &phone, AvatarURL: &avatar}, nil
+	lastName, birthday, sex := "Иванова", "0000-12-23", "female"
+
+	return identity.Profile{Subject: code, DisplayName: name, Email: &email, Phone: &phone, AvatarURL: &avatar, Login: &code, FirstName: &name, LastName: &lastName, Birthday: &birthday, Sex: &sex}, nil
 }
 
 type meetingHTTPTest struct {

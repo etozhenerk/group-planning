@@ -7,16 +7,16 @@ import (
 
 // PlacePollView exposes the current counts and only the caller's own ballot.
 type PlacePollView struct {
-	ID, MeetingID            string
-	Author                   Actor
-	Place, PreviousPlace     string
-	State                    PlacePollState
-	Revision, MyVoteRevision uint64
-	MyVote                   PlaceVote
-	VotesFor, VotesAgainst   int
-	CreatedAt, ClosesAt      time.Time
-	ClosedAt                 *time.Time
-	CanVote                  bool
+	ID, MeetingID                     string
+	Author                            Actor
+	Place, PreviousPlace, Explanation string
+	State                             PlacePollState
+	Revision, MyVoteRevision          uint64
+	MyVote                            PlaceVote
+	VotesFor, VotesAgainst            int
+	CreatedAt, ClosesAt               time.Time
+	ClosedAt                          *time.Time
+	CanVote                           bool
 }
 
 // ReadPlacePoll requires current chat access, including for completed polls.
@@ -64,7 +64,7 @@ func (s *Service) placePollView(reader Reader, meeting Meeting, poll PlacePoll, 
 
 	return PlacePollView{
 		ID: poll.ID, MeetingID: poll.MeetingID, Author: poll.Author,
-		Place: poll.Place, PreviousPlace: poll.PreviousPlace, State: poll.State,
+		Place: poll.Place, Explanation: poll.Explanation, PreviousPlace: poll.PreviousPlace, State: poll.State,
 		Revision: poll.Revision, MyVoteRevision: own.Revision, MyVote: own.Answer,
 		VotesFor: yes, VotesAgainst: no,
 		CreatedAt: poll.CreatedAt, ClosesAt: poll.ClosesAt, ClosedAt: poll.ClosedAt,

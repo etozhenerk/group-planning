@@ -22,5 +22,17 @@ func (s *Service) saveProfile(records Records, profile Profile) (User, error) {
 		user.Phone = *profile.Phone
 	}
 
+	for target, source := range map[*string]*string{
+		&user.Login:     profile.Login,
+		&user.FirstName: profile.FirstName,
+		&user.LastName:  profile.LastName,
+		&user.Birthday:  profile.Birthday,
+		&user.Sex:       profile.Sex,
+	} {
+		if source != nil {
+			*target = *source
+		}
+	}
+
 	return user, records.PutUser(subject, user)
 }

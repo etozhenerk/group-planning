@@ -39,13 +39,13 @@ func New(clientID, clientSecret, callback string, transport http.RoundTripper) *
 	}
 }
 
-// AuthorizationURL requests only login:info and binds the exact registered callback.
+// AuthorizationURL uses the permissions registered in Yandex OAuth and binds the exact callback.
+// Omitting scope and optional_scope requests the configured set, just like the native SDKs.
 func (p *Provider) AuthorizationURL(state, challenge string) string {
 	values := url.Values{
 		"response_type":         {"code"},
 		"client_id":             {p.clientID},
 		"redirect_uri":          {p.callback},
-		"scope":                 {"login:info"},
 		"state":                 {state},
 		"code_challenge":        {challenge},
 		"code_challenge_method": {"S256"},
@@ -106,7 +106,7 @@ func (p *Provider) VerifyToken(ctx context.Context, token string) (identity.Prof
 	}
 
 	if name == "" {
-		name = strings.TrimSpace(profile.Login)
+		name = strings.TrimSpace(profile.Login.value)
 	}
 
 	if name == "" || len(name) > 1000 {

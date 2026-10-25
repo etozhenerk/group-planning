@@ -24,15 +24,17 @@ func TestExperienceOpenAPIResponses(t *testing.T) {
 	h.request(h.anonymous, "GET", "/api/v1/me/profile", nil, nil, 401)
 	profile, _ := h.request(client, "GET", "/api/v1/me/profile", nil, nil, 200)
 	private := decodeMeetingTest[profileResponse](t, profile)
-	if private.ID != owner.User.ID || private.Provider != "yandex" || private.Email == nil || *private.Email != "owner@example.test" || private.Phone == nil {
+	if private.ID != owner.User.ID || private.Provider != "yandex" || private.Email == nil || *private.Email != "owner@example.test" || private.Phone == nil || private.Login == nil || *private.Login != "owner" || private.FirstName == nil || *private.FirstName != "Лена" || private.LastName == nil || *private.LastName != "Иванова" || private.Birthday == nil || *private.Birthday != "0000-12-23" || private.Sex == nil || *private.Sex != "female" {
 		t.Fatal("wrong private profile")
 	}
 
 	data, _ := h.request(client, "POST", "/api/v1/meetings", map[string]any{"title": "Фото прогулки", "starts_on": "2099-01-01", "timezone": "Europe/Moscow"}, headersFor(h, owner, testKey("1600")), 201)
 	created := decodeMeetingTest[createdMeetingResponse](t, data)
 	base := "/api/v1/meetings/" + created.Meeting.ID
-	if bytes.Contains(data, []byte("email")) || bytes.Contains(data, []byte("phone")) {
-		t.Fatal("summary leaked contacts")
+	for _, field := range []string{"email", "phone", "login", "first_name", "last_name", "birthday", "sex"} {
+		if bytes.Contains(data, []byte(`"`+field+`"`)) {
+			t.Fatalf("summary leaked %s", field)
+		}
 	}
 
 	if len(created.Meeting.ParticipantPreview) != 1 || created.Meeting.ParticipantPreview[0].ID != owner.User.ID {
@@ -41,7 +43,7 @@ func TestExperienceOpenAPIResponses(t *testing.T) {
 
 	invitation, _ := url.Parse(created.InvitationURL)
 	public, _ := h.request(h.anonymous, "GET", "/api/v1/invitations/"+strings.TrimPrefix(invitation.Path, "/i/"), nil, nil, 200)
-	for _, field := range []string{"email", "phone", "participant_preview", "memory_preview"} {
+	for _, field := range []string{"email", "phone", "login", "first_name", "last_name", "birthday", "sex", "participant_preview", "memory_preview"} {
 		if bytes.Contains(public, []byte(field)) {
 			t.Fatal("public invitation leaked private data")
 		}

@@ -9,6 +9,7 @@ import (
 // CreatePlacePollInput carries an immutable proposed place and closing instant.
 type CreatePlacePollInput struct {
 	Place, ClosesAt string
+	Explanation     string `json:"Explanation,omitempty"`
 }
 
 // CreatePlacePoll publishes a single open proposal and its close job atomically.
@@ -24,6 +25,11 @@ func (s *Service) CreatePlacePoll(ctx context.Context, actor Actor, meetingID st
 
 	input.Place = strings.TrimSpace(input.Place)
 	if err := validateText("place", input.Place, 500, true); err != nil {
+		return PlacePollView{}, err
+	}
+
+	input.Explanation = strings.TrimSpace(input.Explanation)
+	if err := validateText("explanation", input.Explanation, 2000, false); err != nil {
 		return PlacePollView{}, err
 	}
 
@@ -74,7 +80,7 @@ func (s *Service) CreatePlacePoll(ctx context.Context, actor Actor, meetingID st
 
 		poll := PlacePoll{
 			ID: randomUUID(), MeetingID: meetingID, Author: actor,
-			Place: input.Place, PreviousPlace: details.Meeting.Place,
+			Place: input.Place, Explanation: input.Explanation, PreviousPlace: details.Meeting.Place,
 			State: PlacePollOpen, Revision: 1, Ballots: map[string]PlaceBallot{},
 			CreatedAt: s.now().UTC(), ClosesAt: closesAt.UTC(),
 			CreationRequestID: requestKey.Key, CreationRequestHash: hash,

@@ -27,9 +27,10 @@ type ReturnContext struct{ Kind, Token string }
 
 // User is the local profile linked to a verified external subject.
 type User struct {
-	ID, DisplayName         string
-	AvatarURL, Email, Phone string
-	CreatedAt               time.Time
+	ID, DisplayName                           string
+	AvatarURL, Email, Phone                   string
+	Login, FirstName, LastName, Birthday, Sex string
+	CreatedAt                                 time.Time
 }
 
 // Attempt holds short-lived provider and application bindings. ProviderVerifier
@@ -80,8 +81,9 @@ type Store interface {
 
 // Profile comes only from a provider verified by the server.
 type Profile struct {
-	Subject, DisplayName    string
-	AvatarURL, Email, Phone *string
+	Subject, DisplayName                      string
+	AvatarURL, Email, Phone                   *string
+	Login, FirstName, LastName, Birthday, Sex *string
 }
 
 // Provider performs authorization code + PKCE and verifies the resulting profile.

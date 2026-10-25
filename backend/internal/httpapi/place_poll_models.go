@@ -7,6 +7,7 @@ import (
 )
 
 type placePollResponse struct {
+	Explanation    *string                 `json:"explanation"`
 	ID             string                  `json:"id"`
 	MeetingID      string                  `json:"meeting_id"`
 	Author         userResponse            `json:"author"`
@@ -28,7 +29,7 @@ func placePollDTO(view meetings.PlacePollView) placePollResponse {
 	return placePollResponse{
 		ID: view.ID, MeetingID: view.MeetingID,
 		Author: userResponse{ID: view.Author.ID, DisplayName: view.Author.Name},
-		Place:  view.Place, PreviousPlace: optionalString(view.PreviousPlace), State: view.State,
+		Place:  view.Place, Explanation: optionalString(view.Explanation), PreviousPlace: optionalString(view.PreviousPlace), State: view.State,
 		Revision: decimal(view.Revision), MyVoteRevision: decimal(view.MyVoteRevision),
 		MyVote: optionalString(string(view.MyVote)), VotesFor: view.VotesFor, VotesAgainst: view.VotesAgainst,
 		CreatedAt: view.CreatedAt, ClosesAt: view.ClosesAt, ClosedAt: view.ClosedAt, CanVote: view.CanVote,

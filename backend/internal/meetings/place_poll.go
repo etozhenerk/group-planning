@@ -30,7 +30,7 @@ type PlaceBallot struct {
 type PlacePoll struct {
 	ID, MeetingID                          string
 	Author                                 Actor
-	Place, PreviousPlace                   string
+	Place, PreviousPlace, Explanation      string
 	State                                  PlacePollState
 	Revision                               uint64
 	Ballots                                map[string]PlaceBallot

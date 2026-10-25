@@ -19,8 +19,10 @@
 
 ## Профиль и встречи
 
-- `GET /me/profile` → `{id, display_name, avatar_url, email, phone, provider}`.
-  Три дополнительных поля nullable; provider = `yandex`. Контакты только владельцу.
+- `GET /me/profile` → `{id, display_name, avatar_url, email, phone, provider, login, first_name, last_name, birthday, sex}`.
+  Дополнительные поля nullable; provider = `yandex`. Только владелец видит личные данные.
+  Новые поля необязательны для совместимости со старым сервером. birthday — строка
+  YYYY-MM-DD с возможными нулевыми компонентами; sex — male/female/null.
 - Публичный пользователь: `{id, display_name, avatar_url?}`. `avatar_url`
   nullable; отсутствие обрабатывается инициалами. Контактов здесь нет.
 - MeetingSummary добавляет необязательные `period` (`upcoming|past|undated`, сохранённый сервером статус),
@@ -145,3 +147,12 @@ PostgreSQL-режиме до реализации постоянной очер�
 Футер — только десктопный web-онбординг (от 740 px), никаких футеров внутри
 приложения, в мобильном web, iOS или Android. Это приоритетное уточнение к
 старым HTML/PNG, а не разрешение менять прочие детали утверждённого дизайна.
+
+## Пояснение предложенного места
+
+`POST /meetings/{id}/place-polls` принимает необязательное `explanation` string,
+trim, максимум 2000 Unicode-символов; null/нестроковое значение — 422.
+Ответ PlacePoll добавляет optional nullable `explanation`, пустая строка → null.
+Права и срок опроса прежние, текст доступен только участникам чата. Поле входит
+в hash идемпотентности; отсутствие/пустое поле сохраняет старый hash. JSON-документ
+place_polls сохраняет строку без SQL-миграции, завершение/отмена не стирают её.

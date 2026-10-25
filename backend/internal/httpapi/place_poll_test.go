@@ -29,7 +29,7 @@ func TestPlacePollOpenAPIResponses(t *testing.T) {
 	invitation := "/api/v1/invitations/" + strings.TrimPrefix(invitationURL.Path, "/i/")
 	base := "/api/v1/meetings/" + meeting.Meeting.ID
 	polls := base + "/place-polls"
-	input := map[string]string{"place": "У Саши дома", "closes_at": "2026-10-20T00:01:00Z"}
+	input := map[string]string{"place": "У Саши дома", "closes_at": "2026-10-20T00:01:00Z", "explanation": "  Есть большой стол  "}
 	h.request(h.anonymous, "POST", polls, input, nil, 401)
 	h.request(ownerClient, "POST", polls, input, map[string]string{"Origin": h.server.URL, "Idempotency-Key": testKey("1002")}, 403)
 	h.request(otherClient, "POST", polls, input, headersFor(h, other, testKey("1002")), 403)
@@ -39,13 +39,18 @@ func TestPlacePollOpenAPIResponses(t *testing.T) {
 	h.request(guestClient, "PUT", invitation+"/rsvp", map[string]string{"answer": "going", "expected_revision": "0"}, headersFor(h, guest, testKey("1006")), 200)
 	data, _ = h.request(guestClient, "POST", polls, input, headersFor(h, guest, testKey("1007")), 201)
 	poll := decodeMeetingTest[placePollResponse](t, data)
-	if poll.State != meetings.PlacePollOpen || poll.MyVote != nil || poll.VotesFor != 0 || !poll.CanVote || poll.PreviousPlace == nil || *poll.PreviousPlace != "Кафе" {
+	if poll.State != meetings.PlacePollOpen || poll.MyVote != nil || poll.VotesFor != 0 || !poll.CanVote || poll.PreviousPlace == nil || *poll.PreviousPlace != "Кафе" || poll.Explanation == nil || *poll.Explanation != "Есть большой стол" {
 		t.Fatal("wrong initial poll projection")
 	}
 
 	data, _ = h.request(guestClient, "POST", polls, input, headersFor(h, guest, testKey("1007")), 201)
 	if decodeMeetingTest[placePollResponse](t, data).ID != poll.ID {
 		t.Fatal("create retry duplicated poll")
+	}
+
+	h.request(guestClient, "POST", polls, map[string]string{"place": input["place"], "closes_at": input["closes_at"], "explanation": "Другой текст"}, headersFor(h, guest, testKey("1007")), 409)
+	for _, explanation := range []any{nil, 42, strings.Repeat("я", 2001)} {
+		h.request(ownerClient, "POST", polls, map[string]any{"place": "Новое", "closes_at": input["closes_at"], "explanation": explanation}, headersFor(h, owner, testKey("1008")), 422)
 	}
 
 	h.request(ownerClient, "POST", polls, input, headersFor(h, owner, testKey("1008")), 409)

@@ -50,7 +50,7 @@ func TestProviderCodePKCEAndVerifiedProfile(t *testing.T) {
 		return response(200, `{"id":"123","client_id":"client","login":"lena","email":"discard-me"}`), nil
 	}))
 	u, _ := url.Parse(p.AuthorizationURL("state", "challenge"))
-	if u.Query().Get("scope") != "login:info" || u.Query().Get("code_challenge_method") != "S256" || u.Query().Get("code_challenge") != "challenge" {
+	if u.Query().Has("scope") || u.Query().Has("optional_scope") || u.Query().Get("code_challenge_method") != "S256" || u.Query().Get("code_challenge") != "challenge" {
 		t.Fatal("authorization URL")
 	}
 

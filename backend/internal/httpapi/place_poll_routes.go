@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
@@ -22,14 +23,21 @@ func (h meetingHandlers) createPlacePoll(w http.ResponseWriter, r *http.Request)
 	}
 
 	var input struct {
-		Place    string `json:"place"`
-		ClosesAt string `json:"closes_at"`
+		Place       string          `json:"place"`
+		Explanation json.RawMessage `json:"explanation"`
+		ClosesAt    string          `json:"closes_at"`
 	}
 	if !decodeJSON(w, r, &input) {
 		return
 	}
 
-	view, err := h.app.CreatePlacePoll(r.Context(), call.Actor, call.MeetingID, meetings.CreatePlacePollInput{Place: input.Place, ClosesAt: input.ClosesAt}, call.Key)
+	explanation, ok := patchField(input.Explanation, false)
+	if !ok {
+		writeError(w, 422, "validation_failed", map[string]string{"explanation": "invalid"})
+		return
+	}
+
+	view, err := h.app.CreatePlacePoll(r.Context(), call.Actor, call.MeetingID, meetings.CreatePlacePollInput{Place: input.Place, ClosesAt: input.ClosesAt, Explanation: explanation.Value}, call.Key)
 	h.writePlacePoll(w, view, err, 201)
 }
 
