@@ -155,7 +155,7 @@
 npm run web:dev
 npm run web:check
 npm run web:build
-npx --no-install playwright install chromium
+npx --no-install playwright install chromium webkit
 npm run web:test:e2e
 npm run agent:check
 ```
@@ -163,7 +163,8 @@ npm run agent:check
 `web:check` выполняет TypeScript, ESLint, проверку пустых строк CSS, FSD/AST,
 Prettier и Vitest. `web:test:e2e` собирает отдельный demo build и запускает
 Chromium с настоящим Go API и test-only OAuth-provider на loopback TLS.
-Тот же набор выполняется в CI; на Linux браузер ставится с `--with-deps`.
+Сценарии мобильной прокрутки дополнительно выполняются в WebKit с эмуляцией
+телефона. Тот же набор выполняется в CI; на Linux браузеры ставятся с `--with-deps`.
 Для интерактивной проверки всех действий без Яндекса — `npm run web:demo`;
 это тестовый процесс, он не меняет production-настройки авторизации.
 

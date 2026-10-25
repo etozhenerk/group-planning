@@ -37,7 +37,7 @@ Ctrl+C останавливает его; перезапуск удаляет в
 ```sh
 npm run web:check
 npm run web:build
-npx --no-install playwright install chromium
+npx --no-install playwright install chromium webkit
 npm run web:test:e2e
 npm run format --workspace @somewhere/web
 ```
@@ -50,7 +50,9 @@ Prettier и Vitest. `web:build` создаёт обычный production bundle 
 на `https://127.0.0.1:8444`. Рабочий процесс демо на 8443 им не подходит:
 изолированное состояние необходимо для проверки пустого списка и повторов.
 
-CI использует те же команды, устанавливая Chromium с `--with-deps`.
+CI использует те же команды, устанавливая Chromium и WebKit с `--with-deps`.
+Мобильная прокрутка дополнительно проверяется WebKit с эмуляцией телефона;
+системную клавиатуру и панели Safari нужно проверять на iPhone отдельно.
 Результаты сценариев и снимки — в
 [отчёте веб-среза](../../openspec/changes/gathering-activity-feed/web-verification.md).
 

@@ -37,6 +37,16 @@
 @media (max-width: 739px) {
   .conversation-workspace {
     display: flex;
+    position: fixed;
+    inset-inline: 0;
+    top: var(--visual-viewport-top, 0px);
+    height: var(--visual-viewport-height, 100dvh);
+    overscroll-behavior: none;
+  }
+
+  .conversation-workspace.demo {
+    top: calc(var(--visual-viewport-top, 0px) + 32px);
+    height: calc(var(--visual-viewport-height, 100dvh) - 32px);
   }
 
   .conversation-workspace > .navigation-slot {

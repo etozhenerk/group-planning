@@ -1,5 +1,7 @@
 import styles from '@/shared/ui/Workspace/Workspace.module.css';
 import type { ReactNode } from 'react';
+import { useRef } from 'react';
+import { useVisualViewport } from '@/shared/lib/viewport';
 import { isDemo } from '@/shared/config';
 
 export type WorkspaceProps = {
@@ -13,8 +15,12 @@ export const Workspace = ({
   children,
   conversation = false,
 }: WorkspaceProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useVisualViewport(ref, conversation);
+
   return (
     <div
+      ref={ref}
       className={[
         styles['workspace'],
         conversation ? styles['conversation-workspace'] : '',

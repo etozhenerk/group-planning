@@ -2,9 +2,11 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import type { ReactNode } from 'react';
 import { animateDialog } from '@/shared/ui/Dialog/lib/dialogMotion';
 import { lockBackgroundScroll } from '@/shared/ui/Dialog/lib/lockBackgroundScroll';
+import { useVisualViewport } from '@/shared/lib/viewport';
 
 export const useDialog = (open: boolean, children: ReactNode) => {
   const ref = useRef<HTMLDialogElement>(null);
+  useVisualViewport(ref);
   const release = useRef<(() => void) | undefined>(undefined);
   const [retained, setRetained] = useState<ReactNode>(null);
   const finish = useCallback(() => {
@@ -32,8 +34,8 @@ export const useDialog = (open: boolean, children: ReactNode) => {
     if (open) {
       if (!dialog.open) {
         const previous = document.activeElement;
-        dialog.showModal();
         const unlock = lockBackgroundScroll(dialog);
+        dialog.showModal();
         release.current = () => {
           unlock();
 

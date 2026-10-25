@@ -30,10 +30,10 @@ for (const width of [390, 1440]) {
       dialog.getByText('По ссылке видны детали', { exact: false }),
     ).toBeVisible();
     expect((await dialog.boundingBox())?.height).toBeCloseTo(height ?? 0, -1);
-    await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+    await expect(page.locator('body')).toHaveCSS('position', 'fixed');
     await expect(dialog).not.toBeVisible();
     await expect(open).toBeFocused();
-    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
 
     if (width === 390) {
       const info = page.getByRole('button', { name: 'Информация о встрече' });
@@ -96,7 +96,7 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect(dialog).toHaveAttribute('data-motion', 'closing');
   await expect(dialog).not.toBeVisible();
-  await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+  await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
   await expect(open).toBeFocused();
   await touch.detach();
   await open.click();
@@ -144,7 +144,7 @@ for (const width of [320, 390]) {
       expect((await dialog.boundingBox())?.y).toBeCloseTo(top + 160, 0);
       await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
       await expect(dialog).not.toBeVisible();
-      await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+      await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
     }
 
     await touch.detach();

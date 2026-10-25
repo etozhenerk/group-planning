@@ -130,10 +130,10 @@ jobs:
         id: unit
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py unit npm run test --workspace @somewhere/web
-      - name: Install Chromium
+      - name: Install browsers
         id: browser
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
-        run: python3 scripts/ci/run.py browser npx --no-install playwright install --with-deps chromium
+        run: python3 scripts/ci/run.py browser npx --no-install playwright install --with-deps chromium webkit
       - name: Browser scenarios with Go API
         id: e2e
         if: ${{ !cancelled() && steps.ready.outcome == 'success' && steps.browser.outcome == 'success' }}

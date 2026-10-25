@@ -39,7 +39,7 @@ for (const width of [320, 390, 1440]) {
         .getByRole('group', { name: 'Даты', exact: true })
         .getByRole('button', { name: 'Очистить' }),
     ).toHaveCount(0);
-    await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+    await expect(page.locator('body')).toHaveCSS('position', 'fixed');
     await expect(page.locator('html')).toHaveCSS('overflow', 'hidden');
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     const bounds = await dialog.boundingBox();
@@ -151,7 +151,7 @@ for (const width of [320, 390, 1440]) {
 
     await page.mouse.click(4, 4);
     await expect(dialog).not.toBeVisible();
-    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
     await expect(open).toBeFocused();
     await open.click();
     await page.getByRole('button', { name: 'Предложить дату', exact: true }).click();
