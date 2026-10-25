@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "management": "manual-monium-ui",
+  "deliveryVerified": false,
+  "channels": [
+    {
+      "idSuffix": "somewhere-owner-telegram",
+      "name": "somewhere — Telegram Яндекса",
+      "method": "Cloud telegram",
+      "recipient": "owner-account",
+      "sendScreenshot": true
+    },
+    {
+      "idSuffix": "somewhere-owner-email",
+      "name": "somewhere — email владельца",
+      "method": "Cloud email",
+      "recipient": "owner-account"
+    }
+  ],
+  "statuses": [
+    "Alarm",
+    "Warning",
+    "No data",
+    "Error",
+    "Ok"
+  ],
+  "repeat": "never",
+  "defaultForSeverityLevels": [],
+  "attachedAlertSuffixes": [
+    "somewhere-cpu",
+    "somewhere-memory",
+    "somewhere-disk-free",
+    "somewhere-postgres-up",
+    "somewhere-backup-age"
+  ],
+  "test": {
+    "idSuffix": "somewhere-notification-test",
+    "active": false,
+    "query": "constant_line(4, 1m)",
+    "window": "3m",
+    "delay": "30s",
+    "comparison": "<",
+    "warning": 3,
+    "alarm": 2,
+    "temporaryAlarmThresholds": {
+      "warning": 6,
+      "alarm": 5
+    }
+  }
+}

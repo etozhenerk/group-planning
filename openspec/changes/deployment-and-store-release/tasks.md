@@ -66,6 +66,7 @@ OAuth-реквизитов проверены реальный Яндекс ID, 
 - [x] 3.10 Подключить отдельную бизнес-панель по business-metrics.md: пользователи, встречи, чаты и чаты с сообщениями, постоянный учёт успешных входов. Проверить отсутствие PII, дубли/rollback/cleanup, права exporter, начало достоверной истории и реальные данные Monium после отдельного backend-релиза.
 
 Подключение 3.10 и частичный результат 3.8: [monitoring-live-verification.md](monitoring-live-verification.md).
+Штатный Telegram настроен, доставка 3.7 пока не работает: [native-notifications-verification.md](native-notifications-verification.md).
 
 ## 4. Web: production-путь
 
