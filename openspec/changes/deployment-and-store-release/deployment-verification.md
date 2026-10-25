@@ -2,7 +2,10 @@
 
 ## Result
 
-**Инфраструктура запущена, пользовательское приложение ещё не выпущено.**
+**Этот раздел фиксирует исходную подготовку инфраструктуры 24.10.2026.**
+Актуальная установка backend/web RC.2 на PostgreSQL и состояние реального входа
+25.10 описаны в [postgres-verification.md](postgres-verification.md).
+Домен и HTTPS — [domain-https-verification.md](domain-https-verification.md).
 После решения владельца «возьмём поменьше, потом расширим» создана обычная
 ВМ 2 vCPU 50% / 4 ГБ RAM / **SSD 10 ГБ в ru-central1-d**. CPU/RAM не уменьшались.
 Работают PostgreSQL 16, Caddy с HTTP 503, копии и системный мониторинг.
