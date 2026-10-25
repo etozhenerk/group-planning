@@ -4,6 +4,9 @@
 повышения версий и шаблон описания. Изменения выполняются в общем `main`
 с `meeting-experience-refresh`; принадлежность файлов согласована между чатами.
 
+Обновление проверки: 26.10.2026 получен результат полного web E2E после
+уточнения правила футера. Общий UI-коммит ещё готовится в соседней задаче.
+
 ## Реализовано
 
 - Независимые SemVer пяти компонентов, правило максимальной значимости,
@@ -38,7 +41,7 @@
 | Доступность версии | API заблокирован, вход не выполнен; справка 320/390/1280 px и 200% текста; footer на desktop onboarding, скрыт на 320/390/739 и на touch-телефоне 844×390, виден с 740 при hover/fine pointer; фокус/Enter по версии ведут в справку без footer |
 | `npm run agent:check`, strict validation обоих связанных changes, `git diff --check` | Passed |
 | Полный `npm run web:check` | Passed: TypeScript, ESLint, CSS spacing, FSD/AST, Prettier, 72 Vitest tests в 22 файлах |
-| Основной E2E | По отчёту соседнего web-агента: штатный прогон 116 passed, 1 skipped (нужны native-клиенты). `frontend/web/test-results/.last-run.json` подтверждает passed/пустой failedTests. После финальной типографики выполняется прицельная повторная проверка |
+| Основной E2E | По отчёту соседнего web-агента от 26.10.2026: полный штатный прогон full5 — 123 passed, 1 skipped; новое правило футера проверено, включая touch landscape. Последующие независимые изменения загрузки файлов и выбора даты ещё проходят приёмку в `meeting-experience-refresh`; результат full5 не выдаётся за проверку этих более поздних правок |
 | GitHub CI инфраструктурного коммита `6189f73` | [Repository](https://github.com/etozhenerk/group-planning/actions/runs/40231602942) и [Web](https://github.com/etozhenerk/group-planning/actions/runs/40231602800) — success. Этот коммит ещё не содержит UI соседнего изменения |
 
 Все три сравниваемых архива — локальные тестовые fixtures рабочего дерева,
