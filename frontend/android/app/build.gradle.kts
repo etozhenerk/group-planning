@@ -1,3 +1,4 @@
+import java.net.URI
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -44,6 +45,8 @@ android {
             "Store release requires an HTTPS API origin"
         }
         buildConfigField("String", "API_ORIGIN", "\"$apiOrigin\"")
+        manifestPlaceholders["invitationHost"] =
+            if (apiOrigin.isEmpty()) "unconfigured.invalid" else requireNotNull(URI(apiOrigin).host)
         buildConfigField("String", "INVITATION_SCHEME", "\"group-planning-android\"")
         manifestPlaceholders["invitationScheme"] = "group-planning-android"
         val yandexClientId = providers.gradleProperty("somewhereYandexClientId")
@@ -62,6 +65,8 @@ android {
     sourceSets["test"].resources.srcDir("../../../contracts/fixtures")
     sourceSets["debug"].java.srcDir("src/production/java")
     sourceSets["release"].java.srcDir("src/production/java")
+    sourceSets["debug"].manifest.srcFile("src/production/AndroidManifest.xml")
+    sourceSets["release"].manifest.srcFile("src/production/AndroidManifest.xml")
     testBuildType = providers.gradleProperty("somewhereTestBuildType").orElse("debug").get()
 
     bundle {

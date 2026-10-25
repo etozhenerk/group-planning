@@ -21,7 +21,7 @@ func TestWebWorksWithoutOAuth(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	settings := map[string]string{"SOMEWHERE_WEB_DIST": directory, "SOMEWHERE_WEB_ORIGIN": "https://somewhere.example"}
+	settings := map[string]string{"SOMEWHERE_WEB_DIST": directory, "SOMEWHERE_WEB_ORIGIN": "https://somewhere.example", "SOMEWHERE_IOS_APP_IDS": "ABCDEFGHIJ.dev.groupplanning.ios"}
 	config, err := LoadConfig(func(key string) string { return settings[key] })
 	if err != nil || config.Auth.Enabled {
 		t.Fatal("web requires OAuth", err)
@@ -39,7 +39,7 @@ func TestWebWorksWithoutOAuth(t *testing.T) {
 		finished <- Serve(ctx, listener, memory.New(), config, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	}()
 	client := &http.Client{Timeout: time.Second}
-	for address, status := range map[string]int{"/": 200, "/healthz": 200, "/api/v1/me": 401, "/i/invalid": 404} {
+	for address, status := range map[string]int{"/": 200, "/healthz": 200, "/api/v1/me": 401, "/i/invalid": 404, "/.well-known/apple-app-site-association": 200, "/.well-known/assetlinks.json": 404, "/.well-known/unknown": 404} {
 		response, err := client.Get("http://" + listener.Addr().String() + address)
 		if err != nil {
 			t.Fatal(err)
@@ -53,6 +53,10 @@ func TestWebWorksWithoutOAuth(t *testing.T) {
 
 		if address == "/" && !strings.Contains(string(body), "Somewhere") {
 			t.Fatal("client shell missing")
+		}
+
+		if address == "/.well-known/apple-app-site-association" && (response.Header.Get("Content-Type") != "application/json" || !strings.Contains(string(body), "ABCDEFGHIJ.dev.groupplanning.ios")) {
+			t.Fatal("association intercepted by SPA")
 		}
 	}
 

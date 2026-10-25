@@ -114,6 +114,11 @@ Apple Distribution и экспортировать вместе с private key �
 Сборка использует закреплённый Xcode, Release, generic iOS archive, manual signing
 и `app-store-connect` export. Проверяются срок/назначение profile, team/bundle ID,
 подпись archive, наличие dSYMs, версия/build/origin и сохранение версии в IPA.
+App ID prefix проверяется по provisioning profile отдельно от Team ID.
+В archive и IPA должен сохраниться точный Associated Domain host API origin;
+локальное отключение entitlements для Personal Team не допускается в выпуске.
+Проверенный `associated_application_id` включён в manifest для
+[серверной настройки ссылок](../backend/docs/app-links.md).
 Временные keychain/profile удаляются в `finally`, прежний список keychain
 восстанавливается. Принудительная потеря runner требует его штатной утилизации;
 на общей рабочей машине подписанную сборку предпочтительно не запускать.

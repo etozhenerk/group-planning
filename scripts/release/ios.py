@@ -13,6 +13,7 @@ import tempfile
 import zipfile
 
 from common import ROOT, run
+from ios_links import invitation_host, profile_application_id, verify_signed_entitlements
 
 BUNDLE_ID = 'dev.groupplanning.ios'
 
@@ -25,7 +26,7 @@ def require_credentials():
 
 
 @contextmanager
-def signing():
+def signing(host='smwhere.ru'):
     require_credentials()
     with tempfile.TemporaryDirectory(prefix='somewhere-signing-') as temporary:
         temp = Path(temporary)
@@ -39,8 +40,7 @@ def signing():
         team = os.environ['IOS_TEAM_ID']
         if data['ExpirationDate'].replace(tzinfo=timezone.utc) <= datetime.now(timezone.utc):
             raise ValueError('Provisioning profile has expired')
-        if data['TeamIdentifier'] != [team] or data['Entitlements'].get('application-identifier') != f'{team}.{BUNDLE_ID}':
-            raise ValueError('Profile team/application identifier does not match this application')
+        app_identifier = profile_application_id(data, team, host)
         if data['Entitlements'].get('get-task-allow') or data.get('ProvisionedDevices') or data.get('ProvisionsAllDevices'):
             raise ValueError('An App Store distribution profile is required')
         # Xcode 16+ stores downloaded profiles here. A unique filename avoids replacing an existing profile.
@@ -63,7 +63,7 @@ def signing():
             run('security', 'set-key-partition-list', '-S', 'apple-tool:,apple:,codesign:', '-k', password, str(keychain))
             run('security', 'list-keychains', '-d', 'user', '-s', str(keychain), *search_list)
             changed_search = True
-            yield keychain, data['UUID'], team
+            yield keychain, data['UUID'], team, app_identifier
         finally:
             installed.unlink(missing_ok=True)
             try:
@@ -75,7 +75,8 @@ def signing():
 
 
 def build(directory, meta, origin):
-    with signing() as (keychain, profile, team), tempfile.TemporaryDirectory(prefix='somewhere-archive-') as temporary:
+    host = invitation_host(origin)
+    with signing(host) as (keychain, profile, team, app_identifier), tempfile.TemporaryDirectory(prefix='somewhere-archive-') as temporary:
         temp = Path(temporary)
         archive = temp / 'Somewhere.xcarchive'
         export = temp / 'export'
@@ -90,9 +91,13 @@ def build(directory, meta, origin):
             'CODE_SIGN_IDENTITY=Apple Distribution', f'DEVELOPMENT_TEAM={team}',
             f'PROVISIONING_PROFILE_SPECIFIER={profile}', f'OTHER_CODE_SIGN_FLAGS=--keychain {keychain}',
             f"MARKETING_VERSION={meta['native_version']}", f"CURRENT_PROJECT_VERSION={meta['build_number']}",
-            f'SOMEWHERE_API_ORIGIN={origin}', cwd=ROOT / 'frontend/ios')
+            f'SOMEWHERE_API_ORIGIN={origin}', f'SOMEWHERE_INVITATION_HOST={host}',
+            'CODE_SIGN_ENTITLEMENTS=Config/Somewhere.entitlements',
+            'SOMEWHERE_YANDEX_WEB_ONLY=NO', cwd=ROOT / 'frontend/ios')
         app = archive / 'Products/Applications/Somewhere.app'
         run('codesign', '--verify', '--deep', '--strict', str(app))
+        verify_signed_entitlements(plistlib.loads(subprocess.check_output(
+            ['codesign', '-d', '--entitlements', ':-', str(app)], stderr=subprocess.PIPE)), app_identifier, host)
         info = plistlib.loads((app / 'Info.plist').read_bytes())
         if info.get('SomewhereAPIOrigin') != origin:
             raise ValueError('Archive API origin mismatch')
@@ -107,6 +112,9 @@ def build(directory, meta, origin):
         unpacked = temp / 'ipa-check'
         run('ditto', '-x', '-k', str(ipas[0]), str(unpacked))
         run('codesign', '--verify', '--deep', '--strict', str(unpacked / 'Payload/Somewhere.app'))
+        verify_signed_entitlements(plistlib.loads(subprocess.check_output(
+            ['codesign', '-d', '--entitlements', ':-', str(unpacked / 'Payload/Somewhere.app')],
+            stderr=subprocess.PIPE)), app_identifier, host)
         with zipfile.ZipFile(ipas[0]) as ipa:
             exported = plistlib.loads(ipa.read('Payload/Somewhere.app/Info.plist'))
             for field in ('CFBundleIdentifier', 'CFBundleShortVersionString', 'CFBundleVersion'):
@@ -116,4 +124,6 @@ def build(directory, meta, origin):
             raise ValueError('Archive lacks debug symbols')
         run('ditto', '-c', '-k', '--keepParent', str(archive), str(directory / 'Somewhere.xcarchive.zip'))
         run('ditto', '-c', '-k', '--keepParent', str(archive / 'dSYMs'), str(directory / 'dSYMs.zip'))
-    return {'api_origin': origin, 'application_id': BUNDLE_ID, 'signed': True, 'export_method': 'app-store-connect'}
+    return {'api_origin': origin, 'application_id': BUNDLE_ID, 'signed': True,
+            'associated_application_id': app_identifier, 'invitation_host': host,
+            'export_method': 'app-store-connect'}

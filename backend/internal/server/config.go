@@ -8,19 +8,21 @@ import (
 	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
 
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
-	Storage         string
-	DatabaseURL     string
-	Transitions     meetings.TransitionOptions
-	Auth            AuthConfig
-	WebDirectory    string
-	WebOrigin       string
-	Address         string
-	ShutdownTimeout time.Duration
+	Storage          string
+	DatabaseURL      string
+	Transitions      meetings.TransitionOptions
+	Auth             AuthConfig
+	WebDirectory     string
+	WebOrigin        string
+	LinkAssociations webui.LinkAssociations
+	Address          string
+	ShutdownTimeout  time.Duration
 }
 
 // LoadConfig reads configuration without mutating the process environment.
@@ -80,6 +82,10 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 	}
 
 	config.Auth = auth
+	config.LinkAssociations, err = loadLinkAssociations(getenv)
+	if err != nil {
+		return Config{}, err
+	}
 
 	return config, nil
 }

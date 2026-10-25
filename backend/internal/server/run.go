@@ -53,7 +53,13 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		handler = mux
 	}
 
+	associations, err := webui.NewAssociations(config.LinkAssociations)
+	if err != nil {
+		return err
+	}
+
 	root := http.NewServeMux()
+	root.Handle("/.well-known/", associations)
 	root.Handle("/", handler)
 	root.HandleFunc("GET /readyz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")
