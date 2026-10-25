@@ -35,6 +35,7 @@
   ],
   "test": {
     "idSuffix": "somewhere-notification-test",
+    "additionalChannelSuffixes": ["somewhere-owner-telemost"],
     "active": false,
     "query": "constant_line(4, 1m)",
     "window": "3m",
@@ -46,5 +47,16 @@
       "warning": 6,
       "alarm": 5
     }
-  }
+  },
+  "trialChannels": [
+    {
+      "idSuffix": "somewhere-owner-telemost",
+      "name": "somewhere — Телемост Яндекса",
+      "method": "Cloud Ya.Messenger",
+      "recipient": "owner-account",
+      "sendScreenshot": true,
+      "deliveryVerified": false,
+      "attachedAlertSuffixes": ["somewhere-notification-test"]
+    }
+  ]
 }
