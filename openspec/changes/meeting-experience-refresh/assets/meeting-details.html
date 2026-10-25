@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>О встрече · somewhere · макет v1</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="interactions.js"></script>
+    <link rel="stylesheet" href="styles.css?v=support-4" />
+    <script type="module" src="interactions.js?v=support-4"></script>
   </head>
   <body class="">
     <div class="shell">
@@ -26,7 +26,19 @@
             >Приглашения<span class="count">2</span></a
           >
         </nav>
-        <a class="profile-link" href="profile.html"
+        <a class="sidebar-support" href="report.html"
+          ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11a8 8 0 0 1-8 8H6l-4 3V11a9 9 0 0 1 18 0Z" />
+            <path d="M11 7v5" />
+            <circle
+              cx="11"
+              cy="15"
+              r=".8"
+              fill="currentColor"
+              stroke="none"
+            /></svg
+          ><span>Сообщить о проблеме</span></a
+        ><a class="profile-link" href="profile.html"
           ><span class="avatar">С</span>
           <div>Саша<small>Мой профиль</small></div></a
         >
@@ -62,7 +74,49 @@
                 /></svg
               >Пригласить друзей</a
             >
+            <a class="inline-link" href="report.html?screen=chat"
+              ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 11a8 8 0 0 1-8 8H6l-4 3V11a9 9 0 0 1 18 0Z" />
+                <path d="M11 7v5" />
+                <circle
+                  cx="11"
+                  cy="15"
+                  r=".8"
+                  fill="currentColor"
+                  stroke="none"
+                /></svg
+              >Сообщить о проблеме</a
+            >
           </section>
+          <footer class="site-footer">
+            <div class="footer-top">
+              <div class="footer-brand">
+                <a class="brand" href="about.html"
+                  ><img src="brand.svg" alt="" />somewhere</a
+                >
+                <p>Место для планов с друзьями.</p>
+              </div>
+              <nav aria-label="О сервисе">
+                <h3>Сервис</h3>
+                <a href="about.html">О приложении</a
+                ><a href="help.html">Помощь</a>
+              </nav>
+              <nav aria-label="Обратная связь">
+                <h3>Обратная связь</h3>
+                <a href="report.html">Сообщить о проблеме ↗</a
+                ><a href="report.html?kind=idea">Предложить идею</a>
+              </nav>
+              <nav aria-label="Документы">
+                <h3>Документы</h3>
+                <a href="privacy.html">Конфиденциальность</a
+                ><a href="cookies.html">Cookie</a>
+              </nav>
+            </div>
+            <div class="footer-bottom">
+              <a href="about.html" class="footer-version">Web · 0.1.0-rc.2</a
+              ><span>Developed by <strong>MintyDev</strong></span>
+            </div>
+          </footer>
         </main>
         <nav class="bottom-nav" aria-label="Основная навигация">
           <a class="active" href="list.html"

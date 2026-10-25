@@ -1,3 +1,94 @@
+// openspec/changes/meeting-experience-refresh/assets/support.ts
+var setupSupportForm = () => {
+  const form = document.querySelector(".support-form");
+  if (!(form instanceof HTMLFormElement)) return;
+  const description = form.elements.namedItem("description");
+  const email = form.elements.namedItem("email");
+  const screenshot = form.elements.namedItem("screenshot");
+  const error = document.querySelector("#report-error");
+  const preview = document.querySelector(".attachment-choice");
+  const submit = form.querySelector('button[type="submit"]');
+  if (!(description instanceof HTMLTextAreaElement) || !(email instanceof HTMLInputElement) || !(screenshot instanceof HTMLInputElement) || !(error instanceof HTMLElement) || !(preview instanceof HTMLElement) || !(submit instanceof HTMLButtonElement))
+    return;
+  submit.disabled = false;
+  const params = new URLSearchParams(location.search);
+  const kind = params.get("kind");
+  if (kind === "idea" || kind === "question") {
+    const input = form.querySelector(`input[value="${kind}"]`);
+    if (input instanceof HTMLInputElement) input.checked = true;
+  }
+  const screen = form.elements.namedItem("screen");
+  if (params.get("screen") === "chat" && screen instanceof HTMLSelectElement)
+    screen.value = "\u0427\u0430\u0442 \u0432\u0441\u0442\u0440\u0435\u0447\u0438";
+  const heading = document.querySelector(".service-heading h1");
+  const intro = document.querySelector(".service-heading p");
+  const updateLabel = () => {
+    const selected = form.querySelector(
+      'input[name="kind"]:checked'
+    )?.value;
+    if (heading)
+      heading.textContent = selected === "idea" ? "\u0415\u0441\u0442\u044C \u0438\u0434\u0435\u044F?" : selected === "question" ? "\u041D\u0443\u0436\u043D\u0430 \u043F\u043E\u043C\u043E\u0449\u044C?" : "\u0427\u0442\u043E-\u0442\u043E \u043F\u043E\u0448\u043B\u043E \u043D\u0435 \u0442\u0430\u043A?";
+    if (intro)
+      intro.textContent = selected === "idea" ? "\u0420\u0430\u0441\u0441\u043A\u0430\u0436\u0438\u0442\u0435, \u0447\u0435\u0433\u043E \u0432\u0430\u043C \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u0438\u043B\u0438 \u0447\u0442\u043E \u043C\u043E\u0436\u043D\u043E \u0443\u043B\u0443\u0447\u0448\u0438\u0442\u044C." : selected === "question" ? "\u041E\u043F\u0438\u0448\u0438\u0442\u0435, \u0441 \u0447\u0435\u043C \u0432\u043E\u0437\u043D\u0438\u043A \u0432\u043E\u043F\u0440\u043E\u0441." : "\u0420\u0430\u0441\u0441\u043A\u0430\u0436\u0438\u0442\u0435, \u0447\u0442\u043E \u0441\u043B\u0443\u0447\u0438\u043B\u043E\u0441\u044C. \u042D\u0442\u043E \u043F\u043E\u043C\u043E\u0436\u0435\u0442 \u0440\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F.";
+    description.placeholder = selected === "idea" ? "\u0427\u0435\u0433\u043E \u0432\u0430\u043C \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u0432 somewhere?" : selected === "question" ? "\u0421 \u0447\u0435\u043C \u043D\u0443\u0436\u043D\u0430 \u043F\u043E\u043C\u043E\u0449\u044C?" : "\u0427\u0442\u043E \u0432\u044B \u0434\u0435\u043B\u0430\u043B\u0438 \u0438 \u0447\u0442\u043E \u043F\u043E\u0448\u043B\u043E \u043D\u0435 \u0442\u0430\u043A";
+  };
+  form.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", updateLabel));
+  updateLabel();
+  let objectUrl;
+  const clearAttachment = () => {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = void 0;
+    screenshot.value = "";
+    preview.hidden = true;
+    preview.querySelector("img")?.removeAttribute("src");
+  };
+  const showError = (message) => {
+    error.textContent = message;
+    error.hidden = false;
+  };
+  screenshot.addEventListener("change", () => {
+    const file = screenshot.files?.[0];
+    if (!file) return;
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
+      clearAttachment();
+      showError("\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 PNG, JPG \u0438\u043B\u0438 WebP \u0440\u0430\u0437\u043C\u0435\u0440\u043E\u043C \u0434\u043E 5 \u041C\u0411.");
+      return;
+    }
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = URL.createObjectURL(file);
+    const image = preview.querySelector("img");
+    const name = preview.querySelector("span");
+    if (image) image.src = objectUrl;
+    if (name) name.textContent = file.name;
+    preview.hidden = false;
+    error.hidden = true;
+  });
+  form.querySelector("[data-remove-attachment]")?.addEventListener("click", clearAttachment);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    description.removeAttribute("aria-invalid");
+    email.removeAttribute("aria-invalid");
+    if (description.value.trim().length < 10) {
+      showError("\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u2014 \u0445\u043E\u0442\u044F \u0431\u044B 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432.");
+      description.setAttribute("aria-invalid", "true");
+      description.focus();
+      return;
+    }
+    if (email.value && !email.validity.valid) {
+      showError("\u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u043F\u043E\u0447\u0442\u044B \u0438\u043B\u0438 \u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u043F\u043E\u043B\u0435 \u043F\u0443\u0441\u0442\u044B\u043C.");
+      email.setAttribute("aria-invalid", "true");
+      email.focus();
+      return;
+    }
+    error.hidden = true;
+    window.location.assign("report-success.html");
+  });
+  window.addEventListener("pagehide", () => {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+  });
+};
+setupSupportForm();
+
 // openspec/changes/meeting-experience-refresh/assets/interactions.ts
 var setupPhotoStack = () => {
   const stage = document.querySelector(".photo-stack");

@@ -1,3 +1,5 @@
+import "./support";
+
 // Только взаимодействие UX-макета: локальные иллюстративные фото, без API.
 const setupPhotoStack = (): void => {
   const stage = document.querySelector(".photo-stack");

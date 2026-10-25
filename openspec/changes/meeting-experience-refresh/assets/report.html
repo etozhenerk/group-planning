@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Сообщить о проблеме · somewhere · макет</title>
+    <link rel="stylesheet" href="styles.css?v=support-4" />
+    <script type="module" src="interactions.js?v=support-4"></script>
+  </head>
+  <body class="">
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="list.html"
+          ><img src="brand.svg" alt="" />somewhere</a
+        >
+        <nav class="nav-links" aria-label="Основная навигация">
+          <a class="nav-link" href="list.html"
+            ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="3" />
+              <path d="M7 3v4m10-4v4M3 11h18" /></svg
+            >Мои встречи</a
+          ><a class="nav-link" href="invitations.html"
+            ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="3" />
+              <path d="m3 7 9 6 9-6" /></svg
+            >Приглашения<span class="count">2</span></a
+          >
+        </nav>
+        <a class="sidebar-support" href="report.html"
+          ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11a8 8 0 0 1-8 8H6l-4 3V11a9 9 0 0 1 18 0Z" />
+            <path d="M11 7v5" />
+            <circle
+              cx="11"
+              cy="15"
+              r=".8"
+              fill="currentColor"
+              stroke="none"
+            /></svg
+          ><span>Сообщить о проблеме</span></a
+        ><a class="profile-link active" href="profile.html"
+          ><span class="avatar">С</span>
+          <div>Саша<small>Мой профиль</small></div></a
+        >
+      </aside>
+      <div class="workspace">
+        <header class="mobile-brand">
+          <a class="brand" href="list.html"
+            ><img src="brand.svg" alt="" />somewhere</a
+          >
+        </header>
+        <main class="main service-page">
+          <a class="inline-link" href="list.html">← К встречам</a>
+          <header class="heading service-heading">
+            <div>
+              <h1>Что-то пошло не так?</h1>
+              <p>Расскажите, что случилось. Это поможет разобраться.</p>
+            </div>
+          </header>
+          <div class="support-layout">
+            <form class="support-form panel" novalidate>
+              <fieldset class="report-kinds">
+                <legend>Тема обращения</legend>
+                <label
+                  ><input
+                    type="radio"
+                    name="kind"
+                    value="problem"
+                    checked
+                  /><span>Проблема</span></label
+                >
+                <label
+                  ><input type="radio" name="kind" value="idea" /><span
+                    >Идея</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="kind" value="question" /><span
+                    >Вопрос</span
+                  ></label
+                >
+              </fieldset>
+              <label class="field"
+                >Ваше сообщение<textarea
+                  name="description"
+                  required
+                  minlength="10"
+                  maxlength="3000"
+                  placeholder="Что вы делали и что пошло не так"
+                  aria-describedby="report-error"
+                ></textarea>
+              </label>
+              <div class="field-error" id="report-error" role="alert" hidden>
+                Добавьте описание — хотя бы 10 символов.
+              </div>
+              <div class="report-pair">
+                <label class="field"
+                  >Раздел<select name="screen">
+                    <option>Мои встречи</option>
+                    <option>Календарь</option>
+                    <option>Приглашение</option>
+                    <option>Чат встречи</option>
+                    <option>Вайбы</option>
+                    <option>Профиль</option>
+                    <option>Вход</option>
+                    <option>Другое</option>
+                  </select></label
+                >
+                <label class="field"
+                  >Почта для ответа <span class="optional">Необязательно</span
+                  ><input
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                /></label>
+              </div>
+              <label class="report-attachment"
+                ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="m8 12 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l8-8"
+                  /></svg
+                ><span
+                  ><strong>Прикрепить скриншот</strong
+                  ><small>PNG, JPG или WebP, до 5 МБ</small></span
+                ><input
+                  type="file"
+                  name="screenshot"
+                  accept="image/png,image/jpeg,image/webp"
+                  aria-label="Прикрепить скриншот"
+              /></label>
+              <div class="attachment-choice" hidden>
+                <img alt="Выбранный скриншот" /><span></span
+                ><button
+                  type="button"
+                  class="text-button"
+                  data-remove-attachment
+                >
+                  Убрать
+                </button>
+              </div>
+              <label class="check-row"
+                ><input type="checkbox" name="diagnostics" /><span
+                  >Добавить сведения об устройстве<small
+                    >Версия приложения, браузер и размер экрана</small
+                  ></span
+                ></label
+              >
+              <div class="report-submit">
+                <button class="button primary" type="submit" disabled>
+                  Отправить сообщение <span aria-hidden="true">↗</span>
+                </button>
+                <p>
+                  <a href="privacy.html#support">Политика конфиденциальности</a>
+                </p>
+              </div>
+              <p class="prototype-note">
+                Макет формы: данные никуда не отправляются.
+              </p>
+            </form>
+            <aside class="support-aside">
+              <div class="support-mark" aria-hidden="true">↗</div>
+              <h2>Поможем разобраться</h2>
+              <p>
+                Если ждёте ответ, оставьте почту. Обращение можно отправить и
+                без неё.
+              </p>
+              <div class="support-build">
+                <span class="caption">Вы используете</span
+                ><strong>somewhere для Web</strong><span>0.1.0-rc.2</span>
+              </div>
+              <a class="inline-link" href="help.html">Вопросы о somewhere →</a>
+            </aside>
+          </div>
+          <footer class="site-footer">
+            <div class="footer-top">
+              <div class="footer-brand">
+                <a class="brand" href="about.html"
+                  ><img src="brand.svg" alt="" />somewhere</a
+                >
+                <p>Место для планов с друзьями.</p>
+              </div>
+              <nav aria-label="О сервисе">
+                <h3>Сервис</h3>
+                <a href="about.html">О приложении</a
+                ><a href="help.html">Помощь</a>
+              </nav>
+              <nav aria-label="Обратная связь">
+                <h3>Обратная связь</h3>
+                <a href="report.html">Сообщить о проблеме ↗</a
+                ><a href="report.html?kind=idea">Предложить идею</a>
+              </nav>
+              <nav aria-label="Документы">
+                <h3>Документы</h3>
+                <a href="privacy.html">Конфиденциальность</a
+                ><a href="cookies.html">Cookie</a>
+              </nav>
+            </div>
+            <div class="footer-bottom">
+              <a href="about.html" class="footer-version">Web · 0.1.0-rc.2</a
+              ><span>Developed by <strong>MintyDev</strong></span>
+            </div>
+          </footer>
+        </main>
+        <nav class="bottom-nav" aria-label="Основная навигация">
+          <a class="" href="list.html"
+            ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="3" />
+              <path d="M7 3v4m10-4v4M3 11h18" /></svg
+            >Встречи</a
+          ><a class="" href="invitations.html"
+            ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="3" />
+              <path d="m3 7 9 6 9-6" /></svg
+            >Приглашения</a
+          ><a class="active" href="profile.html"
+            ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21v-2a8 8 0 0 1 16 0v2" /></svg
+            >Профиль</a
+          >
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>

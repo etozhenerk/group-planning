@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Настолки у Саши · somewhere · макет v1</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="interactions.js"></script>
+    <link rel="stylesheet" href="styles.css?v=support-4" />
+    <script type="module" src="interactions.js?v=support-4"></script>
   </head>
   <body class="chat">
     <div class="shell">
@@ -26,7 +26,19 @@
             >Приглашения<span class="count">2</span></a
           >
         </nav>
-        <a class="profile-link" href="profile.html"
+        <a class="sidebar-support" href="report.html"
+          ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11a8 8 0 0 1-8 8H6l-4 3V11a9 9 0 0 1 18 0Z" />
+            <path d="M11 7v5" />
+            <circle
+              cx="11"
+              cy="15"
+              r=".8"
+              fill="currentColor"
+              stroke="none"
+            /></svg
+          ><span>Сообщить о проблеме</span></a
+        ><a class="profile-link" href="profile.html"
           ><span class="avatar">С</span>
           <div>Саша<small>Мой профиль</small></div></a
         >
@@ -137,12 +149,32 @@
                 placeholder="Сообщение"
               ></textarea
               ><a
-                class="icon-button"
+                class="icon-button emoji-toggle"
                 href="chat-emoji.html"
                 aria-label="Выбрать эмодзи"
-                ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M8 14a4 4 0 0 0 8 0M8 8h.1M16 8h.1" /></svg></a
+                title="Эмодзи"
+                aria-expanded="false"
+                ><svg
+                  class="icon emoji-toggle-icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="8.5" />
+                  <circle
+                    cx="9"
+                    cy="9.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="15"
+                    cy="9.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                  <path d="M8.5 13.5c.7 2 2 3 3.5 3s2.8-1 3.5-3" /></svg></a
               ><a
                 class="icon-button send"
                 href="chat-sent.html"
