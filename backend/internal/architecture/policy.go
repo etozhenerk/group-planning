@@ -7,17 +7,19 @@ const modulePath = "github.com/etozhenerk/group-planning/backend"
 
 // Longest matching package boundary wins; an adapter is not part of its domain.
 var dependencies = map[string][]string{
-	"internal/meetings":        {},
-	"internal/identity":        {},
-	"internal/identity/yandex": {"internal/identity"},
-	"internal/storage/memory":  {"internal/meetings", "internal/identity"},
-	"internal/httpapi":         {"internal/meetings", "internal/identity"},
-	"internal/webui":           {"internal/meetings"},
-	"internal/server":          {"internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/httpapi", "internal/webui"},
-	"internal/architecture":    {},
-	"cmd/server":               {"internal/server", "internal/storage/memory"},
-	"cmd/storage-demo":         {"internal/meetings", "internal/storage/memory"},
-	"cmd/check-dependencies":   {"internal/architecture"},
+	"internal/meetings":         {},
+	"internal/identity":         {},
+	"internal/identity/yandex":  {"internal/identity"},
+	"internal/storage/postgres": {"internal/meetings", "internal/identity"},
+	"cmd/migrate":               {"internal/storage/postgres"},
+	"internal/storage/memory":   {"internal/meetings", "internal/identity"},
+	"internal/httpapi":          {"internal/meetings", "internal/identity"},
+	"internal/webui":            {"internal/meetings"},
+	"internal/server":           {"internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/httpapi", "internal/webui"},
+	"internal/architecture":     {},
+	"cmd/server":                {"internal/server", "internal/storage/memory", "internal/storage/postgres"},
+	"cmd/storage-demo":          {"internal/meetings", "internal/storage/memory"},
+	"cmd/check-dependencies":    {"internal/architecture"},
 }
 
 func boundary(name string) string {
@@ -37,7 +39,11 @@ func within(name, parent string) bool {
 
 func importAllowed(source, imported string) bool {
 	if !strings.HasPrefix(imported, modulePath+"/") {
-		// Third-party dependencies require an explicit policy decision.
+		// pgx is restricted to the PostgreSQL adapter.
+		if source == "internal/storage/postgres" && within(imported, "github.com/jackc/pgx/v5") {
+			return true
+		}
+
 		if strings.Contains(strings.Split(imported, "/")[0], ".") || imported == "C" {
 			return false
 		}
@@ -73,7 +79,7 @@ func importAllowed(source, imported string) bool {
 
 func restrictedSymbol(source, imported, symbol string) bool {
 	target := strings.TrimPrefix(imported, modulePath+"/")
-	if source == target || source == "internal/server" || source == "internal/storage/memory" || source == "cmd/storage-demo" {
+	if source == target || source == "internal/server" || source == "internal/storage/memory" || source == "internal/storage/postgres" || source == "cmd/storage-demo" {
 		return false
 	}
 

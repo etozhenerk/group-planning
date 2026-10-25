@@ -10,13 +10,20 @@ import (
 	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
+	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
 
 // Serve binds the supplied store to HTTP and drains requests on cancellation.
 // The caller owns the listener; Serve closes it on return.
 func Serve(ctx context.Context, listener net.Listener, store meetings.Store, config Config, logger *slog.Logger) error {
+	return ServeWithStorage(ctx, listener, store, memory.NewIdentity(), nil, config, logger)
+}
+
+// ServeWithStorage binds both persistent stores and a dependency readiness check.
+func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, ready func(context.Context) error, config Config, logger *slog.Logger) error {
 	defer listener.Close()
 	if config.ShutdownTimeout < time.Second || config.ShutdownTimeout > 30*time.Second {
 		return fmt.Errorf("invalid shutdown timeout")
@@ -27,7 +34,7 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 	}
 
 	app := meetings.NewService(store, time.Now)
-	service, err := newIdentity(config.Auth, app.InvitationExists)
+	service, err := newIdentity(config.Auth, identities, app.InvitationExists)
 	if err != nil {
 		return err
 	}
@@ -45,6 +52,21 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 		mux.Handle("/", site)
 		handler = mux
 	}
+
+	root := http.NewServeMux()
+	root.Handle("/", handler)
+	root.HandleFunc("GET /readyz", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		checkCtx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		defer cancel()
+		if ready != nil && ready(checkCtx) != nil {
+			http.Error(w, "not ready", http.StatusServiceUnavailable)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	})
+	handler = root
 
 	options := config.Transitions
 	if options == (meetings.TransitionOptions{}) {

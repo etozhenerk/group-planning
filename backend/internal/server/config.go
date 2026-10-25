@@ -13,6 +13,8 @@ import (
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
+	Storage         string
+	DatabaseURL     string
 	Transitions     meetings.TransitionOptions
 	Auth            AuthConfig
 	WebDirectory    string
@@ -24,8 +26,18 @@ type Config struct {
 // LoadConfig reads configuration without mutating the process environment.
 func LoadConfig(getenv func(string) string) (Config, error) {
 	config := Config{Address: "127.0.0.1:8080", ShutdownTimeout: 5 * time.Second}
-	if storage := getenv("SOMEWHERE_STORAGE"); storage != "" && storage != "memory" {
-		return Config{}, fmt.Errorf("SOMEWHERE_STORAGE must be memory")
+	config.Storage = getenv("SOMEWHERE_STORAGE")
+	if config.Storage == "" {
+		config.Storage = "memory"
+	}
+
+	if config.Storage != "memory" && config.Storage != "postgres" {
+		return Config{}, fmt.Errorf("SOMEWHERE_STORAGE must be memory or postgres")
+	}
+
+	config.DatabaseURL = getenv("SOMEWHERE_DATABASE_URL")
+	if config.Storage == "postgres" && config.DatabaseURL == "" {
+		return Config{}, fmt.Errorf("SOMEWHERE_DATABASE_URL is required")
 	}
 
 	if address := getenv("SOMEWHERE_HTTP_ADDR"); address != "" {

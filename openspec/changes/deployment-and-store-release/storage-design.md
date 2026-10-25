@@ -41,6 +41,9 @@
 | request_receipts | PK (user_id, operation, request_key) | expires_at для очистки без кеширования прав |
 | transition_jobs | PK (meeting_id, schedule_version); UNIQUE id; FK meeting_id | state/available_at и state/lease_until; очередь и просроченные lease |
 | date_polls | PK id; FK meeting_id | meeting_id; состояние/available_at задачи завершения |
+| place_polls | PK id; FK meeting_id | document с вариантами, голосами и состоянием завершения |
+| preparation_tasks | PK id; FK meeting_id | индекс meeting_id/id; document с поручением |
+| meeting_covers | PK/FK meeting_id | ограниченный доменом бинарный файл в JSONB/base64 (TOAST), версия и размеры |
 | identity_users | PK id; UNIQUE provider_subject | стабильная привязка Яндекс subject → собственный user ID |
 | identity_attempts | PK id | expires_at; короткоживущие PKCE/state/handoff |
 | identity_sessions | PK secret_hash; UNIQUE id; FK user_id | user_id, expires_at для отзыва/очистки |

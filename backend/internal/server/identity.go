@@ -7,17 +7,16 @@ import (
 
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/identity/yandex"
-	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
-func newIdentity(config AuthConfig, invitationExists func(context.Context, string) (bool, error)) (*identity.Service, error) {
+func newIdentity(config AuthConfig, store identity.Store, invitationExists func(context.Context, string) (bool, error)) (*identity.Service, error) {
 	if !config.Enabled {
 		return nil, nil
 	}
 
 	provider := yandex.New(config.ClientID, config.ClientSecret, config.Identity.PublicOrigin+"/api/v1/auth/yandex/callback", nil)
 
-	return identity.New(config.Identity, memory.NewIdentity(), provider, time.Now, invitationExists)
+	return identity.New(config.Identity, store, provider, time.Now, invitationExists)
 }
 
 func cleanupIdentity(ctx context.Context, service *identity.Service, logger *slog.Logger) {

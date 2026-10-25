@@ -32,14 +32,16 @@ def build(component, directory):
             stage = Path(temporary)
             run('go', 'build', '-trimpath', '-buildvcs=true', '-o', str(stage / 'somewhere-api'), './cmd/server',
                 cwd=ROOT / 'backend', env=dict(os.environ, GOOS='linux', GOARCH='amd64', CGO_ENABLED='0'))
+            run('go', 'build', '-trimpath', '-buildvcs=true', '-o', str(stage / 'somewhere-migrate'), './cmd/migrate',
+                cwd=ROOT / 'backend', env=dict(os.environ, GOOS='linux', GOARCH='amd64', CGO_ENABLED='0'))
             shutil.copyfile(ROOT / 'scripts/release/templates/somewhere.service', stage / 'somewhere.service')
             shutil.copyfile(ROOT / 'backend/.env.example', stage / 'environment.example')
             migrations = ROOT / 'backend/migrations'
             if migrations.is_dir():
                 shutil.copytree(migrations, stage / 'migrations')
             tar_directory(stage, directory / 'backend-linux-amd64.tar.gz')
-        return {'platform': 'linux/amd64', 'storage': 'memory', 'production_ready': False,
-                'note': 'До постоянного адаптера этот артефакт не допускает реальные данные.'}
+        return {'platform': 'linux/amd64', 'storage': 'postgres', 'migration': 'somewhere-migrate',
+                'note': 'Миграции применяются отдельной ролью перед запуском; runtime проверяет схему.'}
     if component == 'web':
         run('npm', 'run', 'web:build')
         tar_directory(ROOT / 'frontend/web/dist', directory / 'web.tar.gz')
