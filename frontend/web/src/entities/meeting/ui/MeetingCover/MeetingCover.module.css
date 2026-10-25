@@ -1,0 +1,51 @@
+.cover,
+.thumbnail {
+  overflow: hidden;
+  border-radius: 13px;
+  background: var(--line);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.thumbnail {
+  width: 95px;
+  height: 88px;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  background: var(--line);
+  animation: breathe 1600ms ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.45;
+  }
+
+  to {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading {
+    animation: none;
+  }
+}
+
+@media (max-width: 739px) {
+  .thumbnail {
+    width: 68px;
+    height: 77px;
+    border-radius: 11px;
+  }
+}

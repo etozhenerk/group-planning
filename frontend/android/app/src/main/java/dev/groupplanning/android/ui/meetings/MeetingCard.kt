@@ -20,8 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingSummary
+import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.meetingTime
+import dev.groupplanning.android.ui.covers.CoverImage
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -38,9 +40,13 @@ internal fun MeetingCard(meeting: MeetingSummary, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (LocalDensity.current.fontScale <= 1.5f) {
-                Surface(shape = RoundedCornerShape(16.dp), color = Palette.message) {
-                    Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-                        AppIcon(R.drawable.ic_sparkles, tint = Palette.accent)
+                if (meeting.coverUrl != null) {
+                    CoverImage(CoverSource.Remote(meeting.coverUrl, meeting.id), thumbnail = true)
+                } else {
+                    Surface(shape = RoundedCornerShape(16.dp), color = Palette.message) {
+                        Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                            AppIcon(R.drawable.ic_sparkles, tint = Palette.accent)
+                        }
                     }
                 }
             }

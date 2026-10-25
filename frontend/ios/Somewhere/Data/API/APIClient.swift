@@ -23,14 +23,25 @@ struct APIClient: Sendable {
         _ = try await load(request, credential: credential)
     }
 
-    private func load(_ request: APIRequest, credential: StoredSession?) async throws -> Data {
+    func image(_ request: APIRequest, credential: StoredSession? = nil) async throws -> Data {
+        let data = try await load(request, credential: credential, image: true)
+        guard !data.isEmpty, data.count <= 5 * 1024 * 1024 else {
+            throw ClientFailure.invalidResponse
+        }
+        return data
+    }
+
+    private func load(_ request: APIRequest, credential: StoredSession?, image: Bool = false)
+        async throws -> Data
+    {
         try Task.checkCancellation()
         var wire = URLRequest(url: try origin.url(for: request))
         wire.httpMethod = request.method.rawValue
         wire.httpBody = request.body
         wire.cachePolicy = .reloadIgnoringLocalCacheData
         wire.httpShouldHandleCookies = false
-        wire.setValue("application/json", forHTTPHeaderField: "Accept")
+        wire.setValue(
+            image ? "image/jpeg, image/png" : "application/json", forHTTPHeaderField: "Accept")
         if request.body != nil {
             wire.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
@@ -53,7 +64,8 @@ struct APIClient: Sendable {
             let problem = try? APICoding.decode(APIErrorEnvelope.self, from: data).error
             throw ClientFailure.http(response.statusCode, problem)
         }
-        if response.statusCode != 204, response.mimeType?.lowercased() != "application/json" {
+        let allowed = image ? ["image/jpeg", "image/png"] : ["application/json"]
+        if response.statusCode != 204, !allowed.contains(response.mimeType?.lowercased() ?? "") {
             throw ClientFailure.invalidResponse
         }
         return data

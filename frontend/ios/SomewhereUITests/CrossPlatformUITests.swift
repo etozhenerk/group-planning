@@ -11,8 +11,19 @@ final class CrossPlatformUITests: XCTestCase {
 
     func testJoinAndSend() throws {
         let app = try openMeeting()
-        app.buttons["rsvp-going"].tap()
-        app.buttons["rsvp-save"].tap()
+        XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
+        let going = app.buttons["rsvp-going"]
+        for _ in 0..<6 {
+            if going.isHittable { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
+        going.tap()
+        let save = app.buttons["rsvp-save"]
+        for _ in 0..<6 {
+            if save.isHittable { break }
+            app.scrollViews.firstMatch.swipeUp()
+        }
+        save.tap()
         XCTAssertTrue(message("Hello from web", app: app).waitForExistence(timeout: 15))
         let input = app.descendants(matching: .any)["message-input"].firstMatch
         input.tap()
@@ -25,6 +36,7 @@ final class CrossPlatformUITests: XCTestCase {
         let app = try openMeeting()
         XCTAssertTrue(message("Hello from Android", app: app).waitForExistence(timeout: 15))
         app.buttons["meeting-info-open"].tap()
+        XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
         let answer = app.buttons["rsvp-not_going"]
         let scroll = app.scrollViews["meeting-info"]
         for _ in 0..<5 {

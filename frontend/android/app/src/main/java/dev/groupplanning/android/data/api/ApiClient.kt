@@ -19,7 +19,7 @@ internal class ApiClient(
         serializer: DeserializationStrategy<T>,
         credential: StoredSession? = null,
     ): T {
-        val body = load(request, credential)
+        val body = load(request, credential).body
         return try {
             apiJson.decodeFromString(serializer, body)
         } catch (_: SerializationException) {
@@ -33,10 +33,17 @@ internal class ApiClient(
         load(request, credential)
     }
 
-    private suspend fun load(request: ApiRequest, credential: StoredSession?): String {
+    suspend fun image(request: ApiRequest, credential: StoredSession? = null): ByteArray =
+        load(request, credential, image = true).bytes
+
+    private suspend fun load(
+        request: ApiRequest,
+        credential: StoredSession?,
+        image: Boolean = false,
+    ): WireResponse {
         currentCoroutineContext().ensureActive()
         val wire = Request.Builder().url(origin.resolve(request))
-            .header("Accept", "application/json")
+            .header("Accept", if (image) "image/jpeg, image/png" else "application/json")
             .header("Cache-Control", "no-store")
         val body = if (request.method in setOf("POST", "PUT", "PATCH")) {
             request.body.orEmpty().toRequestBody("application/json".toMediaType())
@@ -58,11 +65,18 @@ internal class ApiClient(
             }
             throw ClientFailure(FailureKind.Http, response.status, problem)
         }
-        if (response.status != 204 &&
-            response.contentType?.substringBefore(';')?.trim()?.lowercase() != "application/json"
+        val mediaType = response.contentType?.substringBefore(';')?.trim()?.lowercase()
+        val validType = if (image) {
+            mediaType in setOf("image/jpeg", "image/png")
+        } else {
+            mediaType ==
+                "application/json"
+        }
+        if ((response.status != 204 && !validType) ||
+            (image && response.bytes.size > 5 * 1024 * 1024)
         ) {
             throw ClientFailure(FailureKind.InvalidResponse)
         }
-        return response.body
+        return response
     }
 }

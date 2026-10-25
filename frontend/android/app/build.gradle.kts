@@ -129,6 +129,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.exifinterface)
     implementation(libs.yandex.auth)
     implementation(libs.kotlin.parcelize.runtime)
     implementation(libs.lifecycle.runtime.compose)

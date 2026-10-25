@@ -8,6 +8,7 @@ enum FieldPatch<Value: Encodable & Sendable>: Sendable {
 
 struct UpdateMeeting: Encodable, Sendable {
     let expectedRevision: ServerCounter
+    var cover: FieldPatch<PreparedCover> = .unchanged
     var title: String?
     var startsAt: FieldPatch<APIInstant> = .unchanged
     var startsOn: String?
@@ -16,7 +17,7 @@ struct UpdateMeeting: Encodable, Sendable {
     var place: FieldPatch<String> = .unchanged
 
     enum CodingKeys: String, CodingKey {
-        case title, timezone, description, place
+        case title, timezone, description, place, cover
         case startsAt = "starts_at"
         case startsOn = "starts_on"
         case expectedRevision = "expected_revision"
@@ -31,6 +32,7 @@ struct UpdateMeeting: Encodable, Sendable {
         try values.encodeIfPresent(timezone, forKey: .timezone)
         try encode(description, key: .description, into: &values)
         try encode(place, key: .place, into: &values)
+        try encode(cover, key: .cover, into: &values)
     }
 
     private func encode<Value: Encodable & Sendable>(

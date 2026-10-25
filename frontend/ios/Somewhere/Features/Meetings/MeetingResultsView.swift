@@ -24,7 +24,9 @@ struct MeetingResultsView: View {
                 if owner.selection.display == .calendar {
                     CalendarMeetingRow(item: item) { select(item.id) }
                 } else {
-                    MeetingCardView(meeting: item.meeting) { select(item.id) }
+                    MeetingCardView(meeting: item.meeting, session: owner.session) {
+                        select(item.id)
+                    }
                 }
             }
             if owner.page.value?.nextCursor != nil {

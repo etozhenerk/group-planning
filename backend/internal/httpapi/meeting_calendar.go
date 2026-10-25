@@ -47,7 +47,7 @@ func (h meetingHandlers) calendar(w http.ResponseWriter, r *http.Request, actor 
 
 	page, err := h.app.Calendar(r.Context(), actor, query)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -57,7 +57,7 @@ func (h meetingHandlers) calendar(w http.ResponseWriter, r *http.Request, actor 
 		Days: []calendarDayResponse{}, NextTransitionAt: page.NextTransitionAt,
 	}
 	for _, item := range page.Meetings {
-		response.Meetings = append(response.Meetings, calendarSummaryResponse{summaryDTO(item.Details), optionalString(item.LocalDate), item.Period})
+		response.Meetings = append(response.Meetings, calendarSummaryResponse{h.summaryDTO(item.Details), optionalString(item.LocalDate), item.Period})
 	}
 
 	for _, day := range page.Days {

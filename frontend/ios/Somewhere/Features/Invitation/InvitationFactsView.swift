@@ -2,9 +2,14 @@ import SwiftUI
 
 struct InvitationFactsView: View {
     let value: InvitationPreview
+    let api: APIClient
+    let session: SessionStore?
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             Text(value.title).font(.largeTitle.bold()).accessibilityAddTraits(.isHeader)
+            if let url = value.coverURL {
+                CoverImageView(source: .remote(url, value.meetingID), api: api, session: session)
+            }
             VStack(alignment: .leading, spacing: 18) {
                 Label(
                     MeetingLabels.time(

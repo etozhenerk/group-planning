@@ -32,6 +32,7 @@ import dev.groupplanning.android.data.drafts.DraftIssue
 import dev.groupplanning.android.state.settings.SettingsIssue
 import dev.groupplanning.android.state.settings.SettingsViewModel
 import dev.groupplanning.android.ui.components.ActionButton
+import dev.groupplanning.android.ui.covers.CoverEditor
 import dev.groupplanning.android.ui.meetingform.MeetingFields
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -41,13 +42,13 @@ internal fun MeetingSettingsSheet(model: SettingsViewModel, close: () -> Unit, s
     val state by model.state.collectAsStateWithLifecycle()
     var confirm by remember { mutableStateOf(false) }
     val requestClose = {
-        if (!state.busy) {
+        if (!state.busy && !state.preparingCover) {
             if (state.dirty) confirm = true else close()
         }
     }
     LaunchedEffect(state.saved) { if (state.saved) saved() }
     val sheet = rememberModalBottomSheetState(skipPartiallyExpanded = true, confirmValueChange = {
-        if (it == SheetValue.Hidden && (state.dirty || state.busy)) {
+        if (it == SheetValue.Hidden && (state.dirty || state.busy || state.preparingCover)) {
             requestClose()
             false
         } else {
@@ -72,6 +73,9 @@ internal fun MeetingSettingsSheet(model: SettingsViewModel, close: () -> Unit, s
                 state.validation == DraftIssue.Ambiguous,
                 model::change,
             )
+            CoverEditor(state.draft.cover, state.editable, model::preparingCover, { cover ->
+                model.change { it.copy(cover = cover) }
+            }, original = state.original.coverUrl, meetingId = state.original.id)
             state.validation?.let { Text(it.text, color = Palette.error) }
             state.issue?.let { SettingsProblem(it, state.busy, model::reload) }
             ActionButton(
@@ -85,8 +89,10 @@ internal fun MeetingSettingsSheet(model: SettingsViewModel, close: () -> Unit, s
                 Modifier.testTag("settings-save"),
                 enabled = state.dirty &&
                     !state.busy &&
+                    !state.preparingCover &&
                     state.issue != SettingsIssue.Conflict &&
                     state.issue != SettingsIssue.Forbidden,
+                busy = state.busy,
                 onClick = model::save,
             )
             TextButton(requestClose) { Text(stringResource(R.string.cancel_settings)) }

@@ -16,6 +16,8 @@ type meetingHandlers struct {
 
 func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service) {
 	h := meetingHandlers{app, service, authHandlers{service}}
+	mux.HandleFunc("/api/v1/meetings/{id}/cover", h.readCover)
+	mux.HandleFunc("/api/v1/invitations/{token}/cover", h.readInvitationCover)
 	mux.HandleFunc("/api/v1/meetings", h.collection)
 	mux.HandleFunc("/api/v1/meetings/{id}", h.details)
 	mux.HandleFunc("/api/v1/meetings/{id}/invitation", h.invitation)
@@ -102,7 +104,7 @@ func allowMethods(w http.ResponseWriter, r *http.Request, methods ...string) boo
 	return false
 }
 
-func writeMeetingError(w http.ResponseWriter, err error) {
+func (h meetingHandlers) writeMeetingError(w http.ResponseWriter, err error) {
 	var validation meetings.ValidationError
 	var conflict *meetings.Conflict
 	switch {
@@ -115,7 +117,7 @@ func writeMeetingError(w http.ResponseWriter, err error) {
 			RequestID:   w.Header().Get("X-Request-ID"),
 		}
 		if conflict.Current != nil {
-			value := meetingDTO(*conflict.Current)
+			value := h.meetingDTO(*conflict.Current)
 			detail.CurrentMeeting = &value
 		}
 

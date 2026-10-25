@@ -6,9 +6,9 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
-func writePlacePoll(w http.ResponseWriter, view meetings.PlacePollView, err error, status int) {
+func (h meetingHandlers) writePlacePoll(w http.ResponseWriter, view meetings.PlacePollView, err error, status int) {
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -30,7 +30,7 @@ func (h meetingHandlers) createPlacePoll(w http.ResponseWriter, r *http.Request)
 	}
 
 	view, err := h.app.CreatePlacePoll(r.Context(), call.Actor, call.MeetingID, meetings.CreatePlacePollInput{Place: input.Place, ClosesAt: input.ClosesAt}, call.Key)
-	writePlacePoll(w, view, err, 201)
+	h.writePlacePoll(w, view, err, 201)
 }
 
 func (h meetingHandlers) readPlacePoll(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func (h meetingHandlers) readPlacePoll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	view, err := h.app.ReadPlacePoll(r.Context(), call.Actor, call.MeetingID, call.PollID)
-	writePlacePoll(w, view, err, 200)
+	h.writePlacePoll(w, view, err, 200)
 }
 
 func (h meetingHandlers) votePlacePoll(w http.ResponseWriter, r *http.Request) {
@@ -63,5 +63,5 @@ func (h meetingHandlers) votePlacePoll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	view, err := h.app.VotePlacePoll(r.Context(), call.Actor, call.MeetingID, call.PollID, meetings.PlaceVoteInput{Answer: input.Answer, ExpectedRevision: revision}, call.Key)
-	writePlacePoll(w, view, err, 200)
+	h.writePlacePoll(w, view, err, 200)
 }

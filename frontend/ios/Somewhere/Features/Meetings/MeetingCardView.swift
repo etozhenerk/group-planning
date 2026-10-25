@@ -2,16 +2,25 @@ import SwiftUI
 
 struct MeetingCardView: View {
     let meeting: MeetingSummary
+    let session: SessionStore
     let open: () -> Void
     @Environment(\.dynamicTypeSize) private var typeSize
     var body: some View {
         Button(action: open) {
             HStack(spacing: 16) {
                 if !typeSize.isAccessibilitySize {
-                    Image(systemName: "sparkles").foregroundStyle(AppPalette.accent).font(.title2)
+                    if let url = meeting.coverURL {
+                        CoverImageView(
+                            source: .remote(url, meeting.id), api: session.api, session: session,
+                            thumbnail: true)
+                    } else {
+                        Image(systemName: "sparkles").foregroundStyle(AppPalette.accent).font(
+                            .title2
+                        )
                         .frame(width: 48, height: 48).background(
                             AppPalette.message, in: RoundedRectangle(cornerRadius: 16)
                         ).accessibilityHidden(true)
+                    }
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text(meeting.title).font(.headline).foregroundStyle(AppPalette.text)

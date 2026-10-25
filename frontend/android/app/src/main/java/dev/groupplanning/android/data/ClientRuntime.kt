@@ -6,6 +6,7 @@ import dev.groupplanning.android.data.api.ApiClient
 import dev.groupplanning.android.data.api.ApiOrigin
 import dev.groupplanning.android.data.auth.FileAuthAttemptStorage
 import dev.groupplanning.android.data.auth.YandexAuthRepository
+import dev.groupplanning.android.data.covers.CoverSelectionSource
 import dev.groupplanning.android.data.drafts.DraftRepository
 import dev.groupplanning.android.data.drafts.FileDraftStorage
 import dev.groupplanning.android.data.links.FileInvitationStorage
@@ -13,6 +14,7 @@ import dev.groupplanning.android.data.links.InvitationContext
 import dev.groupplanning.android.data.links.InvitationLinks
 import dev.groupplanning.android.data.outbox.FileMessageStorage
 import dev.groupplanning.android.data.outbox.MessageOutbox
+import dev.groupplanning.android.data.repository.CoverRepository
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.repository.InvitationRepository
 import dev.groupplanning.android.data.repository.MeetingRepository
@@ -33,6 +35,7 @@ internal class ClientRuntime(
     val candidate: StoredSession? = null,
     val feeds: FeedRepository? = null,
     val auth: YandexAuthRepository? = null,
+    val covers: CoverRepository? = null,
 ) {
     val meetings: MeetingRepository? = sessions?.let(::MeetingRepository)
 
@@ -43,6 +46,7 @@ internal class ClientRuntime(
             api: ApiClient? = origin?.let(::ApiClient),
             candidate: StoredSession? = null,
             namespace: String = "",
+            coverSelection: CoverSelectionSource? = null,
         ): ClientRuntime {
             val identity = (origin?.url?.toString() ?: "unconfigured") + namespace
             val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
@@ -65,6 +69,7 @@ internal class ClientRuntime(
             val links = InvitationLinks(origin, BuildConfig.INVITATION_SCHEME)
             return ClientRuntime(
                 sessions = sessions,
+                covers = sessions?.let { CoverRepository(context, it, coverSelection) },
                 drafts = DraftRepository(
                     FileDraftStorage(File(context.noBackupFilesDir, "drafts/$key")),
                 ),

@@ -28,6 +28,7 @@ internal class AppViewModel(
     initialLink: String?,
     saved: SavedStateHandle = SavedStateHandle(),
 ) : ViewModel() {
+    val covers = runtime.covers
     val snapshot = runtime.sessions?.state ?: MutableStateFlow(ClientSnapshot())
     private val mutableRoute = MutableStateFlow<AppRoute>(AppRoute.Home)
     val route = mutableRoute.asStateFlow()

@@ -16,6 +16,23 @@ enum MeetingSettingsDraft {
         return draft
     }
 
+    static func rebase(_ value: MeetingDraft, from previous: Meeting, to current: Meeting)
+        -> MeetingDraft
+    {
+        let old = make(previous)
+        var merged = make(current)
+        if value.title != old.title { merged.title = value.title }
+        if value.description != old.description { merged.description = value.description }
+        if value.place != old.place { merged.place = value.place }
+        if value.day != old.day || value.clock != old.clock || value.repetition != nil {
+            merged.day = value.day
+            merged.clock = value.clock
+            merged.repetition = value.repetition
+        }
+        merged.cover = value.cover
+        return merged
+    }
+
     static func patch(_ draft: MeetingDraft, from meeting: Meeting) throws -> UpdateMeeting {
         let original = make(meeting)
         let title = draft.title.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -34,6 +51,11 @@ enum MeetingSettingsDraft {
             let date = try draft.input()
             input.startsAt = date.startsAt.map { .value($0) } ?? .clear
             input.startsOn = date.startsOn
+        }
+        switch draft.cover {
+        case .image(let image): input.cover = .value(image)
+        case .removed: input.cover = .clear
+        case nil: break
         }
         return input
     }

@@ -24,7 +24,30 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   }
 
   await login(page, 'Саша');
-  const id = await create(page, 'Встреча трёх платформ');
+  const pixels = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 450;
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      throw new Error('Canvas unavailable');
+    }
+
+    context.fillStyle = '#258d80';
+    context.fillRect(0, 0, 800, 450);
+    context.fillStyle = '#e1b574';
+    context.fillRect(0, 0, 270, 450);
+
+    return canvas.toDataURL('image/png').split(',')[1] ?? '';
+  });
+
+  const id = await create(page, 'Встреча трёх платформ', {
+    name: 'cross-cover.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(pixels, 'base64'),
+  });
+
   const invitation = await inviteLink(page);
   await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await page.getByLabel('Сообщение', { exact: true }).fill('Hello from web');

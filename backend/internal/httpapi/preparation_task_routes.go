@@ -9,13 +9,13 @@ import (
 
 func (h meetingHandlers) writePreparationTask(w http.ResponseWriter, r *http.Request, view meetings.PreparationTaskView, err error, status int) {
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
 	result, err := h.preparationTaskDTO(r.Context(), view)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 

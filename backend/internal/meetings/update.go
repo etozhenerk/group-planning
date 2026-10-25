@@ -16,6 +16,7 @@ type Field struct {
 type UpdateInput struct {
 	Title, Description, StartsAt, Timezone, Place, StartsOn Field
 	ExpectedRevision                                        uint64
+	Cover                                                   *CoverChange `json:",omitempty"`
 }
 
 // Update preserves the instant when only the display timezone changes. Expensive
@@ -30,7 +31,7 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 		return Details{}, err
 	}
 
-	if !input.Title.Present && !input.Description.Present && !input.StartsAt.Present && !input.StartsOn.Present && !input.Timezone.Present && !input.Place.Present {
+	if input.Cover == nil && !input.Title.Present && !input.Description.Present && !input.StartsAt.Present && !input.StartsOn.Present && !input.Timezone.Present && !input.Place.Present {
 		return Details{}, ValidationError{map[string]string{"changes": "required"}}
 	}
 
@@ -70,6 +71,14 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 	})
 	if err != nil {
 		return Details{}, err
+	}
+
+	var cover *Cover
+	if input.Cover != nil {
+		cover, err = prepareCover(input.Cover.Value)
+		if err != nil {
+			return Details{}, err
+		}
 	}
 
 	date, instant, timezone, err := updatedSchedule(original.Meeting, input)
@@ -128,7 +137,14 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 			meeting.Place = input.Place.Value
 		}
 
-		changed := meeting.Title != current.Meeting.Title || meeting.Description != current.Meeting.Description || meeting.Timezone != current.Meeting.Timezone || meeting.Place != current.Meeting.Place || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) || meeting.StartsOn != current.Meeting.StartsOn
+		if input.Cover != nil {
+			meeting.CoverVersion = ""
+			if cover != nil {
+				meeting.CoverVersion = cover.Version
+			}
+		}
+
+		changed := meeting.CoverVersion != current.Meeting.CoverVersion || meeting.Title != current.Meeting.Title || meeting.Description != current.Meeting.Description || meeting.Timezone != current.Meeting.Timezone || meeting.Place != current.Meeting.Place || !sameInstant(meeting.StartsAt, current.Meeting.StartsAt) || meeting.StartsOn != current.Meeting.StartsOn
 		if changed {
 			meeting.Revision, err = increment(meeting.Revision)
 			if err != nil {
@@ -155,6 +171,20 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 
 			if err := writer.SaveMeeting(meeting); err != nil {
 				return err
+			}
+
+			if input.Cover != nil && meeting.CoverVersion != current.Meeting.CoverVersion {
+				if cover == nil {
+					if err := writer.DeleteCover(id); err != nil {
+						return err
+					}
+				} else {
+					copy := *cover
+					copy.MeetingID = id
+					if err := writer.SaveCover(copy); err != nil {
+						return err
+					}
+				}
 			}
 
 			if _, err := s.entry(writer, id, "meeting_updated", actor, struct {

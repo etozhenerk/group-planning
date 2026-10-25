@@ -34,12 +34,26 @@ internal class SettingsViewModel(
         }
     }
 
+    fun preparingCover(value: Boolean) {
+        mutable.value = state.value.copy(preparingCover = value)
+    }
+
     fun reload() {
         if (state.value.busy) return
         mutable.value = state.value.copy(busy = true)
         viewModelScope.launch {
             try {
-                mutable.value = SettingsState(repository.details(access))
+                val before = state.value
+                val current = repository.details(access)
+                mutable.value =
+                    SettingsState(
+                        current,
+                        draft = rebaseSettings(
+                            before.original.settingsDraft(),
+                            before.draft,
+                            current.settingsDraft(),
+                        ),
+                    )
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: ClientFailure) {
@@ -61,6 +75,7 @@ internal class SettingsViewModel(
     fun save() {
         val before = state.value
         if (before.busy ||
+            before.preparingCover ||
             before.saved ||
             before.issue == SettingsIssue.Conflict ||
             before.issue == SettingsIssue.Forbidden ||

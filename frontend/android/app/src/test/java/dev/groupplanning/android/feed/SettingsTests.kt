@@ -90,7 +90,7 @@ class SettingsTests {
         )
         model.reload()
         runCurrent()
-        assertEquals("Другой заголовок", model.state.value.draft.title)
+        assertEquals("Моя правка", model.state.value.draft.title)
         model.change { it.copy(title = "После обновления") }
         h.transport.enqueue(h.path, "", 403)
         model.save()

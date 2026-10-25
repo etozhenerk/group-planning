@@ -140,7 +140,7 @@ final class FeedUITests: XCTestCase {
             if title.isHittable { break }
             scrollSettings(settingsScroll, app: app, down: true)
         }
-        XCTAssertEqual(title.value as? String, "Встреча с другого устройства")
+        XCTAssertEqual(title.value as? String, "Мой вариант")
         replace(title, with: "Вечер настолок")
         for _ in 0..<5 {
             if app.buttons["settings-save"].isHittable { break }

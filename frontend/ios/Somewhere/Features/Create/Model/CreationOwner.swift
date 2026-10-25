@@ -6,6 +6,7 @@ final class CreationOwner {
     private(set) var record: DraftRecord
     private(set) var ready = false
     private(set) var busy = false
+    var preparingCover = false
     private(set) var problem: String?
     private(set) var draftWarning: String?
     private(set) var created: CreatedMeeting?
@@ -22,7 +23,7 @@ final class CreationOwner {
     @ObservationIgnored private var operation: Task<Void, Never>?
     var value: MeetingDraft { record.value }
     var frozen: Bool { record.submission != nil }
-    var editable: Bool { ready && !busy && !frozen }
+    var editable: Bool { ready && !busy && !frozen && !preparingCover }
     var current: Bool {
         session.status == .authenticated && session.profile?.id == record.ownerID
             && sessionLease.map(session.privateData.isCurrent) == true
@@ -103,7 +104,7 @@ final class CreationOwner {
     }
 
     func startSubmit() {
-        guard operation == nil, ready, !busy else { return }
+        guard operation == nil, ready, !busy, !preparingCover else { return }
         operation = Task {
             await submit()
             operation = nil
@@ -111,7 +112,7 @@ final class CreationOwner {
     }
 
     func submit() async {
-        guard current, ready, !busy, let draftLease else { return }
+        guard current, ready, !busy, !preparingCover, let draftLease else { return }
         busy = true
         problem = nil
         persistence?.cancel()

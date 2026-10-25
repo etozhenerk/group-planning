@@ -42,13 +42,23 @@ export const setDate = async (page: Page, value: string) => {
   await expectDate(page, value);
 };
 
-export const create = async (page: Page, title: string) => {
+export const create = async (
+  page: Page,
+  title: string,
+  cover?: { name: string; mimeType: string; buffer: Buffer },
+) => {
   await page.goto('/meetings/new');
   await page.getByLabel('Название', { exact: true }).fill(title);
   await setDate(page, '24.10.2026');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
+
+  if (cover) {
+    await page.getByLabel('Выбрать фото', { exact: true }).setInputFiles(cover);
+    await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
+  }
+
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
   const id = page.url().split('/').at(-2);
@@ -65,10 +75,8 @@ export const inviteLink = async (page: Page): Promise<string> => {
   const field = page.getByLabel('Ссылка приглашения');
   await expect(field).toBeVisible();
   const url = await field.inputValue();
-  await page
-    .getByRole('dialog')
-    .getByRole('button', { name: 'Закрыть', exact: true })
-    .click();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).not.toBeVisible();
 
   return url;
 };

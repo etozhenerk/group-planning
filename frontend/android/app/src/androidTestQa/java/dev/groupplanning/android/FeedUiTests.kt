@@ -109,7 +109,7 @@ class FeedUiTests {
             compose.waitUntil(10_000) {
                 compose.onNodeWithContentDescription("Название").fetchSemanticsNode()
                     .config[androidx.compose.ui.semantics.SemanticsProperties.EditableText].text ==
-                    "Встреча с другого устройства"
+                    "Моя встреча"
             }
             compose.onNodeWithContentDescription(
                 "Название",

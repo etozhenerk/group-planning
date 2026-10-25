@@ -95,14 +95,16 @@ func TestIOSFixture(t *testing.T) {
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
 	// iOS reads participants while opening invitation metadata, before showing the task form.
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now), peopleFailAt: 2}
-	server.Config.Handler = taskFaults.handler(placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api)))))
+	coverFaults := &nativeCoverFaults{}
+	server.Config.Handler = coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api))))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
-	for _, name := range []string{"empty", "list-error", "draft", "lost-create"} {
+	for _, name := range []string{"empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
+	config.Cases["cover-edit"] = seedNativeCoverFixture(t, store, service)
 	calendarOwner := iosCredential(t, service, "calendar")
 	seedIOSCalendar(t, store, service, calendarOwner)
 	config.Cases["calendar"] = calendarOwner
@@ -149,6 +151,10 @@ func TestIOSFixture(t *testing.T) {
 	defer stop()
 	<-ctx.Done()
 	scope := os.Getenv("SOMEWHERE_IOS_FIXTURE_SCOPE")
+	if scope == "covers" || scope == "" {
+		coverFaults.verify(t, store)
+	}
+
 	if scope == "tasks" || scope == "" {
 		verifyNativePreparationFixture(t, store, taskFaults)
 	}
@@ -161,7 +167,7 @@ func TestIOSFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
 		faults.verify(t, scope)
 	}
 

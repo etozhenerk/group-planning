@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
 
 internal class SessionRepository(
-    private val api: ApiClient,
+    val api: ApiClient,
     storage: CredentialStorage,
     io: CoroutineDispatcher = Dispatchers.IO,
     private val clock: Clock = Clock.systemUTC(),
@@ -107,6 +107,19 @@ internal class SessionRepository(
         expectedGeneration: Long? = null,
         expectedLease: RequestLease? = null,
         apply: (PrivateData, T) -> PrivateData = { data, _ -> data },
+    ): T = perform(request, expectedGeneration, expectedLease, apply) { saved ->
+        api.send(request, serializer, saved)
+    }
+
+    suspend fun image(request: ApiRequest, lease: RequestLease): ByteArray =
+        perform(request, lease.generation, lease) { saved -> api.image(request, saved) }
+
+    private suspend fun <T> perform(
+        request: ApiRequest,
+        expectedGeneration: Long?,
+        expectedLease: RequestLease?,
+        apply: (PrivateData, T) -> PrivateData = { data, _ -> data },
+        operation: suspend (StoredSession) -> T,
     ): T = coroutineScope {
         val owner = currentCoroutineContext().job
         val requestId = UUID.randomUUID()
@@ -123,7 +136,7 @@ internal class SessionRepository(
             lease to saved
         }
         try {
-            val result = api.send(request, serializer, saved)
+            val result = operation(saved)
             gate.locked {
                 requireLease(lease)
                 currentCoroutineContext().ensureActive()

@@ -13,13 +13,17 @@ const maxBodyBytes = 64 << 10
 // decodeJSON is the input boundary for JSON operations. Unknown fields and extra
 // values are rejected; clients may still ignore additional fields in responses.
 func decodeJSON(w http.ResponseWriter, r *http.Request, destination any) bool {
+	return decodeJSONLimit(w, r, destination, maxBodyBytes)
+}
+
+func decodeJSONLimit(w http.ResponseWriter, r *http.Request, destination any, limit int64) bool {
 	contentType, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
 	if err != nil || contentType != "application/json" {
 		writeError(w, http.StatusUnsupportedMediaType, "unsupported_media_type", nil)
 		return false
 	}
 
-	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
+	r.Body = http.MaxBytesReader(w, r.Body, limit)
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
 		var tooLarge *http.MaxBytesError

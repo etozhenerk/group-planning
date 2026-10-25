@@ -24,7 +24,7 @@ func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 
 	result, err := h.app.Feed(r.Context(), actor, id, query)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -80,7 +80,7 @@ func (h meetingHandlers) message(w http.ResponseWriter, r *http.Request) {
 
 	result, err := h.app.SendMessage(r.Context(), actor, id, input.Text, input.ClientRequestID, key)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 

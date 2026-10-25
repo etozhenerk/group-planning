@@ -31,6 +31,7 @@ export const draftInput = (draft: MeetingDraft): MeetingInput => {
   }
 
   return {
+    ...(draft.cover === undefined ? {} : { cover: draft.cover }),
     title: draft.title.trim(),
     description: draft.description || null,
     ...resolveSchedule(draft.localTime, draft.timezone, draft.timeChoice),

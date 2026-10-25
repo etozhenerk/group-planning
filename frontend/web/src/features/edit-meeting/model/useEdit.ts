@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { Meeting, MeetingDraft } from '@/entities/meeting';
+import type { Meeting, MeetingDraft, MeetingInput } from '@/entities/meeting';
 import { draftFor, updateMeeting, useAccess, guarded } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { ApiError, errorText } from '@/shared/api';
@@ -12,17 +12,17 @@ export const useEdit = (meeting: Meeting, session: Session, onSaved: () => void)
   const [original] = useState(() => draftFor(meeting));
   const [value, setValue] = useState(original);
   const [problem, setProblem] = useState('');
-  const [revision] = useState(meeting.revision);
+  const [revision, setRevision] = useState(meeting.revision);
+  const [preparing, setPreparing] = useState(false);
   const client = useQueryClient();
   const access = useAccess(session.user.id, meeting.id);
   const intent = useIntent();
   const mutation = useMutation({
-    mutationFn: async () => {
-      const input = patchDraft(value, original);
-      const body = { ...input, expected_revision: revision };
+    mutationFn: async (body: Partial<MeetingInput> & { expected_revision: string }) => {
+      const { expected_revision: expected, ...input } = body;
 
       return guarded(client, session.user.id, meeting.id, access.epoch, () =>
-        updateMeeting(meeting.id, input, revision, session.csrf, intent(body)),
+        updateMeeting(meeting.id, input, expected, session.csrf, intent(body)),
       );
     },
     onSuccess: () => {
@@ -42,7 +42,19 @@ export const useEdit = (meeting: Meeting, session: Session, onSaved: () => void)
     retry: false,
   });
 
+  const uncertain =
+    !!mutation.error &&
+    !(
+      mutation.error instanceof ApiError &&
+      mutation.error.status >= 400 &&
+      mutation.error.status < 500
+    );
+
   const change = (next: MeetingDraft) => {
+    if (mutation.isPending || uncertain) {
+      return;
+    }
+
     setValue(next);
     setProblem('');
     mutation.reset();
@@ -50,14 +62,27 @@ export const useEdit = (meeting: Meeting, session: Session, onSaved: () => void)
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (mutation.isPending || preparing) {
+      return;
+    }
+
     setProblem('');
 
     try {
-      patchDraft(value, original);
-      mutation.mutate();
+      mutation.mutate(
+        uncertain && mutation.variables
+          ? mutation.variables
+          : { ...patchDraft(value, original), expected_revision: revision },
+      );
     } catch (error) {
       setProblem(error instanceof Error ? error.message : 'Проверьте дату.');
     }
+  };
+
+  const fieldErrors: Record<string, string> = {
+    ...(mutation.error instanceof ApiError ? mutation.error.fields : {}),
+    ...(problem.includes('дважды') ? { ambiguous: 'choose' } : {}),
   };
 
   return {
@@ -65,11 +90,23 @@ export const useEdit = (meeting: Meeting, session: Session, onSaved: () => void)
     change,
     submit,
     pending: mutation.isPending,
-    problem: problem || (mutation.error ? errorText(mutation.error) : ''),
-    errors: {
-      ...(mutation.error instanceof ApiError ? mutation.error.fields : {}),
-      ...(problem.includes('дважды') ? { ambiguous: 'choose' } : {}),
+    locked: mutation.isPending || uncertain || preparing,
+    preparing,
+    setPreparing,
+    uncertain,
+    rebaseReady: meeting.revision !== revision,
+    resume: () => {
+      setRevision(meeting.revision);
+      mutation.reset();
     },
+    problem:
+      problem ||
+      (uncertain
+        ? 'Не удалось подтвердить сохранение. Повторите отправку.'
+        : mutation.error
+          ? errorText(mutation.error)
+          : ''),
+    errors: fieldErrors,
     conflict: mutation.error instanceof ApiError && mutation.error.status === 409,
   };
 };

@@ -13,7 +13,7 @@ struct CreateMeetingScreen: View {
                 } label: {
                     Label("Закрыть", systemImage: "xmark")
                 }
-                .disabled(owner.busy)
+                .disabled(owner.busy || owner.preparingCover)
             }
         }
     }

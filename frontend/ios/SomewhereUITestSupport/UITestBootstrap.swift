@@ -56,7 +56,9 @@ enum UITestBootstrap {
             return try AppRuntime(
                 session: session, drafts: drafts,
                 credential: StoredSession(
-                    token: credential.token, expiresAt: credential.expiresAt.date), links: links)
+                    token: credential.token, expiresAt: credential.expiresAt.date), links: links,
+                coverSelection: scenario.hasPrefix("cover-") && scenario != "cover-system"
+                    ? UITestCoverSource() : nil)
         } catch {
             // A broken test configuration must fail UI assertions, never fake API success.
             return AppRuntime(session: nil, drafts: drafts)

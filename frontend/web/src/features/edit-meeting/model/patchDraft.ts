@@ -31,5 +31,9 @@ export const patchDraft = (
     patch.timezone = value.timezone;
   }
 
+  if (value.cover !== undefined) {
+    patch.cover = value.cover;
+  }
+
   return patch;
 };

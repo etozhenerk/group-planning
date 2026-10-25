@@ -33,3 +33,12 @@ describe('editing a meeting', () => {
     ).toBe('2026-11-01T01:45:00-05:00');
   });
 });
+
+it('distinguishes retained, removed and replaced covers without changing the schedule', () => {
+  const image = { media_type: 'image/jpeg' as const, data: 'AQID' };
+  expect(patchDraft(repeatedTime, repeatedTime)).not.toHaveProperty('cover');
+  expect(patchDraft({ ...repeatedTime, cover: null }, repeatedTime).cover).toBeNull();
+  expect(patchDraft({ ...repeatedTime, cover: image }, repeatedTime).cover).toEqual(
+    image,
+  );
+});

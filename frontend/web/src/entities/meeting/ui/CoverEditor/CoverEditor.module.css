@@ -1,0 +1,49 @@
+.editor {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.editor small {
+  color: var(--muted);
+}
+
+.preview,
+.skeleton {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 13px;
+}
+
+.skeleton {
+  background: var(--line);
+  animation: breathe 1600ms ease-in-out infinite alternate;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.error {
+  color: var(--error);
+  margin: 0;
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.45;
+  }
+
+  to {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" && scope != "tasks" {
+	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" && scope != "tasks" && scope != "covers" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -72,14 +72,16 @@ func TestAndroidFixture(t *testing.T) {
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
-	server.Config.Handler = taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api))))))
+	coverFaults := &nativeCoverFaults{}
+	server.Config.Handler = coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api)))))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
-	for _, name := range []string{"empty", "list-error", "draft", "lost-create"} {
+	for _, name := range []string{"empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
+	config.Cases["cover-edit"] = seedNativeCoverFixture(t, store, service)
 	calendarOwner := iosCredential(t, service, "calendar")
 	seedIOSCalendar(t, store, service, calendarOwner)
 	config.Cases["calendar"] = calendarOwner
@@ -121,6 +123,10 @@ func TestAndroidFixture(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	<-ctx.Done()
+	if scope == "all" || scope == "covers" {
+		coverFaults.verify(t, store)
+	}
+
 	if scope == "all" || scope == "tasks" {
 		verifyNativePreparationFixture(t, store, taskFaults)
 	}
@@ -133,7 +139,7 @@ func TestAndroidFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
+	if scope == "covers" || scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
 		return
 	}
 

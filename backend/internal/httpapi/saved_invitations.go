@@ -34,7 +34,7 @@ func (h meetingHandlers) savedInvitations(w http.ResponseWriter, r *http.Request
 
 	page, err := h.app.SavedInvitations(r.Context(), actor, limit, values.Get("cursor"))
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -50,6 +50,7 @@ func (h meetingHandlers) savedInvitations(w http.ResponseWriter, r *http.Request
 				Description: optionalString(preview.Description),
 				StartsOn:    optionalString(preview.StartsOn), StartsAt: preview.StartsAt,
 				Timezone: preview.Timezone, Place: optionalString(preview.Place),
+				CoverURL:       h.coverURL("invitations/"+invitation.Token, preview.CoverVersion),
 				MyRSVP:         optionalString(string(invitation.Response.Answer)),
 				MyRSVPRevision: decimal(invitation.Response.Revision),
 			},

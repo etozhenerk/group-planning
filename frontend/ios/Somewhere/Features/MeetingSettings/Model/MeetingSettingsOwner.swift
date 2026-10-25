@@ -8,6 +8,7 @@ final class MeetingSettingsOwner {
     var original: Meeting
     var value: MeetingDraft
     var saving = false
+    var preparingCover = false
     var conflict = false
     var forbidden = false
     var problem: String?
@@ -30,7 +31,9 @@ final class MeetingSettingsOwner {
     var current: Bool {
         session.status == .authenticated && lease.map { session.privateData.isCurrent($0) } == true
     }
-    var editable: Bool { current && !saving && pending == nil && !conflict && !forbidden }
+    var editable: Bool {
+        current && !saving && !preparingCover && pending == nil && !conflict && !forbidden
+    }
     var dirty: Bool { value != MeetingSettingsDraft.make(original) }
     var needsTimeChoice: Bool {
         do {
@@ -44,11 +47,12 @@ final class MeetingSettingsOwner {
         problem = nil
     }
     func save() {
-        guard current, !saving, !conflict, !forbidden else { return }
+        guard current, !saving, !preparingCover, !conflict, !forbidden else { return }
         operation = Task { await submit() }
     }
     func submit() async {
-        guard current, !saving, !conflict, !forbidden, dirty || pending != nil else { return }
+        guard current, !saving, !preparingCover, !conflict, !forbidden, dirty || pending != nil
+        else { return }
         let version = generation
         saving = true
         problem = nil
@@ -81,7 +85,7 @@ final class MeetingSettingsOwner {
                 pending = nil
                 conflict = true
                 problem =
-                    "Встречу уже изменили. Загрузите актуальные настройки, затем внесите правку снова."
+                    "Встречу уже изменили. Обновите настройки и проверьте свои правки."
             } else if (error as? ClientFailure)?.statusCode == 403 {
                 pending = nil
                 forbidden = true
@@ -104,8 +108,8 @@ final class MeetingSettingsOwner {
                 MeetingRequests.details(original.id), as: Meeting.self)
             try Task.checkCancellation()
             guard current, generation == version, meeting.id == original.id else { return }
+            value = MeetingSettingsDraft.rebase(value, from: original, to: meeting)
             original = meeting
-            value = MeetingSettingsDraft.make(meeting)
             pending = nil
             conflict = false
             forbidden = meeting.organizerID != session.profile?.id

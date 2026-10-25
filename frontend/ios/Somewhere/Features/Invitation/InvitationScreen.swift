@@ -53,7 +53,7 @@ struct InvitationScreen: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 28) {
                 if let value = owner.preview {
-                    InvitationFactsView(value: value)
+                    InvitationFactsView(value: value, api: owner.api, session: owner.session)
                     if let warning {
                         Text(warning).font(.footnote).foregroundStyle(AppPalette.error)
                     }

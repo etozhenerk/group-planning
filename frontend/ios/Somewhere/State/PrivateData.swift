@@ -15,7 +15,7 @@ final class PrivateData {
     private var generation = UUID()
     private var accessGeneration: [UUID: UUID] = [:]
 
-    struct Lease: Sendable {
+    struct Lease: Sendable, Hashable {
         let generation: UUID
         let meetingID: UUID?
         let accessGeneration: UUID?

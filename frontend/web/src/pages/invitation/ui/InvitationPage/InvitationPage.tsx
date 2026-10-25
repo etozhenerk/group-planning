@@ -4,7 +4,7 @@ import styles from '@/pages/invitation/ui/InvitationPage/InvitationPage.module.c
 import { Link, useParams } from 'react-router';
 import { PublicHeader } from '@/widgets/public-header';
 import { useSession } from '@/entities/session';
-import { MeetingFacts } from '@/entities/meeting';
+import { MeetingFacts, MeetingCover } from '@/entities/meeting';
 import { SignInButton, AuthNotice } from '@/features/sign-in';
 import { ResponseButtons } from '@/features/respond';
 import { Status } from '@/shared/ui/Status';
@@ -36,6 +36,9 @@ export const InvitationPage = () => {
             <AuthNotice />
             <p className={styles['eyebrow']}>Вас приглашают на встречу</p>
             <h1>{query.data.title}</h1>
+            {query.data.coverUrl && (
+              <MeetingCover url={query.data.coverUrl} meeting={query.data.meetingId} />
+            )}
             <MeetingFacts
               startsAt={query.data.startsAt}
               startsOn={query.data.startsOn ?? null}

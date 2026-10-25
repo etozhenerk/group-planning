@@ -50,9 +50,9 @@ func (h meetingHandlers) pollContext(w http.ResponseWriter, r *http.Request, met
 	return result, true
 }
 
-func writeDatePoll(w http.ResponseWriter, view meetings.DatePollView, err error, status int) {
+func (h meetingHandlers) writeDatePoll(w http.ResponseWriter, view meetings.DatePollView, err error, status int) {
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -66,7 +66,7 @@ func (h meetingHandlers) readDatePoll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	view, err := h.app.ReadDatePoll(r.Context(), call.Actor, call.MeetingID, call.PollID)
-	writeDatePoll(w, view, err, 200)
+	h.writeDatePoll(w, view, err, 200)
 }
 
 func parsePollRevision(w http.ResponseWriter, value string) (uint64, bool) {

@@ -1,3 +1,4 @@
+import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 import { Link } from 'react-router';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import type { MeetingSummary } from '@/entities/meeting/model/types';
@@ -5,9 +6,9 @@ import { cardLabels } from '@/entities/meeting/lib/cardLabels';
 import { timeLabel } from '@/shared/lib/time';
 import styles from '@/entities/meeting/ui/MeetingCard/MeetingCard.module.css';
 
-export type MeetingCardProps = { meeting: MeetingSummary };
+export type MeetingCardProps = { meeting: MeetingSummary; user: string };
 
-export const MeetingCard = ({ meeting }: MeetingCardProps) => {
+export const MeetingCard = ({ meeting, user }: MeetingCardProps) => {
   const labels = cardLabels(meeting);
 
   return (
@@ -17,7 +18,7 @@ export const MeetingCard = ({ meeting }: MeetingCardProps) => {
       data-testid="meeting-card"
     >
       {meeting.coverUrl ? (
-        <img src={meeting.coverUrl} alt="" className={styles.cover} />
+        <MeetingCover url={meeting.coverUrl} meeting={meeting.id} user={user} thumbnail />
       ) : (
         <div className={styles.emblem}>
           <Sparkles aria-hidden="true" size={30} />

@@ -10,6 +10,7 @@ internal data class SettingsState(
     val original: Meeting,
     val draft: MeetingDraft = original.settingsDraft(),
     val busy: Boolean = false,
+    val preparingCover: Boolean = false,
     val pending: SettingsSubmission? = null,
     val issue: SettingsIssue? = null,
     val validation: DraftIssue? = null,
@@ -17,6 +18,7 @@ internal data class SettingsState(
 ) {
     val dirty: Boolean get() = draft != original.settingsDraft()
     val editable: Boolean get() = !busy &&
+        !preparingCover &&
         pending == null &&
         issue != SettingsIssue.Conflict &&
         issue != SettingsIssue.Forbidden

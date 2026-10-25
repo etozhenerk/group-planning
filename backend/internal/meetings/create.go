@@ -6,7 +6,10 @@ import (
 )
 
 // CreateInput accepts a calendar date with optional time, or a legacy instant.
-type CreateInput struct{ Title, Description, StartsAt, Timezone, Place, StartsOn string }
+type CreateInput struct {
+	Title, Description, StartsAt, Timezone, Place, StartsOn string
+	Cover                                                   *CoverInput `json:",omitempty"`
+}
 
 // Create commits the meeting, invitation, event and request receipt together.
 func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, key string) (Created, error) {
@@ -44,6 +47,11 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 	input.StartsOn = date
 	if instant != nil {
 		input.StartsAt = instant.Format("2006-01-02T15:04:05.999999999Z07:00")
+	}
+
+	cover, err := prepareCover(input.Cover)
+	if err != nil {
+		return Created{}, err
 	}
 
 	hash := requestHash(input)
@@ -96,12 +104,24 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 				Token:     randomToken(),
 				CreatedAt: meeting.CreatedAt,
 			}
+			if cover != nil {
+				meeting.CoverVersion = cover.Version
+			}
+
 			if err := s.schedule(writer, &meeting); err != nil {
 				return err
 			}
 
 			if err := writer.SaveMeeting(meeting); err != nil {
 				return err
+			}
+
+			if cover != nil {
+				copy := *cover
+				copy.MeetingID = meeting.ID
+				if err := writer.SaveCover(copy); err != nil {
+					return err
+				}
 			}
 
 			if err := writer.InsertInvitation(invitation); err != nil {
@@ -149,11 +169,12 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 
 func meetingEvent(meeting Meeting) any {
 	return struct {
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		StartsOn    string `json:"starts_on"`
-		StartsAt    any    `json:"starts_at"`
-		Timezone    string `json:"timezone"`
-		Place       string `json:"place"`
-	}{meeting.Title, meeting.Description, meeting.StartsOn, meeting.StartsAt, meeting.Timezone, meeting.Place}
+		Title        string `json:"title"`
+		Description  string `json:"description"`
+		StartsOn     string `json:"starts_on"`
+		StartsAt     any    `json:"starts_at"`
+		Timezone     string `json:"timezone"`
+		Place        string `json:"place"`
+		CoverVersion string `json:"cover_version,omitempty"`
+	}{meeting.Title, meeting.Description, meeting.StartsOn, meeting.StartsAt, meeting.Timezone, meeting.Place, meeting.CoverVersion}
 }

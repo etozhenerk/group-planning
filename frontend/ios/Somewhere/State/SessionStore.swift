@@ -103,6 +103,23 @@ final class SessionStore {
     func send<Value: Decodable & Sendable>(_ request: APIRequest, as type: Value.Type) async throws
         -> Value
     {
+        let api = self.api
+        return try await perform(request) { credential in
+            try await api.send(request, as: type, credential: credential)
+        }
+    }
+
+    func image(_ request: APIRequest) async throws -> Data {
+        let api = self.api
+        return try await perform(request) { credential in
+            try await api.image(request, credential: credential)
+        }
+    }
+
+    private func perform<Value: Sendable>(
+        _ request: APIRequest,
+        operation: @escaping @Sendable (StoredSession) async throws -> Value
+    ) async throws -> Value {
         guard let credential, status == .authenticated else { throw ClientFailure.http(401, nil) }
         guard credential.expiresAt > Date() else {
             try await invalidate()
@@ -111,8 +128,7 @@ final class SessionStore {
         let version = generation
         let lease = try privateData.lease(for: request.meetingID)
         let id = UUID()
-        let api = self.api
-        let worker = Task { try await api.send(request, as: type, credential: credential) }
+        let worker = Task { try await operation(credential) }
         inFlight[id] = InFlight(meetingID: request.meetingID, cancel: { worker.cancel() })
         defer { inFlight.removeValue(forKey: id) }
         do {

@@ -15,8 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.InvitationPreview
+import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.meetingTime
+import dev.groupplanning.android.ui.covers.CoverImage
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -47,5 +49,6 @@ internal fun InvitationFacts(value: InvitationPreview, showTitle: Boolean = true
             Text(value.place ?: stringResource(R.string.place_unknown), color = Palette.muted)
         }
         value.description?.takeIf { it.isNotBlank() }?.let { Text(it) }
+        value.coverUrl?.let { CoverImage(CoverSource.Remote(it, value.meetingId)) }
     }
 }

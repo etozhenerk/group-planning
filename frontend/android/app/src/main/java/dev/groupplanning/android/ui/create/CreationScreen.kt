@@ -32,6 +32,7 @@ import dev.groupplanning.android.state.CreationViewModel
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.covers.CoverEditor
 import dev.groupplanning.android.ui.meetingform.MeetingFields
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -44,7 +45,7 @@ internal fun CreationScreen(
     val state by model.state.collectAsStateWithLifecycle()
     var confirm by rememberSaveable { mutableStateOf(false) }
     val close = {
-        if (!state.busy) {
+        if (!state.busy && !state.preparingCover) {
             if (state.record.value.isEmpty) back() else confirm = true
         }
     }
@@ -56,7 +57,7 @@ internal fun CreationScreen(
     Column(Modifier.fillMaxSize().imePadding()) {
         TextButton(
             onClick = close,
-            enabled = !state.busy,
+            enabled = !state.busy && !state.preparingCover,
             modifier = Modifier.padding(horizontal = 12.dp),
         ) {
             AppIcon(R.drawable.ic_back)
@@ -88,20 +89,27 @@ internal fun CreationScreen(
                 }
             } else {
                 MeetingFields(state.record.value, state.editable, state.ambiguous, model::change)
+                CoverEditor(
+                    value = state.record.value.cover,
+                    enabled = state.editable,
+                    busy = model::preparingCover,
+                    change = { cover ->
+                        model.change { it.copy(cover = cover) }
+                    },
+                )
                 state.problem?.let {
                     Text(it, Modifier.testTag("create-problem"), color = Palette.error)
                 }
                 state.warning?.let { Text(it, color = Palette.error) }
                 ActionButton(
-                    if (state.busy) {
-                        "Сохраняем…"
-                    } else if (state.frozen) {
+                    if (state.frozen) {
                         "Повторить сохранение"
                     } else {
                         "Создать встречу"
                     },
                     Modifier.testTag("create-submit"),
-                    enabled = !state.busy,
+                    enabled = !state.busy && !state.preparingCover,
+                    busy = state.busy,
                     onClick = model::submit,
                 )
                 Text(

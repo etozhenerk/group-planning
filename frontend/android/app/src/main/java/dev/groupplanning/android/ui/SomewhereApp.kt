@@ -31,6 +31,7 @@ import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.brand.BrandMotion
 import dev.groupplanning.android.ui.brand.BrandWordmark
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.covers.LocalCovers
 import dev.groupplanning.android.ui.invitation.InvitationScreen
 import dev.groupplanning.android.ui.invitation.LinkProblemDialog
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
@@ -59,7 +60,10 @@ internal fun SomewhereApp(model: AppViewModel) {
             }
         }
     }
-    CompositionLocalProvider(LocalMotionEnabled provides motion) {
+    CompositionLocalProvider(
+        LocalMotionEnabled provides motion,
+        LocalCovers provides model.covers,
+    ) {
         if (auth.problem) {
             AlertDialog(
                 onDismissRequest = model.signIn::dismissProblem,

@@ -9,13 +9,14 @@ import (
 // PublicInvitation contains only details a holder of the invitation may see.
 // Profiles, responses and messages must never be added implicitly.
 type PublicInvitation struct {
-	MeetingID   string
-	Title       string
-	Description string
-	StartsOn    string
-	StartsAt    *time.Time
-	Timezone    string
-	Place       string
+	MeetingID    string
+	Title        string
+	Description  string
+	StartsOn     string
+	StartsAt     *time.Time
+	Timezone     string
+	Place        string
+	CoverVersion string
 }
 
 func validInvitationToken(token string) bool {
@@ -51,12 +52,13 @@ func Preview(ctx context.Context, store Store, token string) (PublicInvitation, 
 
 func publicInvitation(meeting Meeting) PublicInvitation {
 	return PublicInvitation{
-		MeetingID:   meeting.ID,
-		Title:       meeting.Title,
-		Description: meeting.Description,
-		StartsOn:    meeting.StartsOn,
-		StartsAt:    meeting.StartsAt,
-		Timezone:    meeting.Timezone,
-		Place:       meeting.Place,
+		MeetingID:    meeting.ID,
+		Title:        meeting.Title,
+		Description:  meeting.Description,
+		StartsOn:     meeting.StartsOn,
+		StartsAt:     meeting.StartsAt,
+		Timezone:     meeting.Timezone,
+		Place:        meeting.Place,
+		CoverVersion: meeting.CoverVersion,
 	}
 }

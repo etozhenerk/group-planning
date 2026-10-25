@@ -16,6 +16,7 @@ type Meeting struct {
 	StartsAt            *time.Time
 	Timezone            string
 	Place               string
+	CoverVersion        string
 	Revision            uint64
 	Status              Period
 	ScheduleVersion     uint64

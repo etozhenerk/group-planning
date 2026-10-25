@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SavedInvitationCard: View {
     let item: SavedInvitation
+    let api: APIClient
     let select: () -> Void
     @Environment(\.dynamicTypeSize) private var textSize
 
@@ -9,8 +10,15 @@ struct SavedInvitationCard: View {
         Button(action: select) {
             HStack(spacing: 16) {
                 if !textSize.isAccessibilitySize {
-                    Image(systemName: "envelope").font(.title2).foregroundStyle(AppPalette.accent)
+                    if let url = item.preview.coverURL {
+                        CoverImageView(
+                            source: .remote(url, item.preview.meetingID), api: api, thumbnail: true)
+                    } else {
+                        Image(systemName: "envelope").font(.title2).foregroundStyle(
+                            AppPalette.accent
+                        )
                         .accessibilityHidden(true)
+                    }
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text(item.preview.title).font(.headline)

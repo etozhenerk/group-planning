@@ -33,6 +33,7 @@ struct AppRootView: View {
         .background(AppPalette.background.ignoresSafeArea())
         .preferredColorScheme(.dark)
         .environment(\.locale, Locale(identifier: "ru_RU"))
+        .environment(\.coverSelectionSource, runtime.coverSelection)
         .animation(
             reduceMotion ? nil : .easeOut(duration: 0.2),
             value: runtime.ready && introductionComplete

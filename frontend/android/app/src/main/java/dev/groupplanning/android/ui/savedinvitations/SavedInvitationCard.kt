@@ -15,7 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.SavedInvitation
+import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.meetingTime
+import dev.groupplanning.android.ui.covers.CoverImage
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -27,6 +29,9 @@ internal fun SavedInvitationCard(item: SavedInvitation, select: () -> Unit) {
         color = Palette.surface,
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            item.preview.coverUrl?.let {
+                CoverImage(CoverSource.Remote(it, item.preview.meetingId), thumbnail = true)
+            }
             Text(item.preview.title, fontWeight = FontWeight.Bold)
             Text(
                 meetingTime(item.preview.startsAt, item.preview.timezone, item.preview.startsOn),

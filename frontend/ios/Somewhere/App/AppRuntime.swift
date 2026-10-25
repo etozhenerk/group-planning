@@ -5,6 +5,7 @@ import Observation
 final class AppRuntime {
     let session: SessionStore?
     let signIn: YandexSignIn?
+    let coverSelection: (any CoverSelectionSource)?
     @ObservationIgnored private var pendingAuthURL: URL?
     let drafts: DraftRepository
     let api: APIClient?
@@ -21,10 +22,12 @@ final class AppRuntime {
     init(
         session: SessionStore?, drafts: DraftRepository, credential: StoredSession? = nil,
         api: APIClient? = nil, links: PendingInvitationStore? = nil,
-        linkScheme: String? = nil, signIn: YandexSignIn? = nil
+        linkScheme: String? = nil, signIn: YandexSignIn? = nil,
+        coverSelection: (any CoverSelectionSource)? = nil
     ) {
         self.session = session
         self.signIn = signIn
+        self.coverSelection = coverSelection
         self.api = api ?? session?.api
         self.links =
             links

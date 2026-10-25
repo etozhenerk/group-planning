@@ -44,7 +44,8 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
     'Суббота без спешки',
   );
-  await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
+  await expect(page.getByLabel('Название', { exact: true })).toBeDisabled();
+  await page.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Встреча создана' })).toBeVisible();
   expect(creates).toBe(2);
   expect(keys[0]).toBe(keys[1]);

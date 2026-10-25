@@ -1,3 +1,4 @@
+import { coverDataURL } from '@/entities/meeting/model/cover';
 import styles from '@/entities/meeting/ui/DraftPreview/DraftPreview.module.css';
 import { validDay } from '@/shared/lib/time';
 import { Sparkles } from 'lucide-react';
@@ -15,6 +16,13 @@ export const DraftPreview = ({ draft }: DraftPreviewProps) => {
         <span className={styles['meeting-emblem']}>
           <Sparkles aria-hidden="true" size={24} />
         </span>
+        {draft.cover && (
+          <img
+            className={styles.cover}
+            src={coverDataURL(draft.cover)}
+            alt="Обложка в приглашении"
+          />
+        )}
         <h3>{draft.title.trim() || 'Название встречи'}</h3>
         <MeetingFacts
           startsAt={draftPreview(draft)}

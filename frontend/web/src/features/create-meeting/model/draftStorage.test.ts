@@ -1,8 +1,14 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { preparedCoverSchema } from '@/shared/api';
 import { emptyDraft } from '@/entities/meeting';
-import { readDraft, storeDraft } from '@/features/create-meeting/model/draftStorage';
+import {
+  readDraft,
+  storeDraft,
+  readPendingCreation,
+} from '@/features/create-meeting/model/draftStorage';
 
 vi.mock('@/entities/meeting', () => ({
+  preparedCoverSchema,
   emptyDraft: () => ({
     title: '',
     description: '',
@@ -60,4 +66,20 @@ it('list navigation and invalid URL dates preserve the existing draft', () => {
   for (const date of [null, '', '2026-02-30', '2026-10-24T00:00:00Z']) {
     expect(readDraft('sasha', date, 'new')).toEqual(draft);
   }
+});
+
+it('keeps the prepared cover and pending request key isolated by account', () => {
+  const draft = {
+    ...emptyDraft(),
+    title: 'С фото',
+    cover: { media_type: 'image/jpeg' as const, data: 'AQID' },
+  };
+
+  const key = '61c27f82-053e-4bfc-85ce-2b3a35ed9977';
+  storeDraft('sasha', draft, 'entry', key);
+  expect(readDraft('sasha', null, 'entry')).toEqual(draft);
+  expect(readPendingCreation('sasha')).toEqual({ key, draft });
+  expect(readPendingCreation('lena')).toBeNull();
+  storeDraft('sasha', draft, 'entry');
+  expect(readPendingCreation('sasha')).toBeNull();
 });

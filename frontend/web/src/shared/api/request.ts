@@ -3,6 +3,9 @@ import { ApiError, parseApiError } from '@/shared/api/errors';
 
 const authEvents = new EventTarget();
 
+export const reportUnauthorized = () =>
+  authEvents.dispatchEvent(new Event('unauthorized'));
+
 export const onUnauthorized = (callback: () => void): (() => void) => {
   authEvents.addEventListener('unauthorized', callback);
 
@@ -25,7 +28,7 @@ export const request = async <T>(
 
   if (!response.ok) {
     if (response.status === 401 && !optionalSession) {
-      authEvents.dispatchEvent(new Event('unauthorized'));
+      reportUnauthorized();
     }
 
     throw parseApiError(response.status, body);

@@ -2,6 +2,7 @@ export {
   request,
   writeOptions,
   onUnauthorized,
+  reportUnauthorized,
   logoutRequest,
 } from '@/shared/api/request';
 
@@ -56,3 +57,5 @@ export type { WirePlacePoll } from '@/shared/api/placePollSchema';
 export { preparationTaskSchema } from '@/shared/api/preparationTaskSchema';
 
 export type { WirePreparationTask } from '@/shared/api/preparationTaskSchema';
+
+export { preparedCoverSchema } from '@/shared/api/coverSchema';

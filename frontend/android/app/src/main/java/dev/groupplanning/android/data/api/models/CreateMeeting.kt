@@ -9,10 +9,13 @@ import kotlinx.serialization.Serializable
 internal data class CreateMeeting(
     val title: String,
     val description: String? = null,
-    @SerialName("starts_at") val startsAt: ApiInstant?,
+    @SerialName("starts_at") val startsAt: ApiInstant? = null,
     val timezone: String,
     val place: String? = null,
     @OptIn(ExperimentalSerializationApi::class)
     @EncodeDefault(EncodeDefault.Mode.NEVER)
     @SerialName("starts_on") val startsOn: String? = null,
+    @OptIn(ExperimentalSerializationApi::class)
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    val cover: PreparedCover? = null,
 )

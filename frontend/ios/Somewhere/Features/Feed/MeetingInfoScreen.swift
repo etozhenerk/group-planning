@@ -17,6 +17,11 @@ struct MeetingInfoScreen: View {
                 if owner.current, let meeting = owner.meeting {
                     VStack(alignment: .leading, spacing: 28) {
                         MeetingInfoFacts(meeting: meeting)
+                        if let url = meeting.coverURL {
+                            CoverImageView(
+                                source: .remote(url, meeting.id), api: owner.session.api,
+                                session: owner.session)
+                        }
                         if owner.invitation.organizer {
                             OrganizerInvitationView(owner: owner.invitation)
                             NavigationLink {

@@ -2030,6 +2030,206 @@ paths:
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CSRF"
+  /api/v1/meetings/{id}/cover:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - name: v
+        in: query
+        required: true
+        schema:
+          type: string
+          pattern: "^[a-f0-9]{64}$"
+    get:
+      operationId: readMeetingCover
+      summary: Обложка встречи с проверкой текущего доступа к разговору
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Изображение (HEAD возвращает только заголовки).
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: private, no-store
+            X-Content-Type-Options:
+              schema:
+                type: string
+                const: nosniff
+            Content-Length:
+              schema:
+                type: integer
+                minimum: 1
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        "default":
+          $ref: "#/components/responses/APIError"
+    head:
+      operationId: headMeetingCover
+      summary: Обложка встречи с проверкой текущего доступа к разговору
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      responses:
+        "200":
+          description: Изображение (HEAD возвращает только заголовки).
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: private, no-store
+            X-Content-Type-Options:
+              schema:
+                type: string
+                const: nosniff
+            Content-Length:
+              schema:
+                type: integer
+                minimum: 1
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        "default":
+          $ref: "#/components/responses/APIError"
+  /api/v1/invitations/{token}/cover:
+    parameters:
+      - $ref: "#/components/parameters/Token"
+      - name: v
+        in: query
+        required: true
+        schema:
+          type: string
+          pattern: "^[a-f0-9]{64}$"
+    get:
+      operationId: readInvitationCover
+      summary: Обложка по действующей ссылке приглашения
+      tags: [meetings]
+      x-implemented: true
+      security: []
+      responses:
+        "200":
+          description: Изображение (HEAD возвращает только заголовки).
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: private, no-store
+            X-Content-Type-Options:
+              schema:
+                type: string
+                const: nosniff
+            Content-Length:
+              schema:
+                type: integer
+                minimum: 1
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        "default":
+          $ref: "#/components/responses/APIError"
+    head:
+      operationId: headInvitationCover
+      summary: Обложка по действующей ссылке приглашения
+      tags: [meetings]
+      x-implemented: true
+      security: []
+      responses:
+        "200":
+          description: Изображение (HEAD возвращает только заголовки).
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: private, no-store
+            X-Content-Type-Options:
+              schema:
+                type: string
+                const: nosniff
+            Content-Length:
+              schema:
+                type: integer
+                minimum: 1
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        "default":
+          $ref: "#/components/responses/APIError"
 components:
   securitySchemes:
     WebSession:
@@ -2248,9 +2448,27 @@ components:
         - can_access_feed
         - meeting_revision
       additionalProperties: true
+    CoverInput:
+      description: JPEG/PNG до 5 MiB и 16 миллионов пикселей. Сервер проверяет и повторно кодирует изображение.
+      type: object
+      properties:
+        media_type:
+          type: string
+          enum: [image/jpeg, image/png]
+        data:
+          type: string
+          minLength: 4
+          maxLength: 6990508
+          pattern: '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
+      required: [media_type, data]
+      additionalProperties: false
     CreateMeeting:
       type: object
       properties:
+        cover:
+          anyOf:
+            - $ref: "#/components/schemas/CoverInput"
+            - type: "null"
         title:
           type: string
           minLength: 1
@@ -2296,6 +2514,10 @@ components:
     UpdateMeeting:
       type: object
       properties:
+        cover:
+          anyOf:
+            - $ref: "#/components/schemas/CoverInput"
+            - type: "null"
         title:
           type: string
           minLength: 1

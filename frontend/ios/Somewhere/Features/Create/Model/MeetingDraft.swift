@@ -11,6 +11,7 @@ struct MeetingDraft: Codable, Equatable, Sendable {
         let minute: Int
     }
     enum Repetition: String, Codable, Sendable { case earlier, later }
+    var cover: CoverDraft?
     var title = ""
     var description = ""
     var place = ""
@@ -20,6 +21,7 @@ struct MeetingDraft: Codable, Equatable, Sendable {
     let timezone: String
     var isEmpty: Bool {
         title.isEmpty && description.isEmpty && place.isEmpty && day == nil && clock == nil
+            && cover?.image == nil
     }
 
     func input() throws -> CreateMeeting {
@@ -35,7 +37,7 @@ struct MeetingDraft: Codable, Equatable, Sendable {
             return CreateMeeting(
                 title: title, description: description.isEmpty ? nil : description,
                 startsAt: nil, timezone: timezone, place: place.isEmpty ? nil : place,
-                startsOn: startsOn)
+                startsOn: startsOn, cover: cover?.image)
         }
         let date = try LocalMeetingTime.resolve(self)
         let zone = try LocalMeetingTime.zone(timezone)
@@ -43,7 +45,7 @@ struct MeetingDraft: Codable, Equatable, Sendable {
         return CreateMeeting(
             title: title, description: description.isEmpty ? nil : description,
             startsAt: try APIInstant(date.formatted(format)), timezone: timezone,
-            place: place.isEmpty ? nil : place)
+            place: place.isEmpty ? nil : place, cover: cover?.image)
     }
 }
 

@@ -18,13 +18,15 @@ internal data class MeetingDraft(
     val day: String? = null,
     val time: String? = null,
     val repetition: Repetition? = null,
+    val cover: CoverDraft? = null,
 ) {
     val isEmpty: Boolean
         get() = title.isEmpty() &&
             description.isEmpty() &&
             place.isEmpty() &&
             day == null &&
-            time == null
+            time == null &&
+            cover?.image == null
 
     fun validate(): DraftValidation {
         val name = title.trim()
@@ -52,6 +54,7 @@ internal data class MeetingDraft(
                     startsAt = null,
                     timezone = timezone,
                     place = place.ifEmpty { null },
+                    cover = cover?.image,
                     startsOn = date.toString(),
                 ),
             )
@@ -75,6 +78,7 @@ internal data class MeetingDraft(
                 startsAt = ApiInstant(instant),
                 timezone = timezone,
                 place = place.ifEmpty { null },
+                cover = cover?.image,
             ),
         )
     }

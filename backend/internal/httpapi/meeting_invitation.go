@@ -30,7 +30,7 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 
 	preview, response, err := h.app.PreviewForUser(r.Context(), r.PathValue("token"), userID)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -42,6 +42,7 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 		StartsAt:       preview.StartsAt,
 		Timezone:       preview.Timezone,
 		Place:          optionalString(preview.Place),
+		CoverURL:       h.coverURL("invitations/"+r.PathValue("token"), preview.CoverVersion),
 		MyRSVP:         optionalString(string(response.Answer)),
 		MyRSVPRevision: decimal(response.Revision),
 	})
@@ -68,7 +69,7 @@ func (h meetingHandlers) invitation(w http.ResponseWriter, r *http.Request) {
 
 	token, err := h.app.Invitation(r.Context(), actor, id)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -123,7 +124,7 @@ func (h meetingHandlers) respond(w http.ResponseWriter, r *http.Request) {
 
 	result, err := h.app.Respond(r.Context(), actor, id, token, meetings.Answer(input.Answer), expected, key)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -151,7 +152,7 @@ func (h meetingHandlers) participants(w http.ResponseWriter, r *http.Request) {
 
 	participants, err := h.app.Participants(r.Context(), actor, id)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -162,7 +163,7 @@ func (h meetingHandlers) participants(w http.ResponseWriter, r *http.Request) {
 
 	users, err := h.identity.Users(r.Context(), ids)
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 

@@ -8,12 +8,13 @@ import (
 )
 
 type createMeetingRequest struct {
-	Title       string  `json:"title"`
-	Description *string `json:"description"`
-	StartsOn    string  `json:"starts_on"`
-	StartsAt    *string `json:"starts_at"`
-	Timezone    string  `json:"timezone"`
-	Place       *string `json:"place"`
+	Cover       json.RawMessage `json:"cover"`
+	Title       string          `json:"title"`
+	Description *string         `json:"description"`
+	StartsOn    string          `json:"starts_on"`
+	StartsAt    *string         `json:"starts_at"`
+	Timezone    string          `json:"timezone"`
+	Place       *string         `json:"place"`
 }
 
 func stringValue(value *string) string {
@@ -45,11 +46,17 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var input createMeetingRequest
-		if !decodeJSON(w, r, &input) {
+		if !decodeJSONLimit(w, r, &input, maxCoverBodyBytes) {
+			return
+		}
+
+		cover, ok := parseCover(w, input.Cover)
+		if !ok {
 			return
 		}
 
 		result, err := h.app.Create(r.Context(), actor, meetings.CreateInput{
+			Cover:       cover,
 			Title:       input.Title,
 			Description: stringValue(input.Description),
 			StartsOn:    input.StartsOn,
@@ -58,11 +65,11 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 			Place:       stringValue(input.Place),
 		}, key)
 		if err != nil {
-			writeMeetingError(w, err)
+			h.writeMeetingError(w, err)
 			return
 		}
 
-		writeJSON(w, 201, createdMeetingResponse{meetingDTO(result.Details), "organizer", h.link(result.InvitationToken)})
+		writeJSON(w, 201, createdMeetingResponse{h.meetingDTO(result.Details), "organizer", h.link(result.InvitationToken)})
 
 		return
 	}
@@ -94,7 +101,7 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 
 	result, err := h.app.List(r.Context(), actor, limit, values.Get("cursor"))
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
@@ -103,13 +110,14 @@ func (h meetingHandlers) collection(w http.ResponseWriter, r *http.Request) {
 		NextCursor: optionalString(result.NextCursor),
 	}
 	for _, details := range result.Meetings {
-		response.Meetings = append(response.Meetings, summaryDTO(details))
+		response.Meetings = append(response.Meetings, h.summaryDTO(details))
 	}
 
 	writeJSON(w, 200, response)
 }
 
 type updateMeetingRequest struct {
+	Cover            json.RawMessage `json:"cover"`
 	Title            json.RawMessage `json:"title"`
 	Description      json.RawMessage `json:"description"`
 	StartsOn         json.RawMessage `json:"starts_on"`
@@ -162,6 +170,14 @@ func parseUpdate(w http.ResponseWriter, input updateMeetingRequest) (meetings.Up
 	}
 
 	result.ExpectedRevision = revision
+	if len(input.Cover) != 0 {
+		cover, ok := parseCover(w, input.Cover)
+		if !ok {
+			return meetings.UpdateInput{}, false
+		}
+
+		result.Cover = &meetings.CoverChange{Value: cover}
+	}
 
 	return result, true
 }
@@ -194,7 +210,7 @@ func (h meetingHandlers) details(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var input updateMeetingRequest
-		if !decodeJSON(w, r, &input) {
+		if !decodeJSONLimit(w, r, &input, maxCoverBodyBytes) {
 			return
 		}
 
@@ -209,9 +225,9 @@ func (h meetingHandlers) details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		writeMeetingError(w, err)
+		h.writeMeetingError(w, err)
 		return
 	}
 
-	writeJSON(w, 200, meetingDTO(details))
+	writeJSON(w, 200, h.meetingDTO(details))
 }

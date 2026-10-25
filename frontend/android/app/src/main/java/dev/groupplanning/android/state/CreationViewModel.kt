@@ -91,8 +91,18 @@ internal class CreationViewModel(
         }
     }
 
+    fun preparingCover(value: Boolean) {
+        mutable.value = state.value.copy(preparingCover = value)
+    }
+
     fun submit() {
-        if (!state.value.ready || state.value.busy || operation?.isActive == true) return
+        if (!state.value.ready ||
+            state.value.busy ||
+            state.value.preparingCover ||
+            operation?.isActive == true
+        ) {
+            return
+        }
         mutable.value = state.value.copy(busy = true, problem = null)
         persistence?.cancel()
         operation = viewModelScope.launch { performSubmit() }
@@ -183,6 +193,6 @@ internal class CreationViewModel(
 
     private companion object {
         const val PENDING_TEXT =
-            "Результат сохранения не подтверждён. Повторите запрос с теми же данными."
+            "Не удалось подтвердить создание. Повторите отправку."
     }
 }

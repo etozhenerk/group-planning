@@ -1,3 +1,4 @@
+import { MeetingCover } from '@/entities/meeting';
 import { Link } from 'react-router';
 import { ArrowUpRight, Mail } from 'lucide-react';
 import type { SavedInvitation } from '@/entities/meeting';
@@ -8,9 +9,17 @@ export type InvitationCardProps = { item: SavedInvitation };
 
 export const InvitationCard = ({ item }: InvitationCardProps) => (
   <Link to={item.path} className={styles.card} data-testid="saved-invitation">
-    <div className={styles.icon}>
-      <Mail size={28} aria-hidden="true" />
-    </div>
+    {item.preview.coverUrl ? (
+      <MeetingCover
+        url={item.preview.coverUrl}
+        meeting={item.preview.meetingId}
+        thumbnail
+      />
+    ) : (
+      <div className={styles.icon}>
+        <Mail size={28} aria-hidden="true" />
+      </div>
+    )}
     <div className={styles.info}>
       <h2>{item.preview.title}</h2>
       <p>

@@ -1,7 +1,7 @@
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import styles from '@/widgets/meeting-details/ui/DetailsContent/DetailsContent.module.css';
 import type { Meeting } from '@/entities/meeting';
-import { MeetingFacts, useParticipants } from '@/entities/meeting';
+import { MeetingFacts, MeetingCover, useParticipants } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { ResponseButtons } from '@/features/respond';
 import { ParticipantRow } from '@/widgets/meeting-details/ui/ParticipantRow';
@@ -23,6 +23,13 @@ export const DetailsContent = ({
 
   return (
     <div className={[styles['stack'], styles['details-content']].join(' ')}>
+      {meeting.coverUrl && (
+        <MeetingCover
+          url={meeting.coverUrl}
+          meeting={meeting.id}
+          user={session.user.id}
+        />
+      )}
       <MeetingFacts
         startsAt={meeting.startsAt}
         startsOn={meeting.startsOn ?? null}

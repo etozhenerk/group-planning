@@ -36,6 +36,7 @@ internal object RuntimeFactory {
             scenario in
                 setOf(
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
+                    "cover-create", "cover-edit", "cover-large", "cover-system",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
                     "feed-owner", "feed-persistence",
                     "calendar", "calendar-large", "calendar-empty",
@@ -88,6 +89,13 @@ internal object RuntimeFactory {
             ApiClient(origin, OkHttpTransport(http)),
             credential?.let { StoredSession(it.token, it.expiresAt) },
             namespace = if (scenario == "invite-rsvp-reentry") "invite-rsvp" else scenario,
+            coverSelection = if (scenario.startsWith("cover-") &&
+                scenario != "cover-system"
+            ) {
+                TestCoverSelection(context)
+            } else {
+                null
+            },
         )
     }
 }

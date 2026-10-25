@@ -53,6 +53,8 @@ struct CreationOwnerTests {
         let harness = try SessionHarness()
         let storage = MemoryDraftStorage()
         let owner = try await owner(harness, storage: storage)
+        let cover = try CoverFixtures.cover()
+        owner.change { $0.cover = .image(cover) }
         await harness.transport.enqueue("/api/v1/meetings", status: 503)
         await owner.submit()
         #expect(owner.frozen && owner.created == nil)

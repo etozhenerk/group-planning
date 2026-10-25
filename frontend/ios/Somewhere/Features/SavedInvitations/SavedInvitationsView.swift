@@ -25,7 +25,9 @@ struct SavedInvitationsView: View {
                             text: "Здесь будут встречи, на которые вы ответили «Возможно».")
                     }
                     ForEach(owner.items) { item in
-                        SavedInvitationCard(item: item) { target = owner.target(item) }
+                        SavedInvitationCard(item: item, api: owner.session.api) {
+                            target = owner.target(item)
+                        }
                     }
                     if owner.page.value?.nextCursor != nil {
                         ActionButton(

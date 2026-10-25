@@ -43,5 +43,5 @@ func (h meetingHandlers) createDatePoll(w http.ResponseWriter, r *http.Request) 
 			HideResults:     settings.HideResults,
 		},
 	}, call.Key)
-	writeDatePoll(w, view, err, 201)
+	h.writeDatePoll(w, view, err, 201)
 }

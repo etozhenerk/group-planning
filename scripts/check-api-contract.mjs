@@ -71,3 +71,11 @@ for (const invalid of [incompleteCalendar, missingDate, { meetings: [], next_cur
   assert.throws(() => validate('MeetingsPage', invalid), 'Accepted incomplete calendar payload');
 }
 console.log(`API contract: ${Object.keys(definitions).length} schemas and ${fixtures.length} fixtures checked.`);
+
+const coveredCreation = fixtures.find(item => item.name === 'create-with-cover');
+assert(coveredCreation);
+validate('CoverInput', coveredCreation.body.cover);
+validate('UpdateMeeting', { expected_revision: '2', cover: null });
+for (const cover of [{ media_type: 'image/svg+xml', data: 'PHN2Zy8+' }, { media_type: 'image/png', data: 'https://example.test/photo' }]) {
+  assert.throws(() => validate('CoverInput', cover), 'Accepted invalid cover payload');
+}

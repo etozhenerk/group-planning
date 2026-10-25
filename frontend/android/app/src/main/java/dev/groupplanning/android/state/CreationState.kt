@@ -7,6 +7,7 @@ internal data class CreationState(
     val record: DraftRecord,
     val ready: Boolean = false,
     val busy: Boolean = false,
+    val preparingCover: Boolean = false,
     val problem: String? = null,
     val warning: String? = null,
     val ambiguous: Boolean = false,
@@ -14,5 +15,5 @@ internal data class CreationState(
     val closed: Boolean = false,
 ) {
     val frozen: Boolean get() = record.submission != null
-    val editable: Boolean get() = ready && !busy && !frozen
+    val editable: Boolean get() = ready && !busy && !frozen && !preparingCover
 }

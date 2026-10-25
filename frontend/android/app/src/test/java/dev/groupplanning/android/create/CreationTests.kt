@@ -2,6 +2,8 @@ package dev.groupplanning.android.create
 
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.CreatedMeeting
+import dev.groupplanning.android.data.api.models.PreparedCover
+import dev.groupplanning.android.data.drafts.CoverDraft
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.support.Fixtures
 import kotlinx.coroutines.test.advanceTimeBy
@@ -71,7 +73,14 @@ class CreationTests {
         val first = h.model()
         first.load()
         runCurrent()
-        first.change { it.copy(title = "Настолки", day = "2026-10-24", time = "19:00") }
+        first.change {
+            it.copy(
+                title = "Настолки",
+                day = "2026-10-24",
+                time = "19:00",
+                cover = CoverDraft(PreparedCover("image/jpeg", "Y292ZXI=")),
+            )
+        }
         h.api.transport.enqueue("meetings", status = 503)
         first.submit()
         first.submit()

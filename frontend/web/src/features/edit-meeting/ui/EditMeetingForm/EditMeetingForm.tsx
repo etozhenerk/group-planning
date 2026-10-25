@@ -1,6 +1,8 @@
+import { EditConflict } from '@/features/edit-meeting/ui/EditConflict';
+import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import styles from '@/features/edit-meeting/ui/EditMeetingForm/EditMeetingForm.module.css';
 import type { Meeting } from '@/entities/meeting';
-import { MeetingFields } from '@/entities/meeting';
+import { MeetingFields, CoverEditor } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { useEdit } from '@/features/edit-meeting/model/useEdit';
 
@@ -18,23 +20,42 @@ export const EditMeetingForm = ({ meeting, session, onSaved }: EditMeetingFormPr
       <MeetingFields
         value={form.value}
         onChange={form.change}
-        disabled={form.pending}
+        disabled={form.locked}
         errors={form.errors}
+      />
+      <CoverEditor
+        value={form.value.cover}
+        onChange={(cover) => form.change({ ...form.value, cover })}
+        onBusy={form.setPreparing}
+        disabled={form.locked}
+        invalid={!!form.errors.cover}
+        original={{ url: meeting.coverUrl, meeting: meeting.id, user: session.user.id }}
       />
       <p role="alert" className={styles['error']}>
         {form.problem}
       </p>
       {form.conflict && (
-        <p className={styles['muted']}>
-          Закройте форму и проверьте обновлённые детали. Введённые изменения не применены.
-        </p>
+        <EditConflict
+          meeting={meeting}
+          user={session.user.id}
+          resume={form.resume}
+          ready={form.rebaseReady}
+        />
       )}
       <button
         type="submit"
         className={styles['primary']}
-        disabled={form.pending || form.conflict}
+        disabled={form.pending || form.preparing || form.conflict}
+        aria-label={form.uncertain ? 'Повторить отправку' : 'Сохранить изменения'}
+        aria-busy={form.pending}
       >
-        {form.pending ? 'Сохраняем…' : 'Сохранить изменения'}
+        {form.pending ? (
+          <ButtonSpinner />
+        ) : form.uncertain ? (
+          'Повторить отправку'
+        ) : (
+          'Сохранить изменения'
+        )}
       </button>
     </form>
   );

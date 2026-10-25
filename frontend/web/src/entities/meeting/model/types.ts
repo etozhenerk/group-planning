@@ -1,3 +1,4 @@
+import type { PreparedCover } from '@/entities/meeting/model/cover';
 import type { Answer } from '@/shared/api';
 
 export type MeetingSummary = {
@@ -78,6 +79,7 @@ export type FeedPage = {
 export type Conversation = FeedPage & { hasOlder: boolean };
 
 export type MeetingDraft = {
+  cover?: PreparedCover | null | undefined;
   title: string;
   description: string;
   localTime: string;
@@ -87,6 +89,7 @@ export type MeetingDraft = {
 };
 
 export type MeetingInput = {
+  cover?: PreparedCover | null | undefined;
   title: string;
   description: string | null;
   starts_at: string | null;

@@ -6,6 +6,10 @@ struct CreationFormView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 CreationFieldsView(owner: owner)
+                CoverEditor(
+                    value: owner.value.cover, disabled: !owner.editable,
+                    onBusy: { owner.preparingCover = $0 },
+                    onChange: { cover in owner.change { $0.cover = cover } })
                 if let problem = owner.problem {
                     Text(problem).foregroundStyle(AppPalette.error).accessibilityIdentifier(
                         "create-problem")
@@ -14,14 +18,10 @@ struct CreationFormView: View {
                     Text(warning).foregroundStyle(AppPalette.error)
                 }
                 ActionButton(
-                    title: owner.busy
-                        ? "Сохраняем…" : owner.frozen ? "Повторить сохранение" : "Создать встречу",
-                    disabled: owner.busy, action: owner.startSubmit
+                    title: owner.frozen ? "Повторить сохранение" : "Создать встречу",
+                    disabled: owner.preparingCover, busy: owner.busy, action: owner.startSubmit
                 )
                 .accessibilityIdentifier("create-submit")
-                if owner.busy {
-                    ProgressView().tint(AppPalette.accent).accessibilityLabel("Сохраняем встречу")
-                }
                 Text("После создания появится ссылка для друзей.").font(.footnote).foregroundStyle(
                     AppPalette.muted)
             }.padding(24)

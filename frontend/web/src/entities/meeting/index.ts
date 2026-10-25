@@ -119,3 +119,9 @@ export {
 } from '@/entities/meeting/api/preparationTask';
 
 export { usePreparationTask } from '@/entities/meeting/model/usePreparationTask';
+
+export { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
+
+export { CoverEditor } from '@/entities/meeting/ui/CoverEditor';
+
+export { preparedCoverSchema } from '@/entities/meeting/model/cover';

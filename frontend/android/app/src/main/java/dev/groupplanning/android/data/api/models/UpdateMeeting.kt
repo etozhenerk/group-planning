@@ -1,10 +1,12 @@
 package dev.groupplanning.android.data.api.models
 
+import dev.groupplanning.android.data.api.apiJson
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.put
 
 internal sealed interface FieldChange<out T> {
@@ -16,6 +18,7 @@ internal sealed interface FieldChange<out T> {
 internal data class UpdateMeeting(
     val expectedRevision: ServerCounter,
     val title: String? = null,
+    val cover: FieldChange<PreparedCover> = FieldChange.Unchanged,
     val description: FieldChange<String> = FieldChange.Unchanged,
     val startsAt: FieldChange<ApiInstant> = FieldChange.Unchanged,
     val startsOn: String? = null,
@@ -25,6 +28,11 @@ internal data class UpdateMeeting(
     fun json(): JsonObject = buildJsonObject {
         put("expected_revision", expectedRevision.value)
         title?.let { put("title", it) }
+        when (cover) {
+            FieldChange.Unchanged -> Unit
+            FieldChange.Clear -> put("cover", JsonNull)
+            is FieldChange.Value -> put("cover", apiJson.encodeToJsonElement(cover.value))
+        }
         when (startsAt) {
             FieldChange.Unchanged -> Unit
             FieldChange.Clear -> put("starts_at", JsonNull)

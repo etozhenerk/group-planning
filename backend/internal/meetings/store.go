@@ -24,6 +24,7 @@ type Store interface {
 
 // Reader returns independent copies. It is valid only for its callback's lifetime.
 type Reader interface {
+	Cover(string) (Cover, error)
 	PreparationTask(string) (PreparationTask, error)
 	PreparationTasks(string) ([]PreparationTask, error)
 	Meeting(string) (Meeting, error)
@@ -50,6 +51,8 @@ type Reader interface {
 type Writer interface {
 	Reader
 	SaveMeeting(Meeting) error
+	SaveCover(Cover) error
+	DeleteCover(string) error
 	SavePlacePoll(PlacePoll) error
 	SavePreparationTask(PreparationTask) error
 	SaveDatePoll(DatePoll) error

@@ -36,14 +36,29 @@ internal class OkHttpTransport(client: OkHttpClient = OkHttpClient()) : HttpTran
                     try {
                         val result = response.use {
                             val source = it.body?.source()
-                            source?.request(MAX_BYTES + 1)
-                            if ((source?.buffer?.size ?: 0) > MAX_BYTES) {
+                            val limit = if (request.header("Accept") ==
+                                "image/jpeg, image/png"
+                            ) {
+                                5L * 1024 * 1024
+                            } else {
+                                MAX_BYTES
+                            }
+                            source?.request(limit + 1)
+                            if ((source?.buffer?.size ?: 0) > limit) {
                                 throw ClientFailure(FailureKind.InvalidResponse)
                             }
+                            val bytes = source?.readByteArray() ?: byteArrayOf()
                             WireResponse(
                                 it.code,
                                 it.header("Content-Type"),
-                                source?.readUtf8().orEmpty(),
+                                if (it.header("Content-Type")?.startsWith("image/") ==
+                                    true
+                                ) {
+                                    ""
+                                } else {
+                                    bytes.decodeToString()
+                                },
+                                bytes,
                             )
                         }
                         wait.resume(result)

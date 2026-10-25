@@ -720,5 +720,36 @@
     "path": "/api/v1/meetings/{id}/preparation-tasks/{task_id}",
     "method": "get",
     "status": 200
+  },
+  {
+    "name": "public-invitation-with-cover",
+    "schema": "InvitationPreview",
+    "body": {
+      "meeting_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+      "title": "Суббота без спешки",
+      "starts_at": "2026-10-24T19:00:00+03:00",
+      "timezone": "Europe/Moscow",
+      "place": null,
+      "cover_url": "https://api.example.test/api/v1/invitations/abcdefghijklmnopqrstuv/cover?v=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": "Пицца и настольные игры."
+    },
+    "path": "/api/v1/invitations/{token}",
+    "method": "get",
+    "status": 200
+  },
+  {
+    "name": "create-with-cover",
+    "schema": "CreateMeeting",
+    "body": {
+      "title": "Суббота",
+      "starts_on": "2026-12-20",
+      "timezone": "Europe/Moscow",
+      "cover": {
+        "media_type": "image/png",
+        "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC"
+      }
+    }
   }
 ]

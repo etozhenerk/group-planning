@@ -7,9 +7,10 @@ struct CreateMeeting: Codable, Equatable, Sendable {
     let timezone: String
     let place: String?
     var startsOn: String?
+    var cover: PreparedCover?
 
     enum CodingKeys: String, CodingKey {
-        case title
+        case title, cover
         case description
         case startsAt = "starts_at"
         case startsOn = "starts_on"

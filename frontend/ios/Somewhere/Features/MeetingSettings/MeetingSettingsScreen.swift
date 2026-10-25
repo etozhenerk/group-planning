@@ -13,6 +13,12 @@ struct MeetingSettingsScreen: View {
             if owner.current {
                 VStack(alignment: .leading, spacing: 24) {
                     MeetingSettingsFields(owner: owner)
+                    CoverEditor(
+                        value: owner.value.cover, original: owner.original.coverURL,
+                        meetingID: owner.original.id, session: owner.session,
+                        disabled: !owner.editable,
+                        onBusy: { owner.preparingCover = $0 },
+                        onChange: { cover in owner.change { $0.cover = cover } })
                     if let problem = owner.problem {
                         Text(problem).foregroundStyle(AppPalette.error).accessibilityIdentifier(
                             "settings-error")
@@ -24,11 +30,10 @@ struct MeetingSettingsScreen: View {
                         .accessibilityIdentifier("settings-reload")
                     } else {
                         ActionButton(
-                            title: owner.saving
-                                ? "Сохраняем…"
-                                : owner.pending == nil ? "Сохранить" : "Повторить сохранение",
-                            disabled: owner.saving || owner.forbidden
-                                || (!owner.dirty && owner.pending == nil), action: owner.save
+                            title: owner.pending == nil ? "Сохранить" : "Повторить сохранение",
+                            disabled: owner.preparingCover || owner.forbidden
+                                || (!owner.dirty && owner.pending == nil), busy: owner.saving,
+                            action: owner.save
                         )
                         .accessibilityIdentifier("settings-save")
                     }
@@ -40,7 +45,7 @@ struct MeetingSettingsScreen: View {
             .safeAreaInset(edge: .top, spacing: 0) {
                 MeetingPanelHeader(title: "Настройки", back: true) {
                     if owner.dirty || owner.pending != nil { discard = true } else { dismiss() }
-                }.disabled(owner.saving)
+                }.disabled(owner.saving || owner.preparingCover)
             }
             .interactiveDismissDisabled(owner.dirty || owner.pending != nil)
             .confirmationDialog(

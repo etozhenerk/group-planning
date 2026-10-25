@@ -1,9 +1,11 @@
 import { z } from 'zod';
 import { validDay } from '@/shared/lib/time';
-import { emptyDraft } from '@/entities/meeting';
+import { emptyDraft, preparedCoverSchema } from '@/entities/meeting';
 import type { MeetingDraft } from '@/entities/meeting';
 
 const schema = z.object({
+  attemptKey: z.uuid().optional(),
+  cover: preparedCoverSchema.nullable().optional(),
   creationEntry: z.string().optional(),
   title: z.string(),
   description: z.string(),
@@ -19,9 +21,11 @@ const storedDraft = (user: string) => {
       JSON.parse(sessionStorage.getItem(`somewhere-draft:${user}`) ?? 'null'),
     );
 
-    return parsed.success ? parsed.data : { ...emptyDraft(), creationEntry: undefined };
+    return parsed.success
+      ? parsed.data
+      : { ...emptyDraft(), creationEntry: undefined, attemptKey: undefined };
   } catch {
-    return { ...emptyDraft(), creationEntry: undefined };
+    return { ...emptyDraft(), creationEntry: undefined, attemptKey: undefined };
   }
 };
 
@@ -30,7 +34,8 @@ export const readDraft = (
   date: string | null,
   entry: string,
 ): MeetingDraft => {
-  const { creationEntry, ...draft } = storedDraft(user);
+  const { creationEntry, attemptKey: _attemptKey, ...draft } = storedDraft(user);
+  void _attemptKey;
   const day = validDay(date);
 
   if (!day || creationEntry === entry) {
@@ -44,11 +49,16 @@ export const readDraft = (
   };
 };
 
-export const storeDraft = (user: string, value: MeetingDraft, entry: string) => {
+export const storeDraft = (
+  user: string,
+  value: MeetingDraft,
+  entry: string,
+  attemptKey?: string,
+) => {
   try {
     sessionStorage.setItem(
       `somewhere-draft:${user}`,
-      JSON.stringify({ ...value, creationEntry: entry }),
+      JSON.stringify({ ...value, creationEntry: entry, attemptKey }),
     );
   } catch {
     /* The in-memory draft remains available when browser storage is disabled. */
@@ -57,4 +67,12 @@ export const storeDraft = (user: string, value: MeetingDraft, entry: string) => 
 
 export const removeDraft = (user: string) => {
   sessionStorage.removeItem(`somewhere-draft:${user}`);
+};
+
+export const readPendingCreation = (user: string) => {
+  const { attemptKey, creationEntry: _entry, ...draft } = storedDraft(user);
+
+  void _entry;
+
+  return attemptKey ? { key: attemptKey, draft } : null;
 };

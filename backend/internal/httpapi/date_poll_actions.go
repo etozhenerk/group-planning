@@ -32,7 +32,7 @@ func (h meetingHandlers) voteDatePoll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	view, err := h.app.VoteDatePoll(r.Context(), call.Actor, call.MeetingID, call.PollID, meetings.DateVoteInput{OptionIDs: *input.OptionIDs, ExpectedRevision: revision}, call.Key)
-	writeDatePoll(w, view, err, 200)
+	h.writeDatePoll(w, view, err, 200)
 }
 
 func (h meetingHandlers) addDateOption(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +55,7 @@ func (h meetingHandlers) addDateOption(w http.ResponseWriter, r *http.Request) {
 	}
 
 	view, err := h.app.AddDateOption(r.Context(), call.Actor, call.MeetingID, call.PollID, meetings.AddDateOptionInput{Date: input.Date, ExpectedRevision: revision}, call.Key)
-	writeDatePoll(w, view, err, 200)
+	h.writeDatePoll(w, view, err, 200)
 }
 
 func (h meetingHandlers) resolveDatePoll(w http.ResponseWriter, r *http.Request) {
@@ -85,5 +85,5 @@ func (h meetingHandlers) resolveDatePoll(w http.ResponseWriter, r *http.Request)
 	}
 
 	view, err := h.app.ResolveDatePoll(r.Context(), call.Actor, call.MeetingID, call.PollID, meetings.ResolveDatePollInput{OptionID: input.OptionID, ExpectedRevision: revision, StartsAt: instant}, call.Key)
-	writeDatePoll(w, view, err, 200)
+	h.writeDatePoll(w, view, err, 200)
 }

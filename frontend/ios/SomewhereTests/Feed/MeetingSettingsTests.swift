@@ -69,7 +69,8 @@ struct MeetingSettingsTests {
         let updated = try meeting(id: baseline.id, revision: "2", title: "С другого устройства")
         await harness.transport.enqueue(path, data: try APICoding.encode(updated))
         await owner.reload()
-        #expect(!owner.conflict && owner.value.title == updated.title && !owner.dirty)
+        #expect(!owner.conflict && owner.value.title == "Мой вариант" && owner.dirty)
+        #expect(owner.original.title == updated.title)
     }
     @Test func uncertainSaveFreezesRequestAndRetryKeepsKeyAndBody() async throws {
         let harness = try SessionHarness()

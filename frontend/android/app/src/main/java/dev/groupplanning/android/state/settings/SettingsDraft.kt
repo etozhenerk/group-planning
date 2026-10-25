@@ -46,6 +46,12 @@ internal fun settingsPatch(original: Meeting, draft: MeetingDraft): SettingsVali
         UpdateMeeting(
             expectedRevision = original.revision,
             title = title.takeIf { it != before.title },
+            cover =
+            draft.cover?.let { change ->
+                change.image?.let { FieldChange.Value(it) }
+                    ?: FieldChange.Clear
+            }
+                ?: FieldChange.Unchanged,
             description = fieldChange(before.description, draft.description),
             place = fieldChange(before.place, draft.place),
             startsAt = if (changedTime) {
@@ -64,3 +70,23 @@ private fun fieldChange(before: String, after: String): FieldChange<String> = wh
     after.isEmpty() -> FieldChange.Clear
     else -> FieldChange.Value(after)
 }
+
+internal fun rebaseSettings(
+    before: MeetingDraft,
+    draft: MeetingDraft,
+    current: MeetingDraft,
+): MeetingDraft = current.copy(
+    title = if (draft.title == before.title) current.title else draft.title,
+    description = if (draft.description ==
+        before.description
+    ) {
+        current.description
+    } else {
+        draft.description
+    },
+    place = if (draft.place == before.place) current.place else draft.place,
+    day = if (draft.day == before.day) current.day else draft.day,
+    time = if (draft.time == before.time) current.time else draft.time,
+    repetition = draft.repetition,
+    cover = draft.cover,
+)

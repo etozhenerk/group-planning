@@ -83,7 +83,7 @@ func optionalString(value string) *string {
 	return &value
 }
 
-func summaryDTO(details meetings.Details) meetingSummaryResponse {
+func (h meetingHandlers) summaryDTO(details meetings.Details) meetingSummaryResponse {
 	m := details.Meeting
 
 	return meetingSummaryResponse{
@@ -93,6 +93,7 @@ func summaryDTO(details meetings.Details) meetingSummaryResponse {
 		StartsAt:         m.StartsAt,
 		Timezone:         m.Timezone,
 		Place:            optionalString(m.Place),
+		CoverURL:         h.coverURL("meetings/"+m.ID, m.CoverVersion),
 		ParticipantCount: details.ParticipantCount,
 		Revision:         decimal(m.Revision),
 		MyRSVP:           optionalString(string(details.MyResponse.Answer)),
@@ -100,9 +101,9 @@ func summaryDTO(details meetings.Details) meetingSummaryResponse {
 	}
 }
 
-func meetingDTO(details meetings.Details) meetingResponse {
+func (h meetingHandlers) meetingDTO(details meetings.Details) meetingResponse {
 	return meetingResponse{
-		meetingSummaryResponse: summaryDTO(details),
+		meetingSummaryResponse: h.summaryDTO(details),
 		OrganizerID:            details.Meeting.OrganizerID,
 		Description:            optionalString(details.Meeting.Description),
 		CreatedAt:              details.Meeting.CreatedAt,
