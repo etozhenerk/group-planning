@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"encoding/json"
 	"io"
 	"mime"
 	"net/http"
@@ -190,12 +191,20 @@ func (h meetingHandlers) publishMedia(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var input struct{}
+	var input struct {
+		Caption json.RawMessage `json:"caption"`
+	}
 	if !decodeJSON(w, r, &input) {
 		return
 	}
 
-	result, err := h.app.PublishMedia(r.Context(), actor, id, mediaID, key)
+	caption, ok := patchField(input.Caption, false)
+	if !ok {
+		writeError(w, 422, "validation_failed", map[string]string{"caption": "invalid"})
+		return
+	}
+
+	result, err := h.app.PublishMediaWithCaption(r.Context(), actor, id, mediaID, key, caption.Value)
 	if err != nil {
 		h.writeMeetingError(w, err)
 		return

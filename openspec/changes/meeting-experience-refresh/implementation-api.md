@@ -64,7 +64,8 @@
 - `PUT /meetings/{id}/media/{media_id}/content`: бинарное тело с Content-Type;
   ответ `{media: Media}`. Повтор идентичных bytes безопасен; другое содержимое
   после успешной загрузки не заменяет готовый файл.
-- `POST /meetings/{id}/media/{media_id}/publish`, Idempotency-Key, `{}` →
+- `POST /meetings/{id}/media/{media_id}/publish`, Idempotency-Key,
+  `{caption?: string}` →
   `{media: Media, entry: FeedEntry|null}`. Для memory — null, для message —
   одна серверная запись. Потерянный ответ повторяется с теми же ID/ключами.
 - `GET /meetings/{id}/media/{media_id}/content` выдаёт готовые bytes после
@@ -82,7 +83,15 @@ uploaded_by — публичный пользователь. До публика
 для preview/original; production-миниатюры и квоты проверяются до выпуска.
 
 Сообщение-вложение сохраняет `kind: message`, `payload_version: 1`,
-`payload: {text: "Фото" либо имя файла, attachments: [Media]}`.
+`payload: {text: "Фото" либо подпись/имя файла, attachments: [Media]}`.
+Необязательный `caption` — только для документа (`kind=file`, `purpose=message`),
+до 2000 Unicode-символов после удаления внешних пробелов. Пустое/отсутствующее
+значение сохраняет прежний текст с именем файла. Непустая подпись фото — 422,
+`field_errors.caption=not_allowed`; превышение длины — `invalid_length`.
+После начала публикации тело и ключ сохраняются при повторе: тот же ключ
+с другой подписью — 409 `idempotency_conflict`; новый ключ не позволяет изменить
+уже опубликованную подпись — 409 `media_already_published`. `{}` совместимо
+с прежними клиентами. Клиент выводит подпись и сам документ с его именем.
 Старый клиент показывает текст; новый рисует файл/фото без повторения этого
 технического текста. Поле attachments необязательное. Фото не публикуется
 в альбом автоматически. Неудачные файлы повторяются по одному.

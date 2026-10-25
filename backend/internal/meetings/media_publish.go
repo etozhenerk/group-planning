@@ -3,6 +3,7 @@ package meetings
 import (
 	"context"
 	"encoding/json"
+	"strings"
 )
 
 type mediaMessagePayload struct {
@@ -12,7 +13,18 @@ type mediaMessagePayload struct {
 
 // PublishMedia atomically attaches a completed upload to exactly one destination.
 func (s *Service) PublishMedia(ctx context.Context, actor Actor, meetingID, id, key string) (PublishedMedia, error) {
+	return s.PublishMediaWithCaption(ctx, actor, meetingID, id, key, "")
+}
+
+// PublishMediaWithCaption attaches an optional document caption to its message.
+// Photos and album entries do not accept captions; published messages are immutable.
+func (s *Service) PublishMediaWithCaption(ctx context.Context, actor Actor, meetingID, id, key, caption string) (PublishedMedia, error) {
 	if err := checkActor(actor); err != nil {
+		return PublishedMedia{}, err
+	}
+
+	caption = strings.TrimSpace(caption)
+	if err := validateText("caption", caption, 2000, false); err != nil {
 		return PublishedMedia{}, err
 	}
 
@@ -23,12 +35,21 @@ func (s *Service) PublishMedia(ctx context.Context, actor Actor, meetingID, id, 
 			return err
 		}
 
+		if caption != "" && (item.Kind != "file" || item.Purpose != "message") {
+			return ValidationError{map[string]string{"caption": "not_allowed"}}
+		}
+
 		requestKey, err := keyFor(actor, "media-publish:"+meetingID, key)
 		if err != nil {
 			return err
 		}
 
+		// Keep the legacy hash for captionless publishes across a server upgrade.
 		hash := requestHash(struct{ MediaID string }{id})
+		if caption != "" {
+			hash = requestHash(struct{ MediaID, Caption string }{id, caption})
+		}
+
 		_, exists, err := s.receipt(w, requestKey, hash)
 		if err != nil {
 			return err
@@ -45,6 +66,8 @@ func (s *Service) PublishMedia(ctx context.Context, actor Actor, meetingID, id, 
 				text := item.FileName
 				if item.Kind == "photo" {
 					text = "Фото"
+				} else if caption != "" {
+					text = caption
 				}
 
 				entry, err := s.entry(w, meetingID, "message", actor, mediaMessagePayload{text, []string{id}}, item.ClientRequestID)
@@ -68,6 +91,22 @@ func (s *Service) PublishMedia(ctx context.Context, actor Actor, meetingID, id, 
 
 			for _, entry := range entries {
 				if entry.ID == item.EntryID {
+					var payload mediaMessagePayload
+					if err := json.Unmarshal(entry.Payload, &payload); err != nil {
+						return ErrInvalidRecord
+					}
+
+					expectedText := item.FileName
+					if item.Kind == "photo" {
+						expectedText = "Фото"
+					} else if caption != "" {
+						expectedText = caption
+					}
+
+					if payload.Text != expectedText {
+						return &Conflict{Code: "media_already_published"}
+					}
+
 					entry.Attachments = []Media{item}
 					result.Entry = &entry
 					break

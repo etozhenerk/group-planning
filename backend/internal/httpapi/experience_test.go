@@ -111,6 +111,7 @@ func TestExperienceOpenAPIResponses(t *testing.T) {
 	}
 
 	h.request(client, "GET", base+"/feed", nil, nil, 200)
+	checkDocumentCaptionHTTP(t, h, client, owner, base)
 	h.request(client, "PUT", base+"/messages/"+value.Entry.ID+"/reactions", map[string]any{"emoji": "❤️", "active": true}, headersFor(h, owner, testKey("1603")), 200)
 	h.request(client, "GET", base+"/reactions?entry_id="+value.Entry.ID, nil, nil, 200)
 	h.request(client, "GET", base+"/memories", nil, nil, 409)

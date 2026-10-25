@@ -4646,7 +4646,13 @@ components:
       additionalProperties: false
     MediaPublishRequest:
       type: object
-      properties: {}
+      properties:
+        caption:
+          type: string
+          maxLength: 2000
+          description: Необязательная подпись документа; обрезаются внешние пробелы.
+            Непустая подпись допустима только для kind=file и purpose=message.
+            Тело не меняется при повторе; опубликованное сообщение неизменяемо.
       required: []
       additionalProperties: false
     SupportScreenshot:

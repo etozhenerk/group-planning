@@ -152,7 +152,20 @@ func seedNativeDesignFixture(t *testing.T, store *memory.Store, identities *memo
 		t.Fatal(err)
 	}
 
-	if _, err := app.ActOnPreparationTask(ctx, meetings.Actor{ID: ids[1], Name: "Миша"}, task.Task.MeetingID, task.Task.ID, meetings.PreparationActionInput{Action: meetings.TaskAccept, ExpectedRevision: 1}, "def00000-0000-4000-8000-000000000011"); err != nil {
+	// The approved visual example shows one live task card, without a separate
+	// historical acceptance entry. Seed that snapshot; lifecycle fixtures still
+	// exercise the real operation and keep its complete audit history.
+	if err := store.Update(ctx, func(w meetings.Writer) error {
+		accepted := task.Task
+		assignee := meetings.Actor{ID: ids[1], Name: "Миша"}
+		accepted.State = meetings.TaskAccepted
+		accepted.Assignee = &assignee
+		accepted.UpdatedBy = assignee
+		accepted.Revision = 2
+		accepted.UpdatedAt = messageTime
+
+		return w.SavePreparationTask(accepted)
+	}); err != nil {
 		t.Fatal(err)
 	}
 
