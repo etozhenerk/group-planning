@@ -2,6 +2,16 @@
   "version": 1,
   "management": "manual-monium-ui",
   "deliveryVerified": false,
+  "blockingMute": {
+    "id": "monogcb6494lt01sl9fq",
+    "serviceProvider": "monitoring",
+    "statusObserved": "Active",
+    "observedOn": "2026-10-25",
+    "endsAtLocal": "2026-11-01 02:00 Europe/Moscow",
+    "selector": "alert.id != 'mon8koqkp9l2t8jqeac0_test_notification'",
+    "affected": "all-current-project-alerts",
+    "management": "provider-owned-not-modified"
+  },
   "channels": [
     {
       "idSuffix": "somewhere-owner-telegram",
@@ -37,15 +47,17 @@
     "idSuffix": "somewhere-notification-test",
     "additionalChannelSuffixes": ["somewhere-owner-telemost"],
     "active": false,
-    "query": "constant_line(4, 1m)",
-    "window": "3m",
+    "query": "{project=\"folder__FOLDER_ID\", cluster=\"default\", service=\"custom\", name=\"somewhere_notification_delivery_test\", environment=\"diagnostic\", probe=\"notification-delivery\"}",
+    "window": "1m",
     "delay": "30s",
-    "comparison": "<",
-    "warning": 3,
-    "alarm": 2,
-    "temporaryAlarmThresholds": {
-      "warning": 6,
-      "alarm": 5
+    "comparison": ">",
+    "warning": 0.5,
+    "alarm": 0.9,
+    "signal": {
+      "healthyValue": 0,
+      "alarmValue": 1,
+      "publishInterval": "20s",
+      "changeMetricInsteadOfAlertConfiguration": true
     }
   },
   "trialChannels": [
