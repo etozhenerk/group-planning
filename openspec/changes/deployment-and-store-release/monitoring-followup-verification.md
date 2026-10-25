@@ -58,3 +58,28 @@ rollback, logout, конкурентные сессии, UTC, reconnect и гр�
 Проверка реального runtime-role, cleanup, restore с новыми агрегатами и поступление
 девяти рядов остаются обязательными до включения в production. Локальная БД/Docker
 не запускались. Задачи 3.8 и 3.10 остаются открытыми.
+
+## Подготовленный релиз
+
+Код опубликован в main: `4426243792d7bec273763518d039ae7405fd8dd3`.
+Из этого commit выпущен [backend/v0.1.0-rc.3](https://github.com/etozhenerk/group-planning/releases/tag/backend/v0.1.0-rc.3),
+build number 8. Все четыре job [Actions 40183138125](https://github.com/etozhenerk/group-planning/actions/runs/40183138125)
+завершились успешно: проверка источника, сборка, публикация и отчёт.
+Опубликованный комплект скачан и проверен через общий verifier: tag, commit,
+состав файлов, manifest, размеры и SHA256SUMS совпали.
+
+SHA-256 `backend-linux-amd64.tar.gz`:
+`55e2022dbc613fd6a2b7e3d3a46946de0451605638c39e6326a1e390fc64a09a`.
+Manifest подтверждает release-tooling-tests, go-format, go-vet, go-race,
+host-metrics-tests, dependency-boundaries, api-contract и artifact-build.
+SQL integration в этом запуске пропущена без SOMEWHERE_TEST_DATABASE_URL;
+успешный CI не заменяет облачную проверку, описанную выше.
+
+Это готовый кандидат на установку, а не развёрнутый backend: на ВМ остаётся RC2.
+Новая команда миграций включает учёт только с явным флагом `-business-metrics`;
+обычный запуск миграций и установка backend его не включают.
+
+Постоянные ссылки на проверенные панели:
+[Бизнес](https://monium.yandex.cloud/projects/folder__b1g8siv8ve2si1qp04nm/dashboards/fbekle0imi8geuvpah9a)
+и [Обзор](https://monium.yandex.cloud/projects/folder__b1g8siv8ve2si1qp04nm/dashboards/fben2tnmhjqvh8g0f7n5).
+Бизнес-источник и HTTPS probe пока не подключены; их графики показывают «Нет данных».
