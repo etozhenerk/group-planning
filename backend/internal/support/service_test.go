@@ -206,3 +206,53 @@ func TestConcurrentWorkersDoNotSendTheSameLease(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestExhaustedDeliveryIsRetainedAndCanBeRetried(t *testing.T) {
+	store := memory.NewSupport()
+	now := time.Now()
+	fail := true
+	delivery := deliveryFunc(func(context.Context, support.Feedback) (support.Progress, error) {
+		if fail {
+			return support.Progress{}, errors.New("upstream unavailable")
+		}
+
+		return support.Progress{MessageID: 9}, nil
+	})
+	service := support.New(store, delivery, func() time.Time { return now })
+	receipt, err := submit(service, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for attempt := 1; attempt <= support.MaxDeliveryAttempts; attempt++ {
+		worked, err := service.DeliverNext(context.Background())
+		expected := support.ErrUnavailable
+		if attempt == support.MaxDeliveryAttempts {
+			expected = support.ErrDeliveryExhausted
+		}
+
+		if !worked || !errors.Is(err, expected) {
+			t.Fatalf("attempt %d: %v", attempt, err)
+		}
+
+		now = now.Add(time.Hour)
+	}
+
+	if worked, err := service.DeliverNext(context.Background()); worked || err != nil {
+		t.Fatal("exhausted record retried automatically")
+	}
+
+	repeated, err := submit(service, 1)
+	if err != nil || repeated != receipt {
+		t.Fatal("exhausted record or receipt lost")
+	}
+
+	fail = false
+	if err := service.RetryDelivery(context.Background(), input(1).ClientRequestID); err != nil {
+		t.Fatal(err)
+	}
+
+	if worked, err := service.DeliverNext(context.Background()); !worked || err != nil {
+		t.Fatal("operator retry failed")
+	}
+}

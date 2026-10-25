@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"time"
@@ -65,7 +66,12 @@ func deliverSupport(ctx context.Context, service *support.Service, logger *slog.
 		case <-ticker.C:
 			_, err := service.DeliverNext(ctx)
 			if err != nil && ctx.Err() == nil {
-				logger.Error("support_delivery_failed", "error_code", "delivery_unavailable")
+				code := "delivery_unavailable"
+				if errors.Is(err, support.ErrDeliveryExhausted) {
+					code = "delivery_attempts_exhausted"
+				}
+
+				logger.Error("support_delivery_failed", "error_code", code)
 			}
 		}
 	}

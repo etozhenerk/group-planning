@@ -25,6 +25,8 @@ func seedNativeDesignFixture(t *testing.T, store *memory.Store, identities *memo
 	t.Helper()
 	ctx := context.Background()
 	now := time.Date(2026, 10, 25, 12, 0, 0, 0, time.UTC)
+	today := time.Now().In(time.FixedZone("Europe/Moscow", 3*60*60))
+	messageTime := time.Date(today.Year(), today.Month(), today.Day(), 15, 24, 0, 0, time.UTC)
 	names := []string{"Лена", "Миша", "Саша", "Сергей", "Катя", "Оля"}
 	ids := make([]string, len(names))
 	for i, name := range names {
@@ -106,7 +108,7 @@ func seedNativeDesignFixture(t *testing.T, store *memory.Store, identities *memo
 				}
 
 				entryID := fmt.Sprintf("ded00000-0000-4000-8000-%012d", i*10+j+1)
-				_, err = w.AppendEntry(meetings.FeedEntry{ID: entryID, MeetingID: id, Kind: "message", ActorID: ids[message.actor], ActorName: names[message.actor], OccurredAt: time.Date(2026, 10, 25, 15, 24, 0, 0, time.UTC), PayloadVersion: 1, Payload: payload})
+				_, err = w.AppendEntry(meetings.FeedEntry{ID: entryID, MeetingID: id, Kind: "message", ActorID: ids[message.actor], ActorName: names[message.actor], OccurredAt: messageTime, PayloadVersion: 1, Payload: payload})
 				if err != nil {
 					return err
 				}

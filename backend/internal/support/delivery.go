@@ -30,7 +30,7 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 		})
 		now := s.now()
 		for _, item := range all {
-			if item.Delivered || now.Before(item.NextAttemptAt) || now.Before(item.LeaseUntil) {
+			if item.Delivered || item.DeliveryFailed || now.Before(item.NextAttemptAt) || now.Before(item.LeaseUntil) {
 				continue
 			}
 
@@ -69,6 +69,9 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 		item.LeaseUntil = time.Time{}
 		if sendErr == nil {
 			item.Delivered = true
+		} else if item.Attempts >= MaxDeliveryAttempts {
+			item.DeliveryFailed = true
+			item.NextAttemptAt = time.Time{}
 		} else {
 			delay := time.Minute * time.Duration(1<<min(item.Attempts-1, 6))
 			item.NextAttemptAt = s.now().Add(min(delay, time.Hour))
@@ -81,8 +84,37 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 	}
 
 	if sendErr != nil {
+		if selected.Attempts >= MaxDeliveryAttempts {
+			return true, ErrDeliveryExhausted
+		}
+
 		return true, ErrUnavailable
 	}
 
 	return true, nil
+}
+
+// RetryDelivery reopens a retained failed record for an authorized operator.
+// No public HTTP endpoint exposes this operation or the submission key.
+func (s *Service) RetryDelivery(ctx context.Context, key string) error {
+	return s.store.Update(ctx, func(r Records) error {
+		item, exists, err := r.ByKey(key)
+		if err != nil {
+			return err
+		}
+
+		if !exists {
+			return ErrUnavailable
+		}
+
+		if !item.DeliveryFailed {
+			return nil
+		}
+
+		item.DeliveryFailed = false
+		item.Attempts = 0
+		item.NextAttemptAt = s.now()
+
+		return r.Put(item)
+	})
 }

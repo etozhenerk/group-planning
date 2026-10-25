@@ -11,6 +11,7 @@ var (
 	ErrUnavailable         = errors.New("feedback unavailable")
 	ErrRateLimited         = errors.New("feedback rate limited")
 	ErrIdempotencyConflict = errors.New("feedback key reused")
+	ErrDeliveryExhausted   = errors.New("feedback delivery attempts exhausted")
 )
 
 // ValidationError exposes only safe field codes.
@@ -19,8 +20,9 @@ type ValidationError struct{ Fields map[string]string }
 func (e ValidationError) Error() string { return "invalid feedback" }
 
 const (
-	MaxScreenshotBytes = 5 << 20
-	MaxStoredBytes     = 50 << 20
+	MaxScreenshotBytes  = 5 << 20
+	MaxStoredBytes      = 50 << 20
+	MaxDeliveryAttempts = 12
 )
 
 // Viewport is present only when the user enabled diagnostics.
@@ -78,6 +80,7 @@ type (
 		LeaseID                                                           string
 		Attempts                                                          int
 		Delivered                                                         bool
+		DeliveryFailed                                                    bool
 		Progress                                                          Progress
 	}
 )
