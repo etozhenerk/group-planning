@@ -9,13 +9,14 @@ const modulePath = "github.com/etozhenerk/group-planning/backend"
 var dependencies = map[string][]string{
 	"internal/meetings":         {},
 	"internal/identity":         {},
+	"internal/accounts":         {"internal/identity"},
 	"internal/identity/yandex":  {"internal/identity"},
 	"internal/storage/postgres": {"internal/meetings", "internal/identity"},
 	"cmd/migrate":               {"internal/storage/postgres"},
 	"internal/storage/memory":   {"internal/meetings", "internal/identity"},
-	"internal/httpapi":          {"internal/meetings", "internal/identity"},
+	"internal/httpapi":          {"internal/meetings", "internal/identity", "internal/accounts"},
 	"internal/webui":            {"internal/meetings"},
-	"internal/server":           {"internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/httpapi", "internal/webui"},
+	"internal/server":           {"internal/accounts", "internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/httpapi", "internal/webui"},
 	"internal/architecture":     {},
 	"cmd/server":                {"internal/server", "internal/storage/memory", "internal/storage/postgres"},
 	"cmd/storage-demo":          {"internal/meetings", "internal/storage/memory"},
@@ -48,7 +49,7 @@ func importAllowed(source, imported string) bool {
 			return false
 		}
 
-		if source == "internal/meetings" || source == "internal/identity" {
+		if source == "internal/meetings" || source == "internal/identity" || source == "internal/accounts" {
 			for _, blocked := range []string{"net", "net/http", "net/rpc", "database/sql", "os", "plugin"} {
 				if imported == "net" || (blocked != "net" && within(imported, blocked)) {
 					return false
@@ -91,7 +92,7 @@ func restrictedSymbol(source, imported, symbol string) bool {
 		}
 	case "internal/identity":
 		switch symbol {
-		case "Store", "Records", "Provider", "New":
+		case "Store", "Records", "Provider", "New", "WithStore":
 			return true
 		}
 	}

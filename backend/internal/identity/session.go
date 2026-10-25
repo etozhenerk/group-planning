@@ -2,7 +2,6 @@ package identity
 
 import (
 	"context"
-	"errors"
 	"time"
 )
 
@@ -110,7 +109,7 @@ func (s *Service) Users(ctx context.Context, ids []string) (map[string]User, err
 		for _, id := range ids {
 			user, ok := records.User(id)
 			if !ok {
-				return errors.New("meeting profile unavailable")
+				user = User{ID: id, DisplayName: "Удалённый аккаунт"}
 			}
 
 			result[id] = user

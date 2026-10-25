@@ -3,6 +3,7 @@ package dev.groupplanning.android.ui
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -28,6 +29,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
+import dev.groupplanning.android.ui.account.AccountDeletionDialog
 import dev.groupplanning.android.ui.brand.BrandMotion
 import dev.groupplanning.android.ui.brand.BrandWordmark
 import dev.groupplanning.android.ui.components.StatusPanel
@@ -41,6 +43,8 @@ import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
 internal fun SomewhereApp(model: AppViewModel) {
+    val deletionError by model.deletionError.collectAsStateWithLifecycle()
+    val deletionPrompt by model.deletionPrompt.collectAsStateWithLifecycle()
     val auth by model.signIn.state.collectAsStateWithLifecycle()
     val snapshot by model.snapshot.collectAsStateWithLifecycle()
     val route by model.route.collectAsStateWithLifecycle()
@@ -64,6 +68,15 @@ internal fun SomewhereApp(model: AppViewModel) {
         LocalMotionEnabled provides motion,
         LocalCovers provides model.covers,
     ) {
+        if (deletionPrompt || snapshot.session is SessionState.Deleting) {
+            AccountDeletionDialog(
+                snapshot.session as? SessionState.Deleting,
+                deletionError,
+                model::dismissDeletion,
+                model::deleteAccount,
+                model::leaveDeletion,
+            )
+        }
         if (auth.problem) {
             AlertDialog(
                 onDismissRequest = model.signIn::dismissProblem,
@@ -92,7 +105,9 @@ internal fun SomewhereApp(model: AppViewModel) {
                             BrandWordmark(rotation = { BrandMotion.rotation(elapsed, motion) })
                         }
                     } else {
-                        if (snapshot.session is SessionState.Failed) {
+                        if (snapshot.session is SessionState.Deleting) {
+                            BrandWordmark()
+                        } else if (snapshot.session is SessionState.Failed) {
                             Box(
                                 Modifier.padding(24.dp),
                                 contentAlignment = Alignment.Center,
@@ -117,10 +132,26 @@ internal fun SomewhereApp(model: AppViewModel) {
                                     route,
                                     snapshot,
                                 )
-                                else -> OnboardingScreen(
-                                    authenticating = auth.busy,
-                                    signIn = model::startSignIn,
-                                )
+                                else -> Column {
+                                    Box(Modifier.weight(1f)) {
+                                        OnboardingScreen(
+                                            authenticating = auth.busy,
+                                            signIn = model::startSignIn,
+                                        )
+                                    }
+                                    if (snapshot.session is SessionState.Deleted) {
+                                        Surface(
+                                            Modifier.align(Alignment.CenterHorizontally)
+                                                .padding(horizontal = 24.dp, vertical = 8.dp),
+                                            color = Palette.surface,
+                                        ) {
+                                            Text(
+                                                stringResource(R.string.account_deleted),
+                                                Modifier.padding(16.dp),
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -39,7 +39,12 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return err
 	}
 
-	var handler http.Handler = httpapi.NewWithIdentity(app, service, logger)
+	deletion, err := NewAccounts(store, identities, service, time.Now)
+	if err != nil {
+		return err
+	}
+
+	var handler http.Handler = httpapi.NewWithIdentity(app, service, logger, deletion)
 	if config.WebDirectory != "" {
 		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {

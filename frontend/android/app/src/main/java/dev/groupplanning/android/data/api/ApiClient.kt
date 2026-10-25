@@ -53,6 +53,7 @@ internal class ApiClient(
         wire.method(request.method, body)
         credential?.let { wire.header("Authorization", "Bearer " + it.token) }
         request.key?.let { wire.header("Idempotency-Key", it.toString()) }
+        request.deletionToken?.let { wire.header("X-Deletion-Token", it) }
         val response = transport.execute(wire.build())
         currentCoroutineContext().ensureActive()
         if (response.status != request.expectedStatus) {

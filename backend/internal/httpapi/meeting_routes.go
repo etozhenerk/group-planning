@@ -15,7 +15,7 @@ type meetingHandlers struct {
 }
 
 func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service) {
-	h := meetingHandlers{app, service, authHandlers{service}}
+	h := meetingHandlers{app, service, authHandlers{service: service}}
 	mux.HandleFunc("/api/v1/meetings/{id}/cover", h.readCover)
 	mux.HandleFunc("/api/v1/invitations/{token}/cover", h.readInvitationCover)
 	mux.HandleFunc("/api/v1/meetings", h.collection)

@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import { isDemo } from '@/shared/config';
 import { CalendarDays } from 'lucide-react';
 import { Brand } from '@/shared/ui/Brand';
-import { Avatar } from '@/shared/ui/Avatar';
-import { LogoutButton } from '@/features/sign-in';
+import { ProfileMenu } from '@/widgets/navigation/ui/ProfileMenu';
 import type { Session } from '@/entities/session';
 
 export type NavigationProps = { session: Session; sticky?: boolean };
@@ -31,11 +30,7 @@ export const Navigation = ({ session, sticky = false }: NavigationProps) => {
         </Link>
       </div>
       <div className={styles['navigation-profile']}>
-        <span className={styles['profile-avatar']}>
-          <Avatar name={session.user.displayName} own />
-        </span>
-        <span className={styles['grow']}>{session.user.displayName}</span>
-        <LogoutButton session={session} />
+        <ProfileMenu session={session} />
       </div>
     </nav>
   );

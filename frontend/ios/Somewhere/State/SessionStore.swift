@@ -3,17 +3,21 @@ import Observation
 
 @MainActor @Observable
 final class SessionStore {
-    enum Status: Sendable { case signedOut, restoring, authenticated, failed }
+    enum Status: Sendable { case signedOut, restoring, authenticated, failed, deleting }
 
     private(set) var status: Status = .signedOut
     private(set) var profile: UserProfile?
     private(set) var error: ClientFailure?
+    private(set) var pendingDeletion: PendingAccountDeletion?
+    private(set) var deletionBusy = false
+    private(set) var deletionFailure: ClientFailure?
+    private(set) var accountDeleted = false
     let privateData: PrivateData
     @ObservationIgnored let api: APIClient
     @ObservationIgnored let credentials: CredentialStore
     @ObservationIgnored private var credential: StoredSession?
     @ObservationIgnored private var generation = 0
-    @ObservationIgnored private var restoreTask: Task<(StoredSession, UserProfile)?, any Error>?
+    @ObservationIgnored private var restoreTask: Task<(StoredSession, UserProfile?)?, any Error>?
     @ObservationIgnored private var inFlight: [UUID: InFlight] = [:]
 
     private struct InFlight {
@@ -27,11 +31,15 @@ final class SessionStore {
         self.privateData = privateData
     }
 
-    func restore() async { await restore(candidate: nil) }
+    func restore() async {
+        guard !deletionBusy else { return }
+        await restore(candidate: nil)
+    }
 
     func establish(_ credential: StoredSession) async { await restore(candidate: credential) }
 
     func accept(_ credential: StoredSession) async throws {
+        guard pendingDeletion == nil && !deletionBusy else { throw ClientFailure.staleSession }
         try await credentials.save(credential, generation: generation)
         await restore()
     }
@@ -42,7 +50,7 @@ final class SessionStore {
         status = .restoring
         let api = self.api
         let credentials = self.credentials
-        let worker = Task<(StoredSession, UserProfile)?, any Error> {
+        let worker = Task<(StoredSession, UserProfile?)?, any Error> {
             let saved: StoredSession?
             if let candidate {
                 saved = candidate
@@ -50,6 +58,7 @@ final class SessionStore {
                 saved = try await credentials.load(generation: version)
             }
             guard let saved else { return nil }
+            if saved.deletion != nil { return (saved, nil) }
             guard saved.expiresAt > Date() else {
                 try await credentials.remove(generation: version)
                 return nil
@@ -77,7 +86,8 @@ final class SessionStore {
             if let (credential, profile) = result {
                 self.credential = credential
                 self.profile = profile
-                status = .authenticated
+                pendingDeletion = credential.deletion
+                status = credential.deletion == nil ? .authenticated : .deleting
             } else {
                 status = .signedOut
             }
@@ -164,9 +174,58 @@ final class SessionStore {
     }
 
     func logout() async throws {
+        guard pendingDeletion == nil && !deletionBusy else { throw ClientFailure.staleSession }
         let old = credential
         try await invalidate()
         if let old { try await api.sendEmpty(SessionRequests.logout, credential: old) }
+    }
+
+    func deleteAccount(cleanup: (UUID) async throws -> Void) async {
+        guard !deletionBusy else { return }
+        deletionBusy = true
+        deletionFailure = nil
+        defer { deletionBusy = false }
+        do {
+            guard let saved = credential else { throw ClientFailure.http(401, nil) }
+            let pending: PendingAccountDeletion
+            if let previous = saved.deletion {
+                pending = previous
+            } else {
+                guard let profile else { throw ClientFailure.http(401, nil) }
+                pending = PendingAccountDeletion(
+                    token: try AuthProof.generate().verifier, userID: profile.id)
+            }
+            let candidate = try StoredSession(
+                token: saved.token, expiresAt: saved.expiresAt, id: saved.id, deletion: pending)
+            try await credentials.save(candidate, generation: generation)
+            reset()
+            credential = candidate
+            pendingDeletion = pending
+            status = .deleting
+            let version = generation
+            try await api.sendEmpty(
+                APIRequest(
+                    path: ["me"], method: .delete, deletionToken: pending.token, expectedStatus: 204
+                ), credential: candidate)
+            guard generation == version else { throw ClientFailure.staleSession }
+            try await cleanup(pending.userID)
+            guard generation == version else { throw ClientFailure.staleSession }
+            try await credentials.remove(generation: generation)
+            reset()
+            pendingDeletion = nil
+            accountDeleted = true
+        } catch {
+            if !(error is CancellationError) { deletionFailure = .sanitized(error) }
+        }
+    }
+
+    func leaveDeletion() async {
+        guard !deletionBusy else { return }
+        do {
+            try await invalidate()
+            pendingDeletion = nil
+            deletionFailure = nil
+        } catch { deletionFailure = .sanitized(error) }
     }
 
     func cancelRestore() {
@@ -180,6 +239,9 @@ final class SessionStore {
     }
 
     private func reset() {
+        pendingDeletion = nil
+        accountDeleted = false
+        deletionFailure = nil
         generation += 1
         restoreTask?.cancel()
         restoreTask = nil

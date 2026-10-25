@@ -6,7 +6,7 @@ export {
   logoutRequest,
 } from '@/shared/api/request';
 
-export { ApiError, errorText } from '@/shared/api/errors';
+export { ApiError, errorText, parseApiError } from '@/shared/api/errors';
 
 export {
   answerSchema,

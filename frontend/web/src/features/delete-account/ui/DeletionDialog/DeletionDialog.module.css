@@ -1,0 +1,31 @@
+.content {
+  display: grid;
+  gap: 16px;
+  line-height: 1.5;
+}
+
+.content p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.actions button.danger {
+  color: var(--background);
+  background: var(--error);
+  min-width: 182px;
+}
+
+.error {
+  color: var(--error);
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+}

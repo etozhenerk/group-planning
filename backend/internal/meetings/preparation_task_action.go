@@ -21,7 +21,7 @@ func (s *Service) ActOnPreparationTask(ctx context.Context, actor Actor, meeting
 
 	hash := requestHash(input)
 	var result PreparationTaskView
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		details, err := privateSnapshot(writer, meetingID, actor.ID)
 		if err != nil {
 			return err

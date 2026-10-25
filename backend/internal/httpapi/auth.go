@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/accounts"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 )
 
@@ -14,7 +15,10 @@ const (
 	bindingCookiePrefix = "__Host-somewhere_auth_"
 )
 
-type authHandlers struct{ service *identity.Service }
+type authHandlers struct {
+	service  *identity.Service
+	deletion *accounts.Service
+}
 
 type authStartRequest struct {
 	ClientKind    string          `json:"client_kind"`
@@ -31,8 +35,12 @@ type authContextResponse struct {
 	Token string `json:"token,omitempty"`
 }
 
-func registerAuth(mux *http.ServeMux, service *identity.Service) {
+func registerAuth(mux *http.ServeMux, service *identity.Service, deletion ...*accounts.Service) {
 	handlers := authHandlers{service: service}
+	if len(deletion) > 0 {
+		handlers.deletion = deletion[0]
+	}
+
 	mux.HandleFunc("/api/v1/auth/yandex/start", handlers.start)
 	mux.HandleFunc("/api/v1/auth/yandex/callback", handlers.callback)
 	mux.HandleFunc("/api/v1/auth/mobile/exchange", handlers.exchange)

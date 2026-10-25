@@ -12,6 +12,7 @@ type (
 )
 
 type state struct {
+	removedUsers     map[string]bool
 	covers           map[string]meetings.Cover
 	preparationTasks map[string]meetings.PreparationTask
 	placePolls       map[string]meetings.PlacePoll
@@ -29,6 +30,7 @@ type state struct {
 
 func newState() *state {
 	return &state{
+		removedUsers:     make(map[string]bool),
 		covers:           make(map[string]meetings.Cover),
 		preparationTasks: make(map[string]meetings.PreparationTask),
 		placePolls:       make(map[string]meetings.PlacePoll),
@@ -47,6 +49,7 @@ func newState() *state {
 
 func (s *state) clone() *state {
 	copy := newState()
+	copy.removedUsers = maps.Clone(s.removedUsers)
 	// Payloads stay immutable inside storage; reads/writes clone the bytes.
 	// Snapshotting unrelated meeting data only copies this index.
 	copy.covers = maps.Clone(s.covers)

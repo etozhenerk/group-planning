@@ -53,6 +53,12 @@ type CleanupCount struct{ Attempts, Sessions int }
 
 // Records is valid only during its store callback; returned values are copies.
 type Records interface {
+	UserSubject(string) (string, bool)
+	DeleteUser(string)
+	DeletionReceipt(string) (DeletionReceipt, bool)
+	PutDeletionReceipt(DeletionReceipt)
+	SubjectFence(string) (time.Time, bool)
+	PutSubjectFence(string, time.Time)
 	Attempt(string) (Attempt, bool)
 	PutAttempt(Attempt)
 	DeleteAttempt(string)

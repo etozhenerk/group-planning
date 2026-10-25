@@ -17,6 +17,8 @@ final class AppRuntime {
     @ObservationIgnored private var linkTask: Task<Void, Never>?
     private(set) var ready = false
     var restoreID = UUID()
+    var confirmDeletion = false
+    @ObservationIgnored private var deletionTask: Task<Void, Never>?
     @ObservationIgnored private let bootstrapCredential: StoredSession?
 
     init(
@@ -62,7 +64,34 @@ final class AppRuntime {
         }
     }
 
+    func deleteAccount() {
+        guard deletionTask == nil, let session else { return }
+        deletionTask = Task {
+            await session.deleteAccount { userID in
+                try await self.drafts.removeAccount(userID)
+                self.linkVersion += 1
+                self.linkTask?.cancel()
+                try await self.links.save(nil, version: self.linkVersion)
+                self.invitation = nil
+                self.pendingAuthURL = nil
+                try self.signIn?.clearAccount()
+            }
+            if session.accountDeleted { confirmDeletion = false }
+            deletionTask = nil
+        }
+    }
+
+    func leaveDeletion() {
+        guard deletionTask == nil, let session else { return }
+        deletionTask = Task {
+            await session.leaveDeletion()
+            if session.pendingDeletion == nil { confirmDeletion = false }
+            deletionTask = nil
+        }
+    }
+
     func startSignIn() {
+        guard session?.pendingDeletion == nil else { return }
         if case .token(let token) = invitation {
             signIn?.start(.invitation(token))
         } else {

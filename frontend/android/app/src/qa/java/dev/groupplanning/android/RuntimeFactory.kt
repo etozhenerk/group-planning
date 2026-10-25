@@ -35,6 +35,7 @@ internal object RuntimeFactory {
         require(
             scenario in
                 setOf(
+                    "account", "account-large",
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
                     "cover-create", "cover-edit", "cover-large", "cover-system",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",

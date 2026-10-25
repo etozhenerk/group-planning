@@ -17,7 +17,7 @@ func (s *Service) Respond(ctx context.Context, actor Actor, id, token string, an
 	}
 
 	var result ResponseState
-	err := s.update(ctx, func(writer Writer) error {
+	err := s.updateAs(ctx, actor, func(writer Writer) error {
 		if token != "" {
 			if !validInvitationToken(token) {
 				return ErrNotFound

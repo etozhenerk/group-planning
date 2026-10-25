@@ -92,7 +92,7 @@ func (s *Service) Update(ctx context.Context, actor Actor, id string, input Upda
 
 	hash := requestHash(input)
 	var result Details
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		current, err := privateSnapshot(writer, id, actor.ID)
 		if err != nil {
 			return err

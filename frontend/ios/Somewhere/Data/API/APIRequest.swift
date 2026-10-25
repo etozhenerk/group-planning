@@ -2,6 +2,7 @@ import Foundation
 
 struct APIRequest: Sendable {
     enum Method: String, Sendable {
+        case delete = "DELETE"
         case get = "GET"
         case post = "POST"
         case put = "PUT"
@@ -10,6 +11,7 @@ struct APIRequest: Sendable {
 
     let path: [String]
     var method: Method = .get
+    var deletionToken: String?
     var body: Data?
     var idempotencyKey: UUID?
     var query: [URLQueryItem] = []

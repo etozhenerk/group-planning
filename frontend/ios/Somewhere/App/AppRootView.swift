@@ -6,7 +6,10 @@ struct AppRootView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private var presentedInvitation: Binding<InvitationTarget?> {
         Binding(
-            get: { runtime.ready && introductionComplete ? runtime.invitation : nil },
+            get: {
+                runtime.ready && introductionComplete && !runtime.confirmDeletion
+                    && runtime.session?.pendingDeletion == nil ? runtime.invitation : nil
+            },
             set: { runtime.invitation = $0 })
     }
 
@@ -17,7 +20,12 @@ struct AppRootView: View {
             } else if let session = runtime.session, session.status == .authenticated,
                 let user = session.profile
             {
-                HomeView(session: session, user: user, drafts: runtime.drafts).id(user.id)
+                HomeView(
+                    session: session, user: user, drafts: runtime.drafts,
+                    deleteAccount: { runtime.confirmDeletion = true }
+                ).id(user.id)
+            } else if runtime.session?.pendingDeletion != nil {
+                BrandWordmark()
             } else if let session = runtime.session, session.status == .failed {
                 StatusView(
                     title: "Не удалось проверить вход",
@@ -51,6 +59,32 @@ struct AppRootView: View {
         .modifier(
             SignInProblemModifier(signIn: runtime.signIn, active: runtime.invitation == nil)
         )
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            if runtime.session?.accountDeleted == true {
+                Text("Аккаунт удалён").padding(16).background(
+                    AppPalette.surface, in: RoundedRectangle(cornerRadius: 16)
+                ).padding(.horizontal, 24).padding(.bottom, 8)
+                    .accessibilityAddTraits(.updatesFrequently)
+            }
+        }
+        .sheet(
+            isPresented: Binding(
+                get: { runtime.confirmDeletion || runtime.session?.pendingDeletion != nil },
+                set: {
+                    if runtime.session?.pendingDeletion == nil
+                        && runtime.session?.deletionBusy != true
+                    {
+                        runtime.confirmDeletion = $0
+                    }
+                }
+            )
+        ) {
+            if let session = runtime.session {
+                AccountDeletionScreen(
+                    session: session, submit: runtime.deleteAccount,
+                    cancel: { runtime.confirmDeletion = false }, leave: runtime.leaveDeletion)
+            }
+        }
         .sheet(item: presentedInvitation, onDismiss: runtime.invitationDidDismiss) { target in
             NavigationStack {
                 if let api = runtime.api {

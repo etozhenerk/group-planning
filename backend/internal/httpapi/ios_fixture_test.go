@@ -70,10 +70,11 @@ func TestIOSFixture(t *testing.T) {
 
 	server.Listener = listener
 	origin := "https://" + listener.Addr().String()
+	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
 		PublicOrigin: origin, SessionTTL: time.Hour,
 		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback"},
-	}, memory.NewIdentity(), iosFixtureProvider{}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
+	}, identities, iosFixtureProvider{}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -89,7 +90,7 @@ func TestIOSFixture(t *testing.T) {
 		"66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777")
 	feedOwner := iosCredential(t, service, "feed-owner")
 	seedIOSFeed(t, store, service, feedOwner)
-	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	api := NewWithIdentity(meetings.NewService(store, time.Now), service, slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
@@ -100,7 +101,7 @@ func TestIOSFixture(t *testing.T) {
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
-	for _, name := range []string{"empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
+	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}
 
@@ -167,7 +168,7 @@ func TestIOSFixture(t *testing.T) {
 		verifyNativePollFixture(t, store)
 	}
 
-	if scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" {
+	if scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" && scope != "account" {
 		faults.verify(t, scope)
 	}
 

@@ -65,6 +65,16 @@ final class YandexSignIn {
         return true
     }
 
+    func clearAccount() throws {
+        task?.cancel()
+        task = nil
+        try storage.clear()
+        try provider.clear()
+        completedContext = nil
+        problem = nil
+        busy = false
+    }
+
     func dismissProblem() { problem = nil }
 
     private func received(_ result: Result<String, NativeLoginFailure>) {

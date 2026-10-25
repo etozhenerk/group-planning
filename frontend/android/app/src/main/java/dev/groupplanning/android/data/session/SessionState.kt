@@ -5,6 +5,8 @@ import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.data.repository.PrivateData
 
 internal sealed interface SessionState {
+    data object Deleted : SessionState
+    data class Deleting(val busy: Boolean = false, val error: ClientFailure? = null) : SessionState
     data object SignedOut : SessionState
     data object Restoring : SessionState
     data class Authenticated(val profile: UserProfile) : SessionState

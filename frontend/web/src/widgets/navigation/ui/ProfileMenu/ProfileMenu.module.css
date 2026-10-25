@@ -1,0 +1,48 @@
+.profile {
+  position: relative;
+  width: 100%;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.trigger::-webkit-details-marker {
+  display: none;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  min-width: 230px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 12px 32px #0005;
+  z-index: 5;
+}
+
+@media (max-width: 739px) {
+  .menu {
+    top: calc(100% + 12px);
+    bottom: auto;
+    left: auto;
+    right: 0;
+  }
+
+  .name {
+    display: none;
+  }
+}

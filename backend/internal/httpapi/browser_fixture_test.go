@@ -78,7 +78,8 @@ func TestBrowserFixture(t *testing.T) {
 	server.Listener = listener
 	origin := "https://" + listener.Addr().String()
 	store := memory.New()
-	service, err := identity.New(identity.Config{PublicOrigin: origin, SessionTTL: time.Hour}, memory.NewIdentity(), browserProvider{origin}, time.Now, func(ctx context.Context, token string) (bool, error) {
+	identities := memory.NewIdentity()
+	service, err := identity.New(identity.Config{PublicOrigin: origin, SessionTTL: time.Hour}, identities, browserProvider{origin}, time.Now, func(ctx context.Context, token string) (bool, error) {
 		_, err := meetings.Preview(ctx, store, token)
 		if errors.Is(err, meetings.ErrNotFound) {
 			return false, nil
@@ -91,7 +92,7 @@ func TestBrowserFixture(t *testing.T) {
 	}
 
 	app := meetings.NewService(store, time.Now)
-	api := NewWithIdentity(app, service, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	api := NewWithIdentity(app, service, slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)

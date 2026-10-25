@@ -15,6 +15,7 @@ export type DialogProps = {
   onClose: () => void;
   children: ReactNode;
   contained?: boolean;
+  dismissible?: boolean;
 };
 
 export const Dialog = ({
@@ -23,6 +24,7 @@ export const Dialog = ({
   onClose,
   children,
   contained = false,
+  dismissible = true,
 }: DialogProps) => {
   const dialog = useDialog(open, children);
   const swipe = useSheetDismiss(dialog.ref, onClose);
@@ -59,6 +61,7 @@ export const Dialog = ({
             type="button"
             className={[styles['icon'], styles['ghost']].join(' ')}
             onClick={onClose}
+            disabled={!dismissible}
             aria-label="Закрыть"
           >
             <X aria-hidden="true" size={20} />

@@ -88,7 +88,7 @@ func (s *Service) SendMessage(ctx context.Context, actor Actor, id, text, client
 
 	hash := requestHash(struct{ Text, ClientRequestID string }{text, clientRequestID})
 	var result FeedEntry
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		if _, err := privateSnapshot(writer, id, actor.ID); err != nil {
 			return err
 		}

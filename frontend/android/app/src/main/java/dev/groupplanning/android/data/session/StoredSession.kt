@@ -4,7 +4,11 @@ import dev.groupplanning.android.data.api.models.ApiInstant
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal class StoredSession(val token: String, val expiresAt: ApiInstant) {
+internal class StoredSession(
+    val token: String,
+    val expiresAt: ApiInstant,
+    val deletion: PendingAccountDeletion? = null,
+) {
     init {
         require(token.length in 1..4096 && token.matches(Regex("[A-Za-z0-9._~+/=-]+")))
     }

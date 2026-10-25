@@ -40,6 +40,11 @@ internal class AppViewModel(
     val linkProblem = mutableLinkProblem.asStateFlow()
     private var navigation: Job? = null
     private var restoration: Job? = null
+    private var deletionJob: Job? = null
+    private val mutableDeletionPrompt = MutableStateFlow(false)
+    val deletionPrompt = mutableDeletionPrompt.asStateFlow()
+    private val mutableDeletionError = MutableStateFlow<ClientFailure?>(null)
+    val deletionError = mutableDeletionError.asStateFlow()
     val signIn = SignInViewModel(runtime.auth, childScope()) { context ->
         context.token?.let { token ->
             val target = InvitationTarget.Token(token)
@@ -92,6 +97,7 @@ internal class AppViewModel(
     }
 
     fun startSignIn() {
+        if (snapshot.value.session is SessionState.Deleting) return
         val target = (route.value as? AppRoute.Invitation)?.model?.target
         signIn.start(
             if (target is InvitationTarget.Token) {
@@ -215,6 +221,46 @@ internal class AppViewModel(
 
     fun open(id: UUID) {
         showInvitation(InvitationTarget.Meeting(id))
+    }
+
+    fun showDeletion() {
+        mutableDeletionError.value = null
+        mutableDeletionPrompt.value = true
+    }
+
+    fun dismissDeletion() {
+        if (snapshot.value.session !is SessionState.Deleting) mutableDeletionPrompt.value = false
+    }
+
+    fun deleteAccount() {
+        if (deletionJob?.isActive == true) return
+        mutableDeletionError.value = null
+        deletionJob = viewModelScope.launch {
+            try {
+                runtime.sessions?.deleteAccount { owner ->
+                    runtime.drafts.removeAccount(owner)
+                    runtime.invitationContext.save(null)
+                    runtime.auth?.cancel()
+                }
+                if (snapshot.value.session is SessionState.Deleted) {
+                    clearRoute()
+                    mutableDeletionPrompt.value = false
+                }
+            } catch (error: ClientFailure) {
+                mutableDeletionError.value = error
+            }
+        }
+    }
+
+    fun leaveDeletion() {
+        if (deletionJob?.isActive == true) return
+        deletionJob = viewModelScope.launch {
+            try {
+                runtime.sessions?.leaveDeletion()
+                mutableDeletionPrompt.value = false
+                clearRoute()
+            } catch (_: ClientFailure) { /* The session exposes storage failure. */ }
+        }
     }
 
     fun logout() {

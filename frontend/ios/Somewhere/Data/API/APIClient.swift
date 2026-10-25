@@ -51,6 +51,9 @@ struct APIClient: Sendable {
         if let key = request.idempotencyKey {
             wire.setValue(key.uuidString.lowercased(), forHTTPHeaderField: "Idempotency-Key")
         }
+        if let token = request.deletionToken {
+            wire.setValue(token, forHTTPHeaderField: "X-Deletion-Token")
+        }
         let result: (Data, HTTPURLResponse)
         do { result = try await transport.data(for: wire) } catch {
             if Task.isCancelled || (error as? URLError)?.code == .cancelled {

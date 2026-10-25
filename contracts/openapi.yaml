@@ -357,6 +357,73 @@ paths:
           $ref: "#/components/responses/APIError"
         default:
           $ref: "#/components/responses/APIError"
+    delete:
+      operationId: deleteAccount
+      summary: Удалить собственный аккаунт
+      description: >-
+        Первый запрос требует действующую сессию и web Origin/CSRF.
+        X-Deletion-Token — сохранённые клиентом 32 случайных байта base64url.
+        Повтор с тем же ключом в течение 24 часов подтверждает прежний успех
+        без сессии; для web квитанции нужен прежний Origin.
+        Организация переходит первому вступившему текущему going; встречи
+        без преемника удаляются целиком. Общая история обезличивается.
+      tags:
+        - auth
+      security:
+        - WebSession: []
+        - NativeSession: []
+        - DeletionReceipt: []
+      x-implemented: true
+      responses:
+        "204":
+          description: Операция завершена
+          headers:
+            X-Request-ID:
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              description: Ответы API не кешируются.
+              schema:
+                type: string
+                const: no-store
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/APIError"
+      parameters:
+        - $ref: "#/components/parameters/CSRF"
+        - name: X-Deletion-Token
+          in: header
+          required: true
+          description: Секрет операции; сохраняется до подтверждённого результата и не используется повторно для другого аккаунта.
+          schema:
+            type: string
+            minLength: 43
+            maxLength: 43
+            pattern: '^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$'
   /api/v1/auth/logout:
     post:
       operationId: logout
@@ -2232,6 +2299,11 @@ paths:
           $ref: "#/components/responses/APIError"
 components:
   securitySchemes:
+    DeletionReceipt:
+      type: apiKey
+      in: header
+      name: X-Deletion-Token
+      description: Только повтор уже завершённого удаления в течение 24 часов; не авторизует первый запрос и не даёт доступа к данным.
     WebSession:
       type: apiKey
       in: cookie

@@ -12,7 +12,15 @@ import (
 //go:embed migrations/001_initial.sql
 var initialSchema string
 
-func schemaChecksum() string { return fmt.Sprintf("%x", sha256.Sum256([]byte(initialSchema))) }
+//go:embed migrations/002_account_deletion.sql
+var accountDeletionSchema string
+
+var migrations = []string{initialSchema, accountDeletionSchema}
+
+func migrationChecksum(version int) string {
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(migrations[version-1])))
+}
+func schemaChecksum() string { return migrationChecksum(1) }
 
 // Migrate applies the embedded schema atomically using a separate DDL identity.
 // Existing checksums must match; there is no destructive down migration.
@@ -36,16 +44,16 @@ func (db *Database) Migrate(ctx context.Context) error {
 		return ErrUnavailable
 	}
 
-	applied := false
+	applied := 0
 	for rows.Next() {
 		var version int
 		var checksum string
-		if rows.Scan(&version, &checksum) != nil || version != 1 || checksum != schemaChecksum() {
+		if rows.Scan(&version, &checksum) != nil || version != applied+1 || version > len(migrations) || checksum != migrationChecksum(version) {
 			rows.Close()
 			return fmt.Errorf("unsupported schema version or migration checksum")
 		}
 
-		applied = true
+		applied++
 	}
 
 	rows.Close()
@@ -53,12 +61,12 @@ func (db *Database) Migrate(ctx context.Context) error {
 		return ErrUnavailable
 	}
 
-	if !applied {
-		if _, err = tx.Exec(ctx, initialSchema, pgx.QueryExecModeSimpleProtocol); err != nil {
+	for version := applied + 1; version <= len(migrations); version++ {
+		if _, err = tx.Exec(ctx, migrations[version-1], pgx.QueryExecModeSimpleProtocol); err != nil {
 			return ErrUnavailable
 		}
 
-		if _, err = tx.Exec(ctx, "INSERT INTO schema_migrations (version,checksum) VALUES (1,$1)", schemaChecksum()); err != nil {
+		if _, err = tx.Exec(ctx, "INSERT INTO schema_migrations (version,checksum) VALUES ($1,$2)", version, migrationChecksum(version)); err != nil {
 			return ErrUnavailable
 		}
 	}

@@ -183,3 +183,18 @@ func (s *Service) entry(writer Writer, meetingID, kind string, actor Actor, payl
 		ClientRequestID: requestID,
 	})
 }
+
+func (s *Service) updateAs(ctx context.Context, actor Actor, callback func(Writer) error) error {
+	return s.update(ctx, func(writer Writer) error {
+		removed, err := writer.UserRemoved(actor.ID)
+		if err != nil {
+			return err
+		}
+
+		if removed {
+			return ErrUnauthenticated
+		}
+
+		return callback(writer)
+	})
+}

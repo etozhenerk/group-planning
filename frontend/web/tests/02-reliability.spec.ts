@@ -174,6 +174,7 @@ test('cancelled invitation sign-in stays on the invitation without an answer', a
   await login(page, 'Саша');
   await create(page, 'Отмена входа');
   const url = await inviteLink(page);
+  await page.locator('summary[aria-label^="Профиль:"]').click();
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await page.goto(url);
   await page.getByRole('button', { name: 'Войти и ответить' }).click();

@@ -52,6 +52,7 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
                 MeetingsHeader(
                     (snapshot.session as SessionState.Authenticated).profile.displayName,
                     model::logout,
+                    model::showDeletion,
                 )
                 if (invitations) {
                     SavedInvitationsScreen(

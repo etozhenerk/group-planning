@@ -79,6 +79,12 @@ internal class SessionGate(
         if (!allowed) withContext(NonCancellable) { clearPrivate(id) }
     }
 
+    suspend fun finishAccountDeletion(except: Job?) {
+        clearPrivate(null)
+        storage { clear() }
+        reset(except)
+    }
+
     suspend fun invalidate(except: Job?) {
         reset(except)
         try {

@@ -70,6 +70,10 @@ func (s *Service) Callback(ctx context.Context, input CallbackInput) (Completed,
 			return ErrInvalidAttempt
 		}
 
+		if deletedAt, exists := records.SubjectFence(digest("yandex:" + profile.Subject)); exists && !current.ExpiresAt.Add(-10*time.Minute).After(deletedAt) {
+			return ErrInvalidAttempt
+		}
+
 		user, exists := records.UserBySubject("yandex:" + profile.Subject)
 		if !exists {
 			user = User{ID: uuid(), DisplayName: profile.DisplayName, CreatedAt: s.now()}

@@ -32,6 +32,11 @@ actor DraftRepository {
         try storage.save(record)
     }
 
+    func removeAccount(_ owner: UUID) throws {
+        generation = UUID()
+        try storage.remove(owner: owner)
+    }
+
     func remove(owner: UUID, lease: UUID) throws {
         try Task.checkCancellation()
         guard lease == generation else { throw ClientFailure.staleSession }

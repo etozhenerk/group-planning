@@ -24,6 +24,7 @@ type Store interface {
 
 // Reader returns independent copies. It is valid only for its callback's lifetime.
 type Reader interface {
+	UserRemoved(string) (bool, error)
 	Cover(string) (Cover, error)
 	PreparationTask(string) (PreparationTask, error)
 	PreparationTasks(string) ([]PreparationTask, error)
@@ -50,6 +51,10 @@ type Reader interface {
 // checks expected revisions within the callback. Other inserts reject duplicates.
 type Writer interface {
 	Reader
+	RemoveUser(string) error
+	DeleteMeeting(string) error
+	DeleteRSVP(string, string) error
+	AnonymizeFeed(string, string, string) error
 	SaveMeeting(Meeting) error
 	SaveCover(Cover) error
 	DeleteCover(string) error

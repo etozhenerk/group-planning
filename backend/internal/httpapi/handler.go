@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/accounts"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
@@ -29,7 +30,7 @@ func New(app *meetings.Service, logger *slog.Logger) http.Handler {
 
 // NewWithIdentity binds verified identity to authentication routes. A nil service
 // disables sign-in and never authorizes a user.
-func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *slog.Logger) http.Handler {
+func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *slog.Logger, deletion ...*accounts.Service) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -41,7 +42,7 @@ func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *s
 		}{"ok"})
 	})
 	registerMeetings(mux, app, service)
-	registerAuth(mux, service)
+	registerAuth(mux, service, deletion...)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "not_found", nil)
 	})

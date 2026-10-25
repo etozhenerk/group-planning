@@ -58,11 +58,12 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 	h.clock.Store(time.Now().Unix())
 	h.server = httptest.NewUnstartedServer(nil)
 	origin := "https://" + h.server.Listener.Addr().String()
+	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
 		PublicOrigin:    origin,
 		SessionTTL:      time.Hour,
 		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback"},
-	}, memory.NewIdentity(), meetingTestProvider{}, func() time.Time { return time.Unix(h.clock.Load(), 0) }, func(ctx context.Context, token string) (bool, error) {
+	}, identities, meetingTestProvider{}, func() time.Time { return time.Unix(h.clock.Load(), 0) }, func(ctx context.Context, token string) (bool, error) {
 		_, err := meetings.Preview(ctx, h.store, token)
 		if errors.Is(err, meetings.ErrNotFound) {
 			return false, nil
@@ -75,7 +76,7 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 	}
 
 	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) })
-	h.server.Config.Handler = NewWithIdentity(h.app, service, slog.New(slog.NewJSONHandler(&h.logs, nil)))
+	h.server.Config.Handler = NewWithIdentity(h.app, service, slog.New(slog.NewJSONHandler(&h.logs, nil)), testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)

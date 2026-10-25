@@ -56,7 +56,7 @@ func (s *Service) Create(ctx context.Context, actor Actor, input CreateInput, ke
 
 	hash := requestHash(input)
 	var result Created
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		receipt, exists, err := s.receipt(writer, requestKey, hash)
 		if err != nil {
 			return err

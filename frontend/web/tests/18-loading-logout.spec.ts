@@ -135,6 +135,7 @@ test('cold logout never renders the sign-in gate while landing loads and clears 
       }
     }).observe(document.body, { childList: true, subtree: true, characterData: true });
   });
+  await page.locator('summary[aria-label^="Профиль:"]').click();
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await expect.poll(() => landing).toBeDefined();
   await page.waitForTimeout(400);
@@ -163,6 +164,7 @@ test('failed logout keeps the current page and permits another attempt', async (
 }) => {
   await login(page, 'Саша');
   await page.route('**/api/v1/auth/logout', (route) => route.abort('failed'));
+  await page.locator('summary[aria-label^="Профиль:"]').click();
   const button = page.getByRole('button', { name: 'Выйти из аккаунта' });
   await button.click();
   await expect(page.getByRole('alert')).toBeVisible();

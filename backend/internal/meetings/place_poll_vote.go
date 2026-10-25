@@ -21,7 +21,7 @@ func (s *Service) VotePlacePoll(ctx context.Context, actor Actor, meetingID, pol
 
 	hash := requestHash(input)
 	var result PlacePollView
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		details, err := privateSnapshot(writer, meetingID, actor.ID)
 		if err != nil {
 			return err

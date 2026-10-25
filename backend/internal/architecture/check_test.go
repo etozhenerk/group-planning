@@ -13,6 +13,10 @@ func TestDependencyPolicy(t *testing.T) {
 		allowed                  bool
 	}{
 		{"transport to operations", "internal/httpapi", modulePath + "/internal/meetings", true},
+		{"transport to account operation", "internal/httpapi", modulePath + "/internal/accounts", true},
+		{"account to identity operation", "internal/accounts", modulePath + "/internal/identity", true},
+		{"account to storage", "internal/accounts", modulePath + "/internal/storage/memory", false},
+		{"account to HTTP", "internal/accounts", "net/http", false},
 		{"transport to storage", "internal/httpapi", modulePath + "/internal/storage/memory", false},
 		{"transport to provider", "internal/httpapi", modulePath + "/internal/identity/yandex", false},
 		{"domain to HTTP", "internal/meetings", "net/http", false},
@@ -43,6 +47,9 @@ func TestSourceChecks(t *testing.T) {
 		{"allowed", "internal/httpapi/example.go", `package httpapi
 import m "MODULE/internal/meetings"
 var app *m.Service`, ""},
+		{"account cannot access records", "internal/accounts/example.go", `package accounts
+import "MODULE/internal/identity"
+var records identity.Records`, "application operations"},
 		{"storage alias", "internal/httpapi/example.go", `package httpapi
 import m "MODULE/internal/meetings"
 type Store = m.Store`, "application operations"},

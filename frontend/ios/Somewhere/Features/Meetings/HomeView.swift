@@ -4,6 +4,7 @@ struct HomeView: View {
     let session: SessionStore
     let user: UserProfile
     let drafts: DraftRepository
+    let deleteAccount: () -> Void
     @Environment(\.scenePhase) private var scenePhase
     @State private var owner: MeetingListOwner
     @State private var savedInvitations: SavedInvitationsOwner
@@ -13,10 +14,14 @@ struct HomeView: View {
     @State private var creator: CreationOwner?
     @State private var refreshID = UUID()
 
-    init(session: SessionStore, user: UserProfile, drafts: DraftRepository) {
+    init(
+        session: SessionStore, user: UserProfile, drafts: DraftRepository,
+        deleteAccount: @escaping () -> Void = {}
+    ) {
         self.session = session
         self.user = user
         self.drafts = drafts
+        self.deleteAccount = deleteAccount
         _owner = State(initialValue: MeetingListOwner(session: session))
         _savedInvitations = State(initialValue: SavedInvitationsOwner(session: session))
     }
@@ -37,7 +42,7 @@ struct HomeView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top, spacing: 0) {
-                MeetingHomeHeader(user: user, logout: owner.logout)
+                MeetingHomeHeader(user: user, logout: owner.logout, deleteAccount: deleteAccount)
             }
             .navigationDestination(for: UUID.self) { id in
                 MeetingSnapshotView(id: id, session: session)

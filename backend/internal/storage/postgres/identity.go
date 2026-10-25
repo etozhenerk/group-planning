@@ -80,6 +80,8 @@ func (tx *identityTransaction) DeleteSession(hash string) {
 }
 
 func (tx *identityTransaction) Cleanup(now time.Time) identity.CleanupCount {
+	_, _ = tx.exec("DELETE FROM identity_deletion_receipts WHERE expires_at <= $1", now)
+	_, _ = tx.exec("DELETE FROM identity_subject_fences WHERE deleted_at <= $1", now.Add(-10*time.Minute))
 	attempts, _ := tx.exec("DELETE FROM identity_attempts WHERE expires_at <= $1 OR handoff_expires_at <= $1", now)
 	sessions, _ := tx.exec("DELETE FROM identity_sessions WHERE expires_at <= $1", now)
 

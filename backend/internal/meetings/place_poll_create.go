@@ -35,7 +35,7 @@ func (s *Service) CreatePlacePoll(ctx context.Context, actor Actor, meetingID st
 	input.ClosesAt = closesAt.UTC().Format(time.RFC3339Nano)
 	hash := requestHash(input)
 	var result PlacePollView
-	err = s.update(ctx, func(writer Writer) error {
+	err = s.updateAs(ctx, actor, func(writer Writer) error {
 		details, err := privateSnapshot(writer, meetingID, actor.ID)
 		if err != nil {
 			return err

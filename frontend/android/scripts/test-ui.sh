@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_scope=${1:-all}
 case "$somewhere_scope" in
-    all|persistence|calendar|auth|polls|places|tasks|covers|saved) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|persistence|calendar|auth|polls|places|tasks|covers|saved]\n' >&2; exit 2 ;;
+    all|account|persistence|calendar|auth|polls|places|tasks|covers|saved) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|account|persistence|calendar|auth|polls|places|tasks|covers|saved]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -61,12 +61,13 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 if [ "$somewhere_scope" = all ]; then
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
         :app:connectedQaAndroidTest
 fi
 
-if [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
+if [ "$somewhere_scope" = account ] || [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
     somewhere_classes=dev.groupplanning.android.CalendarUiTests
+    if [ "$somewhere_scope" = account ]; then somewhere_classes=dev.groupplanning.android.AccountDeletionUiTests; fi
     if [ "$somewhere_scope" = saved ]; then somewhere_classes=dev.groupplanning.android.SavedInvitationsUiTests; fi
     if [ "$somewhere_scope" = covers ]; then somewhere_classes=dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests; fi
     if [ "$somewhere_scope" = tasks ]; then somewhere_classes=dev.groupplanning.android.PreparationTaskUiTests; fi

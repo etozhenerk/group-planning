@@ -15,10 +15,12 @@ type Identity struct {
 	data identityData
 }
 type identityData struct {
-	attempts map[string]identity.Attempt
-	users    map[string]identity.User
-	subjects map[string]string
-	sessions map[string]identity.Session
+	deletions map[string]identity.DeletionReceipt
+	fences    map[string]time.Time
+	attempts  map[string]identity.Attempt
+	users     map[string]identity.User
+	subjects  map[string]string
+	sessions  map[string]identity.Session
 }
 
 // NewIdentity creates an empty authentication store independent from meetings.
@@ -26,10 +28,12 @@ func NewIdentity() *Identity {
 	return &Identity{
 		gate: make(chan struct{}, 1),
 		data: identityData{
-			attempts: map[string]identity.Attempt{},
-			users:    map[string]identity.User{},
-			subjects: map[string]string{},
-			sessions: map[string]identity.Session{},
+			deletions: map[string]identity.DeletionReceipt{},
+			fences:    map[string]time.Time{},
+			attempts:  map[string]identity.Attempt{},
+			users:     map[string]identity.User{},
+			subjects:  map[string]string{},
+			sessions:  map[string]identity.Session{},
 		},
 	}
 }
@@ -51,12 +55,7 @@ func (s *Identity) Update(ctx context.Context, callback func(identity.Records) e
 		return err
 	}
 
-	data := identityData{
-		attempts: maps.Clone(s.data.attempts),
-		users:    maps.Clone(s.data.users),
-		subjects: maps.Clone(s.data.subjects),
-		sessions: maps.Clone(s.data.sessions),
-	}
+	data := s.data.clone()
 	tx := &identityTransaction{data: &data}
 	defer func() { tx.data = nil }()
 	if err := callback(tx); err != nil {
@@ -175,5 +174,21 @@ func (tx *identityTransaction) Cleanup(now time.Time) identity.CleanupCount {
 		}
 	}
 
+	for hash, receipt := range tx.data.deletions {
+		if !now.Before(receipt.ExpiresAt) {
+			delete(tx.data.deletions, hash)
+		}
+	}
+
+	for hash, deletedAt := range tx.data.fences {
+		if !now.Before(deletedAt.Add(10 * time.Minute)) {
+			delete(tx.data.fences, hash)
+		}
+	}
+
 	return result
+}
+
+func (data identityData) clone() identityData {
+	return identityData{attempts: maps.Clone(data.attempts), users: maps.Clone(data.users), subjects: maps.Clone(data.subjects), sessions: maps.Clone(data.sessions), deletions: maps.Clone(data.deletions), fences: maps.Clone(data.fences)}
 }

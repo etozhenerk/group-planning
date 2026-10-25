@@ -1,6 +1,9 @@
 package identity
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 // TokenProvider verifies a token obtained by the official native SDK.
 // The server must validate both the provider identity and the OAuth client ID.
@@ -51,6 +54,10 @@ func (s *Service) ExchangeSDK(ctx context.Context, id, verifier, providerToken s
 	err = s.store.Update(ctx, func(records Records) error {
 		current, ok := records.Attempt(id)
 		if !ok || !current.StateConsumed || current.Status != "pending" || !s.now().Before(current.ExpiresAt) {
+			return ErrInvalidAttempt
+		}
+
+		if deletedAt, exists := records.SubjectFence(digest("yandex:" + profile.Subject)); exists && !current.ExpiresAt.Add(-10*time.Minute).After(deletedAt) {
 			return ErrInvalidAttempt
 		}
 

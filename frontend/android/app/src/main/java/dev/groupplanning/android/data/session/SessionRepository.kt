@@ -30,10 +30,18 @@ internal class SessionRepository(
     clearPrivate: suspend (UUID?) -> Unit = {},
 ) {
     private val gate = SessionGate(storage, io, clearPrivate)
+    private val deletion = AccountDeletionRepository(gate, api)
     val state: StateFlow<ClientSnapshot> = gate.snapshot.asStateFlow()
 
     suspend fun accept(candidate: StoredSession) {
-        gate.locked { storage { save(candidate) } }
+        gate.locked {
+            if (snapshot.value.session is SessionState.Deleting) {
+                throw ClientFailure(
+                    FailureKind.StaleSession,
+                )
+            }
+            storage { save(candidate) }
+        }
         restore()
     }
 
@@ -50,6 +58,15 @@ internal class SessionRepository(
             val saved = gate.locked {
                 requireGeneration(version)
                 candidate ?: storage { load() }
+            }
+            if (saved?.deletion != null) {
+                gate.locked {
+                    requireGeneration(version)
+                    credential = saved
+                    snapshot.value =
+                        ClientSnapshot(SessionState.Deleting(), generation = generation)
+                }
+                return@coroutineScope
             }
             if (saved == null || saved.expiresAt.instant <= clock.instant()) {
                 gate.locked {
@@ -126,6 +143,12 @@ internal class SessionRepository(
         val (lease, saved) = gate.locked {
             expectedGeneration?.let { requireGeneration(it) }
             expectedLease?.let { requireLease(it) }
+            if (snapshot.value.session !is SessionState.Authenticated) {
+                throw ClientFailure(
+                    FailureKind.Http,
+                    401,
+                )
+            }
             val saved = credential ?: throw ClientFailure(FailureKind.Http, 401)
             if (saved.expiresAt.instant <= clock.instant()) {
                 withContext(NonCancellable) { invalidate(owner) }
@@ -160,9 +183,18 @@ internal class SessionRepository(
         }
     }
 
+    suspend fun deleteAccount(cleanup: suspend (UUID) -> Unit = {}) = deletion.delete(cleanup)
+
+    suspend fun leaveDeletion() = gate.locked { invalidate(null) }
+
     suspend fun logout() {
         val old = withContext(NonCancellable) {
             gate.locked {
+                if (snapshot.value.session is SessionState.Deleting) {
+                    throw ClientFailure(
+                        FailureKind.StaleSession,
+                    )
+                }
                 val old = credential
                 invalidate(null)
                 old

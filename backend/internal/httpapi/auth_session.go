@@ -54,7 +54,15 @@ func (h authHandlers) exchange(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h authHandlers) me(w http.ResponseWriter, r *http.Request) {
-	if !getOnly(w, r) {
+	if r.Method == http.MethodDelete {
+		h.deleteAccount(w, r)
+		return
+	}
+
+	if r.Method != http.MethodGet && r.Method != http.MethodHead {
+		w.Header().Set("Allow", "GET, HEAD, DELETE")
+		writeError(w, http.StatusMethodNotAllowed, "method_not_allowed", nil)
+
 		return
 	}
 
@@ -103,32 +111,9 @@ func (h authHandlers) authenticate(r *http.Request) (identity.Principal, string,
 		return identity.Principal{}, "", identity.ErrUnauthenticated
 	}
 
-	cookie, hasCookie := uniqueCookie(r, sessionCookie)
-	count := 0
-	for _, c := range r.Cookies() {
-		if c.Name == sessionCookie {
-			count++
-		}
-	}
-
-	if count > 1 {
-		return identity.Principal{}, "", identity.ErrUnauthenticated
-	}
-
-	auth := r.Header.Values("Authorization")
-	if len(auth) > 0 && hasCookie {
-		return identity.Principal{}, "", identity.ErrUnauthenticated
-	}
-
-	token := cookie
-	web := true
-	if len(auth) > 0 {
-		if len(auth) != 1 || !strings.HasPrefix(auth[0], "Bearer ") {
-			return identity.Principal{}, "", identity.ErrUnauthenticated
-		}
-
-		token = strings.TrimPrefix(auth[0], "Bearer ")
-		web = false
+	token, web, err := sessionCredentials(r)
+	if err != nil {
+		return identity.Principal{}, "", err
 	}
 
 	principal, err := h.service.Authenticate(r.Context(), token, web)
@@ -152,4 +137,36 @@ func writeAuthError(w http.ResponseWriter, err error) {
 	default:
 		writeError(w, 500, "internal_error", nil)
 	}
+}
+
+func sessionCredentials(r *http.Request) (string, bool, error) {
+	cookie, hasCookie := uniqueCookie(r, sessionCookie)
+	count := 0
+	for _, c := range r.Cookies() {
+		if c.Name == sessionCookie {
+			count++
+		}
+	}
+
+	if count > 1 {
+		return "", true, identity.ErrUnauthenticated
+	}
+
+	auth := r.Header.Values("Authorization")
+	if len(auth) > 0 && hasCookie {
+		return "", true, identity.ErrUnauthenticated
+	}
+
+	token := cookie
+	web := true
+	if len(auth) > 0 {
+		if len(auth) != 1 || !strings.HasPrefix(auth[0], "Bearer ") {
+			return "", true, identity.ErrUnauthenticated
+		}
+
+		token = strings.TrimPrefix(auth[0], "Bearer ")
+		web = false
+	}
+
+	return token, web, nil
 }

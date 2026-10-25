@@ -31,6 +31,11 @@ internal class DraftRepository(
         withContext(io) { storage.save(record) }
     }
 
+    suspend fun removeAccount(owner: UUID) = mutex.withLock {
+        generation = UUID.randomUUID()
+        withContext(io) { storage.remove(owner) }
+    }
+
     suspend fun remove(owner: UUID, lease: UUID) = mutex.withLock {
         if (lease != generation) throw ClientFailure(FailureKind.StaleSession)
         withContext(io) { storage.remove(owner) }

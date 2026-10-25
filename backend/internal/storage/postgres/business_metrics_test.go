@@ -22,7 +22,7 @@ func TestBusinessMetricsPersistenceAndPrivacy(t *testing.T) {
 	}
 
 	if err := db.Check(ctx); err != nil {
-		t.Fatal("telemetry must preserve application schema version 1", err)
+		t.Fatal("telemetry must preserve the application schema version", err)
 	}
 
 	read := func(name string) float64 {

@@ -55,14 +55,14 @@ func (db *Database) Check(ctx context.Context) error {
 	for rows.Next() {
 		var version int
 		var checksum string
-		if rows.Scan(&version, &checksum) != nil || version != 1 || checksum != schemaChecksum() {
+		if rows.Scan(&version, &checksum) != nil || version != count+1 || version > len(migrations) || checksum != migrationChecksum(version) {
 			return ErrUnavailable
 		}
 
 		count++
 	}
 
-	if rows.Err() != nil || count != 1 {
+	if rows.Err() != nil || count != len(migrations) {
 		return ErrUnavailable
 	}
 
