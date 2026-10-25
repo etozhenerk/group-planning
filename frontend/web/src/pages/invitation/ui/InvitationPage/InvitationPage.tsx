@@ -6,7 +6,7 @@ import { PublicHeader } from '@/widgets/public-header';
 import { useSession } from '@/entities/session';
 import { MeetingFacts, MeetingCover } from '@/entities/meeting';
 import { SignInButton, AuthNotice } from '@/features/sign-in';
-import { ResponseButtons } from '@/features/respond';
+import { InvitationResponse } from '@/pages/invitation/ui/InvitationResponse';
 import { Status } from '@/shared/ui/Status';
 import { errorText } from '@/shared/api';
 import { useInvite } from '@/pages/invitation/ui/InvitationPage/hooks/useInvite';
@@ -34,7 +34,7 @@ export const InvitationPage = () => {
         ) : (
           <div className={[styles['invitation-card'], styles['stack']].join(' ')}>
             <AuthNotice />
-            <p className={styles['eyebrow']}>Вас приглашают на встречу</p>
+            <p className={styles['eyebrow']}>Приглашение на встречу</p>
             <h1>{query.data.title}</h1>
             {query.data.coverUrl && (
               <MeetingCover url={query.data.coverUrl} meeting={query.data.meetingId} />
@@ -64,12 +64,10 @@ export const InvitationPage = () => {
                 <p className={styles['muted']}>
                   Вы вошли как {session.data.user.displayName}
                 </p>
-                <ResponseButtons
+                <InvitationResponse
                   session={session.data}
-                  id={query.data.meetingId}
+                  invitation={query.data}
                   token={token}
-                  expected={query.data.myRsvpRevision}
-                  current={query.data.myRsvp}
                 />
               </>
             ) : (

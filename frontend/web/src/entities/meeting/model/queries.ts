@@ -6,6 +6,7 @@ import {
   listMeetings,
 } from '@/entities/meeting/api/read';
 import { guarded, privateKey, useAccess } from '@/entities/meeting/model/access';
+import { ApiError } from '@/shared/api';
 
 export const useMeetings = (user: string) => {
   return useInfiniteQuery({
@@ -23,6 +24,28 @@ export const useInvitation = (token: string, user: string) => {
     queryKey: ['invitation', user, token],
     queryFn: ({ signal }) => getInvitation(token, signal),
     retry: false,
+  });
+};
+
+export const useInvitationOrganizer = (id: string, user: string) => {
+  return useQuery({
+    queryKey: ['invitation-organizer', user, id],
+    queryFn: async ({ signal }) => {
+      try {
+        const meeting = await getMeeting(id, signal);
+
+        return meeting.organizerId === user;
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 403) {
+          return false;
+        }
+
+        throw error;
+      }
+    },
+    enabled: !!user,
+    retry: false,
+    gcTime: 0,
   });
 };
 

@@ -1,13 +1,25 @@
 import { expect, test } from '@playwright/test';
 import type { Route } from '@playwright/test';
-import { apiCreate, create, inviteLink, login } from '@tests/helpers';
+import { apiCreate, create, inviteLink, login, writeHeaders } from '@tests/helpers';
 import { holdRequests } from '@tests/loading-helpers';
 
 test('session and list skeletons preserve layout and reduced motion at all widths', async ({
   page,
 }) => {
   await login(page, 'Саша');
-  await apiCreate(page, 'После загрузки');
+  const created = await apiCreate(page, 'После загрузки');
+  const future = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+  const updated = await page.request.patch(`/api/v1/meetings/${created.meeting.id}`, {
+    headers: await writeHeaders(page),
+    data: {
+      starts_at: future,
+      starts_on: future.slice(0, 10),
+      timezone: 'UTC',
+      expected_revision: created.meeting.revision,
+    },
+  });
+
+  expect(updated.status()).toBe(200);
   const releaseSession = await holdRequests(page, '**/api/v1/me');
   const releaseList = await holdRequests(page, '**/api/v1/meetings?*');
   await page.goto('/meetings');

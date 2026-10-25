@@ -14,6 +14,7 @@ export type {
 export {
   useMeetings,
   useInvitation,
+  useInvitationOrganizer,
   useMeeting,
   useParticipants,
 } from '@/entities/meeting/model/queries';
