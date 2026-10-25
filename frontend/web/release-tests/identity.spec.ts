@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { buildInfoSchema } from '#build-info';
@@ -17,6 +18,21 @@ const readInfo = (variant: string) => {
   return buildInfoSchema.parse(value);
 };
 
+const enlargeText = async (page: Page) => {
+  await page.evaluate(() => {
+    const sizes = Array.from(document.querySelectorAll<HTMLElement>('body, body *'))
+      .filter((element) => element instanceof HTMLElement)
+      .map((element) => ({
+        element,
+        size: parseFloat(getComputedStyle(element).fontSize),
+      }));
+
+    for (const { element, size } of sizes) {
+      element.style.setProperty('font-size', `${size * 2}px`, 'important');
+    }
+  });
+};
+
 test('full version is from the unpacked artifact, without login or API', async ({
   page,
   request,
@@ -25,9 +41,7 @@ test('full version is from the unpacked artifact, without login or API', async (
   const info = readInfo('candidate');
   await page.route('**/api/**', (route) => route.abort());
   await page.goto('/about');
-  await expect(
-    page.locator('dl').getByText(`Версия ${info.version}`, { exact: true }),
-  ).toBeVisible();
+  await expect(page.locator('dl').getByText(info.version, { exact: true })).toBeVisible();
   await expect(
     page
       .getByRole('term')
@@ -53,18 +67,7 @@ test('full version is from the unpacked artifact, without login or API', async (
   }
 
   await page.setViewportSize({ width: 320, height: 900 });
-  await page.evaluate(() => {
-    const sizes = Array.from(document.querySelectorAll<HTMLElement>('body, body *'))
-      .filter((element) => element instanceof HTMLElement)
-      .map((element) => ({
-        element,
-        size: parseFloat(getComputedStyle(element).fontSize),
-      }));
-
-    for (const { element, size } of sizes) {
-      element.style.setProperty('font-size', `${size * 2}px`, 'important');
-    }
-  });
+  await enlargeText(page);
   await expect(footer.getByText(`Версия ${info.version}`, { exact: true })).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -97,24 +100,24 @@ test('an open tab keeps its identity through deployment and rollback', async ({
   await request.post('/__test/select?variant=previous');
   await page.goto('/about');
   await expect(
-    page.locator('dl').getByText(`Версия ${previous.version}`, { exact: true }),
+    page.locator('dl').getByText(previous.version, { exact: true }),
   ).toBeVisible();
   await request.post('/__test/select?variant=candidate');
   await expect(
-    page.locator('dl').getByText(`Версия ${previous.version}`, { exact: true }),
+    page.locator('dl').getByText(previous.version, { exact: true }),
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.locator('dl').getByText(`Версия ${candidate.version}`, { exact: true }),
+    page.locator('dl').getByText(candidate.version, { exact: true }),
   ).toBeVisible();
   await request.post('/__test/select?variant=previous');
   await page.reload();
   await expect(
-    page.locator('dl').getByText(`Версия ${previous.version}`, { exact: true }),
+    page.locator('dl').getByText(previous.version, { exact: true }),
   ).toBeVisible();
 });
 
-test('a long RC is readable at 320 px', async ({ page, request }) => {
+test('a long RC is readable at 320 px with enlarged text', async ({ page, request }) => {
   test.skip(
     !existsSync(path.join(root, 'long/dist/build-info.json')),
     'Local long-version artifact is not supplied',
@@ -123,12 +126,17 @@ test('a long RC is readable at 320 px', async ({ page, request }) => {
   await request.post('/__test/select?variant=long');
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/about');
-  await expect(
-    page.locator('dl').getByText(`Версия ${info.version}`, { exact: true }),
-  ).toBeVisible();
+  await enlargeText(page);
+  await expect(page.locator('dl').getByText(info.version, { exact: true })).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
   ).toBe(true);
+  const link = page
+    .locator('footer')
+    .getByRole('link', { name: `Версия ${info.version}`, exact: true });
+
+  await expect(link).toHaveAccessibleName(`Версия ${info.version}`);
+  await link.click({ trial: true });
   await page.screenshot({
     path: path.join(root, 'version-long-320.png'),
     fullPage: true,

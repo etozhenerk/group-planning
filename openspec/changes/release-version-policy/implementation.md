@@ -31,11 +31,13 @@
 | --- | --- |
 | `python3 -m unittest discover -s scripts/release -p 'test_*.py'` | 28 passed: реальные временные Git-репозитории, RC/финал/rerun Android/iOS, порядок и независимость тегов, карточка/SHA, полный набор всех пяти компонентов, подмена версии/карточки, неизменяемость публикации, безопасная распаковка |
 | `vitest run scripts/build-identity.test.ts` | 4 passed: strict metadata, stable/RC/dev/demo/неполные данные, посторонняя VITE_APP_VERSION, разделение версии и сборки |
-| `validate_web_builds.py --output .cache/release-policy-ui-3` | Три сборки TypeScript/Vite; 3 browser tests passed |
+| `validate_web_builds.py --output .cache/release-policy-ui-4` | Три сборки TypeScript/Vite; 3 browser tests passed |
 | Локальное сравнение артефактов | Кандидат `0.1.0-rc.3`, предыдущий `0.1.0-rc.2`, длинный `0.12.34-rc.123`; совпали manifest/build-info/отрисованный номер; открытая вкладка сохранила старый номер, reload сменил его, возврат архива восстановил предыдущий |
 | Доступность версии | API заблокирован, вход не выполнен; 320/390/1280 px, 200% текста, фокус и Enter на ссылке версии; горизонтального переполнения нет |
 | `npm run agent:check`, strict validation обоих связанных changes, `git diff --check` | Passed |
-| Полный `web:check` и основной E2E | Ожидают завершения параллельной работы web; ранний прогон прошёл TypeScript/ESLint, затем выявил оформление CSS в изменяемых файлах соседней задачи. Релизные проверки не отключались |
+| Полный `npm run web:check` | Passed: TypeScript, ESLint, CSS spacing, FSD/AST, Prettier, 72 Vitest tests в 22 файлах |
+| Основной E2E | По отчёту соседнего web-агента: штатный прогон 116 passed, 1 skipped (нужны native-клиенты). `frontend/web/test-results/.last-run.json` подтверждает passed/пустой failedTests. После финальной типографики выполняется прицельная повторная проверка |
+| GitHub CI инфраструктурного коммита `6189f73` | [Repository](https://github.com/etozhenerk/group-planning/actions/runs/40231602942) и [Web](https://github.com/etozhenerk/group-planning/actions/runs/40231602800) — success. Этот коммит ещё не содержит UI соседнего изменения |
 
 Все три сравниваемых архива — локальные тестовые fixtures рабочего дерева,
 а не публикуемые релизы. Их manifest помечены `fixture_only` и
@@ -49,6 +51,12 @@
 [длинный RC](assets/release-identity/version-long-320.png).
 Это доказательство отображения номера; полный визуальный аудит приложения
 остаётся в `meeting-experience-refresh`.
+
+Попытка дополнительного полного E2E на отдельном порту 9444 остановлена:
+общие helpers/specs задают Origin 8444, поэтому возникали CSRF 403. Её результаты
+не используются для оценки приложения; основной успешный прогон выполнен на
+штатном origin. Релизный browser smoke не зависит от этого набора и использует
+отдельный порт 9328 без API.
 
 ## Совместимость и границы
 

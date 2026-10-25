@@ -103,12 +103,12 @@ def release_notes(manifest):
     artifacts += ['`manifest.json` — состав, версия, коммит, сборка и проверки.',
                   '`SHA256SUMS` — контрольные суммы файлов, включая manifest.']
     sections = [f"Компонент: **{manifest['component']}** · Версия: **{manifest['version']}**",
-        f"Предыдущая окончательная версия: {card['previous_version'] or 'нет'}\n"
-        f"Причина повышения: **{card['bump']}** — {card['reason']}\n"
+        f"Предыдущая окончательная версия: {card['previous_version'] or 'нет'}\n\n"
+        f"Причина повышения: **{card['bump']}** — {card['reason']}\n\n"
         f"Коммит: `{manifest['commit']}` · Сборка: {manifest['build_number']}",
         '## Изменения', bullets(card['changes']), '## Совместимость', card['compatibility'],
-        '## Проверки', 'До создания тега:\n' + bullets(card['checks']),
-        'Проверки артефакта в CI:\n' + bullets(manifest['checks']),
+        '## Проверки', 'До создания тега:\n\n' + bullets(card['checks']),
+        'Проверки артефакта в CI:\n\n' + bullets(manifest['checks']),
         '## Ограничения', card['limitations'], '## Артефакты', bullets(artifacts),
         'Публикация артефактов не выполняет деплой и не загружает приложение в стор.']
     return '\n\n'.join(sections) + '\n'
