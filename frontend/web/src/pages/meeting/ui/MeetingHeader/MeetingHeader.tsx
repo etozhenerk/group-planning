@@ -42,7 +42,10 @@ export const MeetingHeader = ({
       <button
         className={[styles.icon, styles.ghost].join(' ')}
         type="button"
-        onClick={showDetails}
+        onClick={(event) => {
+          event.currentTarget.focus({ preventScroll: true });
+          showDetails();
+        }}
         aria-label="Информация о встрече"
       >
         <Ellipsis aria-hidden="true" size={20} />

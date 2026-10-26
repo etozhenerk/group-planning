@@ -1,0 +1,158 @@
+/* Композиционная ревизия; происхождение каждого добавленного значения — README.md. */
+@import url("../../styles.css");
+@import url("revision-tokens.css");
+
+[hidden] {
+  display: none !important;
+}
+
+.revision-sheet {
+  position: static;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: visible;
+}
+
+.revision-sheet:not([open]) {
+  display: none;
+}
+
+.revision-sheet .heading h1 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.revision-close,
+.revision-mobile-title {
+  display: none;
+}
+
+.revision-sheet .main {
+  margin-block: 0;
+}
+
+.revision-action-open .workspace {
+  display: block;
+  height: auto;
+  min-height: 100dvh;
+}
+
+.revision-action-open .chat-header,
+.revision-action-open .chat-layout {
+  display: none;
+}
+
+.revision-back {
+  margin-bottom: 0;
+}
+
+/* Каталог не является экраном продукта или эталоном приложения. */
+.revision-catalog {
+  min-height: 100dvh;
+}
+
+.revision-catalog ul {
+  display: grid;
+  gap: var(--revision-space-s12);
+  padding-inline-start: var(--revision-space-s24);
+}
+
+.revision-catalog a {
+  text-decoration: underline;
+}
+
+@media (max-width: 739px) {
+  .revision-action-open .workspace {
+    display: flex;
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .revision-action-open .chat-header {
+    display: flex;
+  }
+
+  .revision-action-open .chat-layout {
+    display: grid;
+  }
+
+  .revision-sheet {
+    position: fixed;
+    inset: auto 0 var(--revision-viewport-bottom, 0px);
+    width: 100%;
+    max-height: calc(
+      var(--revision-viewport-height, 100dvh) - var(--revision-space-s48)
+    );
+    margin: 0;
+    border-radius: var(--revision-radius-sheet) var(--revision-radius-sheet) 0 0;
+    background: var(--revision-color-surface);
+    overflow: hidden;
+    overscroll-behavior: contain;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .revision-sheet[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .revision-sheet::backdrop {
+    /* Действующий date-poll-v1/date-poll.css .poll-overlay. */
+    background: var(--revision-color-sheetBackdrop);
+    backdrop-filter: blur(var(--revision-component-sheet-backdropBlur));
+  }
+
+  .revision-sheet .main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+    padding: var(--revision-space-s20);
+  }
+
+  .revision-sheet .panel {
+    min-height: 0;
+    overflow: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .revision-sheet .heading {
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--revision-space-s12);
+    margin-bottom: var(--revision-space-s24);
+  }
+
+  .revision-sheet .heading h1 {
+    flex: 1;
+    font-size: var(--revision-typography-size-mobileActionHeading);
+    line-height: var(--revision-component-action-headingLineHeight);
+    letter-spacing: calc(
+      -1 * var(--revision-component-action-headingTrackingMobile)
+    );
+  }
+
+  .revision-close {
+    display: inline-grid;
+    min-width: var(--revision-target-web);
+    min-height: var(--revision-target-web);
+  }
+
+  .revision-mobile-title {
+    display: flex;
+  }
+
+  .revision-back {
+    display: none;
+  }
+}

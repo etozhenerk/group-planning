@@ -12,82 +12,68 @@ struct MediaPickerPanel: View {
     @State private var selectionError: String?
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                Button {
-                    dismiss()
-                } label: {
-                    HStack(spacing: 7) {
-                        ExperienceIcon(kind: .back, size: 18)
-                        Text("Назад")
+        ActionFormSheet(
+            title: photosOnly ? "Отправить фото" : "Отправить файл",
+            dismissDisabled: owner.busy || selecting,
+            scrollIdentifier: "media-picker-scroll", closeIdentifier: "media-picker-close"
+        ) {
+            if selecting { ProgressView("Подготавливаем файлы…") }
+            if let problem = selectionError ?? owner.problem {
+                Text(problem).designFont(12).foregroundStyle(AppPalette.error)
+                Button("Повторить проверку") { Task { await owner.loadLimits() } }
+            }
+            if photosOnly {
+                LazyVGrid(
+                    columns: [GridItem(.flexible()), GridItem(.flexible())],
+                    alignment: .leading, spacing: 16
+                ) {
+                    ForEach(owner.pending) { file in
+                        MediaPreviewItem(file: file, owner: owner)
                     }
-                    .designFont(13).frame(minHeight: 44)
-                }.accessibilityLabel("Готово").disabled(owner.busy)
-                Text(photosOnly ? "Отправить фото" : "Отправить файл")
-                    .designFont(28, weight: .bold).tracking(-0.9).padding(.bottom, 24)
-                VStack(alignment: .leading, spacing: 20) {
-                    if selecting { ProgressView("Подготавливаем файлы…") }
-                    if let problem = selectionError ?? owner.problem {
-                        Text(problem).designFont(12).foregroundStyle(AppPalette.error)
-                        Button("Повторить проверку") { Task { await owner.loadLimits() } }
-                    }
-                    if photosOnly {
-                        LazyVGrid(
-                            columns: [GridItem(.flexible()), GridItem(.flexible())],
-                            alignment: .leading, spacing: 16
-                        ) {
-                            ForEach(owner.pending) { file in
-                                MediaPreviewItem(file: file, owner: owner)
-                            }
-                        }
-                    } else {
-                        ForEach(owner.pending) { file in MediaPreviewItem(file: file, owner: owner)
-                        }
-                    }
-                    Text("Видно участникам встречи").designFont(12).foregroundStyle(
-                        AppPalette.muted)
-                    HStack(spacing: 12) {
-                        Button {
-                            if photosOnly { choosingPhotos = true } else { importing = true }
-                        } label: {
-                            HStack(spacing: 9) {
-                                ExperienceIcon(kind: .plus)
-                                Text("Выбрать ещё")
-                            }
-                            .designFont(14, weight: .semibold).padding(.horizontal, 15)
-                            .frame(minHeight: 47)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 13).stroke(
-                                    .white.opacity(0.125), lineWidth: 1)
-                            }
-                        }.accessibilityLabel(photosOnly ? "Выбрать фото" : "Выбрать файл").disabled(
-                            selecting || owner.busy)
-                        Spacer(minLength: 0)
-                        if owner.pending.contains(where: { $0.stage == .ready }) {
-                            Button(action: owner.send) {
-                                Group {
-                                    if owner.busy { ProgressView() } else { Text("Отправить") }
-                                }
-                                .designFont(14, weight: .semibold).padding(.horizontal, 18)
-                                .frame(minHeight: 47)
-                                .foregroundStyle(AppPalette.actionText).background(
-                                    AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-                            }.disabled(owner.busy)
-                        }
-                    }
-                }.padding(20).background(AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
-                if let limits = owner.limits {
-                    Text(
-                        "До \(limits.maxFiles) файлов. Фото — до \(limits.maxPhotoBytes / 1024 / 1024) МБ, файлы — до \(limits.maxFileBytes / 1024 / 1024) МБ."
-                    )
-                    .designFont(11).foregroundStyle(AppPalette.muted).padding(.top, 24)
                 }
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
-        }.background(AppPalette.background).safeAreaInset(edge: .top, spacing: 0) {
-            ServicePageHeader()
+            } else {
+                ForEach(owner.pending) { file in MediaPreviewItem(file: file, owner: owner)
+                }
+            }
+            Text("Видно участникам встречи").designFont(12).foregroundStyle(
+                AppPalette.muted)
+            HStack(spacing: 12) {
+                Button {
+                    if photosOnly { choosingPhotos = true } else { importing = true }
+                } label: {
+                    HStack(spacing: 9) {
+                        ExperienceIcon(kind: .plus)
+                        Text("Выбрать ещё")
+                    }
+                    .designFont(14, weight: .semibold).padding(.horizontal, 15)
+                    .frame(minHeight: 47)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 13).stroke(
+                            .white.opacity(0.125), lineWidth: 1)
+                    }
+                }.accessibilityLabel(photosOnly ? "Выбрать фото" : "Выбрать файл").disabled(
+                    selecting || owner.busy)
+                Spacer(minLength: 0)
+                if owner.pending.contains(where: { $0.stage == .ready }) {
+                    Button(action: owner.send) {
+                        Group {
+                            if owner.busy { ProgressView() } else { Text("Отправить") }
+                        }
+                        .designFont(14, weight: .semibold).padding(.horizontal, 18)
+                        .frame(minHeight: 47)
+                        .foregroundStyle(AppPalette.actionText).background(
+                            AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
+                    }.disabled(owner.busy)
+                }
+            }
+            if let limits = owner.limits {
+                Text(
+                    "До \(limits.maxFiles) файлов. Фото — до \(limits.maxPhotoBytes / 1024 / 1024) МБ, файлы — до \(limits.maxFileBytes / 1024 / 1024) МБ."
+                )
+                .designFont(11).foregroundStyle(AppPalette.muted).padding(.top, 24)
+            }
         }
-
-        .interactiveDismissDisabled(owner.busy)
+        .interactiveDismissDisabled(owner.busy || selecting)
         .task {
             await owner.loadLimits()
             owner.pending.removeAll { $0.stage == .published }

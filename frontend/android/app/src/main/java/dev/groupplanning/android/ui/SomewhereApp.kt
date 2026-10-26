@@ -42,7 +42,6 @@ import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.motion.rememberMotionEnabled
 import dev.groupplanning.android.ui.onboarding.OnboardingScreen
 import dev.groupplanning.android.ui.service.LocalSupport
-import dev.groupplanning.android.ui.service.ServiceEntry
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -149,10 +148,6 @@ internal fun SomewhereApp(model: AppViewModel) {
                                             signIn = model::startSignIn,
                                         )
                                     }
-                                    ServiceEntry(
-                                        "sign_in",
-                                        help = true,
-                                    )
                                     if (snapshot.session is SessionState.Deleted) {
                                         Surface(
                                             Modifier.align(Alignment.CenterHorizontally)

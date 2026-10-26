@@ -93,10 +93,10 @@ export const useMediaUpload = (
     [items.length, limits.data, photo],
   );
 
-  const initialized = useRef(false);
+  const initialized = useRef<File[] | null>(null);
   useEffect(() => {
-    if (!initialized.current && limits.data && initialFiles.length) {
-      initialized.current = true;
+    if (initialized.current !== initialFiles && limits.data && initialFiles.length) {
+      initialized.current = initialFiles;
       choose(initialFiles);
     }
   }, [choose, initialFiles, limits.data]);

@@ -14,8 +14,11 @@ import androidx.compose.ui.test.performScrollToNode
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class DatePollUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -31,6 +34,16 @@ class DatePollUiTests {
             fixture.waitTag("poll-create")
             fixture.screenshot("poll-create")
             compose.onNodeWithTag("poll-create").performScrollTo().performClick()
+            fixture.waitTag("poll-error")
+            fixture.screenshot("poll-create-uncertain")
+            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.waitAbsent("chat-action-sheet")
+            compose.onNodeWithTag("meeting-add").performClick()
+            compose.onNodeWithTag("new-date-poll").performClick()
+            fixture.waitTag("poll-error")
+            fixture.screenshot("poll-create-restored")
+            compose.onNodeWithTag("poll-create").performScrollTo().performClick()
+            fixture.waitAbsent("chat-action-sheet")
             fixture.waitTag("poll-option-2026-10-26")
             compose.onNodeWithTag(
                 "feed-timeline",

@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
-import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { actionSurface, apiCreate, login, writeHeaders } from '@tests/helpers';
 import { preparationTaskSchema, sessionSchema } from '@/shared/api';
 
 const openForm = async (page: Page) => {
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   await page.getByRole('menuitem', { name: 'Предложить задачу', exact: true }).click();
 
-  return page.getByRole('main', { name: 'Предложить задачу', exact: true });
+  return actionSurface(page, 'Предложить задачу');
 };
 
 const propose = async (
@@ -223,7 +223,7 @@ test('participant loading failure keeps the draft and task read failures retain 
   await expect(form.getByRole('button', { name: 'Предложить задачу' })).toBeDisabled();
   await page.unroute(`**/meetings/${meeting.id}/participants`);
   await form.getByRole('button', { name: 'Повторить', exact: true }).click();
-  await form.getByLabel('Кому предложить').selectOption({ label: 'Любой участник' });
+  await form.getByLabel('Кому предложить').selectOption({ label: 'Любому участнику' });
   await expect(form.getByLabel('Что сделать')).toHaveValue('Купить напитки');
   await form.getByRole('button', { name: 'Предложить задачу' }).click();
   const card = page.getByRole('region', { name: 'Задача подготовки' });

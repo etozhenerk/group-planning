@@ -18,7 +18,7 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
           <input
             value={form.place}
             onChange={(event) => form.setPlace(event.target.value)}
-            disabled={form.pending}
+            disabled={form.locked}
             required
           />
         </label>
@@ -27,7 +27,7 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
           <textarea
             value={form.explanation}
             onChange={(event) => form.setExplanation(event.target.value)}
-            disabled={form.pending}
+            disabled={form.locked}
             rows={3}
           />
         </label>
@@ -38,7 +38,7 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
           choice={form.choice}
           onChoice={form.setChoice}
           ambiguous={form.problem.includes('дважды')}
-          disabled={form.pending}
+          disabled={form.locked}
         />
       </div>
       <div className={styles.footer}>
@@ -51,9 +51,15 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
           type="submit"
           disabled={form.pending}
           aria-busy={form.pending}
-          aria-label="Создать опрос"
+          aria-label={form.uncertain ? 'Повторить отправку' : 'Предложить место'}
         >
-          {form.pending ? <ButtonSpinner /> : 'Создать опрос'}
+          {form.pending ? (
+            <ButtonSpinner />
+          ) : form.uncertain ? (
+            'Повторить отправку'
+          ) : (
+            'Предложить место'
+          )}
         </button>
       </div>
     </form>

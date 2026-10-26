@@ -9,7 +9,7 @@ struct CreatePlacePollScreen: View {
     var body: some View {
         @Bindable var form = form
         let owner = form.operation
-        ActionFormPage(title: "Предложить место", dismissDisabled: owner.busy) {
+        ActionFormSheet(title: "Предложить место", dismissDisabled: owner.busy) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Место").frame(minHeight: 19.5)
                 TextField("Название или адрес", text: $form.place, axis: .vertical)
@@ -34,7 +34,10 @@ struct CreatePlacePollScreen: View {
             ) {
                 SystemKeyboard.dismiss()
                 Task {
-                    if await form.submit() { completed(); dismiss() }
+                    if await form.submit() {
+                        completed()
+                        dismiss()
+                    }
                 }
             }.designFont(14).accessibilityIdentifier("place-poll-create")
         }.onChange(of: owner.current) { _, current in

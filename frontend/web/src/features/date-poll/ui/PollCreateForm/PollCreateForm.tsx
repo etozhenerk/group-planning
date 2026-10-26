@@ -34,7 +34,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             change={form.changeDate}
             add={form.add}
             remove={form.remove}
-            disabled={form.pending}
+            disabled={form.locked}
           />
           <PollDeadline
             value={form.deadline}
@@ -43,12 +43,12 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             choice={form.choice}
             onChoice={form.setChoice}
             ambiguous={form.problem.includes('дважды')}
-            disabled={form.pending}
+            disabled={form.locked}
           />
           <PollSettingsFields
             value={form.settings}
             onChange={form.changeSetting}
-            disabled={form.pending}
+            disabled={form.locked}
           />
         </div>
       </div>
@@ -67,9 +67,15 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
           type="submit"
           disabled={form.pending}
           aria-busy={form.pending}
-          aria-label="Создать опрос"
+          aria-label={form.uncertain ? 'Повторить отправку' : 'Создать опрос'}
         >
-          {form.pending ? <ButtonSpinner /> : 'Создать опрос'}
+          {form.pending ? (
+            <ButtonSpinner />
+          ) : form.uncertain ? (
+            'Повторить отправку'
+          ) : (
+            'Создать опрос'
+          )}
         </button>
       </div>
     </form>

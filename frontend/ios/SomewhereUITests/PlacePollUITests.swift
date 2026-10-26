@@ -13,6 +13,7 @@ final class PlacePollUITests: XCTestCase {
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
             ]
         }
+        ExperienceScreenshot.configure(app)
         app.launch()
         let card = app.buttons["meeting-card-d3c60000-0000-4000-8000-000000000\(suffix)"]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
@@ -35,7 +36,7 @@ final class PlacePollUITests: XCTestCase {
         explanation.tap()
         explanation.typeText("Рядом с метро")
         app.buttons["action-keyboard-done"].tap()
-        app.buttons["action-form-back"].tap()
+        app.buttons["action-form-close"].tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-place-poll"].tap()
@@ -98,9 +99,6 @@ final class PlacePollUITests: XCTestCase {
     }
 
     private func capture(_ name: String) {
-        let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        image.name = name
-        image.lifetime = .keepAlways
-        add(image)
+        ExperienceScreenshot.save(name, test: self)
     }
 }

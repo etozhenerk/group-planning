@@ -1,6 +1,6 @@
 .workspace {
   display: grid;
-  grid-template-columns: 222px minmax(0, 1fr);
+  grid-template-columns: var(--ds-component-navigation-sidebar-width) minmax(0, 1fr);
   min-height: 100dvh;
 }
 
@@ -19,7 +19,9 @@
 }
 
 .conversation-workspace {
-  grid-template-columns: 222px minmax(0, 1fr) 280px;
+  grid-template-columns: var(--ds-component-navigation-sidebar-width) minmax(0, 1fr) var(
+      --ds-component-navigation-details-sidebar-width
+    );
   grid-template-rows: minmax(0, 1fr);
   height: 100dvh;
   min-height: 0;
@@ -33,7 +35,7 @@
 
 @media (max-width: 1100px) {
   .conversation-workspace {
-    grid-template-columns: 222px minmax(0, 1fr);
+    grid-template-columns: var(--ds-component-navigation-sidebar-width) minmax(0, 1fr);
   }
 }
 
@@ -72,7 +74,7 @@
 
 @media (max-width: 1100px) and (min-width: 740px) {
   .workspace {
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns: var(--ds-component-navigation-sidebar-width) minmax(0, 1fr);
   }
 }
 

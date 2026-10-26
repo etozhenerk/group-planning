@@ -3,13 +3,15 @@ import XCTest
 @MainActor
 final class DesignExperienceUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
-    private func launch() -> XCUIApplication {
+    private func launch(large: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "design"
         app.launchArguments = [
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
-            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryL",
+            "-UIPreferredContentSizeCategoryName",
+            large ? "UICTContentSizeCategoryAccessibilityXXXL" : "UICTContentSizeCategoryL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         XCTAssertTrue(
             app.buttons["meeting-card-deb00000-0000-4000-8000-000000000001"].waitForExistence(
@@ -87,6 +89,8 @@ final class DesignExperienceUITests: XCTestCase {
             XCTAssertTrue(
                 app.descendants(matching: .any)[field].firstMatch.waitForExistence(timeout: 5))
             XCTAssertFalse(app.buttons["home-tab-calendar"].exists)
+            XCTAssertFalse(app.buttons["action-form-back"].exists)
+            XCTAssertTrue(app.buttons["action-form-close"].isHittable)
             if name == "action-task" {
                 let input = app.descendants(matching: .any)[field].firstMatch
                 input.tap()
@@ -95,10 +99,98 @@ final class DesignExperienceUITests: XCTestCase {
                 XCTAssertTrue(app.buttons["preparation-recipient"].waitForExistence(timeout: 5))
             }
             capture(name)
-            app.buttons["action-form-back"].tap()
+            app.buttons["action-form-close"].tap()
             XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         }
     }
+    func testMeetingInformationKeepsServiceLinksInProfileAndSettingsDraft() {
+        let app = launch()
+        let card = app.buttons["meeting-card-deb00000-0000-4000-8000-000000000002"]
+        reveal(card, app: app)
+        card.tap()
+        XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
+        app.buttons["meeting-info-open"].tap()
+        let edit = app.buttons["edit-meeting"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 10))
+        for label in [
+            "Помощь", "Сообщить о проблеме", "Предложить идею", "О приложении",
+            "Политика конфиденциальности", "Cookie и хранение",
+        ] {
+            XCTAssertFalse(app.buttons[label].exists)
+        }
+        capture("meeting-info")
+        edit.tap()
+        let title = app.descendants(matching: .any)["settings-title"].firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 10))
+        title.tap()
+        title.typeText(" — черновик")
+        let keyboard = app.keyboards.firstMatch
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 5))
+        XCTAssertGreaterThan(keyboard.keys.count, 10)
+        XCTAssertGreaterThan(keyboard.frame.height, 200)
+        XCTAssertTrue(app.frame.contains(keyboard.frame))
+        XCTAssertLessThanOrEqual(title.frame.maxY, keyboard.frame.minY)
+        XCTAssertTrue(app.buttons["settings-close"].isHittable)
+        XCTAssertLessThanOrEqual(app.buttons["settings-close"].frame.maxY, keyboard.frame.minY)
+        capture("settings-keyboard")
+        app.buttons["settings-close"].tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        edit.tap()
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
+        capture("settings-reopen")
+        app.buttons["settings-close"].tap()
+        app.buttons["meeting-info-close"].tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        app.buttons["feed-back"].tap()
+        app.buttons["home-tab-person.crop.circle"].tap()
+        let help = app.buttons["Помощь"]
+        reveal(help, app: app)
+        XCTAssertTrue(help.isHittable)
+        XCTAssertTrue(app.buttons["О приложении"].exists)
+        capture("profile-service-links")
+    }
+
+    func testActionSheetsKeepCloseAccessibleAtLargeText() {
+        let app = launch(large: true)
+        let card = app.buttons["meeting-card-deb00000-0000-4000-8000-000000000002"]
+        reveal(card, app: app)
+        card.tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+        for (identifier, name, heading, submitIdentifier) in [
+            ("new-preparation-task", "task", "Предложить задачу", "preparation-create"),
+            ("new-place-poll", "place", "Предложить место", "place-poll-create"),
+            ("new-date-poll", "date", "Предложить дату", "poll-create"),
+        ] {
+            app.buttons["meeting-add"].tap()
+            app.buttons[identifier].tap()
+            let close = app.buttons["action-form-close"]
+            XCTAssertTrue(close.waitForExistence(timeout: 5))
+            XCTAssertTrue(close.isHittable)
+            XCTAssertTrue(app.frame.contains(close.frame))
+            let title = app.staticTexts[heading].firstMatch
+            XCTAssertTrue(title.exists)
+            XCTAssertTrue(app.frame.contains(title.frame))
+            XCTAssertFalse(app.buttons["action-form-back"].exists)
+            XCTAssertFalse(app.buttons["home-tab-calendar"].exists)
+            capture("action-" + name + "-large-text")
+            let submit = app.buttons[submitIdentifier]
+            let scroll = app.scrollViews["action-form-scroll"]
+            XCTAssertTrue(scroll.exists)
+            for _ in 0..<8 {
+                if submit.exists && scroll.frame.contains(submit.frame) { break }
+                scroll.swipeUp()
+            }
+            XCTAssertTrue(submit.exists)
+            XCTAssertTrue(scroll.frame.contains(submit.frame))
+            XCTAssertTrue(app.frame.contains(close.frame))
+            XCTAssertTrue(close.isHittable)
+            capture("action-" + name + "-large-text-submit")
+            close.tap()
+            XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        }
+    }
+
     func testHelpAndAboutMatchApprovedLayout() {
         let app = launch()
         app.buttons["home-tab-person.crop.circle"].tap()

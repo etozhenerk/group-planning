@@ -23,8 +23,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class InvitationUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 

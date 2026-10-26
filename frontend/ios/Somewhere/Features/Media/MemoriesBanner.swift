@@ -58,7 +58,7 @@ struct MemoriesBanner: View {
             }
         }.buttonStyle(.plain).padding(.horizontal, 14).padding(.top, 14)
             .fullScreenCover(isPresented: $presented) { MemoriesScreen(owner: owner) }
-            .fullScreenCover(isPresented: $adding, onDismiss: { Task { await owner.load() } }) {
+            .sheet(isPresented: $adding, onDismiss: { Task { await owner.load() } }) {
                 MediaPickerPanel(owner: owner.transfer, photosOnly: true)
             }
             .task { await owner.load() }

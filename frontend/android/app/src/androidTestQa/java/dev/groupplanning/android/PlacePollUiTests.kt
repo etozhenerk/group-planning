@@ -15,8 +15,11 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class PlacePollUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -45,6 +48,14 @@ class PlacePollUiTests {
             fixture.waitTag("place-poll-error")
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             fixture.screenshot("android-place-create-error")
+            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.waitAbsent("chat-action-sheet")
+            compose.onNodeWithTag("meeting-add").performClick()
+            compose.onNodeWithTag("new-place-poll").performClick()
+            fixture.waitTag("place-poll-error")
+            compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
+            compose.onNodeWithTag("place-poll-explanation")
+                .assertTextContains("Есть стол на всех и тихий зал")
             compose.onNodeWithTag("place-poll-create").performScrollTo().performClick()
             fixture.waitTag("place-vote-for")
             compose.onNodeWithText("Есть стол на всех и тихий зал").assertExists()

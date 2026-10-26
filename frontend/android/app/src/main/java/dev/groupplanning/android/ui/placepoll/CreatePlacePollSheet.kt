@@ -15,7 +15,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.DraftIssue
 import dev.groupplanning.android.data.drafts.Repetition
 import dev.groupplanning.android.state.placepoll.PlacePollViewModel
-import dev.groupplanning.android.ui.components.ActionPage
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.CompactButton
 import dev.groupplanning.android.ui.components.DesignField
 import dev.groupplanning.android.ui.datepoll.PollDeadlineField
@@ -25,8 +25,10 @@ import dev.groupplanning.android.ui.theme.Palette
 internal fun CreatePlacePollSheet(model: PlacePollViewModel, close: () -> Unit) {
     val state by model.state.collectAsStateWithLifecycle()
     val draft = state.draft ?: return
-    LaunchedEffect(state.poll?.id) { if (state.poll != null) close() }
-    ActionPage(stringResource(R.string.place_poll_title), state.pending == null, close) {
+    LaunchedEffect(state.poll?.id, state.busy) {
+        if (state.poll != null && !state.busy) close()
+    }
+    ActionSheet(stringResource(R.string.place_poll_title), close, canClose = !state.busy) {
         DesignField(
             draft.place,
             { value -> model.change { it.copy(place = value) } },

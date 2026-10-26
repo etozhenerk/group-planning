@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import styles from '@/pages/meeting/ui/MeetingView/MeetingView.module.css';
 import { Link } from 'react-router';
@@ -15,6 +16,7 @@ import { useMeetingView } from '@/pages/meeting/ui/MeetingView/hooks/useMeetingV
 export type MeetingViewProps = { id: string; session: Session };
 
 export const MeetingView = ({ id, session }: MeetingViewProps) => {
+  const mobile = useMobileLayout();
   const action = useMeetingAction(id);
   const view = useMeetingView(id, session.user.id);
   const query = view.query;
@@ -66,11 +68,14 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
   }
 
   return (
-    <Workspace navigation={<Navigation session={session} />} conversation={!action.open}>
+    <Workspace
+      navigation={<Navigation session={session} />}
+      conversation={mobile || !action.open}
+    >
       <MeetingConversation
         meeting={query.data}
         session={session}
-        hidden={action.open}
+        hidden={!mobile && action.open}
         showDetails={view.details.show}
       />
       <ConversationActionScreen
@@ -80,16 +85,14 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
         open={action.open}
         done={action.close}
       />
-      {!action.open && (
-        <MeetingDetails
-          meeting={query.data}
-          session={session}
-          open={view.details.open}
-          wide={view.wide}
-          close={view.details.close}
-          show={view.details.show}
-        />
-      )}
+      <MeetingDetails
+        meeting={query.data}
+        session={session}
+        open={view.details.open && !action.open}
+        wide={view.wide && !action.open}
+        close={view.details.close}
+        show={view.details.show}
+      />
     </Workspace>
   );
 };

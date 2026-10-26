@@ -109,6 +109,7 @@ final class CrossPlatformUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "invite-rsvp"
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
         app.launch()
         app.open(try XCTUnwrap(URL(string: "group-planning-ios-ui://i/" + token)))
         XCTAssertTrue(app.staticTexts["Встреча трёх платформ"].waitForExistence(timeout: 15))

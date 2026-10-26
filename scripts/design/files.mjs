@@ -45,7 +45,8 @@ export const treeFiles = async (root, paths) => {
       }
     } else if (info.isFile()) result.add(path);
   };
-  for (const path of paths) await walk(path);
+  // Each screen lists its inputs; traverse shared roots once without omitting any file.
+  for (const path of new Set(paths)) await walk(path);
   return [...result].sort();
 };
 export const digestFiles = async (root, files) => {

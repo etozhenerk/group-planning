@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
-import { apiCreate, apiMeeting, login, setDate, writeHeaders } from '@tests/helpers';
+import {
+  actionSurface,
+  apiCreate,
+  apiMeeting,
+  login,
+  setDate,
+  writeHeaders,
+} from '@tests/helpers';
 import { datePollSchema } from '@/shared/api';
 
 const join = async (page: Page, url: string) => {
@@ -67,7 +74,7 @@ test('create with settings and apply live majority in two chats', async ({
   await page.goto(`/meetings/${id}`);
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
-  const form = page.getByRole('main', { name: 'Предложить дату' });
+  const form = actionSurface(page, 'Предложить дату');
   await expect(
     form.getByRole('checkbox', { name: /Можно выбрать несколько дат/ }),
   ).toBeChecked();
@@ -76,7 +83,7 @@ test('create with settings and apply live majority in two chats', async ({
   ).toBeChecked();
   await expect(form.getByRole('checkbox', { name: 'Можно добавить дату' })).toBeChecked();
 
-  await expect(form).toHaveCSS('transform', 'none');
+  await expect(form).toHaveAttribute('data-motion', 'open');
 
   for (const toggle of await form.getByRole('checkbox').all()) {
     const bounds = await toggle.boundingBox();

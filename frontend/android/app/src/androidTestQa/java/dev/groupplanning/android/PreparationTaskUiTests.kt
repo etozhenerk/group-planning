@@ -11,8 +11,11 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class PreparationTaskUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -44,7 +47,16 @@ class PreparationTaskUiTests {
             scenario.recreate()
             fixture.waitTag("preparation-error")
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
+            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.waitAbsent("chat-action-sheet")
+            compose.onNodeWithTag("meeting-add").performClick()
+            compose.onNodeWithTag("new-preparation-task").performClick()
+            fixture.waitTag("preparation-error")
+            compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
             compose.onNodeWithTag("preparation-create").performScrollTo().performClick()
+            fixture.waitAbsent("chat-action-sheet")
+            fixture.waitText("Заказать пиццу")
+            compose.onNodeWithText("Заказать пиццу").performClick()
             fixture.waitText("Кому предложено: Лена")
             compose.onNodeWithTag("preparation-accept").assertDoesNotExist()
             fixture.screenshot("android-task-offered")

@@ -23,6 +23,7 @@ export default defineConfig({
         '28-meeting-refresh.spec.ts',
         '29-media-refresh.spec.ts',
         '32-refresh-resilience.spec.ts',
+        '33-chat-action-sheets.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

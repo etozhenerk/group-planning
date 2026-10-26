@@ -4,6 +4,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
@@ -22,8 +23,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class DesignVisualUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -106,8 +110,13 @@ class DesignVisualUiTests {
                 if (index > 0) compose.onNodeWithTag("meeting-add").performClick()
                 compose.onNodeWithTag(action).performClick()
                 fixture.waitTag(field)
+                compose.onNodeWithTag("chat-action-sheet").assertIsDisplayed()
+                compose.onNodeWithText(fixture.context.getString(R.string.experience_back))
+                    .assertDoesNotExist()
                 if (field == "preparation-title") {
                     compose.onNodeWithTag(field).performTextInput("Заказать пиццу")
+                    compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                    fixture.screenshot("design-action-task-keyboard")
                     fixture.device.pressBack()
                 }
                 compose.onNodeWithTag("home-navigation").assertDoesNotExist()
@@ -115,6 +124,8 @@ class DesignVisualUiTests {
                 if (field == "place-poll-place") {
                     compose.onNodeWithTag(field).performTextInput("Кафе у парка")
                     compose.onNodeWithTag("place-poll-explanation").performTextInput("Тихий зал")
+                    compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                    fixture.screenshot("design-action-place-keyboard")
                     fixture.device.pressBack()
                 }
                 val selectedSetting = if (action == "new-date-poll") {
@@ -132,14 +143,22 @@ class DesignVisualUiTests {
                 compose.onNodeWithTag(action).performClick()
                 fixture.waitTag(field)
                 when (field) {
-                    "preparation-title" -> compose.onNodeWithTag(field).assertTextContains("Заказать пиццу")
+                    "preparation-title" -> compose.onNodeWithTag(
+                        field,
+                    ).assertTextContains("Заказать пиццу")
                     "place-poll-place" -> {
                         compose.onNodeWithTag(field).assertTextContains("Кафе у парка")
-                        compose.onNodeWithTag("place-poll-explanation").assertTextContains("Тихий зал")
+                        compose.onNodeWithTag(
+                            "place-poll-explanation",
+                        ).assertTextContains("Тихий зал")
                     }
-                    else -> assertEquals(selectedSetting,
-                        compose.onNodeWithContentDescription("Можно изменить голос").fetchSemanticsNode()
-                            .config[SemanticsProperties.ToggleableState])
+                    else -> assertEquals(
+                        selectedSetting,
+                        compose.onNodeWithContentDescription(
+                            "Можно изменить голос",
+                        ).fetchSemanticsNode()
+                            .config[SemanticsProperties.ToggleableState],
+                    )
                 }
                 fixture.device.pressBack()
                 fixture.waitTag("meeting-add")

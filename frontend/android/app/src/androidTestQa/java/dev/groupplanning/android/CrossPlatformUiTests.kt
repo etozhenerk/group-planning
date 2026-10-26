@@ -20,8 +20,11 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class CrossPlatformUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -89,5 +92,4 @@ class CrossPlatformUiTests {
             ).fetchSemanticsNodes().isNotEmpty()
         }
     }
-
 }

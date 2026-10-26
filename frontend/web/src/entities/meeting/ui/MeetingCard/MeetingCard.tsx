@@ -11,6 +11,9 @@ export type MeetingCardProps = { meeting: MeetingSummary; user: string; past?: b
 
 export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) => {
   const labels = cardLabels(meeting);
+  const lastSpace = meeting.title.trimEnd().lastIndexOf(' ');
+  const prefix = lastSpace < 0 ? '' : meeting.title.slice(0, lastSpace + 1);
+  const tail = meeting.title.slice(lastSpace + 1);
 
   return (
     <article
@@ -33,9 +36,16 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
         )}
         <div className={styles.info}>
           <h2>
-            {meeting.title}
-            {meeting.organizerId === user && (
-              <Crown size={16} aria-label="Вы организатор" />
+            {meeting.organizerId === user ? (
+              <>
+                {prefix}
+                <span className={styles.titleEnd}>
+                  <span>{tail}</span>
+                  <Crown size={16} aria-label="Вы организатор" />
+                </span>
+              </>
+            ) : (
+              meeting.title
             )}
           </h2>
           <p>

@@ -1,5 +1,5 @@
 export type ConversationActionKind =
-  'menu' | 'date' | 'place' | 'task' | 'photo' | 'file';
+  'menu' | 'date' | 'place' | 'task' | 'photo' | 'file' | 'share';
 
 export const actionTitle = (kind: ConversationActionKind) =>
   ({
@@ -7,6 +7,7 @@ export const actionTitle = (kind: ConversationActionKind) =>
     date: 'Предложить дату',
     place: 'Предложить место',
     task: 'Предложить задачу',
-    photo: 'Добавить фото',
-    file: 'Добавить файл',
+    photo: 'Отправить фото',
+    file: 'Отправить файл',
+    share: 'Пригласить друзей',
   })[kind];

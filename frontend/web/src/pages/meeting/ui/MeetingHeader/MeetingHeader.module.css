@@ -80,6 +80,15 @@ button.icon,
   display: inline-flex;
 }
 
+.conversation-title p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 3px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @media (max-width: 739px) {
   .conversation-header {
     padding: 14px 12px;
@@ -95,18 +104,16 @@ button.icon,
     font-size: 18px;
   }
 
+  .conversation-header h1,
+  .conversation-title p {
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .conversation-header small {
     font-size: 12px;
   }
-}
-
-.conversation-title p {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 3px 0 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 @media (min-width: 1101px) {

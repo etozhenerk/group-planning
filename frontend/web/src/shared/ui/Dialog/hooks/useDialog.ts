@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { animateDialog } from '@/shared/ui/Dialog/lib/dialogMotion';
+import { openAfterModalExit } from '@/shared/ui/Dialog/lib/openAfterModalExit';
 import { lockBackgroundScroll } from '@/shared/lib/lockBackgroundScroll';
 import { useVisualViewport } from '@/shared/lib/viewport';
 
-export const useDialog = (open: boolean, children: ReactNode) => {
+export const useDialog = (open: boolean, children: ReactNode, modal = true) => {
   const ref = useRef<HTMLDialogElement>(null);
   useVisualViewport(ref);
+  const wasModal = useRef(modal);
   const release = useRef<(() => void) | undefined>(undefined);
   const [retained, setRetained] = useState<ReactNode>(null);
   const finish = useCallback(() => {
@@ -32,35 +34,62 @@ export const useDialog = (open: boolean, children: ReactNode) => {
     }
 
     if (open) {
-      if (!dialog.open) {
-        const previous = document.activeElement;
-        const unlock = lockBackgroundScroll(dialog);
-        dialog.showModal();
-        release.current = () => {
-          unlock();
-
-          if (
-            previous instanceof HTMLElement &&
-            previous.isConnected &&
-            !document.querySelector('dialog[open]')
-          ) {
-            previous.focus({ preventScroll: true });
-          }
-        };
+      if (dialog.open && wasModal.current !== modal) {
+        finish();
       }
 
-      return animateDialog(dialog, true, () => {
-        dialog.dataset['motion'] = 'open';
+      wasModal.current = modal;
+
+      return openAfterModalExit(dialog, () => {
+        if (!dialog.open) {
+          const previous = document.activeElement;
+          const unlock = modal ? lockBackgroundScroll(dialog) : () => undefined;
+
+          if (modal) {
+            dialog.showModal();
+          } else {
+            dialog.show();
+          }
+
+          release.current = () => {
+            unlock();
+
+            if (
+              previous instanceof HTMLElement &&
+              previous.isConnected &&
+              !document.querySelector('dialog[open]')
+            ) {
+              previous.focus({ preventScroll: true });
+            }
+          };
+        }
+
+        if (!modal) {
+          dialog.dataset['motion'] = 'open';
+
+          return;
+        }
+
+        return animateDialog(dialog, true, () => {
+          dialog.dataset['motion'] = 'open';
+        });
       });
     }
 
     if (dialog.open) {
+      if (!wasModal.current) {
+        finish();
+        setRetained(null);
+
+        return;
+      }
+
       return animateDialog(dialog, false, () => {
         finish();
         setRetained(null);
       });
     }
-  }, [open, finish]);
+  }, [open, finish, modal]);
 
   useEffect(() => finish, [finish]);
 

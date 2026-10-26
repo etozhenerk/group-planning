@@ -1,11 +1,7 @@
-import { useParams } from 'react-router';
-import { SessionGate } from '@/widgets/session-gate';
-import { ShareView } from '@/pages/meeting-share/ui/ShareView';
+import { Navigate, useParams } from 'react-router';
 
 export const SharePage = () => {
   const { id = '' } = useParams();
 
-  return (
-    <SessionGate>{(session) => <ShareView id={id} session={session} />}</SessionGate>
-  );
+  return <Navigate to={`/meetings/${id}?action=share`} replace />;
 };

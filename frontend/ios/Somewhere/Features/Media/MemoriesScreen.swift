@@ -117,7 +117,7 @@ struct MemoriesScreen: View {
 
             .toolbar(.hidden, for: .navigationBar)
             .task(id: reloadID) { await owner.load() }
-            .fullScreenCover(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
+            .sheet(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
                 MediaPickerPanel(owner: owner.transfer, photosOnly: true)
 
             }

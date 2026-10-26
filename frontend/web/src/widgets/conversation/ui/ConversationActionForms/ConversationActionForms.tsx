@@ -3,6 +3,8 @@ import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollCreateForm } from '@/features/date-poll';
 import { PlacePollForm } from '@/features/place-poll';
+import { ShareForm } from '@/features/share-invitation';
+import { UploadDraft } from '@/features/upload-media';
 import { TaskForm } from '@/features/preparation-task';
 import type { ConversationActionKind } from '@/widgets/conversation/model/actionKind';
 import styles from '@/widgets/conversation/ui/ConversationActionForms/ConversationActionForms.module.css';
@@ -25,7 +27,10 @@ export const ConversationActionForms = ({
   const [generation, setGeneration] = useState({ date: 0, place: 0, task: 0 });
   const complete = (form: 'date' | 'place' | 'task') => {
     setGeneration((value) => ({ ...value, [form]: value[form] + 1 }));
-    done();
+
+    if (open && kind === form) {
+      done();
+    }
   };
 
   return (
@@ -54,6 +59,29 @@ export const ConversationActionForms = ({
           done={() => complete('task')}
           active={open && kind === 'task'}
         />
+      </div>
+      <div className={styles.form} hidden={kind !== 'photo'}>
+        <UploadDraft
+          id={meeting.id}
+          session={session}
+          photo
+          purpose="message"
+          active={open && kind === 'photo'}
+          done={done}
+        />
+      </div>
+      <div className={styles.form} hidden={kind !== 'file'}>
+        <UploadDraft
+          id={meeting.id}
+          session={session}
+          photo={false}
+          purpose="message"
+          active={open && kind === 'file'}
+          done={done}
+        />
+      </div>
+      <div className={styles.form} hidden={kind !== 'share'}>
+        {kind === 'share' && <ShareForm id={meeting.id} />}
       </div>
     </>
   );

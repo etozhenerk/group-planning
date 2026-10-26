@@ -1,5 +1,5 @@
 import { useFilePicker } from '@/shared/lib/file-picker';
-import { useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { Plus } from 'lucide-react';
 import { ActionMenu } from '@/widgets/conversation/ui/ActionMenu';
@@ -25,15 +25,14 @@ export const ConversationActions = ({
   toggle,
   close,
 }: ConversationActionsProps) => {
-  const [kind, setKind] = useState<ConversationActionKind>('menu');
+  const photo = useRef(false);
   const navigate = useNavigate();
   const upload = useUploadSelection(session.user.id, id);
   const picker = useFilePicker((files) =>
     upload.begin({
       files,
-      photo: kind === 'photo',
+      photo: photo.current,
       purpose: 'message',
-      returnTo: `/meetings/${id}`,
     }),
   );
 
@@ -41,13 +40,21 @@ export const ConversationActions = ({
   const ref = useActionMenu(menu, close);
   const select = (value: ConversationActionKind) => {
     ref.current?.querySelector('button')?.focus({ preventScroll: true });
-    setKind(value);
+    photo.current = value === 'photo';
 
     if (value === 'photo' || value === 'file') {
-      picker.choose(value === 'photo');
+      void navigate(`/meetings/${id}?action=${value}`, {
+        state: { meetingAction: true },
+        preventScrollReset: true,
+      });
+
+      if (!upload.selection || upload.selection.photo !== (value === 'photo')) {
+        picker.choose(value === 'photo');
+      }
     } else {
       void navigate(`/meetings/${id}?action=${value}`, {
         state: { meetingAction: true },
+        preventScrollReset: true,
       });
     }
 

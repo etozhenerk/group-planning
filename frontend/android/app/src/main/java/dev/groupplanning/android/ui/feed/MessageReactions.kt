@@ -3,12 +3,10 @@ package dev.groupplanning.android.ui.feed
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,9 +28,11 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.MessageReaction
 import dev.groupplanning.android.state.feed.ReactionController
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.FloatingPanel
 import dev.groupplanning.android.ui.components.UserAvatar
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -114,27 +114,18 @@ internal fun MessageReactions(entry: FeedEntry, model: ReactionController) {
         }, { full = false })
     }
     people?.let { selected ->
-        AlertDialog(
-            onDismissRequest = { people = null },
-            title = { Text(stringResource(R.string.reaction_people)) },
-            text = {
-                Column {
-                    FlowRow {
-                        reactions.forEach { item ->
-                            TextButton({ people = item }) { Text(item.emoji) }
-                        }
-                    }
-                    selected.users.forEach { user ->
-                        FlowRow {
-                            UserAvatar(user.displayName, user.avatarUrl)
-                            Text(user.displayName, Modifier.padding(8.dp))
-                        }
-                    }
+        ActionSheet(stringResource(R.string.reaction_people), { people = null }) {
+            FlowRow {
+                reactions.forEach { item ->
+                    TextButton({ people = item }) { Text(item.emoji) }
                 }
-            },
-            confirmButton = {
-                TextButton({ people = null }) { Text(stringResource(R.string.experience_close)) }
-            },
-        )
+            }
+            selected.users.forEach { user ->
+                FlowRow {
+                    UserAvatar(user.displayName, user.avatarUrl)
+                    Text(user.displayName, Modifier.padding(DesignTokens.spaceS8))
+                }
+            }
+        }
     }
 }

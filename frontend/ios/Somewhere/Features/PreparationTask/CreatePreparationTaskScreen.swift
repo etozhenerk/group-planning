@@ -7,7 +7,7 @@ struct CreatePreparationTaskScreen: View {
 
     var body: some View {
         @Bindable var form = form
-        ActionFormPage(title: "Предложить задачу", dismissDisabled: form.operation.busy) {
+        ActionFormSheet(title: "Предложить задачу", dismissDisabled: form.operation.busy) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Что сделать").frame(minHeight: 19.5)
                 TextField("Что сделать", text: $form.title, axis: .vertical)
@@ -26,7 +26,10 @@ struct CreatePreparationTaskScreen: View {
                 SystemKeyboard.dismiss()
                 Task {
                     await form.submit()
-                    if form.operation.current, form.operation.task != nil { completed(); dismiss() }
+                    if form.operation.current, form.operation.task != nil {
+                        completed()
+                        dismiss()
+                    }
                 }
             }.disabled(
                 form.operation.pending == nil

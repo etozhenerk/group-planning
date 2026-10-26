@@ -4,6 +4,7 @@ import type { Meeting } from '@/entities/meeting';
 import { MeetingFacts, MeetingCover } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { ResponseButtons } from '@/features/respond';
+import { ShareInvitation } from '@/features/share-invitation';
 import { ParticipantList } from '@/widgets/meeting-details/ui/ParticipantList';
 import { Images } from 'lucide-react';
 
@@ -26,7 +27,7 @@ export const DetailsContent = ({
 }: DetailsContentProps) => {
   return (
     <div className={[styles['stack'], styles['details-content']].join(' ')}>
-      {meeting.coverUrl && (
+      {compact && meeting.coverUrl && (
         <div className={compact ? styles.cover : undefined}>
           <MeetingCover
             url={meeting.coverUrl}
@@ -37,7 +38,8 @@ export const DetailsContent = ({
         </div>
       )}
       <MeetingFacts
-        compact
+        compact={compact}
+        summary={!compact}
         startsAt={meeting.startsAt}
         startsOn={meeting.startsOn ?? null}
         timezone={meeting.timezone}
@@ -52,6 +54,9 @@ export const DetailsContent = ({
         compact={compact}
         showAll={showAll}
       />
+      {!compact && meeting.organizerId === session.user.id && (
+        <ShareInvitation id={meeting.id} subtle />
+      )}
       {compact && meeting.period === 'past' && (
         <Link to={`/meetings/${meeting.id}/memories?from=chat`}>
           <Images size={18} />
@@ -75,7 +80,6 @@ export const DetailsContent = ({
             />
           </section>
         ))}
-      {!compact && <Link to="/support?screen=meeting_chat">Сообщить о проблеме</Link>}
     </div>
   );
 };

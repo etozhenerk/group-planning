@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 1.0.0. Do not edit.
+// Generated from design-system/tokens.json · 1.1.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -21,10 +21,18 @@ internal object DesignTokens {
     val colorNavigation = Color(0xff1d1e22)
     val colorOwnMessage = Color(0xffe0dce8)
     val colorOwnText = Color(0xff27252d)
+    val colorParticipantChipAvatar = Color(0x10000000)
+    val colorParticipantChipFirst = Color(0xffc6b4a5)
+    val colorParticipantChipMore = Color(0xff42434b)
+    val colorParticipantChipSecond = Color(0xffc9bfd9)
+    val colorParticipantChipText = Color(0xff302c2b)
+    val colorParticipantChipThird = Color(0xffb5c9bf)
     val colorPhotoBackdrop = Color(0xff141518)
     val colorPhotoFrame = Color(0xffe4ded4)
     val colorRaised = Color(0xff393a42)
     val colorSelectedSegment = Color(0xff45414e)
+    val colorSheetBackdrop = Color(0xa80b0b10)
+    val colorSubtleBorder = Color(0x20ffffff)
     val colorSurface = Color(0xff303138)
     val colorText = Color(0xfff5f4f1)
     val colorWeekday = Color(0xff38313d)
@@ -37,6 +45,21 @@ internal object DesignTokens {
     val colorWeekendFrame = Color(0xff4b615b)
     val colorWeekendHover = Color(0xff344440)
     val colorWeekendText = Color(0xffdcece5)
+    val componentActionColumnWidth = 700.dp
+    val componentActionFieldGap = 18.dp
+    val componentActionHeadingGap = 30.dp
+    val componentActionHeadingLineHeight = 1.15f
+    val componentActionHeadingTracking = 1.2.dp
+    val componentActionHeadingTrackingMobile = 0.9.dp
+    val componentActionPanelInset = 26.dp
+    val componentActionTabletInset = 30.dp
+    val componentActionTopInset = 44.dp
+    val componentButtonIconGap = 9.dp
+    val componentButtonIconSize = 21.dp
+    val componentButtonMinimumHeight = 46.dp
+    val componentButtonPaddingBlock = 12.dp
+    val componentButtonPaddingInline = 18.dp
+    val componentButtonRadius = 13.dp
     val componentCardAvatar = 35.dp
     val componentCardAvatarMobile = 32.dp
     val componentCardAvatarOverlap = 9.dp
@@ -44,13 +67,31 @@ internal object DesignTokens {
     val componentCardCoverMobileHeight = 101.dp
     val componentCardCoverMobileWidth = 102.dp
     val componentCardCoverWidth = 118.dp
+    val componentCardCoverBorder = 3.dp
     val componentCardCoverLift = 4.dp
     val componentCardHoverLift = 3.dp
     val componentCardMinimumHeight = 146.dp
     val componentCardMinimumHeightMobile = 145.dp
+    val componentIconFocusOffset = 5.dp
+    val componentIconStrokeWidth = 1.7f
+    val componentNavigationDetailsSidebarWidth = 280.dp
     val componentNavigationHeight = 62.dp
     val componentNavigationIcon = 19.dp
     val componentNavigationInset = 16.dp
+    val componentNavigationSidebarWidth = 222.dp
+    val componentParticipantChipAvatarSize = 20.dp
+    val componentParticipantChipContentGap = 5.dp
+    val componentParticipantChipGroupTopInset = 22.dp
+    val componentParticipantChipGroupTopInsetMobile = 18.dp
+    val componentParticipantChipHeight = 29.dp
+    val componentParticipantChipMorePaddingBlock = 3.dp
+    val componentParticipantChipMorePaddingInline = 9.dp
+    val componentParticipantChipOverlap = 10.dp
+    val componentParticipantChipPaddingBlock = 2.dp
+    val componentParticipantChipPaddingEnd = 16.dp
+    val componentParticipantChipPaddingStart = 3.dp
+    val componentParticipantChipRadius = 30.dp
+    val componentSheetBackdropBlur = 5.dp
     val motionDurationCard = 220
     val motionDurationCover = 280
     val motionDurationFast = 150
@@ -87,15 +128,23 @@ internal object DesignTokens {
     val typographyLineHeightCardTitle = 1.25f
     val typographyLineHeightLabel = 1.4f
     val typographySizeBody = 15.sp
+    val typographySizeButton = 14.sp
     val typographySizeCaption = 12.sp
     val typographySizeCardTitle = 21.sp
     val typographySizeCardTitleMobile = 19.sp
+    val typographySizeDesktopHeading = 34.sp
     val typographySizeHeading = 27.sp
     val typographySizeLabel = 11.sp
+    val typographySizeMobileActionHeading = 28.sp
+    val typographySizeParticipantChip = 11.sp
+    val typographySizeParticipantChipAvatar = 9.sp
+    val typographySizeParticipantChipMore = 10.sp
+    val typographySizeSectionHeading = 16.sp
     val typographySizeSmall = 13.sp
     val typographyWeightBold = 700f
     val typographyWeightBrand = 850f
     val typographyWeightMedium = 500f
+    val typographyWeightParticipantChipAvatar = 650f
     val typographyWeightRegular = 400f
     val typographyWeightSemibold = 600f
 }

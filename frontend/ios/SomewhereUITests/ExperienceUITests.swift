@@ -12,6 +12,7 @@ final class ExperienceUITests: XCTestCase {
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
             ]
         }
+        ExperienceScreenshot.configure(app)
         app.launch()
         return app
     }
@@ -99,7 +100,7 @@ final class ExperienceUITests: XCTestCase {
         cancelPicker.tap()
         XCTAssertTrue(app.buttons["Выбрать фото"].waitForExistence(timeout: 5))
         capture("refresh-attachments")
-        app.buttons["Готово"].tap()
+        app.buttons["media-picker-close"].tap()
         XCTAssertEqual(input.value as? String, "Жду встречи ❤️")
         XCUIDevice.shared.press(.home)
         app.activate()

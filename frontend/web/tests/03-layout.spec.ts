@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { apiCreate, login } from '@tests/helpers';
+import { actionSurface, apiCreate, login } from '@tests/helpers';
 
 for (const width of [320, 390, 768, 1440]) {
   test(`layout and keyboard at ${width}px`, async ({ page }) => {
@@ -66,7 +66,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.getByTestId('feed-message')).toHaveCount(0);
 
     await share.click();
-    const invitation = page.getByRole('main');
+    const invitation = actionSurface(page, 'Пригласить друзей');
     await expect(page.getByRole('heading', { name: 'Пригласить друзей' })).toBeVisible();
     await expect(invitation).toBeVisible();
     const copy = invitation.getByRole('button', { name: 'Скопировать ссылку' });
@@ -87,7 +87,9 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.getByTestId('details-sidebar')).toHaveCount(0);
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(0);
       await info.click();
-      await expect(page.getByRole('dialog', { name: 'Детали встречи' })).toBeVisible();
+      await expect(
+        page.getByRole('dialog', { name: created.meeting.title }),
+      ).toBeVisible();
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(1);
       await page.keyboard.press('Escape');
       await expect(info).toBeFocused();
@@ -96,7 +98,7 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.getByTestId('details-sidebar')).toBeVisible();
       await expect(page.getByRole('term').filter({ hasText: 'Когда' })).toHaveCount(1);
       await page.getByRole('button', { name: 'Все участники встречи' }).click();
-      const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+      const dialog = page.getByRole('dialog', { name: created.meeting.title });
       await expect(dialog).toBeVisible();
       await expect(
         dialog.getByRole('button', { name: 'Изменить настройки' }),
@@ -116,7 +118,7 @@ test('dialog respects reduced motion and restores focus', async ({ page }) => {
   await page.goto(`/meetings/${created.meeting.id}`);
   const info = page.getByRole('button', { name: 'Информация о встрече' });
   await info.click();
-  const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+  const dialog = page.getByRole('dialog', { name: created.meeting.title });
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveCSS('animation-name', 'none');
   await page.keyboard.press('Escape');

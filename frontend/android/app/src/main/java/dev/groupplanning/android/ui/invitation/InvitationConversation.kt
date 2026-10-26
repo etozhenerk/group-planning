@@ -7,14 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,16 +35,15 @@ import dev.groupplanning.android.state.InvitationIssue
 import dev.groupplanning.android.state.InvitationState
 import dev.groupplanning.android.state.feed.FeedViewModel
 import dev.groupplanning.android.ui.components.ActionButton
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.feed.FeedScreen
-import dev.groupplanning.android.ui.service.ServiceEntry
 import dev.groupplanning.android.ui.settings.MeetingSettingsSheet
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun InvitationConversation(
     state: InvitationState,
@@ -126,46 +120,32 @@ internal fun InvitationConversation(
         }
     }
     if (information) {
-        ModalBottomSheet(
-            onDismissRequest = { information = false },
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            containerColor = Palette.background,
+        ActionSheet(
+            title = details.preview.title,
+            close = { information = false },
+            modifier = Modifier.testTag("meeting-information"),
         ) {
-            Column(
-                Modifier.verticalScroll(
-                    rememberScrollState(),
-                ).padding(horizontal = 24.dp).padding(bottom = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(26.dp),
-            ) {
-                InvitationFacts(details.preview, showTitle = false)
-                ServiceEntry("meeting_chat")
-                if (details.organizer) {
-                    ActionButton(
-                        stringResource(R.string.meeting_settings),
-                        Modifier.testTag("open-settings"),
-                        primary = false,
-                    ) {
-                        details.meeting?.let { feed?.openSettings(it) }
-                        if (feed?.settings?.value != null) information = false
-                    }
-                }
-                if (!details.organizer) {
-                    RsvpForm(state, true, choose, save)
-                }
-                state.issue?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
-                val people = snapshot.data.participants[id]
-                people?.value?.let {
-                    InvitationParticipants(
-                        it,
-                        details.meeting?.participantCount ?: 0,
-                    )
-                }
-                if (people?.error != null) {
-                    InvitationProblem(
-                        InvitationIssue.Load,
-                        true,
-                        reload,
-                    )
+            InvitationFacts(details.preview, showTitle = false)
+            if (!details.organizer) {
+                RsvpForm(state, true, choose, save)
+            }
+            state.issue?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
+            val people = snapshot.data.participants[id]
+            people?.value?.let {
+                InvitationParticipants(it, details.meeting?.participantCount ?: 0)
+            }
+            if (people?.error != null) {
+                InvitationProblem(InvitationIssue.Load, true, reload)
+            }
+            if (details.organizer) {
+                state.shareUrl?.let { InvitationShare(it, showLabel = true) }
+                ActionButton(
+                    stringResource(R.string.meeting_settings),
+                    Modifier.testTag("open-settings"),
+                    primary = false,
+                ) {
+                    details.meeting?.let { feed?.openSettings(it) }
+                    if (feed?.settings?.value != null) information = false
                 }
             }
         }

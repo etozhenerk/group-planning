@@ -10,6 +10,7 @@ import (
 
 func TestTwoSessionsShareRSVPAndCannotRestoreRevokedAccess(t *testing.T) {
 	h := newMeetingHTTPTest(t)
+	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
 	ownerClient := h.client(true)
 	owner := h.login(ownerClient, "owner", map[string]string{"kind": "home"})
 	data, _ := h.request(ownerClient, "POST", "/api/v1/meetings", map[string]string{

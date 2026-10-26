@@ -31,7 +31,7 @@ struct MeetingFeedScreen: View {
             .safeAreaInset(edge: .top, spacing: 0) {
                 if owner.current { MeetingFeedHeader(owner: owner) }
             }
-            .fullScreenCover(
+            .sheet(
                 isPresented: $owner.mediaPresented,
                 onDismiss: {
                     owner.composerFocused = true
@@ -46,7 +46,7 @@ struct MeetingFeedScreen: View {
                 }
             }
             .sheet(isPresented: $owner.infoPresented) { MeetingInfoScreen(owner: owner) }
-            .fullScreenCover(
+            .sheet(
                 isPresented: $owner.pollPresented,
                 onDismiss: {
                     owner.composerFocused = true
@@ -59,7 +59,7 @@ struct MeetingFeedScreen: View {
                         completed: owner.actionDrafts.clearDate)
                 }
             }
-            .fullScreenCover(
+            .sheet(
                 isPresented: $owner.placePollPresented,
                 onDismiss: {
                     owner.composerFocused = true
@@ -72,7 +72,7 @@ struct MeetingFeedScreen: View {
                         completed: owner.actionDrafts.clearPlace)
                 }
             }
-            .fullScreenCover(
+            .sheet(
                 isPresented: $owner.preparationTaskPresented,
                 onDismiss: {
                     owner.composerFocused = true

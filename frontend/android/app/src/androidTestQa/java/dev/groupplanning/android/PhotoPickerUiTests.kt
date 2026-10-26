@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.provider.MediaStore
+import android.util.Log
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
@@ -15,11 +16,15 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import java.util.regex.Pattern
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class PhotoPickerUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -58,11 +63,20 @@ class PhotoPickerUiTests {
                 fixture.waitTag("meeting-add")
                 compose.onNodeWithTag("meeting-add").performClick()
                 compose.onNodeWithTag("add-photo").performClick()
+                val picker = Pattern.compile(".*(?:photopicker|providers\\.media).*")
+                assertTrue(fixture.device.wait(Until.hasObject(By.pkg(picker)), 10_000))
+                fixture.screenshot("design-photo-picker")
                 val thumbnail = fixture.device.wait(
-                    Until.findObject(By.desc(Pattern.compile("(?i)(Photo|Фото|Фотография).*"))),
+                    Until.findObject(
+                        By.pkg(picker).desc(
+                            Pattern.compile("(?i)(Photo|Фото|Фотография)\\b.*"),
+                        ).clickable(true),
+                    ),
                     10_000,
                 )
+                Log.i("PhotoPickerUiTests", "Selected thumbnail: ${thumbnail?.contentDescription}")
                 checkNotNull(thumbnail).click()
+                fixture.screenshot("design-photo-picker-selected")
                 val confirm = fixture.device.wait(
                     Until.findObject(By.text(Pattern.compile("(Add|Добавить).*"))),
                     5_000,

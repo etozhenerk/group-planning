@@ -145,7 +145,7 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
     await page.getByRole('button', { name: 'Информация о встрече' }).click();
     await expect(
       page
-        .getByRole('dialog', { name: 'Детали встречи' })
+        .getByRole('dialog', { name: 'Встреча трёх платформ' })
         .getByText('Не смогу', { exact: true }),
     ).toBeVisible();
     await page.keyboard.press('Escape');

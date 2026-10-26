@@ -76,7 +76,8 @@ func TestAndroidFixture(t *testing.T) {
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
 	coverFaults := &nativeCoverFaults{}
-	server.Config.Handler = coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api)))))))
+	pollFaults := &nativePollFaults{}
+	server.Config.Handler = pollFaults.handler(coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api))))))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -142,6 +143,7 @@ func TestAndroidFixture(t *testing.T) {
 
 	if scope == "all" || scope == "polls" {
 		verifyNativePollFixture(t, store)
+		pollFaults.verify(t)
 	}
 
 	if scope == "account" || scope == "covers" || scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {

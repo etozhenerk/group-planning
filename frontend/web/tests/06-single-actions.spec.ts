@@ -78,7 +78,7 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await page.goto(`/meetings/${created.meeting.id}`);
   const info = page.getByRole('button', { name: 'Информация о встрече' });
   const when = page.getByRole('term').filter({ hasText: 'Когда' });
-  const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+  const dialog = page.getByRole('dialog', { name: created.meeting.title });
   await expect(
     page.getByRole('heading', { name: 'Детали без повторов', exact: true }),
   ).toHaveCount(1);

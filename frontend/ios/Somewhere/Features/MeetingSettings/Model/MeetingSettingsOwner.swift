@@ -120,6 +120,14 @@ final class MeetingSettingsOwner {
             }
         }
     }
+    func clear() {
+        suspend()
+        value = MeetingSettingsDraft.make(original)
+        pending = nil
+        saved = nil
+        problem = nil
+    }
+
     func suspend() {
         generation = UUID()
         operation?.cancel()

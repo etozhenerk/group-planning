@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.preparation.PreparationFormIssue
 import dev.groupplanning.android.state.preparation.PreparationFormViewModel
-import dev.groupplanning.android.ui.components.ActionPage
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.CompactButton
 import dev.groupplanning.android.ui.components.DesignField
 import dev.groupplanning.android.ui.theme.Palette
@@ -22,8 +22,10 @@ internal fun CreatePreparationTaskSheet(model: PreparationFormViewModel, close: 
     val form by model.state.collectAsStateWithLifecycle()
     val state by model.operation.state.collectAsStateWithLifecycle()
     LaunchedEffect(model) { model.loadPeople() }
-    LaunchedEffect(state.task?.id) { if (state.task != null) close() }
-    ActionPage(stringResource(R.string.preparation_propose), state.pending == null, close) {
+    LaunchedEffect(state.task?.id, state.busy) {
+        if (state.task != null && !state.busy) close()
+    }
+    ActionSheet(stringResource(R.string.preparation_propose), close, canClose = !state.busy) {
         DesignField(
             form.title,
             model::title,

@@ -1,92 +1,73 @@
-import { useFilePicker } from '@/shared/lib/file-picker';
-import { useAlbumPaging } from '@/pages/memories/model/useAlbumPaging';
-import { Link, useSearchParams } from 'react-router';
-import { AlbumHeading } from '@/pages/memories/ui/AlbumHeading';
-import { useMemories, useMeeting } from '@/entities/meeting';
+import { Link } from 'react-router';
 import type { Session } from '@/entities/session';
-import { useUploadSelection } from '@/features/upload-media';
+import { Dialog } from '@/shared/ui/Dialog';
+import { UploadDraft } from '@/features/upload-media';
 import { Navigation } from '@/widgets/navigation';
 import { Workspace } from '@/shared/ui/Workspace';
-import { useAlbum } from '@/pages/memories/model/useAlbum';
+import { AlbumHeading } from '@/pages/memories/ui/AlbumHeading';
 import { AlbumBody } from '@/pages/memories/ui/AlbumBody';
+import { useMemoriesView } from '@/pages/memories/model/useMemoriesView';
 import { PhotoViewer } from '@/features/view-media';
 import styles from '@/pages/memories/ui/MemoriesView/MemoriesView.module.css';
 
 export type MemoriesViewProps = { id: string; session: Session };
 
 export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
-  const query = useMemories(id, session.user.id);
-  const meeting = useMeeting(id, session.user.id);
-  const photos = query.data?.pages.flatMap((page) => page.photos) ?? [];
-  const album = useAlbum(photos.length);
-  useAlbumPaging(query, album.index, photos.length);
-  const [params, setParams] = useSearchParams();
-  const fromChat = params.get('from') === 'chat';
-  const origin = fromChat ? { from: 'chat' } : {};
-  const upload = useUploadSelection(session.user.id, id);
-  const picker = useFilePicker((files) =>
-    upload.begin({
-      files,
-      photo: true,
-      purpose: 'memory',
-      returnTo: `/meetings/${id}/memories${fromChat ? '?from=chat' : ''}`,
-    }),
-  );
-
-  const current = photos.find((photo) => photo.id === params.get('photo'));
+  const view = useMemoriesView(id, session.user.id);
 
   return (
     <Workspace navigation={<Navigation session={session} />}>
-      <main id="main" className={styles.page}>
-        <input {...picker.inputProps} />
+      <main
+        id={view.uploading && !view.mobile ? undefined : 'main'}
+        className={styles.page}
+        hidden={view.uploading && !view.mobile}
+      >
+        <input {...view.picker.inputProps} />
         <Link
           className={styles.back}
-          to={fromChat ? `/meetings/${id}` : '/meetings?view=list&period=past'}
+          to={view.fromChat ? `/meetings/${id}` : '/meetings?view=list&period=past'}
         >
-          {fromChat ? '← К встрече' : '‹ Прошедшие встречи'}
+          {view.fromChat ? '← К встрече' : '‹ Прошедшие встречи'}
         </Link>
         <AlbumHeading
-          meeting={meeting.data}
-          upload={() => picker.choose(true)}
-          disabled={query.access.denied}
+          meeting={view.meeting.data}
+          upload={view.choose}
+          disabled={view.query.access.denied}
         />
         <AlbumBody
-          photos={photos}
+          photos={view.photos}
           user={session.user.id}
-          album={album}
-          query={query}
-          open={(index) => {
-            const photo = photos[index];
-
-            if (photo) {
-              setParams({ ...origin, photo: photo.id });
-            }
-          }}
+          album={view.album}
+          query={view.query}
+          open={view.open}
         />
-        {current && !query.access.denied && (
+        {view.current && !view.query.access.denied && (
           <PhotoViewer
-            media={current}
-            index={photos.findIndex((photo) => photo.id === current.id)}
-            count={photos.length}
-            change={(step) => {
-              const index =
-                (photos.findIndex((photo) => photo.id === current.id) +
-                  step +
-                  photos.length) %
-                photos.length;
-
-              const photo = photos[index];
-
-              if (photo) {
-                album.select(index);
-                setParams({ ...origin, photo: photo.id }, { replace: true });
-              }
-            }}
+            media={view.current}
+            index={view.photos.findIndex((photo) => photo.id === view.current?.id)}
+            count={view.photos.length}
+            change={view.change}
             user={session.user.id}
-            close={() => setParams(origin, { replace: true })}
+            close={view.close}
           />
         )}
       </main>
+      <Dialog
+        open={view.uploading}
+        title="Добавить фото в альбом"
+        onClose={view.close}
+        desktopPage
+        chatAction
+      >
+        <UploadDraft
+          id={id}
+          session={session}
+          photo
+          purpose="memory"
+          active={view.uploading}
+          done={view.close}
+        />
+      </Dialog>
     </Workspace>
   );
 };

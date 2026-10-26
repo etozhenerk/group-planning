@@ -3,12 +3,9 @@ import XCTest
 @MainActor
 final class FeedUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
     func capture(_ name: String, _ app: XCUIApplication) {
-        RunLoop.current.run(until: Date().addingTimeInterval(0.5))
-        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        attachment.name = name
-        attachment.lifetime = .keepAlways
-        add(attachment)
+        ExperienceScreenshot.save(name, test: self)
     }
     func field(_ id: String, app: XCUIApplication) -> XCUIElement {
         app.descendants(matching: .any).matching(identifier: id).firstMatch
@@ -25,13 +22,15 @@ final class FeedUITests: XCTestCase {
     func scrollSettings(_ scroll: XCUIElement, app: XCUIApplication, down: Bool = false) {
         let frame = scroll.frame.intersection(app.frame)
         let keyboard = app.keyboards.firstMatch
-        let bottom = keyboard.exists ? min(frame.maxY, keyboard.frame.minY) : frame.maxY
-        let top = max(frame.minY, app.buttons["settings-back"].frame.maxY)
+        var bottom = keyboard.exists ? min(frame.maxY, keyboard.frame.minY) : frame.maxY
+        let done = app.buttons["action-keyboard-done"]
+        if done.exists { bottom = min(bottom, done.frame.minY) }
+        let top = max(frame.minY, app.buttons["settings-close"].frame.maxY)
         let height = bottom - top
         XCTAssertGreaterThan(height, 80)
         let origin = app.coordinate(withNormalizedOffset: .zero)
-        let upper = origin.withOffset(CGVector(dx: frame.midX, dy: top + height * 0.2))
-        let lower = origin.withOffset(CGVector(dx: frame.midX, dy: top + height * 0.8))
+        let upper = origin.withOffset(CGVector(dx: frame.minX + 10, dy: top + height * 0.2))
+        let lower = origin.withOffset(CGVector(dx: frame.minX + 10, dy: top + height * 0.8))
         (down ? upper : lower).press(forDuration: 0.05, thenDragTo: down ? lower : upper)
     }
     func testConversationHistoryRetryBackgroundAndSettings() {
@@ -41,6 +40,7 @@ final class FeedUITests: XCTestCase {
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         let card = app.buttons["meeting-card-88888888-8888-4888-8888-888888888888"]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
@@ -106,7 +106,7 @@ final class FeedUITests: XCTestCase {
         XCTAssertEqual(
             app.staticTexts.matching(
                 NSPredicate(
-                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Вы, ",
+                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Саша, ",
                     "Пицца будет к семи")
             )
             .count, 1)
@@ -132,8 +132,8 @@ final class FeedUITests: XCTestCase {
         XCTAssertTrue(app.buttons["settings-save"].isHittable)
         app.buttons["settings-save"].tap()
         XCTAssertTrue(app.buttons["settings-reload"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["settings-back"].isHittable)
-        XCTAssertGreaterThan(app.buttons["settings-back"].frame.minY, 45)
+        XCTAssertTrue(app.buttons["settings-close"].isHittable)
+        XCTAssertGreaterThan(app.buttons["settings-close"].frame.minY, 45)
         capture("feed-settings-conflict", app)
         app.buttons["settings-reload"].tap()
         for _ in 0..<5 {
@@ -158,6 +158,7 @@ final class FeedUITests: XCTestCase {
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         XCTAssertTrue(card.waitForExistence(timeout: 15))
         card.tap()

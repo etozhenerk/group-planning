@@ -85,7 +85,7 @@ export const MessageReactions = ({
           Не удалось сохранить. Повторить
         </button>
       )}
-      <Dialog open={people} title="Реакции" onClose={() => setPeople(false)}>
+      <Dialog open={people} title="Реакции" onClose={() => setPeople(false)} chatAction>
         <ReactionPeople reactions={reactions} />
       </Dialog>
     </div>

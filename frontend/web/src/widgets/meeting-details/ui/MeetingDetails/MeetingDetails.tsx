@@ -1,4 +1,5 @@
 import styles from '@/widgets/meeting-details/ui/MeetingDetails/MeetingDetails.module.css';
+import { useEffect, useState } from 'react';
 import { useDisclosure } from '@/shared/lib/disclosure';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -24,6 +25,13 @@ export const MeetingDetails = ({
   show,
 }: MeetingDetailsProps) => {
   const editing = useDisclosure();
+  const [visited, setVisited] = useState(false);
+  const [generation, setGeneration] = useState(0);
+  useEffect(() => {
+    if (editing.open) {
+      setVisited(true);
+    }
+  }, [editing.open]);
 
   const content = (
     <DetailsContent
@@ -56,19 +64,25 @@ export const MeetingDetails = ({
           />
         </aside>
       )}
-      <Dialog open={open} title="Детали встречи" onClose={close}>
+      <Dialog open={open} title={meeting.title} onClose={close} chatAction>
         {open && content}
       </Dialog>
       <Dialog
         open={editing.open}
         title="Настройки встречи"
         onClose={() => editing.close()}
+        chatAction
       >
-        {editing.open && (
+        {(visited || editing.open) && (
           <EditMeetingForm
+            key={generation}
             meeting={meeting}
             session={session}
-            onSaved={() => editing.close()}
+            onSaved={() => {
+              setVisited(false);
+              setGeneration((value) => value + 1);
+              editing.close();
+            }}
           />
         )}
       </Dialog>

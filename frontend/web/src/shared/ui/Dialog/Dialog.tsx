@@ -1,13 +1,12 @@
 import styles from '@/shared/ui/Dialog/Dialog.module.css';
 import type { ReactNode } from 'react';
-import { useId } from 'react';
-import { useBackdropDismiss } from '@/shared/ui/Dialog/hooks/useBackdropDismiss';
-import { X } from 'lucide-react';
+import { ChevronLeft, X } from 'lucide-react';
+import { useDialogLayout } from '@/shared/ui/Dialog/hooks/useDialogLayout';
 import { PortalProvider, DefaultPropsProvider } from '@gravity-ui/uikit';
 import { popupDefaults } from '@/shared/ui/Dialog/lib/popupDefaults';
 import { preservePopupEscape } from '@/shared/ui/Dialog/lib/preservePopupEscape';
 import { useDialog } from '@/shared/ui/Dialog/hooks/useDialog';
-import { useSheetDismiss } from '@/shared/ui/Dialog/hooks/useSheetDismiss';
+import { useDialogControls } from '@/shared/ui/Dialog/hooks/useDialogControls';
 
 export type DialogProps = {
   open: boolean;
@@ -16,6 +15,8 @@ export type DialogProps = {
   children: ReactNode;
   contained?: boolean;
   dismissible?: boolean;
+  desktopPage?: boolean;
+  chatAction?: boolean;
 };
 
 export const Dialog = ({
@@ -25,25 +26,38 @@ export const Dialog = ({
   children,
   contained = false,
   dismissible = true,
+  desktopPage = false,
+  chatAction = false,
 }: DialogProps) => {
-  const dialog = useDialog(open, children);
-  const swipe = useSheetDismiss(dialog.ref, onClose);
-  const heading = useId();
-  const backdrop = useBackdropDismiss(onClose);
+  const { inline, tablet } = useDialogLayout(desktopPage);
+  const dialog = useDialog(open, children, !inline);
+  const { swipe, heading, backdrop, dismiss, cancel } = useDialogControls(
+    dialog.ref,
+    onClose,
+    dismissible,
+    inline,
+    open,
+  );
 
   return (
     <dialog
-      className={[styles['dialog'], contained ? styles['contained'] : '']
+      className={[
+        styles['dialog'],
+        contained ? styles['contained'] : '',
+        inline ? styles.page : '',
+        tablet ? styles.tablet : '',
+        desktopPage ? styles.action : '',
+        chatAction ? styles['chat-action'] : '',
+      ]
         .filter(Boolean)
         .join(' ')}
       onPointerDown={backdrop.pointerDown}
       onClick={backdrop.click}
       ref={dialog.ref}
+      role={inline ? 'main' : undefined}
       aria-labelledby={heading}
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
+      id={inline && open ? 'main' : undefined}
+      onCancel={cancel}
       onKeyDownCapture={preservePopupEscape}
     >
       <div
@@ -56,21 +70,36 @@ export const Dialog = ({
         data-testid="dialog-drag-region"
       >
         <div className={styles['dialog-heading']}>
-          <h2 id={heading}>{title}</h2>
+          <h2 id={heading} aria-level={inline ? 1 : 2}>
+            {title}
+          </h2>
           <button
             type="button"
-            className={[styles['icon'], styles['ghost']].join(' ')}
-            onClick={onClose}
+            className={[inline ? styles.back : styles.icon, styles.ghost].join(' ')}
+            onClick={dismiss}
             disabled={!dismissible}
-            aria-label="Закрыть"
+            aria-label={inline ? 'Назад' : 'Закрыть'}
           >
-            <X aria-hidden="true" size={20} />
+            {inline ? (
+              <>
+                <ChevronLeft aria-hidden="true" />
+                Назад
+              </>
+            ) : (
+              <X aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
       <PortalProvider container={dialog.ref}>
         <DefaultPropsProvider defaultProps={popupDefaults}>
-          {dialog.content}
+          {desktopPage || chatAction ? (
+            <div className={styles.panel} data-testid="dialog-content">
+              {dialog.content}
+            </div>
+          ) : (
+            dialog.content
+          )}
         </DefaultPropsProvider>
       </PortalProvider>
     </dialog>

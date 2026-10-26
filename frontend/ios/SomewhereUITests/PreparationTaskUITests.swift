@@ -13,6 +13,7 @@ final class PreparationTaskUITests: XCTestCase {
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
             ]
         }
+        ExperienceScreenshot.configure(app)
         app.launch()
         let card = app.buttons["meeting-card-d3c70000-0000-4000-8000-000000000\(suffix)"]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
@@ -65,7 +66,7 @@ final class PreparationTaskUITests: XCTestCase {
         app.buttons["preparation-create"].tap()
         XCTAssertTrue(app.staticTexts["preparation-error"].waitForExistence(timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
-        app.buttons["action-form-back"].tap()
+        app.buttons["action-form-close"].tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-preparation-task"].tap()
@@ -122,7 +123,7 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(app.buttons["preparation-cancel"].waitForExistence(timeout: 10))
         app.buttons["preparation-cancel"].tap()
         XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 10))
-        app.buttons["Готово"].tap()
+        app.buttons["preparation-details-close"].tap()
         XCTAssertTrue(
             app.staticTexts["Задача отменена · Саша · «Заказать пиццу»"].waitForExistence(
                 timeout: 10))
@@ -144,9 +145,6 @@ final class PreparationTaskUITests: XCTestCase {
     }
 
     private func capture(_ name: String) {
-        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        attachment.name = name
-        attachment.lifetime = .keepAlways
-        add(attachment)
+        ExperienceScreenshot.save(name, test: self)
     }
 }

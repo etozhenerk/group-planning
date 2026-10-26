@@ -180,3 +180,8 @@ export const expectMessageSide = async (
   expect(bubble.x).toBeGreaterThanOrEqual(row.x);
   expect(bubble.x + bubble.width).toBeLessThanOrEqual(row.x + row.width + 1);
 };
+
+export const actionSurface = (page: Page, title: string) =>
+  page
+    .getByRole('main', { name: title, exact: true })
+    .or(page.getByRole('dialog', { name: title, exact: true }));

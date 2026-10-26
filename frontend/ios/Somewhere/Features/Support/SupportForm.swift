@@ -8,6 +8,7 @@ struct SupportForm: View {
     let submit: () -> Void
     @FocusState private var focused: String?
     var body: some View {
+        let screenshotTitle = owner.screenshot == nil ? "Добавить скриншот" : "Заменить скриншот"
         VStack(alignment: .leading, spacing: 21) {
             SupportTopics(owner: owner)
             VStack(alignment: .leading, spacing: 8) {
@@ -73,7 +74,7 @@ struct SupportForm: View {
                 HStack(spacing: 13) {
                     ExperienceIcon(kind: .photo, size: 23).foregroundStyle(AppPalette.accent)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(owner.screenshot == nil ? "Добавить скриншот" : "Заменить скриншот")
+                        Text(screenshotTitle)
                             .designFont(12, weight: .medium)
                         Text("PNG, JPG или WebP · до 5 МБ").designFont(11).foregroundStyle(
                             AppPalette.muted)

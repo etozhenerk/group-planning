@@ -3,14 +3,10 @@ package dev.groupplanning.android.ui.preparation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.PreparationAction
 import dev.groupplanning.android.state.preparation.PreparationTaskState
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.feed.FeedAvatar
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.UUID
@@ -91,17 +87,8 @@ internal fun PreparationTaskCard(
         }
     }
     if (details) {
-        Dialog({ details = false }) {
-            Surface(shape = RoundedCornerShape(22.dp), color = Palette.surface) {
-                Column(
-                    Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp),
-                ) {
-                    PreparationTaskDetails(state, entry, own, user, act, retry)
-                    TextButton({ details = false }, Modifier.align(Alignment.End)) {
-                        Text(stringResource(R.string.experience_close))
-                    }
-                }
-            }
+        ActionSheet(stringResource(R.string.preparation_details), { details = false }) {
+            PreparationTaskDetails(state, entry, own, user, act, retry)
         }
     }
 }

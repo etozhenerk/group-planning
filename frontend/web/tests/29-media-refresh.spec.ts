@@ -1,6 +1,50 @@
 import { test, expect } from '@playwright/test';
-import { apiCreate, apiMeeting, login, writeHeaders } from '@tests/helpers';
+import {
+  actionSurface,
+  apiCreate,
+  apiMeeting,
+  login,
+  writeHeaders,
+} from '@tests/helpers';
 import { feedSchema } from '@/shared/api';
+
+for (const width of [320, 390]) {
+  test(`an immediate file choice closes to chat with one click at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await login(page, 'Саша');
+    const { meeting } = await apiCreate(page, 'Быстрый выбор файла');
+    await page.goto(`/meetings/${meeting.id}`);
+    const message = page.getByLabel('Сообщение', { exact: true });
+    await message.fill('Черновик под вложением');
+    const before = await page.evaluate(() => history.length);
+    const selected = new Promise<void>((resolve, reject) => {
+      page.once('filechooser', (chooser) => {
+        void chooser
+          .setFiles({
+            name: 'quick.txt',
+            mimeType: 'text/plain',
+            buffer: Buffer.from('План встречи'),
+          })
+          .then(resolve, reject);
+      });
+    });
+
+    await page.getByRole('button', { name: 'Добавить к встрече' }).click();
+    await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+    await selected;
+    const preview = page.getByRole('dialog', { name: 'Отправить файл', exact: true });
+    await expect(preview.getByLabel('Подпись к quick.txt')).toBeVisible();
+    expect(await page.evaluate(() => history.length)).toBe(before + 1);
+    await preview.getByRole('button', { name: 'Закрыть', exact: true }).click();
+    await expect(preview).not.toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`/meetings/${meeting.id}$`));
+    await expect(message).toHaveValue('Черновик под вложением');
+    await page.goForward();
+    await expect(preview.getByLabel('Подпись к quick.txt')).toBeVisible();
+  });
+}
 
 test('partial upload retries only the failed file and preserves the message draft', async ({
   page,
@@ -46,9 +90,7 @@ test('partial upload retries only the failed file and preserves the message draf
     { name: 'plan.txt', mimeType: 'text/plain', buffer: Buffer.from('План встречи') },
     { name: 'list.txt', mimeType: 'text/plain', buffer: Buffer.from('Список покупок') },
   ]);
-  const preview = page
-    .getByRole('main')
-    .filter({ has: page.getByRole('heading', { name: 'Отправить файл', exact: true }) });
+  const preview = actionSurface(page, 'Отправить файл');
 
   await preview.getByLabel('Подпись к plan.txt').fill('План на вечер');
   await preview.getByLabel('Подпись к list.txt').fill('Купим по дороге');
@@ -133,9 +175,7 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
     { name: 'one.png', mimeType: 'image/png', buffer: photo },
     { name: 'two.png', mimeType: 'image/png', buffer: photo },
   ]);
-  const preview = page.getByRole('main').filter({
-    has: page.getByRole('heading', { name: 'Добавить фото в альбом', exact: true }),
-  });
+  const preview = actionSurface(page, 'Добавить фото в альбом');
 
   await preview.getByRole('button', { name: 'Добавить в альбом' }).click();
   await expect(preview.getByText('Добавлено', { exact: true })).toHaveCount(2);
@@ -205,7 +245,7 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   await page.screenshot({ path: 'test-results/refresh-album.png' });
 });
 
-test('leaving the upload screen clears chosen files and preserves the message draft', async ({
+test('closing the upload preserves files and captions until leaving the meeting', async ({
   page,
 }) => {
   await login(page, 'Саша');
@@ -229,16 +269,18 @@ test('leaving the upload screen clears chosen files and preserves the message dr
     buffer: Buffer.from('Отменённый файл'),
   });
   await page.getByLabel('Подпись к cancel.txt').fill('Не отправлять');
-  await page.getByRole('link', { name: 'Назад', exact: true }).click();
+  await actionSurface(page, 'Отправить файл')
+    .getByRole('button', { name: /^(Назад|Закрыть)$/ })
+    .click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
     'Вернусь к этому тексту',
   );
-  await page.goBack();
+  await page.goForward();
   await expect(page.getByRole('heading', { name: 'Отправить файл' })).toBeVisible();
-  await expect(page.getByLabel('Подпись к cancel.txt')).toHaveCount(0);
+  await expect(page.getByLabel('Подпись к cancel.txt')).toHaveValue('Не отправлять');
   await expect(
     page.getByRole('button', { name: 'Отправить', exact: true }),
-  ).toBeDisabled();
+  ).toBeEnabled();
   await page.reload();
   await expect(page.getByLabel('Подпись к cancel.txt')).toHaveCount(0);
   expect(publications).toBe(0);

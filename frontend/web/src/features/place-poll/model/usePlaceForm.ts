@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPlacePoll, guarded, accessEpoch, useAccess } from '@/entities/meeting';
 import type { Meeting, PlacePollCreate } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
+import { ApiError } from '@/shared/api';
 import { useIntent } from '@/shared/lib/intent';
 import { resolveTime } from '@/shared/lib/time';
 import { placePollError } from '@/features/place-poll/model/placePollCopy';
@@ -42,22 +43,61 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
     retry: false,
   });
 
+  const uncertain =
+    !!action.error &&
+    !(
+      action.error instanceof ApiError &&
+      action.error.status >= 400 &&
+      action.error.status < 500
+    );
+
+  const locked = action.isPending || uncertain;
+  const edit = (change: () => void) => {
+    if (locked) {
+      return;
+    }
+
+    change();
+    setValidation('');
+    action.reset();
+  };
+
   return {
     place,
-    setPlace,
+    setPlace: (value: string) => edit(() => setPlace(value)),
     explanation,
-    setExplanation,
+    setExplanation: (value: string) => edit(() => setExplanation(value)),
     deadline,
-    setDeadline: (value: string) => {
-      setDeadline(value);
-      setChoice('');
-    },
+    setDeadline: (value: string) =>
+      edit(() => {
+        setDeadline(value);
+        setChoice('');
+      }),
     choice,
-    setChoice,
+    setChoice: (value: '' | 'earlier' | 'later') => edit(() => setChoice(value)),
     pending: action.isPending,
-    problem: validation || (action.error ? placePollError(action.error) : ''),
+    locked,
+    uncertain,
+    problem:
+      validation ||
+      (uncertain
+        ? 'Не удалось подтвердить создание опроса. Повторите отправку.'
+        : action.error
+          ? placePollError(action.error)
+          : ''),
     submit: (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+
+      if (action.isPending || access.denied) {
+        return;
+      }
+
+      if (uncertain && action.variables) {
+        action.mutate(action.variables);
+
+        return;
+      }
+
       setValidation('');
 
       try {

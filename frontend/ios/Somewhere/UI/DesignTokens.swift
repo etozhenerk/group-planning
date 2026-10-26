@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 1.0.0. Do not edit.
+// Generated from design-system/tokens.json · 1.1.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -107,6 +107,48 @@ enum DesignTokens {
         blue: 0.17647058823529413,
         opacity: 1
     )
+    static let colorParticipantChipAvatar = Color(
+        .sRGB,
+        red: 0,
+        green: 0,
+        blue: 0,
+        opacity: 0.06274509803921569
+    )
+    static let colorParticipantChipFirst = Color(
+        .sRGB,
+        red: 0.7764705882352941,
+        green: 0.7058823529411765,
+        blue: 0.6470588235294118,
+        opacity: 1
+    )
+    static let colorParticipantChipMore = Color(
+        .sRGB,
+        red: 0.25882352941176473,
+        green: 0.2627450980392157,
+        blue: 0.29411764705882354,
+        opacity: 1
+    )
+    static let colorParticipantChipSecond = Color(
+        .sRGB,
+        red: 0.788235294117647,
+        green: 0.7490196078431373,
+        blue: 0.8509803921568627,
+        opacity: 1
+    )
+    static let colorParticipantChipText = Color(
+        .sRGB,
+        red: 0.18823529411764706,
+        green: 0.17254901960784313,
+        blue: 0.16862745098039217,
+        opacity: 1
+    )
+    static let colorParticipantChipThird = Color(
+        .sRGB,
+        red: 0.7098039215686275,
+        green: 0.788235294117647,
+        blue: 0.7490196078431373,
+        opacity: 1
+    )
     static let colorPhotoBackdrop = Color(
         .sRGB,
         red: 0.0784313725490196,
@@ -134,6 +176,20 @@ enum DesignTokens {
         green: 0.2549019607843137,
         blue: 0.3058823529411765,
         opacity: 1
+    )
+    static let colorSheetBackdrop = Color(
+        .sRGB,
+        red: 0.043137254901960784,
+        green: 0.043137254901960784,
+        blue: 0.06274509803921569,
+        opacity: 0.6588235294117647
+    )
+    static let colorSubtleBorder = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.12549019607843137
     )
     static let colorSurface = Color(
         .sRGB,
@@ -219,6 +275,21 @@ enum DesignTokens {
         blue: 0.8980392156862745,
         opacity: 1
     )
+    static let componentActionColumnWidth = CGFloat(700)
+    static let componentActionFieldGap = CGFloat(18)
+    static let componentActionHeadingGap = CGFloat(30)
+    static let componentActionHeadingLineHeight = 1.15
+    static let componentActionHeadingTracking = CGFloat(1.2)
+    static let componentActionHeadingTrackingMobile = CGFloat(0.9)
+    static let componentActionPanelInset = CGFloat(26)
+    static let componentActionTabletInset = CGFloat(30)
+    static let componentActionTopInset = CGFloat(44)
+    static let componentButtonIconGap = CGFloat(9)
+    static let componentButtonIconSize = CGFloat(21)
+    static let componentButtonMinimumHeight = CGFloat(46)
+    static let componentButtonPaddingBlock = CGFloat(12)
+    static let componentButtonPaddingInline = CGFloat(18)
+    static let componentButtonRadius = CGFloat(13)
     static let componentCardAvatar = CGFloat(35)
     static let componentCardAvatarMobile = CGFloat(32)
     static let componentCardAvatarOverlap = CGFloat(9)
@@ -226,13 +297,31 @@ enum DesignTokens {
     static let componentCardCoverMobileHeight = CGFloat(101)
     static let componentCardCoverMobileWidth = CGFloat(102)
     static let componentCardCoverWidth = CGFloat(118)
+    static let componentCardCoverBorder = CGFloat(3)
     static let componentCardCoverLift = CGFloat(4)
     static let componentCardHoverLift = CGFloat(3)
     static let componentCardMinimumHeight = CGFloat(146)
     static let componentCardMinimumHeightMobile = CGFloat(145)
+    static let componentIconFocusOffset = CGFloat(5)
+    static let componentIconStrokeWidth = 1.7
+    static let componentNavigationDetailsSidebarWidth = CGFloat(280)
     static let componentNavigationHeight = CGFloat(62)
     static let componentNavigationIcon = CGFloat(19)
     static let componentNavigationInset = CGFloat(16)
+    static let componentNavigationSidebarWidth = CGFloat(222)
+    static let componentParticipantChipAvatarSize = CGFloat(20)
+    static let componentParticipantChipContentGap = CGFloat(5)
+    static let componentParticipantChipGroupTopInset = CGFloat(22)
+    static let componentParticipantChipGroupTopInsetMobile = CGFloat(18)
+    static let componentParticipantChipHeight = CGFloat(29)
+    static let componentParticipantChipMorePaddingBlock = CGFloat(3)
+    static let componentParticipantChipMorePaddingInline = CGFloat(9)
+    static let componentParticipantChipOverlap = CGFloat(10)
+    static let componentParticipantChipPaddingBlock = CGFloat(2)
+    static let componentParticipantChipPaddingEnd = CGFloat(16)
+    static let componentParticipantChipPaddingStart = CGFloat(3)
+    static let componentParticipantChipRadius = CGFloat(30)
+    static let componentSheetBackdropBlur = CGFloat(5)
     static let motionDurationCard = 0.22
     static let motionDurationCover = 0.28
     static let motionDurationFast = 0.15
@@ -269,15 +358,23 @@ enum DesignTokens {
     static let typographyLineHeightCardTitle = 1.25
     static let typographyLineHeightLabel = 1.4
     static let typographySizeBody = CGFloat(15)
+    static let typographySizeButton = CGFloat(14)
     static let typographySizeCaption = CGFloat(12)
     static let typographySizeCardTitle = CGFloat(21)
     static let typographySizeCardTitleMobile = CGFloat(19)
+    static let typographySizeDesktopHeading = CGFloat(34)
     static let typographySizeHeading = CGFloat(27)
     static let typographySizeLabel = CGFloat(11)
+    static let typographySizeMobileActionHeading = CGFloat(28)
+    static let typographySizeParticipantChip = CGFloat(11)
+    static let typographySizeParticipantChipAvatar = CGFloat(9)
+    static let typographySizeParticipantChipMore = CGFloat(10)
+    static let typographySizeSectionHeading = CGFloat(16)
     static let typographySizeSmall = CGFloat(13)
     static let typographyWeightBold = 700
     static let typographyWeightBrand = 850
     static let typographyWeightMedium = 500
+    static let typographyWeightParticipantChipAvatar = 650
     static let typographyWeightRegular = 400
     static let typographyWeightSemibold = 600
 }

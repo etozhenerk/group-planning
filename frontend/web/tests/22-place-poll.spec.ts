@@ -1,13 +1,19 @@
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
-import { apiCreate, apiMeeting, login, writeHeaders } from '@tests/helpers';
+import {
+  actionSurface,
+  apiCreate,
+  apiMeeting,
+  login,
+  writeHeaders,
+} from '@tests/helpers';
 import { placePollSchema } from '@/shared/api';
 
 const openForm = async (page: Page) => {
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   await page.getByRole('menuitem', { name: 'Предложить место', exact: true }).click();
 
-  return page.getByRole('main', { name: 'Предложить место', exact: true });
+  return actionSurface(page, 'Предложить место');
 };
 
 const seed = async (page: Page, meeting: string, seconds = 60) => {
@@ -48,17 +54,19 @@ for (const width of [320, 390, 1440]) {
         await route.continue();
       }
     });
-    await form.getByRole('button', { name: 'Создать опрос', exact: true }).click();
+    await form.getByRole('button', { name: 'Предложить место', exact: true }).click();
     await expect(form.getByRole('alert')).toHaveText(
-      'Не удалось создать опрос. Попробуйте ещё раз.',
+      'Не удалось подтвердить создание опроса. Повторите отправку.',
     );
     await expect(form.getByLabel('Новое место')).toHaveValue('Кафе у парка');
-    await expect(form.getByRole('button', { name: 'Создать опрос' })).toBeInViewport();
+    await expect(
+      form.getByRole('button', { name: 'Повторить отправку' }),
+    ).toBeInViewport();
     await page.screenshot({
       path: `test-results/place-form-error-${width}.png`,
       animations: 'disabled',
     });
-    await form.getByRole('button', { name: 'Создать опрос', exact: true }).click();
+    await form.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
     await expect(form).not.toBeVisible();
     expect(keys).toHaveLength(2);
     expect(keys[0]).toBeTruthy();
@@ -86,7 +94,7 @@ for (const width of [320, 390, 1440]) {
     });
     const activeForm = await openForm(page);
     await activeForm.getByLabel('Новое место').fill('Другая площадка');
-    await activeForm.getByRole('button', { name: 'Создать опрос' }).click();
+    await activeForm.getByRole('button', { name: 'Предложить место' }).click();
     await expect(activeForm.getByRole('alert')).toContainText('уже есть открытый опрос');
     await page.keyboard.press('Escape');
     await expect(activeForm).not.toBeVisible();

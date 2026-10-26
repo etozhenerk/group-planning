@@ -11,6 +11,7 @@ final class CoverUITests: XCTestCase {
             "-UIPreferredContentSizeCategoryName",
             large ? "UICTContentSizeCategoryAccessibilityXXXL" : "UICTContentSizeCategoryL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         return app
     }
@@ -33,10 +34,7 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(element.isHittable)
     }
     private func capture(_ name: String) {
-        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        attachment.name = name
-        attachment.lifetime = .keepAlways
-        add(attachment)
+        ExperienceScreenshot.save(name, test: self)
     }
     private func createForm(_ app: XCUIApplication, title: String) {
         XCTAssertTrue(app.buttons["Создать встречу"].waitForExistence(timeout: 15))
@@ -84,6 +82,7 @@ final class CoverUITests: XCTestCase {
         XCUIDevice.shared.press(.home)
         app.activate()
         app.terminate()
+        ExperienceScreenshot.configure(app)
         app.launch()
         XCTAssertTrue(app.buttons["Создать встречу"].waitForExistence(timeout: 15))
         app.buttons["Создать встречу"].tap()

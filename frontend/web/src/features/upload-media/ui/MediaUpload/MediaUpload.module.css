@@ -1,10 +1,6 @@
 .upload {
   display: grid;
-  gap: 18px;
-  padding: 26px;
-  background: #303138;
-  border: 1px solid #ffffff08;
-  border-radius: 22px;
+  gap: var(--ds-component-action-field-gap);
 }
 
 .hint {
@@ -24,10 +20,4 @@
 .items[data-photo='true'] {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-}
-
-@media (max-width: 739px) {
-  .upload {
-    padding: 20px;
-  }
 }

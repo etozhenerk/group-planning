@@ -51,9 +51,15 @@ def main():
     adb = str(Path(os.environ["ANDROID_HOME"]) / "platform-tools/adb")
     devices = subprocess.check_output([adb, "devices"], text=True).splitlines()[1:]
     online = [line.split()[0] for line in devices if line.endswith("\tdevice")]
-    if len(online) != 1:
-        raise RuntimeError("Нужен ровно один уже запущенный Android")
-    adb_args = [adb, "-s", online[0]]
+    serial = os.environ.get("ANDROID_SERIAL")
+    if serial:
+        if serial not in online:
+            raise RuntimeError("Выбранный ANDROID_SERIAL не подключён")
+    elif len(online) == 1:
+        serial = online[0]
+    else:
+        raise RuntimeError("Укажите ANDROID_SERIAL одного уже запущенного Android")
+    adb_args = [adb, "-s", serial]
     products = IOS / ".build/UITestDerivedData/Build/Products"
     template = products / "SomewhereUI_iphonesimulator27.1-arm64.xctestrun"
     results = ROOT / ".cache/cross-platform-results"

@@ -25,8 +25,8 @@ export const useEdit = (meeting: Meeting, session: Session, onSaved: () => void)
         updateMeeting(meeting.id, input, expected, session.csrf, intent(body)),
       );
     },
-    onSuccess: () => {
-      void client.invalidateQueries({
+    onSuccess: async () => {
+      await client.invalidateQueries({
         queryKey: ['private', session.user.id, meeting.id],
       });
       void client.invalidateQueries({ queryKey: ['meetings', session.user.id] });

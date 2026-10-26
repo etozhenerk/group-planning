@@ -99,7 +99,8 @@ func TestIOSFixture(t *testing.T) {
 	// iOS reads participants while opening invitation metadata, before showing the task form.
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now), peopleFailAt: 2}
 	coverFaults := &nativeCoverFaults{}
-	server.Config.Handler = coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api))))))
+	pollFaults := &nativePollFaults{}
+	server.Config.Handler = pollFaults.handler(coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(feedFaults.handler(faults.handler(api)))))))
 	server.StartTLS()
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
@@ -170,6 +171,7 @@ func TestIOSFixture(t *testing.T) {
 
 	if scope == "polls" || scope == "" {
 		verifyNativePollFixture(t, store)
+		pollFaults.verify(t)
 	}
 
 	if scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" && scope != "account" {

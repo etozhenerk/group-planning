@@ -58,7 +58,10 @@ test('generation is reproducible and hand edit is rejected', async (t) => {
   await mkdir(`${root}/design-system`);
   await writeFile(
     `${root}/design-system/tokens.json`,
-    JSON.stringify({ ...baseTokens, space: { s4: dimension({ value: 4, unit: 'px' }) } }),
+    JSON.stringify({
+      ...baseTokens,
+      space: { ...baseTokens.space, s4: dimension({ value: 4, unit: 'px' }) },
+    }),
   );
   await writeFile(`${root}/design-system/version.json`, '{"version":"1.0.0"}');
   const paths = await generate(false, root);

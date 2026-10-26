@@ -1,8 +1,9 @@
 package dev.groupplanning.android
 
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import androidx.compose.ui.semantics.SemanticsActions
-import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
@@ -16,12 +17,16 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ActivityScenario
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class ExperienceUiTests {
+    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+
     @get:Rule val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
@@ -57,28 +62,70 @@ class ExperienceUiTests {
         try {
             fixture.shell("settings put system font_scale 1.8")
             fixture.shell("settings put global animator_duration_scale 0")
-            activity.onActivity { it.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE }
+            activity.onActivity {
+                it.requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            }
+            compose.waitUntil(10_000) {
+                var ready = false
+                activity.onActivity {
+                    val configuration = it.resources.configuration
+                    ready = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE &&
+                        kotlin.math.abs(configuration.fontScale - 1.8f) < .01f
+                }
+                ready
+            }
             fixture.waitText("2 / 3")
             val actions = compose.onNodeWithTag("photo-stack").fetchSemanticsNode()
-                .config[SemanticsProperties.CustomActions]
+                .config[SemanticsActions.CustomActions]
             compose.runOnIdle {
-                check(actions.single { it.label == fixture.context.getString(R.string.photo_next) }.action())
+                check(
+                    actions.single {
+                        it.label == fixture.context.getString(R.string.photo_next)
+                    }.action(),
+                )
             }
             fixture.waitText("3 / 3")
-            compose.onNodeWithText("3 / 3").performScrollTo().assertIsDisplayed()
-            compose.onNodeWithContentDescription("Все фото").assertIsDisplayed()
+            revealGalleryControl(compose.onNodeWithContentDescription("Все фото"))
+            compose.onNodeWithText("3 / 3").assertIsDisplayed()
             fixture.screenshot("refresh-memory-landscape-large-no-motion")
+            compose.onNodeWithContentDescription("Все фото").performClick()
+            compose.onNodeWithContentDescription("1 / 3").assertExists()
+            fixture.screenshot("refresh-memory-landscape-large-grid")
         } finally {
-            activity.onActivity { it.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED }
-            if (scale == "null") fixture.shell("settings delete system font_scale") else {
+            activity.onActivity {
+                it.requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            }
+            if (scale == "null") {
+                fixture.shell("settings delete system font_scale")
+            } else {
                 require(scale.toFloatOrNull() != null)
                 fixture.shell("settings put system font_scale $scale")
             }
-            if (animation == "null") fixture.shell("settings delete global animator_duration_scale") else {
+            if (animation ==
+                "null"
+            ) {
+                fixture.shell("settings delete global animator_duration_scale")
+            } else {
                 require(animation.toFloatOrNull() != null)
                 fixture.shell("settings put global animator_duration_scale $animation")
             }
         }
+    }
+
+    private fun revealGalleryControl(control: SemanticsNodeInteraction) {
+        repeat(8) {
+            try {
+                control.assertIsDisplayed()
+                return
+            } catch (_: AssertionError) {
+                compose.onNodeWithTag("memory-gallery").performTouchInput {
+                    swipeUp(startY = height * .85f, endY = height * .15f)
+                }
+            }
+        }
+        control.assertIsDisplayed()
     }
 
     @Test fun profileSupportDraftAndNavigationSurviveRecreation() {

@@ -2,7 +2,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { test, expect } from '@playwright/test';
 import { createdSchema, mediaResultSchema } from '@/shared/api';
-import { apiCreate, apiMeeting, login, setDate, writeHeaders } from '@tests/helpers';
+import {
+  actionSurface,
+  apiCreate,
+  apiMeeting,
+  login,
+  setDate,
+  writeHeaders,
+} from '@tests/helpers';
 
 const assets = path.resolve('../../openspec/changes/meeting-experience-refresh/assets');
 const output = '/tmp/somewhere-web-design';
@@ -242,7 +249,7 @@ test('approved HTML and implemented screens at four widths', async ({
     ] as const) {
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       await page.getByRole('menuitem', { name: label, exact: true }).click();
-      const action = page.getByRole('main', { name: label, exact: true });
+      const action = actionSurface(page, label);
       await expect(action).toBeVisible();
 
       if (kind === 'task') {
@@ -266,7 +273,9 @@ test('approved HTML and implemented screens at four widths', async ({
         fullPage: true,
         animations: 'disabled',
       });
-      await action.getByRole('button', { name: 'Назад', exact: true }).click();
+      await action
+        .getByRole('button', { name: width < 740 ? 'Закрыть' : 'Назад', exact: true })
+        .click();
       await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     }
 

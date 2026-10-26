@@ -8,10 +8,13 @@ final class DatePollUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "poll-owner"
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
         app.launch()
         let meeting = app.buttons["meeting-card-d3c50000-0000-4000-8000-000000000100"]
         XCTAssertTrue(meeting.waitForExistence(timeout: 15))
-        XCTAssertTrue(meeting.label.contains("Время пока не выбрано"))
+        XCTAssertTrue(meeting.label.contains("25 октября"), meeting.label)
+        XCTAssertNil(meeting.label.range(of: #"\b\d{1,2}:\d{2}\b"#, options: .regularExpression))
+        capture("poll-date-only-list")
         meeting.tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
         app.buttons["meeting-add"].tap()
@@ -20,7 +23,7 @@ final class DatePollUITests: XCTestCase {
         create.tap()
         let submit = app.buttons["poll-create"]
         XCTAssertTrue(submit.waitForExistence(timeout: 5))
-        let multiple = app.buttons["Можно выбрать несколько дат"]
+        let multiple = app.switches["Можно выбрать несколько дат"]
         for _ in 0..<5 {
             if multiple.isHittable { break }
             app.scrollViews["action-form-scroll"].swipeUp()
@@ -28,10 +31,10 @@ final class DatePollUITests: XCTestCase {
         multiple.tap()
         let changed = multiple.value as? String
         for _ in 0..<5 {
-            if app.buttons["action-form-back"].isHittable { break }
+            if app.buttons["action-form-close"].isHittable { break }
             app.scrollViews["action-form-scroll"].swipeDown()
         }
-        app.buttons["action-form-back"].tap()
+        app.buttons["action-form-close"].tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-date-poll"].tap()
@@ -42,6 +45,21 @@ final class DatePollUITests: XCTestCase {
             if submit.isHittable { break }
             app.swipeUp()
         }
+        submit.tap()
+        XCTAssertTrue(app.staticTexts["poll-error"].waitForExistence(timeout: 10))
+        capture("poll-create-error")
+        app.buttons["action-form-close"].tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
+        app.buttons["meeting-add"].tap()
+        app.buttons["new-date-poll"].tap()
+        XCTAssertTrue(submit.waitForExistence(timeout: 5))
+        XCTAssertEqual(submit.label, "Повторить")
+        XCTAssertEqual(multiple.value as? String, changed)
+        for _ in 0..<6 {
+            if submit.isHittable { break }
+            app.scrollViews["action-form-scroll"].swipeUp()
+        }
+        capture("poll-pending-reopen")
         submit.tap()
         let option = app.buttons["poll-option-2026-10-26"]
         XCTAssertTrue(option.waitForExistence(timeout: 15))
@@ -73,10 +91,7 @@ final class DatePollUITests: XCTestCase {
     }
 
     private func capture(_ name: String) {
-        let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        image.name = name
-        image.lifetime = .keepAlways
-        add(image)
+        ExperienceScreenshot.save(name, test: self)
     }
 
     func testOrganizerResolvesTie() {
@@ -126,6 +141,7 @@ final class DatePollUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = scenario
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
         app.launch()
         let card = app.buttons["meeting-card-d3c50000-0000-4000-8000-000000000" + suffix]
         XCTAssertTrue(card.waitForExistence(timeout: 15))

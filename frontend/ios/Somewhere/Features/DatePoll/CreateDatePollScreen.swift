@@ -9,17 +9,18 @@ struct CreateDatePollScreen: View {
     var body: some View {
         @Bindable var form = form
         let owner = form.operation
-        ActionFormPage(title: "Предложить дату", dismissDisabled: owner.busy) {
-            ForEach(form.dates.indices, id: \.self) { index in
+        ActionFormSheet(title: "Предложить дату", dismissDisabled: owner.busy) {
+            ForEach(Array(form.options.enumerated()), id: \.element.id) { index, option in
+                let displayedDate = CalendarDate.parse(option.day) ?? Date()
                 HStack(alignment: .bottom, spacing: 10) {
                     ActionDateField(
                         title: index == 0 ? "Новая дата" : "Ещё одна дата",
                         selection: Binding(
-                            get: { CalendarDate.parse(form.dates[index]) ?? Date() },
-                            set: { form.dates[index] = CalendarDate.string($0) }))
+                            get: { form.date(for: option.id, fallback: displayedDate) },
+                            set: { form.setDate($0, for: option.id) }))
                     if form.dates.count > 2 {
                         Button {
-                            form.dates.remove(at: index)
+                            form.removeDate(option.id)
                         } label: {
                             ExperienceIcon(kind: .close, size: 18)
                                 .frame(width: 44, height: 48).contentShape(Rectangle())
@@ -29,9 +30,7 @@ struct CreateDatePollScreen: View {
             }
             if form.dates.count < 20 {
                 Button("Добавить дату") {
-                    form.dates.append(
-                        CalendarDate.adding(
-                            form.dates.last ?? CalendarDate.today(), component: .day, value: 1))
+                    form.addDate()
                 }.foregroundStyle(AppPalette.accent).frame(minHeight: 44)
                     .disabled(!owner.editable)
             }
@@ -57,7 +56,10 @@ struct CreateDatePollScreen: View {
                 title: owner.pending == nil ? "Создать опрос" : "Повторить", busy: owner.busy
             ) {
                 Task {
-                    if await form.submit() { completed(); dismiss() }
+                    if await form.submit() {
+                        completed()
+                        dismiss()
+                    }
                 }
             }.designFont(14).accessibilityIdentifier("poll-create")
         }.onChange(of: form.deadline) { _, _ in

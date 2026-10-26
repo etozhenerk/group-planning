@@ -16,7 +16,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.DraftIssue
 import dev.groupplanning.android.data.drafts.Repetition
 import dev.groupplanning.android.state.datepoll.DatePollViewModel
-import dev.groupplanning.android.ui.components.ActionPage
+import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.CompactButton
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
@@ -25,8 +25,10 @@ import java.time.LocalDate
 internal fun CreateDatePollSheet(model: DatePollViewModel, close: () -> Unit) {
     val state by model.state.collectAsStateWithLifecycle()
     val draft = state.draft ?: return
-    LaunchedEffect(state.poll?.id) { if (state.poll != null) close() }
-    ActionPage(stringResource(R.string.action_date_title), state.pending == null, close) {
+    LaunchedEffect(state.poll?.id, state.busy) {
+        if (state.poll != null && !state.busy) close()
+    }
+    ActionSheet(stringResource(R.string.action_date_title), close, canClose = !state.busy) {
         draft.dates.forEachIndexed { index, day ->
             Row {
                 Column(Modifier.weight(1f)) {

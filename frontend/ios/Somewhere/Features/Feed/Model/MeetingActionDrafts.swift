@@ -1,4 +1,5 @@
 import Foundation
+
 @MainActor
 final class MeetingActionDrafts {
     private let meetingID: UUID
@@ -6,6 +7,7 @@ final class MeetingActionDrafts {
     private var dateForm: DatePollFormOwner?
     private var placeForm: PlacePollFormOwner?
     private var preparationForm: PreparationFormOwner?
+    private var settingsForm: MeetingSettingsOwner?
 
     init(meetingID: UUID, session: SessionStore) {
         self.meetingID = meetingID
@@ -33,6 +35,18 @@ final class MeetingActionDrafts {
         return form
     }
 
+    func settings(meeting: Meeting) -> MeetingSettingsOwner {
+        if let settingsForm { return settingsForm }
+        let form = MeetingSettingsOwner(meeting: meeting, session: session)
+        settingsForm = form
+        return form
+    }
+
+    func clearSettings() {
+        settingsForm?.clear()
+        settingsForm = nil
+    }
+
     func clearDate() {
         dateForm?.clear()
         dateForm = nil
@@ -52,5 +66,6 @@ final class MeetingActionDrafts {
         clearDate()
         clearPlace()
         clearPreparation()
+        clearSettings()
     }
 }

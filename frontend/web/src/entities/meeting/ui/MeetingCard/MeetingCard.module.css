@@ -2,8 +2,8 @@
   position: relative;
   margin-top: 12px;
   margin-bottom: 16px;
-  border-radius: 22px;
-  background: #38313d;
+  border-radius: var(--ds-radius-card);
+  background: var(--ds-color-weekday);
   border: 1px solid #ffffff0a;
   box-shadow: 0 8px 20px #0000000b;
   min-width: 0;
@@ -17,7 +17,7 @@
 .link {
   position: relative;
   display: block;
-  min-height: 146px;
+  min-height: var(--ds-component-card-minimum-height);
   padding: 29px 21px 30px;
 }
 
@@ -25,10 +25,10 @@
   position: absolute;
   left: 17px;
   top: -12px;
-  background: #57475e;
-  color: #ede0f1;
+  background: var(--ds-color-weekday-badge);
+  color: var(--ds-color-weekday-text);
   border: 1px solid #ffffff09;
-  border-radius: 8px;
+  border-radius: var(--ds-radius-badge);
   padding: 4px 10px;
   font-size: 11px;
   line-height: 1.4;
@@ -43,10 +43,10 @@
   position: absolute;
   right: 18px;
   top: -11px;
-  width: 118px;
-  height: 112px;
-  border: 3px solid #5e4f63;
-  border-radius: 16px;
+  width: var(--ds-component-card-cover-width);
+  height: var(--ds-component-card-cover-height);
+  border: var(--ds-component-card-cover-border) solid var(--ds-color-weekday-frame);
+  border-radius: var(--ds-radius-cover);
   overflow: hidden;
   transform: rotate(5deg);
   box-shadow: 0 5px 14px #0004;
@@ -64,8 +64,8 @@
 }
 
 .info h2 {
-  font-size: 21px;
-  line-height: 1.25;
+  font-size: var(--ds-typography-size-card-title);
+  line-height: var(--ds-typography-line-height-card-title);
   letter-spacing: -0.45px;
   margin: 0 0 8px;
   max-width: 350px;
@@ -131,16 +131,16 @@
 }
 
 .card[data-weekend='true'] {
-  background: #2e3938;
+  background: var(--ds-color-weekend);
 }
 
 .card[data-weekend='true'] .date {
-  background: #425653;
-  color: #dcece5;
+  background: var(--ds-color-weekend-badge);
+  color: var(--ds-color-weekend-text);
 }
 
 .card[data-weekend='true'] .cover {
-  border-color: #4b615b;
+  border-color: var(--ds-color-weekend-frame);
   transform: rotate(-4deg);
 }
 
@@ -153,11 +153,11 @@
     transform: translateY(-3px);
     box-shadow: 0 13px 30px #0003;
     border-color: #d6cce92a;
-    background: #403649;
+    background: var(--ds-color-weekday-hover);
   }
 
   .card[data-weekend='true']:hover {
-    background: #344440;
+    background: var(--ds-color-weekend-hover);
   }
 
   .card:hover .cover {
@@ -180,17 +180,17 @@
   }
 
   .link {
-    min-height: 145px;
+    min-height: var(--ds-component-card-minimum-height-mobile);
     padding: 26px 17px 29px;
   }
 
   .info h2 {
-    font-size: 19px;
+    font-size: var(--ds-typography-size-card-title-mobile);
   }
 
   .cover {
-    width: 102px;
-    height: 101px;
+    width: var(--ds-component-card-cover-mobile-width);
+    height: var(--ds-component-card-cover-mobile-height);
     right: 13px;
     top: -10px;
   }
@@ -245,7 +245,20 @@
 }
 
 .date {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.titleEnd {
+  display: inline-flex;
+  align-items: baseline;
+  max-width: 100%;
+}
+
+.titleEnd span {
+  min-width: 0;
+}
+
+.titleEnd svg {
+  flex-shrink: 0;
 }

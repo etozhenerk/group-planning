@@ -1,8 +1,12 @@
 package dev.groupplanning.android
 
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.ParcelFileDescriptor
+import android.provider.Settings
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -10,6 +14,10 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import java.io.File
+import java.time.Instant
+import java.util.TimeZone
+import org.json.JSONArray
+import org.json.JSONObject
 
 internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -70,6 +78,79 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         val directory = File(output).apply {
             check(mkdirs() || isDirectory) { "Screenshot directory is unavailable: $output" }
         }
-        check(device.takeScreenshot(File(directory, "$name.png")))
+        val captureStartedAt = Instant.now().toString()
+        val image = File(directory, "$name.png")
+        check(device.takeScreenshot(image))
+        val capturedAt = Instant.now().toString()
+        saveCaptureMetadata(image, captureStartedAt, capturedAt)
+    }
+
+    private fun saveCaptureMetadata(image: File, startedAt: String, capturedAt: String) {
+        val bitmap = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(image.absolutePath, bitmap)
+        check(bitmap.outWidth > 0 && bitmap.outHeight > 0) { "Screenshot bounds are unavailable" }
+        val configuration = context.resources.configuration
+        val metrics = context.resources.displayMetrics
+        val metadata = JSONObject().apply {
+            put("schemaVersion", 1)
+            put("image", image.name)
+            put("captureStartedAt", startedAt)
+            put("capturedAt", capturedAt)
+            put(
+                "android",
+                JSONObject().apply {
+                    put("release", Build.VERSION.RELEASE)
+                    put("apiLevel", Build.VERSION.SDK_INT)
+                    put("codename", Build.VERSION.CODENAME)
+                    put("buildId", Build.ID)
+                    put("buildDisplay", Build.DISPLAY)
+                    put("incremental", Build.VERSION.INCREMENTAL)
+                    put("deviceModel", Build.MODEL)
+                    put("vmName", System.getProperty("java.vm.name"))
+                    put("vmVersion", System.getProperty("java.vm.version"))
+                },
+            )
+            put(
+                "imageBoundsPx",
+                JSONObject().apply {
+                    put("left", 0)
+                    put("top", 0)
+                    put("width", bitmap.outWidth)
+                    put("height", bitmap.outHeight)
+                },
+            )
+            put(
+                "display",
+                JSONObject().apply {
+                    put("widthPx", device.displayWidth)
+                    put("heightPx", device.displayHeight)
+                    put("rotation", device.displayRotation)
+                    put("density", metrics.density.toDouble())
+                    put("densityDpi", metrics.densityDpi)
+                    put("configurationWidthDp", configuration.screenWidthDp)
+                    put("configurationHeightDp", configuration.screenHeightDp)
+                },
+            )
+            put("locales", JSONArray(configuration.locales.toLanguageTags().split(",")))
+            put("timezone", TimeZone.getDefault().id)
+            put("fontScale", configuration.fontScale.toDouble())
+            put(
+                "motion",
+                JSONObject().apply {
+                    listOf(
+                        Settings.Global.WINDOW_ANIMATION_SCALE,
+                        Settings.Global.TRANSITION_ANIMATION_SCALE,
+                        Settings.Global.ANIMATOR_DURATION_SCALE,
+                    ).forEach { setting ->
+                        val actual = Settings.Global.getString(context.contentResolver, setting)
+                        put(setting, actual?.toDoubleOrNull() ?: JSONObject.NULL)
+                    }
+                    put("animatorsEnabled", ValueAnimator.areAnimatorsEnabled())
+                },
+            )
+            put("fonts", CaptureFontProbe.measure())
+        }
+        File(image.parentFile, "${image.nameWithoutExtension}.capture.json")
+            .writeText(metadata.toString(2) + "\n")
     }
 }

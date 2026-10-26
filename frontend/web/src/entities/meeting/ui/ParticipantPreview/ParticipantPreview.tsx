@@ -1,4 +1,3 @@
-import { Crown } from 'lucide-react';
 import { Avatar } from '@/shared/ui/Avatar';
 import type { MeetingSummary } from '@/entities/meeting/model/types';
 import styles from '@/entities/meeting/ui/ParticipantPreview/ParticipantPreview.module.css';
@@ -20,9 +19,6 @@ export const ParticipantPreview = ({ meeting }: ParticipantPreviewProps) => (
           size="small"
           tone={index === 0 ? 'sand' : index === 1 ? 'lilac' : 'mint'}
         />
-        {person.id === meeting.organizerId && (
-          <Crown className={styles.crown} size={13} aria-hidden="true" />
-        )}
       </span>
     ))}
     {meeting.participantCount > Math.min(3, meeting.participantPreview?.length ?? 0) && (

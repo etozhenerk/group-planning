@@ -30,7 +30,7 @@ export const TaskRecipient = ({
           onChange={(event) => onChange(event.target.value)}
           disabled={disabled || error}
         >
-          <option value="">Любой участник</option>
+          <option value="">Любому участнику</option>
           {value && !people.some((person) => person.user.id === value) && (
             <option value={value} disabled>
               Участник вышел из встречи

@@ -58,11 +58,13 @@ button.share-invitation-trigger.compact {
 .share-invitation-trigger:not(.compact) {
   background: var(--action);
   color: var(--action-text);
-  min-height: 46px;
-  font-size: 14px;
-  padding: 12px 18px;
-  border-radius: 13px;
-  font-weight: 600;
+  min-height: var(--ds-component-button-minimum-height);
+  font-size: var(--ds-typography-size-button);
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  border-radius: var(--ds-component-button-radius);
+  font-weight: var(--ds-typography-weight-semibold);
+  gap: var(--ds-component-button-icon-gap);
 }
 
 .share-invitation-trigger.compact {
@@ -76,4 +78,16 @@ button.share-invitation-trigger.compact {
 button.share-invitation-trigger.compact {
   width: 44px;
   padding: 0;
+}
+
+button.share-invitation-trigger.subtle {
+  background: transparent;
+  color: var(--ds-color-text);
+  border: var(--ds-space-s1) solid var(--ds-color-subtle-border);
+}
+
+.share-invitation-trigger.subtle svg {
+  width: var(--ds-component-button-icon-size);
+  height: var(--ds-component-button-icon-size);
+  flex-basis: var(--ds-component-button-icon-size);
 }

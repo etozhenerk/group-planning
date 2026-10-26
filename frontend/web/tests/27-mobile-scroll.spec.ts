@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { designTokens } from '@/shared/config/design-tokens';
 
 const expectFitsWidth = async (element: Locator) => {
   await expect
@@ -70,21 +71,62 @@ for (const width of [320, 402, 430]) {
     await page.goto(`/meetings/${created.meeting.id}`);
     await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     await expectFitsWidth(page.locator('html'));
+    const header = page.locator('main#main > header');
+    const heading = header.getByTestId('conversation-title');
+    await expect(heading.locator('h1')).toHaveText(created.meeting.title);
+
+    for (const text of [heading.locator('h1'), heading.locator('p')]) {
+      await expectFitsWidth(text);
+      await expect
+        .poll(() => text.evaluate((node) => node.scrollHeight - node.clientHeight))
+        .toBeLessThanOrEqual(1);
+    }
+
+    const back = header.getByRole('link', { name: 'К моим встречам', exact: true });
+    const controls = [
+      back,
+      header.getByRole('button', { name: 'Пригласить друзей', exact: true }),
+      header.getByRole('button', { name: 'Информация о встрече', exact: true }),
+    ];
+
+    for (const control of controls) {
+      await expect(control).toBeInViewport();
+      const bounds = await control.boundingBox();
+      const minimum = Number.parseFloat(designTokens.targetWeb);
+      expect(bounds?.width).toBeGreaterThanOrEqual(minimum);
+      expect(bounds?.height).toBeGreaterThanOrEqual(minimum);
+      await control.click({ trial: true });
+    }
+
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
     await page.getByRole('button', { name: 'Информация о встрече' }).click();
-    const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+    const dialog = page.getByRole('dialog', { name: created.meeting.title });
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     await expectFitsWidth(dialog);
-    // Long content still scrolls vertically inside its own panel.
-    expect(await dialog.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(
+    // The body scrolls under a fixed header, so close stays reachable.
+    const content = dialog.getByTestId('dialog-content');
+    expect(await content.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(
       true,
     );
+    await content.evaluate((node) => {
+      node.scrollTop = node.scrollHeight;
+    });
+    await expect(
+      dialog.getByRole('button', { name: 'Закрыть', exact: true }),
+    ).toBeInViewport({ ratio: 1 });
     await page.screenshot({
       path: `test-results/mobile-facts-${test.info().project.name}-${width}.png`,
     });
     await page.keyboard.press('Escape');
     await expect(dialog).not.toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
+    await back.click();
+    await expect(page).toHaveURL(/\/meetings$/);
+    await expect(
+      page.locator(
+        `[data-testid="meeting-card"] a[href="/meetings/${created.meeting.id}"]`,
+      ),
+    ).toBeVisible();
   });
 }
 
@@ -111,14 +153,14 @@ test('chat and sheet follow the visible viewport without creating a second page 
   await expectFitsWidth(page.locator('html'));
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
   await page.getByRole('button', { name: 'Информация о встрече' }).click();
-  const dialog = page.getByRole('dialog', { name: 'Детали встречи' });
+  const dialog = page.getByRole('dialog', { name: created.meeting.title });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expectFitsWidth(dialog);
   const bounds = await dialog.boundingBox();
   expect((bounds?.y ?? 0) + (bounds?.height ?? 0)).toBeLessThanOrEqual(512);
   expect(bounds?.y).toBeGreaterThanOrEqual(12);
   await expect(
-    dialog.getByRole('heading', { name: 'Детали встречи', exact: true }),
+    dialog.getByRole('heading', { name: created.meeting.title, exact: true }),
   ).toBeInViewport();
   await page.screenshot({
     path: `test-results/mobile-keyboard-${test.info().project.name}.png`,

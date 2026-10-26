@@ -2,21 +2,22 @@ import SwiftUI
 
 struct MeetingSettingsFields: View {
     let owner: MeetingSettingsOwner
-    @ScaledMetric(relativeTo: .caption) private var labelSize = 13.0
-    @ScaledMetric(relativeTo: .body) private var inputSize = 16.0
     @State private var dateSheet = false
     @State private var timeSheet = false
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: DesignTokens.componentActionFieldGap) {
             field("Название", key: \.title, identifier: "settings-title")
             field(
                 "Описание · необязательно", key: \.description, identifier: "settings-description",
                 lines: 3...6)
             Text("Описание увидят все, у кого есть приглашение.")
-                .font(.caption).foregroundStyle(AppPalette.muted)
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Дата и время").font(.system(size: labelSize)).foregroundStyle(
-                    AppPalette.muted)
+                .designFont(DesignTokens.typographySizeCaption, relativeTo: .caption)
+                .foregroundStyle(DesignTokens.colorMuted)
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
+                Text("Дата и время").designFont(
+                    DesignTokens.typographySizeSmall, relativeTo: .caption
+                ).foregroundStyle(
+                    DesignTokens.colorMuted)
                 SettingsPickerButton(
                     title: MeetingLabels.day(owner.value.day), symbol: "calendar"
                 ) {
@@ -34,11 +35,14 @@ struct MeetingSettingsFields: View {
                             $0.clock = nil
                             $0.repetition = nil
                         }
-                    }.frame(minHeight: 44).accessibilityIdentifier("clear-meeting-time")
+                    }.frame(minHeight: DesignTokens.targetIos).accessibilityIdentifier(
+                        "clear-meeting-time")
                 }
-                Text("Время необязательно · \(owner.value.timezone)").font(.caption)
-                    .foregroundStyle(
-                        AppPalette.muted)
+                Text("Время необязательно · \(owner.value.timezone)").designFont(
+                    DesignTokens.typographySizeCaption, relativeTo: .caption
+                )
+                .foregroundStyle(
+                    DesignTokens.colorMuted)
             }
             if owner.needsTimeChoice {
                 Picker(
@@ -76,18 +80,17 @@ struct MeetingSettingsFields: View {
         _ label: String, key: WritableKeyPath<MeetingDraft, String>, identifier: String,
         lines: ClosedRange<Int> = 1...3
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(label).font(.system(size: labelSize)).foregroundStyle(AppPalette.muted)
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS8) {
+            Text(label).designFont(DesignTokens.typographySizeSmall, relativeTo: .caption)
+                .foregroundStyle(DesignTokens.colorMuted)
             TextField(
                 label,
                 text: Binding(
                     get: { owner.value[keyPath: key] },
                     set: { value in owner.change { $0[keyPath: key] = value } }),
-                prompt: Text(label).foregroundStyle(AppPalette.muted), axis: .vertical
+                prompt: Text(label).foregroundStyle(DesignTokens.colorMuted), axis: .vertical
             )
-            .font(.system(size: inputSize)).lineLimit(lines).padding(12)
-            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-            .background(Color("SettingsField"), in: RoundedRectangle(cornerRadius: 13))
+            .lineLimit(lines).actionField()
             .accessibilityLabel(label).accessibilityIdentifier(identifier)
         }
     }

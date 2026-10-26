@@ -3,10 +3,12 @@ import XCTest
 @MainActor
 final class MediaExperienceUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "audit-owner"
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
         app.launch()
         let card = app.buttons["meeting-card-88888888-8888-4888-8888-888888888888"]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
@@ -34,7 +36,7 @@ final class MediaExperienceUITests: XCTestCase {
         capture("refresh-photo-preview")
         app.buttons["Отправить"].tap()
         XCTAssertTrue(app.staticTexts["Отправлено"].waitForExistence(timeout: 15))
-        app.buttons["Готово"].tap()
+        app.buttons["media-picker-close"].tap()
         XCTAssertEqual(input.value as? String, "Фото отдельно от сообщения")
         let attachment = app.buttons["Открыть фото"].firstMatch
         XCTAssertTrue(attachment.waitForExistence(timeout: 10))
@@ -58,6 +60,7 @@ final class MediaExperienceUITests: XCTestCase {
         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "ваша реакция"))
             .firstMatch
         XCTAssertTrue(mine.waitForExistence(timeout: 10))
+        revealReaction(mine, app: app)
         capture("refresh-reaction")
         message.press(forDuration: 1)
         let people = app.buttons["Кто поставил ❤️"]
@@ -66,9 +69,21 @@ final class MediaExperienceUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Саша"].waitForExistence(timeout: 5))
         capture("refresh-reaction-people")
         app.buttons["Готово"].tap()
+        revealReaction(mine, app: app)
         mine.tap()
         let removed = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: mine)
         XCTAssertEqual(XCTWaiter.wait(for: [removed], timeout: 10), .completed)
+    }
+
+    private func revealReaction(_ reaction: XCUIElement, app: XCUIApplication) {
+        let scroll = app.scrollViews["feed-timeline"]
+        let composer = app.textViews["message-input"]
+        for _ in 0..<5 {
+            if reaction.isHittable, reaction.frame.maxY < composer.frame.minY { break }
+            scroll.swipeUp()
+        }
+        XCTAssertTrue(reaction.isHittable)
+        XCTAssertLessThan(reaction.frame.maxY, composer.frame.minY)
     }
 }

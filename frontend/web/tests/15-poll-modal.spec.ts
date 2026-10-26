@@ -1,15 +1,15 @@
 import { expect, test } from '@playwright/test';
-import { apiCreate, login } from '@tests/helpers';
+import { actionSurface, apiCreate, login } from '@tests/helpers';
 
 for (const width of [320, 390, 1440]) {
-  test(`date action page preserves draft, handles calendar and validation at ${width}px`, async ({
+  test(`date action adapts to sheet, preserves draft, handles calendar and validation at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 844 });
     await login(page, 'Саша');
     const { meeting } = await apiCreate(
       page,
-      'Дата без модального окна',
+      'Дата в панели',
       '2026-10-24T19:00:00+03:00',
     );
 
@@ -18,11 +18,14 @@ for (const width of [320, 390, 1440]) {
     await page.getByLabel('Сообщение', { exact: true }).fill('Черновик разговора');
     await open.click();
     await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
-    const screen = page.getByRole('main', { name: 'Предложить дату', exact: true });
+    const screen = actionSurface(page, 'Предложить дату');
     await expect(screen).toBeVisible();
     await expect(page).toHaveURL(/action=date$/);
-    await expect(page.getByRole('dialog')).toHaveCount(0);
-    await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
+    await expect(page.getByRole('dialog')).toHaveCount(width < 740 ? 1 : 0);
+    await expect(page.locator('body')).toHaveCSS(
+      'position',
+      width < 740 ? 'fixed' : 'static',
+    );
     await expect(
       page.getByRole('navigation', { name: 'Основная навигация' }),
     ).toBeVisible({ visible: width >= 740 });
@@ -52,7 +55,9 @@ for (const width of [320, 390, 1440]) {
     ).toBeInViewport();
     await screen.getByRole('button', { name: 'Удалить вариант 3' }).click();
     await expect(third).toHaveCount(0);
-    await screen.getByRole('button', { name: 'Назад', exact: true }).click();
+    await screen
+      .getByRole('button', { name: width < 740 ? 'Закрыть' : 'Назад', exact: true })
+      .click();
     await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
       'Черновик разговора',
     );

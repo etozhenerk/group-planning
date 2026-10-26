@@ -9,13 +9,22 @@ case "$somewhere_scope" in
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
-somewhere_count=$(printf '%s\n' "$somewhere_devices" | awk '$2 == "device" {n++} END {print n+0}')
-somewhere_emulators=$(printf '%s\n' "$somewhere_devices" | awk '$1 ~ /^emulator-/ {n++} END {print n+0}')
-if [ "$somewhere_count" -ne 1 ] || [ "$somewhere_emulators" -gt 1 ]; then
-    printf 'Reuse exactly one online device. This script never creates or starts an emulator.\n' >&2
-    exit 1
+if [ -n "${ANDROID_SERIAL:-}" ]; then
+    somewhere_selected=$(printf '%s\n' "$somewhere_devices" | awk -v serial="$ANDROID_SERIAL" '$1 == serial && $2 == "device" {n++} END {print n+0}')
+    if [ "$somewhere_selected" -ne 1 ]; then
+        printf 'ANDROID_SERIAL must name an already online device. No device will be started.\n' >&2
+        exit 1
+    fi
+else
+    somewhere_count=$(printf '%s\n' "$somewhere_devices" | awk '$2 == "device" {n++} END {print n+0}')
+    somewhere_emulators=$(printf '%s\n' "$somewhere_devices" | awk '$1 ~ /^emulator-/ {n++} END {print n+0}')
+    if [ "$somewhere_count" -ne 1 ] || [ "$somewhere_emulators" -gt 1 ]; then
+        printf 'Select one existing online device with ANDROID_SERIAL. No device will be started.\n' >&2
+        exit 1
+    fi
+    ANDROID_SERIAL=$(printf '%s\n' "$somewhere_devices" | awk '$2 == "device" {print $1}')
 fi
-export ANDROID_SERIAL=$(printf '%s\n' "$somewhere_devices" | awk '$2 == "device" {print $1}')
+export ANDROID_SERIAL
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-android-ui.XXXXXX")
 somewhere_remote="/data/local/tmp/somewhere-android-ui-$$.json"
 somewhere_fixture=
@@ -60,16 +69,18 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 "$somewhere_adb" -s "$ANDROID_SERIAL" reverse "tcp:$somewhere_port" "tcp:$somewhere_port" >/dev/null
 "$somewhere_adb" -s "$ANDROID_SERIAL" push "$somewhere_temporary/config.json" "$somewhere_remote" >/dev/null
 "$somewhere_adb" -s "$ANDROID_SERIAL" shell chmod 600 "$somewhere_remote"
+# Run InvitationUiTests before the extra RSVP withdrawal check: its initial
+# unanswered invitation is part of that scenario. Design captures precede uploads.
 if [ "$somewhere_scope" = all ]; then
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
         :app:connectedQaAndroidTest
 fi
 
 if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = account ] || [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
     somewhere_classes=dev.groupplanning.android.CalendarUiTests
-    if [ "$somewhere_scope" = experience ]; then somewhere_classes=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests; fi
+    if [ "$somewhere_scope" = experience ]; then somewhere_classes=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests; fi
     if [ "$somewhere_scope" = account ]; then somewhere_classes=dev.groupplanning.android.AccountDeletionUiTests; fi
     if [ "$somewhere_scope" = saved ]; then somewhere_classes=dev.groupplanning.android.SavedInvitationsUiTests; fi
     if [ "$somewhere_scope" = covers ]; then somewhere_classes=dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests; fi
