@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "functional-qa-pilot",
+  "purpose": "feature",
+  "component": "web",
+  "createdAt": "2026-10-26T22:07:39.217Z",
+  "implementer": "root",
+  "catalogHash": "f76aceb21cfc483b0600fcf957de6d761a73d7d5049be4224958f86029fe4401",
+  "sourceHash": "11e1d35e6e8d53dcba37e71de7c70fca095c083d9b22206a5c898d8abe4ad34e",
+  "selectedCases": [
+    "TC-CREATE-9138348C",
+    "TC-INV-F00F3753"
+  ],
+  "expected": [
+    {
+      "id": "TC-INV-F00F3753/web-pilot/manual",
+      "caseId": "TC-INV-F00F3753",
+      "environment": "web-pilot",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9138348C/web-pilot/manual",
+      "caseId": "TC-CREATE-9138348C",
+      "environment": "web-pilot",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "web-check",
+    "web-e2e"
+  ],
+  "environments": [
+    {
+      "id": "web-pilot",
+      "profile": "web-desktop",
+      "platform": "web",
+      "application": "product",
+      "url": "https://127.0.0.1:8457",
+      "build": "619f8aa + local demo build 2026-10-27",
+      "os": "macOS",
+      "device": "chromium",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "isolated memory.Store fixture on port 8457; test-only OAuth",
+      "backend": "619f8aa isolated Go browser fixture"
+    }
+  ],
+  "artifact": null
+}

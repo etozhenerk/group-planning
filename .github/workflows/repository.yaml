@@ -7,6 +7,7 @@ on:
       - 'README.md'
       - 'docs/**'
       - 'design-system/**'
+      - 'testing/**'
       - '.codex/hooks.json'
       - 'frontend/**'
       - 'openspec/**'
@@ -27,6 +28,7 @@ on:
       - 'README.md'
       - 'docs/**'
       - 'design-system/**'
+      - 'testing/**'
       - '.codex/hooks.json'
       - 'frontend/**'
       - 'openspec/**'
@@ -80,6 +82,10 @@ jobs:
         id: design
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py design npm run design:check
+      - name: Test catalog and task acceptance
+        id: qa
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py qa npm run qa:check
       - name: GitHub Actions syntax and expressions
         id: actions
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
@@ -114,6 +120,10 @@ jobs:
         id: design_tests
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py design_tests npm run design:test
+      - name: Testing gates and evidence integrity
+        id: qa_tests
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py qa_tests npm run qa:test
       - name: Exit codes, logs and failure summaries
         id: reports
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}

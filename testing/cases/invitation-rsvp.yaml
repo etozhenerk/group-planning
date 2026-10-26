@@ -1,0 +1,1386 @@
+- id: TC-INV-F7D14B7B
+  title: "Приглашение видно до входа: Друг впервые открыл ссылку"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Приглашение видно до входа
+    scenario: Друг впервые открыл ссылку
+    sha256: a3f1073a8f480438edb9496a83fb5ede2060583dd9a342c5d7e2241ba8f5d967
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать по действительной ссылке приглашения название,
+      дату, место и полное описание встречи до авторизации. Переписка SHALL NOT раскрываться
+      на публичном приглашении.
+  steps:
+    - action: Лена без сессии Somewhere открывает действительное приглашение
+      expected: она видит основные детали и действие ответа, но не переписку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-D788A9C2
+  title: "Ответ требует входа: Ответ без действующей сессии"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Ответ требует входа
+    scenario: Ответ без действующей сессии
+    sha256: feee42518ab973c2406e690c716f4b2bd6af46cf74eac61faf7e1d218384b6e6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL требовать вход через Яндекс ID для сохранения ответа
+      на приглашение. Пользователю с действующей сессией повторный вход не требуется.
+  steps:
+    - action: Лена хочет ответить на приглашение без входа
+      expected: ей предлагается Яндекс ID до сохранения ответа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-1BABADA3
+  title: "Ответ требует входа: Друг уже вошёл"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Ответ требует входа
+    scenario: Друг уже вошёл
+    sha256: 3c5e475e855031679e5d2adedb9741acc0a1ac8c474004f6474d8a409b3263e5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL требовать вход через Яндекс ID для сохранения ответа
+      на приглашение. Пользователю с действующей сессией повторный вход не требуется.
+  steps:
+    - action: Лена открывает приглашение с действующей сессией
+      expected: она может перейти к выбору ответа без повторной авторизации
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-EE3B32D9
+  title: "Ответ требует входа: Организатор открывает собственную ссылку"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Ответ требует входа
+    scenario: Организатор открывает собственную ссылку
+    sha256: 6bd39b3d2be1bbcdd2e76e2e5de845d983653c70d12c5715bdbfd27c783231c1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL требовать вход через Яндекс ID для сохранения ответа
+      на приглашение. Пользователю с действующей сессией повторный вход не требуется.
+  steps:
+    - action: Саша после входа открывает в web приглашение созданной им встречи
+      expected: веб-клиент проверяет организатора по защищённым деталям и предлагает открыть эту встречу
+        вместо выбора RSVP открытие ссылки и переход не записывают ответ и не добавляют второго
+        участника ошибка проверки роли допускает повтор, не подменяя роль организатора ролью
+        приглашённого
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-BE2ABEB1
+  title: "Возврат к исходной встрече: Первый вход по приглашению"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Возврат к исходной встрече
+    scenario: Первый вход по приглашению
+    sha256: b710088b26d12ef449d2b4a1856e14c71203e813b1e3e7ca31c038f45e72d3be
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять контекст приглашения при переходе к Яндекс ID
+      и после успешного входа возвращать к той же встрече. Сам вход SHALL NOT
+      сохранять «Приду» или открывать переписку.
+  steps:
+    - action: Лена успешно завершает первый вход из приглашения Саши
+      expected: профиль создаётся автоматически и открывается выбор ответа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-01BC1377
+  title: "Возврат к исходной встрече: Отмена или ошибка входа"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Возврат к исходной встрече
+    scenario: Отмена или ошибка входа
+    sha256: fe06b4fb3a65d60f04f24869a94915063fd9ca40cc718e2ff567569d87de2db1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять контекст приглашения при переходе к Яндекс ID
+      и после успешного входа возвращать к той же встрече. Сам вход SHALL NOT
+      сохранять «Приду» или открывать переписку.
+  steps:
+    - action: вход из приглашения отменён либо завершился ошибкой
+      expected: приглашение не теряется и Лена может повторить вход
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-14E94338
+  title: "Выбор ответа: Принять приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Выбор ответа
+    scenario: Принять приглашение
+    sha256: e6b5e2d29a1980d0f8d6d6f48dfeb66f9968b9e996b8d14994a2e8afece9cc21
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять авторизованному приглашённому ответить «Приду»,
+      «Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без
+      точного времени, и SHALL подтверждать, какой ответ успешно сохранён.
+  steps:
+    - action: Лена выбирает «Приду» и ответ успешно сохранён
+      expected: она видит подтверждение участия и переход к разговору встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-F54ED6C1
+  title: "Выбор ответа: Отклонить приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Выбор ответа
+    scenario: Отклонить приглашение
+    sha256: 2dbfbfb4893f1043a0652f4c9f16486442e6a04be0dac7ddccca76e57b12ceb9
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять авторизованному приглашённому ответить «Приду»,
+      «Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без
+      точного времени, и SHALL подтверждать, какой ответ успешно сохранён.
+  steps:
+    - action: Лена выбирает «Не смогу» и ответ успешно сохранён
+      expected: она видит подтверждение «Не смогу», а не экран принятого приглашения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-9CE1DE4C
+  title: "Выбор ответа: Друг ещё не определился"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Выбор ответа
+    scenario: Друг ещё не определился
+    sha256: 1ced7f1fe767bc85c72232c73dc110be042f55c69822c86fcc8dabc7744ec432
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять авторизованному приглашённому ответить «Приду»,
+      «Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без
+      точного времени, и SHALL подтверждать, какой ответ успешно сохранён.
+  steps:
+    - action: Лена выбирает «Возможно» и ответ успешно сохранён
+      expected: подтверждение показывает «Возможно» и не утверждает, что она придёт
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-A8232BFB
+  title: "Переписка после принятия: Участие подтверждено"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Переписка после принятия
+    scenario: Участие подтверждено
+    sha256: 704aecc4578c074b723d575f1973fa97b6b385234f73f6b253c7061b47eaa0c9
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL открывать переписку приглашённому после успешного сохранения
+      «Приду». До этого, включая первый ответ «Возможно» или «Не смогу»,
+      переписка SHALL оставаться закрытой.
+  steps:
+    - action: первый ответ Лены «Приду» успешно сохранён
+      expected: она может открыть разговор встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-967EBE4C
+  title: "Переписка после принятия: Друг не принял участие"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Переписка после принятия
+    scenario: Друг не принял участие
+    sha256: 123cba140dcde423d40ae98d08b7fa74ac8ee3101661d95fcc3f20ccb7aa7f16
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL открывать переписку приглашённому после успешного сохранения
+      «Приду». До этого, включая первый ответ «Возможно» или «Не смогу»,
+      переписка SHALL оставаться закрытой.
+  steps:
+    - action: Лена пока не ответила либо её первый ответ «Возможно» или «Не смогу»
+      expected: разговор встречи ей не раскрывается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-A1B0667E
+  title: "Ошибка не выглядит успешным ответом: Не удалось сохранить «Приду»"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Ошибка не выглядит успешным ответом
+    scenario: Не удалось сохранить «Приду»
+    sha256: 8383cd2bfba08904c61aa9244b9abdea70fdfdd00d59cd35af14f71690556e34
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при неудачном сохранении ответа показывать ошибку и возможность
+      повтора. Ошибка отправки «Приду» SHALL NOT показываться как подтверждённое
+      участие или открывать переписку.
+  steps:
+    - action: сохранение выбранного «Приду» завершилось ошибкой
+      expected: Лена видит неуспешную отправку и может повторить тот же ответ
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-38B3DC35
+  title: "Организатор видит результат: Друг принял приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Организатор видит результат
+    scenario: Друг принял приглашение
+    sha256: 321d8193557a8bbc1980a0b6cd232864c2603f56d4a052f6a7d23ddf86c26cbb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL отражать успешно принятое приглашение в ленте организатора
+      и актуальном составе участников. Первый отказ SHALL NOT отображаться
+      как присоединение к встрече.
+  steps:
+    - action: у новой встречи был только Саша и Лена успешно ответила «Приду»
+      expected: лента отражает принятие и показывает двух участников
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-0BDDE341
+  title: "Организатор видит результат: Друг не сможет прийти"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Организатор видит результат
+    scenario: Друг не сможет прийти
+    sha256: ca3a0b1236b9914522d38252e75aa0aad3bc5471cf70a356997a3dac0b9aa1f9
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL отражать успешно принятое приглашение в ленте организатора
+      и актуальном составе участников. Первый отказ SHALL NOT отображаться
+      как присоединение к встрече.
+  steps:
+    - action: у новой встречи был только Саша и Лена впервые ответила «Не смогу»
+      expected: её ответ не увеличивает число присоединившихся участников
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-289FC0C1
+  title: "Изменение ответа меняет доступ: Участник больше не подтверждает участие"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Изменение ответа меняет доступ
+    scenario: Участник больше не подтверждает участие
+    sha256: 8d951a38c0839e02c5198aee5af3a136aee9c9b6c6bd3e2c13843b74eb01d39b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять приглашённому изменить свой сохранённый ответ.
+      При смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ
+      к чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»
+      SHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ.
+  steps:
+    - action: Лена с ответом «Приду» успешно сохраняет «Возможно»
+      expected: её текущий ответ изменён, она не считается пришедшей и больше не может читать или писать
+        разговор
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-968EF190
+  title: "Изменение ответа меняет доступ: Участник отклонил после принятия"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Изменение ответа меняет доступ
+    scenario: Участник отклонил после принятия
+    sha256: 021d053203f5a6e5e8f1f3228ee7d425047b0a99b481086fe73eb39cd0b4b775
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять приглашённому изменить свой сохранённый ответ.
+      При смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ
+      к чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»
+      SHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ.
+  steps:
+    - action: Лена успешно меняет «Приду» на «Не смогу»
+      expected: переписка закрывается и число участников уменьшается без удаления истории встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-A1BC322E
+  title: "Изменение ответа меняет доступ: Участник возвращается"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Изменение ответа меняет доступ
+    scenario: Участник возвращается
+    sha256: 85dc08ea61ab334e3653fc7396e866874898a59455128744562044718e14d663
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять приглашённому изменить свой сохранённый ответ.
+      При смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ
+      к чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»
+      SHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ.
+  steps:
+    - action: Лена после «Не смогу» успешно сохраняет «Приду»
+      expected: она снова получает доступ к разговору и учитывается в составе компании
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-234112E7
+  title: "Изменение ответа меняет доступ: Изменение ответа не сохранилось"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Изменение ответа меняет доступ
+    scenario: Изменение ответа не сохранилось
+    sha256: 7784e1ba82fea175cecc37fe185696cf2b846dc44eab61814a1e8889a601aa91
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять приглашённому изменить свой сохранённый ответ.
+      При смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ
+      к чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»
+      SHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ.
+  steps:
+    - action: запрос смены «Приду» завершился ошибкой до сохранения
+      expected: подтверждённый ответ и его права не меняются из-за локального выбора
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-2BEDEB5C
+  title: "Короткая совместимая ссылка приглашения: Новое приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Короткая совместимая ссылка приглашения
+    scenario: Новое приглашение
+    sha256: 511fdc5eadeb6bce24aee2e95aa411d6e4aa556f1132eaf5a9a0489322665a7d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Новая ссылка SHALL иметь путь `/i/{token}` и 22 символа канонического
+      base64url из 16 случайных байт. Ранее выданные 43-символьные токены
+      и путь `/invitations/{token}` SHALL оставаться доступными. Вход, возврат
+      и RSVP SHALL работать с обоими форматами. Секреты сессий и PKCE SHALL NOT
+      сокращаться вместе с токенами приглашений.
+  steps:
+    - action: организатор создаёт встречу или получает её приглашение
+      expected: ссылка использует `/i/` и 22-символьный случайный токен
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-0ACF4522
+  title: "Короткая совместимая ссылка приглашения: Старая ссылка"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Короткая совместимая ссылка приглашения
+    scenario: Старая ссылка
+    sha256: bbc6b312c19c7e7f7e95cc75621cc37b241ae8ea1da05130acc67d25c297ad49
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Новая ссылка SHALL иметь путь `/i/{token}` и 22 символа канонического
+      base64url из 16 случайных байт. Ранее выданные 43-символьные токены
+      и путь `/invitations/{token}` SHALL оставаться доступными. Вход, возврат
+      и RSVP SHALL работать с обоими форматами. Секреты сессий и PKCE SHALL NOT
+      сокращаться вместе с токенами приглашений.
+  steps:
+    - action: друг открывает старый путь с 43-символьным токеном
+      expected: открывается то же приглашение и вход не теряет его контекст
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-13167695
+  title: "HTTPS-приглашения открываются в нативном приложении: Системная доставка приглашения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: HTTPS-приглашения открываются в нативном приложении
+    scenario: Системная доставка приглашения
+    sha256: cc2d494d0967d511c0958acbf31e6ff1562595485f72176365b9aabcf49f6be6
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL поддерживать Universal Links и Android App Links для путей
+      `/i/<token>` и `/invitations/<token>` согласованного HTTPS origin. Приложение
+      SHALL повторно проверять origin и канонический токен после системной доставки.
+      Без установленного или подтверждённого приложения SHALL оставаться доступен web.
+  steps:
+    - action: ОС подтверждает связь установленного приложения с доменом и пользователь открывает
+        HTTPS-приглашение из другого приложения
+      expected: iOS или Android показывает существующий экран этой встречи, сохраняя приглашение при входе
+        и перезапуске участник выбирает ответ явно
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-A59A26A0
+  title: "HTTPS-приглашения открываются в нативном приложении: Приложение не установлено"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: HTTPS-приглашения открываются в нативном приложении
+    scenario: Приложение не установлено
+    sha256: 389314ce7028b92470f68204abd8f8456c67050b076411041956872a88512af9
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL поддерживать Universal Links и Android App Links для путей
+      `/i/<token>` и `/invitations/<token>` согласованного HTTPS origin. Приложение
+      SHALL повторно проверять origin и канонический токен после системной доставки.
+      Без установленного или подтверждённого приложения SHALL оставаться доступен web.
+  steps:
+    - action: пользователь открывает HTTPS-приглашение без установленного приложения или подтверждения
+        ассоциации
+      expected: ссылка сохраняет рабочий путь в web и публичное превью
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-8FCFECD4
+  title: "HTTPS-приглашения открываются в нативном приложении: Ассоциация ещё не настроена"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: HTTPS-приглашения открываются в нативном приложении
+    scenario: Ассоциация ещё не настроена
+    sha256: cecbcdb15e73c5d80182562742b8c3d219beb03bc8bcacfeaa00e4ddf932888d
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL поддерживать Universal Links и Android App Links для путей
+      `/i/<token>` и `/invitations/<token>` согласованного HTTPS origin. Приложение
+      SHALL повторно проверять origin и канонический токен после системной доставки.
+      Без установленного или подтверждённого приложения SHALL оставаться доступен web.
+  steps:
+    - action: сервер не получил идентификатор iOS-приложения или пару Android package/fingerprint
+      expected: соответствующий файл ассоциации возвращает 404 вместо HTML SPA или выдуманного идентификатора
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-C4994006
+  title: "HTTPS-приглашения открываются в нативном приложении: Явная привязка и посторонний путь"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: HTTPS-приглашения открываются в нативном приложении
+    scenario: Явная привязка и посторонний путь
+    sha256: 6053bb60b4512f73f16cbcca80719d876d8d037ec3b661368fb6aa03ccead5f9
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL поддерживать Universal Links и Android App Links для путей
+      `/i/<token>` и `/invitations/<token>` согласованного HTTPS origin. Приложение
+      SHALL повторно проверять origin и канонический токен после системной доставки.
+      Без установленного или подтверждённого приложения SHALL оставаться доступен web.
+  steps:
+    - action: сервер публикует ассоциацию и ОС доставляет ссылку приложению
+      expected: файл содержит только явно настроенные идентификаторы и отпечатки подписей OAuth callback и
+        произвольные пути не превращаются в приглашение и не подтверждают участие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-B9E5EC51
+  title: "Серверное превью приглашения: Ссылка отправлена другу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Серверное превью приглашения
+    scenario: Ссылка отправлена другу
+    sha256: 2e3e395a1ad92c4b32044d1a1a4cf32048295c66ce73f8affb5f1775d3f96fb3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Публичный HTML приглашения SHALL содержать title/description, canonical
+      и Open Graph: title, description, type, URL, image и параметры изображения.
+      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
+      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
+      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
+      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+  steps:
+    - action: внешний клиент запрашивает публичное приглашение без JavaScript
+      expected: HTML содержит заголовок встречи, описание и абсолютный URL PNG метаданные не содержат
+        переписки, профилей или ответов участников
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-623DEDA5
+  title: "Серверное превью приглашения: Недействительное приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Серверное превью приглашения
+    scenario: Недействительное приглашение
+    sha256: 730add0a1e6c0c8608f6949f4d0287b85848d61f0459ab8fe13f696a0d04e5b3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Публичный HTML приглашения SHALL содержать title/description, canonical
+      и Open Graph: title, description, type, URL, image и параметры изображения.
+      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
+      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
+      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
+      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+  steps:
+    - action: токен неизвестен или имеет неверный формат
+      expected: сервер возвращает 404 без метаданных существующих встреч
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-B28C9A8B
+  title: "Серверное превью приглашения: Текст содержит HTML"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Серверное превью приглашения
+    scenario: Текст содержит HTML
+    sha256: 2c543d496a229671be4ba4639cb2754305c8b4f0fd693d95b4948a47dcad7824
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Публичный HTML приглашения SHALL содержать title/description, canonical
+      и Open Graph: title, description, type, URL, image и параметры изображения.
+      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
+      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
+      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
+      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+  steps:
+    - action: название или описание содержит теги, кавычки или script
+      expected: это остаётся текстом, метаданные не создают исполняемые элементы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-84CC3D0C
+  title: "Отсечка присоединения за час: До границы"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Отсечка присоединения за час
+    scenario: До границы
+    sha256: 329ec5be73959282daaf23e8f0c9fa918e024eda568265cc9fba4da367d6e2ff
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если встрече назначено точное время начала, сервер SHALL запрещать новое
+      присоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент
+      по абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL
+      NOT включать эту отсечку. Базовые ограничения участия в прошедших встречах
+      сохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора.
+  steps:
+    - action: новый участник подтверждает «Приду» раньше чем за час до начала
+      expected: применяется обычная проверка и подтверждается участие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-F8EEC653
+  title: "Отсечка присоединения за час: Ровно за час"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Отсечка присоединения за час
+    scenario: Ровно за час
+    sha256: 0f14625a3e518ca18328a8e68a1cdc685f879184dc936f997bfc2e33fbb4f285
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если встрече назначено точное время начала, сервер SHALL запрещать новое
+      присоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент
+      по абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL
+      NOT включать эту отсечку. Базовые ограничения участия в прошедших встречах
+      сохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора.
+  steps:
+    - action: новый участник подтверждает «Приду» ровно за час до начала или позже
+      expected: сервер отклоняет присоединение, а клиент показывает «Присоединиться уже нельзя» переписка
+        и закрытые фотографии не раскрываются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-235E4D53
+  title: "Отсечка присоединения за час: Есть только дата"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Отсечка присоединения за час
+    scenario: Есть только дата
+    sha256: 029d572237ec11497b2dcaf93f420ad44f94766c9cb77f782c44e08f02b4ac58
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если встрече назначено точное время начала, сервер SHALL запрещать новое
+      присоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент
+      по абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL
+      NOT включать эту отсечку. Базовые ограничения участия в прошедших встречах
+      сохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора.
+  steps:
+    - action: дата назначена, но точное время отсутствует
+      expected: правило часовой отсечки не запрещает новое участие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-F00F3753
+  title: "Отсечка присоединения за час: Уже подтверждённый участник"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Отсечка присоединения за час
+    scenario: Уже подтверждённый участник
+    sha256: a68262400b211f55658e0f2f3e825a36a0011cab3fb35525962b6858ba6f8b22
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если встрече назначено точное время начала, сервер SHALL запрещать новое
+      присоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент
+      по абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL
+      NOT включать эту отсечку. Базовые ограничения участия в прошедших встречах
+      сохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора.
+  steps:
+    - action: человек остаётся текущим участником на момент отсечки
+      expected: сохраняет доступ к чату и доступным действиям своей роли повтор того же подтверждённого
+        запроса не отменяет участие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/28-meeting-refresh.spec.ts
+          selector: one hour cutoff is reflected after server refresh without losing current members
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-82AE12A5
+  title: "Возврат после отказа подчиняется отсечке: Возвращение в последний час"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Возврат после отказа подчиняется отсечке
+    scenario: Возвращение в последний час
+    sha256: d4021ee540f421edfcb5ef2752fed76fd898b8da6b652299a6aec247e66fca12
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Пользователь, ранее участвовавший и затем отказавшийся, SHALL считаться новым
+      присоединяющимся при возвращении. История участия SHALL NOT давать исключение.
+  steps:
+    - action: бывший участник с текущим ответом «Не приду» пытается снова выбрать «Приду» после отсечки
+      expected: получает тот же отказ, что и новый участник
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-13F9DCAB
+  title: "Актуальность состояния приглашения: Приглашение оставалось открытым"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Актуальность состояния приглашения
+    scenario: Приглашение оставалось открытым
+    sha256: 05263fcd00ebd197c58f37952fce9b8740e496092d86bff47dae52b9a1a26e6b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL показывать закрытое состояние приглашения при наступлении отсечки,
+      возврате приложения на передний план и изменении времени встречи. Сервер SHALL
+      повторять проверку в момент изменения RSVP независимо от версии клиента.
+      Если время перенесено, возможность вступления SHALL пересчитываться по новому
+      началу с сохранением остальных ограничений базовой спецификации.
+  steps:
+    - action: отсечка наступила после загрузки страницы до отправки ответа
+      expected: сервер не принимает устаревшее разрешение на вход клиент сохраняет детали приглашения и
+        объясняет закрытие входа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INV-DEC030F5
+  title: "Актуальность состояния приглашения: Старый мобильный клиент"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md
+    requirement: Актуальность состояния приглашения
+    scenario: Старый мобильный клиент
+    sha256: bee3f0ba3c2b9a32aa003d489998633e0a0735233648c6e8cf0a4e605e743293
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL показывать закрытое состояние приглашения при наступлении отсечки,
+      возврате приложения на передний план и изменении времени встречи. Сервер SHALL
+      повторять проверку в момент изменения RSVP независимо от версии клиента.
+      Если время перенесено, возможность вступления SHALL пересчитываться по новому
+      началу с сохранением остальных ограничений базовой спецификации.
+  steps:
+    - action: выпущенная версия клиента отправляет запрос после отсечки
+      expected: сервер возвращает совместимую ошибку запрета с понятным сообщением не полагается на
+        наличие нового интерфейса в этом клиенте
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

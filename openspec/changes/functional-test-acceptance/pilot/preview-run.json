@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "planHash": "95bede3e91372f96337e739ab92c9f3a05530e430d408cbf270175ec8f25a7d2",
+  "checks": [
+    {
+      "id": "TC-INV-F00F3753/web-pilot/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "feature_test_pilot"
+      },
+      "startedAt": "2026-10-26T22:09:39.332Z",
+      "finishedAt": "2026-10-26T22:09:39.332Z",
+      "actual": "UI не открыт: Chromium sandbox MachPort Permission denied; IAB остановлен NET::ERR_CERT_AUTHORITY_INVALID до входа. Создание/чат/участие не проверены.",
+      "defect": "ENV-TLS-8457: браузер не доверяет сертификату изолированного fixture; требуется совместимое окружение или пользовательский handoff.",
+      "evidence": [
+        {
+          "path": "evidence/interaction-blocked.txt",
+          "kind": "interaction",
+          "sha256": "b373ebff8f9abac4af7b60561d316f578e631c66a8c75ea37af2f85a2507ad28"
+        },
+        {
+          "path": "evidence/tls-blocked.png",
+          "kind": "screenshot",
+          "sha256": "e01016563475911c89db1025a633dbfdf7a4d12a400dc859a1c6d7e152997213"
+        },
+        {
+          "path": "evidence/tool-errors.txt",
+          "kind": "log",
+          "sha256": "fc339047f1840441eb74bd3f3b594ac36b1ae907eb6ffa12d12031bfb32edfce"
+        }
+      ]
+    },
+    {
+      "id": "TC-CREATE-9138348C/web-pilot/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "feature_test_pilot"
+      },
+      "startedAt": "2026-10-26T22:09:39.332Z",
+      "finishedAt": "2026-10-26T22:09:39.332Z",
+      "actual": "UI не открыт: Chromium sandbox MachPort Permission denied; IAB остановлен NET::ERR_CERT_AUTHORITY_INVALID до входа. Создание/чат/участие не проверены.",
+      "defect": "ENV-TLS-8457: браузер не доверяет сертификату изолированного fixture; требуется совместимое окружение или пользовательский handoff.",
+      "evidence": [
+        {
+          "path": "evidence/interaction-blocked.txt",
+          "kind": "interaction",
+          "sha256": "b373ebff8f9abac4af7b60561d316f578e631c66a8c75ea37af2f85a2507ad28"
+        },
+        {
+          "path": "evidence/tls-blocked.png",
+          "kind": "screenshot",
+          "sha256": "e01016563475911c89db1025a633dbfdf7a4d12a400dc859a1c6d7e152997213"
+        },
+        {
+          "path": "evidence/tool-errors.txt",
+          "kind": "log",
+          "sha256": "fc339047f1840441eb74bd3f3b594ac36b1ae907eb6ffa12d12031bfb32edfce"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "web-check",
+      "status": "failed",
+      "commandHash": "f5fbb86ed6c006dfc55fb8b05dff26dfba04d258df5c7a6d5f3ec530e24b31b2",
+      "startedAt": "2026-10-26T22:08:16.734Z",
+      "finishedAt": "2026-10-26T22:08:29.069Z",
+      "exitCode": 1,
+      "actual": "Process exit: 1",
+      "evidence": [
+        {
+          "path": "suites/web-check-1793052496735.log",
+          "kind": "log",
+          "sha256": "1e25230ea5e0b0820d3b8d890cd54c2ece52d2ec4fb3952a4ab0b35142fa3a70"
+        }
+      ]
+    }
+  ]
+}

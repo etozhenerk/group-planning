@@ -1,0 +1,459 @@
+- id: TC-TASK-C5DD3ECA
+  title: "Предложение задачи участнику: Попросить друга заказать пиццу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Предложение задачи участнику
+    scenario: Попросить друга заказать пиццу
+    sha256: 56d3b1d48fa0e1725de123f882841c57b2107ffa5b1eb97635c6fd6688f52fb4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять участнику предложить другому участнику встречи
+      задачу подготовки с понятным названием. Лента SHALL показывать автора,
+      содержание и адресата предложения.
+  steps:
+    - action: Саша предлагает Тимофею задачу «Заказать пиццу»
+      expected: задача появляется в ленте как предложение Тимофею от Саши
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-1DAB5DF2
+  title: "Предложение не означает принятие: Друг ещё не ответил"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Предложение не означает принятие
+    scenario: Друг ещё не ответил
+    sha256: 35bbeed763a1ab75fa6dfc9af5f67c0fb404f80c3e7df384e32b6bcd801f546d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL различать предложенную и принятую задачу. Создание предложения
+      SHALL NOT автоматически означать согласие указанного участника выполнить задачу.
+  steps:
+    - action: Саша предложил задачу Тимофею, а Тимофей её не принял
+      expected: задача остаётся предложенной и не показывает Тимофея как согласившегося
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-B8D2770E
+  title: "Явное принятие ответственности: Тимофей берёт пиццу на себя"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Явное принятие ответственности
+    scenario: Тимофей берёт пиццу на себя
+    sha256: 50ab82da2445379ac42e8a63ae28453c26b3b1fefef9c4def7358e6254d1fb43
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять адресату принять предложенную ему задачу и SHALL
+      показать участникам, кто взял её на себя, в карточке и в общей хронологии.
+  steps:
+    - action: Тимофей принимает предложенную ему задачу «Заказать пиццу»
+      expected: задача показывает, что Тимофей её принял, и лента отражает это действие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-42D24BF8
+  title: "Общая задача и допустимый исполнитель: Двое принимают общую задачу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Общая задача и допустимый исполнитель
+    scenario: Двое принимают общую задачу
+    sha256: 41483b5643986815e851669a84f561dcfa4be55139c837b0d65b38cf36538f0b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять предложить задачу без конкретного адресата. Её SHALL
+      мочь принять любой текущий участник с доступом к разговору; адресованную задачу
+      SHALL мочь принять только адресат. Одновременное принятие SHALL назначать
+      ровно одного исполнителя. Создание задачи себе SHALL NOT заменять явное принятие.
+  steps:
+    - action: Лена и Тимофей одновременно принимают общую задачу с одной ревизией
+      expected: один становится исполнителем, второй получает конфликт и актуальное
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-A7464DF9
+  title: "Общая задача и допустимый исполнитель: Чужое адресованное предложение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Общая задача и допустимый исполнитель
+    scenario: Чужое адресованное предложение
+    sha256: b7ebf24dd77d99626484746ea3c8a1dc8761a5589f0a33da88ba5f48bd78c3ec
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять предложить задачу без конкретного адресата. Её SHALL
+      мочь принять любой текущий участник с доступом к разговору; адресованную задачу
+      SHALL мочь принять только адресат. Одновременное принятие SHALL назначать
+      ровно одного исполнителя. Создание задачи себе SHALL NOT заменять явное принятие.
+  steps:
+    - action: Лена пытается принять предложение, адресованное Тимофею
+      expected: сервер отказывает и не меняет исполнителя
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-0D640ABE
+  title: "Отказ, отмена и выполнение: Адресат отказывается до принятия"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Отказ, отмена и выполнение
+    scenario: Адресат отказывается до принятия
+    sha256: 1fcb4443e6b05cc3908d031244c43558c525e5198acac21af5eb5b6b2703592c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять адресату отказаться от предложения и исполнителю
+      отказаться от принятой задачи. Автор или организатор SHALL мочь отменить
+      предложенную или принятую задачу. Только исполнитель SHALL мочь отметить
+      принятую задачу выполненной. Итоги SHALL оставаться в истории без автоматического
+      назначения другого человека.
+  steps:
+    - action: Тимофей отказывается от предложения заказать пиццу
+      expected: карточка показывает отказ, исполнитель не назначен, лента отражает действие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-148F3348
+  title: "Отказ, отмена и выполнение: Исполнитель выполнил задачу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Отказ, отмена и выполнение
+    scenario: Исполнитель выполнил задачу
+    sha256: d968a281051b39862c16b849f874552aab462531cf77d3bc58cc13b9979da106
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять адресату отказаться от предложения и исполнителю
+      отказаться от принятой задачи. Автор или организатор SHALL мочь отменить
+      предложенную или принятую задачу. Только исполнитель SHALL мочь отметить
+      принятую задачу выполненной. Итоги SHALL оставаться в истории без автоматического
+      назначения другого человека.
+  steps:
+    - action: принявший задачу Тимофей отмечает выполнение
+      expected: карточка становится выполненной, активные действия исчезают,
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-00CF9F67
+  title: "Отказ, отмена и выполнение: Организатор отменяет принятую задачу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Отказ, отмена и выполнение
+    scenario: Организатор отменяет принятую задачу
+    sha256: 95826bb4a0916696acda60b00b73e9fec1641bd1bc8d1eaa8a0813df2d1795e6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять адресату отказаться от предложения и исполнителю
+      отказаться от принятой задачи. Автор или организатор SHALL мочь отменить
+      предложенную или принятую задачу. Только исполнитель SHALL мочь отметить
+      принятую задачу выполненной. Итоги SHALL оставаться в истории без автоматического
+      назначения другого человека.
+  steps:
+    - action: организатор отменяет задачу, которую уже приняла Лена
+      expected: карточка показывает отмену, больше не описывает Лену действующим
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-7F1A22A7
+  title: "Передача требует нового согласия: Предложить задачу другому"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Передача требует нового согласия
+    scenario: Предложить задачу другому
+    sha256: 541bfbb263472408428bcab0af22f2638d42f01255c367418c56c45eb479ea3e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Передача SHALL выполняться новым предложением после отказа от прежней задачи
+      или её отмены.
+      Система SHALL NOT переносить ответственность без явного согласия нового адресата.
+  steps:
+    - action: Тимофей отказывается и создаёт новое предложение Лене
+      expected: прежняя задача хранит отказ, новая остаётся предложенной до принятия Леной
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-7F4ECAA3
+  title: "Доступ, повторы и атомарность задач: Старый повтор принятия после выполнения"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Доступ, повторы и атомарность задач
+    scenario: Старый повтор принятия после выполнения
+    sha256: 102f61224ae81256d81fca916059160938e270b7438efbe08f9c821d270abf5a
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Операции SHALL проверять текущий доступ до чтения или ответа на повтор.
+      Ревизии SHALL защищать от устаревших действий, ключи — от дублей.
+      Задача и событие SHALL сохраняться атомарно. Выход человека SHALL NOT
+      автоматически назначать другого исполнителя.
+  steps:
+    - action: после выполнения приходит повтор прежнего принятия с тем же ключом
+      expected: сервер возвращает актуальную выполненную задачу без нового события
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-187FF052
+  title: "Доступ, повторы и атомарность задач: Ошибка записи события"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Доступ, повторы и атомарность задач
+    scenario: Ошибка записи события
+    sha256: f11204012e7ed1d17508260927f20076f3e7e4f04f3c3a17e5351b290e139557
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Операции SHALL проверять текущий доступ до чтения или ответа на повтор.
+      Ревизии SHALL защищать от устаревших действий, ключи — от дублей.
+      Задача и событие SHALL сохраняться атомарно. Выход человека SHALL NOT
+      автоматически назначать другого исполнителя.
+  steps:
+    - action: запись события принятия не удалась
+      expected: задача остаётся предложенной без исполнителя и без новой ревизии
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-TASK-B6EA2551
+  title: "Доступ, повторы и атомарность задач: Исполнитель вышел из встречи"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md
+    requirement: Доступ, повторы и атомарность задач
+    scenario: Исполнитель вышел из встречи
+    sha256: 25351f08ca0b553bbf2e4cf76541466b692e7b4e135fa62016bd23a37d9b37ec
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Операции SHALL проверять текущий доступ до чтения или ответа на повтор.
+      Ревизии SHALL защищать от устаревших действий, ключи — от дублей.
+      Задача и событие SHALL сохраняться атомарно. Выход человека SHALL NOT
+      автоматически назначать другого исполнителя.
+  steps:
+    - action: исполнитель сменил RSVP с going
+      expected: доступ к действиям закрыт, история задачи сохранена; автор или
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []

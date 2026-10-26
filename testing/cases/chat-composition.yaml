@@ -1,0 +1,423 @@
+- id: TC-CHAT-03C1F855
+  title: "Компактное меню добавления: Выбор действия"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Компактное меню добавления
+    scenario: Выбор действия
+    sha256: 0f53862e33bec39baca1d67e3a2c536138ae1449d773f0846a2bf4866fb844fd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Плюс рядом с сообщением SHALL открывать компактное меню фото, файла, предложения
+      даты, места и задачи. Форма SHALL открываться после выбора пункта. Закрытие меню
+      SHALL сохранять черновик и возвращать фокус к кнопке. Существующие права и правила
+      опросов/задач SHALL сохраняться.
+  steps:
+    - action: участник открывает плюс и выбирает «Предложить дату»
+      expected: появляется форма существующего опроса даты для этой встречи её подтверждение создаёт
+        действие по действующим правилам
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-13212426
+  title: "Компактное меню добавления: Закрытие меню"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Компактное меню добавления
+    scenario: Закрытие меню
+    sha256: a2473bae811785b94aa650b6ae869360356f08c0730f81055ad4088c72681379
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Плюс рядом с сообщением SHALL открывать компактное меню фото, файла, предложения
+      даты, места и задачи. Форма SHALL открываться после выбора пункта. Закрытие меню
+      SHALL сохранять черновик и возвращать фокус к кнопке. Существующие права и правила
+      опросов/задач SHALL сохраняться.
+  steps:
+    - action: пользователь нажимает плюс повторно, вне меню, Escape либо системный Back
+      expected: меню закрывается без потери текста сообщения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-1F396228
+  title: "Выбор эмодзи в сообщении: Вставка в черновик"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Выбор эмодзи в сообщении
+    scenario: Вставка в черновик
+    sha256: 5860ebb46a399935125a8042fca89f57659be8b6f6313e5b3f13be33940c200b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Кнопка эмодзи SHALL открывать панель с поиском по русским названиям, недавними
+      и категориями. Выбор SHALL вставлять эмодзи в текущую позицию или вместо
+      выделенного текста без отправки. Текст, курсор и прокрутка разговора SHALL
+      сохраняться при переключении панели и клавиатуры.
+  steps:
+    - action: пользователь выбирает эмодзи между двумя словами
+      expected: эмодзи вставляется между ними, остальные символы не меняются сообщение отправляется только
+        отдельным действием
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-44FA05AC
+  title: "Выбор эмодзи в сообщении: Пустой поиск"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Выбор эмодзи в сообщении
+    scenario: Пустой поиск
+    sha256: ddcea6d7d68445b6a1237a065bfd84c503d2f9de7946c656ba160a4015463d02
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Кнопка эмодзи SHALL открывать панель с поиском по русским названиям, недавними
+      и категориями. Выбор SHALL вставлять эмодзи в текущую позицию или вместо
+      выделенного текста без отправки. Текст, курсор и прокрутка разговора SHALL
+      сохраняться при переключении панели и клавиатуры.
+  steps:
+    - action: по запросу нет эмодзи
+      expected: панель сообщает об отсутствии результатов и позволяет изменить запрос
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-F00844F6
+  title: "Управление панелями на телефоне: Переключение панели"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Управление панелями на телефоне
+    scenario: Переключение панели
+    sha256: 0de221142dca824c08df4cd4b4e1558fce34e9d8746a07ecd2b2427ab4853094
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL показывать одну активную панель добавления/эмодзи.
+      На телефоне панель SHALL учитывать клавиатуру и безопасные области; поле ввода
+      и действие закрытия SHALL оставаться доступны. Поиск SHALL поддерживать ввод
+      с системной клавиатуры без потери выбранного сообщения или черновика.
+  steps:
+    - action: пользователь после меню добавления открывает эмодзи
+      expected: меню закрывается и не перекрывает новую панель
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-8FCD1231
+  title: "Управление панелями на телефоне: Увеличенный текст"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Управление панелями на телефоне
+    scenario: Увеличенный текст
+    sha256: 1763d285b6ac305077ef1f9fc11de0aa8a989a2d91d5b26fab26d1bc56270474
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL показывать одну активную панель добавления/эмодзи.
+      На телефоне панель SHALL учитывать клавиатуру и безопасные области; поле ввода
+      и действие закрытия SHALL оставаться доступны. Поиск SHALL поддерживать ввод
+      с системной клавиатуры без потери выбранного сообщения или черновика.
+  steps:
+    - action: пользователь увеличил размер текста
+      expected: подписи остаются читаемыми, содержимое панели можно прокрутить
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-87982DEF
+  title: "Кнопка панели эмодзи: Повторное нажатие"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Кнопка панели эмодзи
+    scenario: Повторное нажатие
+    sha256: 483352bdf9470d210d6a12ed411ba94cceea31a7d764efd6e646945753b4e51b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Кнопка SHALL использовать узнаваемую контурную улыбку и доступное название
+      «Выбрать эмодзи». Область нажатия SHALL быть не меньше 44 × 44 px/pt/dp,
+      видимая иконка — около 23. Раскрытое состояние SHALL сообщаться экранному диктору;
+      повторное нажатие SHALL закрывать панель с сохранением черновика.
+  steps:
+    - action: пользователь нажимает кнопку уже открытой панели эмодзи
+      expected: панель закрывается, фокус возвращается к кнопке и её состояние обновляется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-1064C7F5
+  title: "Панели действий чата на телефоне: Действие в мобильном чате"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Панели действий чата на телефоне
+    scenario: Действие в мобильном чате
+    sha256: 2f5990c8b9f756e2bb44f2ed327bbf523cfab48b7f323dfd39111c931743e720
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      На mobile web, iOS и Android все голосования, задачи и прочие действия из чата
+      SHALL открываться в bottom sheet без отдельного экрана с Back, нижней навигации
+      и футера. Desktop MAY сохранять отдельные страницы. Бизнес-правила опросов
+      и задач SHALL сохраняться. Предложение места SHALL поддерживать необязательное
+      пояснение «Почему здесь» до 2000 символов. Пояснение SHALL быть неизменяемой
+      частью предложения, доступной только участникам с доступом к чату.
+  steps:
+    - action: пользователь открывает голосование, задачу или другое действие из чата на телефоне
+      expected: действие открывается в bottom sheet поверх текущего чата отдельная страница с кнопкой
+        «Назад» не появляется закрытие панели восстанавливает чат и сохраняет несданный черновик по
+        UX
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-7DDB3260
+  title: "Панели действий чата на телефоне: Предложение с пояснением"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Панели действий чата на телефоне
+    scenario: Предложение с пояснением
+    sha256: 0921d5afee7d4737ac6baa337e33be8e986554a8c60467453016bb25580bd5a5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      На mobile web, iOS и Android все голосования, задачи и прочие действия из чата
+      SHALL открываться в bottom sheet без отдельного экрана с Back, нижней навигации
+      и футера. Desktop MAY сохранять отдельные страницы. Бизнес-правила опросов
+      и задач SHALL сохраняться. Предложение места SHALL поддерживать необязательное
+      пояснение «Почему здесь» до 2000 символов. Пояснение SHALL быть неизменяемой
+      частью предложения, доступной только участникам с доступом к чату.
+  steps:
+    - action: участник заполняет место, пояснение и срок опроса
+      expected: после публикации карточка опроса показывает пояснение повтор с тем же ключом и данными
+        возвращает тот же опрос изменение пояснения при повторе с прежним ключом отклоняется
+        конфликтом
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-C60E942D
+  title: "Панели действий чата на телефоне: Совместимость без пояснения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Панели действий чата на телефоне
+    scenario: Совместимость без пояснения
+    sha256: 6c697fd0e8ffc2b8f3774fdf058c1b9a08929910900d0792e6ee77130971331f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      На mobile web, iOS и Android все голосования, задачи и прочие действия из чата
+      SHALL открываться в bottom sheet без отдельного экрана с Back, нижней навигации
+      и футера. Desktop MAY сохранять отдельные страницы. Бизнес-правила опросов
+      и задач SHALL сохраняться. Предложение места SHALL поддерживать необязательное
+      пояснение «Почему здесь» до 2000 символов. Пояснение SHALL быть неизменяемой
+      частью предложения, доступной только участникам с доступом к чату.
+  steps:
+    - action: прежний клиент создаёт предложение без explanation
+      expected: операция сохраняет прежнее поведение, ответ содержит explanation null ранее сохранённый
+        повтор без пояснения остаётся идемпотентным
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

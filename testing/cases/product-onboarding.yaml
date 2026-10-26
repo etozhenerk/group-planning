@@ -1,0 +1,458 @@
+- id: TC-AUTH-0E2CAE49
+  title: "Знакомство до входа: Посетитель знакомится с сервисом"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Знакомство до входа
+    scenario: Посетитель знакомится с сервисом
+    sha256: f034da4118c55609deabb28ad58a234986e94afcb9b50184db9cfe969b35cb90
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при общем первом входе показывать страницу, объясняющую
+      приглашения по ссылке, общий чат, голосования, задачи подготовки и просмотр
+      встреч списком или календарём. На странице SHALL быть действие «Попробовать».
+  steps:
+    - action: посетитель без сессии впервые открывает общий вход Somewhere
+      expected: он может понять назначение сервиса и его возможности до авторизации
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-AD08346A
+  title: "Вход из онбординга: Новый профиль"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Вход из онбординга
+    scenario: Новый профиль
+    sha256: 8004dc4951443d945a5f6120906ebdc2dc1dde62abc04d542d9e21e560713dd5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL по действию «Попробовать» предлагать вход через Яндекс ID.
+      После успешного входа из общего сценария система SHALL открывать личные встречи
+      этого профиля; новый профиль SHALL создаваться без отдельной анкеты.
+  steps:
+    - action: посетитель выбирает «Попробовать» и впервые успешно входит
+      expected: открываются его личные встречи с возможностью создать первую
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-E3BD2CA1
+  title: "Вход из онбординга: Существующий профиль"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Вход из онбординга
+    scenario: Существующий профиль
+    sha256: 5822d025055be4edb221ba2657cb8b4f257ef28ae037ec11dac3a3a95112623a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL по действию «Попробовать» предлагать вход через Яндекс ID.
+      После успешного входа из общего сценария система SHALL открывать личные встречи
+      этого профиля; новый профиль SHALL создаваться без отдельной анкеты.
+  steps:
+    - action: человек входит тем же аккаунтом после «Попробовать» или «Войти»
+      expected: открываются встречи его существующего профиля
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-911C8A44
+  title: "Сохранение точки входа: Действующая сессия"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Сохранение точки входа
+    scenario: Действующая сессия
+    sha256: 2ece76d9cbb8a970f0d2fbfc0f9642641d84d7666f0850d862f128e4e75c4279
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять вошедшему пользователю открыть личные встречи без
+      обязательного повторного онбординга. Прямое приглашение SHALL вести к исходной
+      встрече, сохраняя её при входе через Яндекс ID.
+  steps:
+    - action: пользователь с действующей сессией открывает свои встречи
+      expected: он получает личные встречи без обязательного повторного знакомства
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-FB1D20CD
+  title: "Сохранение точки входа: Вход по приглашению"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Сохранение точки входа
+    scenario: Вход по приглашению
+    sha256: 67a783b3724c94c69234e02b24480287f14e34d3f13ef8947955e783736909c0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять вошедшему пользователю открыть личные встречи без
+      обязательного повторного онбординга. Прямое приглашение SHALL вести к исходной
+      встрече, сохраняя её при входе через Яндекс ID.
+  steps:
+    - action: друг открывает ссылку приглашения без сессии и затем входит
+      expected: он возвращается к тому же приглашению, а не к обязательному онбордингу
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-C08F3966
+  title: "Непрерывные состояния веб-входа: API ответил раньше перехода браузера"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Непрерывные состояния веб-входа
+    scenario: API ответил раньше перехода браузера
+    sha256: 8128559f5ff6e671c39884e02b954f336353c50455fe25a7e48af59fab637b8a
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб-клиент SHALL сохранять состояние ожидания кнопки от нажатия до перехода
+      в Яндекс, скрывая текст и стрелку без изменения геометрии. Возврат SHALL показывать единый
+      индикатор без технических заголовков, с доступной подписью и поддержкой
+      уменьшения анимации. Ошибка SHALL предоставлять подходящее действие повтора.
+  steps:
+    - action: URL входа уже получен, но браузер ещё не открыл Яндекс
+      expected: кнопка продолжает показывать индикатор и не принимает повторное нажатие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-53762CEB
+  title: "Непрерывные состояния веб-входа: Возврат браузером назад"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Непрерывные состояния веб-входа
+    scenario: Возврат браузером назад
+    sha256: f61134daf25cfff5ce1250bc076639378d9ae8fb688cd9da7376c775772c3cc4
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб-клиент SHALL сохранять состояние ожидания кнопки от нажатия до перехода
+      в Яндекс, скрывая текст и стрелку без изменения геометрии. Возврат SHALL показывать единый
+      индикатор без технических заголовков, с доступной подписью и поддержкой
+      уменьшения анимации. Ошибка SHALL предоставлять подходящее действие повтора.
+  steps:
+    - action: пользователь возвращается к странице входа через Back, включая bfcache
+      expected: он может начать новую попытку, кнопка не остаётся заблокированной
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-3FDF50A1
+  title: "Непрерывные состояния веб-входа: Повтор проверки сессии"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Непрерывные состояния веб-входа
+    scenario: Повтор проверки сессии
+    sha256: 7882548261c4dbd50e32b17469223c42b305d6d29a2c0f0ce9dfdb949711eac2
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб-клиент SHALL сохранять состояние ожидания кнопки от нажатия до перехода
+      в Яндекс, скрывая текст и стрелку без изменения геометрии. Возврат SHALL показывать единый
+      индикатор без технических заголовков, с доступной подписью и поддержкой
+      уменьшения анимации. Ошибка SHALL предоставлять подходящее действие повтора.
+  steps:
+    - action: профиль не удалось загрузить из-за сетевой ошибки после возврата
+      expected: доступен повтор чтения сессии без обязательного нового перехода в Яндекс при отсутствии
+        сессии доступен новый вход с прежним контекстом приглашения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-99776D75
+  title: "Мобильное знакомство по слайдам: Перелистывание и пропуск"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Мобильное знакомство по слайдам
+    scenario: Перелистывание и пропуск
+    sha256: e61ac6d9bb75cce35f241a362b9f4d22577ec75de1f4805e4144636c782c7655
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Мобильные клиенты iOS и Android SHALL показывать возможности сервиса
+      последовательностью слайдов с визуальными примерами. Действие «Попробовать»
+      SHALL находиться на последнем слайде и вести к общему входу/созданию профиля.
+      Недоступные в текущей версии возможности SHALL быть явно помечены.
+  steps:
+    - action: посетитель открывает мобильное знакомство
+      expected: он может перелистывать его свайпом и доступными кнопками, пропуск не выполняет вход и не
+        изменяет RSVP
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-7D705E42
+  title: "Мобильное знакомство по слайдам: Системные настройки доступности"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Мобильное знакомство по слайдам
+    scenario: Системные настройки доступности
+    sha256: a8bd8754f40ab066a8b4dff110b653e765c9da2290ecbee3161da3188e918609
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Мобильные клиенты iOS и Android SHALL показывать возможности сервиса
+      последовательностью слайдов с визуальными примерами. Действие «Попробовать»
+      SHALL находиться на последнем слайде и вести к общему входу/созданию профиля.
+      Недоступные в текущей версии возможности SHALL быть явно помечены.
+  steps:
+    - action: включено увеличение текста или уменьшение анимации
+      expected: содержимое и действие последнего слайда остаются доступными,
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-3216EE9E
+  title: "Скелетоны web и прямой выход: Загрузка данных страницы"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Скелетоны web и прямой выход
+    scenario: Загрузка данных страницы
+    sha256: e8627817ca226bff9347b977b34268d6406d3f1e7abb2ad39a5addf8d575a2dc
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web MUST показывать скелетоны в геометрии загружаемых блоков, сохранять оболочку
+      и имеющиеся данные при фоновом запросе. Reduced motion MUST отключать анимацию,
+      а доступное имя MUST сообщать загрузку без озвучивания декоративных блоков.
+  steps:
+    - action: начальный запрос списка, встречи, приглашения или вложенного блока ещё не завершён
+      expected: показан соответствующий скелетон, после ответа заменяемый данными или ошибкой с повтором
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-ED4A103E
+  title: "Скелетоны web и прямой выход: Выход на главную"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Скелетоны web и прямой выход
+    scenario: Выход на главную
+    sha256: b820faab81f0b60c98614ad3fe5709225675b0861998f7d18ad1fbd17f99d641
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web MUST показывать скелетоны в геометрии загружаемых блоков, сохранять оболочку
+      и имеющиеся данные при фоновом запросе. Reduced motion MUST отключать анимацию,
+      а доступное имя MUST сообщать загрузку без озвучивания декоративных блоков.
+  steps:
+    - action: пользователь выходит из аккаунта и код главной ещё загружается
+      expected: кнопка выхода остаётся заблокированной, экран предложения войти не появляется, приватный
+        кеш очищен сразу после подтверждения выхода сервером
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-AUTH-645BD8E2
+  title: "Скелетоны web и прямой выход: Спиннер кнопки входа"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md
+    requirement: Скелетоны web и прямой выход
+    scenario: Спиннер кнопки входа
+    sha256: c8b019df9104f041299b5f3bfe33dc089eecd47f977ad084314b4f7f26b87a1d
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web MUST показывать скелетоны в геометрии загружаемых блоков, сохранять оболочку
+      и имеющиеся данные при фоновом запросе. Reduced motion MUST отключать анимацию,
+      а доступное имя MUST сообщать загрузку без озвучивания декоративных блоков.
+  steps:
+    - action: начат вход и переход ещё не завершён
+      expected: виден только спиннер по центру кнопки, её размер и доступное имя сохранены
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []

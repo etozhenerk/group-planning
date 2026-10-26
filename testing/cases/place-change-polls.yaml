@@ -1,0 +1,565 @@
+- id: TC-PLACE-F800A899
+  title: "Предложение смены места: Участник предлагает собраться дома"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Предложение смены места
+    scenario: Участник предлагает собраться дома
+    sha256: cb107bf8fc413b604c6ff8cf43411a7cad6be3eaebd0631c89e1b49b06808fdd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять участнику предложить новое место в голосовании
+      внутри ленты встречи. Предложение SHALL быть различимо от уже принятого места.
+  steps:
+    - action: Лена предлагает «У Саши дома» вместо лофта
+      expected: в ленте появляется голосование с новым местом и автором Леной
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-BAD0723B
+  title: "Текущее место до завершения: Предложение лидирует в открытом опросе"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Текущее место до завершения
+    scenario: Предложение лидирует в открытом опросе
+    sha256: d3dfa6588de98b25e316270f43d0867bf94cfec82c37ba83aa95e9ac9b568e08
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять актуальное место встречи, пока опрос не завершён,
+      независимо от промежуточного соотношения голосов.
+  steps:
+    - action: в незавершённом опросе два голоса за новое место и один против
+      expected: место встречи ещё остаётся прежним
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-37DAE5F5
+  title: "Большинство проголосовавших: Из пяти участников проголосовали трое"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Большинство проголосовавших
+    scenario: Из пяти участников проголосовали трое
+    sha256: 4829b3d1eadb60d1b48b81900e11b180fe8085f127c3f22bf32e01f796955071
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL определять поддержку предложения после завершения опроса
+      по большинству проголосовавших. Непроголосовавшие участники SHALL NOT
+      считаться голосами против или увеличивать число голосов, нужное для большинства.
+  steps:
+    - action: опрос завершён, в компании пять человек, два голоса за и один против
+      expected: предложение поддержано большинством двух из трёх проголосовавших
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-6229D18A
+  title: "Автоматическое применение принятого предложения: Компания поддержала новое место"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Автоматическое применение принятого предложения
+    scenario: Компания поддержала новое место
+    sha256: 73019b0a83f6e16fb61c603802692e11bd6fe77c0c425e23ed57e2f8e0cce97e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL автоматически менять актуальное место на предложенное после
+      завершения опроса, поддержанного большинством проголосовавших, и показывать
+      результат в ленте. Дополнительное ручное изменение организатором не требуется.
+  steps:
+    - action: завершённый опрос принял предложение «У Саши дома»
+      expected: актуальное место становится «У Саши дома», а лента содержит итог
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-4688D25C
+  title: "Большинство против предложения: Два голоса против одного за"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Большинство против предложения
+    scenario: Два голоса против одного за
+    sha256: ae4506bb55e110a98fdedbe863dbd50ed815773f721c034840c2e8c05f5fa710
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять прежнее место, если после завершения опроса
+      большинство проголосовавших выступило против предложения.
+  steps:
+    - action: опрос завершён с одним голосом за новое место и двумя против
+      expected: актуальное место не меняется и лента показывает итог опроса
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-9F289216
+  title: "Срок и автоматическое завершение: Наступил срок"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Срок и автоматическое завершение
+    scenario: Наступил срок
+    sha256: 8366d2728e3e7286cf04debff7f5b2ac8317aa3f4e7a593cb5a9dbb965ebcb0d
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять автору задать срок голосования и SHALL автоматически
+      закрывать опрос при его наступлении независимо от открытых клиентских экранов.
+      До завершения участник SHALL иметь возможность изменить свой голос.
+  steps:
+    - action: наступил заданный автором срок открытого опроса
+      expected: сервер закрывает его, фиксирует итог и при принятии автоматически применяет место
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-035083C3
+  title: "Срок и автоматическое завершение: Участник передумал"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Срок и автоматическое завершение
+    scenario: Участник передумал
+    sha256: 865b8b460aafca80d1d369f7a53b56d0370c26f2b81461c99207e898dcf8b7b8
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять автору задать срок голосования и SHALL автоматически
+      закрывать опрос при его наступлении независимо от открытых клиентских экранов.
+      До завершения участник SHALL иметь возможность изменить свой голос.
+  steps:
+    - action: Лена до закрытия меняет голос «За» на «Против»
+      expected: в текущем результате учитывается один её голос «Против»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-4EE92189
+  title: "Один открытый опрос о месте: Второе предложение до завершения первого"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Один открытый опрос о месте
+    scenario: Второе предложение до завершения первого
+    sha256: 835cb96dfbd801ec6f3f86abefa331c270c8c0bb84c9cf3b434eefa5fb3eeb4b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL NOT допускать одновременно более одного открытого опроса
+      о месте одной встречи.
+  steps:
+    - action: участник пытается открыть ещё один опрос о месте при уже открытом
+      expected: второй опрос не создаётся и текущее место не меняется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-044F61D2
+  title: "Нет кворума и принятия при ничьей: Голосов поровну"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Нет кворума и принятия при ничьей
+    scenario: Голосов поровну
+    sha256: 4ca33a8ce0c2a93189ef9e022a24fc4f5ea113ed46aebb055351a23c498cdd0a
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL NOT требовать кворум участников. При равенстве голосов или
+      отсутствии голосов после завершения опроса система SHALL сохранять прежнее место.
+  steps:
+    - action: опрос завершён с одним голосом за и одним против
+      expected: прежнее место сохраняется и лента показывает непринятое предложение
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-65DD5684
+  title: "Нет кворума и принятия при ничьей: Никто не проголосовал"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Нет кворума и принятия при ничьей
+    scenario: Никто не проголосовал
+    sha256: 40768ca8b76da67f9bd73bfb5ed189a64b4be1a85be7b0e33716d373ecdae5ef
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL NOT требовать кворум участников. При равенстве голосов или
+      отсутствии голосов после завершения опроса система SHALL сохранять прежнее место.
+  steps:
+    - action: опрос завершён без голосов
+      expected: прежнее место сохраняется и результат не обозначается как принятое предложение
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-7409FF20
+  title: "Нет кворума и принятия при ничьей: Проголосовал один из пяти"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Нет кворума и принятия при ничьей
+    scenario: Проголосовал один из пяти
+    sha256: 81aaf81cd333df28b9b0c7956d32355f0df30a19b084c820a9d40561721dcf92
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL NOT требовать кворум участников. При равенстве голосов или
+      отсутствии голосов после завершения опроса система SHALL сохранять прежнее место.
+  steps:
+    - action: в завершённом опросе один голос за и ноль против при пяти участниках
+      expected: предложение принято большинством проголосовавших без требования дополнительных голосов
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-D40C53F7
+  title: "Текущий состав голосующих за место: Голосовавший вышел и вернулся"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Текущий состав голосующих за место
+    scenario: Голосовавший вышел и вернулся
+    sha256: bd77962c7880951583f25bb69b90738c0eec224c36ffe73e2963e6de53e558df
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL учитывать организатора и текущих участников с ответом `going`.
+      Бюллетени вышедших SHALL сохраняться, но SHALL NOT участвовать в текущем
+      подсчёте. Возвращение с `going` SHALL вернуть прежний голос в открытый опрос.
+      После завершения состав и итог SHALL оставаться неизменными.
+  steps:
+    - action: участник с голосом «За» меняет ответ на `maybe`, а затем на `going` до срока
+      expected: голос исключается на время отсутствия и снова учитывается после возвращения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-3BC03FE1
+  title: "Текущий состав голосующих за место: Возвращение после закрытия"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Текущий состав голосующих за место
+    scenario: Возвращение после закрытия
+    sha256: 870b991c1a6d4350b75903a82ae5d827e49463b51f716b977ab7558513c2dd71
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL учитывать организатора и текущих участников с ответом `going`.
+      Бюллетени вышедших SHALL сохраняться, но SHALL NOT участвовать в текущем
+      подсчёте. Возвращение с `going` SHALL вернуть прежний голос в открытый опрос.
+      После завершения состав и итог SHALL оставаться неизменными.
+  steps:
+    - action: вышедший участник возвращается после фиксации итога
+      expected: окончательные счётчики и применённое место не пересчитываются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-99209333
+  title: "Ручная смена места отменяет опрос: Организатор изменил место"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Ручная смена места отменяет опрос
+    scenario: Организатор изменил место
+    sha256: c44195164e70a655f0fb9050f96d9c3e6319eb52b91a24654c2b7070f812b4dc
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL отменять открытый опрос при фактическом ручном изменении места
+      организатором. Сохранение прежнего места и изменение других деталей SHALL NOT
+      отменять опрос. Отмена SHALL исключать последующее применение его результата.
+  steps:
+    - action: организатор сохраняет другое место или очищает его во время открытого опроса
+      expected: опрос отменяется одной транзакцией с изменением; лента сообщает об отмене
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-AB91F721
+  title: "Ручная смена места отменяет опрос: Ручное изменение совпало с закрытием"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Ручная смена места отменяет опрос
+    scenario: Ручное изменение совпало с закрытием
+    sha256: 2c488f03c76b8ef855d7252b3b01ac43bfc31712abff35f514204de40db391ae
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL отменять открытый опрос при фактическом ручном изменении места
+      организатором. Сохранение прежнего места и изменение других деталей SHALL NOT
+      отменять опрос. Отмена SHALL исключать последующее применение его результата.
+  steps:
+    - action: обработчик завершения и организатор сохраняют изменения одновременно
+      expected: операции сериализуются; отменённый опрос не перезаписывает ручное место,
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-43962F2B
+  title: "Атомарный итог и безопасный повтор: Два обработчика закрывают один опрос"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Атомарный итог и безопасный повтор
+    scenario: Два обработчика закрывают один опрос
+    sha256: def8907406a05860a343f06ce65f06c5c1c889106196fa4d844a330b3a3f2294
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог, окончательный состав, место и события ленты
+      одной атомарной операцией. Повтор доставки задачи SHALL NOT создавать второй
+      итог. Ошибка записи SHALL откатывать все изменения и оставлять возможность повтора.
+  steps:
+    - action: два обработчика одновременно получают просроченный опрос
+      expected: итог и автоматическое изменение места записываются ровно один раз
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PLACE-C9A11D28
+  title: "Атомарный итог и безопасный повтор: Потерян ответ на голосование"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md
+    requirement: Атомарный итог и безопасный повтор
+    scenario: Потерян ответ на голосование
+    sha256: 7765451847d25252b7251b57f2e8924436ef43c6070909b114c73abff07e26bc
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог, окончательный состав, место и события ленты
+      одной атомарной операцией. Повтор доставки задачи SHALL NOT создавать второй
+      итог. Ошибка записи SHALL откатывать все изменения и оставлять возможность повтора.
+  steps:
+    - action: клиент повторяет тот же голос с прежним ключом после потери ответа
+      expected: второй бюллетень не появляется и более поздний голос не откатывается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []

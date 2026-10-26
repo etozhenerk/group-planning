@@ -1,0 +1,1930 @@
+- id: TC-FEED-C1BEA088
+  title: "Общая хронология встречи: Создание и настройка"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Общая хронология встречи
+    scenario: Создание и настройка
+    sha256: 2069626c4a2f5973929d14975e3b5fd34d5b20f0f2eed674f081e4144e3420c5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать сообщения участников и события встречи в одной
+      хронологической ленте. Создание встречи, изменения её настроек и принятие
+      приглашения SHALL быть различимы как события ленты.
+  steps:
+    - action: организатор создал встречу и затем изменил её описание
+      expected: лента содержит события создания и изменения с автором и временем
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-ACDBB703
+  title: "Общая хронология встречи: Друг принял приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Общая хронология встречи
+    scenario: Друг принял приглашение
+    sha256: 5b3d509b5827fc3fbdfe49c3cf8efc660808a77a2e196f8ada5e71b4ff6bffa0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать сообщения участников и события встречи в одной
+      хронологической ленте. Создание встречи, изменения её настроек и принятие
+      приглашения SHALL быть различимы как события ленты.
+  steps:
+    - action: друг по приглашению присоединился к встрече
+      expected: лента показывает принятие приглашения и актуальное число участников
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-31091982
+  title: "Сообщения в общем разговоре: Участник написал компании"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Сообщения в общем разговоре
+    scenario: Участник написал компании
+    sha256: 4bffb5d9f3316f50b151df326049ce89d81f5aa553ab696c2cd796703b2ba8d6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять участникам встречи отправлять текстовые сообщения
+      в её ленту и различать автора и время каждого сообщения.
+  steps:
+    - action: Лена отправляет сообщение в ленту встречи и отправка успешна
+      expected: участники видят это сообщение с автором Леной и временем отправки
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-FD99AC06
+  title: "Сообщения в общем разговоре: Сторона сообщения зависит от открытого профиля"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Сообщения в общем разговоре
+    scenario: Сторона сообщения зависит от открытого профиля
+    sha256: e8266321345cacec7d89e7e6301d0665a51cacafe05eccc2558a57cf01d9c145
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять участникам встречи отправлять текстовые сообщения
+      в её ленту и различать автора и время каждого сообщения.
+  steps:
+    - action: Саша и Лена открыли одну встречу и отправили сообщения
+      expected: каждый видит собственные сообщения и аватары справа, сообщения и аватары собеседника слева
+        автор и время сохраняются, уведомления показаны системными строками по центру на телефоне
+        длинный текст переносится внутри пузыря без горизонтальной прокрутки страницы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-96A539A5
+  title: "Сообщения в общем разговоре: Сообщение ещё не подтверждено"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Сообщения в общем разговоре
+    scenario: Сообщение ещё не подтверждено
+    sha256: cb742fa9f69ad48385dc1adb88e5b23fb72cd251d37555cf27517e97d7f1f5e6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять участникам встречи отправлять текстовые сообщения
+      в её ленту и различать автора и время каждого сообщения.
+  steps:
+    - action: отправка ожидает подтверждения или закончилась ошибкой
+      expected: локальное сообщение остаётся справа со статусом либо доступным повтором
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-014A5D5C
+  title: "Актуальные детали встречи: Место изменилось после голосования"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Актуальные детали встречи
+    scenario: Место изменилось после голосования
+    sha256: efd5fec435d3ace8c8d09c010f568c829109823a9815f4e2ffa71b254c47062a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать актуальные дату, место и число участников рядом
+      с общей лентой. События истории SHALL описывать произошедшие изменения,
+      не подменяя актуальное состояние встречи.
+  steps:
+    - action: результат завершённого голосования изменил место встречи
+      expected: актуальные детали показывают новое место, а прежние записи остаются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-E1119919
+  title: "Результаты действий в ленте: Компания договорилась и распределила подготовку"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Результаты действий в ленте
+    scenario: Компания договорилась и распределила подготовку
+    sha256: 8d50ace2c3e8f083ccf4e1f4c2c9f2bd3d0f146b60908e1638d3f28b1221a260
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать предложения смены места и задачи подготовки вместе
+      с сообщениями. Применённое изменение места и принятие задачи SHALL отражаться
+      в той же хронологии.
+  steps:
+    - action: место изменилось по результату опроса и Тимофей принял задачу пиццы
+      expected: участники видят результат голосования, изменение места и принятие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-F9D67D03
+  title: "Настройки и видимость ответов: Участник смотрит компанию"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настройки и видимость ответов
+    scenario: Участник смотрит компанию
+    sha256: 29901ff749954b831c64f20346327b35f2152954aeea84c04277e8a9ef1f5a33
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL разрешать изменение настроек встречи её организатору.
+      Участники с доступом к встрече SHALL видеть состав компании и ответы друг друга.
+      Публичное приглашение SHALL NOT раскрывать чужие ответы или переписку.
+  steps:
+    - action: Лена с успешно сохранённым «Приду» открывает информацию о встрече
+      expected: ей доступны состав и ответы участников
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-59997D82
+  title: "Настройки и видимость ответов: Настройки меняет организатор"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настройки и видимость ответов
+    scenario: Настройки меняет организатор
+    sha256: 40a43838b02542c077793dab74be8456729ff2c70f1d32ab33e7244516b0d5d4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL разрешать изменение настроек встречи её организатору.
+      Участники с доступом к встрече SHALL видеть состав компании и ответы друг друга.
+      Публичное приглашение SHALL NOT раскрывать чужие ответы или переписку.
+  steps:
+    - action: Саша как организатор сохраняет новое описание встречи
+      expected: описание обновляется и изменение отражается в ленте
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-210E7F12
+  title: "Настройки и видимость ответов: Обычный участник пытается изменить настройки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настройки и видимость ответов
+    scenario: Обычный участник пытается изменить настройки
+    sha256: 09579035afd2aecb2774d0bf9ca5a8315a0bda5ff512df3c8a01157e5ff77406
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL разрешать изменение настроек встречи её организатору.
+      Участники с доступом к встрече SHALL видеть состав компании и ответы друг друга.
+      Публичное приглашение SHALL NOT раскрывать чужие ответы или переписку.
+  steps:
+    - action: Лена без роли организатора пытается изменить настройки напрямую
+      expected: изменение отклоняется независимо от наличия кнопки в её клиенте
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-C013DF5D
+  title: "Шапка встречи и доступные панели веба: Приглашение из шапки на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Шапка встречи и доступные панели веба
+    scenario: Приглашение из шапки на телефоне
+    sha256: 3619f521b646389f9050eb71cd72b10913c02c76897e86cb15705c96eb8d2094
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб-клиент SHALL выравнивать заголовок встречи и действия шапки по центру
+      и использовать узнаваемую иконку передачи приглашения. Панели SHALL плавно
+      появляться по центру широкого экрана и от нижнего края телефона; настройка
+      уменьшения движения SHALL отключать анимацию. Закрытие и фокус SHALL сохранять
+      доступность клавиатуры, а подписи действий внутри панели SHALL оставаться читаемыми.
+  steps:
+    - action: организатор нажимает «Пригласить друзей» в шапке встречи
+      expected: нижняя панель показывает ссылку и читаемые действия закрытие возвращает фокус на кнопку
+        приглашения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-8EBD7B16
+  title: "Шапка встречи и доступные панели веба: Пользователь уменьшил движение"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Шапка встречи и доступные панели веба
+    scenario: Пользователь уменьшил движение
+    sha256: f2f06c6adaa7ed5b06d35df8d16a8bae8b6940ec7164c6b960970d9c8449221f
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб-клиент SHALL выравнивать заголовок встречи и действия шапки по центру
+      и использовать узнаваемую иконку передачи приглашения. Панели SHALL плавно
+      появляться по центру широкого экрана и от нижнего края телефона; настройка
+      уменьшения движения SHALL отключать анимацию. Закрытие и фокус SHALL сохранять
+      доступность клавиатуры, а подписи действий внутри панели SHALL оставаться читаемыми.
+  steps:
+    - action: включено prefers-reduced-motion и пользователь открывает детали
+      expected: панель появляется без анимации и остаётся доступной с клавиатуры
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-1900A3BA
+  title: "Один блок деталей встречи на вебе: Широкий экран"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Один блок деталей встречи на вебе
+    scenario: Широкий экран
+    sha256: eb11ba7a4955b06f594f2357a43263953fc6130ab694dc7198b23a092d169156
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL показывать одно название встречи в шапке. Дата, место, описание
+      и компания SHALL находиться в правой панели при ширине от 1170 px или
+      в панели по `i` на меньшей ширине. Эти варианты SHALL NOT показываться
+      одновременно; лента SHALL NOT повторять текущие детали отдельным вступлением.
+  steps:
+    - action: ширина экрана не меньше 1170 px
+      expected: детали находятся справа, кнопка `i` отсутствует, в ленте нет повторного блока
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-0C670F7D
+  title: "Один блок деталей встречи на вебе: Узкий экран"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Один блок деталей встречи на вебе
+    scenario: Узкий экран
+    sha256: a1d77215dffaf307e920745ee3a43a118afe6deb17ac57282d73896b058ab78e
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL показывать одно название встречи в шапке. Дата, место, описание
+      и компания SHALL находиться в правой панели при ширине от 1170 px или
+      в панели по `i` на меньшей ширине. Эти варианты SHALL NOT показываться
+      одновременно; лента SHALL NOT повторять текущие детали отдельным вступлением.
+  steps:
+    - action: ширина экрана меньше 1170 px
+      expected: правая панель отсутствует, кнопка `i` открывает единственный блок деталей
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-229F5E49
+  title: "Настраиваемый опрос переноса даты: Опрос от участника"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настраиваемый опрос переноса даты
+    scenario: Опрос от участника
+    sha256: ac9211e34761a19a8290e01cad8bdfb79ade06908881b816a7b99b01a4042b5b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять любому пользователю с доступом к чату создавать опрос о переносе уже
+      назначенной даты и предлагать варианты. Автор SHALL задавать конец опроса.
+      Настройки SHALL включать несколько ответов, изменение голоса, добавление
+      вариантов участниками, анонимность и скрытие результатов до завершения.
+      Первые три SHALL быть включены по умолчанию, последние две — выключены.
+      Даты SHALL отображаться хронологически.
+  steps:
+    - action: участница Лена, не являющаяся организатором встречи, создаёт опрос с вариантами дат и сроком
+      expected: в ленте появляется её опрос с выбранными настройками сама публикация не меняет текущую
+        дату встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-C003D8BB
+  title: "Настраиваемый опрос переноса даты: Один ответ"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настраиваемый опрос переноса даты
+    scenario: Один ответ
+    sha256: e1e1c24a1f44bfaf88233a117cac8462e85429772498d44b5d7e8ca6e2bc0631
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять любому пользователю с доступом к чату создавать опрос о переносе уже
+      назначенной даты и предлагать варианты. Автор SHALL задавать конец опроса.
+      Настройки SHALL включать несколько ответов, изменение голоса, добавление
+      вариантов участниками, анонимность и скрытие результатов до завершения.
+      Первые три SHALL быть включены по умолчанию, последние две — выключены.
+      Даты SHALL отображаться хронологически.
+  steps:
+    - action: автор отключил несколько ответов и участник голосует
+      expected: можно сохранить только один выбранный вариант
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-17B239A8
+  title: "Настраиваемый опрос переноса даты: Переголосование запрещено"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настраиваемый опрос переноса даты
+    scenario: Переголосование запрещено
+    sha256: 142032cee7dba62d1073d3ceaee6dee4cad76067d54be89c6325d107ce526d91
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять любому пользователю с доступом к чату создавать опрос о переносе уже
+      назначенной даты и предлагать варианты. Автор SHALL задавать конец опроса.
+      Настройки SHALL включать несколько ответов, изменение голоса, добавление
+      вариантов участниками, анонимность и скрытие результатов до завершения.
+      Первые три SHALL быть включены по умолчанию, последние две — выключены.
+      Даты SHALL отображаться хронологически.
+  steps:
+    - action: возможность изменения голоса выключена и участник уже проголосовал
+      expected: повторная попытка изменить набор выбранных вариантов отклоняется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-C57CD3F9
+  title: "Настраиваемый опрос переноса даты: Свои варианты"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настраиваемый опрос переноса даты
+    scenario: Свои варианты
+    sha256: 863a2ce592cf4650a25aa49c53ec4fd43e8d258c639ff9bd42cbe56e9baedc84
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять любому пользователю с доступом к чату создавать опрос о переносе уже
+      назначенной даты и предлагать варианты. Автор SHALL задавать конец опроса.
+      Настройки SHALL включать несколько ответов, изменение голоса, добавление
+      вариантов участниками, анонимность и скрытие результатов до завершения.
+      Первые три SHALL быть включены по умолчанию, последние две — выключены.
+      Даты SHALL отображаться хронологически.
+  steps:
+    - action: добавление вариантов включено и участник предлагает допустимую дату
+      expected: вариант появляется в опросе с сохранением хронологического порядка
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-415D5E37
+  title: "Настраиваемый опрос переноса даты: Анонимный опрос"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Настраиваемый опрос переноса даты
+    scenario: Анонимный опрос
+    sha256: 01720c25d007fec3e236c78eeabcb55b1b4e6dfdf98e466135c416919febeae4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL позволять любому пользователю с доступом к чату создавать опрос о переносе уже
+      назначенной даты и предлагать варианты. Автор SHALL задавать конец опроса.
+      Настройки SHALL включать несколько ответов, изменение голоса, добавление
+      вариантов участниками, анонимность и скрытие результатов до завершения.
+      Первые три SHALL быть включены по умолчанию, последние две — выключены.
+      Даты SHALL отображаться хронологически.
+  steps:
+    - action: включена анонимность и участник просматривает опрос
+      expected: интерфейс и доступный ему API не раскрывают, кто выбрал конкретный вариант
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-A2835932
+  title: "Большинство в опросе даты: Большинство достигнуто в открытом опросе"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Большинство в опросе даты
+    scenario: Большинство достигнуто в открытом опросе
+    sha256: 66c36da70da535f977c0abcadf93b75779e6462fb815024cbc76983e312226ed
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Большинство SHALL означать строго больше половины текущего состава с доступом
+      к чату. Если один вариант набрал большинство, система SHALL сразу автоматически
+      применить дату без подтверждения организатора и ожидания. Скрытые результаты
+      SHALL ждать закрытия. Система SHALL сообщить об уже выполненном переносе.
+  steps:
+    - action: у встречи шесть пользователей с доступом к чату и единственный вариант получил четвёртый
+        голос в опросе с видимыми результатами
+      expected: дата сразу меняется, детали и календарь показывают новую дату системное сообщение сообщает
+        о переносе; кнопок подтверждения и двухчасового таймера нет
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-C1A7DF1A
+  title: "Единогласие в опросе даты: Единогласный вариант"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Единогласие в опросе даты
+    scenario: Единогласный вариант
+    sha256: 61a3f307d8781b0e705d8245d84fcb1b564ab3626ca9a388e5f52010d2beb056
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Единогласие SHALL означать поддержку всего текущего состава с доступом к чату. Единственный
+      единогласный
+
+      вариант SHALL применяться автоматически; несколько единогласных вариантов
+
+      SHALL передаваться на выбор организатору. Для скрытых результатов SHALL
+
+      действовать отдельное правило ожидания закрытия.
+  steps:
+    - action: все шесть участников поддержали единственный общий вариант в опросе с видимыми результатами
+      expected: дата меняется автоматически, результат и перенос появляются в ленте детали встречи и
+        календарь показывают новую дату
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-B689CF8D
+  title: "Единогласие в опросе даты: Несколько единогласных вариантов"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Единогласие в опросе даты
+    scenario: Несколько единогласных вариантов
+    sha256: 62ca1518a152e25e31b87b5f4b8a672d8363effed7c8f849210d4d5c2f993ec0
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Единогласие SHALL означать поддержку всего текущего состава с доступом к чату. Единственный
+      единогласный
+
+      вариант SHALL применяться автоматически; несколько единогласных вариантов
+
+      SHALL передаваться на выбор организатору. Для скрытых результатов SHALL
+
+      действовать отдельное правило ожидания закрытия.
+  steps:
+    - action: все участники поддержали два варианта в опросе с несколькими ответами
+      expected: система не выбирает произвольный вариант и передаёт выбор организатору
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-05AE83C3
+  title: "Завершение опроса даты без большинства: Большинство не собрано"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Завершение опроса даты без большинства
+    scenario: Большинство не собрано
+    sha256: 57a865d23bd3ccb58700512fa434f11f6850dd5299530b8261a7dbf7193820a5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если при завершении ни один вариант не набрал большинства, система SHALL
+      сохранить дату и сообщить в чате, что новую дату выбрать не удалось.
+  steps:
+    - action: опрос завершился и ни один вариант не поддержало больше половины всех участников
+      expected: дата сохраняется, а в чат поступает системное сообщение об отсутствии выбранной новой даты
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-3C208C22
+  title: "Скрытые результаты опроса даты: Единогласие до конца скрытого опроса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Скрытые результаты опроса даты
+    scenario: Единогласие до конца скрытого опроса
+    sha256: 0e0048a0c907bf05d5a9a12578fba42990d19934c280d1fce589de2ec29058ca
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если включено скрытие результатов, система SHALL NOT раскрывать промежуточные
+      итоги, предлагать организатору применить их или автоматически переносить дату
+      до завершения опроса. Ограничение SHALL действовать для интерфейса, API,
+      системных сообщений и возможных будущих пушей. После закрытия SHALL применяться
+      правила большинства и единогласия с учётом анонимности, без двухчасового ожидания.
+  steps:
+    - action: единственный вариант получил все голоса, но срок скрытого опроса ещё не наступил
+      expected: текущая дата сохраняется и сообщения о результате не появляются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-3C4DFFD7
+  title: "Скрытые результаты опроса даты: Закрытие скрытого опроса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Скрытые результаты опроса даты
+    scenario: Закрытие скрытого опроса
+    sha256: 7175f0e9ec1162e9b1b3724d160ad439fcbe97bfc5f3c48e9bd18d20125cd451
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если включено скрытие результатов, система SHALL NOT раскрывать промежуточные
+      итоги, предлагать организатору применить их или автоматически переносить дату
+      до завершения опроса. Ограничение SHALL действовать для интерфейса, API,
+      системных сообщений и возможных будущих пушей. После закрытия SHALL применяться
+      правила большинства и единогласия с учётом анонимности, без двухчасового ожидания.
+  steps:
+    - action: скрытый опрос закрывается с единственным единогласным вариантом
+      expected: итог раскрывается, дата применяется, а результат появляется в чате при анонимном
+        голосовании имена голосовавших не раскрываются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-C76315C7
+  title: "Доступ и состав голосующих за дату: Ответ Возможно не увеличивает знаменатель"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Доступ и состав голосующих за дату
+    scenario: Ответ Возможно не увеличивает знаменатель
+    sha256: bb79829924046279a418e8cf5b511def75ce93f84ad3088c20e6946daadf08ce
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Создавать опрос даты, добавлять варианты и голосовать SHALL только пользователи
+      с текущим доступом к чату: организатор и участники с ответом «Приду».
+      Большинство и единогласие SHALL учитывать этот текущий состав и его голоса.
+      Пользователи с ответом «Возможно»/«Не смогу» и их прежние голоса SHALL NOT
+      учитываться. Смена доступа SHALL обновлять подсчёт без ожидания запроса клиента.
+  steps:
+    - action: организатор и пять участников имеют доступ к чату, ещё двое ответили «Возможно»
+      expected: большинство требует четыре голоса из шести ответившие «Возможно» не могут создать опрос,
+        добавить вариант или проголосовать, в том числе напрямую через API
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-56ACBBDA
+  title: "Доступ и состав голосующих за дату: Голосовавший закрыл себе доступ"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Доступ и состав голосующих за дату
+    scenario: Голосовавший закрыл себе доступ
+    sha256: bfa35ade557e35866c9d1bced94b5f983431be4a0296e479c0bafde659b92b6a
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Создавать опрос даты, добавлять варианты и голосовать SHALL только пользователи
+      с текущим доступом к чату: организатор и участники с ответом «Приду».
+      Большинство и единогласие SHALL учитывать этот текущий состав и его голоса.
+      Пользователи с ответом «Возможно»/«Не смогу» и их прежние голоса SHALL NOT
+      учитываться. Смена доступа SHALL обновлять подсчёт без ожидания запроса клиента.
+  steps:
+    - action: голосовавший участник меняет «Приду» на «Возможно» или «Не смогу»
+      expected: его голос и он сам исключаются из текущего подсчёта, доступ к опросу закрывается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-06DD5CEC
+  title: "Немедленный итог при закрытии опроса даты: Скрытый опрос закрыт с большинством"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Немедленный итог при закрытии опроса даты
+    scenario: Скрытый опрос закрыт с большинством
+    sha256: 9e588c1501d10d2f6fd5e5fead0dd29921c371326f3536af031725dfe55e96f8
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      При закрытии опроса система SHALL сразу автоматически применить вариант
+      с большинством; при отсутствии большинства SHALL сохранить дату. Это SHALL
+      действовать и для скрытых результатов без дополнительного ожидания. Несколько
+      единогласных вариантов SHALL остаться на выбор организатора. Одновременные
+      голосование и закрытие SHALL NOT дублировать один перенос и его сообщение.
+  steps:
+    - action: при закрытии скрытого опроса единственный вариант набрал четыре голоса из шести
+      expected: дата меняется автоматически и системное сообщение сообщает результат при анонимном
+        голосовании имена голосовавших не раскрываются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-B3780DEC
+  title: "Немедленный итог при закрытии опроса даты: Голосование совпало с закрытием"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Немедленный итог при закрытии опроса даты
+    scenario: Голосование совпало с закрытием
+    sha256: fc3cca46b3532dde3a7f7cedd4a6175774c81dd6e4e67a6dd8073f1ac576dc2c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      При закрытии опроса система SHALL сразу автоматически применить вариант
+      с большинством; при отсутствии большинства SHALL сохранить дату. Это SHALL
+      действовать и для скрытых результатов без дополнительного ожидания. Несколько
+      единогласных вариантов SHALL остаться на выбор организатора. Одновременные
+      голосование и закрытие SHALL NOT дублировать один перенос и его сообщение.
+  steps:
+    - action: голосование и обработчик закрытия одновременно применяют один результат
+      expected: система сохраняет один перенос и публикует одно системное сообщение
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-3E013DC7
+  title: "Системные уведомления голосования: Дата перенесена автоматически"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Системные уведомления голосования
+    scenario: Дата перенесена автоматически
+    sha256: 455a4041c20b0382459a917fd17d499e965ee86622d9ce16e5a4178ccc08318a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Уведомления о результате и состоянии голосования SHALL отображаться системными
+      строками по центру общей ленты, без имени и аватара бота. Создание встречи,
+      настройки, RSVP и напоминание об отсутствующем времени используют тот же вид.
+      Уведомления SHALL работать без подписки и AI. Будущий бот относится к функциям
+      AI-помощника по подписке и SHALL NOT учитываться как голосующий участник.
+  steps:
+    - action: система применила результат опроса даты
+      expected: системное сообщение сообщает новую дату без обращения за подтверждением наличие подписки у
+        организатора не влияет на доставку уведомления
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-B1878EAF
+  title: "Компактное количество голосов: Результаты в небольшой компании"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Компактное количество голосов
+    scenario: Результаты в небольшой компании
+    sha256: 771819a09ed6826ae8a70a719c146c19adf1af4805e54f54c0e91808cde18508
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      При видимых результатах интерфейс SHALL показывать у каждого варианта число
+      голосов с правильной формой слова, например «1 голос», «3 голоса», «6 голосов».
+      Знаменатель «из N» SHALL NOT повторяться у вариантов. Скрытый опрос SHALL NOT
+      раскрывать эти числа до закрытия.
+  steps:
+    - action: в опросе для шести участников три пользователя выбрали вариант
+      expected: рядом с ним отображается «3 голоса», а не «3 из 6»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-CE20B563
+  title: "Окончательный перенос по результату опроса даты: Опрос уже изменил дату"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Окончательный перенос по результату опроса даты
+    scenario: Опрос уже изменил дату
+    sha256: cb801ab164cf3378f4f92c405465955a5351501a820dbab9eb2ec155ca7b5647
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      После переноса система SHALL закрывать опрос и сохранять результат в истории.
+      Повторная доставка и последующие изменения состава SHALL NOT применять итог
+      повторно. Для нового переноса SHALL создаваться новый опрос. Опрос SHALL менять
+      только календарный день, сохраняя уже заданное время и его отсутствие.
+  steps:
+    - action: результат применён, затем приходит запоздавший голос или повтор задачи
+      expected: дата и итог не меняются снова, новый голос не принимается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-5699CCDB
+  title: "Выбор среди вариантов с большинством: Два варианта получили большинство"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Выбор среди вариантов с большинством
+    scenario: Два варианта получили большинство
+    sha256: e341e42e78e1e06d66a6183322f7db2d221401c6ce87871e7cf14c7f16399254
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL выбирать вариант с наибольшим числом голосов среди набравших
+      большинство. При равенстве максимальных результатов организатор SHALL выбирать
+      из этих лидеров. Скрытые результаты SHALL ожидать закрытия перед этим выбором.
+  steps:
+    - action: при закрытии скрытого опроса из шести участников пять выбрали одну дату и четыре другую
+      expected: автоматически применяется дата с пятью голосами
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-F6AD0AFE
+  title: "Выбор среди вариантов с большинством: У лидеров одинаковый результат"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Выбор среди вариантов с большинством
+    scenario: У лидеров одинаковый результат
+    sha256: b36a97b6f4dcd1808592a3b3230daad1aec80692c3d2b7d0972fdaefe590bd00
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL выбирать вариант с наибольшим числом голосов среди набравших
+      большинство. При равенстве максимальных результатов организатор SHALL выбирать
+      из этих лидеров. Скрытые результаты SHALL ожидать закрытия перед этим выбором.
+  steps:
+    - action: две даты набрали по четыре голоса из шести и другого лидера нет
+      expected: текущая дата сохраняется до выбора организатором одной из этих двух дат
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-7E11E92C
+  title: "Единственный активный опрос даты: Ручной перенос"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Единственный активный опрос даты
+    scenario: Ручной перенос
+    sha256: 18e81d60b51bfbc015702e92b7db8c688e9ca8a7ea0ee675e49aa4a1cda8637d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL допускать один активный опрос даты на встречу, включая ожидание
+      выбора между лидерами. Ручное изменение календарного дня организатором SHALL
+      закрывать этот опрос без применения результата. Действующие RSVP SHALL сохраняться.
+  steps:
+    - action: организатор сохраняет другой день в настройках встречи
+      expected: действующий опрос закрывается, его запоздавшая задача не отменяет ручной перенос
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-E2777BB0
+  title: "Единственный активный опрос даты: Участник вернулся"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Единственный активный опрос даты
+    scenario: Участник вернулся
+    sha256: d6c0c467edb7dd46c7cd3ad4104c75b59c74a09362d2d4a56ae1558b501a501f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL допускать один активный опрос даты на встречу, включая ожидание
+      выбора между лидерами. Ручное изменение календарного дня организатором SHALL
+      закрывать этот опрос без применения результата. Действующие RSVP SHALL сохраняться.
+  steps:
+    - action: участник после «Возможно» вновь сохраняет «Приду», пока опрос открыт
+      expected: его прежний голос снова входит в текущий подсчёт
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-CAF35EFF
+  title: "Атомарный итог опроса даты: Голос одновременно с окончанием срока"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Атомарный итог опроса даты
+    scenario: Голос одновременно с окончанием срока
+    sha256: f637dddd789f1bd12af61ce86819047dd7689672ffeae93aa3cfa66701525d34
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог опроса, дату встречи, новое расписание перехода
+      в историю и системное событие одной операцией. Повтор и конкурентное закрытие
+      SHALL NOT создавать второй перенос. GET SHALL NOT закрывать опрос.
+  steps:
+    - action: фоновая задача закрывает опрос и приходит новый голос после срока
+      expected: голос отклоняется, сохранённый итог и событие существуют в одном экземпляре
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-E4505646
+  title: "Атомарный итог опроса даты: Ошибка при записи уведомления"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Атомарный итог опроса даты
+    scenario: Ошибка при записи уведомления
+    sha256: b770e665575ab0b3e00b8435a947435832a6e9b852cd4c6bceb52a480c00b932
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог опроса, дату встречи, новое расписание перехода
+      в историю и системное событие одной операцией. Повтор и конкурентное закрытие
+      SHALL NOT создавать второй перенос. GET SHALL NOT закрывать опрос.
+  steps:
+    - action: сохранение события переноса завершилось ошибкой
+      expected: дата, результат и решающий голос не применяются частично повтор не создаёт дублирующее
+        событие
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-4B3A615C
+  title: "Атомарный итог опроса даты: Фоновая задача исчерпала попытки"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Атомарный итог опроса даты
+    scenario: Фоновая задача исчерпала попытки
+    sha256: 9c0df0dd3af98218b8ed35edc51d0a020b9e7651b50ceb325473c7ff6f84a1b1
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог опроса, дату встречи, новое расписание перехода
+      в историю и системное событие одной операцией. Повтор и конкурентное закрытие
+      SHALL NOT создавать второй перенос. GET SHALL NOT закрывать опрос.
+  steps:
+    - action: задача закрытия не выполнилась за допустимое число попыток
+      expected: сохраняется ошибочное состояние задачи и операционный сигнал сверка не сбрасывает лимит;
+        ручной повтор сохраняет историю попыток
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-4DD0C98B
+  title: "Атомарный итог опроса даты: Прежний час неоднозначен на выбранную дату"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Атомарный итог опроса даты
+    scenario: Прежний час неоднозначен на выбранную дату
+    sha256: c4028b7f8d578556b2a2a47acebd0be78e7b2a75ca5738b529d3e07b8c1e78d3
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL сохранять итог опроса, дату встречи, новое расписание перехода
+      в историю и системное событие одной операцией. Повтор и конкурентное закрытие
+      SHALL NOT создавать второй перенос. GET SHALL NOT закрывать опрос.
+  steps:
+    - action: перенос дня попадает на отсутствующий или повторяющийся местный час
+      expected: сервер не выбирает другой час или смещение незаметно результат ожидает явного уточнения
+        времени организатором; голоса уже закрыты
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-5C22B221
+  title: "Компактная форма опроса: Длинная форма на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Компактная форма опроса
+    scenario: Длинная форма на телефоне
+    sha256: 2bf1cfd17b69b1c0be6ba927af5ae5f4443c39d60df3e233b1b97d1a3a8b9007
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Форма SHALL показывать все настройки без раскрывающихся блоков. Кнопки удаления
+      вариантов SHALL появляться только при наличии более двух дат. Ошибка отсутствующей
+      или повторяющейся даты SHALL отображаться у поля; отправка SHALL переводить фокус
+      к первому ошибочному полю. Прокрутка SHALL затрагивать только содержимое формы,
+      а календарь SHALL оставаться видимым и доступным внутри модального окна.
+  steps:
+    - action: варианты и настройки не помещаются по высоте
+      expected: прокручиваются поля, кнопка создания остаётся видимой тень над кнопкой появляется, пока
+        ниже остаётся непросмотренное содержимое фон не прокручивается, нажатие по нему закрывает
+        окно с сохранением черновика
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-FEED-1BFACA40
+  title: "Завершённое движение диалога: Закрытие шторки жестом"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
+    requirement: Завершённое движение диалога
+    scenario: Закрытие шторки жестом
+    sha256: 76d3ba188539e5dc5973751537c4aaa94960d2ff948673aada1583ca657fe0cd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Диалог SHALL анимировать открытие и закрытие, сохраняя содержимое и блокировку
+      фона до конца выхода. Уменьшение движения SHALL отключать анимации.
+      Вся верхняя область мобильной шторки, включая отступы над ручкой и по бокам,
+      SHALL поддерживать свайп вниз. Крестик SHALL отображаться только на десктопе.
+  steps:
+    - action: пользователь тянет верхнюю область мобильной шторки вниз
+      expected: панель следует за пальцем после достаточного или быстрого свайпа уходит за нижний край и
+        возвращает фокус на кнопку открытия короткий жест возвращает панель без закрытия и потери
+        ввода
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-304D49BA
+  title: "Ограниченная загрузка и отображение истории: Первое непрочитанное далеко от хвоста"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Ограниченная загрузка и отображение истории
+    scenario: Первое непрочитанное далеко от хвоста
+    sha256: a482e5b9fc118786b2a0332a04ca6478b0755f16841a1d4c67683e50f6b7db62
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Лента SHALL загружать историю ограниченными страницами вокруг нужной позиции и ограничивать
+      объём сохранённых в памяти строк. Размер запроса и ответа SHALL NOT расти пропорционально всей
+      истории встречи.
+  steps:
+    - action: пользователь открывает встречу с большой историей и непрочитанным сообщением в середине
+      expected: клиент загружает окно вокруг него, не вычитывая последовательно всю историю
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-A697B69A
+  title: "Ограниченная загрузка и отображение истории: Длительная прокрутка"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Ограниченная загрузка и отображение истории
+    scenario: Длительная прокрутка
+    sha256: 8d7bcb4793bbe89b4ba43b23b42537c1fcb2c86ff51d3d3dfdb25f68ca9dfec2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Лента SHALL загружать историю ограниченными страницами вокруг нужной позиции и ограничивать
+      объём сохранённых в памяти строк. Размер запроса и ответа SHALL NOT расти пропорционально всей
+      истории встречи.
+  steps:
+    - action: пользователь просмотрел тысячи записей
+      expected: клиент удаляет далёкие невидимые диапазоны из памяти, сохраняет якорь и умеет загрузить их
+        снова
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-025A8CA5
+  title: "Автоматическая дозагрузка с локальной ошибкой: Повтор после сбоя страницы"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Автоматическая дозагрузка с локальной ошибкой
+    scenario: Повтор после сбоя страницы
+    sha256: becc0287fea8858c541f29c19c581c89043d26c8ae5a53b94c90649794742cc8
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - При приближении к границе загруженного диапазона клиент SHALL автоматически запрашивать
+      следующую страницу без конкурентных одинаковых запросов. Ошибка SHALL оставлять показанные
+      записи и действие повтора у границы.
+  steps:
+    - action: запрос старых сообщений завершился ошибкой
+      expected: лента не заменяется экраном ошибки, ввод доступен и повтор использует прежнюю границу
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-9FADE3B3
+  title: "Стабильный якорь и идентичность строки: Старые строки и выросшая карточка"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Стабильный якорь и идентичность строки
+    scenario: Старые строки и выросшая карточка
+    sha256: 0d4e820585c251cdefaf7bca9751f62f28ff00ddb64a7b49fbcb1898a9720719
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Лента SHALL сохранять видимую строку и её смещение при prepend, изменении размеров, клавиатуре
+      и подтверждении исходящего. Собственное сообщение SHALL сохранять UI-идентичность при
+      получении серверного ID.
+  steps:
+    - action: над видимой строкой добавились старые записи или изменилась высота карточки
+      expected: читатель остаётся на прежней строке с прежним смещением в пределах допуска приёмки
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-E81D170C
+  title: "Стабильный якорь и идентичность строки: Подтверждение исходящего"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Стабильный якорь и идентичность строки
+    scenario: Подтверждение исходящего
+    sha256: f356467d24d4bd2163b95c68d97ebfd06df5236460941d0c04e433ae9c203cbd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Лента SHALL сохранять видимую строку и её смещение при prepend, изменении размеров, клавиатуре
+      и подтверждении исходящего. Собственное сообщение SHALL сохранять UI-идентичность при
+      получении серверного ID.
+  steps:
+    - action: сервер подтвердил локально показанное сообщение
+      expected: оно не исчезает и не переносится между отдельными UI-контейнерами; серверный порядок
+        сохраняется
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-D0C7E8FB
+  title: "Управляемое следование за новыми сообщениями: Новое сообщение при чтении прошлого"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Управляемое следование за новыми сообщениями
+    scenario: Новое сообщение при чтении прошлого
+    sha256: 7345dab34b52c74ef295a90651a43ed363e03d0ba57c19be7b11cb3f2b836a1b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Лента SHALL следовать за хвостом только когда пользователь уже находится у него либо явно
+      перешёл вниз. При чтении прошлого новые записи SHALL сохранять положение и давать отдельное
+      действие перехода.
+  steps:
+    - action: приходит чужое или подтверждается собственное сообщение, пока пользователь читает историю
+      expected: положение не меняется и доступна кнопка перехода к новым сообщениям
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-722B1526
+  title: "Начальная позиция и восстановление: Возврат после просмотра списка прочитавших"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Начальная позиция и восстановление
+    scenario: Возврат после просмотра списка прочитавших
+    sha256: 9ac51f55cfcdb950eb2d191e7121940b7df44f60da9e227aa6195f5f3660a569
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - При открытии клиент SHALL восстанавливать доступный сохранённый якорь, иначе первое
+      непрочитанное, иначе хвост. Перестройка окна SHALL NOT автоматически отмечать непоказанные
+      сообщения прочитанными.
+  steps:
+    - action: пользователь закрывает список прочитавших
+      expected: чат сохраняет положение и возвращает фокус к исходному сообщению
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-CCD3E2A3
+  title: "Загрузка и доступность мобильного чата: Узкий web с клавиатурой"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Загрузка и доступность мобильного чата
+    scenario: Узкий web с клавиатурой
+    sha256: 82fa4cd35968003cb40a9acf32b213d03ad5cfcc6658a80c396d0f1d0ff0ad85
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL показывать скелетоны только в загружаемой области, сохранять composer и доступные
+      данные, поддерживать системный размер текста, screen reader и Reduce Motion. Клавиатура SHALL
+      NOT создавать лишнюю прокрутку страницы или перекрывать ввод.
+  steps:
+    - action: пользователь открывает клавиатуру на iPhone при длинной ссылке и крупном тексте
+      expected: ввод виден, горизонтального scroll нет и вертикально прокручивается только лента
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-84D3BA20
+  title: "Загрузка и доступность мобильного чата: Виртуализация и клавиатурный фокус"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Загрузка и доступность мобильного чата
+    scenario: Виртуализация и клавиатурный фокус
+    sha256: b5e4df2e52619b3f1639b44eb9bc97e04b4ddd0c71786f6811284bc7e1261e0c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL показывать скелетоны только в загружаемой области, сохранять composer и доступные
+      данные, поддерживать системный размер текста, screen reader и Reduce Motion. Клавиатура SHALL
+      NOT создавать лишнюю прокрутку страницы или перекрывать ввод.
+  steps:
+    - action: сфокусированная строка оказывается у границы окна
+      expected: клиент сохраняет её до перевода фокуса и не перехватывает фокус при поступлении новых записей
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

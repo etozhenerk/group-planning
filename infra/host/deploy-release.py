@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Установить проверенный backend/web release на подготовленной ВМ (sudo)."""
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -37,9 +38,52 @@ def ready():
     raise RuntimeError('Backend readiness failed')
 
 
-def deploy(directory):
+def verify_acceptance(directory, receipt_path):
+    """Validate the local qa:release-ready receipt before any host mutation.
+
+    Receipt comes from the trusted QA executor, not an untrusted upload.
+    Full catalog/evidence validation is performed by qa:release-ready in checkout.
+    """
+    if receipt_path is None or receipt_path.is_symlink():
+        raise ValueError('Functional acceptance receipt is required')
+    receipt = json.loads(receipt_path.read_text())
+    manifest = json.loads((directory / 'manifest.json').read_text())
+    artifact = receipt.get('artifact', {})
+    expected_files = [{'path': item['name'], 'sha256': item['sha256']} for item in manifest['artifacts']]
+    if receipt.get('schemaVersion') != 1 or receipt.get('status') != 'passed':
+        raise ValueError('Functional acceptance has not passed')
+    if artifact != {'component': manifest['component'], 'version': manifest['version'],
+                    'manifestHash': hashlib.sha256((directory / 'manifest.json').read_bytes()).hexdigest(),
+                    'files': expected_files}:
+        raise ValueError('Acceptance belongs to another artifact')
+    for item in expected_files:
+        if Path(item['path']).name != item['path'] or hashlib.sha256((directory / item['path']).read_bytes()).hexdigest() != item['sha256']:
+            raise ValueError('Accepted artifact changed')
+    for key in ('planHash', 'runHash', 'catalogHash', 'sourceHash'):
+        if not re.fullmatch('[0-9a-f]{64}', receipt.get(key, '')):
+            raise ValueError('Missing acceptance provenance')
+    for key in ('expected', 'passed', 'suites'):
+        if type(receipt.get(key)) is not int or receipt[key] < 1:
+            raise ValueError('Empty acceptance scope')
+    if receipt['expected'] != receipt['passed']:
+        raise ValueError('Incomplete acceptance')
+    created = datetime.fromisoformat(receipt['createdAt'].replace('Z', '+00:00'))
+    if created.tzinfo is None or created > datetime.now(timezone.utc):
+        raise ValueError('Invalid acceptance time')
+    profiles = {'web': {'web-desktop', 'web-mobile'},
+                'backend': {'api', 'web-desktop', 'web-mobile', 'ios-phone', 'android-phone'}}
+    environments = receipt.get('environments', [])
+    if not profiles.get(manifest['component'], set()).issubset({e['profile'] for e in environments}):
+        raise ValueError('Missing release environments')
+    identity = 'backend' if manifest['component'] == 'backend' else 'build'
+    if not environments or any(e.get(identity) != artifact['manifestHash'] for e in environments):
+        raise ValueError('Environment was not testing this candidate')
+
+
+def deploy(directory, acceptance):
     if os.geteuid() != 0:
         raise RuntimeError('Run on the VM as root')
+    verify_acceptance(directory, acceptance)
     manifest = json.loads((directory / 'manifest.json').read_text())
     component, version = manifest['component'], manifest['version']
     if component not in ('backend', 'web') or not re.fullmatch(r'\d+\.\d+\.\d+(?:-rc\.\d+)?', version):
@@ -81,6 +125,7 @@ def deploy(directory):
         if any(not (stage / name).is_file() for name in required):
             raise ValueError('Missing runtime files')
         shutil.copyfile(directory / 'manifest.json', stage / 'release-manifest.json')
+        shutil.copyfile(acceptance, stage / 'acceptance.json')
         stage.chmod(0o755)
         stage.rename(destination)
     if component == 'backend':
@@ -114,4 +159,6 @@ def deploy(directory):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory', type=Path)
-    deploy(parser.parse_args().directory.resolve())
+    parser.add_argument('--acceptance', type=Path, required=True, help='Trusted qa:release-ready receipt')
+    args = parser.parse_args()
+    deploy(args.directory.resolve(), args.acceptance.absolute())

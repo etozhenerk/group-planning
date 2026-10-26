@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    "openspec/changes/gathering-activity-feed/specs/event-feed/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/place-change-polls/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md",
+    "openspec/changes/gathering-activity-feed/specs/product-onboarding/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/service-information/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md",
+    "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+    "openspec/changes/account-deletion/specs/account-lifecycle/spec.md",
+    "openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md",
+    "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+    "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+    "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+    "openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md",
+    "openspec/changes/release-version-policy/specs/web-release-identity/spec.md"
+  ],
+  "profiles": {
+    "web-desktop": {
+      "platform": "web"
+    },
+    "web-mobile": {
+      "platform": "web"
+    },
+    "ios-phone": {
+      "platform": "ios"
+    },
+    "android-phone": {
+      "platform": "android"
+    },
+    "api": {
+      "platform": "backend"
+    },
+    "operations": {
+      "platform": "monitoring"
+    }
+  },
+  "releaseProfiles": {
+    "web": [
+      "web-desktop",
+      "web-mobile"
+    ],
+    "ios": [
+      "ios-phone"
+    ],
+    "android": [
+      "android-phone"
+    ],
+    "backend": [
+      "api",
+      "web-desktop",
+      "web-mobile",
+      "ios-phone",
+      "android-phone"
+    ],
+    "monitoring": [
+      "operations"
+    ]
+  },
+  "inputs": {
+    "backend": [
+      "backend",
+      "contracts"
+    ],
+    "web": [
+      "frontend/web",
+      "package.json",
+      "package-lock.json",
+      "backend",
+      "contracts"
+    ],
+    "ios": [
+      "frontend/ios",
+      "backend",
+      "contracts"
+    ],
+    "android": [
+      "frontend/android",
+      "backend",
+      "contracts"
+    ],
+    "monitoring": [
+      "infra/telegram-bot"
+    ]
+  },
+  "runners": {
+    "backend-unit-integration": {
+      "platforms": [
+        "backend"
+      ],
+      "cwd": "backend",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./..."
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "web-check": {
+      "platforms": [
+        "web"
+      ],
+      "cwd": ".",
+      "command": [
+        "npm",
+        "run",
+        "web:check"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "web-e2e": {
+      "platforms": [
+        "web"
+      ],
+      "cwd": ".",
+      "command": [
+        "npm",
+        "run",
+        "web:test:e2e"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "ios-unit": {
+      "platforms": [
+        "ios"
+      ],
+      "cwd": "frontend/ios",
+      "command": [
+        "sh",
+        "scripts/test.sh"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "ios-ui": {
+      "platforms": [
+        "ios"
+      ],
+      "cwd": "frontend/ios",
+      "command": [
+        "sh",
+        "scripts/test-ui.sh"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "android-unit": {
+      "platforms": [
+        "android"
+      ],
+      "cwd": "frontend/android",
+      "command": [
+        "./gradlew",
+        "testDebugUnitTest"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "android-ui": {
+      "platforms": [
+        "android"
+      ],
+      "cwd": "frontend/android",
+      "command": [
+        "sh",
+        "scripts/test-ui.sh"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "monitoring-tests": {
+      "platforms": [
+        "monitoring"
+      ],
+      "cwd": "infra/telegram-bot",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./..."
+      ],
+      "required": true,
+      "scope": "source"
+    }
+  },
+  "manifests": [],
+  "legacyChanges": [
+    "gathering-activity-feed",
+    "meeting-experience-refresh",
+    "account-deletion",
+    "deployment-and-store-release",
+    "telegram-monitoring-bot",
+    "chat-reliability-and-sync",
+    "release-version-policy"
+  ],
+  "nonProductChanges": [
+    "functional-test-acceptance",
+    "cross-platform-design-system",
+    "component-releases"
+  ],
+  "excludedSources": [
+    {
+      "path": "openspec/changes/component-releases/specs/component-release-artifacts/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/cross-platform-design-system/specs/design-review/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/cross-platform-design-system/specs/design-system/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/specs/client-distribution/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/specs/service-operations/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/functional-test-acceptance/specs/functional-acceptance/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/functional-test-acceptance/specs/release-test-acceptance/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/functional-test-acceptance/specs/test-catalog/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    },
+    {
+      "path": "openspec/changes/release-version-policy/specs/release-version-policy/spec.md",
+      "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."
+    }
+  ]
+}

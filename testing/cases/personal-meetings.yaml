@@ -1,0 +1,2464 @@
+- id: TC-LIST-5389B110
+  title: "Личные встречи: Созданная встреча"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Личные встречи
+    scenario: Созданная встреча
+    sha256: 45c5e6e665c3049af442754d6ffa110be124c39db1b906f4f83fa8e62d90c9cb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать авторизованному пользователю его созданные встречи
+      и встречи с сохранённым ответом «Приду». Выбор встречи SHALL открывать именно
+      её детали и доступный этому пользователю разговор.
+  steps:
+    - action: организатор успешно создал встречу и открывает личные встречи
+      expected: эта встреча доступна ему в личном разделе
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-52547BA0
+  title: "Личные встречи: Принятое приглашение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Личные встречи
+    scenario: Принятое приглашение
+    sha256: f8d85b3016dfe39893bea5d0b569b78ff661b5d6aa037cb6b3330ee769100495
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать авторизованному пользователю его созданные встречи
+      и встречи с сохранённым ответом «Приду». Выбор встречи SHALL открывать именно
+      её детали и доступный этому пользователю разговор.
+  steps:
+    - action: друг успешно сохранил ответ «Приду»
+      expected: эта встреча доступна ему в личном разделе с переходом к её разговору
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-ADAB91B7
+  title: "Предстоящие и прошедшие встречи: История встреч"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Предстоящие и прошедшие встречи
+    scenario: История встреч
+    sha256: 04b065d5a945393bfac12e47ae6e2438477f2ab7c98f4d0664cddbd0acec8aa1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять разделы предстоящих и прошедших встреч.
+      Прошедшие встречи SHALL оставаться доступными для просмотра из личного раздела.
+      Отсутствие встреч в одном разделе SHALL NOT скрывать встречи другого.
+  steps:
+    - action: пользователь выбирает раздел прошедших встреч
+      expected: он может найти и открыть свои прошедшие встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-87A73A33
+  title: "Предстоящие и прошедшие встречи: Нет будущих событий"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Предстоящие и прошедшие встречи
+    scenario: Нет будущих событий
+    sha256: f7267c2058aa23fd5c98087bfe3df70e8d357f1e13456f3dbddec9bebcb6595b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять разделы предстоящих и прошедших встреч.
+      Прошедшие встречи SHALL оставаться доступными для просмотра из личного раздела.
+      Отсутствие встреч в одном разделе SHALL NOT скрывать встречи другого.
+  steps:
+    - action: у пользователя нет предстоящих встреч, но есть прошедшие
+      expected: предстоящий раздел показывает пустое состояние, а история остаётся доступна
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-6FB6D20F
+  title: "Календарная граница истории: Вечер встречи"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Календарная граница истории
+    scenario: Вечер встречи
+    sha256: d205ab2478d411bd9610d104e473a4d9476af51282715cfea6a32876d31ab7f5
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL хранить статус встречи. Отложенная задача SHALL сохранять `past`
+      со следующего дня по часовому поясу встречи, независимо от пользовательских
+      запросов. До границы встреча SHALL оставаться в «Предстоящих». Граница использует
+      серверное время и календарную дату, не прибавление 24 часов. API и статистика
+      SHALL читать сохранённый статус; GET SHALL NOT менять его.
+  steps:
+    - action: встреча назначена на 24 октября в 19:00 по Москве, а сейчас 24 октября 23:00 по Москве
+      expected: встреча остаётся в «Предстоящих»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-DF584CA1
+  title: "Календарная граница истории: Начало следующего дня"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Календарная граница истории
+    scenario: Начало следующего дня
+    sha256: 51c4b10cc02913580d1d2132c1715946f684f21921c702a9d1890f442b8f2b2a
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL хранить статус встречи. Отложенная задача SHALL сохранять `past`
+      со следующего дня по часовому поясу встречи, независимо от пользовательских
+      запросов. До границы встреча SHALL оставаться в «Предстоящих». Граница использует
+      серверное время и календарную дату, не прибавление 24 часов. API и статистика
+      SHALL читать сохранённый статус; GET SHALL NOT менять его.
+  steps:
+    - action: серверное время достигает 25 октября 00:00 по Москве для встречи 24 октября
+      expected: фоновый обработчик сохраняет статус `past`, даже если никто не открывает сервис web, iOS,
+        Android и статистика получают сохранённый статус независимо от пояса устройства
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-1934E04E
+  title: "Календарная граница истории: День перехода на другое смещение UTC"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Календарная граница истории
+    scenario: День перехода на другое смещение UTC
+    sha256: f5547b1dac6f9e72585b0b8d5a39a63fb85e5ddbc1d40d0d4aed51b11e09fc39
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL хранить статус встречи. Отложенная задача SHALL сохранять `past`
+      со следующего дня по часовому поясу встречи, независимо от пользовательских
+      запросов. До границы встреча SHALL оставаться в «Предстоящих». Граница использует
+      серверное время и календарную дату, не прибавление 24 часов. API и статистика
+      SHALL читать сохранённый статус; GET SHALL NOT менять его.
+  steps:
+    - action: длина календарного дня в часовом поясе встречи отличается от 24 часов
+      expected: раздел меняется с наступлением следующей локальной даты, без фиксированной прибавки часов
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-44EEA6A3
+  title: "Надёжное выполнение отложенного перехода: Задача без посещений"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Надёжное выполнение отложенного перехода
+    scenario: Задача без посещений
+    sha256: 4b8077db162d74bb6e0f13b29c9214d518dbba8a867ced193d3ce25db255333c
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL согласованно сохранять встречу и задачу перехода. Обработчик
+      SHALL безопасно переносить повторную доставку, проверять актуальное расписание
+      перед записью и повторять выполнение после временных ошибок. В варианте с
+      постоянным хранилищем задачи SHALL сохраняться после перезапуска и выполняться
+      после пропущенного срока. Мок в памяти SHALL NOT считаться проверкой этой гарантии.
+  steps:
+    - action: срок задачи наступил и после создания встречи не было пользовательских запросов
+      expected: обработчик сохраняет `past`, а последующая статистика читает этот статус
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-5CACA118
+  title: "Надёжное выполнение отложенного перехода: Повтор после сохранения"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Надёжное выполнение отложенного перехода
+    scenario: Повтор после сохранения
+    sha256: 91ab559533a3f5d16ec02740f256b77dfecdb2a9609f403537ba0dd9edb6e940
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL согласованно сохранять встречу и задачу перехода. Обработчик
+      SHALL безопасно переносить повторную доставку, проверять актуальное расписание
+      перед записью и повторять выполнение после временных ошибок. В варианте с
+      постоянным хранилищем задачи SHALL сохраняться после перезапуска и выполняться
+      после пропущенного срока. Мок в памяти SHALL NOT считаться проверкой этой гарантии.
+  steps:
+    - action: статус уже сохранён, но очередь повторно доставляет задачу
+      expected: повтор не меняет статус снова и не создаёт повторных побочных действий
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-FD4EA9A7
+  title: "Надёжное выполнение отложенного перехода: Перенос до старого срока"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Надёжное выполнение отложенного перехода
+    scenario: Перенос до старого срока
+    sha256: df5debf457c3ac342e5041ceac5bc2f0317c35e0729d555ff0e6d7248d9e20d6
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL согласованно сохранять встречу и задачу перехода. Обработчик
+      SHALL безопасно переносить повторную доставку, проверять актуальное расписание
+      перед записью и повторять выполнение после временных ошибок. В варианте с
+      постоянным хранилищем задачи SHALL сохраняться после перезапуска и выполняться
+      после пропущенного срока. Мок в памяти SHALL NOT считаться проверкой этой гарантии.
+  steps:
+    - action: организатор перенёс встречу и доставлена задача прежнего расписания
+      expected: старая задача не меняет встречу, а новая задача действует по новому сроку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-467A8C4B
+  title: "Надёжное выполнение отложенного перехода: Восстановление после остановки"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Надёжное выполнение отложенного перехода
+    scenario: Восстановление после остановки
+    sha256: 6d795553b96abd6daed6d327794b5528ddae994bfc24bcb553f4f5f4a7c9c051
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL согласованно сохранять встречу и задачу перехода. Обработчик
+      SHALL безопасно переносить повторную доставку, проверять актуальное расписание
+      перед записью и повторять выполнение после временных ошибок. В варианте с
+      постоянным хранилищем задачи SHALL сохраняться после перезапуска и выполняться
+      после пропущенного срока. Мок в памяти SHALL NOT считаться проверкой этой гарантии.
+  steps:
+    - action: обработчик запущен после срока задачи, сохранённой в постоянном хранилище
+      expected: задача выполняется без открытия встречи пользователем
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-639EA2F6
+  title: "Контроль ошибок фоновых задач: Исчерпание попыток"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Контроль ошибок фоновых задач
+    scenario: Исчерпание попыток
+    sha256: 65b7c30d1c057214b24c6ca89569b0880e7f8db0162b6a54be58879a9a6ded48
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL обнаруживать зависшие задачи, исчерпанные попытки и превышение
+      порога задержки выполнения. Она SHALL сохранять безопасную диагностику и
+      подавать операционный сигнал. Повторный запуск SHALL сохранять проверку
+      расписания и идемпотентность; окончательная ошибка SHALL NOT исчезать незаметно.
+  steps:
+    - action: задача перехода исчерпала разрешённые попытки
+      expected: ошибка доступна для разбора и управляемого повтора, а оператор получает сигнал
+        периодическая сверка не обнуляет счётчик попыток и не создаёт бесконечные дубли
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-BC0DB8A4
+  title: "Контроль ошибок фоновых задач: Зависший исполнитель"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Контроль ошибок фоновых задач
+    scenario: Зависший исполнитель
+    sha256: 6de79dc1d1824faa94e2d608367e831ba4e5d204d7720595baea62af6b345b94
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL обнаруживать зависшие задачи, исчерпанные попытки и превышение
+      порога задержки выполнения. Она SHALL сохранять безопасную диагностику и
+      подавать операционный сигнал. Повторный запуск SHALL сохранять проверку
+      расписания и идемпотентность; окончательная ошибка SHALL NOT исчезать незаметно.
+  steps:
+    - action: исполнитель перестал подтверждать владение задачей и срок владения истёк
+      expected: задача может быть повторно обработана с теми же проверками статуса и расписания
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-37C00F8E
+  title: "Контроль ошибок фоновых задач: Безопасная диагностика"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Контроль ошибок фоновых задач
+    scenario: Безопасная диагностика
+    sha256: 226e02809799d5ca003ad781c8754873b6002cd3bb49c988e89f637eae00c473
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL обнаруживать зависшие задачи, исчерпанные попытки и превышение
+      порога задержки выполнения. Она SHALL сохранять безопасную диагностику и
+      подавать операционный сигнал. Повторный запуск SHALL сохранять проверку
+      расписания и идемпотентность; окончательная ошибка SHALL NOT исчезать незаметно.
+  steps:
+    - action: задача завершилась ошибкой
+      expected: диагностика позволяет связать задачу, встречу и попытку без текстов переписки, токенов и
+        данных сессии
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-E79450F5
+  title: "Сверка просроченных встреч: Пропущенная задача"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Сверка просроченных встреч
+    scenario: Пропущенная задача
+    sha256: 562e347256efaecef88156ab91266fa7e35a192507d6d1481fbc846b4d2e0877
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при запуске и периодически проверять встречи `upcoming`
+      с наступившим сроком перехода, без пользовательских запросов. Для отсутствующей
+      задачи она SHALL безопасно восстановить обработку актуального расписания.
+      Сверка SHALL NOT создавать дубли или обходить проверки обработчика перехода.
+      Ошибки и отсутствие успешных запусков сверки SHALL обнаруживаться мониторингом.
+  steps:
+    - action: срок предстоящей встречи наступил, а задача текущего расписания отсутствует
+      expected: сверка восстанавливает задачу, и обычный обработчик сохраняет `past`
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-2BA2A9C4
+  title: "Сверка просроченных встреч: Параллельные проходы"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Сверка просроченных встреч
+    scenario: Параллельные проходы
+    sha256: dbbc8783981f9dd9b9209711b7f954a1516268fc43cd5735187cdbfef547d161
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при запуске и периодически проверять встречи `upcoming`
+      с наступившим сроком перехода, без пользовательских запросов. Для отсутствующей
+      задачи она SHALL безопасно восстановить обработку актуального расписания.
+      Сверка SHALL NOT создавать дубли или обходить проверки обработчика перехода.
+      Ошибки и отсутствие успешных запусков сверки SHALL обнаруживаться мониторингом.
+  steps:
+    - action: два прохода сверки одновременно обнаружили одну встречу
+      expected: восстанавливается одна задача для её текущей версии расписания
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-B0424312
+  title: "Сверка просроченных встреч: Задача уже обрабатывается"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Сверка просроченных встреч
+    scenario: Задача уже обрабатывается
+    sha256: e4669bdd8a586a89a799f2b7a8743962fdb47fa6308e8eff2bd03018c558892f
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при запуске и периодически проверять встречи `upcoming`
+      с наступившим сроком перехода, без пользовательских запросов. Для отсутствующей
+      задачи она SHALL безопасно восстановить обработку актуального расписания.
+      Сверка SHALL NOT создавать дубли или обходить проверки обработчика перехода.
+      Ошибки и отсутствие успешных запусков сверки SHALL обнаруживаться мониторингом.
+  steps:
+    - action: сверка нашла просроченную встречу с выполняющейся или ожидающей повтора задачей
+      expected: она не создаёт дубликат и сохраняет действующие ограничения повторов
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-40B61FAA
+  title: "Сверка просроченных встреч: Перенос во время сверки"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Сверка просроченных встреч
+    scenario: Перенос во время сверки
+    sha256: 6a54cebb87638438ed635357186909b6a19089218a10989eb4d519614177ca1a
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при запуске и периодически проверять встречи `upcoming`
+      с наступившим сроком перехода, без пользовательских запросов. Для отсутствующей
+      задачи она SHALL безопасно восстановить обработку актуального расписания.
+      Сверка SHALL NOT создавать дубли или обходить проверки обработчика перехода.
+      Ошибки и отсутствие успешных запусков сверки SHALL обнаруживаться мониторингом.
+  steps:
+    - action: организатор перенёс встречу после выборки просроченных записей
+      expected: повторная проверка в транзакции исключает восстановление устаревшего перехода
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-D15ECA8B
+  title: "Сверка просроченных встреч: Сбой сверки"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Сверка просроченных встреч
+    scenario: Сбой сверки
+    sha256: 437c12d0f6f98baaed6bd8c469dcb614e8b8cca5f5927dff3e1ce1857f6d5376
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL при запуске и периодически проверять встречи `upcoming`
+      с наступившим сроком перехода, без пользовательских запросов. Для отсутствующей
+      задачи она SHALL безопасно восстановить обработку актуального расписания.
+      Сверка SHALL NOT создавать дубли или обходить проверки обработчика перехода.
+      Ошибки и отсутствие успешных запусков сверки SHALL обнаруживаться мониторингом.
+  steps:
+    - action: сверка завершается ошибкой или перестаёт успешно запускаться дольше настроенного порога
+      expected: мониторинг показывает проблему, а последующий успешный проход обрабатывает накопившиеся
+        записи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-133F2EBF
+  title: "История сохраняет существующие права: Переписка после смены раздела"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: История сохраняет существующие права
+    scenario: Переписка после смены раздела
+    sha256: eaba41da2837f2d709de1307b214a656c3f4158dd70d2637680391487cc32fd2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Переход в «Прошедшие» SHALL сохранять статус встречи и менять раздел её отображения.
+      Он SHALL NOT менять правила приглашения, RSVP, чтения и отправки сообщений,
+      редактирования организатором или включения встречи в личный раздел.
+      Этот этап SHALL NOT вводить время окончания, отдельное завершение встречи,
+      статус текущей встречи или новые возможности истории.
+  steps:
+    - action: встреча стала прошедшей, а участник сохранил ответ «Приду»
+      expected: ему доступны прежняя переписка и отправка сообщений
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-FF2F37CB
+  title: "История сохраняет существующие права: Смена ответа в истории"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: История сохраняет существующие права
+    scenario: Смена ответа в истории
+    sha256: c5e02c471acf586f380e58be7a8738039239d57ac936b5e53ef292e0bce1380a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Переход в «Прошедшие» SHALL сохранять статус встречи и менять раздел её отображения.
+      Он SHALL NOT менять правила приглашения, RSVP, чтения и отправки сообщений,
+      редактирования организатором или включения встречи в личный раздел.
+      Этот этап SHALL NOT вводить время окончания, отдельное завершение встречи,
+      статус текущей встречи или новые возможности истории.
+  steps:
+    - action: участник прошедшей встречи сохраняет «Возможно» или «Не смогу»
+      expected: доступ к чату закрывается и встреча исчезает из его личного раздела по прежнему правилу
+        его собственный ответ остаётся доступным по приглашению
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-2BE34CCA
+  title: "История сохраняет существующие права: Перенос встречи организатором"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: История сохраняет существующие права
+    scenario: Перенос встречи организатором
+    sha256: a019b578aad6d95f660408becedcae0785d5ad49950b797ca9b6acc7a497e0a1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Переход в «Прошедшие» SHALL сохранять статус встречи и менять раздел её отображения.
+      Он SHALL NOT менять правила приглашения, RSVP, чтения и отправки сообщений,
+      редактирования организатором или включения встречи в личный раздел.
+      Этот этап SHALL NOT вводить время окончания, отдельное завершение встречи,
+      статус текущей встречи или новые возможности истории.
+  steps:
+    - action: организатор изменяет дату так, что она относится к другому разделу
+      expected: список, календарь и счётчики отражают новую дату и раздел без создания второй встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-08B41F50
+  title: "Список и календарь: Смена вида истории"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Список и календарь
+    scenario: Смена вида истории
+    sha256: 7b861dfd151c9d55bf93c2105a7afcf6ce7414ca9e2c773b15215aa4e926ef1d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять два вида личных встреч: список и календарь.
+      Они SHALL отражать один набор встреч; переключение вида SHALL сохранять
+      выбранный раздел предстоящих или прошедших событий.
+  steps:
+    - action: пользователь переключает прошедшие встречи из списка в календарь
+      expected: сохраняется раздел прошедших встреч с тем же набором событий
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-DCA296C2
+  title: "Встречи выбранного дня: Разные пояса устройств"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Встречи выбранного дня
+    scenario: Разные пояса устройств
+    sha256: 9dae33cb9899b9b2b9c826735171e34ccf6d5e17516899006d5ee5a55305bb6b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL позволять выбирать день и переходить между месяцами.
+      Система SHALL показывать все встречи выбранного дня с названием и временем,
+      а при их отсутствии — понятное пустое состояние. Дата ячейки и время
+      карточки SHALL определяться по часовому поясу самой встречи. Число встреч
+      на календаре SHALL учитывать весь выбранный диапазон, а не только первую
+      страницу списка. Загрузка очередной страницы SHALL NOT выдаваться за
+      отсутствие остальных встреч.
+  steps:
+    - action: участники в разных часовых поясах открывают календарь одной встречи
+      expected: она стоит под датой начала в часовом поясе встречи у каждого участника
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-8729E653
+  title: "Встречи выбранного дня: Встреч больше размера страницы"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Встречи выбранного дня
+    scenario: Встреч больше размера страницы
+    sha256: a556b6a84429c4b8e38361dcda718f24452f1ca9e138b919771403712989af50
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL позволять выбирать день и переходить между месяцами.
+      Система SHALL показывать все встречи выбранного дня с названием и временем,
+      а при их отсутствии — понятное пустое состояние. Дата ячейки и время
+      карточки SHALL определяться по часовому поясу самой встречи. Число встреч
+      на календаре SHALL учитывать весь выбранный диапазон, а не только первую
+      страницу списка. Загрузка очередной страницы SHALL NOT выдаваться за
+      отсутствие остальных встреч.
+  steps:
+    - action: в выбранном диапазоне встреч больше лимита одной страницы API
+      expected: отметки дней отражают все доступные встречи диапазона, а встречи дня можно догрузить
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-316128BD
+  title: "Встречи выбранного дня: Несколько встреч за день"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Встречи выбранного дня
+    scenario: Несколько встреч за день
+    sha256: 5c6850f82d8c88e1de79b14ed7b9b33ce3c3ded407c2287d9944272982a6466a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL позволять выбирать день и переходить между месяцами.
+      Система SHALL показывать все встречи выбранного дня с названием и временем,
+      а при их отсутствии — понятное пустое состояние. Дата ячейки и время
+      карточки SHALL определяться по часовому поясу самой встречи. Число встреч
+      на календаре SHALL учитывать весь выбранный диапазон, а не только первую
+      страницу списка. Загрузка очередной страницы SHALL NOT выдаваться за
+      отсутствие остальных встреч.
+  steps:
+    - action: на выбранный день назначены две встречи
+      expected: обе доступны для просмотра и каждая открывает соответствующую встречу
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-ACB261EF
+  title: "Встречи выбранного дня: День без встреч"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Встречи выбранного дня
+    scenario: День без встреч
+    sha256: b6cf587a21eeb36f678d2cbd933ce612123af7b9828a43b24befadc5720fc70d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL позволять выбирать день и переходить между месяцами.
+      Система SHALL показывать все встречи выбранного дня с названием и временем,
+      а при их отсутствии — понятное пустое состояние. Дата ячейки и время
+      карточки SHALL определяться по часовому поясу самой встречи. Число встреч
+      на календаре SHALL учитывать весь выбранный диапазон, а не только первую
+      страницу списка. Загрузка очередной страницы SHALL NOT выдаваться за
+      отсутствие остальных встреч.
+  steps:
+    - action: на выбранный день встреч нет
+      expected: система сообщает об этом без вымышленной карточки события
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-DF554EBC
+  title: "Встречи без итоговой даты: Дата ещё выбирается"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Встречи без итоговой даты
+    scenario: Дата ещё выбирается
+    sha256: f1d6281626f7882229bac4f51e38c197fc06e163df1b9c548d62c75f4656a65f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать встречи без итоговой даты отдельно от датированных
+      и SHALL NOT назначать им произвольный день календаря. Они SHALL NOT входить
+      в «Прошедшие» или счётчики датированных встреч. Список без даты и его счётчик
+      SHALL оставаться доступными независимо от выбранного раздела.
+      Создание опроса даты остаётся отдельным этапом; календарь SHALL обрабатывать
+      уже предусмотренный nullable `starts_at` без добавления такого способа создания.
+  steps:
+    - action: у встречи идёт выбор времени и итоговая дата не назначена
+      expected: встреча доступна отдельно с указанием выбора даты и не занимает вымышленный день
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-9A6FBD0D
+  title: "Пустое состояние отличается от ошибки: Новый профиль"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Пустое состояние отличается от ошибки
+    scenario: Новый профиль
+    sha256: de0af1e13968ff8fd2bcda5cf443188fb0e8fd3f8afd62e0111396bc54adbc9b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL различать загрузку, ошибку получения встреч и успешно загруженный
+      пустой раздел. Ошибка SHALL предоставлять повторную попытку, а новый пустой
+      раздел SHALL позволять создать встречу.
+  steps:
+    - action: личные встречи успешно загружены и у нового пользователя их нет
+      expected: система показывает пустое состояние и действие создания встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-043034FD
+  title: "Пустое состояние отличается от ошибки: Ошибка загрузки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Пустое состояние отличается от ошибки
+    scenario: Ошибка загрузки
+    sha256: 570c2f7ad8b2fd7195278b45e1357a5537c63b978b3b04d7be43e89248308b8a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL различать загрузку, ошибку получения встреч и успешно загруженный
+      пустой раздел. Ошибка SHALL предоставлять повторную попытку, а новый пустой
+      раздел SHALL позволять создать встречу.
+  steps:
+    - action: получить личные встречи не удалось
+      expected: система показывает ошибку и повтор, не утверждая, что встреч нет
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-FE4C30B8
+  title: "Актуальность открытого календаря: Открытый экран в полночь"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Актуальность открытого календаря
+    scenario: Открытый экран в полночь
+    sha256: 2de03a29722fef3b3f86cf90a2e1164463392de295a1b7e90a7dca1d2a7fb48d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL обновлять данные при наступлении серверной границы перехода
+      в историю, возврате приложения на экран и после изменений даты или RSVP.
+      Обновление SHALL сохранять выбранный вид, раздел, месяц и день. Устаревший
+      ответ предыдущего диапазона SHALL NOT заменять текущий экран.
+  steps:
+    - action: открытый календарь достигает границы перехода встречи в историю
+      expected: данные и счётчики обновляются; выбранный день остаётся прежним и при необходимости
+        становится пустым
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-8609AC3B
+  title: "Актуальность открытого календаря: Изменение между страницами"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Актуальность открытого календаря
+    scenario: Изменение между страницами
+    sha256: 22b7a025de9a17e2e3caea71d8e104f935fe62be89bcc578fb18df79d838efc3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL обновлять данные при наступлении серверной границы перехода
+      в историю, возврате приложения на экран и после изменений даты или RSVP.
+      Обновление SHALL сохранять выбранный вид, раздел, месяц и день. Устаревший
+      ответ предыдущего диапазона SHALL NOT заменять текущий экран.
+  steps:
+    - action: между страницами календаря изменился доступный набор или сохранённый статус встречи
+      expected: сервер сообщает о необходимости обновить выборку, а клиент заново загружает её без
+        сохранения устаревших страниц выбранные раздел, месяц и день остаются прежними
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-81E87CAE
+  title: "Актуальность открытого календаря: Возврат из встречи"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Актуальность открытого календаря
+    scenario: Возврат из встречи
+    sha256: ef45dd06c5205d6116283290682f4fd64a14bbed0ade01ac0f3a5c95f4eef347
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL обновлять данные при наступлении серверной границы перехода
+      в историю, возврате приложения на экран и после изменений даты или RSVP.
+      Обновление SHALL сохранять выбранный вид, раздел, месяц и день. Устаревший
+      ответ предыдущего диапазона SHALL NOT заменять текущий экран.
+  steps:
+    - action: пользователь возвращается из деталей встречи в личный календарь
+      expected: сохраняются выбранные раздел, месяц и день, а данные актуализируются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-3078FA7A
+  title: "Одно действие создания в личных встречах: Пустой список"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Пустой список
+    sha256: 1421bab4a9a9781b8efb203a45e739da103c99ca98486792f13c9495721304eb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: личный список успешно загружен и встреч нет
+      expected: одна кнопка создания находится в пустом состоянии, а шапка её не дублирует
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-33C30BAA
+  title: "Одно действие создания в личных встречах: Непустой список"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Непустой список
+    sha256: 9235d8b9091e71538ada16433519c96da2f738df1c3956e4df608347552eadac
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: в личном списке есть встречи
+      expected: одна кнопка создания находится в шапке
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-C9EF742E
+  title: "Одно действие создания в личных встречах: Загрузка и ошибка"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Загрузка и ошибка
+    sha256: ed9c0f420538ac2f06fb989c5146e427e96972f8ceec79b567e8e88a0f9468aa
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: мобильный календарь загружается или запрос завершился ошибкой
+      expected: действие создания остаётся в закреплённой верхней панели
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-579BD1E0
+  title: "Одно действие создания в личных встречах: Пустой календарь нового профиля"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Пустой календарь нового профиля
+    sha256: beb722782abb1a4cad030c21a679b9862e6fd53c9e050739b55d9191e3740a9a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: пользователь открыл мобильный календарь без единой встречи и выбрал день
+      expected: одна кнопка создания находится в закреплённой верхней панели она видна сразу и при
+        прокрутке, а под сеткой нет её дубля
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-3DD0444B
+  title: "Одно действие создания в личных встречах: Десктопный календарь пустого аккаунта"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Десктопный календарь пустого аккаунта
+    sha256: 1abd4615d52d01fee9a4e8df986fdbeea3f23e0710d2d3048b5ace4ff98cec2e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: пользователь открыл широкий календарь с панелью дня справа
+      expected: единственная кнопка создания находится в правом пустом состоянии шапка не закреплена и не
+        дублирует кнопку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-569071FD
+  title: "Одно действие создания в личных встречах: Пустой день при непустой истории"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Одно действие создания в личных встречах
+    scenario: Пустой день при непустой истории
+    sha256: 67392bbae54d96fa54620b8bdc8bd3db6ad129952dfaa2d9888c0605b5d2c601
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL показывать ровно одно действие создания встречи.
+      В мобильном календаре оно SHALL находиться в закреплённой верхней панели
+      без прокрутки. На десктопе и в списке для пустого аккаунта действие SHALL
+      находиться в пустом состоянии; иначе — в шапке. Десктопный календарь SHALL
+      сохранять блок создания справа и незакреплённую шапку.
+      Навигация, пустой день и раздел SHALL NOT дублировать это действие.
+  steps:
+    - action: на выбранный день нет встреч, но в личном наборе есть прошедшая встреча
+      expected: создание доступно только в шапке, а день показывает сообщение об отсутствии встреч
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-8D68235F
+  title: "Возврат к сегодняшнему дню: Возврат из другого месяца"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Возврат к сегодняшнему дню
+    scenario: Возврат из другого месяца
+    sha256: f4b73bc07aed439355759b80d3f31cec584dff3884ade0476c9e943367056a47
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL предоставлять действие «Сегодня», которое открывает текущий
+      месяц, выбирает сегодняшний день в поясе устройства и переводит на его ячейку
+      клавиатурный фокус в вебе. Выбранный раздел SHALL сохраняться. Действие SHALL
+      выходить из группы без даты к встречам выбранного дня.
+  steps:
+    - action: пользователь нажимает «Сегодня» после просмотра другого месяца
+      expected: открыт текущий месяц и выбран сегодняшний день без смены раздела в вебе фокус находится на
+        ячейке сегодняшнего дня
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-D18FE28E
+  title: "Создание из выбранного дня: Создание из пустого дня"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Создание из выбранного дня
+    scenario: Создание из пустого дня
+    sha256: 2f6f4055abf360290b6f07652de255d5a384ccb605a67937b1aeb23b0f75ae7e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      В календаре действие создания SHALL открывать форму с выбранной календарной
+      датой. Правило SHALL действовать для единственной кнопки в текущей компоновке.
+      Система SHALL NOT подставлять произвольное время. Если есть черновик, выбранная
+      дата SHALL заменить только его дату, сохранив остальные поля и часовой пояс.
+      Правки пользователя в форме SHALL сохраняться при перезагрузке.
+      Из списка и группы без даты выбранный день календаря SHALL NOT применяться.
+  steps:
+    - action: пользователь выбрал 24 октября и нажал создание в календаре
+      expected: форма содержит 24 октября, а ещё не заданное время остаётся пустым
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-0FE7E758
+  title: "Создание из выбранного дня: Правка даты в форме"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Создание из выбранного дня
+    scenario: Правка даты в форме
+    sha256: 96bf309cd0b18ac2f6db37aff89c7be048db76d2b133b23cf2ab82004d52d60f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      В календаре действие создания SHALL открывать форму с выбранной календарной
+      датой. Правило SHALL действовать для единственной кнопки в текущей компоновке.
+      Система SHALL NOT подставлять произвольное время. Если есть черновик, выбранная
+      дата SHALL заменить только его дату, сохранив остальные поля и часовой пояс.
+      Правки пользователя в форме SHALL сохраняться при перезагрузке.
+      Из списка и группы без даты выбранный день календаря SHALL NOT применяться.
+  steps:
+    - action: после перехода из календаря пользователь изменил дату в форме и перезагрузил страницу
+      expected: сохраняется новая дата, а исходный выбор календаря её не перезаписывает
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-6239968D
+  title: "Создание из выбранного дня: Существующий черновик"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Создание из выбранного дня
+    scenario: Существующий черновик
+    sha256: d160907a1613182c2716cdeb4bd6eba46a4a4cef53d618dfd7b4843e58a21b16
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      В календаре действие создания SHALL открывать форму с выбранной календарной
+      датой. Правило SHALL действовать для единственной кнопки в текущей компоновке.
+      Система SHALL NOT подставлять произвольное время. Если есть черновик, выбранная
+      дата SHALL заменить только его дату, сохранив остальные поля и часовой пояс.
+      Правки пользователя в форме SHALL сохраняться при перезагрузке.
+      Из списка и группы без даты выбранный день календаря SHALL NOT применяться.
+  steps:
+    - action: пользователь открыл создание из другого дня календаря при сохранённом черновике
+      expected: дата меняется на выбранную, а остальные данные черновика сохраняются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-D20DFBB0
+  title: "Создание из выбранного дня: Загрузка выбранного дня"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Создание из выбранного дня
+    scenario: Загрузка выбранного дня
+    sha256: 0dfbd8252a0176013604ac83e1c9e499a25139bddfb9fa7e7c61019a29eba0bf
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      В календаре действие создания SHALL открывать форму с выбранной календарной
+      датой. Правило SHALL действовать для единственной кнопки в текущей компоновке.
+      Система SHALL NOT подставлять произвольное время. Если есть черновик, выбранная
+      дата SHALL заменить только его дату, сохранив остальные поля и часовой пояс.
+      Правки пользователя в форме SHALL сохраняться при перезагрузке.
+      Из списка и группы без даты выбранный день календаря SHALL NOT применяться.
+  steps:
+    - action: у пустого аккаунта меняется выбранный день и запрос ещё не завершился
+      expected: строка счётчика сохраняет место, а кнопка создания не меняет положение
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-D4341E32
+  title: "Календарная дата без точного времени: Встреча без времени"
+  lifecycle: active
+  level: unit
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Календарная дата без точного времени
+    scenario: Встреча без времени
+    sha256: beae38381f52829ecbabf4cd634f72bc562bf8b58b6ac4cfa7bbadcff61d6445
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Встреча с известной датой и незаданным временем SHALL отображаться под этой
+      датой, а не в группе «Без даты». Переход в историю SHALL выполняться
+      в начале следующего дня по поясу встречи. Реализация относится к этапу 10.
+  steps:
+    - action: встреча создана на 24 октября в поясе Europe/Moscow без точного времени
+      expected: она отображается в календаре 24 октября без вымышленного часа начала отложенная задача
+        переводит её в историю 25 октября в 00:00 по Москве
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-4F4A9BEB
+  title: "Приглашения с ответом Возможно: Вернуться к приглашению без поиска ссылки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Приглашения с ответом Возможно
+    scenario: Вернуться к приглашению без поиска ссылки
+    sha256: 9dcb0ca633678f73069436416b152e803b388afa90856ebd24afccd5a1f7f05e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять вкладку «Приглашения» со встречами, на которые
+      пользователь ответил «Возможно». Выбор SHALL открывать приглашение и смену
+      собственного ответа без доступа к чату. После сохранённого «Приду» встреча
+      SHALL переходить в личные встречи с доступом к чату; после «Не смогу» SHALL
+      исчезать из этой вкладки. Неотвеченные приглашения SHALL NOT входить в неё.
+  steps:
+    - action: пользователь ответил «Возможно» и позже открывает «Приглашения»
+      expected: встреча видна в списке, можно открыть приглашение и изменить ответ переписка и опрос даты
+        остаются недоступны
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-516FFD79
+  title: "Приглашения с ответом Возможно: Решил прийти"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Приглашения с ответом Возможно
+    scenario: Решил прийти
+    sha256: 3790fed15992cd4867b336422f8fd71ce279dd1ed3f8e8a4a21a0b0972875aca
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять вкладку «Приглашения» со встречами, на которые
+      пользователь ответил «Возможно». Выбор SHALL открывать приглашение и смену
+      собственного ответа без доступа к чату. После сохранённого «Приду» встреча
+      SHALL переходить в личные встречи с доступом к чату; после «Не смогу» SHALL
+      исчезать из этой вкладки. Неотвеченные приглашения SHALL NOT входить в неё.
+  steps:
+    - action: пользователь сохраняет «Приду» из вкладки «Приглашения»
+      expected: встреча исчезает из этой вкладки и появляется в «Моих встречах», чат открывается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-E30711B2
+  title: "Приглашения с ответом Возможно: Участник снова сомневается"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Приглашения с ответом Возможно
+    scenario: Участник снова сомневается
+    sha256: a85f7a915445d5ebd7e005fb50a0bb8fb6759d239f3cc4e36fa854979b2cc8dd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять вкладку «Приглашения» со встречами, на которые
+      пользователь ответил «Возможно». Выбор SHALL открывать приглашение и смену
+      собственного ответа без доступа к чату. После сохранённого «Приду» встреча
+      SHALL переходить в личные встречи с доступом к чату; после «Не смогу» SHALL
+      исчезать из этой вкладки. Неотвеченные приглашения SHALL NOT входить в неё.
+  steps:
+    - action: участник меняет «Приду» на «Возможно»
+      expected: чат закрывается, встреча переходит из личных встреч в «Приглашения»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-12B3545C
+  title: "Приглашения с ответом Возможно: Не удалось изменить ответ"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/personal-meetings/spec.md
+    requirement: Приглашения с ответом Возможно
+    scenario: Не удалось изменить ответ
+    sha256: d75e37f8404b643d49872da3aeed5ed3bee382aac464ad53e5958662e42d383d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять вкладку «Приглашения» со встречами, на которые
+      пользователь ответил «Возможно». Выбор SHALL открывать приглашение и смену
+      собственного ответа без доступа к чату. После сохранённого «Приду» встреча
+      SHALL переходить в личные встречи с доступом к чату; после «Не смогу» SHALL
+      исчезать из этой вкладки. Неотвеченные приглашения SHALL NOT входить в неё.
+  steps:
+    - action: сохранение нового ответа завершилось ошибкой
+      expected: встреча остаётся в разделе, соответствующем последнему сохранённому ответу, доступ к чату
+        не расширяется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-170C9AF2
+  title: "Навигация между основными разделами: Навигация на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Навигация между основными разделами
+    scenario: Навигация на телефоне
+    sha256: cd57f6053a5c8104017cffeb009a0920a28fdb51061d011616a6fcac9ec1082f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять разделы встреч, приглашений и профиля. На широком
+      web встречи/приглашения SHALL находиться слева, профиль — внизу. На телефоне
+      нижняя панель SHALL отображаться только на основном списке/календаре встреч,
+      списке приглашений и основном профиле. На вложенных экранах и онбординге она
+      SHALL NOT отображаться или оставлять резерв. Возврат SHALL сохранять раздел.
+  steps:
+    - action: пользователь открывает основной список/календарь встреч, список приглашений или основной
+        профиль
+      expected: видит нижнюю панель с подписями и выделением текущего раздела последний элемент контента
+        не перекрыт панелью
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-74A5E939
+  title: "Навигация между основными разделами: Вложенный экран без нижней панели"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Навигация между основными разделами
+    scenario: Вложенный экран без нижней панели
+    sha256: 33ea7f33a3802b026e62ca2d879fd6f1fcf5f2f5c152ad7983b0a7ca0543421a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять разделы встреч, приглашений и профиля. На широком
+      web встречи/приглашения SHALL находиться слева, профиль — внизу. На телефоне
+      нижняя панель SHALL отображаться только на основном списке/календаре встреч,
+      списке приглашений и основном профиле. На вложенных экранах и онбординге она
+      SHALL NOT отображаться или оставлять резерв. Возврат SHALL сохранять раздел.
+  steps:
+    - action: пользователь открывает создание/редактирование, отдельное приглашение, чат, Share, загрузку,
+        альбом, сетку, полное фото, обращение, помощь, сведения о приложении или документ
+      expected: нижняя панель отсутствует на mobile web, iOS и Android экран использует системную
+        безопасную область без дополнительного отступа под скрытую панель явный Back и
+        системная/браузерная история возвращают к предыдущему экрану
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-57D734C1
+  title: "Навигация между основными разделами: Возврат к основному разделу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Навигация между основными разделами
+    scenario: Возврат к основному разделу
+    sha256: 77d3155c76d4d611925c5de07c13bfc2311e85901d13246df99cf0f15ababac6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять разделы встреч, приглашений и профиля. На широком
+      web встречи/приглашения SHALL находиться слева, профиль — внизу. На телефоне
+      нижняя панель SHALL отображаться только на основном списке/календаре встреч,
+      списке приглашений и основном профиле. На вложенных экранах и онбординге она
+      SHALL NOT отображаться или оставлять резерв. Возврат SHALL сохранять раздел.
+  steps:
+    - action: пользователь закрывает вложенный экран и возвращается к списку встреч, приглашений или
+        профилю
+      expected: нижняя панель снова отображается с правильным выбранным пунктом содержимое, выбранный
+        период и прокрутка основного раздела сохраняются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-155758C7
+  title: "Навигация между основными разделами: Возврат из чата"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Навигация между основными разделами
+    scenario: Возврат из чата
+    sha256: b5a8c5ece9e7d58146c655b516a953e225cd0d9ea5efb65b60f5037043cfa9c5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять разделы встреч, приглашений и профиля. На широком
+      web встречи/приглашения SHALL находиться слева, профиль — внизу. На телефоне
+      нижняя панель SHALL отображаться только на основном списке/календаре встреч,
+      списке приглашений и основном профиле. На вложенных экранах и онбординге она
+      SHALL NOT отображаться или оставлять резерв. Возврат SHALL сохранять раздел.
+  steps:
+    - action: пользователь возвращается из встречи, открытой в календаре
+      expected: восстанавливаются вид, период, месяц и выбранный день
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-17F34870
+  title: "Постоянное пояснение приглашений: Заполненный список"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Постоянное пояснение приглашений
+    scenario: Заполненный список
+    sha256: 7df8f8758f9b18aefd99237e2e23f579486456eb00abe8f7973017178ffcf8b7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Страница «Приглашения» SHALL объяснять, что содержит сохранённые ответы
+      «Возможно», и возможность изменить ответ. Пояснение SHALL оставаться видимым
+      при загрузке, ошибке, пустом и заполненном списке. Состав раздела SHALL
+      сохранять правила invitation-rsvp и personal-meetings базового изменения.
+  steps:
+    - action: есть приглашение с ответом «Возможно»
+      expected: под заголовком видно пояснение, а карточка открывает приглашение переписка не раскрывается
+        до подтверждённого «Приду»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-D671C5B8
+  title: "Постоянное пояснение приглашений: Пустой список"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Постоянное пояснение приглашений
+    scenario: Пустой список
+    sha256: bc4886adb7714c015a838da0096e1223a838d1e68617d666523063f2eecd05c9
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Страница «Приглашения» SHALL объяснять, что содержит сохранённые ответы
+      «Возможно», и возможность изменить ответ. Пояснение SHALL оставаться видимым
+      при загрузке, ошибке, пустом и заполненном списке. Состав раздела SHALL
+      сохранять правила invitation-rsvp и personal-meetings базового изменения.
+  steps:
+    - action: список успешно загружен без элементов
+      expected: постоянное пояснение не дублируется вторым абзацем пустого состояния
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-697C602C
+  title: "Содержательная карточка встречи: Встреча с шестью участниками"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Содержательная карточка встречи
+    scenario: Встреча с шестью участниками
+    sha256: 601f58619cceb25e939ab9505e306fd65c57177666b360f77ddb4608da5e47f0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Карточка SHALL показывать название, дату/время, место и краткий подтверждённый
+      состав перекрывающимися аватарами справа и количеством остальных. Имена SHALL
+      оставаться в доступных названиях/подсказках, роль организатора — обозначаться
+      небольшим символом с подписью для экранного диктора. Отсутствующие время,
+      место и аватар SHALL иметь честные состояния. Крупная заглушка обложки SHALL
+      NOT занимать место фотографии. Личные контакты SHALL NOT попадать в карточку.
+  steps:
+    - action: доступны шесть текущих участников
+      expected: карточка показывает несколько перекрывающихся аватаров и точное количество остальных на
+        узкой ширине аватары не перекрывают название и не создают горизонтальную прокрутку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-5B54DA87
+  title: "Содержательная карточка встречи: Встреча без времени и обложки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Содержательная карточка встречи
+    scenario: Встреча без времени и обложки
+    sha256: 6f5dfce0427a30aee15dbb329e826a32463bf12f37dde95b4844e40bedf8cd53
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Карточка SHALL показывать название, дату/время, место и краткий подтверждённый
+      состав перекрывающимися аватарами справа и количеством остальных. Имена SHALL
+      оставаться в доступных названиях/подсказках, роль организатора — обозначаться
+      небольшим символом с подписью для экранного диктора. Отсутствующие время,
+      место и аватар SHALL иметь честные состояния. Крупная заглушка обложки SHALL
+      NOT занимать место фотографии. Личные контакты SHALL NOT попадать в карточку.
+  steps:
+    - action: время не назначено и фото отсутствует
+      expected: видны дата, «время уточняем» и текстовые детали без вымышленного часа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-AA6FA112
+  title: "Альбом в карточке истории: Есть воспоминания"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Альбом в карточке истории
+    scenario: Есть воспоминания
+    sha256: 2b6542f79b675959c92610de55ae4bbe179d5067c0de84dd9a64423e8097abfa
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Карточка прошедшей встречи SHALL показывать превью и количество доступных
+      фотографий при наличии альбома. Вход в альбом SHALL отличаться от перехода в чат.
+  steps:
+    - action: участник открывает прошедшие встречи с фотографиями
+      expected: видит коллаж/превью и может открыть альбом или чат этой же встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-6BAF1838
+  title: "Цвет и движение карточки: Будний и выходной день"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Цвет и движение карточки
+    scenario: Будний и выходной день
+    sha256: d8ee37f482857fa9be888132d1ec2a654570f44a743ddb49b9e04d0f0845c6c6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Карточка SHALL использовать один цвет для будней и другой для субботы/воскресенья
+      по календарной дате в часовом поясе встречи. Цвет SHALL NOT быть единственным
+      носителем даты. Дата, обложка и аватары MAY слегка выходить за границы карточки,
+      не перекрывая соседей. На устройствах с мышью наведение SHALL давать мягкий
+      подъём карточки, обложки и раскрытие аватаров; уменьшение движения SHALL
+      отключать эти смещения. Произвольная смена цвета пользователем пока не входит
+      в объём.
+  steps:
+    - action: встречи назначены на пятницу и субботу в часовом поясе встречи
+      expected: пятничная карточка имеет сливовый тон, субботняя — серо-зелёный обе показывают текстовую
+        дату и день недели
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-53C0DC15
+  title: "Цвет и движение карточки: Мобильная навигация"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Цвет и движение карточки
+    scenario: Мобильная навигация
+    sha256: 856f9bd24da940e27d60104e842d1e72fa205013a34356d92f48ffdf23eeb3b8
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Карточка SHALL использовать один цвет для будней и другой для субботы/воскресенья
+      по календарной дате в часовом поясе встречи. Цвет SHALL NOT быть единственным
+      носителем даты. Дата, обложка и аватары MAY слегка выходить за границы карточки,
+      не перекрывая соседей. На устройствах с мышью наведение SHALL давать мягкий
+      подъём карточки, обложки и раскрытие аватаров; уменьшение движения SHALL
+      отключать эти смещения. Произвольная смена цвета пользователем пока не входит
+      в объём.
+  steps:
+    - action: пользователь выбирает соседний основной раздел на телефоне
+      expected: компактное выделение плавно перемещается внутри округлой нижней панели подпись и небольшая
+        иконка остаются выровненными, а при уменьшении движения переход мгновенный
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-40EE551B
+  title: "Единый дизайн списка и календаря: Сегодня на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Единый дизайн списка и календаря
+    scenario: Сегодня на телефоне
+    sha256: 264228bd1d42b88bebbbd0f4359efa60ea7597b0c99413f620c68e1b01d19c15
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL использовать те же карточки встреч и смысл цветов, что список.
+      Выбор месяца, дня, периода и действие «Сегодня» SHALL оставаться доступны на
+      широком и мобильном экране. «Сегодня» SHALL возвращать текущий месяц и выбирать
+      сегодняшнюю дату, не меняя выбранный период.
+  steps:
+    - action: пользователь просматривает другой месяц и нажимает «Сегодня» на узком экране
+      expected: календарь открывает текущий месяц и встречи сегодняшнего дня кнопка не скрыта и не
+        перекрыта соседними элементами
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-LIST-AB3EFA81
+  title: "Единый дизайн списка и календаря: Карточка выбранного дня"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md
+    requirement: Единый дизайн списка и календаря
+    scenario: Карточка выбранного дня
+    sha256: ceede6e4a8aac9136adf3768d95f9ffd26f62c474b9256d4b37d27d7bd297c89
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Календарь SHALL использовать те же карточки встреч и смысл цветов, что список.
+      Выбор месяца, дня, периода и действие «Сегодня» SHALL оставаться доступны на
+      широком и мобильном экране. «Сегодня» SHALL возвращать текущий месяц и выбирать
+      сегодняшнюю дату, не меняя выбранный период.
+  steps:
+    - action: пользователь выбирает день со встречей
+      expected: видит такую же обложку, символ организатора и перекрывающиеся аватары, как в списке
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

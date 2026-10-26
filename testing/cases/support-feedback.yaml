@@ -1,0 +1,291 @@
+- id: TC-SUPPORT-C47A0ACC
+  title: "Доступная форма обращения: Обращение без контакта"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Доступная форма обращения
+    scenario: Обращение без контакта
+    sha256: 38a2ab86465bc8ba15d2345a09e0ea2cf9ac360fc242602d278b75b4ed993d7c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Клиенты SHALL предоставлять действие «Сообщить о проблеме» в помощи/профиле,
+
+      а web — также в футере десктопного онбординга и боковой навигации. Из чата SHALL быть доступен
+      вход
+
+      через меню деталей. Форма SHALL содержать тему, описание и выбранный экран;
+
+      почта, один скриншот и сведения об устройстве SHALL быть необязательными.
+
+      Отсутствие почты SHALL NOT запрещать обращение.
+  steps:
+    - action: пользователь заполнил описание, не добавив почту и скриншот
+      expected: может отправить обращение и получить номер после подтверждения сервера
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-B8F9FF7E
+  title: "Доступная форма обращения: Недостаточное описание"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Доступная форма обращения
+    scenario: Недостаточное описание
+    sha256: ec2afa6976971f4ab9bb0f9e3a92eeb07ddab39eeda5686db4c8f933016816b2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Клиенты SHALL предоставлять действие «Сообщить о проблеме» в помощи/профиле,
+
+      а web — также в футере десктопного онбординга и боковой навигации. Из чата SHALL быть доступен
+      вход
+
+      через меню деталей. Форма SHALL содержать тему, описание и выбранный экран;
+
+      почта, один скриншот и сведения об устройстве SHALL быть необязательными.
+
+      Отсутствие почты SHALL NOT запрещать обращение.
+  steps:
+    - action: описание содержит менее 10 символов после обрезки крайних пробелов или более 3000
+      expected: форма показывает ошибку около поля и сохраняет введённое
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-689C3B5F
+  title: "Контроль передаваемых сведений: Добавить и убрать скриншот"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Контроль передаваемых сведений
+    scenario: Добавить и убрать скриншот
+    sha256: bea2c6aac1f111ddf0e88d85d723396bae536200cf7a6cc96994922b4367a829
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Текст чата, cookie, токены и параметры приватных ссылок SHALL NOT автоматически
+      попадать в обращение. Скриншот SHALL добавляться только явным выбором файла;
+      диагностика SHALL быть выключена по умолчанию и перечислять состав до включения.
+      Форма SHALL давать ссылку на политику, без строки о получателе и канале доставки.
+  steps:
+    - action: пользователь выбирает PNG/JPEG/WebP до 5 МБ, а затем нажимает «Убрать»
+      expected: видит предпросмотр до удаления, а файл не входит в отправку после удаления
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-703D40F6
+  title: "Контроль передаваемых сведений: Без диагностических сведений"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Контроль передаваемых сведений
+    scenario: Без диагностических сведений
+    sha256: 1ae8b4724afcbf203be9f088a4e73d7e6c76e222a601345b9c9de2846868885f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Текст чата, cookie, токены и параметры приватных ссылок SHALL NOT автоматически
+      попадать в обращение. Скриншот SHALL добавляться только явным выбором файла;
+      диагностика SHALL быть выключена по умолчанию и перечислять состав до включения.
+      Форма SHALL давать ссылку на политику, без строки о получателе и канале доставки.
+  steps:
+    - action: дополнительный переключатель не включён
+      expected: обращение не включает браузер и размер экрана содержит только необходимые служебные ID и
+        явно заполненные поля версия приложения передаётся только при включённой диагностике
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-E6C8467F
+  title: "Надёжное принятие обращения: Потерян ответ"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Надёжное принятие обращения
+    scenario: Потерян ответ
+    sha256: 91e5532406980165efd44421a4605dc46722f563106b465812e8fb4c82c72b71
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL подтверждать успех только после принятия обращения сервером.
+      Повтор запроса с тем же ключом SHALL NOT создавать новый номер обращения.
+      При ошибке форма SHALL сохранять описание и выбранный файл в текущем сеансе,
+      показывать повтор и не обещать срок ответа. Ограничения SHALL проверяться сервером.
+  steps:
+    - action: сервер принял обращение, но клиент повторил запрос после потери ответа
+      expected: клиент получает прежний номер, а не новое обращение
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-751A99A9
+  title: "Надёжное принятие обращения: Сервер недоступен"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Надёжное принятие обращения
+    scenario: Сервер недоступен
+    sha256: 4ceddc990f6eb15315165fb4f49518b7d649a49a87e6a15f7334dbb52b6ce3d3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL подтверждать успех только после принятия обращения сервером.
+      Повтор запроса с тем же ключом SHALL NOT создавать новый номер обращения.
+      При ошибке форма SHALL сохранять описание и выбранный файл в текущем сеансе,
+      показывать повтор и не обещать срок ответа. Ограничения SHALL проверяться сервером.
+  steps:
+    - action: отправку не удалось подтвердить
+      expected: видны ошибка и повтор без потери заполненной формы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-SUPPORT-2B1C9FBF
+  title: "Доставка в выделенный канал поддержки: Telegram временно недоступен"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md
+    requirement: Доставка в выделенный канал поддержки
+    scenario: Telegram временно недоступен
+    sha256: 6cba433b28bf2c87b4740cfd4d34f6d0efc7401390eaa101b9918b9084768eb2
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Принятые обращения SHALL направляться ботом в отдельный настроенный Telegram-чат.
+      Секрет бота и ID назначения SHALL NOT передаваться клиенту. Сбой доставки SHALL
+      сохранять принятую запись и давать контролируемый повтор; логи SHALL NOT содержать
+      полный текст, скриншот, почту или секреты. Доступ к каналу SHALL быть ограничен.
+  steps:
+    - action: обращение принято, но отправка ботом завершилась временной ошибкой
+      expected: обращение остаётся в очереди доставки и повторяется с ограничением частоты пользователь не
+        обязан повторно заполнять форму
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []

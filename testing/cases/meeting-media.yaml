@@ -1,0 +1,290 @@
+- id: TC-MEDIA-82F4AC83
+  title: "Выбор и отправка вложений: Выбрать несколько фотографий"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Выбор и отправка вложений
+    scenario: Выбрать несколько фотографий
+    sha256: d4735fd614c8dbbfc46b58ad6706eb2616052467ab02e268bcd038935eebd44c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник с доступом к чату SHALL отправлять фото и файлы.
+      Клиенты SHALL показывать выбранные файлы до отправки и разрешать убрать их.
+      Фотографии SHALL NOT иметь отдельного поля подписи; текст можно отправить
+      обычным сообщением. Отмена системного выбора SHALL сохранять черновик сообщения.
+  steps:
+    - action: участник выбирает фото через плюс
+      expected: видит предпросмотр выбранного и может убрать отдельный кадр до отправки форма не содержит
+        поля подписи фото
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-2BD057D2
+  title: "Выбор и отправка вложений: Выбран документ"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Выбор и отправка вложений
+    scenario: Выбран документ
+    sha256: a866bbfcc43fc3eccf3cc1d3cbc699dd5e78bdb8fa03e8cebbb9e075a8682dfb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник с доступом к чату SHALL отправлять фото и файлы.
+      Клиенты SHALL показывать выбранные файлы до отправки и разрешать убрать их.
+      Фотографии SHALL NOT иметь отдельного поля подписи; текст можно отправить
+      обычным сообщением. Отмена системного выбора SHALL сохранять черновик сообщения.
+  steps:
+    - action: участник выбирает файл
+      expected: видит имя, тип, размер и необязательное поле «Подпись» до 2000 символов в чате файл
+        становится отдельным вложением с подписью, если она заполнена
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-D7DEA204
+  title: "Выбор и отправка вложений: Потерян ответ публикации документа с подписью"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Выбор и отправка вложений
+    scenario: Потерян ответ публикации документа с подписью
+    sha256: 8fff6cfb9a4fca26357caa9324dfae2c0efa767f6835a3b87ff1b06b23a2e98b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник с доступом к чату SHALL отправлять фото и файлы.
+      Клиенты SHALL показывать выбранные файлы до отправки и разрешать убрать их.
+      Фотографии SHALL NOT иметь отдельного поля подписи; текст можно отправить
+      обычным сообщением. Отмена системного выбора SHALL сохранять черновик сообщения.
+  steps:
+    - action: сервер сохранил документ с подписью, но клиент не получил ответ
+      expected: повтор использует тот же ключ и подпись, не создавая второе сообщение смена ключа не
+        позволяет изменить подпись уже опубликованного документа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-7640A673
+  title: "Надёжность загрузки: Один файл не загрузился"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Надёжность загрузки
+    scenario: Один файл не загрузился
+    sha256: 7426bc46618cc7ef70d46d7dc33c80516fca57c89e3e8a6632dc2595788e02eb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL различать подготовку, загрузку, успех и ошибку каждого файла.
+      Повтор SHALL NOT создавать дубликат вложения. При частичном успехе SHALL
+      сохраняться успешные файлы и повторяться только неудачные. Ограничения сервера
+      SHALL быть известны до отправки и проверяться повторно сервером.
+  steps:
+    - action: два фото сохранены, а третье не удалось загрузить
+      expected: видны два сохранённых и отдельная ошибка третьего с повтором
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-A8006656
+  title: "Надёжность загрузки: Формат или размер недопустим"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Надёжность загрузки
+    scenario: Формат или размер недопустим
+    sha256: 5c9ff49cbd7bec87dfa9dee0980bd4b7e4b14363933c1745f3b97c5f9e94f517
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL различать подготовку, загрузку, успех и ошибку каждого файла.
+      Повтор SHALL NOT создавать дубликат вложения. При частичном успехе SHALL
+      сохраняться успешные файлы и повторяться только неудачные. Ограничения сервера
+      SHALL быть известны до отправки и проверяться повторно сервером.
+  steps:
+    - action: выбран файл за пределами возвращённых сервером ограничений
+      expected: клиент объясняет ограничение, не теряя остальные выбранные файлы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-BC197682
+  title: "Закрытые медиа встречи: Ссылка переслана постороннему"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Закрытые медиа встречи
+    scenario: Ссылка переслана постороннему
+    sha256: d758a61a6bf01e6a9eaccc35c4f4e468041fad90961014de97505328e2eb5233
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Чтение, загрузка и выдача файлов SHALL проверять текущий доступ к чату.
+      Публичное приглашение и его обложка SHALL NOT раскрывать приватные вложения
+      или альбом. Потеря доступа SHALL закрывать предпросмотр и очищать локальный
+      кеш встречи; поздние ответы SHALL NOT восстанавливать его.
+  steps:
+    - action: пользователь без доступа запрашивает приватное фото или файл
+      expected: содержимое и метаданные вложения ему не возвращаются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MEDIA-F3CC5A3E
+  title: "Закрытые медиа встречи: Отказ от участия во время загрузки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Закрытые медиа встречи
+    scenario: Отказ от участия во время загрузки
+    sha256: a80e6031b917a5e718cfceda456f6f69e14fd89616658d979ba740b7caa0fd73
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Чтение, загрузка и выдача файлов SHALL проверять текущий доступ к чату.
+      Публичное приглашение и его обложка SHALL NOT раскрывать приватные вложения
+      или альбом. Потеря доступа SHALL закрывать предпросмотр и очищать локальный
+      кеш встречи; поздние ответы SHALL NOT восстанавливать его.
+  steps:
+    - action: доступ к чату отозван до завершения отправки
+      expected: публикация отклоняется; клиент не показывает её как успешную
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

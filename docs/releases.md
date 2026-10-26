@@ -263,7 +263,7 @@ App ID prefix проверяется по provisioning profile отдельно 
   build number, а не замену старого файла в Releases.
 
 Release workflow только публикует артефакты. Установщик для подготовленной ВМ —
-`infra/host/deploy-release.py`: проверка manifest/SHA256, безопасная распаковка,
+`infra/host/deploy-release.py`: проверка функциональной приёмки и manifest/SHA256, безопасная распаковка,
 миграция backend, атомарный symlink, restart/readiness и возврат прежнего symlink
 при неудаче. Выпуск в магазины остаётся отдельным действием.
 Домен, постоянное хранилище и реальные уведомления проверяются отдельно перед
@@ -272,3 +272,35 @@ Release workflow только публикует артефакты. Устан�
 Источники: [GitHub CLI release create](https://cli.github.com/manual/gh_release_create),
 [Android app signing](https://developer.android.com/studio/publish/app-signing),
 [Apple archive/export](https://help.apple.com/xcode/mac/current/en.lproj/deva1f2ab5a2.html).
+
+## Функциональная приёмка перед выкаткой
+
+Сборка и публикация кандидата для тестирования не выкатывают его пользователям.
+После получения точных артефактов примени [release-test](../.agents/skills/release-test/SKILL.md)
+по [процессу тестирования](../testing/README.md): все применимые кейсы из каталога,
+обязательные suites, ручной проход агентом. Не ограничивай регрессию diff релиза.
+Тесты demo/QA не принимают production/store-сборку. Перед продвижением в App Store
+или Google Play действует тот же процесс; пока продвижение ручное, это обязательный
+шаг оператора, а не автоматическая интеграция со store API.
+
+`qa:release-ready` повторно проверяется в актуальном checkout непосредственно
+перед выкаткой. Сохранить plan/run, evidence и созданный `acceptance.json` вместе
+с результатами выпуска. Receipt передаётся с доверенной рабочей машины, отдельно
+от неизменяемого набора артефактов. Он не является криптографической аттестацией:
+не принимай его от произвольного отправителя и не составляй вручную.
+
+```sh
+npm run qa:release-ready -- --plan <plan.json> --run <run.json> \
+  --artifact-dir <candidate-directory> --receipt <acceptance.json>
+# На ВМ, только после разрешённой выкатки:
+sudo python3 deploy-release.py <candidate-directory> --acceptance <acceptance.json>
+```
+
+Host deployer отказывает до изменения файлов сервиса, если receipt отсутствует,
+неполон или относится к другому manifest/артефакту/окружению. Его копия сохраняется
+рядом с установленным выпуском. Старые версии deployer на ВМ нужно обновить
+вместе с этим процессом; данный change сам по себе production не изменяет.
+Сохранённый receipt не заменяет повторную локальную проверку актуальности каталога.
+После выкатки проверь smoke/readiness и доступность; это дополняет, а не заменяет
+предрелизную приёмку. Публикация артефактов GitHub Releases остаётся доступной
+для организации тестирования до этого шага.

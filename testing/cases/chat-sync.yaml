@@ -1,0 +1,489 @@
+- id: TC-CHAT-SYNC-2D68FE69
+  title: "Подтверждённая последовательность обновлений: Своя отправка опередила получение чужой"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Подтверждённая последовательность обновлений
+    scenario: Своя отправка опередила получение чужой
+    sha256: 1b0831757e3ea8a0cd162aac226599266f25c4f5ed957b28d3190055e4e28d0d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL восстанавливать все доступные изменения после подтверждённого курсора. Получение
+      собственной отправки или метаданных о хвосте SHALL NOT подтверждать получение промежуточных
+      изменений.
+  steps:
+    - action: клиент получил записи до 100, чужая 101 сохранена, а ответ на собственную 102 пришёл раньше
+        следующей синхронизации
+      expected: последующая синхронизация получает 101 и сохраняет единственный экземпляр 102 в серверном
+        порядке
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-5EFD24A6
+  title: "Подтверждённая последовательность обновлений: Изменение уже показанной карточки"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Подтверждённая последовательность обновлений
+    scenario: Изменение уже показанной карточки
+    sha256: bc5e55b53874b8d5d6f13d15192b462ade5db6a77b694ac42d5c4151bba7a78b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL восстанавливать все доступные изменения после подтверждённого курсора. Получение
+      собственной отправки или метаданных о хвосте SHALL NOT подтверждать получение промежуточных
+      изменений.
+  steps:
+    - action: завершился опрос или изменилось авторство старой записи после удаления аккаунта
+      expected: синхронизация обновляет затронутые данные без требования нового сообщения в хвосте
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-BC07BEB1
+  title: "Восстановление после разрыва и перезапуска: Разрыв между снимком и подпиской"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Восстановление после разрыва и перезапуска
+    scenario: Разрыв между снимком и подпиской
+    sha256: 087d124d4640914d79821e3fc74a8e6be59f625c6d28169aadecc3f481c4147f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
+      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
+      проверкой показанных данных.
+  steps:
+    - action: изменение сохранено после получения начального снимка, но до готовности подписки
+      expected: клиент получает его при обязательной последующей сверке
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-AA76CADB
+  title: "Восстановление после разрыва и перезапуска: Сбой после commit до уведомления"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Восстановление после разрыва и перезапуска
+    scenario: Сбой после commit до уведомления
+    sha256: 0878f8c98471b8d19ae10bf2ecfd20b99956e6bb191eb453d87cc8c29f94c3c5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
+      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
+      проверкой показанных данных.
+  steps:
+    - action: сервер сохранил сообщение и перезапустился до уведомления клиентов
+      expected: сообщение остаётся в истории и обнаруживается восстановлением; повтор публикации не
+        создаёт дубля
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-F6CFB5E9
+  title: "Восстановление после разрыва и перезапуска: Курсор вышел за срок восстановления"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Восстановление после разрыва и перезапуска
+    scenario: Курсор вышел за срок восстановления
+    sha256: 6b191ed122fcaea296b445f1e7d3ed95249be1ba1340b69d9ddcf65272a4f7eb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
+      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
+      проверкой показанных данных.
+  steps:
+    - action: сервер больше не поддерживает переданный курсор
+      expected: клиент получает явный результат сброса, пересобирает актуальное окно и сохраняет ещё
+        допустимые исходящие
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-E77C7AE6
+  title: "Устойчивое намерение отправить: Завершение процесса до ответа"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Устойчивое намерение отправить
+    scenario: Завершение процесса до ответа
+    sha256: e8bf54c9216111e94adced3da0b5ec75ddfe1cca02a7f7adb8b75d2305261ea8
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
+      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
+      другое содержимое SHALL отклоняться.
+  steps:
+    - action: приложение закрыто после локального сохранения и серверного commit, но до получения ответа
+      expected: после входа тем же аккаунтом клиент сверяет прежний ID и показывает одну подтверждённую
+        запись
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-6EF9F915
+  title: "Устойчивое намерение отправить: Ошибка локального хранилища"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Устойчивое намерение отправить
+    scenario: Ошибка локального хранилища
+    sha256: c2586c022719ede33a766441209bfc789f0ddf879945d4862cdb915c9703face
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
+      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
+      другое содержимое SHALL отклоняться.
+  steps:
+    - action: сохранить намерение не удалось
+      expected: текст остаётся в редакторе, сеть не получает отправку и доступен повтор сохранения
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-DC61BB4A
+  title: "Устойчивое намерение отправить: Несколько исходящих без сети"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Устойчивое намерение отправить
+    scenario: Несколько исходящих без сети
+    sha256: 1f40c49fe764ec1b367dbcfa2f2682775a53f559b0e4e70128e810ddf78835b7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
+      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
+      другое содержимое SHALL отклоняться.
+  steps:
+    - action: пользователь последовательно отправляет несколько сообщений в доступном открытом чате при
+        разрыве связи
+      expected: очередь сохраняет отдельные ID и порядок намерений; после восстановления и проверки
+        доступа сообщения отправляются без взаимной перезаписи
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-14D92D7D
+  title: "Подтверждение сохранения и повтор: Таймаут после сохранения"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Подтверждение сохранения и повтор
+    scenario: Таймаут после сохранения
+    sha256: 83bb5057e8e243ba7db86ddf9cfaff0f34d8308ae3d272243ce5b3a08cb1d983
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL отличать ожидание, неопределённый результат, подтверждённое сохранение и
+      окончательную ошибку. Таймаут SHALL NOT означать отсутствие записи на сервере. Подтверждение
+      SHALL относиться к своему автору и исходящему ID.
+  steps:
+    - action: ответ потерян после commit
+      expected: строка остаётся ожидающей сверки, повтор использует прежний ID и не заявляет новую отправку
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-EB93F8D1
+  title: "Подтверждение сохранения и повтор: Ошибка с новым черновиком"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Подтверждение сохранения и повтор
+    scenario: Ошибка с новым черновиком
+    sha256: 3d2e4fdb8f3b8b75f7d5c77ae8179d7b707a2472db6f4c3bd23c0267e14ebabf
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL отличать ожидание, неопределённый результат, подтверждённое сохранение и
+      окончательную ошибку. Таймаут SHALL NOT означать отсутствие записи на сервере. Подтверждение
+      SHALL относиться к своему автору и исходящему ID.
+  steps:
+    - action: окончательная ошибка относится к прежнему исходящему, а поле уже содержит новый текст
+      expected: восстановление прежнего текста не перезаписывает новый без выбора пользователя
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-65C6F806
+  title: "Жизненный цикл и совместимость транспорта: Исправное соединение без активности"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Жизненный цикл и совместимость транспорта
+    scenario: Исправное соединение без активности
+    sha256: 01a2d83a85187cc6772e00f96c0b726e4aa76904ebab9faa06f953a149500e5c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
+      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
+      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+  steps:
+    - action: чат открыт и изменений нет
+      expected: клиент не вызывает периодический GET ленты; транспортный heartbeat не считается таким GET
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-60FCAA1D
+  title: "Жизненный цикл и совместимость транспорта: Сервер или прокси не поддерживает realtime"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Жизненный цикл и совместимость транспорта
+    scenario: Сервер или прокси не поддерживает realtime
+    sha256: 9a70400adce369cf53bdfc21d90b8cd1f2dee4a793856994ca024474206634d2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
+      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
+      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+  steps:
+    - action: подключение недоступно, но авторизованный HTTP работает
+      expected: клиент получает обновления через один управляемый опрос, без параллельных циклов и
+        запросов из фона
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-6F728A92
+  title: "Жизненный цикл и совместимость транспорта: Возврат приложения из фона"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Жизненный цикл и совместимость транспорта
+    scenario: Возврат приложения из фона
+    sha256: ac28bf1f8189096881dfe4c95e6985f629727f423376a4d4418d91546e3668cf
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
+      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
+      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+  steps:
+    - action: приложение возвращается в foreground
+      expected: оно заново проверяет сессию, восстанавливает синхронизацию и продолжает разрешённые исходящие
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

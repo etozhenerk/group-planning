@@ -1,0 +1,22 @@
+ВЫДЕРЖКИ ИЗ ФАКТИЧЕСКИХ TOOL OUTPUT, feature_test_pilot
+
+node_repl / Playwright launch:
+browserType.launch: Target page, context or browser has been closed
+<launched> pid=20067
+[pid=20067][err] [1027/010827.315301:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.20067: Permission denied (1100)
+[pid=20067] <process did exit: exitCode=null, signal=SIGTRAP>
+
+CUA createBrowserTab:
+Browser Use cannot open https://127.0.0.1:8457 in tab 1. Browser reported: net::ERR_CERT_AUTHORITY_INVALID
+
+CUA getTab:
+Browser tab: 1, Title: "Ошибка нарушения конфиденциальности", URL: "https://127.0.0.1:8457/".
+0 AXWebArea Ошибка нарушения конфиденциальности, URL: chrome-error://chromewebdata/
+    4 heading Подключение не защищено, Value: 1
+    11 button (collapsed) NET::ERR_CERT_AUTHORITY_INVALID, ID: error-code, Secondary Actions: Expand
+    12 button Вернуться к безопасной странице, ID: primary-button
+    13 button (collapsed) Дополнительные настройки, ID: details-button, Secondary Actions: Expand
+
+Отметка браузерного лога 10-27 01:08:27 локальная (Europe/Moscow), то есть 2026-10-26T22:08:27Z.
+Время формальной записи blocked сохранено в manual-results.json.
+Созданная тестовая IAB-вкладка закрыта после сохранения screenshot, пользовательские вкладки не затронуты.

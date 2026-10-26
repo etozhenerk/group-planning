@@ -1,0 +1,425 @@
+- id: TC-VIBE-75A8C069
+  title: "Заметный переход в вайб после встречи: Прошедшая встреча без фотографий"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Заметный переход в вайб после встречи
+    scenario: Прошедшая встреча без фотографий
+    sha256: 00bb46e7bbbb1ee29011f0bccedac33541299aae82db52ecbd3efc901d494163
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      После существующего календарного перехода встречи в `past` клиент SHALL
+      показывать заметный вход в вайб над прокручиваемой перепиской. Переход в `past`
+      SHALL NOT означать ручного подтверждения, что встреча состоялась, или закрывать
+      чат. При отсутствии фото SHALL предлагаться добавление, при наличии — просмотр.
+  steps:
+    - action: текущий участник открывает чат прошедшей встречи без фото
+      expected: видит блок «Как всё прошло?» с действием «Добавить фото» может продолжать переписку без
+        загрузки фотографий
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-3C98DE12
+  title: "Заметный переход в вайб после встречи: В альбоме уже есть фотографии"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Заметный переход в вайб после встречи
+    scenario: В альбоме уже есть фотографии
+    sha256: fbe6fbacefb9863c5f767e13be29672cdad943127dd9e1b09d5a8c756cc0d43e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      После существующего календарного перехода встречи в `past` клиент SHALL
+      показывать заметный вход в вайб над прокручиваемой перепиской. Переход в `past`
+      SHALL NOT означать ручного подтверждения, что встреча состоялась, или закрывать
+      чат. При отсутствии фото SHALL предлагаться добавление, при наличии — просмотр.
+  steps:
+    - action: текущий участник открывает чат прошедшей встречи с фото
+      expected: видит «Вайб встречи», превью фотостопки и «Открыть вайб» переход остаётся видимым при
+        прокрутке сообщений
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-F5929004
+  title: "Общий альбом участников: Фото добавляет обычный участник"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Общий альбом участников
+    scenario: Фото добавляет обычный участник
+    sha256: 8d81832cd0f4a3579c886e378385d1066ff6f7b8813a71349f57abf61499b95d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник встречи, включая организатора, SHALL иметь возможность
+      добавлять фотографии в её вайб. Добавление SHALL быть явным: фотографии из чата
+      SHALL NOT автоматически попадать в альбом. Фотографии SHALL NOT иметь поля
+      пользовательской подписи. Доступ SHALL следовать правилам meeting-media и
+      существующему доступу к встрече.
+  steps:
+    - action: участник без роли организатора добавляет выбранные фото
+      expected: после подтверждения загрузки фото появляются в общем альбоме форма не запрашивает подписи
+        к фотографиям
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-3E0FC811
+  title: "Общий альбом участников: Часть файлов не загрузилась"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Общий альбом участников
+    scenario: Часть файлов не загрузилась
+    sha256: 450c7b3546c9194ae06b1faa6f185fec1e13d22b06718c927aa990b4709222a5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник встречи, включая организатора, SHALL иметь возможность
+      добавлять фотографии в её вайб. Добавление SHALL быть явным: фотографии из чата
+      SHALL NOT автоматически попадать в альбом. Фотографии SHALL NOT иметь поля
+      пользовательской подписи. Доступ SHALL следовать правилам meeting-media и
+      существующему доступу к встрече.
+  steps:
+    - action: часть выбранных фото успешно сохранена, а остальные завершились ошибкой
+      expected: успешные фото остаются в альбоме повторная отправка касается только неуспешных файлов без
+        дубликатов
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-03EF9D2B
+  title: "Общий альбом участников: Пользователь больше не участвует"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Общий альбом участников
+    scenario: Пользователь больше не участвует
+    sha256: 98fa3f253def0fa710685762a0c01eedd1fa3f7d1205bf38349fc774558ab2f4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Любой текущий участник встречи, включая организатора, SHALL иметь возможность
+      добавлять фотографии в её вайб. Добавление SHALL быть явным: фотографии из чата
+      SHALL NOT автоматически попадать в альбом. Фотографии SHALL NOT иметь поля
+      пользовательской подписи. Доступ SHALL следовать правилам meeting-media и
+      существующему доступу к встрече.
+  steps:
+    - action: пользователь потерял доступ к встрече до завершения загрузки
+      expected: сервер отклоняет добавление и дальнейшее чтение закрытых фото клиент убирает недоступный
+        альбом и его локальные превью
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-D2414F1E
+  title: "Фотостопка с жестовым управлением: Перелистывание и возврат"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Фотостопка с жестовым управлением
+    scenario: Перелистывание и возврат
+    sha256: 067cafcc2ccc725a40759a04e823f7d02ec3ab1a76726661b32ca4f7019b8db5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Вайб SHALL показывать крупную фотостопку без видимых кнопок листания.
+      Горизонтальный жест SHALL двигать верхнее фото за указателем и переключать
+      снимок при завершении; короткий жест SHALL возвращать его. Клавиши
+      ArrowLeft/ArrowRight SHALL переключать фото вне текстового ввода. Сетка,
+      счётчик и полноэкранный просмотр SHALL оставаться доступны.
+  steps:
+    - action: участник свайпает влево, затем нажимает ArrowLeft
+      expected: открывается следующее, затем предыдущее фото счётчик и полноэкранная ссылка соответствуют
+        текущему снимку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-C82FDBE2
+  title: "Фотостопка с жестовым управлением: Короткий жест и вертикальная прокрутка"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Фотостопка с жестовым управлением
+    scenario: Короткий жест и вертикальная прокрутка
+    sha256: c3810ea8ca84657c4993b2050875eb84f246ce983874f8e8f8a2d3b8c59e09af
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Вайб SHALL показывать крупную фотостопку без видимых кнопок листания.
+      Горизонтальный жест SHALL двигать верхнее фото за указателем и переключать
+      снимок при завершении; короткий жест SHALL возвращать его. Клавиши
+      ArrowLeft/ArrowRight SHALL переключать фото вне текстового ввода. Сетка,
+      счётчик и полноэкранный просмотр SHALL оставаться доступны.
+  steps:
+    - action: смещение недостаточно для перелистывания или начат вертикальный скролл
+      expected: индекс фотографии не меняется и страница сохраняет прокрутку
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-DAC4D8E1
+  title: "Фотостопка с жестовым управлением: Первое, последнее и единственное фото"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Фотостопка с жестовым управлением
+    scenario: Первое, последнее и единственное фото
+    sha256: 4b6ac065521e26f48975b19556eace32e1f2a4b61b9dde7f513d2b5b3e1e457b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Вайб SHALL показывать крупную фотостопку без видимых кнопок листания.
+      Горизонтальный жест SHALL двигать верхнее фото за указателем и переключать
+      снимок при завершении; короткий жест SHALL возвращать его. Клавиши
+      ArrowLeft/ArrowRight SHALL переключать фото вне текстового ввода. Сетка,
+      счётчик и полноэкранный просмотр SHALL оставаться доступны.
+  steps:
+    - action: в альбоме несколько фото и участник листает за границу
+      expected: просмотр продолжается циклически для единственного фото перелистывание не запускается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-5A39D7F0
+  title: "Фотостопка с жестовым управлением: Уменьшенное движение и доступность"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Фотостопка с жестовым управлением
+    scenario: Уменьшенное движение и доступность
+    sha256: 56a3516bae3e1441e3f3e253cbe28e994f635b74c676d2ccf658e360a8c8214c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Вайб SHALL показывать крупную фотостопку без видимых кнопок листания.
+      Горизонтальный жест SHALL двигать верхнее фото за указателем и переключать
+      снимок при завершении; короткий жест SHALL возвращать его. Клавиши
+      ArrowLeft/ArrowRight SHALL переключать фото вне текстового ввода. Сетка,
+      счётчик и полноэкранный просмотр SHALL оставаться доступны.
+  steps:
+    - action: включено уменьшение движения или используется экранный диктор
+      expected: фото меняется без вращения и вылета, текущий номер озвучивается сетка позволяет открыть
+        любое фото без сложного жеста
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-VIBE-B5FF73B4
+  title: "Полноэкранные фото без подписей: Возврат из полноэкранного просмотра"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Полноэкранные фото без подписей
+    scenario: Возврат из полноэкранного просмотра
+    sha256: eb29a7a26ec8ca2658eb4796761a40ec9384cb89ae38c89d4256ab9febded2da
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Полноэкранный просмотр SHALL сохранять пропорции исходного фото, поддерживать
+      свайпы, ArrowLeft/ArrowRight и закрытие через Escape/кнопку закрытия. Возврат
+      SHALL восстанавливать выбранное фото. Технические подсказки про жесты, формат
+      хранения и права SHALL NOT занимать визуальное пространство альбома.
+  steps:
+    - action: участник перелистывает фото и закрывает просмотр
+      expected: возвращается к тому же фото в фотостопке видит название встречи и счётчик, без подписей к
+        снимкам
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

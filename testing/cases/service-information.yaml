@@ -1,0 +1,471 @@
+- id: TC-INFO-28355B41
+  title: "Разделы помощи и документов: Десктопный онбординг"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Десктопный онбординг
+    sha256: 76288c86ee48971dd4c60eb6977d4a06c0f696d0b51b54f00930f4613ccd9143
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: посетитель открывает онбординг в десктопной компоновке web
+      expected: видит футер с помощью, документами и фактической версией
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-9C1A86D2
+  title: "Разделы помощи и документов: Узкий экран или внутренний раздел"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Узкий экран или внутренний раздел
+    sha256: 74bf065bf11c9a6ec14535950cb2e86ee8cc96a936575d28d066b2783bfd9d3d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: пользователь открывает web на ширине 320 px либо внутреннюю страницу на любой ширине
+      expected: футер отсутствует и не занимает место в прокрутке необходимые ссылки доступны через
+        профиль и соответствующие формы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-91E4ECFC
+  title: "Разделы помощи и документов: Нативное приложение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Нативное приложение
+    sha256: d840d9b17b224b3f2cadaf5b390ab773600413829e47d67fbf45827cf359b7e1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: пользователь открывает экран iOS или Android
+      expected: футер отсутствует; помощь и документы открываются из профиля
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-9D87E6B1
+  title: "Разделы помощи и документов: Телефон в альбомной ориентации"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Телефон в альбомной ориентации
+    sha256: 09bb1a91e73e63956fcf0d11fd3671c13b67104f58bee375bb3f8dc04bf56500
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: мобильный web открыт на touch-устройстве шириной более 740 px
+      expected: футер отсутствует независимо от ширины экрана
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-C4EDD04F
+  title: "Разделы помощи и документов: Служебная страница на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Служебная страница на телефоне
+    sha256: 8dda0f7cfe63f43e274d8d501f54236003b5892efa4ba209f02ff9c9952b9855
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: пользователь открывает помощь, обращение, сведения о приложении или документ
+      expected: нет ни футера, ни нижней панели основных разделов вернуться можно через явный Back и
+        историю навигации
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-4D0E6354
+  title: "Разделы помощи и документов: Сведения о встрече без пунктов сервиса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Разделы помощи и документов
+    scenario: Сведения о встрече без пунктов сервиса
+    sha256: 7c84c3fd496c56ce70ebd03abe396fdd54e4743c38027b98c69b0edf7e615724
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web SHALL показывать футер с разделами «Сервис», «Обратная связь» и «Документы»
+      только на десктопном онбординге. На внутренних страницах и мобильном web
+      футер SHALL NOT отображаться; iOS и Android SHALL NOT содержать футер.
+      Все клиенты SHALL обеспечивать
+      доступ к помощи, обратной связи, версии и документам из профиля. Панель сведений
+      о встрече SHALL NOT содержать эти пункты.
+  steps:
+    - action: участник открывает сведения о встрече из чата
+      expected: панель содержит только сведения и действия по встрече помощь, обратная связь, сведения о
+        приложении, версия и документы в ней отсутствуют эти пункты доступны через профиль
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-87665C8F
+  title: "Версия и разработчик: Разные выпуски клиентов"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Версия и разработчик
+    scenario: Разные выпуски клиентов
+    sha256: d93a30539e677afce95bb75fbaa7b8570715514f052e1b73a6320f6dc945e4fc
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL показывать собственную фактическую версию и подпись
+      «Developed by MintyDev». Версия SHALL соответствовать сборке открытого клиента,
+      а не версии API или другого приложения. Подпись web SHALL сохранять полный
+      SemVer, включая PATCH и RC, например «Версия 0.1.0-rc.2». Отдельный номер
+      CI-сборки SHALL быть доступен в справке как «Сборка 42». Подпись разработчика SHALL NOT
+      подменять реквизиты оператора персональных данных.
+  steps:
+    - action: версии web и мобильного приложения различаются
+      expected: каждый клиент показывает свою версию в разделе «О somewhere»
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-D5C31112
+  title: "Публичная политика: Пользователь ещё не вошёл"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Публичная политика
+    scenario: Пользователь ещё не вошёл
+    sha256: 73b2a3ef1a3da771ee1188025c2253890b6e35f853b41f20ca736027267c5787
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Политика SHALL открываться без авторизации и быть связана с формами сбора данных.
+      Опубликованная политика SHALL содержать реальные реквизиты, контакт, цели,
+      основания, сроки и условия передачи данных. Макеты с незаполненными полями SHALL
+      быть явно обозначены проектом документа и SHALL NOT выдаваться за готовую политику.
+  steps:
+    - action: посетитель открывает политику со страницы входа
+      expected: текст доступен без создания аккаунта
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-5AF98147
+  title: "Публичная политика: Реквизиты отложены"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Публичная политика
+    scenario: Реквизиты отложены
+    sha256: 12308dbfd84c79a70e0471209d5ff74506ae50440ae533b27b3ed2417cf0ade3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Политика SHALL открываться без авторизации и быть связана с формами сбора данных.
+      Опубликованная политика SHALL содержать реальные реквизиты, контакт, цели,
+      основания, сроки и условия передачи данных. Макеты с незаполненными полями SHALL
+      быть явно обозначены проектом документа и SHALL NOT выдаваться за готовую политику.
+  steps:
+    - action: оператор и контакт ещё не указаны
+      expected: макет сохраняет незаполненные поля и статус проекта документа выпуск окончательной
+        политики остаётся незавершённой задачей
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-666F6B46
+  title: "Прозрачность cookie и хранения: Длительное сохранение входа"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Прозрачность cookie и хранения
+    scenario: Длительное сохранение входа
+    sha256: 116771fffef3e178d7edf45fb8456e04fe5288ba1102e4bbe805f81ad2f61e46
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Страница cookie SHALL описывать фактические цели и сроки cookie и хранения
+      в браузере. Само наличие cookie авторизации SHALL NOT трактоваться как решение
+      о необходимости либо отсутствии согласия. До выпуска SHALL быть определены
+      применимые правила и основания; требуемое согласие SHALL быть отдельным действием,
+      не подменённым ссылкой на политику.
+  steps:
+    - action: авторизация сохраняется между посещениями до 30 дней
+      expected: страница сообщает этот срок и не описывает cookie как исчезающую при закрытии вкладки
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-INFO-E5D26634
+  title: "Прозрачность cookie и хранения: Добавлена необязательная аналитика"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Прозрачность cookie и хранения
+    scenario: Добавлена необязательная аналитика
+    sha256: 0939ebe28783e53ac3159688591ad8eae090de2ffbccfcc7141ead4ca07de6b7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Страница cookie SHALL описывать фактические цели и сроки cookie и хранения
+      в браузере. Само наличие cookie авторизации SHALL NOT трактоваться как решение
+      о необходимости либо отсутствии согласия. До выпуска SHALL быть определены
+      применимые правила и основания; требуемое согласие SHALL быть отдельным действием,
+      не подменённым ссылкой на политику.
+  steps:
+    - action: выпуск добавляет необязательное отслеживание, для которого требуется согласие
+      expected: оно не включается до отдельного согласия и отказ не отключает необходимую авторизацию
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

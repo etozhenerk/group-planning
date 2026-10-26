@@ -1,0 +1,327 @@
+- id: TC-WEB-RELEASE-IDENTITY-DBDD7231
+  title: "Полный номер открытого клиента: Кандидат на сайте"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Полный номер открытого клиента
+    scenario: Кандидат на сайте
+    sha256: fa938e498d719d60dcc68cfae6f6fe0ed6fc0db727d54fe059202df3248e419c
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - >-
+      Web SHALL показывать `Версия X.Y.Z` либо `Версия X.Y.Z-rc.N` в футере
+
+      десктопного онбординга и разделе «О somewhere» на всех размерах экрана.
+
+      На mobile web и внутренних страницах футера SHALL NOT быть. Значение SHALL
+
+      соответствовать загруженному web-артефакту. PATCH и RC SHALL NOT отбрасываться. Номер
+      CI-сборки SHALL
+
+      показываться отдельно в справке. Отсутствие футера SHALL NOT скрывать
+
+      номер в «О somewhere» или добавлять футер в native-клиенты.
+  steps:
+    - action: посетитель открывает web-артефакт 0.1.0-rc.3
+      expected: в справке и футере десктопного онбординга показано «Версия 0.1.0-rc.3», без префикса
+        web/v; подпись доступна без авторизации и без запроса к API
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-CD87A4E3
+  title: "Полный номер открытого клиента: Мобильный онбординг"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Полный номер открытого клиента
+    scenario: Мобильный онбординг
+    sha256: 0fe1bd39982e31b687b0d997d26ce3e4ccf9183d43bb83cd3642d8e5dda98703
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - >-
+      Web SHALL показывать `Версия X.Y.Z` либо `Версия X.Y.Z-rc.N` в футере
+
+      десктопного онбординга и разделе «О somewhere» на всех размерах экрана.
+
+      На mobile web и внутренних страницах футера SHALL NOT быть. Значение SHALL
+
+      соответствовать загруженному web-артефакту. PATCH и RC SHALL NOT отбрасываться. Номер
+      CI-сборки SHALL
+
+      показываться отдельно в справке. Отсутствие футера SHALL NOT скрывать
+
+      номер в «О somewhere» или добавлять футер в native-клиенты.
+  steps:
+    - action: посетитель открывает онбординг на ширине 320 или 390 px либо на touch-телефоне горизонтально
+        844×390
+      expected: футер скрыт, а полный номер остаётся доступным в «О somewhere»
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-8E4884EF
+  title: "Полный номер открытого клиента: Внутренняя страница"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Полный номер открытого клиента
+    scenario: Внутренняя страница
+    sha256: 951de54719d5dd7f8f5f449b4fca99a301c2340895b12a7c3c1ad1cb9c1ff998
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - >-
+      Web SHALL показывать `Версия X.Y.Z` либо `Версия X.Y.Z-rc.N` в футере
+
+      десктопного онбординга и разделе «О somewhere» на всех размерах экрана.
+
+      На mobile web и внутренних страницах футера SHALL NOT быть. Значение SHALL
+
+      соответствовать загруженному web-артефакту. PATCH и RC SHALL NOT отбрасываться. Номер
+      CI-сборки SHALL
+
+      показываться отдельно в справке. Отсутствие футера SHALL NOT скрывать
+
+      номер в «О somewhere» или добавлять футер в native-клиенты.
+  steps:
+    - action: посетитель открывает /about, встречи, профиль, чат или альбом
+      expected: футера нет даже на десктопе; справка сохраняет номер и сборку
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-375E4EC9
+  title: "Полный номер открытого клиента: Независимое обновление сервера"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Полный номер открытого клиента
+    scenario: Независимое обновление сервера
+    sha256: adee61ea62c1c3271260d6253924c2d0f45414b75d16052ac490900f06e387cb
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - >-
+      Web SHALL показывать `Версия X.Y.Z` либо `Версия X.Y.Z-rc.N` в футере
+
+      десктопного онбординга и разделе «О somewhere» на всех размерах экрана.
+
+      На mobile web и внутренних страницах футера SHALL NOT быть. Значение SHALL
+
+      соответствовать загруженному web-артефакту. PATCH и RC SHALL NOT отбрасываться. Номер
+      CI-сборки SHALL
+
+      показываться отдельно в справке. Отсутствие футера SHALL NOT скрывать
+
+      номер в «О somewhere» или добавлять футер в native-клиенты.
+  steps:
+    - action: backend обновлён, а web-артефакт остался прежним
+      expected: версия в открытом web-клиенте не меняется
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-74FB4009
+  title: "Достоверные метаданные выпуска: Потеря номера при сборке"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Достоверные метаданные выпуска
+    scenario: Потеря номера при сборке
+    sha256: 809152b0465778f5766dffa2f8e271d8a38caf542e4f2a6ae0fcad3f202ab69f
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Версия, тег, component=web и commit SHA в web-сборке SHALL совпадать
+      с проверенным источником релиза и его manifest. Отсутствие или несогласованность
+      этих значений SHALL блокировать публикацию. Номер пакета инструментов,
+      константа из макета или произвольная переменная окружения SHALL NOT заменять
+      проверенную версию релиза.
+  steps:
+    - action: релизный тег имеет версию 0.1.1, но сборка получила 0.0.0 либо пустое значение
+      expected: выпуск останавливается до публикации артефакта
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-5B6AA27D
+  title: "Достоверные метаданные выпуска: Расхождение артефакта и manifest"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Достоверные метаданные выпуска
+    scenario: Расхождение артефакта и manifest
+    sha256: f02954e9498f85a75e6e52066df420e2105536b9d4320d1a24d7a42818f1f07f
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Версия, тег, component=web и commit SHA в web-сборке SHALL совпадать
+      с проверенным источником релиза и его manifest. Отсутствие или несогласованность
+      этих значений SHALL блокировать публикацию. Номер пакета инструментов,
+      константа из макета или произвольная переменная окружения SHALL NOT заменять
+      проверенную версию релиза.
+  steps:
+    - action: внутри web-архива указан commit или номер, отличный от manifest
+      expected: проверка набора завершается ошибкой даже при корректных SHA256 файлов
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-F6282EEF
+  title: "Работа без релизного контекста: Разработка без тега"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Работа без релизного контекста
+    scenario: Разработка без тега
+    sha256: 0f657cc744fee1a36482b34d272833c6591f28f674481feed9e1e118c141ef83
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Локальный запуск и demo SHALL оставаться доступны без Git-тега и облачных
+      секретов. Они SHALL явно обозначаться «Локальная сборка» или «Демо» и SHALL NOT
+      выдаваться за опубликованную версию. Повреждённая старая сборка без метаданных
+      SHALL показывать «Версия недоступна», не придумывая номер.
+  steps:
+    - action: разработчик запускает web:dev в незакоммиченном рабочем дереве
+      expected: сайт работает с подписью «Локальная сборка», а релизный workflow по-прежнему требует
+        чистый проверенный источник
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-7A0F2E0A
+  title: "Версия следует артефакту: Открытая вкладка во время деплоя"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Версия следует артефакту
+    scenario: Открытая вкладка во время деплоя
+    sha256: 597b88e1b9bba6adeab336570f003275d0394ced2bd767a375ddd2a781d15866
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Версия SHALL встраиваться в статический клиент и SHALL NOT определяться
+      запросом последнего GitHub Release, API-версии или глобальной mutable-константы.
+      После отката и свежей загрузки SHALL отображаться версия возвращённого
+      артефакта. Ранее открытая вкладка SHALL сохранять номер реально загруженной сборки.
+  steps:
+    - action: пользователь открыл 0.1.0, а на сервере развёрнут 0.1.1
+      expected: до загрузки нового клиента его вкладка продолжает показывать 0.1.0
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-F3774AB0
+  title: "Версия следует артефакту: Возврат предыдущего выпуска"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Версия следует артефакту
+    scenario: Возврат предыдущего выпуска
+    sha256: 8712b32080dab5dc17c838748ee7b2e27304806e377b74f9a892c7f42f03f617
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Версия SHALL встраиваться в статический клиент и SHALL NOT определяться
+      запросом последнего GitHub Release, API-версии или глобальной mutable-константы.
+      После отката и свежей загрузки SHALL отображаться версия возвращённого
+      артефакта. Ранее открытая вкладка SHALL сохранять номер реально загруженной сборки.
+  steps:
+    - action: развёртывание откатили с 0.1.1 на 0.1.0 и клиент загрузился заново
+      expected: сайт показывает 0.1.0; отдельного ручного изменения подписи не требуется
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-WEB-RELEASE-IDENTITY-6D753EFB
+  title: "Доступная подпись версии: Длинный RC на телефоне"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/release-version-policy/specs/web-release-identity/spec.md
+    requirement: Доступная подпись версии
+    scenario: Длинный RC на телефоне
+    sha256: 0b8201b437f4b08e0a3ccfb0bf72cd5997205068732f828389f7a7bd677fdde3
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - |-
+      Полный номер SHALL оставаться читаемым и выделяемым текстом на узком
+      экране, при увеличении текста и управлении клавиатурой. Он SHALL NOT
+      обрезаться многоточием или перекрываться нижней навигацией. Новые действия,
+      модальные окна и принудительная перезагрузка для чтения версии не требуются.
+  steps:
+    - action: в «О somewhere» на ширине 320 px отображается 0.12.34-rc.123 с увеличенным текстом
+      expected: полный номер доступен без горизонтальной прокрутки и перекрытия элементов
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []

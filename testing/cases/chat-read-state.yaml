@@ -1,0 +1,522 @@
+- id: TC-CHAT-READ-STATE-068DA926
+  title: "Общая монотонная позиция прочтения: Запоздалое устройство"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Общая монотонная позиция прочтения
+    scenario: Запоздалое устройство
+    sha256: 186b905dd9998423c443a7204c2d4da6934d3ae800a96b62ec9948054f6b6449
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL хранить позицию «прочитано до» отдельно для пользователя и встречи, объединять
+      устройства максимумом подтверждённых позиций и отклонять значения за пределами доступной
+      ленты.
+  steps:
+    - action: одно устройство подтвердило позицию 150, а второе позже отправило 140
+      expected: сервер сохраняет 150 и возвращает её обоим устройствам
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-99A5AEEE
+  title: "Общая монотонная позиция прочтения: Некорректная позиция"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Общая монотонная позиция прочтения
+    scenario: Некорректная позиция
+    sha256: 34bc94e61ec0367e54721791f8266d15be7366ee4484c0919c3fc4f695f351cc
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL хранить позицию «прочитано до» отдельно для пользователя и встречи, объединять
+      устройства максимумом подтверждённых позиций и отклонять значения за пределами доступной
+      ленты.
+  steps:
+    - action: клиент передал несуществующую запись, позицию за хвостом или встречу без доступа
+      expected: сервер отклоняет обновление и не раскрывает приватные данные
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-55EC5376
+  title: "Чтение зависит от видимости: Сообщение получено в фоне"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Сообщение получено в фоне
+    sha256: 07e4610d87151bf64297104e3a4cb58c3fb368137f4ecdfba25283789880407e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL продвигать позицию только по сообщению, нижний край которого виден не менее 500
+      мс в активном открытом чате без перекрывающего окна. Получение данных, отправка сообщения и
+      фон SHALL NOT сами продвигать позицию.
+  steps:
+    - action: обновление пришло при закрытом чате или неактивном приложении
+      expected: сообщение остаётся непрочитанным
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-850EBE76
+  title: "Чтение зависит от видимости: Длинное сообщение и окно поверх чата"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Длинное сообщение и окно поверх чата
+    sha256: 895372355c79ddb5318c56827bf10b5f503321299f4373092359d64ca1ecd855
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL продвигать позицию только по сообщению, нижний край которого виден не менее 500
+      мс в активном открытом чате без перекрывающего окна. Получение данных, отправка сообщения и
+      фон SHALL NOT сами продвигать позицию.
+  steps:
+    - action: виден только верх длинного сообщения или лента перекрыта диалогом
+      expected: его получение не подтверждается как прочтение
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-34B98D4D
+  title: "Чтение зависит от видимости: Явный переход к новым сообщениям"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Явный переход к новым сообщениям
+    sha256: c37012ff61eb5aab96947b07070295dae31c26ba993cbc9085435625ecfe8b93
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиент SHALL продвигать позицию только по сообщению, нижний край которого виден не менее 500
+      мс в активном открытом чате без перекрывающего окна. Получение данных, отправка сообщения и
+      фон SHALL NOT сами продвигать позицию.
+  steps:
+    - action: пользователь переходит к хвосту и его сообщение удовлетворяет условию видимости
+      expected: позиция продвигается до него, считая предыдущие записи прочитанными по правилу read-through
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-284DD6EE
+  title: "Личные непрочитанные: Смешанные обновления"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Личные непрочитанные
+    scenario: Смешанные обновления
+    sha256: b791c06b349768012a7296ed786610e6e1f110a28a01948db3be9fbf42be02ba
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL считать непрочитанными сообщения других пользователей после максимума начальной
+      базы и позиции прочтения. Собственные сообщения, системные записи, изменения опросов и реакции
+      SHALL NOT увеличивать счётчик сообщений. Счётчик и первое непрочитанное SHALL быть согласованы
+      между устройствами.
+  steps:
+    - action: после позиции появились два чужих сообщения, своё сообщение и результат опроса
+      expected: счётчик равен двум, а переход к непрочитанным открывает первое чужое сообщение
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-299278E4
+  title: "Личные непрочитанные: Чтение на другом устройстве"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Личные непрочитанные
+    scenario: Чтение на другом устройстве
+    sha256: 1c795731d34a788ab8859d57662bed208e5b1f861571040e5875448e48a9b6b7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Система SHALL считать непрочитанными сообщения других пользователей после максимума начальной
+      базы и позиции прочтения. Собственные сообщения, системные записи, изменения опросов и реакции
+      SHALL NOT увеличивать счётчик сообщений. Счётчик и первое непрочитанное SHALL быть согласованы
+      между устройствами.
+  steps:
+    - action: пользователь прочитал чат на iOS
+      expected: web и Android получают актуальную позицию и счётчик без повторной авторизации
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-8A47BDBD
+  title: "Предсказуемая инициализация: Существующая большая история"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: Существующая большая история
+    sha256: 109a7d9972d85727e5bd38d80142d4e53f71abf10a6894cad287e4dfa70abee7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - При включении функции и первом вступлении система SHALL установить базу подсчёта непрочитанных
+      на текущем хвосте, не выдавая её за фактическое прочтение. Возврат ранее участвовавшего
+      пользователя SHALL сохранять базу и позицию прочтения, пока его аккаунт существует.
+  steps:
+    - action: read state включается для участника с историей в тысячи сообщений
+      expected: вся прошлая история не объявляется новой; сообщения после зафиксированной базы учитываются
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-5869F951
+  title: "Предсказуемая инициализация: База не является подтверждением чтения"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: База не является подтверждением чтения
+    sha256: e03daccc64684eccd8379fd4653abeae40d531053a6b6b781a4fa3da1a5d1a03
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - При включении функции и первом вступлении система SHALL установить базу подсчёта непрочитанных
+      на текущем хвосте, не выдавая её за фактическое прочтение. Возврат ранее участвовавшего
+      пользователя SHALL сохранять базу и позицию прочтения, пока его аккаунт существует.
+  steps:
+    - action: новый участник получил базу на текущем хвосте, но ещё не просмотрел сообщения
+      expected: авторы не видят его в списке прочитавших только из-за инициализации базы
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-51E51F41
+  title: "Предсказуемая инициализация: Повторное вступление"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: Повторное вступление
+    sha256: 9dc6bb9eef4f6d8e70898103f317026d1d097fd41e11516de46a9ddae182f29e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - При включении функции и первом вступлении система SHALL установить базу подсчёта непрочитанных
+      на текущем хвосте, не выдавая её за фактическое прочтение. Возврат ранее участвовавшего
+      пользователя SHALL сохранять базу и позицию прочтения, пока его аккаунт существует.
+  steps:
+    - action: участник вышел и вновь получил доступ
+      expected: его позиция не обнуляется; доступные чужие сообщения после неё учитываются как непрочитанные
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-B0815A4A
+  title: "Кто прочитал собственное сообщение: Два прочитавших"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Два прочитавших
+    sha256: df3fbd442458ded6dee1c8a2db1fea67da5aeb377dbf93fa46e13448f2aff034
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Автор SHALL иметь возможность открыть список текущих участников, чья позиция достигла его
+      подтверждённого сообщения. Список SHALL исключать автора, удалённые аккаунты и потерявших
+      доступ; не раскрывать контакты или выдуманное время чтения.
+  steps:
+    - action: позиции двух текущих участников достигли сообщения автора
+      expected: автор видит «Прочитали 2» и может открыть их имена
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-EC05E2CA
+  title: "Кто прочитал собственное сообщение: Участник вышел"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Участник вышел
+    sha256: 394fe8040eaea1112d50542ee4ac6b94e22084a3a3b669964862ada7ff381be6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Автор SHALL иметь возможность открыть список текущих участников, чья позиция достигла его
+      подтверждённого сообщения. Список SHALL исключать автора, удалённые аккаунты и потерявших
+      доступ; не раскрывать контакты или выдуманное время чтения.
+  steps:
+    - action: прочитавший участник больше не имеет доступа к чату
+      expected: его имя и вклад в число исчезают из актуального списка; старый ответ не возвращает их
+        после сверки
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-E32551D3
+  title: "Кто прочитал собственное сообщение: Нет прочитавших или запрошено чужое сообщение"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Нет прочитавших или запрошено чужое сообщение
+    sha256: ac5a9ca747cd6016af0f0b821a09a70756d33f18f997ea572f90798b9893428d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Автор SHALL иметь возможность открыть список текущих участников, чья позиция достигла его
+      подтверждённого сообщения. Список SHALL исключать автора, удалённые аккаунты и потерявших
+      доступ; не раскрывать контакты или выдуманное время чтения.
+  steps:
+    - action: автор открывает список без прочитавших либо другой пользователь запрашивает список чужого
+        сообщения
+      expected: автор видит пустое состояние, а запрос неавтора отклоняется без раскрытия персональных
+        позиций
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-D6A20C5D
+  title: "Прочитанность не является доставкой: Сообщение сохранено, получатель не открыл чат"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Прочитанность не является доставкой
+    scenario: Сообщение сохранено, получатель не открыл чат
+    sha256: da2440d47b47ceefbf4ab98ebbfbee9c9dfbb7df6ce20cfa38722d61414b8097
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - UI SHALL различать сохранение сообщения сервером и прочтение по правилам видимости. Успешное
+      соединение, публикация уведомления или POST SHALL NOT отображаться как прочтение получателем.
+  steps:
+    - action: сервер подтвердил отправку, но чужой read-through ещё не достиг сообщения
+      expected: сообщение показано сохранённым без отметки чужого прочтения
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

@@ -116,7 +116,7 @@ try {
       `Skill version mismatch: ${name}; run npm run agent:update.`);
   }
 
-  const projectSkills = ['product-copy-editor', 'design-system-publish', 'design-review'];
+  const projectSkills = ['product-copy-editor', 'design-system-publish', 'design-review', 'test-spec', 'feature-test', 'release-test'];
   for (const name of projectSkills) {
     const path = `.agents/skills/${name}/SKILL.md`;
     if (!existsSync(join(root, path))) {
@@ -137,6 +137,7 @@ try {
   const documentation = [
     join(root, 'README.md'), join(root, 'AGENTS.md'),
     ...markdownFiles(join(root, 'docs')),
+    ...markdownFiles(join(root, 'testing')),
     ...markdownFiles(join(root, 'frontend/ios/docs')),
     ...markdownFiles(join(root, 'frontend/android/docs')),
     ...projectSkills.map((name) => join(root, `.agents/skills/${name}/SKILL.md`)),

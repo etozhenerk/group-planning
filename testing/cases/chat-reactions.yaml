@@ -1,0 +1,205 @@
+- id: TC-REACT-1AAA13AA
+  title: "Выбор и снятие своей реакции: Быстрая реакция"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md
+    requirement: Выбор и снятие своей реакции
+    scenario: Быстрая реакция
+    sha256: 1646ea10bf037925906f2915ba2619ced61dacce3c3e334bd7dfddf41ad66447
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Участник с доступом к чату SHALL добавлять Unicode-реакцию к обычному сообщению,
+      включая сообщение с вложением. Повторное нажатие той же реакции SHALL снимать
+      её. Одна пара пользователь/эмодзи SHALL учитываться один раз; разные эмодзи
+      одного пользователя допускаются. Системные события и голоса опросов не заменяются реакциями.
+  steps:
+    - action: пользователь открывает действия сообщения наведением, кнопкой или долгим нажатием
+      expected: доступны ❤️ 👍 😂 🔥 🎉 и переход к полному выбору
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-REACT-7E7A775E
+  title: "Выбор и снятие своей реакции: Повторное нажатие"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md
+    requirement: Выбор и снятие своей реакции
+    scenario: Повторное нажатие
+    sha256: 7ec19dd329159ee116792c0e9ad1e67c493983010567d6c6122297b3059531f6
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Участник с доступом к чату SHALL добавлять Unicode-реакцию к обычному сообщению,
+      включая сообщение с вложением. Повторное нажатие той же реакции SHALL снимать
+      её. Одна пара пользователь/эмодзи SHALL учитываться один раз; разные эмодзи
+      одного пользователя допускаются. Системные события и голоса опросов не заменяются реакциями.
+  steps:
+    - action: пользователь нажимает свою уже установленную реакцию
+      expected: она удаляется и счётчик уменьшается на один
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-REACT-EFCCD7B0
+  title: "Выбор и снятие своей реакции: Повтор запроса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md
+    requirement: Выбор и снятие своей реакции
+    scenario: Повтор запроса
+    sha256: e5923df1614169ea3c699e5b02e886ded95f9ecb3376fec47af2bda66ef03732
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Участник с доступом к чату SHALL добавлять Unicode-реакцию к обычному сообщению,
+      включая сообщение с вложением. Повторное нажатие той же реакции SHALL снимать
+      её. Одна пара пользователь/эмодзи SHALL учитываться один раз; разные эмодзи
+      одного пользователя допускаются. Системные события и голоса опросов не заменяются реакциями.
+  steps:
+    - action: добавление повторено после потери ответа
+      expected: количество не увеличивается повторно для того же пользователя и эмодзи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-REACT-18CAB411
+  title: "Подтверждённое состояние реакций: Ошибка сохранения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md
+    requirement: Подтверждённое состояние реакций
+    scenario: Ошибка сохранения
+    sha256: fb73721a13f9bf8a1b7e3f9d962225d4a7991592ce4bf16ecb21bfd3a4e66a03
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Реакции SHALL показывать эмодзи, количество и собственное участие, различимое
+      без цвета. Ошибка SHALL сохранять последнее подтверждённое состояние и давать
+      повтор. Счётчик SHALL позволять узнать имена отреагировавших с текущим доступом
+      к сообщению, без раскрытия контактов.
+  steps:
+    - action: сервер не подтвердил реакцию
+      expected: клиент отменяет неподтверждённое изменение и предлагает повторить
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-REACT-126AB1CF
+  title: "Подтверждённое состояние реакций: Отзыв доступа"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md
+    requirement: Подтверждённое состояние реакций
+    scenario: Отзыв доступа
+    sha256: c93adade7538b014a480b4f57d010461aee514baf2a3af5b2268e897cbe589ba
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Реакции SHALL показывать эмодзи, количество и собственное участие, различимое
+      без цвета. Ошибка SHALL сохранять последнее подтверждённое состояние и давать
+      повтор. Счётчик SHALL позволять узнать имена отреагировавших с текущим доступом
+      к сообщению, без раскрытия контактов.
+  steps:
+    - action: пользователь потерял доступ к чату
+      expected: реакции не читаются и не изменяются, поздний ответ не возвращает их на экран
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

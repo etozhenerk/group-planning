@@ -1,0 +1,183 @@
+- id: TC-OPS-A77B6B93
+  title: "Разрешённые источники и получатель: Подмена параметров"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: Разрешённые источники и получатель
+    scenario: Подмена параметров
+    sha256: c0f0d605f9cf66bb3fdc5ec511d96b48aa5da8309b4945383e6aea2ccf18dcbf
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Бот SHALL принимать только известные alert ID/статусы и согласованные технические
+      метки. Запросы, единицы, пороги, ссылки и получатель SHALL задаваться конфигурацией;
+      событие SHALL NOT подменять их. Неизвестное событие SHALL завершаться без отправки.
+  steps:
+    - action: событие содержит неизвестный alert ID, чужой folder/host/environment либо произвольные
+        annotations
+      expected: чужое событие отклоняется, annotations не используются для запросов, ссылок или текста
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-OPS-9D3AB3FA
+  title: "График и честное отсутствие данных: Нет свежей истории"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: График и честное отсутствие данных
+    scenario: Нет свежей истории
+    sha256: b8fa6f0ac16a8a9495abe97bd17d975482f193631b31dfd9c48b50c117ee9faf
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Бот SHALL строить PNG из истории выбранной метрики с единицами, порогами, UTC-временем
+      и разрывами. PNG SHALL NOT называться скриншотом интерфейса. Пропуск SHALL NOT стать
+      нулём. Сбой чтения/рендера SHALL приводить к тексту с причиной отсутствия графика.
+  steps:
+    - action: источник пуст, недоступен или последнее значение старше трёх минут
+      expected: уведомление явно показывает отсутствие или устаревание данных; не объявляет ноль или норму
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-OPS-1D941C10
+  title: "График и честное отсутствие данных: Восстановление после аварии"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: График и честное отсутствие данных
+    scenario: Восстановление после аварии
+    sha256: 8fe88bf4047d4cb7c6506faa5102ac40e61bba1be4e65686cf8910b97645363f
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Бот SHALL строить PNG из истории выбранной метрики с единицами, порогами, UTC-временем
+      и разрывами. PNG SHALL NOT называться скриншотом интерфейса. Пропуск SHALL NOT стать
+      нулём. Сбой чтения/рендера SHALL приводить к тексту с причиной отсутствия графика.
+  steps:
+    - action: приходит известное событие OK после Alarm
+      expected: отправляется уведомление восстановления с порогами и историей, не выполняется повторное
+        вычисление статуса по последней точке
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-OPS-1326848C
+  title: "Ограниченные повторы и приватность: Долгое ограничение Telegram"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: Ограниченные повторы и приватность
+    scenario: Долгое ограничение Telegram
+    sha256: c791265ed79722768b78ba31028ba130e1c14054187e4fdf1fd5cb828062e499
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Обработка SHALL иметь дедлайн 30 с, до трёх попыток Telegram, учёт retry_after
+      и безопасные ошибки без токена/URL/payload. Секрет SHALL читаться из Lockbox;
+      весь процесс SHALL работать без БД/API somewhere. Лимит PNG — 1 МиБ.
+  steps:
+    - action: Telegram требует retry_after больше пяти секунд
+      expected: функция возвращает наблюдаемую ошибку без длительного ожидания и бесконечных повторов
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-OPS-8BE1D39B
+  title: "Ограниченные повторы и приватность: Ротация секрета и параллельные события"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: Ограниченные повторы и приватность
+    scenario: Ротация секрета и параллельные события
+    sha256: 34ffd4f1ab162545849be971800cce7b6b2f0aa7eb9c66857b4847dcc1262fe0
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Обработка SHALL иметь дедлайн 30 с, до трёх попыток Telegram, учёт retry_after
+      и безопасные ошибки без токена/URL/payload. Секрет SHALL читаться из Lockbox;
+      весь процесс SHALL работать без БД/API somewhere. Лимит PNG — 1 МиБ.
+  steps:
+    - action: токен Lockbox сменился или пришло 20 независимых событий
+      expected: новый вызов получает актуальный токен, состояния разных событий не смешиваются, каждое
+        соблюдает лимит попыток; возможные дубли документированы
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-OPS-EC714809
+  title: "Воспроизводимая эксплуатация: Код проверен без токена"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/telegram-monitoring-bot/specs/operations-telegram-notifications/spec.md
+    requirement: Воспроизводимая эксплуатация
+    scenario: Код проверен без токена
+    sha256: 6788c4ecb4e637dc7f3c3a4c7187fe7a8e5fe4f74483b1d4f6a39f25f9a8577d
+  platforms:
+    - monitoring
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Репозиторий SHALL содержать отдельный модуль, сборку, CI, каталог метрик и инструкцию
+      закрытого выпуска/отката. Реальная доставка SHALL считаться подтверждённой только
+      после проверки в разрешённом Telegram-чате, отдельно от тестов с заглушками.
+  steps:
+    - action: локальные тесты и сборка прошли, но бот ещё не подключён к чату
+      expected: отчёт фиксирует готовность к подключению и непроверенную живую доставку отдельно
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    monitoring:
+      status: manual
+      health: unknown
+      tests: []

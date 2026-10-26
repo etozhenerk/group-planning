@@ -26,7 +26,14 @@
     "design:context": "node scripts/design/cli.mjs context",
     "design:test": "node --test scripts/design/*.test.mjs",
     "design:prune": "node scripts/design/cli.mjs prune",
-    "design:inspect-report": "node scripts/design/cli.mjs inspect-report"
+    "design:inspect-report": "node scripts/design/cli.mjs inspect-report",
+    "qa:check": "node scripts/testing/cli.mjs check",
+    "qa:plan": "node scripts/testing/cli.mjs plan",
+    "qa:run-suite": "node scripts/testing/cli.mjs run-suite",
+    "qa:ready": "node scripts/testing/cli.mjs ready",
+    "qa:release-ready": "node scripts/testing/cli.mjs release-ready",
+    "qa:report": "node scripts/testing/cli.mjs report",
+    "qa:test": "node --test scripts/testing/*.test.mjs"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.3",
@@ -34,11 +41,17 @@
     "@redocly/cli": "2.65.0",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
+    "allure": "3.22.1",
     "prettier": "3.9.10",
     "style-dictionary": "5.7.1",
     "yaml": "2.9.1"
   },
   "workspaces": [
     "frontend/web"
-  ]
+  ],
+  "overrides": {
+    "@allurereport/web-commons": {
+      "dompurify": "3.4.17"
+    }
+  }
 }

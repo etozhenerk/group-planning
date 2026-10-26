@@ -1,0 +1,371 @@
+- id: TC-CHAT-SECURITY-791FF479
+  title: "Аутентифицированные защищённые соединения: Подписка с чужого сайта или на чужую встречу"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Аутентифицированные защищённые соединения
+    scenario: Подписка с чужого сайта или на чужую встречу
+    sha256: 3ec58333d9d6fc9b5a14437d27a04df2ae6cb84ac5b8be269ed2ad3b697934c4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Внешние HTTP и realtime-соединения SHALL использовать TLS с проверкой сертификата. Сервер
+      SHALL аутентифицировать соединение, проверять web Origin и разрешение подписки; секреты SHALL
+      NOT передаваться в URL или попадать в диагностические журналы.
+  steps:
+    - action: клиент использует запрещённый Origin либо не имеет доступа к запрошенной встрече
+      expected: сервер отклоняет подключение или подписку без приватного содержимого
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-0E0CB54C
+  title: "Аутентифицированные защищённые соединения: Истечение сессии"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Аутентифицированные защищённые соединения
+    scenario: Истечение сессии
+    sha256: f2f339ebe5de07640bbbd2062e29dd9596db382a9da215ad0d544584238ca795
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Внешние HTTP и realtime-соединения SHALL использовать TLS с проверкой сертификата. Сервер
+      SHALL аутентифицировать соединение, проверять web Origin и разрешение подписки; секреты SHALL
+      NOT передаваться в URL или попадать в диагностические журналы.
+  steps:
+    - action: сессия истекла или отозвана
+      expected: соединение больше не даёт авторизованных обновлений, повтор требует действующую сессию
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-1DC708F2
+  title: "Актуальные права и минимальное уведомление: Отзыв между уведомлением и загрузкой"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Актуальные права и минимальное уведомление
+    scenario: Отзыв между уведомлением и загрузкой
+    sha256: ee6b9177879a3af92533f8d2c5e1e8fc85079daff855edbb05c5b030c99ee255
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Сервер SHALL проверять актуальное членство при выдаче истории, изменений и read state. Общая
+      публикация SHALL NOT содержать текст сообщений, индивидуальные позиции чтения или значения
+      скрытых голосов.
+  steps:
+    - action: пользователь потерял доступ после получения сигнала об изменении
+      expected: последующий запрос приватных данных отклонён и клиент очищает состояние встречи
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-6DD0CC09
+  title: "Актуальные права и минимальное уведомление: Голосование в скрытом опросе"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Актуальные права и минимальное уведомление
+    scenario: Голосование в скрытом опросе
+    sha256: 6e884697c8e594f46bf81fd2d825221df360dd7a189ec051c469a7559834273d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Сервер SHALL проверять актуальное членство при выдаче истории, изменений и read state. Общая
+      публикация SHALL NOT содержать текст сообщений, индивидуальные позиции чтения или значения
+      скрытых голосов.
+  steps:
+    - action: участник голосует до закрытия скрытого опроса
+      expected: другие участники не получают его выбор через realtime, журнал синхронизации или read state
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-92CE8303
+  title: "Изоляция аккаунтов и устаревших ответов: Ответ предыдущего аккаунта"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Изоляция аккаунтов и устаревших ответов
+    scenario: Ответ предыдущего аккаунта
+    sha256: 4cb3d1409747cc77bdabb20f0aa61072cc272f9dca1abe548c89a965bb353f1a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиенты SHALL изолировать историю, черновики, исходящие и cursors по аккаунту и доступу.
+      Logout, удаление аккаунта или утрата доступа SHALL отменять работу и очищать соответствующие
+      приватные данные; запоздалый ответ SHALL NOT восстанавливать их.
+  steps:
+    - action: отправка или синхронизация завершилась после входа другим пользователем
+      expected: ответ отбрасывается и ни текст, ни read marker не попадают в новый аккаунт
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-6A1C1A1A
+  title: "Изоляция аккаунтов и устаревших ответов: Исходящее после выхода из встречи"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Изоляция аккаунтов и устаревших ответов
+    scenario: Исходящее после выхода из встречи
+    sha256: 0803bcce89fa28379ad59ae5a4b9fc6af3b40513eb2fdffcc72a8510245714cf
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Клиенты SHALL изолировать историю, черновики, исходящие и cursors по аккаунту и доступу.
+      Logout, удаление аккаунта или утрата доступа SHALL отменять работу и очищать соответствующие
+      приватные данные; запоздалый ответ SHALL NOT восстанавливать их.
+  steps:
+    - action: сохранённая очередь принадлежит встрече, доступ к которой утрачен
+      expected: она не отправляется автоматически и приватное локальное состояние встречи удаляется
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-0830EED9
+  title: "Честная модель шифрования: Текущий серверный режим"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Честная модель шифрования
+    scenario: Текущий серверный режим
+    sha256: dce90f4486cb80a7d795ef09e87d1da83b2728e52e84ace8af2a21c3af9ff109
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Продукт SHALL явно различать защиту транспорта/хранилища и E2EE. При доступном серверу тексте
+      он SHALL NOT заявлять сквозное шифрование. Заявление о защите хранения SHALL опираться на
+      проверенную конфигурацию и восстановление резервных копий.
+  steps:
+    - action: сервер обрабатывает открытый текст сообщения через TLS
+      expected: UI и документация не обещают недоступность содержимого оператору сервера
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-A91C53BB
+  title: "Честная модель шифрования: Защита backup не проверена"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Честная модель шифрования
+    scenario: Защита backup не проверена
+    sha256: 833886ee7695c85c9928169b389faea9d280b7dbcee4c5fd09c0c2c76ecf0fc5
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Продукт SHALL явно различать защиту транспорта/хранилища и E2EE. При доступном серверу тексте
+      он SHALL NOT заявлять сквозное шифрование. Заявление о защите хранения SHALL опираться на
+      проверенную конфигурацию и восстановление резервных копий.
+  steps:
+    - action: нет подтверждения конфигурации ключей и восстановления резервной копии
+      expected: статус проверки остаётся незавершённым и защита backup не объявляется реализованной
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-BDBF283F
+  title: "Минимизация сохранённых приватных данных: Диагностика сбоя"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Минимизация сохранённых приватных данных
+    scenario: Диагностика сбоя
+    sha256: 6267df21f29ef4880949cf5f540ca7d357348ce63c7d8c2eecf8c2c128c76c03
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Диагностика и журнал уведомлений SHALL обходиться без копий текста и токенов. Нативные
+      исходящие SHALL использовать системную защиту хранения; web SHALL учитывать ограничения
+      профиля браузера и ошибку сохранения, не обещая защиты от XSS посредством IndexedDB.
+  steps:
+    - action: фиксируются ошибка отправки, reconnect или задержка синхронизации
+      expected: диагностика содержит безопасные идентификаторы/метрики без тела сообщения и credentials
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-SECURITY-A3B3BFE7
+  title: "Минимизация сохранённых приватных данных: Удаление данных аккаунта"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
+    requirement: Минимизация сохранённых приватных данных
+    scenario: Удаление данных аккаунта
+    sha256: 3a7d431c78bae62951bf1364542bf633c4c191f73fab7a38f17374e38d1a7d89
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение по testing/environments.md.
+    - Диагностика и журнал уведомлений SHALL обходиться без копий текста и токенов. Нативные
+      исходящие SHALL использовать системную защиту хранения; web SHALL учитывать ограничения
+      профиля браузера и ошибку сохранения, не обещая защиты от XSS посредством IndexedDB.
+  steps:
+    - action: аккаунт удаляется
+      expected: новые read markers и данные синхронизации обрабатываются теми же правилами
+        удаления/обезличивания, что и основная история; повтор журнала не возвращает старое имя
+  cleanup:
+    - Удалить только созданные этим прогоном тестовые данные.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

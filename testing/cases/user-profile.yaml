@@ -1,0 +1,274 @@
+- id: TC-PROFILE-CC2372B4
+  title: "Просмотр собственного профиля: Профиль без телефона"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Просмотр собственного профиля
+    scenario: Профиль без телефона
+    sha256: 23545cd104d25185a681d1bcf35df79f520e165dcff2a0858e77ccab51ead3e7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Клиенты SHALL открывать профиль из общей навигации и показывать имя, аватар,
+
+      связь с Яндекс ID, логин, имя, фамилию, дату рождения, пол и доступные контакты. Отсутствие
+      аватара SHALL заменяться
+
+      инициалами, отсутствие контакта — честной подписью. Редактирование имени,
+
+      аватара и контактов не входит в этот этап.
+  steps:
+    - action: Яндекс не передал телефон
+      expected: в поле видно «Не указан», а остальные сведения доступны
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-EBBA2EA5
+  title: "Просмотр собственного профиля: Не удалось загрузить профиль"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Просмотр собственного профиля
+    scenario: Не удалось загрузить профиль
+    sha256: 00e6c63f077904606b8599237fb7004780b8af16a59077de6d4347a361118147
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - >-
+      Клиенты SHALL открывать профиль из общей навигации и показывать имя, аватар,
+
+      связь с Яндекс ID, логин, имя, фамилию, дату рождения, пол и доступные контакты. Отсутствие
+      аватара SHALL заменяться
+
+      инициалами, отсутствие контакта — честной подписью. Редактирование имени,
+
+      аватара и контактов не входит в этот этап.
+  steps:
+    - action: запрос профиля завершился ошибкой
+      expected: показаны ошибка и повтор, отсутствие ответа не выдаётся за пустые поля
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-842701DD
+  title: "Приватность контактов: Просмотр участника"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Приватность контактов
+    scenario: Просмотр участника
+    sha256: cc16a90e6b4646d09b2dafab877193b680c053cc5a634dced038e4407e3e143d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Логин, имя/фамилия отдельными полями, дата рождения, пол, почта и телефон SHALL
+      возвращаться только владельцу профиля. Участники встречи
+      SHALL получать лишь публичное представление: ID, имя и аватар. Обновление
+      авторизации SHALL NOT перезаписывать известный контакт отсутствующим полем
+      из-за недостаточных разрешений нового токена.
+  steps:
+    - action: другой участник получает состав встречи или авторов сообщений
+      expected: личные поля отсутствуют в ответе API и в интерфейсе
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-C6FA6B4C
+  title: "Приватность контактов: Недостаточно прав Яндекс ID"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Приватность контактов
+    scenario: Недостаточно прав Яндекс ID
+    sha256: a29fb50df7e333b3461e56dd4db8c545c2b3ce43a82b68e49f9faf087f229848
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Логин, имя/фамилия отдельными полями, дата рождения, пол, почта и телефон SHALL
+      возвращаться только владельцу профиля. Участники встречи
+      SHALL получать лишь публичное представление: ID, имя и аватар. Обновление
+      авторизации SHALL NOT перезаписывать известный контакт отсутствующим полем
+      из-за недостаточных разрешений нового токена.
+  steps:
+    - action: действующий токен не предоставляет контакты
+      expected: вход остаётся возможным, клиент показывает доступные данные дополнительное разрешение не
+        считается уже предоставленным
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-4F3DAAFE
+  title: "Синхронизация данных Яндекс ID: Все права и полные данные"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Синхронизация данных Яндекс ID
+    scenario: Все права и полные данные
+    sha256: 0a877b0c47ed148b6d4653c54c6c116569dd8ff96235cd0588dcd8237cd13f50
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Авторизация SHALL запрашивать права, выбранные владельцем приложения в Яндекс
+      OAuth. Сервер SHALL проверять токен и получать данные непосредственно у Яндекса.
+      Пропущенное поле SHALL сохранять прежнее значение, явно пустое личное поле —
+      очищать его. Неизвестные части даты SHALL NOT дополняться. Старые сессии SHALL
+      оставаться действительными, новые данные обновляются при следующем входе.
+  steps:
+    - action: новый вход возвращает все выбранные поля Яндекс ID
+      expected: собственный профиль показывает данные, полученные сервером, на всех трёх клиентах клиент
+        не подменяет отсутствующие значения демонстрационными
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-3E5EFE8D
+  title: "Синхронизация данных Яндекс ID: Неполная дата и неизвестный пол"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Синхронизация данных Яндекс ID
+    scenario: Неполная дата и неизвестный пол
+    sha256: f35b77710a0124d7bc09ad0d68b50d698ab6c6c5e968c78b8aa13fecf359d5c3
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Авторизация SHALL запрашивать права, выбранные владельцем приложения в Яндекс
+      OAuth. Сервер SHALL проверять токен и получать данные непосредственно у Яндекса.
+      Пропущенное поле SHALL сохранять прежнее значение, явно пустое личное поле —
+      очищать его. Неизвестные части даты SHALL NOT дополняться. Старые сессии SHALL
+      оставаться действительными, новые данные обновляются при следующем входе.
+  steps:
+    - action: Яндекс возвращает birthday 0000-12-23 и sex null
+      expected: интерфейс показывает «23 декабря» и «Не указано» не придумывает год, возраст или пол по
+        имени/аватару
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-PROFILE-F319B092
+  title: "Синхронизация данных Яндекс ID: Явное очищение и частичные права"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Синхронизация данных Яндекс ID
+    scenario: Явное очищение и частичные права
+    sha256: da37fbbe2f238a0bd9a2fcceebc85b6f15967a6e025fe79cc4eb975ad2370fca
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Авторизация SHALL запрашивать права, выбранные владельцем приложения в Яндекс
+      OAuth. Сервер SHALL проверять токен и получать данные непосредственно у Яндекса.
+      Пропущенное поле SHALL сохранять прежнее значение, явно пустое личное поле —
+      очищать его. Неизвестные части даты SHALL NOT дополняться. Старые сессии SHALL
+      оставаться действительными, новые данные обновляются при следующем входе.
+  steps:
+    - action: повторный вход содержит birthday null, но не содержит first_name
+      expected: дата рождения очищается, известное имя сохраняется отсутствие дополнительного поля не
+        блокирует вход
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []

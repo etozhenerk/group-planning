@@ -1,0 +1,1072 @@
+- id: TC-CREATE-ECED7F8F
+  title: "Быстрый первый вход: Первый вход организатора"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Быстрый первый вход
+    scenario: Первый вход организатора
+    sha256: 54d5833ea20f2c34564e696a0056a7b14f3ff5110da282cb711b7a1e99dbb2f3
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL создавать профиль Somewhere после первого успешного входа
+      через Яндекс ID без дополнительной анкеты регистрации. Повторный вход
+      SHALL открывать существующий профиль и его встречи.
+  steps:
+    - action: Саша впервые успешно входит через Яндекс ID
+      expected: у него появляется профиль и возможность создать встречу
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-01E5737C
+  title: "Быстрый первый вход: Повторный вход"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Быстрый первый вход
+    scenario: Повторный вход
+    sha256: 511ef90e23173674397f9dcede0646fb977c7dd45db6dcf7dbc932bf754a0fb0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL создавать профиль Somewhere после первого успешного входа
+      через Яндекс ID без дополнительной анкеты регистрации. Повторный вход
+      SHALL открывать существующий профиль и его встречи.
+  steps:
+    - action: Саша снова входит тем же аккаунтом
+      expected: он видит существующий профиль и ранее созданные встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-1F56135E
+  title: "Создание встречи с обязательной датой: Создание субботней встречи"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Создание встречи с обязательной датой
+    scenario: Создание субботней встречи
+    sha256: 4edf459aef8d0f007690d42486058dd4ee1e7dde733e8b05e6b628f8478dc736
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL требовать название и дату при создании встречи.
+      Время, описание и место SHALL быть необязательными. При отсутствии времени
+      система SHALL сохранять выбранную календарную дату и SHALL NOT подменять
+      неизвестное время полуночью. Решение уточнено 22.10.2026; его реализация
+      и совместимость первого контракта входят в этап 10.
+  steps:
+    - action: Саша создаёт «Суббота без спешки» на 24 октября в 19:00
+      expected: встреча сохраняет эти детали и Саша указан как организатор
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-9894513C
+  title: "Создание встречи с обязательной датой: Место определится позже"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Создание встречи с обязательной датой
+    scenario: Место определится позже
+    sha256: 6da68869fe8816959db903e83b9b3be39b20157b700ecd5f884a91c9db405b64
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL требовать название и дату при создании встречи.
+      Время, описание и место SHALL быть необязательными. При отсутствии времени
+      система SHALL сохранять выбранную календарную дату и SHALL NOT подменять
+      неизвестное время полуночью. Решение уточнено 22.10.2026; его реализация
+      и совместимость первого контракта входят в этап 10.
+  steps:
+    - action: Саша создаёт встречу без заполненного места
+      expected: встреча может быть создана, а отсутствие места не заменяется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-D1DE264B
+  title: "Раздельный выбор даты и времени на вебе: Выбрать дату в форме"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Выбрать дату в форме
+    sha256: f5207860bd936f0fa70527d21add6457785c4cf21148fafb7652a3609405ac47
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: организатор открывает календарь у поля «Дата» и выбирает день
+      expected: день сохраняется отдельно от поля «Время», календарь закрывается,
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-C6784AF1
+  title: "Раздельный выбор даты и времени на вебе: Создание в поясе браузера"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Создание в поясе браузера
+    sha256: b5bd01e5032b8f104fbc4b8fcd086fb0fb5814cc3c9f1a5cb3df900f280c2929
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: браузер использует Asia/Yekaterinburg и организатор задаёт 24 октября 2026 года, 19:00
+      expected: запрос содержит Asia/Yekaterinburg и момент 2026-10-24T19:00:00+05:00
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-152EBB75
+  title: "Раздельный выбор даты и времени на вебе: Редактирование из другого пояса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Редактирование из другого пояса
+    sha256: c6b628efb75b15eb08504e03a56d48ca2bd0133cd9451e042a9f635618e97102
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: встреча сохранена в America/New_York, а организатор редактирует её из Europe/Moscow
+      expected: поля относятся к America/New_York, а изменение описания не меняет момент встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-B3AAE303
+  title: "Раздельный выбор даты и времени на вебе: Не выбрано время"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Не выбрано время
+    sha256: e9729ec2c7bc86da56fb47d38f0927fbba76afe9151d8c81884853bfdf9611cb
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: организатор указал название и дату, оставил время пустым и создаёт встречу
+      expected: встреча создаётся с этой датой и без придуманного времени в чате появляется системное
+        сообщение с предложением уточнить время
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-63E4AEE7
+  title: "Раздельный выбор даты и времени на вебе: Не выбрана дата"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Не выбрана дата
+    sha256: 6f94f242cd246af5d1887225d7306077638377c2ee41d92deb37493bec12e236
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: организатор указал название, но оставил дату пустой
+      expected: создание отклоняется с ошибкой поля даты
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-D1EB815D
+  title: "Раздельный выбор даты и времени на вебе: Нажать на любую часть поля даты"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Раздельный выбор даты и времени на вебе
+    scenario: Нажать на любую часть поля даты
+    sha256: a56780affb8138eb3d5a439ade269bf8be10759b539ef71ed2650c512c1259ec
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Веб SHALL предоставлять отдельные поля даты и времени с календарём сервиса,
+      без поля пояса. Новая встреча SHALL использовать IANA-пояс браузера,
+      редактируемая — пояс встречи, черновик SHALL сохранять исходный пояс.
+      При заданном времени API SHALL получать согласованные дату, время, смещение
+      и пояс; при пустом — сохранять дату в поясе встречи.
+      Неоднозначное или несуществующее время SHALL NOT молча переноситься библиотекой.
+  steps:
+    - action: пользователь нажимает на текст, свободную область или иконку поля даты
+      expected: открывается пользовательский календарь очистка даты остаётся отдельным действием, а выбор
+        дня и Escape закрывают календарь
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-D1B946D8
+  title: "Ссылка на созданную встречу: Отправить приглашение другу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Ссылка на созданную встречу
+    scenario: Отправить приглашение другу
+    sha256: 1eeb250959f58d50a07221f6cc273e20b92879a05bb69b734e20456ed0bb7047
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL предоставлять ссылку приглашения после успешного создания
+      встречи. По этой ссылке друг SHALL открывать приглашение к той же встрече.
+  steps:
+    - action: Саша получает ссылку созданной встречи и передаёт её Лене
+      expected: Лена по ней открывает приглашение с тем же названием, датой и местом
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-E78D9748
+  title: "Обложка относится к встрече: Своя обложка встречи"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Обложка относится к встрече
+    scenario: Своя обложка встречи
+    sha256: 7b84906468304182940c5d593fa6fe7a8134b00ec3f11500525d90448f32861c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL рассматривать обложку как необязательное изображение конкретной
+      встречи. Она SHALL NOT автоматически становиться общим фоном сервиса,
+      обложкой других встреч или фотографией профиля участника.
+  steps:
+    - action: у встречи «Суббота без спешки» выбрана обложка с пиццей
+      expected: это изображение относится к её карточке, приглашению и ленте,
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-0ED06A05
+  title: "Обложка относится к встрече: Встреча без обложки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Обложка относится к встрече
+    scenario: Встреча без обложки
+    sha256: aa6926c1764604777bd477a907d0e532c16f3610b79cdad14d8e1c589052526e
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL рассматривать обложку как необязательное изображение конкретной
+      встречи. Она SHALL NOT автоматически становиться общим фоном сервиса,
+      обложкой других встреч или фотографией профиля участника.
+  steps:
+    - action: у встречи нет обложки
+      expected: приглашение сохраняет доступные текстовые детали без обязательного фото
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-C06A60F6
+  title: "Создание отражается в ленте: До первых приглашённых"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Создание отражается в ленте
+    scenario: До первых приглашённых
+    sha256: 1774c777d51b33f527483130d0bcc33e1310594baeac4b5504822c4b5bc948bc
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL показывать создание встречи в её общей хронологии
+      и позволять организатору открыть ленту из списка своих встреч.
+  steps:
+    - action: Саша открыл только что созданную встречу
+      expected: он видит её детали, событие создания и возможность пригласить друзей
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-7F4861C1
+  title: "Загрузка и изменение обложки: Создание с фото и повтором"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Загрузка и изменение обложки
+    scenario: Создание с фото и повтором
+    sha256: 8c1b8f07c093f57b3c158aba4d2f6030aad2302138a342160047a9210f2cc30b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL принимать необязательную обложку при создании встречи и разрешать
+      организатору заменить или удалить её в настройках. Сохранение фото и встречи
+      SHALL быть атомарным и идемпотентным. Отсутствие поля cover в прежнем клиенте
+      SHALL NOT удалять существующую обложку.
+  steps:
+    - action: организатор выбирает фото, создаёт встречу и повторяет запрос после потери ответа
+      expected: сервер сохраняет одну встречу с одной обложкой, а клиент сохраняет поля до подтверждения
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-7D86A432
+  title: "Загрузка и изменение обложки: Замена, удаление и старый клиент"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Загрузка и изменение обложки
+    scenario: Замена, удаление и старый клиент
+    sha256: 583a7628a7814f5d97fb53efafdafe3405bf8dd64ceba5cbe81e5e565aad57c2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL принимать необязательную обложку при создании встречи и разрешать
+      организатору заменить или удалить её в настройках. Сохранение фото и встречи
+      SHALL быть атомарным и идемпотентным. Отсутствие поля cover в прежнем клиенте
+      SHALL NOT удалять существующую обложку.
+  steps:
+    - action: организатор сохраняет новое фото либо явно удаляет прежнее
+      expected: его встреча получает соответствующую обложку либо отсутствие фото PATCH без cover
+        сохраняет прежнее фото
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-BE9613AB
+  title: "Загрузка и изменение обложки: Ошибка фото не создаёт частичную встречу"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Загрузка и изменение обложки
+    scenario: Ошибка фото не создаёт частичную встречу
+    sha256: 1deda11fd2c3ab4f4fdc15435f7232e2f77bbc58599bcab1661a5b2290362786
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL принимать необязательную обложку при создании встречи и разрешать
+      организатору заменить или удалить её в настройках. Сохранение фото и встречи
+      SHALL быть атомарным и идемпотентным. Отсутствие поля cover в прежнем клиенте
+      SHALL NOT удалять существующую обложку.
+  steps:
+    - action: прислан повреждённый файл, неверный формат или превышены ограничения
+      expected: сервер возвращает ошибку cover и не создаёт/не изменяет встречу поля формы и прежнее фото
+        остаются доступны для исправления
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-1B0A34EA
+  title: "Ограничения и доступ к файлам обложек: Чужая встреча и потеря доступа"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Ограничения и доступ к файлам обложек
+    scenario: Чужая встреча и потеря доступа
+    sha256: 0028cdf2c7ae94b3804a2e94f2e16a380165147ed8cfbb75d6bf54f779d5a102
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      API SHALL принимать JPEG/PNG до 5 MiB, 16 миллионов пикселей и 8192 px по каждой
+      стороне; проверять формат и размеры до полного декодирования, удалять метаданные
+      повторным кодированием. API SHALL NOT скачивать произвольные внешние URL.
+      Приватное чтение SHALL проверять текущий доступ к встрече; публичное чтение
+      SHALL требовать действующую ссылку приглашения. Неверная версия URL SHALL NOT
+      возвращать новое фото под старым адресом.
+  steps:
+    - action: пользователь без доступа запрашивает приватную обложку встречи
+      expected: сервер не возвращает пиксели, а поздний ответ не восстанавливает их в закрытом клиентском
+        экране
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-9581586C
+  title: "Ограничения и доступ к файлам обложек: Фото в приглашении"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Ограничения и доступ к файлам обложек
+    scenario: Фото в приглашении
+    sha256: ebbe5e63818ced1dfbc24a154f3a4cb37edbb5fac1c17de7623849bc57557ae0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      API SHALL принимать JPEG/PNG до 5 MiB, 16 миллионов пикселей и 8192 px по каждой
+      стороне; проверять формат и размеры до полного декодирования, удалять метаданные
+      повторным кодированием. API SHALL NOT скачивать произвольные внешние URL.
+      Приватное чтение SHALL проверять текущий доступ к встрече; публичное чтение
+      SHALL требовать действующую ссылку приглашения. Неверная версия URL SHALL NOT
+      возвращать новое фото под старым адресом.
+  steps:
+    - action: человек открывает действующую ссылку приглашения
+      expected: ему доступно фото именно этой встречи вместе с её публичными деталями недействительный
+        токен не даёт доступа к изображению
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-31E77694
+  title: "Ограничения и доступ к файлам обложек: Независимые фотографии"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Ограничения и доступ к файлам обложек
+    scenario: Независимые фотографии
+    sha256: 1ab552b5a5a3a2a2fccad55403b3a51fa46dba8267ce3d157806133fd2f5417c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      API SHALL принимать JPEG/PNG до 5 MiB, 16 миллионов пикселей и 8192 px по каждой
+      стороне; проверять формат и размеры до полного декодирования, удалять метаданные
+      повторным кодированием. API SHALL NOT скачивать произвольные внешние URL.
+      Приватное чтение SHALL проверять текущий доступ к встрече; публичное чтение
+      SHALL требовать действующую ссылку приглашения. Неверная версия URL SHALL NOT
+      возвращать новое фото под старым адресом.
+  steps:
+    - action: у двух встреч выбраны разные фото и одно из них заменено
+      expected: список, приглашение и сведения каждой встречи показывают только её текущую обложку фото не
+        попадает в аватары, пустой список или экран входа
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-42A9F768
+  title: "Системный выбор и состояния обложки: Выбор отменён или файл недоступен"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Системный выбор и состояния обложки
+    scenario: Выбор отменён или файл недоступен
+    sha256: 88ee572e5ee68fa75dbe73966fe8edd5f0ff56969839ef82ca85aba8ed1fa0d1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять выбор одного фото, предпросмотр, замену и удаление
+      до отправки. Отмена выбора SHALL сохранять форму и прежнее фото. Подготовка,
+      загрузка, ошибка чтения и ошибка сохранения SHALL иметь разные состояния.
+      Нативные клиенты SHALL использовать системный picker без требования читать
+      всю медиатеку; отказ доступа к выбранному файлу SHALL сохранять форму.
+  steps:
+    - action: пользователь закрывает picker без выбора или клиент не может прочитать выбранный файл
+      expected: остальные поля и прежняя обложка остаются в форме ошибка чтения позволяет выбрать другое фото
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-0DA4822F
+  title: "Системный выбор и состояния обложки: Загрузка и повтор"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md
+    requirement: Системный выбор и состояния обложки
+    scenario: Загрузка и повтор
+    sha256: 038d47fff2baf5c7b434a150d86426c301d294bb22c12e2a74fd76b554d43f01
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL предоставлять выбор одного фото, предпросмотр, замену и удаление
+      до отправки. Отмена выбора SHALL сохранять форму и прежнее фото. Подготовка,
+      загрузка, ошибка чтения и ошибка сохранения SHALL иметь разные состояния.
+      Нативные клиенты SHALL использовать системный picker без требования читать
+      всю медиатеку; отказ доступа к выбранному файлу SHALL сохранять форму.
+  steps:
+    - action: фото готовится или запрос сохраняется
+      expected: интерфейс показывает соответствующий скелетон/спиннер и блокирует повторную отправку
+        неизвестный результат повторяется с прежними телом и ключом
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-9138348C
+  title: "Непосредственный переход после создания: Успешное создание"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Непосредственный переход после создания
+    scenario: Успешное создание
+    sha256: f7b383027dd539d2a8833863654f3589600c81f0154263e7c01ab330162a45d2
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL после подтверждённого создания открывать чат созданной
+      встречи без экрана «Встреча создана» и кнопки входа во встречу. Возврат назад
+      SHALL вести к исходному списку или календарю, а не к отправленной форме.
+  steps:
+    - action: сервер подтвердил создание встречи
+      expected: организатор видит её чат и действие «Пригласить друзей» приложение не запрашивает RSVP
+        организатора
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/28-meeting-refresh.spec.ts
+          selector: new meeting goes directly to chat; composer panels preserve cursor and draft
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-2066E79A
+  title: "Непосредственный переход после создания: Потерян ответ создания"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Непосредственный переход после создания
+    scenario: Потерян ответ создания
+    sha256: 2f8ab22f4a5bfb57a9a5c82eb57da40e521162113e95811e8d939655d5a477fc
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL после подтверждённого создания открывать чат созданной
+      встречи без экрана «Встреча создана» и кнопки входа во встречу. Возврат назад
+      SHALL вести к исходному списку или календарю, а не к отправленной форме.
+  steps:
+    - action: результат создания не подтверждён из-за сети
+      expected: форма сохраняет ввод и предлагает повтор с прежним ключом операции чат открывается только
+        после подтверждения того же ID встречи
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-2A0E9F3E
+  title: "Непосредственный переход после создания: Прежняя ссылка подтверждения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Непосредственный переход после создания
+    scenario: Прежняя ссылка подтверждения
+    sha256: 4d316741cb6da5ee84ae24c385769efdf4c35001f5ad8831374d13d1e64d81c7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL после подтверждённого создания открывать чат созданной
+      встречи без экрана «Встреча создана» и кнопки входа во встречу. Возврат назад
+      SHALL вести к исходному списку или календарю, а не к отправленной форме.
+  steps:
+    - action: авторизованный организатор открывает прежний маршрут созданной встречи
+      expected: после проверки доступа он переходит в её чат без промежуточного действия
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-9724DED7
+  title: "Приглашение друзей из нового чата: Организатор пока один"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Приглашение друзей из нового чата
+    scenario: Организатор пока один
+    sha256: 8970a2ac77ae11924538c107b8af4c96f35546f7ab864d6092c9a782d5ed9a84
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Чат новой встречи SHALL показывать событие создания и компактное приглашение
+      поделиться ссылкой. Отмена Share SHALL оставлять пользователя в чате.
+      При наличии переписки отдельное пустое состояние SHALL исчезать, а действие
+      приглашения SHALL оставаться доступным в шапке.
+  steps:
+    - action: после создания в чате нет пользовательских сообщений
+      expected: видны «Позовём остальных?» и «Пригласить друзей», поле сообщения доступно
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CREATE-932B50E6
+  title: "Приглашение друзей из нового чата: Отмена отправки ссылки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Приглашение друзей из нового чата
+    scenario: Отмена отправки ссылки
+    sha256: 27a6926beaa39cd332e7bfbc96e7c039ef0a436c0b31413aae8369da9ab47578
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Чат новой встречи SHALL показывать событие создания и компактное приглашение
+      поделиться ссылкой. Отмена Share SHALL оставлять пользователя в чате.
+      При наличии переписки отдельное пустое состояние SHALL исчезать, а действие
+      приглашения SHALL оставаться доступным в шапке.
+  steps:
+    - action: организатор закрывает системный Share без отправки
+      expected: встреча остаётся созданной и чат сохраняется
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

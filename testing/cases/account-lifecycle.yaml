@@ -1,0 +1,467 @@
+- id: TC-ACCOUNT-FB303DFB
+  title: "Подтверждённое удаление собственного аккаунта: Пользователь отменил подтверждение"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Подтверждённое удаление собственного аккаунта
+    scenario: Пользователь отменил подтверждение
+    sha256: d0cbacf79dd62d32a290e10fb198cdd65d14e03d2abd672bd7361cb2ca774c52
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL предоставлять удаление в меню профиля. Перед отправкой
+      клиент SHALL объяснять необратимость, сохранение общей переписки без имени,
+      передачу организации и удаление встреч без преемника. Сервер SHALL принимать
+      первый запрос только от действующей сессии удаляемого пользователя; web требует
+      Origin и CSRF. Идентификатор чужого профиля SHALL NOT приниматься от клиента.
+  steps:
+    - action: пользователь открыл подтверждение и нажал «Отмена»
+      expected: запрос не отправляется и профиль, встречи и сессия остаются прежними
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-9A32B220
+  title: "Подтверждённое удаление собственного аккаунта: Посторонний запрос"
+  lifecycle: active
+  level: e2e
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Подтверждённое удаление собственного аккаунта
+    scenario: Посторонний запрос
+    sha256: 5feed9981a432ec22b129bf10d9190851030dd712c8cedf2e714ee2d4132f6e1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Web, iOS и Android SHALL предоставлять удаление в меню профиля. Перед отправкой
+      клиент SHALL объяснять необратимость, сохранение общей переписки без имени,
+      передачу организации и удаление встреч без преемника. Сервер SHALL принимать
+      первый запрос только от действующей сессии удаляемого пользователя; web требует
+      Origin и CSRF. Идентификатор чужого профиля SHALL NOT приниматься от клиента.
+  steps:
+    - action: первый запрос не имеет действующей сессии либо не прошёл web CSRF
+      expected: сервер отказывает без изменения профиля и встреч
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-3B50E73F
+  title: "Автоматический преемник организатора: Несколько участников и более ранний отказ"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Автоматический преемник организатора
+    scenario: Несколько участников и более ранний отказ
+    sha256: f577f4eb21f0e1605976d1cc2bfb79b3a5ac58fc0d9dcc5356b376b838c85e9b
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      При удалении организатора система SHALL передать каждую его встречу оставшемуся
+      текущему участнику «Приду», чьё первое вступление произошло раньше остальных.
+      Передача SHALL не требовать подтверждения преемника и SHALL давать ему все
+      права организатора. Повторное вступление SHALL не менять очередь первого вступления.
+  steps:
+    - action: организатор удаляется, первым вступил А и затем отказался, вторым Б с текущим «Приду»,
+        третьим В с текущим «Приду»
+      expected: организатором становится Б, а А и удаляемый человек не учитываются
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-8BE9C65D
+  title: "Автоматический преемник организатора: Участник вернулся"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Автоматический преемник организатора
+    scenario: Участник вернулся
+    sha256: 0907681c673c8e295d9395f11d0d3b5f5d3382e31b060bff8a82f964244e82a6
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      При удалении организатора система SHALL передать каждую его встречу оставшемуся
+      текущему участнику «Приду», чьё первое вступление произошло раньше остальных.
+      Передача SHALL не требовать подтверждения преемника и SHALL давать ему все
+      права организатора. Повторное вступление SHALL не менять очередь первого вступления.
+  steps:
+    - action: Б вступил раньше В, временно вышел и снова подтвердил «Приду» до удаления организатора
+      expected: преемником становится Б
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-71C6F454
+  title: "Встреча без преемника удаляется: Остались только возможно и отказ"
+  lifecycle: active
+  level: integration
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Встреча без преемника удаляется
+    scenario: Остались только возможно и отказ
+    sha256: 9b947ec9d2108411066d2a3ecfdaeb90b6cd3417de8efb3f4c2c28c56dd49a24
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Если после удаления организатора не остаётся участников «Приду», система SHALL
+      удалить встречу полностью: приглашение, ответы, ленту, обложку, опросы, задачи
+      подготовки и фоновые задания. Это SHALL распространяться и на прошедшие встречи.
+  steps:
+    - action: организатор удаляет аккаунт, а другие ответы встречи — «Возможно» и «Не смогу»
+      expected: встреча удаляется, её ссылка возвращает 404, фоновые задания её не восстанавливают
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-139EA5EB
+  title: "Исключение участника и сохранение истории: Голос в открытом и закрытом опросах"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Исключение участника и сохранение истории
+    scenario: Голос в открытом и закрытом опросах
+    sha256: 7b02468d55fbd5668ef83f63bb480b566e0f77cfc915826af8b0a6a0bfe8c16b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      В сохранённых встречах система SHALL удалить ответы пользователя и его голоса
+      в открытых опросах, пересчитать текущий состав по правилам опроса и заменить
+      сохранённые имена автора на «Удалённый аккаунт». Закрытые результаты и тексты
+      переписки SHALL сохраняться; удаление профиля SHALL не переписывать свободный текст.
+  steps:
+    - action: голосовавший удаляет профиль
+      expected: его открытый голос удалён, закрытый результат не пересчитан, прежнее имя нигде в профиле
+        или снимках авторства не отображается
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-4FA2310E
+  title: "Задачи удаляемого участника: Удаляется исполнитель"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Задачи удаляемого участника
+    scenario: Удаляется исполнитель
+    sha256: df59297df49a66f3137eb2a51792917f4fdbdcfc4b4df16e26aff80f9d8cb651
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Система SHALL отменить предложенные удаляемому человеку и принятые им задачи.
+      Общие предложения, задачи другим людям и завершённая история SHALL сохраняться
+      с обезличенным авторством. Удаление SHALL NOT автоматически назначать исполнителя.
+  steps:
+    - action: пользователь удаляет профиль с принятой задачей подготовки
+      expected: задача отменяется с записью в ленте; новый организатор не становится её исполнителем
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-A8D0B8CD
+  title: "Отзыв профиля и доступа: Старое действие после удаления"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Отзыв профиля и доступа
+    scenario: Старое действие после удаления
+    sha256: 2a1010d596ee16b37f56745e37f8afb338d3b83e9a1e074d0a6bb21bee3fd044
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Успешное удаление SHALL удалять профиль, привязку провайдера, все сессии и связанные
+      handoff. Старая сессия и ранее проверенный запрос SHALL не позволять восстановить
+      участие или создать данные. Новый самостоятельный вход через тот же Яндекс ID
+      SHALL создавать новый пустой профиль, без восстановления прежних прав.
+  steps:
+    - action: запрос успел пройти проверку сессии до удаления, но записывает сообщение или RSVP после него
+      expected: запись отклоняется и удалённый пользователь не возвращается в состав
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-C8388C19
+  title: "Отзыв профиля и доступа: Незавершённый вход"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Отзыв профиля и доступа
+    scenario: Незавершённый вход
+    sha256: 631246613263aaef76c663e73d41e6a17a66e0f24243f609020d0ad956b73921
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Успешное удаление SHALL удалять профиль, привязку провайдера, все сессии и связанные
+      handoff. Старая сессия и ранее проверенный запрос SHALL не позволять восстановить
+      участие или создать данные. Новый самостоятельный вход через тот же Яндекс ID
+      SHALL создавать новый пустой профиль, без восстановления прежних прав.
+  steps:
+    - action: начатый до удаления OAuth/SDK обмен завершился после удаления
+      expected: он не создаёт профиль или сессию; начать новый вход можно отдельно
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-1C58ABFB
+  title: "Атомарность и безопасный повтор: Ошибка во второй встрече"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Атомарность и безопасный повтор
+    scenario: Ошибка во второй встрече
+    sha256: 3bb01ee3d3e2640d32ac8140a1f135cac2ddcede828418ae522809fe17e7d5c9
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Удаление профиля и обработка всех встреч SHALL быть одной атомарной операцией.
+      Повтор с тем же случайным секретом операции SHALL подтверждать прежний успех
+      в течение 24 часов без действующей сессии и без удаления нового аккаунта.
+      Секрет повтора SHALL не давать доступа к другим операциям или данным.
+  steps:
+    - action: операция завершилась ошибкой при обработке одной из встреч
+      expected: профиль, сессии и все встречи остаются в исходном состоянии
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-C479CF83
+  title: "Атомарность и безопасный повтор: Потерян ответ"
+  lifecycle: active
+  level: integration
+  risk: critical
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Атомарность и безопасный повтор
+    scenario: Потерян ответ
+    sha256: 2ea762ba88ccb7f7bd72f35f0b18e1712c023cd985bf92c2e8cdaf55d7466eb1
+  platforms:
+    - backend
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Удаление профиля и обработка всех встреч SHALL быть одной атомарной операцией.
+      Повтор с тем же случайным секретом операции SHALL подтверждать прежний успех
+      в течение 24 часов без действующей сессии и без удаления нового аккаунта.
+      Секрет повтора SHALL не давать доступа к другим операциям или данным.
+  steps:
+    - action: удаление сохранилось, но клиент не получил ответ и повторяет прежнюю операцию
+      expected: сервер подтверждает успех без повторной передачи организации и клиент очищает локальные
+        данные
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    backend:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-766FCFA1
+  title: "Состояния клиента и очистка: Перезапуск после сетевой ошибки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Состояния клиента и очистка
+    scenario: Перезапуск после сетевой ошибки
+    sha256: 64083036632cbd96c4ef8dd4fad16cef567ac481b14651038fb43a6f5a39305d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL сохранять ключ незавершённой операции до подтверждения результата,
+      показывать ожидание без повторных отправок и предлагать повтор при неопределённом
+      результате. После подтверждённого удаления SHALL очищаться сессия, приватный
+      кэш, черновики и контекст приглашений; публичный экран SHALL сообщать об успехе.
+  steps:
+    - action: клиент перезапущен с незавершённым запросом удаления
+      expected: доступен повтор прежней операции, без ложного сообщения об успехе и без показа устаревших
+        приватных данных
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-ACCOUNT-CFA13C97
+  title: "Состояния клиента и очистка: Сессия истекла до первого запроса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/account-deletion/specs/account-lifecycle/spec.md
+    requirement: Состояния клиента и очистка
+    scenario: Сессия истекла до первого запроса
+    sha256: 16a7e3807d42e3fb91ea81b227e7fdb179010e6cb1bd47db5198537380dbc55f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
+      API и время.
+    - |-
+      Клиенты SHALL сохранять ключ незавершённой операции до подтверждения результата,
+      показывать ожидание без повторных отправок и предлагать повтор при неопределённом
+      результате. После подтверждённого удаления SHALL очищаться сессия, приватный
+      кэш, черновики и контекст приглашений; публичный экран SHALL сообщать об успехе.
+  steps:
+    - action: первый запрос вернул 401
+      expected: клиент предлагает войти снова и не сообщает, что аккаунт удалён
+  cleanup:
+    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
+      настройки.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
