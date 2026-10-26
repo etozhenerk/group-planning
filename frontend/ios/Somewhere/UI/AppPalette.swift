@@ -1,21 +1,21 @@
 import SwiftUI
 
 enum AppPalette {
-    static let weekdayCard = Color("WeekdayCard")
-    static let weekendCard = Color("WeekendCard")
-    static let weekdayBadge = Color("WeekdayBadge")
-    static let weekendBadge = Color("WeekendBadge")
-    static let background = Color("AppBackground")
-    static let text = Color("PrimaryText")
-    static let navigation = Color("NavigationBackground")
-    static let surface = Color("Surface")
-    static let selectedSegment = Color("SelectedSegment")
-    static let message = Color("Message")
-    static let ownMessage = Color("OwnMessage")
-    static let muted = Color("MutedText")
-    static let action = Color("PrimaryAction")
-    static let actionText = Color("ActionText")
-    static let accent = Color("Accent")
-    static let error = Color("ErrorText")
-    static let border = Color("Border")
+    static let weekdayCard = DesignTokens.colorWeekday
+    static let weekendCard = DesignTokens.colorWeekend
+    static let weekdayBadge = DesignTokens.colorWeekdayBadge
+    static let weekendBadge = DesignTokens.colorWeekendBadge
+    static let background = DesignTokens.colorBackground
+    static let text = DesignTokens.colorText
+    static let navigation = DesignTokens.colorNavigation
+    static let surface = DesignTokens.colorSurface
+    static let selectedSegment = DesignTokens.colorLegacyIosSelectedSegment
+    static let message = DesignTokens.colorMessage
+    static let ownMessage = DesignTokens.colorOwnMessage
+    static let muted = DesignTokens.colorMuted
+    static let action = DesignTokens.colorAction
+    static let actionText = DesignTokens.colorActionText
+    static let accent = DesignTokens.colorLegacyIosAccent
+    static let error = DesignTokens.colorError
+    static let border = DesignTokens.colorBorderStrong
 }

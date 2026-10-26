@@ -1,0 +1,12 @@
+{
+  "description": "Проверка независимого дизайн-ревью перед завершением UI-этапа; требуется доверие этой конфигурации в Codex.",
+  "hooks": {
+    "Stop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "node \"$(git rev-parse --show-toplevel)/scripts/design/stop.mjs\"",
+        "timeout": 30
+      }]
+    }]
+  }
+}

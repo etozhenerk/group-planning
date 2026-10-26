@@ -6,6 +6,9 @@ on:
       - 'AGENTS.md'
       - 'README.md'
       - 'docs/**'
+      - 'design-system/**'
+      - '.codex/hooks.json'
+      - 'frontend/**'
       - 'openspec/**'
       - '.agents/**'
       - 'scripts/**'
@@ -23,6 +26,9 @@ on:
       - 'AGENTS.md'
       - 'README.md'
       - 'docs/**'
+      - 'design-system/**'
+      - '.codex/hooks.json'
+      - 'frontend/**'
       - 'openspec/**'
       - '.agents/**'
       - 'scripts/**'
@@ -70,6 +76,10 @@ jobs:
         id: agent
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py agent npm run agent:check
+      - name: Design publication and review contracts
+        id: design
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py design npm run design:check
       - name: GitHub Actions syntax and expressions
         id: actions
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
@@ -100,6 +110,10 @@ jobs:
       - name: Install dependencies
         id: ready
         run: python3 scripts/ci/run.py ready npm ci
+      - name: Design token and acceptance failure tests
+        id: design_tests
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py design_tests npm run design:test
       - name: Exit codes, logs and failure summaries
         id: reports
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}

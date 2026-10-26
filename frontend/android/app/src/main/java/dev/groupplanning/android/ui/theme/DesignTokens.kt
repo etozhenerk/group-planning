@@ -1,0 +1,101 @@
+// Generated from design-system/tokens.json · 1.0.0. Do not edit.
+package dev.groupplanning.android.ui.theme
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+internal object DesignTokens {
+    val colorAccent = Color(0xffd6cce9)
+    val colorAction = Color(0xffebe7df)
+    val colorActionText = Color(0xff252429)
+    val colorBackground = Color(0xff24252a)
+    val colorBorderStrong = Color(0xff414249)
+    val colorError = Color(0xffffb8b2)
+    val colorFocus = Color(0xffd6d1f5)
+    val colorLegacyIosAccent = Color(0xffc5bbd6)
+    val colorLegacyIosSelectedSegment = Color(0xff46414e)
+    val colorLine = Color(0x12ffffff)
+    val colorMessage = Color(0xff33343a)
+    val colorMuted = Color(0xffb9b9c2)
+    val colorNavigation = Color(0xff1d1e22)
+    val colorOwnMessage = Color(0xffe0dce8)
+    val colorOwnText = Color(0xff27252d)
+    val colorPhotoBackdrop = Color(0xff141518)
+    val colorPhotoFrame = Color(0xffe4ded4)
+    val colorRaised = Color(0xff393a42)
+    val colorSelectedSegment = Color(0xff45414e)
+    val colorSurface = Color(0xff303138)
+    val colorText = Color(0xfff5f4f1)
+    val colorWeekday = Color(0xff38313d)
+    val colorWeekdayBadge = Color(0xff57475e)
+    val colorWeekdayFrame = Color(0xff5e4f63)
+    val colorWeekdayHover = Color(0xff403649)
+    val colorWeekdayText = Color(0xffede0f1)
+    val colorWeekend = Color(0xff2e3938)
+    val colorWeekendBadge = Color(0xff425653)
+    val colorWeekendFrame = Color(0xff4b615b)
+    val colorWeekendHover = Color(0xff344440)
+    val colorWeekendText = Color(0xffdcece5)
+    val componentCardAvatar = 35.dp
+    val componentCardAvatarMobile = 32.dp
+    val componentCardAvatarOverlap = 9.dp
+    val componentCardCoverHeight = 112.dp
+    val componentCardCoverMobileHeight = 101.dp
+    val componentCardCoverMobileWidth = 102.dp
+    val componentCardCoverWidth = 118.dp
+    val componentCardCoverLift = 4.dp
+    val componentCardHoverLift = 3.dp
+    val componentCardMinimumHeight = 146.dp
+    val componentCardMinimumHeightMobile = 145.dp
+    val componentNavigationHeight = 62.dp
+    val componentNavigationIcon = 19.dp
+    val componentNavigationInset = 16.dp
+    val motionDurationCard = 220
+    val motionDurationCover = 280
+    val motionDurationFast = 150
+    val motionDurationNavigation = 260
+    val motionDurationPhoto = 290
+    val motionEasingStandard = listOf(0.2f, 0.7f, 0.3f, 1f)
+    val radiusBadge = 8.dp
+    val radiusCard = 22.dp
+    val radiusControl = 12.dp
+    val radiusCover = 16.dp
+    val radiusPill = 999.dp
+    val radiusSheet = 24.dp
+    val spaceS0 = 0.dp
+    val spaceS1 = 1.dp
+    val spaceS10 = 10.dp
+    val spaceS12 = 12.dp
+    val spaceS16 = 16.dp
+    val spaceS2 = 2.dp
+    val spaceS20 = 20.dp
+    val spaceS24 = 24.dp
+    val spaceS3 = 3.dp
+    val spaceS32 = 32.dp
+    val spaceS4 = 4.dp
+    val spaceS40 = 40.dp
+    val spaceS48 = 48.dp
+    val spaceS6 = 6.dp
+    val spaceS64 = 64.dp
+    val spaceS8 = 8.dp
+    val targetAndroid = 48.dp
+    val targetIos = 44.dp
+    val targetWeb = 44.dp
+    val typographyFamilyAndroid = "sans-serif"
+    val typographyLineHeightBody = 1.5f
+    val typographyLineHeightCardTitle = 1.25f
+    val typographyLineHeightLabel = 1.4f
+    val typographySizeBody = 15.sp
+    val typographySizeCaption = 12.sp
+    val typographySizeCardTitle = 21.sp
+    val typographySizeCardTitleMobile = 19.sp
+    val typographySizeHeading = 27.sp
+    val typographySizeLabel = 11.sp
+    val typographySizeSmall = 13.sp
+    val typographyWeightBold = 700f
+    val typographyWeightBrand = 850f
+    val typographyWeightMedium = 500f
+    val typographyWeightRegular = 400f
+    val typographyWeightSemibold = 600f
+}

@@ -126,3 +126,13 @@ Validate → Build → Publish и общий Summary; это отдельный 
 ```sh
 python3 -m unittest discover -s scripts/release -p 'test_*.py' -v
 ```
+
+## Контроль дизайна
+
+Repository CI также запускается при изменении frontend, design-system и
+проектного hooks.json: `design:check` проверяет источник/генерацию/литералы,
+манифесты и актуальность complete; `design:test` проверяет ошибочные случаи.
+Checkpoint/paused допускают незавершённую работу, не подтверждая UI-приёмку.
+Выпуск web/iOS/Android вызывает `design:ready -- --platform <client>`; новые
+зарегистрированные UI-сценарии без актуального pass выпуск не проходят.
+Прежние изменения перечислены в registry и требуют manifest при продолжении UI.

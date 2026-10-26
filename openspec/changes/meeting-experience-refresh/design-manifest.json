@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "id": "meeting-experience-pilot",
+  "designVersion": "1.0.0",
+  "phase": "paused",
+  "approval": "Пакет 25.10.2026 и коррекции 26.10.2026; реализация на паузе, исторический пилот процесса.",
+  "implementer": "implementation-before-design-system",
+  "report": "openspec/changes/meeting-experience-refresh/design-review.json",
+  "screens": [
+    {
+      "id": "list",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "states": [
+        "default",
+        "long-title",
+        "no-cover"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/list.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.3"
+        ],
+        "ios": [
+          "5.1"
+        ],
+        "android": [
+          "6.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-actions",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "states": [
+        "open",
+        "error",
+        "reopen"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/action-task.html",
+        "openspec/changes/meeting-experience-refresh/assets/action-date.html",
+        "openspec/changes/meeting-experience-refresh/assets/action-place.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "0.1"
+        ],
+        "ios": [
+          "0.1"
+        ],
+        "android": [
+          "0.1"
+        ]
+      }
+    }
+  ]
+}

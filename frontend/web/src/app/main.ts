@@ -3,6 +3,7 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/ui/App';
 import '@gravity-ui/uikit/styles/styles.css';
+import '@/app/styles/design-tokens.css';
 import '@/app/styles/tokens.css';
 import '@/app/styles/base.css';
 

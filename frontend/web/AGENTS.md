@@ -181,3 +181,12 @@ Chromium с настоящим Go API и test-only OAuth-provider на loopback 
 `scripts/check-components.ts` входит в ту же команду: проверяет имена и состав
 каталога, реэкспорт, собственный CSS Module и локальную область селекторов.
 Правила проверяются тестами `scripts/component-layout.test.ts`.
+
+## Общая дизайн-система
+
+Используй [опубликованные токены](../../design-system/README.md) и
+[платформенный контракт](../../docs/design/platforms.md). Generated-значения
+обновляются из корня `npm run design:generate`; ручные правки запрещены.
+После реализации экрана — `design-review` с отдельным субагентом; до готовности
+`npm run design:ready -- --manifest <путь>`. Сборка и форматтер не заменяют
+сравнение с макетами и живую проверку взаимодействий.

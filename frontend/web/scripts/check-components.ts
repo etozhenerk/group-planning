@@ -4,7 +4,12 @@ import postcss from 'postcss';
 import ts from 'typescript';
 import { checkGlobalStyles, checkStyleReferences } from '@tools/component-style-rules';
 
-const globalStyles = new Set(['app/styles/base.css', 'app/styles/tokens.css']);
+const globalStyles = new Set([
+  'app/styles/base.css',
+  'app/styles/tokens.css',
+  'app/styles/design-tokens.css',
+]);
+
 const privateDirectories = new Set(['hooks', 'lib', 'utils']);
 
 const walk = (directory: string): string[] => {

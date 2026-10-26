@@ -116,7 +116,7 @@ try {
       `Skill version mismatch: ${name}; run npm run agent:update.`);
   }
 
-  const projectSkills = ['product-copy-editor'];
+  const projectSkills = ['product-copy-editor', 'design-system-publish', 'design-review'];
   for (const name of projectSkills) {
     const path = `.agents/skills/${name}/SKILL.md`;
     if (!existsSync(join(root, path))) {

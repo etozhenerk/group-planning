@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "6b38a86e30f4f966ca2a654524db3c8214b41e8a7296c82a5bff27437b48d050",
+  "reviewer": "independent-subagent:/root/design_review_pilot",
+  "reviewedAt": "2026-10-26T18:24:39.908Z",
+  "mode": "historical",
+  "environment": "Изолированный forward-test 26.10.2026; phase=paused. Просмотрены существующие изображения через view_image, без приложения, браузерного запуска, симулятора, эмулятора или новых screenshots. Web: выбранные ширины 320/390/1440 CSS px, runner задаёт height=1000, ru-RU, Europe/Moscow; фактическая версия ОС/Chromium, установленные шрифты, deviceScaleFactor, zoom и build commit на момент снимков не удостоверены. Web actual содержит 32 px Demo; fixture списка — 2099 и один участник, reference — октябрь/ноябрь 2026 и шесть; menu использует shared fixture. На reference дат web видны US-поля, поэтому фактическая locale этих исторических reference не доказана настройкой текущего runner. iOS: по сохранённой gallery index.html iPhone 18 Pro Simulator, 402×874 pt, PNG 1206×2622, 3 px/pt, safe area 62/34 pt, reference HTML в JPEG 402×778 (файлы с расширением .png); runtime/build/фактические SF метрики/Dynamic Type/locale/timezone не удостоверены. iOS refresh-meetings отличается fixture. Android: только HTML reference JPEG 360×708 (файлы с расширением .png), native actual/build/device/runtime отсутствуют. Анимации/reduced motion/hover/фокус/экранные дикторы не проверялись. Изображения больше 2048 px инструмент отображал уменьшенными; точное измерение native пикселей не заявляется. Новых interaction evidence нет. Уточнение метаданных: sips определил фактический формат и размер всех 35 evidence: 26 PNG и 9 JPEG. Девять JPEG имеют расширение .png: пять Android reference — 360×708 и четыре iOS reference — 402×778. Первоначальная таблица ошибочно читала их как PNG; исправлена по результатам sips. Файлы evidence, их SHA-256, замечания UI, reviewedAt и исходный inputHash пилота сохранены; это уточнение метаданных, не новое ревью.",
+  "summary": "Исторический пилот: 18/18 пар отражены, 0 pass, 3 needs-fixes, 15 blocked. Подтверждены предварительные расхождения web/iOS форм с bottom sheet-коррекцией, web desktop-компоновки/меню и читаемости даты на 320 px. Android actual, длинные данные и ошибки/reopen не обеспечены evidence. design:check прошёл до пилота; это не приёмка UI. Исходный inputHash фиксирует контекст пилота на момент ревью и не является build hash исторических снимков. Приложение, manifest и tasks ревьюер не менял; пауза сохранена. Отчёт находится вне manifest.report по изолированному поручению и не подменяет release gate.",
+  "checks": [
+    {
+      "screen": "list",
+      "platform": "web",
+      "state": "default",
+      "status": "needs-fixes",
+      "observations": "Историческое замечание: на list-320-actual.png ярлык первой, второй и последней карточки заканчивается «время уточн…», тогда как personal-meetings/spec.md, Scenario «Встреча без времени и обложки», требует видимое честное состояние «время уточняем». На list-320-reference.png полная формулировка помещается в карточке без обложки. Это предварительная проблема читаемости на 320 CSS px; исправление необходимо повторно проверить на одинаковой fixture. При 390 px корона «Суббота без спешки» переносится на отдельную строку, что ослабляет связь с заголовком из meeting-card.md. Цвета пятницы/субботы, выступающий ярлык и наклонённая обложка визуально узнаваемы. Состав участников, даты 2099 против 2026, число карточек и 32 px демоплашка отличаются от эталона и не объявлены дефектами. Фокус, hover/reduced motion, семантика, возврат к прокрутке и текущая сборка не проверены; pass запрещён историческим режимом.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-actual.png",
+          "kind": "actual",
+          "sha256": "7dd7c6521a841176a208a5446da993734fef2fced3fcd96eb595c5d5c27a05fe"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-reference.png",
+          "kind": "reference",
+          "sha256": "046c8562aa975faf31a29cfce6ac926e54aa185c6b47bd4b8589d9ddfb226af9"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-390-actual.png",
+          "kind": "actual",
+          "sha256": "1c04fcd305d0f6f241385f1a3ee36a22d364f2675b9a26597b26ff6e5582e47e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-390-reference.png",
+          "kind": "reference",
+          "sha256": "7dbbe21ea544b838de0197a168e51fae6442793240519b72ae83a9a1c2963f2c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-1440-actual.png",
+          "kind": "actual",
+          "sha256": "c1a0929674b3f81abed9beb05b33bd3c1d81849dc417d47e4a6aa94ff6c5c35a"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-1440-reference.png",
+          "kind": "reference",
+          "sha256": "3b1beef6008e947103b00b42b076be8ea78e88947a17ed7899137bade953d9c4"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "web",
+      "state": "long-title",
+      "status": "blocked",
+      "observations": "Не найдена сопоставимая fixture действительно длинного названия и места. Просмотренные короткие заголовки переносятся на две строки при 320 px, но это не проверяет отсутствие ограничения высоты/обрезки при длинных данных по meeting-card.md. При обычном тексте нельзя подтвердить поведение длинного; живого сценария, масштабирования и взаимодействий нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-actual.png",
+          "kind": "actual",
+          "sha256": "7dd7c6521a841176a208a5446da993734fef2fced3fcd96eb595c5d5c27a05fe"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-reference.png",
+          "kind": "reference",
+          "sha256": "046c8562aa975faf31a29cfce6ac926e54aa185c6b47bd4b8589d9ddfb226af9"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "web",
+      "state": "no-cover",
+      "status": "blocked",
+      "observations": "На list-1440-actual.png в правой карточке второго ряда нет обложки и крупной заглушки; название и состояние места читаются. Reference показывает тот же принцип для «Воскресенье без планов». На мобильных actual эту карточку частично перекрывает плавающая навигация в полноразмерном снимке; без прокрутки нельзя установить доступность всего содержимого. Короткое название actual не доказывает, что длинный текст займёт всю свободную ширину. Требования meeting-card.md и возврат в список живьём не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-actual.png",
+          "kind": "actual",
+          "sha256": "7dd7c6521a841176a208a5446da993734fef2fced3fcd96eb595c5d5c27a05fe"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-320-reference.png",
+          "kind": "reference",
+          "sha256": "046c8562aa975faf31a29cfce6ac926e54aa185c6b47bd4b8589d9ddfb226af9"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-390-actual.png",
+          "kind": "actual",
+          "sha256": "1c04fcd305d0f6f241385f1a3ee36a22d364f2675b9a26597b26ff6e5582e47e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-390-reference.png",
+          "kind": "reference",
+          "sha256": "7dbbe21ea544b838de0197a168e51fae6442793240519b72ae83a9a1c2963f2c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-1440-actual.png",
+          "kind": "actual",
+          "sha256": "c1a0929674b3f81abed9beb05b33bd3c1d81849dc417d47e4a6aa94ff6c5c35a"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-1440-reference.png",
+          "kind": "reference",
+          "sha256": "3b1beef6008e947103b00b42b076be8ea78e88947a17ed7899137bade953d9c4"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "ios",
+      "state": "default",
+      "status": "blocked",
+      "observations": "На list-ios.png и list-reference.png совпадают показанные названия, даты, обложки и состав аватаров: сливовая пятница, серо-зелёная суббота, наклонённая обложка справа сверху, перекрывающиеся инициалы/+3 справа снизу, корона рядом с названием. Native SF, safe area и размер 3 px/pt являются платформенной адаптацией, а не pixel regression. По статичным изображениям нельзя проверить доступные имена, Dynamic Type, фокус, движение, открытие/возврат и доступность последней карточки под навигацией. Исторические снимки не подтверждают текущую сборку.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/list-ios.png",
+          "kind": "actual",
+          "sha256": "23147d70b6a4b48a621b6576bd877acee8a58d072d7ff34301169ee176ac1d3c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/list-reference.png",
+          "kind": "reference",
+          "sha256": "2ffdc66264d444f3e7401a0031f569f93c4e7d021d40c20b6fc73eb937799be0"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "ios",
+      "state": "long-title",
+      "status": "blocked",
+      "observations": "В доступных просмотренных iOS actual нет fixture длинного названия и длинного места; «Настолки у Саши» не является проверкой предельного текста. Требования переноса/роста высоты, Dynamic Type и сохранения области нажатия по meeting-card.md и platforms.md остаются непроверенными.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/list-ios.png",
+          "kind": "actual",
+          "sha256": "23147d70b6a4b48a621b6576bd877acee8a58d072d7ff34301169ee176ac1d3c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/list-reference.png",
+          "kind": "reference",
+          "sha256": "2ffdc66264d444f3e7401a0031f569f93c4e7d021d40c20b6fc73eb937799be0"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "ios",
+      "state": "no-cover",
+      "status": "blocked",
+      "observations": "refresh-meetings.png показывает карточку «Разговор о субботе» без фотографии и крупной заглушки, с местом и одним аватаром. Полный shared HTML reference в web/list-390-reference.png показывает no-cover-композицию; iOS list-reference.png обрезан до начала этой карточки. Эти evidence различаются fixture/размером и не образуют регрессионную пару. Длинный текст, системный масштаб, семантика и переход/возврат не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/refresh-meetings.png",
+          "kind": "actual",
+          "sha256": "508c359a27f2330906594055f7961a19df65edb20abd9a0880cafaf682343d6f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/list-reference.png",
+          "kind": "reference",
+          "sha256": "2ffdc66264d444f3e7401a0031f569f93c4e7d021d40c20b6fc73eb937799be0"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/list-390-reference.png",
+          "kind": "reference",
+          "sha256": "7dbbe21ea544b838de0197a168e51fae6442793240519b72ae83a9a1c2963f2c"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "android",
+      "state": "default",
+      "status": "blocked",
+      "observations": "В assets/verification/android обнаружены только reference JPEG с расширением .png, включая list.png (360×708). Native actual отсутствует даже при поиске rg --files --hidden --no-ignore. Просмотрен reference: сливовая/серо-зелёная карточки, обложки и перекрывающиеся аватары; он не доказывает реализацию Compose. Для состояния default отсутствуют actual, сопоставимая fixture и живые действия. TalkBack, масштаб текста, Back и возврат к прокрутке не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/list.png",
+          "kind": "reference",
+          "sha256": "f632605cff4ac15a900eca449eec1437a4627660fb963f7ff3f6a06526b70a63"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "android",
+      "state": "long-title",
+      "status": "blocked",
+      "observations": "В assets/verification/android обнаружены только reference JPEG с расширением .png, включая list.png (360×708). Native actual отсутствует даже при поиске rg --files --hidden --no-ignore. Просмотрен reference: сливовая/серо-зелёная карточки, обложки и перекрывающиеся аватары; он не доказывает реализацию Compose. Для состояния long-title отсутствуют actual, сопоставимая fixture и живые действия. TalkBack, масштаб текста, Back и возврат к прокрутке не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/list.png",
+          "kind": "reference",
+          "sha256": "f632605cff4ac15a900eca449eec1437a4627660fb963f7ff3f6a06526b70a63"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "platform": "android",
+      "state": "no-cover",
+      "status": "blocked",
+      "observations": "В assets/verification/android обнаружены только reference JPEG с расширением .png, включая list.png (360×708). Native actual отсутствует даже при поиске rg --files --hidden --no-ignore. Просмотрен reference: сливовая/серо-зелёная карточки, обложки и перекрывающиеся аватары; он не доказывает реализацию Compose. Для состояния no-cover отсутствуют actual, сопоставимая fixture и живые действия. TalkBack, масштаб текста, Back и возврат к прокрутке не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/list.png",
+          "kind": "reference",
+          "sha256": "f632605cff4ac15a900eca449eec1437a4627660fb963f7ff3f6a06526b70a63"
+        }
+      ]
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "web",
+      "state": "open",
+      "status": "needs-fixes",
+      "observations": "P1, historical: action-task/date/place-390-actual.png показывают отдельные страницы с брендом и «Назад», без чата под панелью. Это прямо противоречит последней коррекции 26.10.2026 в ux.md, chat-actions.md и chat-composition/spec.md: mobile web должен открывать bottom sheet поверх чата. Старая полноэкранная оболочка reference не отменяет коррекцию. P2: на 1440 px все три actual-формы начинаются около x=270, reference — около x=529; ширина панели примерно одинакова, но утверждённая узкая форма центрирована в рабочей области. 32 px демоплашка объясняет вертикальный сдвиг, не горизонтальный. P2: menu-390-actual.png центрирует каждую строку отдельно; в chat-menu.html/reference иконки/подписи имеют общую левую ось. Поля task/place/date в основном сохранены, две даты в actual соответствуют актуальному минимуму, отсутствие футера/нижней навигации верно. «Любой участник» после «Кому предложить» на web грамматически не согласовано; reference/iOS используют «Любому участнику». Обработку клавиатуры/фокуса, закрытие и отправку не проверял.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-task-390-actual.png",
+          "kind": "actual",
+          "sha256": "a080aee13bd8ea019bb823e4b3a8e690acb9968a51f975b009442c467189f1df"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-task-390-reference.png",
+          "kind": "reference",
+          "sha256": "2f061b3873a0294e7bb8b2bc11b2fef0be34ecaec5f91d87da6146b7a077d4b6"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-task-1440-actual.png",
+          "kind": "actual",
+          "sha256": "829bc4a32e1a415b8d7fdfc0f4a02d705f30c8f13a700e475f4786cb5fae6b05"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-task-1440-reference.png",
+          "kind": "reference",
+          "sha256": "b9ff06f8d2d26a70446bd08aef4d821f8f5af772e5555268da2fa43b6454b3df"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-date-390-actual.png",
+          "kind": "actual",
+          "sha256": "7d26ffaf5caf615ac45ba81b660793a60e8df37ab1324ef6b08128cbe57976ad"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-date-390-reference.png",
+          "kind": "reference",
+          "sha256": "c0031cb4d362169cc183a71473630e693fca8d41713d9ed6e0cd738e3e4cd0ae"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-date-1440-actual.png",
+          "kind": "actual",
+          "sha256": "2a91cb84e451d7fe86980afd25609ae5c499cb637545efbc12abfe2388f616ce"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-date-1440-reference.png",
+          "kind": "reference",
+          "sha256": "90005c5ba3cfc6dd071f875b0f507b751d52402c52c0fea5775a170fa7322598"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-place-390-actual.png",
+          "kind": "actual",
+          "sha256": "06b0469bc79db2d69620ade66b01b7485f1542f9fd7a24254f235fc3a6bad413"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-place-390-reference.png",
+          "kind": "reference",
+          "sha256": "355fd4739432d0691caa305dff44f2918419005e62c207d3d5944909534196f2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-place-1440-actual.png",
+          "kind": "actual",
+          "sha256": "b3e03ab29d67a80943583222c0cb8a17e599232d378197d081b7ab40af3ede40"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/action-place-1440-reference.png",
+          "kind": "reference",
+          "sha256": "bcf5d85bd4050e96c617a15eb2883cbc37ce85d48e130ce764f29a30ff97114c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/menu-390-actual.png",
+          "kind": "actual",
+          "sha256": "0f7a4bfa3a67b44f2c1e3f703e2b3e91b128718dcd88628d0fd0b7fadbfb60d8"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/web/menu-390-reference.png",
+          "kind": "reference",
+          "sha256": "0c537d25ba8755fc73bbb427f4545d38d630b3f6471c1eb1664ca8bd766c9f58"
+        }
+      ]
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "web",
+      "state": "error",
+      "status": "blocked",
+      "observations": "Нет actual/reference ошибки формы задачи, даты или места и журнала отправки. По chat-actions.md и product-copy-editor ошибка должна называть неудавшуюся операцию, сохранять поля, а при неопределённом исходе — ключ повтора. Нельзя перенести evidence ошибки загрузки/обращения на формы действий. Ни сетевой отказ, ни валидация, ни идемпотентный повтор не проверены.",
+      "evidence": []
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "web",
+      "state": "reopen",
+      "status": "blocked",
+      "observations": "Статичный заполненный open не подтверждает закрытие/Back и восстановление. Нет журнала плюс → действие → ввод → Back → повторное открытие с проверкой текста и ключа неопределённой отправки. Очистка после успеха/смены встречи/logout/потери доступа также не проверена. Требования chat-actions.md остаются blocked.",
+      "evidence": []
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "ios",
+      "state": "open",
+      "status": "needs-fixes",
+      "observations": "P1, historical: action-task-ios.png, action-date-ios.png и action-place-ios.png показывают самостоятельный экран с «Назад» и брендом, без чата под bottom sheet. Это нарушает коррекцию 26.10.2026 в ux.md, chat-actions.md и chat-composition/spec.md. Полноэкранные HTML references пригодны только для содержания формы. Меню плюса компактно и стоит над composer; в menu-ios.png строки выровнены слева. Для меню использован общий HTML reference Android 360×708 только как композиционный ориентир, не pixel baseline iOS. Системный шрифт/календарь, две даты и отсутствие футера/нижней навигации допустимы. Клавиатура, свайп закрытия, Back, VoiceOver, Dynamic Type и отправка не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-task-ios.png",
+          "kind": "actual",
+          "sha256": "4001552c42e5afb27a9e3a649319535d69fc7813db93f3a7fc95fb4427f321f6"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-task-reference.png",
+          "kind": "reference",
+          "sha256": "889fef7644c7a7942bd3f89274236ed52ea1d730382653be3babc1b1baa5cb7f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-date-ios.png",
+          "kind": "actual",
+          "sha256": "2891125b57a34c20362cab779a9e98ef351fc586994be1e6197439b9fc391b96"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-date-reference.png",
+          "kind": "reference",
+          "sha256": "49b3bdab674c93f01e49ffb9152a138d54516eaccd3f8b650fb872a6e60ac7b7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-place-ios.png",
+          "kind": "actual",
+          "sha256": "21f229672d44c9de9f424d3b81c1d54a2735df8a0d1397d40744a058084d9818"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/action-place-reference.png",
+          "kind": "reference",
+          "sha256": "6875fca19c83801ea4567ab110bd41a8f97abcc099219cf377e9a07317b0c3a1"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/ios/menu-ios.png",
+          "kind": "actual",
+          "sha256": "589a4272c78ed91aa391231856c114af5487763a518238d705d4e8ea097e9477"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/chat-menu.png",
+          "kind": "reference",
+          "sha256": "93782f763628e4d4d3833ef7e3aebac5594784448404e5b803b6d0f8562bc71b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "ios",
+      "state": "error",
+      "status": "blocked",
+      "observations": "Нет скриншота ошибки именно формы действия и живого журнала. Требования сохранения полей, ключа повтора, доступного объявления ошибки и повторной отправки из chat-actions.md не проверены. Исторические открытые формы не заменяют эти данные.",
+      "evidence": []
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "ios",
+      "state": "reopen",
+      "status": "blocked",
+      "observations": "Нет live-журнала закрытия панели/системного Back и повторного открытия с тем же черновиком и ключом. По одному screenshot невозможно проверить сохранность и условия очистки по chat-actions.md. Сборка на паузе не запускалась.",
+      "evidence": []
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "android",
+      "state": "open",
+      "status": "blocked",
+      "observations": "Просмотрены reference/action-task.png, action-date.png, action-place.png и chat-menu.png; actual Compose отсутствует. Старый reference форм содержит отдельный экран, нижнюю навигацию и местами футер; для будущей реализации эти элементы отменены коррекциями 26.10.2026. Нельзя объявить такой же дефект Android-приложения без actual. Открытие поверх чата, клавиатура, Back, TalkBack и большой текст не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/action-task.png",
+          "kind": "reference",
+          "sha256": "fde4d66735f9cdd30eaa156dc88a2a518929dd2bae41192bc9af4ad8a3bc5a47"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/action-date.png",
+          "kind": "reference",
+          "sha256": "8c0dc0d7b4f8c5745e883e4e7bd083d7575e080a1ec4b611a49c760ecef3b7af"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/action-place.png",
+          "kind": "reference",
+          "sha256": "6d2b98688ab5de1ebdfd3204b97adb345168eee5adca7ecd3847fa225f33a9a5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/verification/android/reference/chat-menu.png",
+          "kind": "reference",
+          "sha256": "93782f763628e4d4d3833ef7e3aebac5594784448404e5b803b6d0f8562bc71b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "android",
+      "state": "error",
+      "status": "blocked",
+      "observations": "Нет actual формы, evidence ошибки и журнала взаимодействий. Сохранение полей/ключа, понятный текст ошибки и повтор по chat-actions.md не проверены.",
+      "evidence": []
+    },
+    {
+      "screen": "chat-actions",
+      "platform": "android",
+      "state": "reopen",
+      "status": "blocked",
+      "observations": "Нет actual или журнала закрытия/Back/повторного открытия Compose-панели. Сохранение черновика и ключа, очистка после успеха/смены встречи/logout/потери доступа не проверены.",
+      "evidence": []
+    }
+  ]
+}

@@ -8,15 +8,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 internal fun SomewhereTheme(content: @Composable () -> Unit) {
+    val lineHeightRatio = DesignTokens.typographyLineHeightBody
+
     MaterialTheme(
         typography = Typography(
-            bodyLarge = TextStyle(fontSize = 15.sp, lineHeight = 22.5.sp),
-            bodyMedium = TextStyle(fontSize = 13.sp, lineHeight = 19.5.sp),
-            bodySmall = TextStyle(fontSize = 12.sp, lineHeight = 18.sp),
+            bodyLarge = TextStyle(
+                fontSize = DesignTokens.typographySizeBody,
+                lineHeight = DesignTokens.typographySizeBody * lineHeightRatio,
+            ),
+            bodyMedium = TextStyle(
+                fontSize = DesignTokens.typographySizeSmall,
+                lineHeight = DesignTokens.typographySizeSmall * lineHeightRatio,
+            ),
+            bodySmall = TextStyle(
+                fontSize = DesignTokens.typographySizeCaption,
+                lineHeight = DesignTokens.typographySizeCaption * lineHeightRatio,
+            ),
         ),
         colorScheme = darkColorScheme(
             primary = Palette.action,

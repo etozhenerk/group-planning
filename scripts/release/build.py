@@ -33,6 +33,9 @@ def build(tag, number, destination):
         run(*command, cwd=cwd, env=env)
         checks.append(name)
 
+    if component in ('web', 'ios', 'android'):
+        check('design-acceptance', 'npm', 'run', 'design:ready', '--', '--platform', component)
+
     check('release-tooling-tests', 'python3', '-m', 'unittest', 'discover', '-s', 'scripts/release', '-p', 'test_*.py')
     if component in ('backend', 'monitoring'):
         folder = ROOT / ('backend' if component == 'backend' else 'infra/telegram-bot')

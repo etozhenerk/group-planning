@@ -19,7 +19,14 @@
     "web:check": "npm run check --workspace @somewhere/web",
     "web:build": "npm run build --workspace @somewhere/web",
     "web:test:e2e": "npm run test:e2e --workspace @somewhere/web",
-    "web:demo": "npm run demo --workspace @somewhere/web"
+    "web:demo": "npm run demo --workspace @somewhere/web",
+    "design:generate": "node scripts/design/generate.mjs",
+    "design:check": "node scripts/design/cli.mjs check",
+    "design:ready": "node scripts/design/cli.mjs ready",
+    "design:context": "node scripts/design/cli.mjs context",
+    "design:test": "node --test scripts/design/*.test.mjs",
+    "design:prune": "node scripts/design/cli.mjs prune",
+    "design:inspect-report": "node scripts/design/cli.mjs inspect-report"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.3",
@@ -27,6 +34,8 @@
     "@redocly/cli": "2.65.0",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
+    "prettier": "3.9.10",
+    "style-dictionary": "5.7.1",
     "yaml": "2.9.1"
   },
   "workspaces": [

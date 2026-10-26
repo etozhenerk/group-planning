@@ -32,11 +32,13 @@ const triggered = (files, event) => [...workflows]
   .sort();
 
 const cases = [
-  ['iOS source', ['frontend/ios/Somewhere/App/SomewhereApp.swift'], ['ios']],
-  ['Android source', ['frontend/android/app/src/main/java/dev/groupplanning/android/ui/SomewhereApp.kt'], ['android']],
-  ['Web source', ['frontend/web/src/app/App.tsx'], ['web']],
+  ['iOS source', ['frontend/ios/Somewhere/App/SomewhereApp.swift'], ['ios', 'repository']],
+  ['Android source', ['frontend/android/app/src/main/java/dev/groupplanning/android/ui/SomewhereApp.kt'], ['android', 'repository']],
+  ['Web source', ['frontend/web/src/app/App.tsx'], ['repository', 'web']],
   ['Backend source', ['backend/internal/httpapi/router.go'], ['backend', 'contracts']],
-  ['Mixed native change', ['frontend/ios/.swift-format', 'frontend/android/app/build.gradle.kts'], ['android', 'ios']],
+  ['Mixed native change', ['frontend/ios/.swift-format', 'frontend/android/app/build.gradle.kts'], ['android', 'ios', 'repository']],
+  ['Design tokens', ['design-system/tokens.json'], ['repository']],
+  ['Design hooks', ['.codex/hooks.json'], ['repository']],
   ['Product docs', ['docs/product/overview.md'], ['repository']],
   ['Host metrics', ['infra/host/postgres-metrics.py'], ['repository']],
   ['OpenAPI schema', ['contracts/openapi.yaml'], ['contracts']],
