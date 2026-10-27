@@ -1,0 +1,40 @@
+
+> group-planning@0.0.0 web:check
+> npm run check --workspace @somewhere/web
+
+
+> @somewhere/web@0.0.0 check
+> npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test
+
+
+> @somewhere/web@0.0.0 typecheck
+> tsc --noEmit
+
+
+> @somewhere/web@0.0.0 lint
+> eslint .
+
+
+> @somewhere/web@0.0.0 styles
+> tsx scripts/check-styles.ts
+
+CSS block spacing: OK
+
+> @somewhere/web@0.0.0 architecture
+> tsx scripts/check-architecture.ts
+
+/Users/misha/Documents/Codex/projects/group-planning/frontend/web/src/shared/ui/DateInput/DateInput.module.css: :global is limited to Gravity UI classes
+npm error Lifecycle script `architecture` failed with error:
+npm error code 1
+npm error path /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error workspace @somewhere/web@0.0.0
+npm error location /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error command failed
+npm error command sh -c tsx scripts/check-architecture.ts
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error workspace @somewhere/web@0.0.0
+npm error location /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error command failed
+npm error command sh -c npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test

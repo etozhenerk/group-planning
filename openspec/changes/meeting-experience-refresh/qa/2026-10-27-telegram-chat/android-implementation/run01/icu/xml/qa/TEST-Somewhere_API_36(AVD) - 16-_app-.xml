@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests" tests="3" failures="1" errors="0" skipped="0" time="0.429" timestamp="2026-10-27T12:22:43" hostname="localhost">
+  <properties>
+    <property name="device" value="Somewhere_API_36(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="deletionUsesAndroidGraphemeBoundariesForFamiliesModifiersAndFlags" classname="dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests" time="0.006">
+    <failure>java.lang.IllegalArgumentException: offset out of bounds
+at android.icu.text.RuleBasedBreakIterator.checkOffset(RuleBasedBreakIterator.java:518)
+at android.icu.text.RuleBasedBreakIterator.isBoundary(RuleBasedBreakIterator.java:534)
+at dev.groupplanning.android.ui.feed.ComposerEditingKt.deleteGrapheme(ComposerEditing.kt:20)
+at dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests.deletionUsesAndroidGraphemeBoundariesForFamiliesModifiersAndFlags(ComposerEditingDeviceTests.kt:24)
+</failure>
+  </testcase>
+  <testcase name="deletingSelectionOrAtStartDoesNotCorruptAdjacentText" classname="dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests" time="0.0" />
+  <testcase name="selectionReplacementAndRepeatedInsertionPreserveSurroundingText" classname="dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests" time="0.001" />
+</testsuite>

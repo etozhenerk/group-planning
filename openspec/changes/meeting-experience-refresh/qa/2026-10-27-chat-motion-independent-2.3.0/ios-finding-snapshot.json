@@ -1,0 +1,27 @@
+{
+  "inputHash": "f0956a7e9b8f9a3bedf3747feba292c30e95771b676b2d01a0be386feaa9854a",
+  "designVersion": "2.3.0",
+  "build": "d7ef9cf3b81f83655157b78907e76e5fc83ea2102d4b24a49d194c1f49e8d2fb",
+  "case": "TC-CHAT-EMOJI-DISMISS-FOCUS",
+  "status": "failed",
+  "defect": "IOS-DS23-ESCAPE-001",
+  "steps": [
+    "Launch QA host scenario design",
+    "Open meeting cea00000-0000-4000-8000-000000000001",
+    "Open composer emoji dock",
+    "XCUITest app.typeKey(.escape, modifierFlags: [])",
+    "Wait 3 seconds for emoji-search absence"
+  ],
+  "actual": "Emoji search and keyboard toggle remain visible after 3 seconds. No software keyboard opens.",
+  "evidence": [
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/ios-escape03-attachments/DE11FD10-903B-40B2-A5E4-2C3BA4912B33.png",
+      "sha256": "905e02d4b21a179abc1e7de35023ef2379141cae9ddb3b9c545a7c86714cd42f"
+    }
+  ],
+  "logs": [
+    "ios-run01.log",
+    "ios-escape-run03.log"
+  ],
+  "harnessFailedAttempt": "ios-escape-run02.log: app.activate did not restore chat; Escape not executed."
+}

@@ -8,7 +8,8 @@ struct ServerCounter: Codable, Hashable, Comparable, Sendable {
     init(_ value: String) throws {
         guard !value.isEmpty,
             value.utf8.allSatisfy({ (48...57).contains($0) }),
-            value == "0" || !value.hasPrefix("0")
+            value == "0" || !value.hasPrefix("0"),
+            value.count < 20 || (value.count == 20 && value <= "18446744073709551615")
         else {
             throw ClientFailure.invalidResponse
         }

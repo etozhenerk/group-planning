@@ -1,7 +1,7 @@
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useFilePicker } from '@/shared/lib/file-picker';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { Plus } from 'lucide-react';
 import { ActionMenu } from '@/widgets/conversation/ui/ActionMenu';
 import { useMeeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -45,6 +45,7 @@ export const ConversationActions = ({
     if (value === 'photo' || value === 'file') {
       void navigate(`/meetings/${id}?action=${value}`, {
         state: { meetingAction: true },
+        replace: menu,
         preventScrollReset: true,
       });
 
@@ -54,11 +55,10 @@ export const ConversationActions = ({
     } else {
       void navigate(`/meetings/${id}?action=${value}`, {
         state: { meetingAction: true },
+        replace: menu,
         preventScrollReset: true,
       });
     }
-
-    close();
   };
 
   if (meeting.access.denied) {
@@ -73,11 +73,12 @@ export const ConversationActions = ({
         className={styles.add}
         aria-label="Добавить к встрече"
         aria-expanded={menu}
+        data-chat-surface-trigger
         onClick={toggle}
       >
-        <Plus size={24} aria-hidden="true" />
+        <ChatIcon name="plus" size={24} aria-hidden="true" />
       </button>
-      {menu && <ActionMenu select={select} />}
+      <ActionMenu open={menu} select={select} />
     </div>
   );
 };

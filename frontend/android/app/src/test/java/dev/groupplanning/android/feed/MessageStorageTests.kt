@@ -2,6 +2,7 @@
 
 package dev.groupplanning.android.feed
 
+import dev.groupplanning.android.data.api.WireResponse
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.state.feed.MessageSender
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -32,13 +33,15 @@ class MessageStorageTests {
         assertTrue(h.transport.requests.none { it.method == "POST" })
 
         h.disk.failWrites = false
+        h.transport.handle("${h.path}/messages") {
+            val pending = checkNotNull(sender.state.value.pending)
+            WireResponse(
+                201,
+                "application/json",
+                apiJson.encodeToString(h.entry(2, pending.key, pending.text)),
+            )
+        }
         sender.send()
-        val pending = checkNotNull(sender.state.value.pending)
-        h.transport.enqueue(
-            "${h.path}/messages",
-            apiJson.encodeToString(h.entry(2, pending.key)),
-            201,
-        )
         runCurrent()
         assertNull(sender.state.value.pending)
         assertEquals(1, h.transport.requests.count { it.method == "POST" })

@@ -15,6 +15,7 @@ export const summaryTimeLabel = (
     day: 'numeric',
     month: 'long',
   }).format(value);
+
   const time = new Intl.DateTimeFormat('ru-RU', {
     timeZone: timezone,
     hour: '2-digit',

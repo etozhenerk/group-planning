@@ -10,8 +10,6 @@
     sha256: 76288c86ee48971dd4c60eb6977d4a06c0f696d0b51b54f00930f4613ccd9143
   platforms:
     - web
-    - ios
-    - android
   preconditions:
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
@@ -33,14 +31,6 @@
       status: manual
       health: unknown
       tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
 - id: TC-INFO-9C1A86D2
   title: "Разделы помощи и документов: Узкий экран или внутренний раздел"
   lifecycle: active
@@ -53,8 +43,6 @@
     sha256: 74bf065bf11c9a6ec14535950cb2e86ee8cc96a936575d28d066b2783bfd9d3d
   platforms:
     - web
-    - ios
-    - android
   preconditions:
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
@@ -77,14 +65,6 @@
       status: manual
       health: unknown
       tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
 - id: TC-INFO-91E4ECFC
   title: "Разделы помощи и документов: Нативное приложение"
   lifecycle: active
@@ -96,7 +76,6 @@
     scenario: Нативное приложение
     sha256: d840d9b17b224b3f2cadaf5b390ab773600413829e47d67fbf45827cf359b7e1
   platforms:
-    - web
     - ios
     - android
   preconditions:
@@ -116,10 +95,6 @@
     - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
       настройки.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
     ios:
       status: manual
       health: unknown
@@ -140,8 +115,6 @@
     sha256: 09bb1a91e73e63956fcf0d11fd3671c13b67104f58bee375bb3f8dc04bf56500
   platforms:
     - web
-    - ios
-    - android
   preconditions:
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
@@ -160,14 +133,6 @@
       настройки.
   automation:
     web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
       status: manual
       health: unknown
       tests: []
@@ -397,8 +362,6 @@
     sha256: 116771fffef3e178d7edf45fb8456e04fe5288ba1102e4bbe805f81ad2f61e46
   platforms:
     - web
-    - ios
-    - android
   preconditions:
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
@@ -419,14 +382,6 @@
       status: manual
       health: unknown
       tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
 - id: TC-INFO-E5D26634
   title: "Прозрачность cookie и хранения: Добавлена необязательная аналитика"
   lifecycle: active
@@ -439,8 +394,6 @@
     sha256: 0939ebe28783e53ac3159688591ad8eae090de2ffbccfcc7141ead4ca07de6b7
   platforms:
     - web
-    - ios
-    - android
   preconditions:
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
@@ -461,11 +414,90 @@
       status: manual
       health: unknown
       tests: []
+- id: TC-INFO-ONBOARDING-NO-SERVICE
+  title: "Мобильный онбординг: весь экран без сервисной кнопки и перекрытий"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Мобильный онбординг без сервисной панели
+    scenario: Отсутствие лишней кнопки на слайдах
+    sha256: 0fc44d4083b2036ba40633a976c1b843e00c5d51350b50890613e86b3170574d
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированный Go memory fixture, тестовые профили и реально собранный клиент по
+      testing/environments.md; зафиксированы commit, API, часы, locale и устройство. Реальные
+      пользовательские данные не используются.
+    - Отдельное QA-приложение находится до завершения онбординга. Личная обычная сборка и её данные
+      не сбрасываются.
+    - Зафиксированы обычный и максимальный поддержанный доступный размер текста; доступен тестовый
+      вход для проверки профиля.
+  steps:
+    - action: Открыть первый слайд и пройти все слайды, захватывая весь экран приложения вместе с общей
+        оболочкой.
+      expected: Нигде нет отдельной кнопки помощи, знака вопроса или панели документов. Предусмотренные
+        навигация и вход не перекрыты.
+    - action: На предусмотренном слайде нажать «Пропустить», затем в отдельном чистом QA-сценарии дойти до
+        последнего слайда обычным перелистыванием.
+      expected: Оба пути приводят к предусмотренному завершающему состоянию. На последнем слайде доступны
+        текст, подпись и кнопка входа.
+    - action: Увеличить системный размер текста и повторить первый/последний слайды, прокрутить весь текст
+        и нажать основную кнопку.
+      expected: Текст достижим без обрезки, навигация/CTA работают; посторонних перекрытий нет. Проверка
+        не ограничена наличием AX-узла.
+    - action: Войти тестовым профилем и открыть профиль.
+      expected: Помощь и документы доступны из профиля; их удаление с онбординга не удалило
+        предусмотренный путь.
+  cleanup:
+    - Очистить только созданные этим прогоном fixture-данные; восстановить изменённые настройки,
+      ориентацию и масштаб. Сохранить обезличенный журнал действий и результат до очистки.
+  automation:
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-INFO-PUBLIC-POLICY-RELEASE
+  title: "Выпуск документов: согласованные реквизиты, публичный доступ и фактическое хранение"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Публичная политика
+    scenario: Пользователь ещё не вошёл
+    sha256: 73b2a3ef1a3da771ee1188025c2253890b6e35f853b41f20ca736027267c5787
+  platforms:
+    - web
+  preconditions:
+    - Владелец утвердил реальные реквизиты оператора, контакт, цели/основания, страны, сроки и
+      условия передачи через Telegram. Если сведения ещё отложены, кейс blocked и задача8.8 остаётся
+      открытой.
+    - Проверяется изолированный кандидат с фактической конфигурацией трафика/cookie/storage и
+      согласованным решением о необходимости отдельного согласия. Не определять юридическое
+      основание по наличию cookie.
+  steps:
+    - action: Без авторизации открыть политику из формы входа/обращения и документы из профиля.
+      expected: Публичный документ доступен; опубликованная версия содержит все утверждённые реальные
+        сведения, без шаблонных полей или ложной подписи окончательной политики.
+    - action: Сопоставить перечни/сроки в политике и cookie-странице с фактическими запросами, cookies и
+        локальным хранением кандидата.
+      expected: Объявления соответствуют поведению; авторизационный срок до30дней описан верно, передачи в
+        поддержку отражены.
+    - action: Проверить согласованный режим необязательного отслеживания и отказа от него.
+      expected: Если согласие требуется, отслеживание не включается до отдельного действия; отказ не
+        отключает необходимый вход. Если отслеживания нет, оно не выдумывается ради кейса.
+  cleanup:
+    - Очистить только собственный тестовый профиль браузера и данные; сохранить обезличенную сверку
+      без cookie/token/личных контактов.
+  automation:
+    web:
       status: manual
       health: unknown
       tests: []

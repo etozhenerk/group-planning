@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { PollSettings } from '@/entities/meeting';
 import styles from '@/features/date-poll/ui/PollSettingsFields/PollSettingsFields.module.css';
 
@@ -12,8 +13,15 @@ export const PollSettingsFields = ({
   onChange,
   disabled,
 }: PollSettingsFieldsProps) => {
+  const mobile = useMobileLayout();
+
   return (
-    <fieldset className={styles['settings']} disabled={disabled} aria-label="Настройки">
+    <fieldset
+      className={styles['settings']}
+      data-mobile={mobile}
+      disabled={disabled}
+      aria-label="Настройки"
+    >
       <label>
         <span>Можно выбрать несколько дат</span>
         <input

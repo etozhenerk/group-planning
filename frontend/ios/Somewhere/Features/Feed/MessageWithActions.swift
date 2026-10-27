@@ -4,111 +4,108 @@ struct MessageWithActions: View {
     let entry: FeedEntry
     let owner: FeedOwner
     let own: Bool
-    @State private var emojiPresented = false
-    @State private var people: MessageReaction?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @AccessibilityFocusState private var messageFocused: Bool
+    @AccessibilityFocusState private var focusedReaction: String?
+    @GestureState private var pressed = false
     private var reactions: [MessageReaction] { owner.reactions.values[entry.id] ?? [] }
+    private var feedback: Animation? {
+        ChatMotion.animation(
+            DesignTokens.motionDurationReactionFeedback, reduceMotion: reduceMotion)
+    }
+
     var body: some View {
-        VStack(alignment: own ? .trailing : .leading, spacing: 8) {
-            if owner.panel == .reaction(entry.id) {
-                ReactionQuickPicker(
-                    reactions: reactions,
-                    choose: { emoji in
-                        owner.reactions.toggle(emoji, entryID: entry.id)
-                        owner.panel = nil
-                    },
-                    all: {
-                        owner.panel = nil
-                        emojiPresented = true
-                    },
-                    people: { reaction in
-                        owner.panel = nil
-                        people = reaction
+        VStack(alignment: own ? .trailing : .leading, spacing: DesignTokens.spaceS2) {
+            message
+                .scaleEffect(
+                    reduceMotion || !pressed ? 1 : DesignTokens.componentReactionPickerPressedScale
+                )
+                .animation(feedback, value: pressed)
+                .animation(feedback, value: owner.panel == .reaction(entry.id))
+                .gesture(
+                    LongPressGesture(
+                        minimumDuration: DesignTokens.motionDurationReactionLongPress,
+                        maximumDistance: DesignTokens
+                            .componentReactionPickerLongPressMovementTolerance
+                    )
+                    .updating($pressed) { value, state, _ in state = value }
+                    .onEnded { _ in openReactions() }
+                )
+                .accessibilityAction(named: "Добавить реакцию", openReactions)
+                .accessibilityActions {
+                    if own, owner.reads.enabled {
+                        Button("Кто прочитал") { owner.openReaders(entry) }
                     }
-                ).padding(.horizontal, 32)
-            }
-            message.simultaneousGesture(
-                LongPressGesture(minimumDuration: 0.4).onEnded { _ in
-                    owner.panel = .reaction(entry.id)
                 }
-            )
-            .accessibilityAction(named: "Добавить реакцию") {
-                owner.panel = .reaction(entry.id)
+                .accessibilityIdentifier("chat-message-" + entry.id.uuidString.lowercased())
+                .accessibilityFocused($messageFocused)
+            if own, owner.reads.enabled, let count = owner.reads.counts[entry.id], count > .zero {
+                Button("Прочитали " + count.rawValue) { owner.openReaders(entry) }
+                    .font(.caption).foregroundStyle(DesignTokens.colorMuted)
+                    .frame(minHeight: DesignTokens.targetIos)
+                    .accessibilityIdentifier("message-readers-" + entry.id.uuidString.lowercased())
             }
             if !reactions.isEmpty {
-                ViewThatFits(in: .horizontal) {
-                    HStack(spacing: 6) {
-                        chips
-                        addReaction
-                    }
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 6) {
-                            chips
-                            addReaction
-                        }
-                    }
-                }.padding(.horizontal, 32)
+                reactionRow
+                    .padding(
+                        .leading,
+                        own ? DesignTokens.spaceS0 : DesignTokens.componentMobileChatInlineIndent
+                    )
+                    .padding(
+                        .trailing,
+                        own ? DesignTokens.componentMobileChatInlineIndent : DesignTokens.spaceS0
+                    )
             }
             if owner.reactions.failures.contains(entry.id) {
                 HStack {
                     Text("Изменение реакции не подтверждено.").font(.caption)
-                        .foregroundStyle(AppPalette.error)
+                        .foregroundStyle(DesignTokens.colorError)
                     Button("Повторить") { owner.reactions.retry(entry.id) }.font(.caption)
-                        .frame(minHeight: 44)
-                }.padding(.horizontal, 32)
-            }
-        }.sheet(isPresented: $emojiPresented) {
-            EmojiPicker(privateData: owner.session.privateData) {
-                owner.reactions.toggle($0, entryID: entry.id)
-            }.presentationDetents([.height(390)]).presentationDragIndicator(.hidden)
-                .presentationBackground(.clear)
-        }.sheet(item: $people) { reaction in ReactionPeopleScreen(reaction: reaction) }
-            .onChange(of: owner.current) { _, current in
-                if !current {
-                    emojiPresented = false
-                    people = nil
+                        .frame(minHeight: DesignTokens.targetIos)
                 }
             }
+        }.onChange(of: owner.returnedMessage) { _, id in
+            guard id == entry.id else { return }
+            if let emoji = owner.reactionPeopleFilter,
+                owner.returnedToPeople && reactions.contains(where: { $0.emoji == emoji })
+            {
+                focusedReaction = emoji
+            } else {
+                messageFocused = true
+            }
+        }
     }
+
+    private var reactionRow: some View {
+        ReactionChipLayout(trailing: own) {
+            ForEach(reactions) { reaction in
+                ReactionChip(
+                    reaction: reaction, updating: owner.reactions.isUpdating(entry.id),
+                    toggle: { owner.reactions.toggle(reaction.emoji, entryID: entry.id) },
+                    showPeople: {
+                        SystemKeyboard.dismiss()
+                        owner.openReactionPeople(entry.id, emoji: reaction.emoji)
+                    }
+                )
+                .accessibilityFocused($focusedReaction, equals: reaction.emoji)
+            }
+        }.foregroundStyle(DesignTokens.colorMuted)
+    }
+
+    private func openReactions() {
+        SystemKeyboard.dismiss()
+        owner.openReactions(entry.id)
+    }
+
     @ViewBuilder private var message: some View {
         if entry.attachments.isEmpty {
             FeedMessageView(
                 user: entry.actor, text: entry.messageText ?? "", date: entry.occurredAt.date,
-                own: own)
+                own: own, entryID: entry.id, selected: owner.panel == .reaction(entry.id))
         } else {
-            FeedAttachmentMessageView(entry: entry, session: owner.session, own: own)
-        }
-    }
-    private var addReaction: some View {
-        Button {
-            owner.panel = .reaction(entry.id)
-        } label: {
-            ExperienceIcon(kind: .smile, size: 18).frame(width: 36, height: 30)
-                .background(.white.opacity(0.035), in: Capsule())
-                .contentShape(Rectangle().inset(by: -7))
-        }.buttonStyle(.plain).accessibilityLabel("Выбрать реакцию")
-    }
-    private var chips: some View {
-        ForEach(reactions) { reaction in
-            Button {
-                owner.reactions.toggle(reaction.emoji, entryID: entry.id)
-            } label: {
-                Text("\(reaction.emoji) \(reaction.count)").font(.system(size: 12)).padding(
-                    .horizontal, 9
-                )
-                .frame(minHeight: 30)
-                .background(
-                    reaction.mine ? AppPalette.accent.opacity(0.14) : .white.opacity(0.035),
-                    in: Capsule()
-                )
-                .contentShape(Rectangle().inset(by: -7))
-                .overlay {
-                    Capsule().stroke(
-                        reaction.mine ? AppPalette.accent.opacity(0.3) : .clear, lineWidth: 1)
-                }
-            }.buttonStyle(.plain).disabled(owner.reactions.isUpdating(entry.id)).accessibilityLabel(
-                "\(reaction.emoji), \(reaction.count)\(reaction.mine ? ", ваша реакция" : "")"
-            )
-            .accessibilityAction(named: "Кто поставил реакцию") { people = reaction }
+            FeedAttachmentMessageView(
+                entry: entry, session: owner.session, own: own,
+                selected: owner.panel == .reaction(entry.id))
         }
     }
 }

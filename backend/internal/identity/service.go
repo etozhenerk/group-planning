@@ -16,6 +16,7 @@ type Config struct {
 
 // Service owns authentication rules; it cannot change meetings or RSVP.
 type Service struct {
+	revocations      *revocations
 	config           Config
 	store            Store
 	provider         Provider
@@ -42,6 +43,7 @@ func New(config Config, store Store, provider Provider, now func() time.Time, in
 
 	return &Service{
 		config:           config,
+		revocations:      &revocations{listeners: map[uint64]func(string, string){}},
 		store:            store,
 		provider:         provider,
 		now:              now,

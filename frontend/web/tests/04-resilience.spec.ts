@@ -20,10 +20,13 @@ test('an offline message keeps its text and can be retried after reconnecting', 
   await page.getByLabel('Сообщение', { exact: true }).fill('Сообщение без сети');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   await expect(page.getByText('Сообщение без сети', { exact: true })).toHaveCount(1);
-  await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
+  const row = page.getByTestId('feed-message').filter({ hasText: 'Сообщение без сети' });
+  await expect(row).toHaveAttribute('data-delivery', 'queued');
+  const stableKey = await row.getAttribute('data-ui-key');
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeEditable();
   await context.setOffline(false);
-  await page.getByRole('button', { name: 'Повторить отправку' }).click();
-  await expect(page.getByRole('button', { name: 'Повторить отправку' })).toHaveCount(0);
+  await expect(row).toHaveAttribute('data-delivery', 'accepted');
+  await expect(row).toHaveAttribute('data-ui-key', stableKey ?? 'missing-key');
   await page.reload();
   await expect(page.getByText('Сообщение без сети', { exact: true })).toHaveCount(1);
 });
@@ -66,7 +69,7 @@ test('a late message response cannot reopen access after a 403', async ({
   await messageStored;
   const leave = await friend.request.put(`/api/v1/meetings/${created.meeting.id}/rsvp`, {
     headers: {
-      Origin: 'https://127.0.0.1:8444',
+      Origin: new URL(friend.url()).origin,
       'X-CSRF-Token': await csrf(friend),
       'Idempotency-Key': crypto.randomUUID(),
     },

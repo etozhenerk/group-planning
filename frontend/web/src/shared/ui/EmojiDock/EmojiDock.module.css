@@ -1,0 +1,77 @@
+.dock {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+  background: var(--ds-color-surface);
+  font-family: var(--ds-typography-family-mobile-chat);
+  color: var(--ds-color-text);
+}
+
+.dock[data-composer='true'] {
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--ds-space-s4);
+  padding: var(--ds-component-emoji-dock-toolbar-inset-top)
+    var(--ds-component-emoji-dock-toolbar-inset-inline) 0;
+}
+
+.search {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--ds-space-s8);
+  padding: 0 var(--ds-component-emoji-dock-search-inset);
+  min-height: var(--ds-target-web);
+  background: var(--ds-color-background);
+  border-radius: var(--ds-component-emoji-dock-search-radius);
+  color: var(--ds-color-muted);
+}
+
+.search:focus-within {
+  outline: var(--ds-space-s1) solid var(--ds-color-focus);
+}
+
+.search svg {
+  width: var(--ds-component-emoji-dock-search-icon);
+  height: var(--ds-component-emoji-dock-search-icon);
+  flex-shrink: 0;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--ds-target-web);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font-size: var(--ds-typography-size-mobile-web-input);
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  min-width: var(--ds-target-web);
+  height: var(--ds-target-web);
+  color: var(--ds-color-muted);
+  background: transparent;
+}
+
+.control svg {
+  width: var(--ds-component-button-icon-size);
+  height: var(--ds-component-button-icon-size);
+}

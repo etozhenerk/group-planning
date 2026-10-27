@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-10-27T19:01:03.699547+00:00",
+  "service": {
+    "exitCode": 0,
+    "stdout": "MainPID=21231\nNRestarts=0\nActiveState=active\nSubState=running\nFragmentPath=/etc/systemd/system/somewhere.service",
+    "stderr": ""
+  },
+  "backendRelease": {
+    "exitCode": 0,
+    "stdout": "/opt/somewhere/backend/releases/0.1.0-rc.3",
+    "stderr": ""
+  },
+  "backupTimer": {
+    "exitCode": 0,
+    "stdout": "NextElapseUSecRealtime=Wed 2026-10-28 03:01:06 UTC\nLastTriggerUSec=Tue 2026-10-27 03:01:27 UTC\nActiveState=active",
+    "stderr": ""
+  },
+  "backupLastRun": {
+    "exitCode": 0,
+    "stdout": "Result=success\nExecMainExitTimestamp=Tue 2026-10-27 03:01:27 UTC\nExecMainStatus=0",
+    "stderr": ""
+  },
+  "backupManifest": {
+    "completed_at": 1793070087,
+    "sha256": "9845d207fb3322d58e695ff9a4ba22fa2c3a1b3df7142e5d2af8205daea0ddd3"
+  },
+  "backupScript": {
+    "exists": true,
+    "sha256": "435184500a3cf71b37b080413bd158bedc68d4b94780cd233ae9eee9be548585"
+  },
+  "deployer": {
+    "exists": false,
+    "sha256": null
+  },
+  "caddyProxyTargets": [
+    "reverse_proxy 127.0.0.1:8080"
+  ],
+  "tcpListeners": {
+    "exitCode": 0,
+    "stdout": "State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess\nLISTEN 0      4096         0.0.0.0:22         0.0.0.0:*          \nLISTEN 0      4096      127.0.0.54:53         0.0.0.0:*          \nLISTEN 0      4096       127.0.0.1:8080       0.0.0.0:*          \nLISTEN 0      4096       127.0.0.1:2019       0.0.0.0:*          \nLISTEN 0      4096       127.0.0.1:16241      0.0.0.0:*          \nLISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*          \nLISTEN 0      5          127.0.0.1:9108       0.0.0.0:*          \nLISTEN 0      4096               *:443              *:*          \nLISTEN 0      4096               *:80               *:*          \nLISTEN 0      4096            [::]:22            [::]:*          \nLISTEN 0      4096           [::1]:16241         [::]:*",
+    "stderr": ""
+  },
+  "disk": {
+    "exitCode": 0,
+    "stdout": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"vda\",\n         \"type\": \"disk\",\n         \"fstype\": null,\n         \"mountpoints\": [\n             null\n         ],\n         \"children\": [\n            {\n               \"name\": \"vda1\",\n               \"type\": \"part\",\n               \"fstype\": \"ext4\",\n               \"mountpoints\": [\n                   \"/\"\n               ]\n            },{\n               \"name\": \"vda14\",\n               \"type\": \"part\",\n               \"fstype\": null,\n               \"mountpoints\": [\n                   null\n               ]\n            },{\n               \"name\": \"vda15\",\n               \"type\": \"part\",\n               \"fstype\": \"vfat\",\n               \"mountpoints\": [\n                   \"/boot/efi\"\n               ]\n            }\n         ]\n      }\n   ]\n}",
+    "stderr": ""
+  },
+  "dbConfig": {
+    "exitCode": 0,
+    "stdout": "listen_addresses=\nssl=on\nsomewhere_migrator:super=false,createdb=false,createrole=false\nsomewhere:super=false,createdb=false,createrole=false",
+    "stderr": ""
+  },
+  "readiness": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

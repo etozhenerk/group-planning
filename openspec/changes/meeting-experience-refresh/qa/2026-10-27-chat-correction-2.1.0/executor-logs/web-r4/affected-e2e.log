@@ -1,0 +1,228 @@
+[WebServer] (node:68540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:68541) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 67 tests using 1 worker
+
+(node:68695) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/67] [chromium] › tests/02-reliability.spec.ts:15:1 › draft survives an error, back warns and sharing returns to the chat
+[2/67] [chromium] › tests/02-reliability.spec.ts:78:1 › message retry after a lost response keeps its ID and confirms once
+[3/67] [chromium] › tests/02-reliability.spec.ts:117:1 › history and a stale settings form preserve authoritative state
+[4/67] [chromium] › tests/02-reliability.spec.ts:157:1 › a revoked session closes private content and keeps invitation entry
+[5/67] [chromium] › tests/02-reliability.spec.ts:187:1 › cancelled invitation sign-in stays on the invitation without an answer
+[6/67] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 320px
+[7/67] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 390px
+[8/67] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 1440px
+[9/67] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 320px
+[10/67] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 390px
+[11/67] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 1440px
+[12/67] [chromium] › tests/22-place-poll.spec.ts:127:3 › place closes on time with majority and refreshes header
+[13/67] [chromium] › tests/22-place-poll.spec.ts:127:3 › place closes on time with zero votes and refreshes header
+[14/67] [chromium] › tests/22-place-poll.spec.ts:163:1 › failed vote preserves state, retry keeps key, late reply cannot restore lost membership
+[15/67] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 320px
+[16/67] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 390px
+[17/67] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 1440px
+[18/67] [chromium] › tests/23-preparation-tasks.spec.ts:124:1 › addressed task waits for its recipient and preserves uncertain acceptance
+[19/67] [chromium] › tests/23-preparation-tasks.spec.ts:207:1 › a conflicting general acceptance refreshes the assignee without taking their task
+[20/67] [chromium] › tests/23-preparation-tasks.spec.ts:253:1 › participant loading failure keeps the draft and task read failures retain confirmed content
+[21/67] [chromium] › tests/23-preparation-tasks.spec.ts:304:1 › pending acceptance shows only a spinner and its late response cannot restore access
+[22/67] [chromium] › tests/28-meeting-refresh.spec.ts:5:1 › new meeting goes directly to chat; composer panels preserve cursor and draft
+[23/67] [chromium] › tests/28-meeting-refresh.spec.ts:36:1 › profile distinguishes a failed request from missing contacts
+[24/67] [chromium] › tests/28-meeting-refresh.spec.ts:79:1 › support keeps input after error, retries the same request, and returns server reference
+[25/67] [chromium] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload
+[26/67] [chromium] › tests/28-meeting-refresh.spec.ts:167:1 › one hour cutoff is reflected after server refresh without losing current members
+[27/67] [chromium] › tests/28-meeting-refresh.spec.ts:197:1 › private profile displays provider fields without inventing a birth year
+[28/67] [chromium] › tests/32-refresh-resilience.spec.ts:4:1 › public support receives a real reference and retries a lost response without duplication
+[29/67] [chromium] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent
+[30/67] [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions
+  1) [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Состав встречи', exact: true })
+    Expected: "open"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('dialog', { name: 'Состав встречи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true })
+
+
+      113 |             })
+      114 |             .click();
+    > 115 |           await expect(info).toHaveAttribute('data-motion', 'open');
+          |                              ^
+      116 |         }
+      117 |
+      118 |         await info.getByRole('button', { name: 'Закрыть', exact: true }).click();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:115:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/error-context.md
+
+    attachment #10: trace (application/zip) ────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:70260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[31/67] [chromium] › tests/33-chat-action-sheets.spec.ts:130:3 › date poll freezes a committed request after a lost response and retries after reopening
+[32/67] [chromium] › tests/33-chat-action-sheets.spec.ts:130:3 › place poll freezes a committed request after a lost response and retries after reopening
+[33/67] [chromium] › tests/33-chat-action-sheets.spec.ts:237:1 › mobile task sheet preserves an uncertain request across close and resize
+[34/67] [chromium] › tests/33-chat-action-sheets.spec.ts:301:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft
+[35/67] [chromium] › tests/33-chat-action-sheets.spec.ts:411:3 › chat action keeps its heading and close button visible in a real 320x430 viewport
+[36/67] [chromium] › tests/33-chat-action-sheets.spec.ts:411:3 › chat action keeps its heading and close button visible in a real 390x430 viewport
+[37/67] [chromium] › tests/33-chat-action-sheets.spec.ts:451:1 › mobile task details keep inline actions and require a reversible cancellation confirmation
+[38/67] [chromium] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard
+[39/67] [chromium] › tests/34-telegram-chat.spec.ts:60:1 › emoji dock and expanded reactions keep the composer usable in compact viewports
+[40/67] [chromium] › tests/34-telegram-chat.spec.ts:107:1 › settings and sharing return to the same information sheet and retain the draft
+[41/67] [chromium] › tests/34-telegram-chat.spec.ts:147:1 › opening the emoji dock preserves the reading position and the new-message action stays above it
+[42/67] [chromium] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+[43/67] [chromium] › tests/34-telegram-chat.spec.ts:256:1 › desktop chat actions stay modal over the conversation and restore the draft
+[44/67] [chromium] › tests/34-telegram-chat.spec.ts:289:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+(node:70519) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[45/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:5:1 › new meeting goes directly to chat; composer panels preserve cursor and draft
+[46/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:36:1 › profile distinguishes a failed request from missing contacts
+[47/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:79:1 › support keeps input after error, retries the same request, and returns server reference
+[48/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload
+[49/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:167:1 › one hour cutoff is reflected after server refresh without losing current members
+[50/67] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:197:1 › private profile displays provider fields without inventing a birth year
+[51/67] [mobile-webkit] › tests/32-refresh-resilience.spec.ts:4:1 › public support receives a real reference and retries a lost response without duplication
+[52/67] [mobile-webkit] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent
+[53/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions
+  2) [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Состав встречи', exact: true })
+    Expected: "open"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('dialog', { name: 'Состав встречи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true })
+
+
+      113 |             })
+      114 |             .click();
+    > 115 |           await expect(info).toHaveAttribute('data-motion', 'open');
+          |                              ^
+      116 |         }
+      117 |
+      118 |         await info.getByRole('button', { name: 'Закрыть', exact: true }).click();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:115:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/error-context.md
+
+    attachment #10: trace (application/zip) ────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r4/affected-results/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:72263) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[54/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:130:3 › date poll freezes a committed request after a lost response and retries after reopening
+[55/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:130:3 › place poll freezes a committed request after a lost response and retries after reopening
+[56/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:237:1 › mobile task sheet preserves an uncertain request across close and resize
+[57/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:301:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft
+[58/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:411:3 › chat action keeps its heading and close button visible in a real 320x430 viewport
+[59/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:411:3 › chat action keeps its heading and close button visible in a real 390x430 viewport
+[60/67] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:451:1 › mobile task details keep inline actions and require a reversible cancellation confirmation
+[61/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard
+[62/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:60:1 › emoji dock and expanded reactions keep the composer usable in compact viewports
+[63/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:107:1 › settings and sharing return to the same information sheet and retain the draft
+[64/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:147:1 › opening the emoji dock preserves the reading position and the new-message action stays above it
+[65/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+[66/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:256:1 › desktop chat actions stay modal over the conversation and restore the draft
+[67/67] [mobile-webkit] › tests/34-telegram-chat.spec.ts:289:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+  2 failed
+    [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+    [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+  65 passed (4.4m)

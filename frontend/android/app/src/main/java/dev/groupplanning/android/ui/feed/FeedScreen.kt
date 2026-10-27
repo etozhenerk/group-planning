@@ -3,7 +3,7 @@ package dev.groupplanning.android.ui.feed
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -13,9 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -37,6 +41,7 @@ import dev.groupplanning.android.ui.placepoll.CreatePlacePollSheet
 import dev.groupplanning.android.ui.placepoll.PlacePollRoute
 import dev.groupplanning.android.ui.preparation.CreatePreparationTaskSheet
 import dev.groupplanning.android.ui.preparation.PreparationTaskRoute
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
 import java.time.ZoneId
@@ -52,6 +57,7 @@ internal fun FeedScreen(
     modifier: Modifier = Modifier,
     shareUrl: String? = null,
 ) {
+    val presentation = LocalChatPresentation.current
     val media = model.media
     val mediaState = media?.state?.collectAsStateWithLifecycle()?.value
     var upload by rememberSaveable {
@@ -89,6 +95,16 @@ internal fun FeedScreen(
     }
     val state by model.state.collectAsStateWithLifecycle()
     val messages by model.sender.state.collectAsStateWithLifecycle()
+    val reading by model.reading.state.collectAsStateWithLifecycle()
+    var readerAnchor by remember { mutableStateOf<ReactionAnchor?>(null) }
+    val openReaders: (
+        dev.groupplanning.android.data.api.models.FeedEntry,
+        ReactionAnchor,
+    ) -> Unit = { entry, anchor ->
+        readerAnchor = anchor
+        model.focused(entry.id)
+        model.reading.openReaders(entry)
+    }
     val snapshot by model.repository.snapshot.collectAsStateWithLifecycle()
     val polls by model.polls.collectAsStateWithLifecycle()
     val creation by model.pollCreation.collectAsStateWithLifecycle()
@@ -101,7 +117,27 @@ internal fun FeedScreen(
     LaunchedEffect(model, lifecycle) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) { model.runActive() }
     }
+    val lifecycleState by lifecycle.currentStateFlow.collectAsStateWithLifecycle()
+    val readEligible =
+        LocalWindowInfo.current.isWindowFocused &&
+            lifecycleState == Lifecycle.State.RESUMED &&
+            presentation.reaction == null &&
+            presentation.composerPanel == null &&
+            reading.readerEntry == null &&
+            creation == null &&
+            placeCreation == null &&
+            taskCreation == null &&
+            upload == null &&
+            !gallery
     if (state.revoked) return
+    if (reading.readerEntry != null) {
+        ChatReadersSheet(reading, {
+            model.reading.closeReaders()
+            readerAnchor?.focus?.requestFocus()
+        }, { model.reading.loadReaders(more = reading.readers.isNotEmpty()) }, {
+            model.reading.loadReaders(more = true)
+        })
+    }
     LaunchedEffect(state.ready, meeting?.period) {
         if (state.ready &&
             meeting?.period == MeetingPeriod.Past
@@ -151,101 +187,143 @@ internal fun FeedScreen(
     creation?.let { CreateDatePollSheet(it, model::closePollCreation) }
     placeCreation?.let { CreatePlacePollSheet(it, model::closePlaceCreation) }
     taskCreation?.let { CreatePreparationTaskSheet(it, model::closeTaskCreation) }
-    Column(modifier.imePadding()) {
-        if (meeting?.period == MeetingPeriod.Past &&
-            media != null
-        ) {
-            MemoryBanner(mediaState?.photos.orEmpty(), media) {
-                if (mediaState?.photos.isNullOrEmpty()) pickPhotos("memory") else gallery = true
-            }
+    BoxWithConstraints(modifier.imePadding()) {
+        val preferredDock = if (maxHeight < DesignTokens.breakpointChatCompactHeight) {
+            DesignTokens.componentEmojiDockCompactHeight
+        } else {
+            DesignTokens.componentEmojiDockPreferredHeight
         }
-        FeedTimeline(
-            state,
-            messages,
-            profile,
-            model::history,
-            model.sender::retry,
-            model.sender::recoverRejected,
-            poll = { entry ->
-                val field = if (entry.kind == "preparation_task_created") "task_id" else "poll_id"
-                val raw = (entry.payload[field] as? JsonPrimitive)?.content
-                val id = raw?.let { runCatching { UUID.fromString(it) }.getOrNull() }
-                val poll = polls[id]
-                val place = places[id]
-                val task = tasks[id]
-                if (task != null && id != null && entry.kind == "preparation_task_created") {
-                    PreparationTaskRoute(id, task, entry, entry.actor.id == profile.id)
-                } else if (place != null &&
-                    meeting != null &&
-                    id != null &&
-                    entry.kind == "place_poll_created"
-                ) {
-                    PlacePollRoute(id, place, meeting, entry, entry.actor.id == profile.id)
-                } else if (poll != null && meeting != null && id != null) {
-                    DatePollRoute(id, poll, meeting, entry, entry.actor.id == profile.id)
-                }
-            },
-            modifier = Modifier.weight(1f),
-            reaction = { MessageReactions(it, model.reactions) },
-            openReaction = { model.reactions.pick(it.id) },
-            attachment = { item ->
-                media?.let { MessageAttachment(item, it) }
-            },
-            visible = model.reactions::visible,
-            empty = { shareUrl?.let { InviteFriends(it) } },
+        val dockHeight = minOf(
+            preferredDock,
+            maxHeight * DesignTokens.componentEmojiDockMaximumViewportRatio,
         )
-        if (state.loadError || messages.storageError) {
-            TextButton(model::refresh, Modifier.padding(horizontal = 16.dp)) {
-                Text(
-                    stringResource(
-                        if (messages.storageError) {
-                            R.string.message_storage_error
-                        } else {
-                            R.string.feed_load_error
-                        },
-                    ),
-                    color = Palette.error,
-                )
+        Column {
+            if (meeting?.period == MeetingPeriod.Past &&
+                media != null
+            ) {
+                MemoryBanner(mediaState?.photos.orEmpty(), media) {
+                    if (mediaState?.photos.isNullOrEmpty()) pickPhotos("memory") else gallery = true
+                }
             }
-        }
-        if (mediaState?.items?.any { !it.value.published && it.value.purpose == "message" } ==
-            true
-        ) {
-            TextButton({ upload = "message" }) { Text(stringResource(R.string.upload_send)) }
-        }
-        if (mediaState?.exportStatus != null &&
-            mediaState.exportStatus != 0
-        ) {
-            Text(
-                stringResource(
-                    if (mediaState.exportStatus >
-                        0
-                    ) {
-                        R.string.media_saved
-                    } else {
-                        R.string.media_save_error
-                    },
-                ),
-            )
-        }
-        Column(
-            Modifier.padding(horizontal = 12.dp).padding(top = 8.dp, bottom = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            MessageComposer(
+            FeedTimeline(
+                state.copy(readInfo = reading.info ?: state.readInfo),
                 messages,
-                model.sender::edit,
-                model.sender::send,
-                openPoll = { meeting?.let(model::createPoll) },
-                openPlace = { meeting?.let(model::createPlacePoll) },
-                openTask = model::createPreparationTask,
-                openPhoto = { pickPhotos("message") },
-                openFile = {
-                    files.launch(
-                        arrayOf("application/pdf", "text/plain", "application/zip", "image/*"),
+                profile,
+                model::history,
+                { model.sender.retry(it) },
+                { model.sender.recoverRejected(it) },
+                poll = { entry ->
+                    val field = if (entry.kind ==
+                        "preparation_task_created"
+                    ) {
+                        "task_id"
+                    } else {
+                        "poll_id"
+                    }
+                    val raw = (entry.payload[field] as? JsonPrimitive)?.content
+                    val id = raw?.let { runCatching { UUID.fromString(it) }.getOrNull() }
+                    val poll = polls[id]
+                    val place = places[id]
+                    val task = tasks[id]
+                    if (task != null && id != null && entry.kind == "preparation_task_created") {
+                        PreparationTaskRoute(id, task, entry)
+                    } else if (place != null &&
+                        meeting != null &&
+                        id != null &&
+                        entry.kind == "place_poll_created"
+                    ) {
+                        PlacePollRoute(id, place, meeting, entry)
+                    } else if (poll != null && meeting != null && id != null) {
+                        DatePollRoute(id, poll, meeting, entry)
+                    }
+                },
+                modifier = Modifier.weight(1f).onGloballyPositioned {
+                    presentation.conversationBounds = it.boundsInWindow()
+                },
+                reaction = { entry, anchor ->
+                    MessageReactions(
+                        entry,
+                        model.reactions,
+                        anchor,
+                        readers = if (reading.enabled && entry.actor.id == profile.id) {
+                            { openReaders(entry, anchor) }
+                        } else {
+                            null
+                        },
                     )
                 },
+                receipt = { entry, anchor ->
+                    if (reading.enabled) {
+                        ChatReceipt(reading.counts[entry.id]) {
+                            openReaders(entry, anchor)
+                        }
+                    }
+                },
+                readVisible = model.reading::visible,
+                readEligible = readEligible,
+                bounds = presentation.conversationBounds,
+                focused = model::focused,
+                openReaction = { presentation.react(it.id) },
+                attachment = { item ->
+                    media?.let { MessageAttachment(item, it) }
+                },
+                visible = model.reactions::visible,
+                viewport = model::viewport,
+                newer = model::newer,
+                tail = model::tail,
+                empty = { shareUrl?.let { InviteFriends(it) } },
             )
+            if (state.loadError || messages.storageError) {
+                TextButton(model::refresh, Modifier.padding(horizontal = 16.dp)) {
+                    Text(
+                        stringResource(
+                            if (messages.storageError) {
+                                R.string.message_storage_error
+                            } else {
+                                R.string.feed_load_error
+                            },
+                        ),
+                        color = Palette.error,
+                    )
+                }
+            }
+            if (mediaState?.items?.any { !it.value.published && it.value.purpose == "message" } ==
+                true
+            ) {
+                TextButton({ upload = "message" }) { Text(stringResource(R.string.upload_send)) }
+            }
+            if (mediaState?.exportStatus != null &&
+                mediaState.exportStatus != 0
+            ) {
+                Text(
+                    stringResource(
+                        if (mediaState.exportStatus >
+                            0
+                        ) {
+                            R.string.media_saved
+                        } else {
+                            R.string.media_save_error
+                        },
+                    ),
+                )
+            }
+            Column {
+                MessageComposer(
+                    messages,
+                    model.sender::edit,
+                    model.sender::send,
+                    dockHeight = dockHeight,
+                    openPoll = { meeting?.let(model::createPoll) },
+                    openPlace = { meeting?.let(model::createPlacePoll) },
+                    openTask = model::createPreparationTask,
+                    openPhoto = { pickPhotos("message") },
+                    openFile = {
+                        files.launch(
+                            arrayOf("application/pdf", "text/plain", "application/zip", "image/*"),
+                        )
+                    },
+                )
+            }
         }
     }
 }

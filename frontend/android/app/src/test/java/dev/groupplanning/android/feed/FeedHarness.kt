@@ -45,17 +45,20 @@ internal class FeedHarness(dispatcher: CoroutineDispatcher) {
         MemoryCredentials(),
         dispatcher,
         clearPrivate = outbox::clear,
+        retainPrivate = outbox::retainOwner,
     )
     val repository = FeedRepository(session, outbox)
     val id = Fixtures.meetingId
     val path = "meetings/$id"
 
-    suspend fun login() {
+    suspend fun login(sync: Boolean = false, realtime: Boolean = false) {
         transport.enqueue(
             "me",
             apiJson.encodeToString(CurrentSession(Fixtures.user, Fixtures.expiry)),
         )
         session.restore()
+        foreground(sync, realtime)
+
         session.beginData {
             it.copy(
                 details = mapOf(
@@ -63,6 +66,24 @@ internal class FeedHarness(dispatcher: CoroutineDispatcher) {
                 ),
             )
         }
+    }
+
+    fun foreground(sync: Boolean = false, realtime: Boolean = false) {
+        transport.enqueue(
+            "me",
+            apiJson.encodeToString(CurrentSession(Fixtures.user, Fixtures.expiry)),
+        )
+        transport.enqueue(
+            "chat-capabilities",
+            apiJson.encodeToString(
+                dev.groupplanning.android.data.api.models.ChatCapabilities(
+                    1,
+                    sync,
+                    realtime,
+                    false,
+                ),
+            ),
+        )
     }
 
     fun page(
@@ -88,14 +109,15 @@ internal class FeedHarness(dispatcher: CoroutineDispatcher) {
         )
     }
 
-    fun entry(sequence: Int, key: UUID? = null): FeedEntry = FeedEntry(
-        UUID(0, sequence.toLong()), id, ServerCounter(sequence.toString()), "message", 1,
-        Fixtures.user, Fixtures.expiry,
-        JsonObject(
-            mapOf(
-                "text" to JsonPrimitive("Сообщение $sequence"),
+    fun entry(sequence: Int, key: UUID? = null, text: String = "Сообщение $sequence"): FeedEntry =
+        FeedEntry(
+            UUID(0, sequence.toLong()), id, ServerCounter(sequence.toString()), "message", 1,
+            Fixtures.user, Fixtures.expiry,
+            JsonObject(
+                mapOf(
+                    "text" to JsonPrimitive(text),
+                ),
             ),
-        ),
-        key,
-    )
+            key,
+        )
 }

@@ -1,0 +1,370 @@
+[
+  {
+    "at": "2026-10-27T13:43:17.281866Z",
+    "method": "post",
+    "path": "/api/v1/meetings",
+    "status": 201,
+    "sha256": "66acc9ee0946490ea3e8cf9c752a4286e7e0b3636be6ce1647f43021148b8f5e"
+  },
+  {
+    "at": "2026-10-27T13:43:17.281995Z",
+    "method": "get",
+    "path": "/api/v1/invitations/{token}",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "title": "Независимая проверка",
+      "description": null,
+      "starts_on": "2026-10-27",
+      "starts_at": "2026-10-27T12:00:00Z",
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "join_closes_at": "2026-10-27T11:00:00Z",
+      "can_join": true,
+      "join_disabled_reason": null
+    },
+    "sha256": "6f58bac294bb20a25419c52d16562e0a41def03959a465964783ed4423ad1a58"
+  },
+  {
+    "at": "2026-10-27T13:43:17.282121Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "sha256": "af34302829232b4dc393cd968061daff23cf3ea182707482e2fad9134f877c8c"
+  },
+  {
+    "at": "2026-10-27T13:43:17.282441Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "978bb272-0894-4853-9ec1-1a737a45852a",
+        "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "c4707973cd5c01ea8e2891a083ad801b8081528c9ccf8074963890165448e903"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283174Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "978bb272-0894-4853-9ec1-1a737a45852a",
+        "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "a1e374a47064d3e343ce5e46c98f4a174709d7dad5fda0eccbd19d8d22857f7b"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283379Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "978bb272-0894-4853-9ec1-1a737a45852a",
+        "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "published",
+        "download_url": "/api/v1/meetings/44993f3b-68ed-49c3-b506-28c88e431a12/media/978bb272-0894-4853-9ec1-1a737a45852a/content",
+        "thumbnail_url": "/api/v1/meetings/44993f3b-68ed-49c3-b506-28c88e431a12/media/978bb272-0894-4853-9ec1-1a737a45852a/content",
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0"
+        }
+      },
+      "entry": {
+        "id": "f446a83e-fac4-4a0f-9ee1-a627f6cb6b60",
+        "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+        "sequence": "3",
+        "kind": "message",
+        "payload_version": 1,
+        "actor": {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0"
+        },
+        "sender": {
+          "kind": "user",
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0"
+        },
+        "occurred_at": "2026-10-27T10:00:00Z",
+        "payload": {
+          "attachments": [
+            {
+              "id": "978bb272-0894-4853-9ec1-1a737a45852a",
+              "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+              "file_name": "synthetic.bin",
+              "content_type": "image/png",
+              "size_bytes": 121,
+              "kind": "photo",
+              "purpose": "message",
+              "status": "published",
+              "download_url": "/api/v1/meetings/44993f3b-68ed-49c3-b506-28c88e431a12/media/978bb272-0894-4853-9ec1-1a737a45852a/content",
+              "thumbnail_url": "/api/v1/meetings/44993f3b-68ed-49c3-b506-28c88e431a12/media/978bb272-0894-4853-9ec1-1a737a45852a/content",
+              "created_at": "2026-10-27T10:00:00Z",
+              "uploaded_by": {
+                "id": "3ec35484-2672-461d-a635-72bc21506a09",
+                "display_name": "Участник p0"
+              }
+            }
+          ],
+          "text": "Фото"
+        },
+        "client_request_id": "e2720000-0000-4000-8000-000000000003"
+      }
+    },
+    "sha256": "c9b07829e97a57d92a9e82138dbb09a82ab6c2179d21ccbf84609458088354c3"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283524Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "join_closed",
+        "field_errors": {},
+        "request_id": "fff9ed9b-039a-4e13-8695-a443f9145af1"
+      }
+    },
+    "sha256": "7f09edd6af9e0d31c0e4e3b539e5a0ce70a07dd67f9c590a9f3d720106da7098"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283649Z",
+    "method": "get",
+    "path": "/api/v1/invitations/{token}",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "title": "Независимая проверка",
+      "description": null,
+      "starts_on": "2026-10-27",
+      "starts_at": "2026-10-27T12:00:00Z",
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "join_closes_at": "2026-10-27T11:00:00Z",
+      "can_join": false,
+      "join_disabled_reason": "join_closed"
+    },
+    "sha256": "041cfc632510cc8575b5d70ffcc1324e99666a3d9f979d0a454743f735f81a1a"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283763Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/feed",
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "forbidden",
+        "field_errors": {},
+        "request_id": "edf4eca4-648a-4924-ab50-b4b63b2f53df"
+      }
+    },
+    "sha256": "c97387ba11ad18eed74cf38626fd073a8082907d172684412ed1989ba5d57b24"
+  },
+  {
+    "at": "2026-10-27T13:43:17.283904Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "forbidden",
+        "field_errors": {},
+        "request_id": "63328b72-af42-4eb7-aabe-f5f2aef9d2d1"
+      }
+    },
+    "sha256": "9d2c574a42f71487b912d9dd22331ed6c5a590e0d3a56bdfe4dddb23961cce48"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284066Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "sha256": "af34302829232b4dc393cd968061daff23cf3ea182707482e2fad9134f877c8c"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284184Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "rsvp": "not_going",
+      "rsvp_revision": "2",
+      "can_access_feed": false,
+      "meeting_revision": "3"
+    },
+    "sha256": "e9d9c0b3f8c35923ae9fe226579a23e9e92c5295c1c00d5b5ad80ee7e705edb3"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284338Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "join_closed",
+        "field_errors": {},
+        "request_id": "b08284a3-ffea-4f9f-821f-9ec1d123e562"
+      }
+    },
+    "sha256": "f2bdb66c6d3f81da10efa2ab7f975b1a2fab23c601094277baff804a5804aa51"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284495Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}",
+    "status": 200,
+    "body": {
+      "memory_photo_count": 0,
+      "memory_preview": [],
+      "organizer_id": "3ec35484-2672-461d-a635-72bc21506a09",
+      "period": "upcoming",
+      "participant_preview": [
+        {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        }
+      ],
+      "id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "title": "Независимая проверка",
+      "starts_on": "2026-10-27",
+      "starts_at": "2026-10-27T12:00:00Z",
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "participant_count": 1,
+      "revision": "3",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": null,
+      "created_at": "2026-10-27T10:00:00Z"
+    },
+    "sha256": "25b66d8642c5785559780baa82eaa3ce416cdf773ad6957be6829499ec436155"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284666Z",
+    "method": "patch",
+    "path": "/api/v1/meetings/{id}",
+    "status": 200,
+    "body": {
+      "memory_photo_count": 0,
+      "memory_preview": [],
+      "organizer_id": "3ec35484-2672-461d-a635-72bc21506a09",
+      "period": "upcoming",
+      "participant_preview": [
+        {
+          "id": "3ec35484-2672-461d-a635-72bc21506a09",
+          "display_name": "Участник p0",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        }
+      ],
+      "id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "title": "Независимая проверка",
+      "starts_on": "2026-10-27",
+      "starts_at": "2026-10-27T15:00:00Z",
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "participant_count": 1,
+      "revision": "4",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": null,
+      "created_at": "2026-10-27T10:00:00Z"
+    },
+    "sha256": "228228603f0f8a0dffb811baa54554e5c98ca578e9dd4d840206982ca431f6ab"
+  },
+  {
+    "at": "2026-10-27T13:43:17.284787Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "44993f3b-68ed-49c3-b506-28c88e431a12",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "5"
+    },
+    "sha256": "d5becf06c0ded2f9355d5ac9bc7bfcc8536f55863ffe6326af2bc074dafc077a"
+  },
+  {
+    "at": "2026-10-27T13:43:17.28494Z",
+    "method": "post",
+    "path": "/api/v1/meetings",
+    "status": 201,
+    "sha256": "b5ad58e3b06da8a211a7ec481a9a7ede8b91d37e002f042d166b8c58be1f2a38"
+  },
+  {
+    "at": "2026-10-27T13:43:17.285088Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "f1d1e8cd-177a-47b5-b5f1-bc7bd617eaf4",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "sha256": "3ca55d573df21365fec4c5ccaec5d702b25fc2461b2c89ba8b112371ba404313"
+  }
+]

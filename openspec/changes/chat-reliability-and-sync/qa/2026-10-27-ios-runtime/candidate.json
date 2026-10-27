@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "frozen_engineering_candidate_pending_independent_review",
+  "source_commit": "f2fe0d5548453077f2de0a93253530abb3808a17",
+  "runtime_commit": "492b7481e6fbdc32cced155bb7a043cbc5c56665",
+  "base_commit": "51a5caf",
+  "storage_checkpoint": "57852d1",
+  "design_system": "2.5.1",
+  "source_delta_after_tested_runtime": "Only equal-valued published spaceS20 (20) and typographySizeLabel (11) in FeedTimelineRow plus formatter. No old acceptance transferred.",
+  "backend": {
+    "path": "/tmp/chat-read-httpapi-r4.test",
+    "revision": "c789",
+    "sha256": "590e2449b00e90dbc4284f9069997d2a2aadb72d8c3c988aaa4748ecd406be49",
+    "realtime": true,
+    "read_state": true
+  },
+  "toolchain": {
+    "xcode": "27.1",
+    "xcode_build": "27A9275",
+    "swift": "6.4",
+    "sdk": "iphonesimulator27.1",
+    "simulator_id": "31262733-50DC-46A5-938E-4C462D70F109",
+    "simulator_model": "iPhone 18 Pro",
+    "runtime": "iOS 27.0",
+    "xcode_jobs": 2
+  },
+  "app": {
+    "source_commit": "f2fe0d5548453077f2de0a93253530abb3808a17",
+    "configuration": "Debug simulator unsigned",
+    "path": "/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/Frozen-f2fe0d5/Somewhere.app",
+    "executable_sha256": "1d38d28505cc1ab5108ce9323203cbd6b65ce71f7bc2c3284439b9b56b38c6fc",
+    "file_manifest": "Somewhere-f2fe0d5.app.sha256.json",
+    "file_manifest_sha256": "2563b1cd89797351a744d1e5cf0c8fe9bfa5e375fcc1ee270e07b9222d2c8f68"
+  },
+  "qa_artifacts": "candidate-492b748/artifacts.json",
+  "checks": {
+    "format": {
+      "status": "pass",
+      "source_commit": "f2fe0d5548453077f2de0a93253530abb3808a17",
+      "log": "ios-chat-runtime-format-tokens-final.log.gz"
+    },
+    "clean_build_analyze": {
+      "status": "pass",
+      "source_commit": "f2fe0d5548453077f2de0a93253530abb3808a17",
+      "log": "ios-chat-runtime-build-tokens-final.log.gz"
+    },
+    "unit": {
+      "status": "pass_with_explicit_physical_skip",
+      "source_commit": "492b7481e6fbdc32cced155bb7a043cbc5c56665",
+      "tests": 164,
+      "suites": 42,
+      "duration_seconds": 3.668,
+      "skip": "encryptedFileUsesCompleteDeviceProtection: physical iOS required",
+      "log": "ios-chat-runtime-unit-candidate2.log.gz"
+    },
+    "live_ui": {
+      "status": "pass",
+      "source_commit": "492b7481e6fbdc32cced155bb7a043cbc5c56665",
+      "tests": 1,
+      "failures": 0,
+      "duration_seconds": 54.039,
+      "case": "ChatSyncUITests.testSDKSendReadersKeyboardAndDraftRestart",
+      "log": "ios-chat-runtime-ui-frozen.log.gz",
+      "xcresult": "/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/UIResults-20261027T213019-27758.xcresult",
+      "evidence": "candidate-492b748"
+    },
+    "agent_check": {
+      "status": "pass",
+      "log": "ios-chat-runtime-agent-check-evidence.log.gz"
+    },
+    "independent_feature_test": "pending",
+    "independent_design_review": "pending",
+    "diff_check": "pass"
+  },
+  "not_verified": [
+    "Physical device Data Protection metadata",
+    "Signed Release Archive / store",
+    "Normal/reduced motion frame analysis",
+    "Full IME/caret/selection and VoiceOver",
+    "Historical anchor <=2pt across all scenarios",
+    "Two native devices cross-device scenario"
+  ],
+  "runbook": "runbook.md"
+}

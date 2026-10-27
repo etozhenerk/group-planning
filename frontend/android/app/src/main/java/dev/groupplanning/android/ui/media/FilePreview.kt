@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.groupplanning.android.R
-import dev.groupplanning.android.ui.components.AppIcon
+import dev.groupplanning.android.ui.components.ChatIcon
+import dev.groupplanning.android.ui.components.ChatSymbol
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.Locale
 
@@ -30,7 +30,7 @@ internal fun FilePreview(name: String, size: Long) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        AppIcon(R.drawable.ic_file)
+        ChatIcon(ChatSymbol.File)
         Column(Modifier.weight(1f)) {
             Text(name, fontSize = 14.sp, lineHeight = 21.sp, fontWeight = FontWeight.Bold)
             Text(

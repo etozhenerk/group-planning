@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { prepareCover } from '@/entities/meeting/lib/prepareCover';
 import type { PreparedCover } from '@/entities/meeting/model/cover';
@@ -14,7 +15,10 @@ export const useCoverSelection = (
   return {
     problem,
     busy,
-    choose: async (file: File | undefined) => {
+    choose: async (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      event.target.value = '';
+
       if (!file) {
         return;
       }

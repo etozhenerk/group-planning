@@ -3,11 +3,16 @@ package dev.groupplanning.android.ui.covers
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -15,6 +20,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -25,6 +31,8 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.CoverDraft
 import dev.groupplanning.android.state.covers.CoverSelectionViewModel
 import dev.groupplanning.android.state.covers.CoverSource
+import dev.groupplanning.android.ui.components.AppIcon
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.UUID
 
@@ -37,6 +45,7 @@ internal fun CoverEditor(
     modifier: Modifier = Modifier,
     original: String? = null,
     meetingId: UUID? = null,
+    compact: Boolean = false,
 ) {
     val repository = LocalCovers.current
     val model = remember { CoverSelectionViewModel() }
@@ -67,17 +76,7 @@ internal fun CoverEditor(
             } else {
                 null
             }
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(stringResource(R.string.cover_title), fontWeight = FontWeight.SemiBold)
-        if (state.busy) {
-            CoverSkeleton(
-                Modifier.fillMaxWidth().aspectRatio(16f / 9f),
-            )
-        } else {
-            source?.let {
-                CoverImage(it)
-            }
-        }
+    val actions: @Composable () -> Unit = {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             TextButton(
                 onClick = {
@@ -117,6 +116,55 @@ internal fun CoverEditor(
                     Text(stringResource(R.string.cover_remove))
                 }
             }
+        }
+    }
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMeetingSettingsCoverGap),
+    ) {
+        if (compact) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(
+                    DesignTokens.componentMeetingSettingsCoverGap,
+                ),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(
+                    Modifier.size(DesignTokens.componentMeetingSettingsCoverSize).background(
+                        DesignTokens.colorBackground,
+                        RoundedCornerShape(DesignTokens.componentMeetingSettingsCoverRadius),
+                    ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (state.busy) {
+                        CoverSkeleton(Modifier.size(DesignTokens.componentMeetingSettingsCoverSize))
+                    } else if (source != null) {
+                        CoverImage(
+                            source,
+                            thumbnail = true,
+                            thumbnailSize = DesignTokens.componentMeetingSettingsCoverSize,
+                            cornerRadius = DesignTokens.componentMeetingSettingsCoverRadius,
+                        )
+                    } else {
+                        AppIcon(R.drawable.ic_photo)
+                    }
+                }
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        stringResource(R.string.cover_title),
+                        fontSize = DesignTokens.typographySizeSmall,
+                    )
+                    actions()
+                }
+            }
+        } else {
+            Text(stringResource(R.string.cover_title), fontWeight = FontWeight.SemiBold)
+            if (state.busy) {
+                CoverSkeleton(Modifier.fillMaxWidth().aspectRatio(16f / 9f))
+            } else {
+                source?.let { CoverImage(it) }
+            }
+            actions()
         }
         state.issue?.let {
             Text(

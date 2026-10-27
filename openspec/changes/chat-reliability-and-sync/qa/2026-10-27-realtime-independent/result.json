@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/chat_sync_backend_review",
+  "candidate": "e794168085968b123e011844ac9b97539af54857",
+  "sourceFilesChanged": [],
+  "status": "failed",
+  "fullCasesPassed": [],
+  "environment": {
+    "go": "go1.27.2 darwin/arm64",
+    "parallelism": "GOMAXPROCS=1 -p=1",
+    "data": "synthetic memory fixture; loopback WebSocket only"
+  },
+  "checks": [
+    {
+      "id": "RT-01",
+      "test": "TestIndependentPersonalUnsubscribeCannotExpandMeetingLimit",
+      "status": "failed",
+      "actual": "unsubscribe personal succeeded; both authorized meeting subscriptions succeeded"
+    },
+    {
+      "id": "RT-02",
+      "test": "TestIndependentRetryDeadlineElapsedInsidePublishBatch",
+      "status": "failed",
+      "actual": "Claimed=2 Published=1 Retried=1 Acknowledged=0; invalid storage record at ACK after retry deadline elapsed"
+    }
+  ],
+  "externalEvidence": "../2026-10-27-realtime-storage-sql/run01; root engineering SQL, not independently executed",
+  "remaining": "Independent broader runtime review deferred by parent until candidate fixes; no feature ready/pass"
+}

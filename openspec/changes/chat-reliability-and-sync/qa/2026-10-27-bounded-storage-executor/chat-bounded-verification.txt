@@ -1,0 +1,40 @@
+Backend bounded feed / direct retry — verification, 2026-10-27
+Worktree: /Users/misha/.codex/worktrees/chat-bounded-storage/group-planning
+Base: 6e69ae85755e7e8c5bc51854befabd9f21c46504
+
+RED baseline (before implementation):
+GOCACHE=/tmp/chat-bounded-go-cache GOMAXPROCS=2 go test -p 2 ./internal/meetings -run 'TestFeedAndTextRetryNeverReadFullHistory|TestMediaRetryNeverReadsFullHistory' -count=1
+Both tests failed with: bounded operation called full Feed (meetings 0.231s).
+This demonstrates full-history reads in text/media retry; it is not the web ACK race.
+
+Initial full race attempts:
+1. Sandbox blocked httptest localhost listeners. Retried with authorized escalation.
+2. TestPreparationTaskOpenAPIResponses and TestSavedInvitationsOpenAPIResponses failed: meeting_past, 409 instead of 200. Both used starts_on=2026-10-26 and the real wall clock.
+The fixed-clock edits exactly match the already dirty primary checkout files (cmp passed).
+The failed outputs are retained in the tool transcript; this paragraph is a summary, not an original raw log.
+
+GREEN checks after implementation and fixture fixes:
+- Targeted meetings / memory / postgres package tests: PASS.
+- go test -race -p 2 ./...: PASS; final output /tmp/chat-bounded-race.log.
+- go vet ./...: PASS.
+- go run ./cmd/check-dependencies: PASS.
+- go build ./...: PASS.
+- sh scripts/format.sh --check and gofmt -l .: PASS, no formatting output.
+- go run ./cmd/storage-demo: PASS.
+- npm run api:test: PASS, 65 schemas / 32 fixtures / 424 actual HTTP responses; /tmp/chat-bounded-api.log.
+  Used identical package-lock and installed dependencies from primary checkout via /tmp-only Node module loader; no app or dependency files changed there.
+- git diff --check: PASS.
+Go commands used GOMAXPROCS=2 and -p 2 / GOFLAGS=-p=2, GOCACHE=/tmp/chat-bounded-go-cache.
+
+NOT VERIFIED:
+SOMEWHERE_TEST_DATABASE_URL is absent. TestFeedWindowIntegration,
+TestFeedWindowSnapshotRollbackIntegration and TestFeedBoundedQueryPlansIntegration
+compile but explicitly SKIP. No live SQL/EXPLAIN/latency/restart/persistence claim.
+The EXPLAIN fixture targets only existing somewhere_integration, with synthetic
+1k/10k/100k histories and row/index checks. No local DB/Docker, production access,
+new migration, deployment, push, or cherry-pick.
+Memory reader uses binary search/direct offsets and bounded payload copies, but
+Store.View/Update still clone the entire state snapshot. No overall memory-store
+performance claim. Around/sync/realtime/new endpoints are outside this patch.
+Task 2.1/2.2 remain partial; no OpenSpec checkbox, manifest, catalog or UI acceptance
+was changed. Independent feature acceptance and qa:ready remain separate gates.

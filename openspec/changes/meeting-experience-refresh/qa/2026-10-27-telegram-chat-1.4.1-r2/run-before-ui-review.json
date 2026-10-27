@@ -1,0 +1,893 @@
+{
+  "schemaVersion": 1,
+  "planHash": "b6858d722d87becaa58b273effe6aa3bfa4b899e25f8b5ce9ff1efc280fc2c58",
+  "checks": [
+    {
+      "id": "TC-API-PROFILE-PRIVACY/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Собственный профиль прочитан по Cookie и после native PKCE/handoff exchange по Bearer: тела совпали; анонимно 401. Отдельный новый p9 возвращает null для всех отсутствующих необязательных полей. Второй текущий участник прочитал meeting/list/participants/feed/reactions. Рекурсивная проверка запретила login/first_name/last_name/birthday/sex/email/phone; чужое приглашение не содержит состав/медиа, приватная лента постороннему 403. Фактические JSON-ответы прошли OpenAPI. Минимальный прежний потребитель прочитал ID/kind=message/payload_version=1/payload.text, игнорируя новые свойства; прежний мобильный бинарник не запускался.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentPrivacy.json",
+          "sha256": "6fa7732e0d6ab8e482257c40f9bdc2acb14188ef7a40bda2d601c922057823c7",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentProfileSynchronization_full_and_repeated_login.json",
+          "sha256": "7887f0bd377a7f980c56672e9a41121599cb43939b262b2d571b83306cebe637",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-RSVP-CUTOFF/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "На независимых TLS HTTP fixtures в UTC и Europe/Moscow запрос за секунду до starts_at−1h получил 200, ровно и после — 409; отвергнутый профиль не читает feed (403). Исходный подтверждённый ключ после границы снова дал CanAccessFeed=true; после not_going новая going-попытка вернула 409. Встреча starts_on без времени допускает going вечером той же даты. PATCH точного начала пересчитал границу: прежний формат going принят после допустимого переноса. Шесть пар RSVP/PATCH синхронно отпущены на HTTP-барьере. Сохранённые count/starts_at/revision и доступ feed проверены для обеих допустимых сериализаций; отвергнутому профилю также недоступен существующий photo URL в сценарии границы.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_0.json",
+          "sha256": "9d04c934e514d37ac89ebd5811b2d18b26e7f54420ef288e7b221a61de21bf19",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_1.json",
+          "sha256": "c6900b5f9e3b4c873d3f73d48d72d74325beaa3748cb4f54f0e2a1b00fb78bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_2.json",
+          "sha256": "2a5ca01c6bd6274a5705da0a1e2c249a88fbb1a4ccb4b32e3fc9796cd6e871ae",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_3.json",
+          "sha256": "c9ba97ff46da7ec2e96270d8d10b0b497f4bf2f4710e7b61d6929fbeb307cb32",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_4.json",
+          "sha256": "981de16fe0b84a2fa7a5365846e1aca12c9fbce54adc9812d3f55e679c305508",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentConcurrentCutoffReschedule_interleave_5.json",
+          "sha256": "746b6a31f49593aae994bfeeca91aa04289c8b93851c85654c478089f9d3efde",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentLegacyAndCutoff_legacy_retry_move_date_only.json",
+          "sha256": "6e0e14e2da1f8eca0011f93ebfb3ab9ad385103e9acc791ee8b64d436d79b37f",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentLegacyAndCutoff_offset_-1.json",
+          "sha256": "dcd9c04851b427d0b84944f82b240ccce4b853a25cd8e1f8415936aba2ac8ff3",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentLegacyAndCutoff_offset_0.json",
+          "sha256": "7184cf5c28ee731cc0b451c119c4e66bdcacd93e3790bfbc6c732b29a6431c09",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentLegacyAndCutoff_offset_1.json",
+          "sha256": "641974d91a67ffe4228a286b0c4492c20c026de80246b1ee76bb60b1b6680749",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentUTCExactCutoff_-1s.json",
+          "sha256": "91a36a7a8334838bf71a744d3dc248c58da559fc69038b47dafed35391771f41",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentUTCExactCutoff_0s.json",
+          "sha256": "279baf6860d1c38c67574abad3847150b77eae4f40770ea62c8f26132a901bd9",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentUTCExactCutoff_1s.json",
+          "sha256": "0e640867168dd14903e979a50d811eaeb2438863ebdd6af4093460cdb80b9027",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-RSVP-LEGACY/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "До границы GET invitation дал can_join=true. После смены управляемых часов прежний PUT {answer,expected_revision} получил 409, без новых UI-полей. Повторный preview вернул can_join=false, join_disabled_reason=join_closed и точное join_closes_at; feed и photo/content отвергнутому профилю вернули 403. После PATCH starts_at тот же прежний формат запроса принят (200/CanAccessFeed=true), решение основано на текущем начале.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentLegacyAndCutoff_legacy_retry_move_date_only.json",
+          "sha256": "6e0e14e2da1f8eca0011f93ebfb3ab9ad385103e9acc791ee8b64d436d79b37f",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-PARTICIPANT-SUMMARY/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Созданы шесть текущих (включая организатора), maybe и not_going. GET meeting/list/calendar-filter сразу содержит participant_count=6 и публичное participant_preview. Участник выбран именно из preview; его not_going принят. Повторные meeting/list/calendar-filter содержат count=5 и исключают этот ID из preview. Профиль p2 действительно имеет avatar_url=null; приватные поля отсутствуют. Public invitation не раскрывает participants/participant_preview/media/memory_preview.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentParticipantSummary.json",
+          "sha256": "2bbecb1913d1e6443131ad2ed4ea7d525bc316fa92a1a5b8b26454c1e19f32c7",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-REACTION-IDEMPOTENCY/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "После успешного HTTP commit тело первого ответа отброшено; исходный запрос повторён, затем восемь параллельных одинаковых PUT. Второй профиль прочитал heart count=1. Тот же участник добавил fire, организатор heart: counts 2/1. Удаление собственного heart дало 1/1, чужая реакция сохранена. Реакция на message с фото принята; попытка реакции на системное событие получила 404, событие не превращено в голос/сообщение. После not_going GET/PUT reactions вернули 403; представление реакций другому участнику не содержит контактов.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentReactions.json",
+          "sha256": "f44bc459bbf3467611cc04c45ed01f3b5ac174d7a9ce7d66bad084b59ad8d88c",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-LIMITS/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "GET limits: фото 10 MiB, файл 20 MiB, выбор 10. Резерв на допустимой границе принят и тот же ключ возвращает идентичное тело; граница+1, GIF и нулевой размер отвергнуты 422. Publish без bytes вернул 409; фиктивный PNG и несовпадающий фактический размер вернули 422. Корректные bytes затем приняты. У собственных orphan bytes выставлена контролируемая давность >1h; PruneMedia удалил их. Через 24h удалены все незавершённые резервы и pending bytes; единственный опубликованный файл и его HTTP чтение сохранены. Close временного файлового адаптера удалил исключительно его каталог. Новый независимый memory fixture имеет пустой список встреч. Сохранность после рестарта PostgreSQL этим не заявляется.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentMediaLimitsAndCleanup.json",
+          "sha256": "bdfff449a17d0626675a2819fc12eb95636f0b478f86018c222bb46acda2746a",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentMediaLimitsAndCleanup_fresh.json",
+          "sha256": "46fd6ab08b93738210900b7b3d99772c35d4a19a03892cd2de3c1fdbf64ebb62",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-PUBLICATION/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "PDF опубликован с trim-подписью; ответ отброшен после commit. Исходный ключ/тело возвращают прежний результат; feed второму участнику содержит ровно одно сообщение с подписью. Изменённая подпись со старым и с новым ключом получила 409. Перечитанный опубликованный payload сохранил исходную подпись. Отдельные фото чата и альбома опубликованы, соседняя неверная загрузка получила 422/409. Повторы успешных публикаций сохраняют ID/entry, в альбоме ровно одно явно выбранное фото. Caption для фото получил 422. Прежний потребитель прочитал kind=message/version=1/text; PDF имеет текст подписи, фото — Фото. Все записанные актуальные JSON-ответы провалидированы OpenAPI.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentMediaPublicationAndAlbum.json",
+          "sha256": "71bf52a0681d65994186c45feaa34723624b170db6f6ff37baf94b8b3c1670e0",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentPublicationReplayAndAccessMatrix.json",
+          "sha256": "479d6fe45f6e00063371cddfcf81a296fc433dc49f2cf485548124317e3011dd",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-ACCESS/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Текущие owner/guest прочитали file/photo originals, thumbnail URL, metadata в meeting/feed/album. Постороннему 403, анонимно 401. Публичная обложка и приглашение доступны, приватных ID в preview нет; перенос private URL под invitation route вернул 404. Thumbnail в текущем контракте использует защищённый original route. Фактическая HTTP-загрузка остановлена на барьере MediaContent.Put. Через HTTP отозвано участие; после продолжения upload и publish вернули 403, metadata осталась pending. Отозванному профилю прежние read URL и сохранённые publish keys вернули 403. Текущий owner перечитал feed и past album: отвергнутого media ID нет.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentMediaRevocationBarrier.json",
+          "sha256": "f1d98df543d06a1c8f54ae9f47d49f5f10eb199484c991924383d10b228f58b3",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentPublicationReplayAndAccessMatrix.json",
+          "sha256": "479d6fe45f6e00063371cddfcf81a296fc433dc49f2cf485548124317e3011dd",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-ALBUM-PAGINATION/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Три независимые встречи переведены в past через ClaimTransition/CompleteTransition по управляемым календарным часам. Для пустой count=0/preview=[], chat доступен; наличие фото для перехода не требуется. Обычный участник добавил четыре фото. Две страницы limit=2 дают четыре разных ID, конец без next_cursor; повтор страницы сохраняет порядок. Текущие owner/guest читают подтверждённые originals. Отдельная встреча с одним фото имеет count=1/preview=1; полный альбом count=4/preview=3 и summary списка согласованы. Cursor другой встречи получил 422. Фото чата не появилось в альбоме автоматически.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentMediaPublicationAndAlbum.json",
+          "sha256": "71bf52a0681d65994186c45feaa34723624b170db6f6ff37baf94b8b3c1670e0",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentPublicationReplayAndAccessMatrix.json",
+          "sha256": "479d6fe45f6e00063371cddfcf81a296fc433dc49f2cf485548124317e3011dd",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-SUPPORT-ACCEPTANCE/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Анонимное обращение без email/screenshot/diagnostics принято; тело первого ответа отброшено после 201. Исходный ключ/trim-тело снова возвращают один receipt; мок worker не обнаружил второй записи. Изменённый текст с прежним ключом — 409. Длины 9/3001 — 422, 10/3000 после trim — 201; ложный PNG и >5MiB — 422, настоящий PNG — 201, session_token как лишнее поле — 400. Шестое новое обращение — 429; повтор принятого ключа остаётся 201. В сформированном payload нет чата/cookie/token/URL; у первой принятой записи diagnostics/email/screenshot отсутствуют. Ответ содержит только receipt; GET по номеру — 404. Журналы и receipt проверены на текст, contact, screenshot, upstream error и синтетические секреты доставки. После временного mock failure запись и progress сохранены, ранний worker не работает, через минуту исходная запись доставляется. Повторного заполнения клиентом и нового receipt нет.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentSupportAcceptanceAndRetry.json",
+          "sha256": "a0138db3807e4e32c587990a295c10e741db7fc3ff0d83ebdbd2fca06c01833b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentTelegramMockTransport.json",
+          "sha256": "f40780013620c14c8d9bc528ec4f564f51ce211fc75e478730c96a012131fb6b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-DURABILITY/api/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-API-SUPPORT-DURABILITY/api/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Нет постоянного support adapter/очереди, утверждённых сроков хранения/очистки и отдельного разрешённого тестового канала этапа 8.9. backend/docs/support.md прямо фиксирует memory queue и HTTP 503 в PostgreSQL-режиме. Реальная отправка запрещена заданием; рестарт постоянной очереди и retention не проверены.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-SUPPORT-2B1C9FBF/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Реальный Telegram adapter работает через закрытый RoundTripper. Синтетическое обращение принято по HTTP один раз; первый delivery возвращает временную ошибку, подтверждённый receipt уже выдан. Worker до срока не вызывает транспорт. Через управляемую минуту транспорт восстановлен; отправлено то же содержание с тем же Reference, после доставки очередь пуста. Дополнительно проверено сохранение подтверждённого progress при частичном отказе. Конфигурация назначения только синтетическая, в процессе нет реального сетевого transport. Receipt/логи не содержат destination, token, email или description; отдельная проверка screenshot-данных выполнена в support acceptance.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentSupportAcceptanceAndRetry.json",
+          "sha256": "a0138db3807e4e32c587990a295c10e741db7fc3ff0d83ebdbd2fca06c01833b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentTelegramMockTransport.json",
+          "sha256": "f40780013620c14c8d9bc528ec4f564f51ce211fc75e478730c96a012131fb6b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-4F3DAAFE/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Тестовый OAuth callback использовал настоящий Yandex JSON decoder с закрытым transport. Собственный HTTP профиль точно совпал с полным provider document; client first_name во входном запросе отвергнут 400, новый минимальный профиль не получил демонстрационных полей. Второй вход того же subject с новым именем сохранил ID; новый и прежний Cookie client читают обновлённое имя/first_name. Прежняя действующая сессия не отозвана.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentProfileSynchronization_full_and_repeated_login.json",
+          "sha256": "7887f0bd377a7f980c56672e9a41121599cb43939b262b2d571b83306cebe637",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-3E5EFE8D/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "Тестовый provider document содержит birthday=0000-12-23 и sex=null. После обмена HTTP profile сохранил строку 0000-12-23, sex/first_name=null, поля age нет. Год/пол/возраст не выведены из имени или аватара.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentProfileSynchronization_partial_birthday_unknown_sex.json",
+          "sha256": "d7f6b4a2f5749f82b595017fcfe0f923dafe7f9c12ecde323843171b8c39d2a1",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-F319B092/api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/api_r2_independent"
+      },
+      "startedAt": "2026-10-27T14:37:15.170867+00:00",
+      "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+      "actual": "После полного входа повторный provider document содержит birthday:null, first_name пропущено. HTTP profile имеет тот же ID, birthday=null и сохранённое first_name. Следующий вход с отсутствующими контактами сохраняет прежние email/phone и уже очищенную дату. Документ provider не объявляет новые scopes, API также не добавляет утверждений о полученных правах; старая сессия действует.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "backend-reviewer-evidence/run03/command.json",
+          "sha256": "d9b999c23135e700fbfadca9b9c57ba3e889631055ce691eaf99c2240833cd58",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/raw.jsonl",
+          "sha256": "28d87a690169a26ede7924e048d6694526831866368e5e501a40388289e2d264",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/openapi-run03.json",
+          "sha256": "67b6808edf8c7ea89992d0417b91828412615529a2cdbc503d2cfde430499ab3",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/run03/TestIndependentProfileSynchronization_explicit_clear_missing_permissions.json",
+          "sha256": "fc06117bf5929197bc85b6d65a47092b764c39d5af9756e23ee6e8bd7eb7681c",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/case-review.json",
+          "sha256": "90a065406e72cb6e4d5f36427eee0e2d109347265bcd6e0cbd35e2053fd3f32b",
+          "kind": "interaction"
+        },
+        {
+          "path": "backend-reviewer-evidence/before.json",
+          "sha256": "b97d6c74c658cd3a4cc4844530f96fea4853a1ade3ff656b788ebce89bf4977d",
+          "kind": "log"
+        },
+        {
+          "path": "backend-reviewer-evidence/after.json",
+          "sha256": "a6f4598c01ab941ad38f4b8b7173f6159181221c1bda2e0f74ca89fb4f71397c",
+          "kind": "log"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-10-27T13:59:30.938Z",
+      "finishedAt": "2026-10-27T13:59:41.983Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793109570939.txt",
+          "kind": "log",
+          "sha256": "c1cf8f18acfe82be3cc71a30d8242df1f34bb37f611eaeb8286c4c1555f84de6"
+        }
+      ]
+    }
+  ]
+}

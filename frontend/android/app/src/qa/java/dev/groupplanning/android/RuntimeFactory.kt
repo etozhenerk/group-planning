@@ -45,6 +45,7 @@ internal object RuntimeFactory {
                     "place-owner", "place-close", "place-rejected", "place-cancelled",
                     "poll-owner", "poll-tie", "poll-time", "poll-hidden",
                     "saved-invitations", "saved-error", "saved-empty",
+                    "profile-fields",
                 ),
         )
         val config = apiJson.decodeFromString<Config>(
@@ -67,7 +68,14 @@ internal object RuntimeFactory {
         val ssl = SSLContext.getInstance("TLS").apply { init(null, arrayOf(trust), null) }
         val http = OkHttpClient.Builder().sslSocketFactory(ssl.socketFactory, trust)
             .addInterceptor { chain ->
-                if (chain.request().url.encodedPath == "/api/v1/auth/yandex/start") {
+                QaChatProbe.request(
+                    chain.request().method,
+                    chain.request().url.encodedPath,
+                    chain.request().url.queryParameter("cursor") != null,
+                )
+                if (scenario != "profile-fields" &&
+                    chain.request().url.encodedPath == "/api/v1/auth/yandex/start"
+                ) {
                     throw IOException("Offline authentication fixture")
                 }
                 chain.proceed(
@@ -78,7 +86,7 @@ internal object RuntimeFactory {
                 )
             }.build()
         val credential = config.cases[scenario]
-        if (scenario == "invite-anonymous") {
+        if (scenario == "invite-anonymous" || scenario == "profile-fields") {
             dev.groupplanning.android.data.session.AndroidCredentials.create(
                 context,
                 origin,
@@ -89,6 +97,9 @@ internal object RuntimeFactory {
             origin,
             ApiClient(origin, OkHttpTransport(http)),
             credential?.let { StoredSession(it.token, it.expiresAt) },
+            realtime = QaChatProbe.observe(
+                dev.groupplanning.android.data.realtime.CentrifugeRealtime(origin, http),
+            ),
             namespace = if (scenario == "invite-rsvp-reentry") "invite-rsvp" else scenario,
             coverSelection = if (scenario.startsWith("cover-") &&
                 scenario != "cover-system"

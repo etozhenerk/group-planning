@@ -109,7 +109,7 @@ final class PreparationTaskOwner {
         loading = false
     }
 
-    private func receive(_ value: PreparationTask) throws {
+    func receive(_ value: PreparationTask) throws {
         guard value.meetingID == meetingID, task == nil || value.id == task?.id else {
             throw ClientFailure.invalidResponse
         }

@@ -7,11 +7,19 @@ import (
 )
 
 type (
-	responseKey struct{ meetingID, userID string }
-	messageKey  struct{ meetingID, actorID, requestID string }
+	responseKey   struct{ meetingID, userID string }
+	messageKey    struct{ meetingID, actorID, requestID string }
+	entryLocation struct {
+		meetingID string
+		offset    int
+	}
 )
 
 type state struct {
+	readMarkers      map[responseKey]meetings.ReadMarker
+	streams          map[string]meetings.ChatStream
+	changes          map[string][]meetings.ChatChange
+	hints            map[string]meetings.ChatHint
 	media            map[string]meetings.Media
 	removedUsers     map[string]bool
 	reactions        map[meetings.Reaction]meetings.Reaction
@@ -24,14 +32,18 @@ type state struct {
 	inviteIDs        map[string]bool
 	responses        map[responseKey]meetings.RSVP
 	feed             map[string][]meetings.FeedEntry
-	entryIDs         map[string]bool
-	messageIDs       map[messageKey]bool
+	entryIDs         map[string]entryLocation
+	messageIDs       map[messageKey]int
 	jobs             map[transitionKey]meetings.TransitionJob
 	receipts         map[meetings.RequestKey]meetings.Receipt
 }
 
 func newState() *state {
 	return &state{
+		readMarkers:      make(map[responseKey]meetings.ReadMarker),
+		streams:          make(map[string]meetings.ChatStream),
+		changes:          make(map[string][]meetings.ChatChange),
+		hints:            make(map[string]meetings.ChatHint),
 		media:            make(map[string]meetings.Media),
 		removedUsers:     make(map[string]bool),
 		reactions:        make(map[meetings.Reaction]meetings.Reaction),
@@ -44,8 +56,8 @@ func newState() *state {
 		inviteIDs:        make(map[string]bool),
 		responses:        make(map[responseKey]meetings.RSVP),
 		feed:             make(map[string][]meetings.FeedEntry),
-		entryIDs:         make(map[string]bool),
-		messageIDs:       make(map[messageKey]bool),
+		entryIDs:         make(map[string]entryLocation),
+		messageIDs:       make(map[messageKey]int),
 		jobs:             make(map[transitionKey]meetings.TransitionJob),
 		receipts:         make(map[meetings.RequestKey]meetings.Receipt),
 	}
@@ -53,6 +65,16 @@ func newState() *state {
 
 func (s *state) clone() *state {
 	copy := newState()
+	copy.readMarkers = maps.Clone(s.readMarkers)
+	copy.streams = maps.Clone(s.streams)
+	for id, changes := range s.changes {
+		copy.changes[id] = append([]meetings.ChatChange(nil), changes...)
+	}
+
+	for id, hint := range s.hints {
+		copy.hints[id] = cloneChatHint(hint)
+	}
+
 	copy.media = maps.Clone(s.media)
 	copy.removedUsers = maps.Clone(s.removedUsers)
 	copy.reactions = maps.Clone(s.reactions)
@@ -105,6 +127,8 @@ func cloneMeeting(meeting meetings.Meeting) meetings.Meeting {
 
 func cloneEntry(entry meetings.FeedEntry) meetings.FeedEntry {
 	entry.Payload = append([]byte(nil), entry.Payload...)
+	entry.Attachments = append([]meetings.Media(nil), entry.Attachments...)
+
 	return entry
 }
 

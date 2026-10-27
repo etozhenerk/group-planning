@@ -9,7 +9,7 @@ enum PlacePollCopy {
         case "open":
             !poll.canVote || poll.closesAt.date <= Date()
                 ? "Голосование завершено"
-                : "До \(MeetingLabels.time(poll.closesAt, timezone: timezone))"
+                : "До \(PollDeadlineLabel.text(poll.closesAt, timezone: timezone)) · место пока прежнее"
         default: "Опрос пока не поддерживается"
         }
     }

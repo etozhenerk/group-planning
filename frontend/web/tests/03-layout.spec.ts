@@ -28,12 +28,22 @@ for (const width of [320, 390, 768, 1440]) {
     expect(size?.height).toBeGreaterThanOrEqual(44);
     expect((size?.y ?? 0) + (size?.height ?? 0)).toBeLessThanOrEqual(900);
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
-    const title = await page.getByTestId('conversation-title').boundingBox();
-    const share = page
+    const title = await (
+      width < 740
+        ? page.getByRole('button', {
+            name: `Сведения о встрече «${created.meeting.title}»`,
+          })
+        : page.getByTestId('conversation-title')
+    ).boundingBox();
+
+    const headerShare = page
       .locator('header')
       .getByRole('button', { name: 'Пригласить друзей', exact: true });
 
+    const share = headerShare;
+
     const info = page.getByRole('button', { name: 'Информация о встрече' });
+    await expect(headerShare).toHaveCount(1);
 
     for (const action of [share, info]) {
       const bounds = await action.boundingBox();
@@ -48,13 +58,11 @@ for (const width of [320, 390, 768, 1440]) {
     expect(plus?.height).toBe(24);
     expect((plus?.x ?? 0) + 12).toBeCloseTo((addBounds?.x ?? 0) + 22, 0);
     expect((plus?.y ?? 0) + 12).toBeCloseTo((addBounds?.y ?? 0) + 22, 0);
-    const shareIcon = await share.locator('svg').boundingBox();
-    expect(shareIcon?.width).toBe(20);
-    expect(shareIcon?.height).toBe(20);
 
-    if (width < 740) {
-      const shareBounds = await share.boundingBox();
-      expect((shareIcon?.x ?? 0) + 10).toBeCloseTo((shareBounds?.x ?? 0) + 22, 0);
+    if (width >= 740) {
+      const shareIcon = await share.locator('svg').boundingBox();
+      expect(shareIcon?.width).toBe(20);
+      expect(shareIcon?.height).toBe(20);
     }
 
     const system = page
@@ -81,6 +89,9 @@ for (const width of [320, 390, 768, 1440]) {
 
     await page.keyboard.press('Escape');
     await expect(share).toBeVisible();
+
+    await expect(share).toBeFocused();
+
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 
     if (width < 1170) {

@@ -1,3 +1,4 @@
+import { UnreadBadge } from '@/entities/meeting/ui/UnreadBadge';
 import { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';
 import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 import { ParticipantPreview } from '@/entities/meeting/ui/ParticipantPreview';
@@ -35,19 +36,22 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
           </div>
         )}
         <div className={styles.info}>
-          <h2>
-            {meeting.organizerId === user ? (
-              <>
-                {prefix}
-                <span className={styles.titleEnd}>
-                  <span>{tail}</span>
-                  <Crown size={16} aria-label="Вы организатор" />
-                </span>
-              </>
-            ) : (
-              meeting.title
-            )}
-          </h2>
+          <div className={styles.titleRow}>
+            <h2>
+              {meeting.organizerId === user ? (
+                <>
+                  {prefix}
+                  <span className={styles.titleEnd}>
+                    <span>{tail}</span>
+                    <Crown size={16} aria-label="Вы организатор" />
+                  </span>
+                </>
+              ) : (
+                meeting.title
+              )}
+            </h2>
+            <UnreadBadge count={meeting.unreadCount} />
+          </div>
           <p>
             <MapPin size={14} aria-hidden="true" />
             {meeting.place || 'Место пока не выбрано'}

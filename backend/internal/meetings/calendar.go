@@ -99,8 +99,20 @@ func (s *Service) Calendar(ctx context.Context, actor Actor, q CalendarQuery) (C
 		if len(result.Meetings) > q.Limit {
 			result.Meetings = result.Meetings[:q.Limit]
 			result.NextCursor, err = encodeCalendarCursor(q, fingerprint, actor.ID, result.Meetings[q.Limit-1].position)
+			if err != nil {
+				return err
+			}
+		}
 
-			return err
+		if s.ChatReadStateEnabled() {
+			for i := range result.Meetings {
+				state, err := reader.ChatReadState(result.Meetings[i].Details.Meeting.ID, actor.ID)
+				if err != nil {
+					return err
+				}
+
+				result.Meetings[i].Details.ReadState = &state
+			}
 		}
 
 		return nil

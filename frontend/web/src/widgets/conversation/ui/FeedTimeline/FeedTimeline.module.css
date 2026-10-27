@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-anchor: none;
   overflow-x: hidden;
   min-height: 0;
   flex: 1;
@@ -24,9 +25,15 @@
   font-size: 13px;
 }
 
+.new-messages-position {
+  position: relative;
+  flex-shrink: 0;
+  height: 0;
+}
+
 .new-messages {
   position: absolute;
-  bottom: 95px;
+  bottom: var(--ds-space-s12);
   right: 28px;
   box-shadow: 0 6px 20px #0005;
   font-size: 12px;
@@ -42,6 +49,13 @@
 
   .new-messages {
     right: 18px;
-    bottom: 86px;
   }
+}
+
+.feed-scroll[data-mobile='true'] {
+  padding: var(--ds-space-s16) var(--ds-space-s12) var(--ds-space-s4);
+}
+
+.feed-scroll[data-history='true'] {
+  padding-bottom: var(--ds-space-s64);
 }

@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import type { ConversationSurface } from '@/widgets/conversation/model/useConversationSurface';
 import type { Session } from '@/entities/session';
 import { SendMessage } from '@/features/send-message';
 import { ConversationActions } from '@/widgets/conversation/ui/ConversationActions';
 
-export type ConversationComposerProps = { id: string; session: Session };
+export type ConversationComposerProps = {
+  id: string;
+  session: Session;
+  surface: ConversationSurface;
+};
 
-export const ConversationComposer = ({ id, session }: ConversationComposerProps) => {
-  const [panel, setPanel] = useState<'add' | 'emoji' | null>(null);
+export const ConversationComposer = ({
+  id,
+  session,
+  surface,
+}: ConversationComposerProps) => {
+  const { panel, setPanel } = surface;
 
   return (
     <div>

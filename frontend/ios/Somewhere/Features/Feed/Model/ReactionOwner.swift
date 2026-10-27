@@ -29,7 +29,7 @@ final class ReactionOwner {
     var current: Bool {
         session.status == .authenticated && lease.map { session.privateData.isCurrent($0) } == true
     }
-    func isUpdating(_ entryID: UUID) -> Bool { mutations[entryID] != nil }
+    func isUpdating(_ entryID: UUID) -> Bool { activeIntents[entryID] != nil }
     func updateVisible(_ ids: [UUID]) {
         guard visible != ids else { return }
         visible = ids

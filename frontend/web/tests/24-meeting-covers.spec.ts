@@ -38,14 +38,31 @@ const photo = async (page: Page, color: string) => ({
 });
 
 const edit = async (page: Page) => {
-  await expect(page.getByTestId('conversation-title')).toBeVisible();
-  const details = page.getByRole('button', { name: 'Информация о встрече' });
+  const mobile = (page.viewportSize()?.width ?? 1440) < 740;
+  const title = mobile
+    ? page.getByRole('button', {
+        name: /^Сведения о встрече «/,
+        includeHidden: true,
+      })
+    : page.getByTestId('conversation-title');
 
-  if (await details.isVisible()) {
+  await expect(title).toBeVisible();
+  const details = page.getByRole('button', {
+    name: 'Информация о встрече',
+    exact: true,
+  });
+
+  if (!(await page.getByRole('dialog').isVisible())) {
     await details.click();
   }
 
-  await page.getByRole('button', { name: 'Изменить настройки' }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', {
+      name: mobile ? 'Настройки встречи' : 'Изменить настройки',
+      exact: true,
+    })
+    .click();
 
   return page.getByRole('dialog', { name: 'Настройки встречи' });
 };
@@ -131,7 +148,31 @@ for (const width of [320, 390, 1440]) {
     await page.goto(`/meetings/${id}`);
     let form = await edit(page);
     await form.getByLabel('Выбрать фото').setInputFiles(await photo(page, '#315fa1'));
-    await expect(form.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
+    const prepared = form.getByRole('img', { name: 'Выбранная обложка' });
+    await expect(prepared).toBeVisible();
+    const chosen = await prepared.getAttribute('src');
+
+    if (width < 740) {
+      const bounds = await prepared.locator('..').boundingBox();
+      expect(bounds?.width).toBe(52);
+      expect(bounds?.height).toBe(52);
+      await expect(
+        form.getByRole('button', { name: 'Дата', exact: true }),
+      ).toHaveAttribute('data-date', '29.02.2028');
+    }
+
+    await form.getByRole('button', { name: 'Закрыть', exact: true }).click();
+    await expect(
+      page.getByRole('dialog', { name: `Встреча с фото ${width}`, exact: true }),
+    ).toBeVisible();
+    form = await edit(page);
+    await expect(form.getByLabel('Название', { exact: true })).toHaveValue(
+      `Встреча с фото ${width}`,
+    );
+    await expect(form.getByRole('img', { name: 'Выбранная обложка' })).toHaveAttribute(
+      'src',
+      chosen ?? '',
+    );
     await form.getByRole('button', { name: 'Сохранить изменения' }).click();
     await expect(form).not.toBeVisible();
     await page.goto(invitation);

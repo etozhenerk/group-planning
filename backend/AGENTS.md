@@ -10,6 +10,9 @@
 экраны реализуются в клиентах. См. [ADR 0002](../docs/architecture/0002-client-ui.md).
 Go-модуль 1.27.2, memory.Store для локальной разработки и PostgreSQL 16
 для облака. pgx v5.11.0 разрешён только в internal/storage/postgres.
+Centrifuge v0.40.1 разрешён только в internal/realtime: embedded MemoryBroker,
+прикладные операции identity/meetings, без доступа к чужим Store/Reader/Writer.
+Durable outbox реализован через meetings и storage; публикация выполняется вне транзакции.
 Декодер golang.org/x/image v0.47.0 разрешён только в internal/imagecontent;
 этот пакет проверяет и нормализует изображения перед сохранением.
 Пользователь разрешил постоянное хранение на заключительном этапе;

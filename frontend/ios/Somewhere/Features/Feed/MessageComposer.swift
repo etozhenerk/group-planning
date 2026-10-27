@@ -2,74 +2,160 @@ import SwiftUI
 
 struct MessageComposer: View {
     @Bindable var owner: FeedOwner
-    @ScaledMetric(relativeTo: .body) private var textSize = 15.0
-    @Environment(\.dynamicTypeSize) private var typeSize
-    @State private var selection = NSRange(location: 0, length: 0)
+    let availableHeight: CGFloat
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @AccessibilityFocusState private var emojiFocused: Bool
+    @AccessibilityFocusState private var addFocused: Bool
+
+    private var compact: Bool { availableHeight < DesignTokens.breakpointChatCompactHeight }
+    private var dockHeight: CGFloat {
+        min(
+            compact
+                ? DesignTokens.componentEmojiDockCompactHeight
+                : DesignTokens.componentEmojiDockPreferredHeight,
+            max(0, availableHeight * DesignTokens.componentEmojiDockMaximumViewportRatio))
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(spacing: DesignTokens.spaceS0) {
+            if let problem = owner.storageProblem {
+                Text(problem).font(.caption).foregroundStyle(DesignTokens.colorError)
+                    .accessibilityIdentifier("chat-storage-error")
+            }
             if owner.draft.unicodeScalars.count > 4000 {
                 Text("В сообщении должно быть не больше 4000 символов.")
-                    .font(.caption).foregroundStyle(AppPalette.error)
+                    .font(.caption).foregroundStyle(DesignTokens.colorError)
             }
-            HStack(alignment: .bottom, spacing: 3) {
+            HStack(alignment: .bottom, spacing: DesignTokens.componentChatComposerGap) {
                 Button {
+                    owner.composerFocused = false
+                    SystemKeyboard.dismiss()
                     owner.panel = owner.panel == .actions ? nil : .actions
                 } label: {
-                    ExperienceIcon(kind: owner.panel == .actions ? .close : .plus).frame(
-                        width: 44, height: 44)
+                    ChatIcon(kind: owner.panel == .actions ? .close : .plus)
+                        .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                        .contentShape(Rectangle())
                 }.accessibilityLabel("Добавить к встрече").accessibilityIdentifier("meeting-add")
+                    .accessibilityFocused($addFocused)
                     .disabled(!owner.loaded || owner.meeting == nil)
-                ComposerTextView(
-                    text: $owner.draft, selection: $selection, focused: $owner.composerFocused
-                )
-                .overlay(alignment: .topLeading) {
-                    if owner.draft.isEmpty {
-                        Text("Сообщение").designFont(15).foregroundStyle(AppPalette.muted).padding(
-                            .leading, 5
-                        ).padding(.top, 12)
-                            .allowsHitTesting(false).accessibilityHidden(true)
-                    }
+                HStack(alignment: .bottom, spacing: DesignTokens.spaceS0) {
+                    ComposerTextView(
+                        text: $owner.draft, selection: $owner.composerSelection,
+                        focused: $owner.composerFocused
+                    )
+                    Button(action: toggleEmoji) {
+                        ChatIcon(
+                            kind: owner.panel == .emoji ? .keyboard : .smile,
+                            size: DesignTokens.componentChatComposerEmojiIcon
+                        ).frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                            .contentShape(Rectangle())
+                    }.accessibilityLabel(
+                        owner.panel == .emoji ? "Вернуться к клавиатуре" : "Выбрать эмодзи"
+                    )
+                    .accessibilityValue(owner.panel == .emoji ? "Открыто" : "Закрыто")
+                    .accessibilityIdentifier("composer-emoji-toggle")
+                    .accessibilityFocused($emojiFocused)
                 }
-                Button {
-                    owner.panel = owner.panel == .emoji ? nil : .emoji
-                } label: {
-                    ExperienceIcon(kind: .smile).frame(width: 44, height: 44).contentShape(
-                        Rectangle())
-                }.accessibilityLabel("Добавить эмодзи")
+                .background(
+                    DesignTokens.colorSurface,
+                    in: RoundedRectangle(cornerRadius: DesignTokens.componentChatComposerRadius)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignTokens.componentChatComposerRadius)
+                        .strokeBorder(DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
+                }
                 Button(action: owner.sendDraft) {
-                    ExperienceIcon(kind: .send)
-                        .foregroundStyle(AppPalette.actionText).frame(width: 44, height: 44)
+                    ChatIcon(kind: .send).foregroundStyle(DesignTokens.colorActionText)
+                        .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                        .background(DesignTokens.colorAction, in: Circle())
                         .contentShape(Rectangle())
-                        .background(AppPalette.action, in: Circle()).frame(width: 44, height: 44)
-                        .contentShape(Rectangle())
-                        .contentShape(Rectangle())
-                }.buttonStyle(OnboardingPressStyle()).disabled(!owner.canSend)
+                }.buttonStyle(ChatPressStyle()).disabled(!owner.canSend)
                     .accessibilityLabel("Отправить сообщение").accessibilityIdentifier(
                         "message-send")
-            }.padding(7).background(
-                AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
-        }.padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 12).background(
-            AppPalette.background
-        )
-        .overlay(alignment: .bottomLeading) {
-            if owner.panel == .actions {
-                ComposerMenu(owner: owner) { owner.panel = nil }.offset(x: 12, y: -88)
             }
-        }
-        .overlay(alignment: .bottom) {
-            if owner.panel == .emoji {
+            .padding(.horizontal, DesignTokens.componentChatComposerPaddingInline)
+            .padding(
+                .top,
+                compact
+                    ? DesignTokens.componentChatComposerCompactPaddingBlock
+                    : DesignTokens.componentChatComposerPaddingTop
+            )
+            .padding(
+                .bottom,
+                compact
+                    ? DesignTokens.componentChatComposerCompactPaddingBlock
+                    : DesignTokens.componentChatComposerPaddingBottom
+            )
+            .overlay(alignment: .top) {
+                Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+            }
+            .overlay(alignment: .bottomLeading) {
+                ZStack(alignment: .bottomLeading) {
+                    if owner.panel == .actions {
+                        ComposerMenu(owner: owner) {
+                            owner.panel = nil
+                            addFocused = true
+                        }.offset(
+                            x: DesignTokens.componentMobileChatHeaderInset,
+                            y: -DesignTokens.targetIos
+                                - DesignTokens.componentChatComposerPaddingTop
+                                - DesignTokens.componentChatComposerPaddingBottom
+                        )
+                        .transition(.opacity.combined(with: .offset(y: DesignTokens.spaceS8)))
+                    }
+                }
+                .allowsHitTesting(owner.panel == .actions)
+                .accessibilityHidden(owner.panel != .actions)
+                .disabled(owner.panel != .actions)
+            }
+            ComposerEmojiDock(isOpen: owner.panel == .emoji, height: dockHeight) {
                 EmojiPicker(
-                    privateData: owner.session.privateData, close: { owner.panel = nil }
+                    privateData: owner.session.privateData,
+                    delete: {
+                        ComposerInsertion.deleteBackward(
+                            in: &owner.draft, selection: &owner.composerSelection)
+                    }
                 ) { emoji in
-                    ComposerInsertion.insert(emoji, into: &owner.draft, selection: &selection)
-                    owner.composerFocused = true
-                }.padding(.horizontal, 12).offset(y: -88)
+                    ComposerInsertion.insert(
+                        emoji, into: &owner.draft, selection: &owner.composerSelection)
+                }
             }
-        }.zIndex(10)
-        .onChange(of: owner.current) { _, current in
-            if !current {
-                owner.panel = nil
+        }.background(DesignTokens.colorBackground).zIndex(10)
+            .animation(
+                ChatMotion.animation(
+                    owner.panel == nil
+                        ? DesignTokens.motionDurationFast
+                        : DesignTokens.motionDurationMobileSheet,
+                    reduceMotion: reduceMotion), value: owner.panel
+            )
+            .buttonStyle(ChatPressStyle())
+            .onKeyPress(.escape) {
+                guard owner.panel != nil else { return .ignored }
+                closePanel()
+                return .handled
             }
+            .onChange(of: owner.composerFocused) { _, focused in
+                if focused { owner.panel = nil }
+            }
+    }
+
+    private func toggleEmoji() {
+        if owner.panel == .emoji {
+            owner.panel = nil
+            SystemKeyboard.dismiss()
+            owner.composerFocused = true
+        } else {
+            owner.composerFocused = false
+            SystemKeyboard.dismiss()
+            owner.panel = .emoji
         }
+    }
+
+    private func closePanel() {
+        let emoji = owner.panel == .emoji
+        owner.panel = nil
+        owner.composerFocused = false
+        SystemKeyboard.dismiss()
+        if emoji { emojiFocused = true } else { addFocused = true }
     }
 }

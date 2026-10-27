@@ -1,0 +1,664 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.chat-regression.config.ts",
+      "--workers",
+      "1",
+      "--grep",
+      "two tabs share|reaction toggle|failed reaction|touch hold|message retry after a lost response|an offline message",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/playwright.chat-regression.config.ts",
+    "rootDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "0"
+      },
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "02-reliability.spec.ts",
+      "file": "02-reliability.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "message retry after a lost response keeps its ID and confirms once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:33.447Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "641231ebdd1d979e5da1-e52ac02f93d0fd1bdc63",
+          "file": "02-reliability.spec.ts",
+          "line": 78,
+          "column": 1
+        },
+        {
+          "title": "message retry after a lost response keeps its ID and confirms once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:51.555Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "641231ebdd1d979e5da1-cb0d53c528e27d1a90d0",
+          "file": "02-reliability.spec.ts",
+          "line": 78,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "04-resilience.spec.ts",
+      "file": "04-resilience.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "an offline message keeps its text and can be retried after reconnecting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 818,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:38.907Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "70be8a4995692c9a4fa0-d95d8078b03bd0b6bebe",
+          "file": "04-resilience.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "an offline message keeps its text and can be retried after reconnecting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1144,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:57.411Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "70be8a4995692c9a4fa0-b4e707f748b7b7b33452",
+          "file": "04-resilience.spec.ts",
+          "line": 11,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "28-meeting-refresh.spec.ts",
+      "file": "28-meeting-refresh.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reaction toggle is confirmed by the API and persists on reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1403,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:39.735Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a07d0f94eb848a0d03a3-269f46f6003a866b8332",
+          "file": "28-meeting-refresh.spec.ts",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "reaction toggle is confirmed by the API and persists on reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:58.566Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a07d0f94eb848a0d03a3-9e86e9ff2e58cd9367ec",
+          "file": "28-meeting-refresh.spec.ts",
+          "line": 134,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "32-refresh-resilience.spec.ts",
+      "file": "32-refresh-resilience.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "failed reaction restores confirmed state and retries the same intent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:41.146Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284fbaf24d836e93f58e-25b645c4766a027aac30",
+          "file": "32-refresh-resilience.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "failed reaction restores confirmed state and retries the same intent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:00.245Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284fbaf24d836e93f58e-b3cf51b409f957294497",
+          "file": "32-refresh-resilience.spec.ts",
+          "line": 34,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "34-telegram-chat.spec.ts",
+      "file": "34-telegram-chat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "touch hold opens reactions and chip people without a second toggle; moving cancels a hold",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:42.357Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1c79bc8b28b427b38274-d8fc07727e3851dd131e",
+          "file": "34-telegram-chat.spec.ts",
+          "line": 346,
+          "column": 1
+        },
+        {
+          "title": "touch hold opens reactions and chip people without a second toggle; moving cancels a hold",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4445,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:01.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1c79bc8b28b427b38274-faec1faa620c354190a6",
+          "file": "34-telegram-chat.spec.ts",
+          "line": 346,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "37-chat-persistence.spec.ts",
+      "file": "37-chat-persistence.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two tabs share one durable intent owner while its POST is in flight",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4624,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:40:46.613Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e4a47c27d1bcb242a55-ab4696664ef40c98b9bc",
+          "file": "37-chat-persistence.spec.ts",
+          "line": 206,
+          "column": 1
+        },
+        {
+          "title": "two tabs share one durable intent owner while its POST is in flight",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:06.338Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e4a47c27d1bcb242a55-1b74158d14b021675f02",
+          "file": "37-chat-persistence.spec.ts",
+          "line": 206,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T21:40:32.717Z",
+    "duration": 38707.106,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

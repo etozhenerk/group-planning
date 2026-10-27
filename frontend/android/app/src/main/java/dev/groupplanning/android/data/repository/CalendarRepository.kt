@@ -23,6 +23,7 @@ internal class CalendarRepository(private val session: SessionRepository) {
     }
 
     suspend fun load(filter: CalendarFilter, month: CalendarFilter?, reset: Boolean = false) {
+        val beforeRead = state.value.data.readVersions
         val request = UUID.randomUUID()
         val version = session.beginData { data ->
             val old = data.calendar
@@ -52,9 +53,8 @@ internal class CalendarRepository(private val session: SessionRepository) {
                     data.copy(
                         calendar = data.calendar.copy(
                             page = page.copy(
-                                meetings = page.meetings.filter {
-                                    it.id !in data.denied
-                                },
+                                meetings = data.preserveNewerReadState(page.meetings, beforeRead)
+                                    .filter { it.id !in data.denied },
                             ),
                             counts = monthPage.counts,
                             days = monthPage.days,
@@ -105,6 +105,7 @@ internal class CalendarRepository(private val session: SessionRepository) {
         val cursor = before.page?.nextCursor ?: return
         val filter = before.filter ?: return
         if (before.request != null || before.more != null) return
+        val beforeRead = state.value.data.readVersions
         val request = UUID.randomUUID()
         val version = session.beginData {
             it.copy(calendar = it.calendar.copy(more = request, moreError = null))
@@ -119,7 +120,8 @@ internal class CalendarRepository(private val session: SessionRepository) {
                         calendar = data.calendar.copy(
                             page = page.copy(
                                 meetings = (
-                                    before.page.meetings + page.meetings
+                                    data.calendar.page?.meetings.orEmpty() +
+                                        data.preserveNewerReadState(page.meetings, beforeRead)
                                     ).distinctBy { it.id }.filter { it.id !in data.denied },
                             ),
                             counts = page.counts,

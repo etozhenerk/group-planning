@@ -80,6 +80,97 @@ def verify_acceptance(directory, receipt_path):
         raise ValueError('Environment was not testing this candidate')
 
 
+def schema_identity():
+    """Read the exact migration identity checked by API readiness, without data."""
+    command = ('sudo', '-u', 'somewhere_migrator', 'psql', '-X', '-d', 'somewhere',
+               '-v', 'ON_ERROR_STOP=1', '-A', '-t', '-c')
+    exists = subprocess.check_output(
+        (*command, "SELECT to_regclass('public.schema_migrations') IS NOT NULL"),
+        text=True, timeout=15).strip()
+    if exists == 'f':
+        return False, ()
+    if exists != 't':
+        raise ValueError('Unknown migration table identity')
+    rows = json.loads(subprocess.check_output(
+        (*command, "SELECT COALESCE(json_agg(json_build_array(version, checksum) ORDER BY version), '[]'::json) FROM public.schema_migrations"),
+        text=True, timeout=15))
+    if not isinstance(rows, list) or any(
+            not isinstance(row, list) or len(row) != 2 or type(row[0]) is not int or row[0] != index
+            or not isinstance(row[1], str) or not re.fullmatch('[0-9a-f]{64}', row[1])
+            for index, row in enumerate(rows, 1)):
+        raise ValueError('Invalid migration identity')
+    return True, tuple(tuple(row) for row in rows)
+
+
+def activate_backend(destination, link, unit):
+    previous = link.resolve() if link.is_symlink() else None
+    previous_unit = unit.read_bytes() if unit.exists() else None
+    # Abort a failed preflight before stopping a healthy writer. A successful
+    # systemctl stop waits for API and embedded workers to exit before any DDL.
+    before = schema_identity()
+    if previous_unit is not None:
+        run('systemctl', 'stop', 'somewhere.service')
+    after = None
+    try:
+        try:
+            run('sudo', '-u', 'somewhere_migrator', 'env',
+                'SOMEWHERE_DATABASE_URL=host=/var/run/postgresql dbname=somewhere user=somewhere_migrator sslmode=disable',
+                str(destination / 'somewhere-migrate'))
+        finally:
+            # A migration command may fail after committing. Inspect the actual
+            # version/checksums even on failure; inability to read is not equality.
+            try:
+                after = schema_identity()
+            except Exception:
+                after = None
+        if after is None:
+            raise RuntimeError('Cannot establish schema identity after migration')
+        run('sudo', '-u', 'somewhere_migrator', 'psql', '-X', '-d', 'somewhere', '-v', 'ON_ERROR_STOP=1', '-c',
+            'REVOKE INSERT, UPDATE, DELETE ON schema_migrations FROM somewhere; GRANT SELECT ON schema_migrations TO somewhere;')
+        shutil.copyfile(destination / 'somewhere.service', unit)
+        run('systemctl', 'daemon-reload')
+        switch(link, destination)
+        run('systemctl', 'enable', 'somewhere.service')
+        run('systemctl', 'restart', 'somewhere.service')
+        ready()
+    except Exception as failure:
+        if unit.exists():
+            run('systemctl', 'stop', 'somewhere.service')
+        if previous is not None and previous_unit is not None and after is not None and before == after:
+            unit.write_bytes(previous_unit)
+            run('systemctl', 'daemon-reload')
+            switch(link, previous)
+            run('systemctl', 'restart', 'somewhere.service')
+            ready()
+            raise
+        # Never restart an older schema-exact binary against changed/unknown
+        # migrations. Keep the accepted candidate available for operator recovery.
+        switch(link, destination)
+        state = 'unknown' if after is None else ('unchanged' if before == after else 'changed')
+        raise RuntimeError(
+            f'Backend deployment failed; schema {state} or no previous runtime. '
+            f'Service remains stopped, current points to {destination}. '
+            'Automatic rollback refused; recover this compatible candidate using infra/host/README.md.') from failure
+
+
+def activate_web(destination, link, unit):
+    previous = link.resolve() if link.is_symlink() else None
+    switch(link, destination)
+    try:
+        if unit.exists():
+            run('systemctl', 'enable', 'somewhere.service')
+            run('systemctl', 'restart', 'somewhere.service')
+            ready()
+    except Exception:
+        if previous:
+            switch(link, previous)
+            run('systemctl', 'restart', 'somewhere.service')
+        else:
+            run('systemctl', 'stop', 'somewhere.service')
+            link.unlink(missing_ok=True)
+        raise
+
+
 def deploy(directory, acceptance):
     if os.geteuid() != 0:
         raise RuntimeError('Run on the VM as root')
@@ -128,31 +219,12 @@ def deploy(directory, acceptance):
         shutil.copyfile(acceptance, stage / 'acceptance.json')
         stage.chmod(0o755)
         stage.rename(destination)
-    if component == 'backend':
-        run('sudo', '-u', 'somewhere_migrator', 'env',
-            'SOMEWHERE_DATABASE_URL=host=/var/run/postgresql dbname=somewhere user=somewhere_migrator sslmode=disable',
-            str(destination / 'somewhere-migrate'))
-        run('sudo', '-u', 'somewhere_migrator', 'psql', '-d', 'somewhere', '-v', 'ON_ERROR_STOP=1', '-c',
-            'REVOKE INSERT, UPDATE, DELETE ON schema_migrations FROM somewhere; GRANT SELECT ON schema_migrations TO somewhere;')
-        shutil.copyfile(destination / 'somewhere.service', '/etc/systemd/system/somewhere.service')
-        run('systemctl', 'daemon-reload')
     link = base / 'current'
-    previous = link.resolve() if link.is_symlink() else None
-    switch(link, destination)
-    installed = Path('/etc/systemd/system/somewhere.service').exists()
-    try:
-        if installed:
-            run('systemctl', 'enable', 'somewhere.service')
-            run('systemctl', 'restart', 'somewhere.service')
-            ready()
-    except Exception:
-        if previous:
-            switch(link, previous)
-            run('systemctl', 'restart', 'somewhere.service')
-        else:
-            run('systemctl', 'stop', 'somewhere.service')
-            link.unlink(missing_ok=True)
-        raise
+    unit = Path('/etc/systemd/system/somewhere.service')
+    if component == 'backend':
+        activate_backend(destination, link, unit)
+    else:
+        activate_web(destination, link, unit)
     print(f'Installed {manifest["tag"]} at {manifest["commit"]}')
 
 

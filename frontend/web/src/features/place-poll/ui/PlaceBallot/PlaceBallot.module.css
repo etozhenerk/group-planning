@@ -1,35 +1,32 @@
 .answers {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--ds-space-s8);
 }
 
 .answers > * {
+  display: flex;
+  justify-content: space-between;
   flex: 1;
-  min-width: 85px;
-  text-align: center;
-  padding: 10px;
-}
-
-.answers button {
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--line);
+  min-width: 0;
+  min-height: var(--ds-target-web);
+  padding: var(--ds-component-mobile-chat-inline-vote-inset-block)
+    var(--ds-component-mobile-chat-inline-vote-inset-inline);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-chat-inline-vote-radius);
+  background: var(--ds-color-raised);
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-small);
 }
 
 .answers button[aria-pressed='true'] {
-  border-color: var(--accent);
-  background: var(--action);
-  color: var(--action-text);
+  border-color: var(--ds-color-accent);
 }
 
-.note {
-  font-size: 13px;
-  margin: 10px 0 0;
-  color: var(--muted);
+.answers span {
+  color: var(--ds-color-muted);
 }
 
 .error {
-  color: var(--error);
-  font-size: 13px;
+  color: var(--ds-color-error);
+  font-size: var(--ds-typography-size-small);
 }

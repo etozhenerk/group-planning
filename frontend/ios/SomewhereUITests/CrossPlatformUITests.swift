@@ -80,7 +80,8 @@ final class CrossPlatformUITests: XCTestCase {
                 .firstMatch.exists)
         ExperienceScreenshot.save("cross-ios-android-reaction", test: self)
         app.buttons["meeting-info-open"].tap()
-        XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
         let answer = app.buttons["rsvp-not_going"]
         let scroll = app.scrollViews["meeting-info"]
         for _ in 0..<5 {

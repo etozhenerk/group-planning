@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -15,11 +16,20 @@ export type PollCreateFormProps = {
 };
 
 export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) => {
+  const mobile = useMobileLayout();
   const form = usePollForm(meeting, session, done);
   const scroll = usePollViewport(form.attempt);
 
+  const settings = (
+    <PollSettingsFields
+      value={form.settings}
+      onChange={form.changeSetting}
+      disabled={form.locked}
+    />
+  );
+
   return (
-    <form onSubmit={form.submit} className={styles['form']}>
+    <form onSubmit={form.submit} className={styles['form']} data-mobile={mobile}>
       <div
         className={styles['body']}
         ref={scroll.viewport}
@@ -36,6 +46,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             remove={form.remove}
             disabled={form.locked}
           />
+          {mobile && settings}
           <PollDeadline
             value={form.deadline}
             onChange={form.setDeadline}
@@ -45,11 +56,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             ambiguous={form.problem.includes('дважды')}
             disabled={form.locked}
           />
-          <PollSettingsFields
-            value={form.settings}
-            onChange={form.changeSetting}
-            disabled={form.locked}
-          />
+          {!mobile && settings}
         </div>
       </div>
       <div

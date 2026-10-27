@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/entities/meeting/ui/MeetingFacts/MeetingFacts.module.css';
 import { Calendar, MapPin } from 'lucide-react';
 import { timeLabel, timezoneLabel } from '@/shared/lib/time';
@@ -20,16 +21,19 @@ export const MeetingFacts = ({
   compact = false,
   summary = false,
 }: MeetingFactsProps) => {
+  const mobile = useMobileLayout();
+
   return (
     <dl
       className={[
         styles['meeting-facts'],
         compact ? styles.compact : '',
         summary ? styles.summary : '',
+        summary && mobile ? styles['mobile-summary'] : '',
       ].join(' ')}
     >
       <div>
-        <dt className={summary ? styles['sr-only'] : undefined}>
+        <dt className={summary && !mobile ? styles['sr-only'] : undefined}>
           <Calendar aria-hidden="true" size={18} />
           <span className={styles['sr-only']}>Когда</span>
         </dt>
@@ -39,11 +43,11 @@ export const MeetingFacts = ({
               ? summaryTimeLabel(startsAt, timezone, startsOn)
               : timeLabel(startsAt, timezone, startsOn)}
           </span>
-          {!summary && <small>{timezoneLabel(timezone)}</small>}
+          {(!summary || mobile) && <small>{timezoneLabel(timezone)}</small>}
         </dd>
       </div>
       <div>
-        <dt className={summary ? styles['sr-only'] : undefined}>
+        <dt className={summary && !mobile ? styles['sr-only'] : undefined}>
           <MapPin aria-hidden="true" size={18} />
           <span className={styles['sr-only']}>Где</span>
         </dt>

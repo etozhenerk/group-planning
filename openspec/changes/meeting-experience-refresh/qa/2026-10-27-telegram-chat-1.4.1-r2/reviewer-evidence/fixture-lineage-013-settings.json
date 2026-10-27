@@ -1,0 +1,235 @@
+{
+  "environmentSha256": "ed58f646dd8ebf2aa2b2ec9349e6bd689c94f0992181f5486668d50bcd46dc5c",
+  "scenario": "design",
+  "priorActions": [
+    {
+      "at": "2026-10-27T14:02:35.194940+00:00",
+      "step": "002-chat",
+      "before": "001-list",
+      "reason": "Открыть наблюдаемую карточку Настолки у Саши",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "220",
+        "1240"
+      ],
+      "finishedAt": "2026-10-27T14:02:35.222827+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:03:12.651091+00:00",
+      "step": "003-return-list",
+      "before": "002-chat",
+      "reason": "Вернуться через наблюдаемую кнопку Мои встречи; проверить фактический выбор карточки",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "72",
+        "200"
+      ],
+      "finishedAt": "2026-10-27T14:03:12.681254+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:03:45.480977+00:00",
+      "step": "004-organizer-chat",
+      "before": "003-return-list",
+      "reason": "Открыть текущую видимую карточку Настолки у Саши по свежим bounds",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "220",
+        "650"
+      ],
+      "finishedAt": "2026-10-27T14:03:45.512189+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:04:48.425939+00:00",
+      "step": "005-composer-focus",
+      "before": "004-organizer-chat",
+      "reason": "Сфокусировать видимый composer для неотправленного QA черновика",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "300",
+        "1490"
+      ],
+      "finishedAt": "2026-10-27T14:04:48.469710+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:05:15.293706+00:00",
+      "step": "006-draft",
+      "before": "005-composer-focus",
+      "reason": "Ввести неотправленный синтетический черновик для проверки сохранения",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "text",
+        "QA%sXX%sdraft"
+      ],
+      "finishedAt": "2026-10-27T14:05:15.461747+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:05:58.218604+00:00",
+      "step": "007-dismiss-ime-tutorial",
+      "before": "006-draft",
+      "reason": "Закрыть видимый системный Try out your stylus через Cancel; введённый текст был в tutorial, не в composer",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "360",
+        "1505"
+      ],
+      "finishedAt": "2026-10-27T14:05:58.247140+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:06:45.534215+00:00",
+      "step": "009-app-draft",
+      "before": "008-after-tutorial",
+      "reason": "Ввести QA черновик после закрытия системного tutorial; composer focused",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "text",
+        "QA%sXX%sdraft"
+      ],
+      "finishedAt": "2026-10-27T14:06:45.708891+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:07:02.106785+00:00",
+      "step": "010-info",
+      "before": "009-app-draft",
+      "reason": "Открыть сведения организатора с неотправленным composer QA XX draft",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "648",
+        "200"
+      ],
+      "finishedAt": "2026-10-27T14:07:02.136192+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:07:20.455792+00:00",
+      "step": "011-info-expanded",
+      "before": "010-info",
+      "reason": "Раскрыть наблюдаемый компактный состав Компания6",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "350",
+        "1173"
+      ],
+      "finishedAt": "2026-10-27T14:07:20.487796+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:08:00.062151+00:00",
+      "step": "012-info-collapsed",
+      "before": "011-info-expanded",
+      "reason": "Свернуть список в той же панели и проверить восстановление краткого состава",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "150",
+        "1450"
+      ],
+      "finishedAt": "2026-10-27T14:08:00.090878+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T14:08:13.365879+00:00",
+      "step": "013-settings",
+      "before": "012-info-collapsed",
+      "reason": "Открыть настройки организатора из компактных сведений",
+      "foreground": "    topResumedActivity=ActivityRecord{193036243 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t10}",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "tap",
+        "350",
+        "1450"
+      ],
+      "finishedAt": "2026-10-27T14:08:13.396666+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

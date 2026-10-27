@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,12 +14,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.components.AppIcon
+import dev.groupplanning.android.ui.components.ChatIcon
+import dev.groupplanning.android.ui.components.ChatSymbol
+import dev.groupplanning.android.ui.components.LocalMobileSheet
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -30,30 +35,64 @@ internal fun DateTimeField(
     modifier: Modifier = Modifier,
     open: () -> Unit,
 ) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(label, fontSize = 13.sp, lineHeight = 19.5.sp)
+    val compact = LocalMobileSheet.current
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.spacedBy(
+            if (compact) DesignTokens.componentMobileFieldGap else DesignTokens.spaceS8,
+        ),
+    ) {
+        Text(label, fontSize = DesignTokens.typographySizeCaption, color = DesignTokens.colorMuted)
         Surface(
             open,
-            Modifier.fillMaxWidth().semantics { contentDescription = label },
+            Modifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid).semantics {
+                contentDescription =
+                    label
+            },
             enabled = enabled,
-            color = Color(0xff1d1e22),
-            shape = RoundedCornerShape(12.dp),
-            border = BorderStroke(1.dp, Color(0x14ffffff)),
+            color = if (compact) DesignTokens.colorBackground else DesignTokens.colorNavigation,
+            shape = RoundedCornerShape(
+                if (compact) {
+                    DesignTokens.componentMobileFieldRadius
+                } else {
+                    DesignTokens.radiusControl
+                },
+            ),
+            border = BorderStroke(
+                DesignTokens.spaceS1,
+                if (compact) DesignTokens.colorBorderStrong else DesignTokens.colorFieldBorder,
+            ),
         ) {
             Row(
-                Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
+                Modifier.padding(
+                    horizontal = DesignTokens.componentMobileFieldInsetInline,
+                    vertical = DesignTokens.componentMobileFieldInsetBlock,
+                ),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     value,
                     Modifier.weight(1f),
-                    fontSize = 13.sp,
+                    fontSize = if (compact) {
+                        DesignTokens.typographySizeButton
+                    } else {
+                        DesignTokens.typographySizeSmall
+                    },
                     lineHeight = 20.sp,
-                    maxLines = 1,
+                    maxLines = if (compact) Int.MAX_VALUE else 1,
                     color = Palette.text,
                 )
-                AppIcon(icon, Modifier.size(17.dp))
+                val symbol = when (icon) {
+                    R.drawable.ic_calendar -> ChatSymbol.Calendar
+                    R.drawable.ic_clock -> ChatSymbol.Clock
+                    else -> null
+                }
+                if (compact && symbol != null) {
+                    ChatIcon(symbol, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                } else {
+                    AppIcon(icon, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                }
             }
         }
     }

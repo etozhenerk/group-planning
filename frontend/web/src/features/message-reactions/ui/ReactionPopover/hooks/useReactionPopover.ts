@@ -7,20 +7,94 @@ import {
   useDismiss,
   useRole,
   useInteractions,
+  size,
+  useTransitionStyles,
 } from '@floating-ui/react';
+import { useLayoutEffect } from 'react';
+import type { RefObject } from 'react';
+import { designTokens } from '@/shared/config/design-tokens';
+import { useMediaQuery } from '@/shared/lib/media';
 
-export const useReactionPopover = (open: boolean, close: (value: boolean) => void) => {
+export const useReactionPopover = (
+  open: boolean,
+  close: (value: boolean) => void,
+  anchor: RefObject<HTMLElement | null>,
+  boundary: RefObject<HTMLElement | null>,
+) => {
+  const reduced = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const bounds = () => ({
+    boundary: boundary.current ?? ('clippingAncestors' as const),
+    padding: Number.parseFloat(designTokens.componentReactionPickerEdgeInset),
+  });
+
   const floating = useFloating({
     open,
     onOpenChange: close,
     placement: 'top',
-    middleware: [offset(8), flip(), shift({ padding: 12 })],
+    strategy: 'fixed',
+    middleware: [
+      offset(Number.parseFloat(designTokens.componentReactionPickerAnchorGap)),
+      flip(bounds),
+      shift(bounds),
+      size(() => ({
+        ...bounds(),
+        apply: ({ availableWidth, availableHeight, elements }) => {
+          elements.floating.style.setProperty(
+            '--reaction-available-width',
+            `${Math.max(0, availableWidth)}px`,
+          );
+          elements.floating.style.setProperty(
+            '--reaction-available-height',
+            `${Math.max(0, availableHeight)}px`,
+          );
+        },
+      })),
+    ],
     whileElementsMounted: autoUpdate,
   });
 
-  const dismiss = useDismiss(floating.context);
+  const refs = floating.refs;
+  useLayoutEffect(() => {
+    refs.setReference(anchor.current);
+  }, [anchor, refs, open]);
+
+  const inside = () => [
+    ...Array.from(
+      anchor.current?.parentElement?.querySelectorAll('[data-reaction-chip]') ?? [],
+    ),
+    ...Array.from(document.querySelectorAll('[data-chat-surface-trigger]')),
+  ];
+
+  const dismiss = useDismiss(floating.context, {
+    outsidePress: (event) => {
+      const target = event.target;
+
+      return !(target instanceof Node && inside().some((chip) => chip.contains(target)));
+    },
+  });
+
   const role = useRole(floating.context, { role: 'dialog' });
   const interactions = useInteractions([dismiss, role]);
 
-  return { ...floating, ...interactions };
+  const away = {
+    opacity: 0,
+    transform: reduced
+      ? 'none'
+      : `translateY(${designTokens.componentReactionPickerEnterOffset}) scale(${designTokens.componentReactionPickerEnterScale})`,
+  };
+
+  const transition = useTransitionStyles(floating.context, {
+    duration: reduced
+      ? 0
+      : {
+          open: Number.parseFloat(designTokens.motionDurationReactionEnter),
+          close: Number.parseFloat(designTokens.motionDurationReactionExit),
+        },
+    initial: away,
+    close: away,
+    open: { opacity: 1, transform: 'none' },
+    common: { transitionTimingFunction: designTokens.motionEasingStandard },
+  });
+
+  return { ...floating, ...interactions, transition, inside };
 };

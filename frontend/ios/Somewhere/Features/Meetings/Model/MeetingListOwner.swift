@@ -16,12 +16,18 @@ final class MeetingListOwner {
     var moreError: ClientFailure?
     var generation = UUID()
     var failures = 0
+    @ObservationIgnored var realtime: any ChatRealtimeTransport
+    @ObservationIgnored var streamGeneration = UUID()
+    @ObservationIgnored var listRefreshTask: Task<Void, Never>?
+    var realtimeReady = false
+    var refreshRequested = false
     @ObservationIgnored let lease: PrivateData.Lease?
     @ObservationIgnored var moreTask: Task<Void, Never>?
     @ObservationIgnored var actionTask: Task<Void, Never>?
 
     init(session: SessionStore) {
         self.session = session
+        realtime = session.realtimeFactory()
         lease = try? session.privateData.lease()
     }
 
@@ -92,18 +98,6 @@ final class MeetingListOwner {
         selectionID = UUID()
     }
 
-    func observe() async {
-        while !Task.isCancelled && current {
-            await load()
-            do {
-                try await Task.sleep(
-                    for: .seconds(
-                        CalendarRefresh.delay(
-                            page: page.value ?? month.value, failures: failures, now: Date())))
-            } catch { return }
-        }
-    }
-
     func retry() { selectionID = UUID() }
 
     func loadMore() {
@@ -130,6 +124,11 @@ final class MeetingListOwner {
     }
 
     func cancel() {
+        streamGeneration = UUID()
+        realtime.disconnect()
+        realtimeReady = false
+        listRefreshTask?.cancel()
+        listRefreshTask = nil
         generation = UUID()
         moreTask?.cancel()
         moreTask = nil

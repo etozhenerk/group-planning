@@ -1,0 +1,34 @@
+
+ RUN  v5.0.5 /Users/misha/.codex/worktrees/chat-bounded-storage/group-planning/frontend/web
+
+ ❯ src/entities/meeting/model/loadConversation.test.ts (10 tests | 1 failed) 62ms
+   ❯ confirmed receive cursor with QueryClient and controlled transport (10)
+     × preserves a late ACK between the reader result and Tanstack cache commit 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/entities/meeting/model/loadConversation.test.ts > confirmed receive cursor with QueryClient and controlled transport > preserves a late ACK between the reader result and Tanstack cache commit
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/entities/meeting/model/loadConversation.test.ts:128:70
+    126|     expect(acknowledged).toBe(true);
+    127|     expect(client.getQueryData<Conversation>(key)?.receiveCursor).toBe…
+    128|     expect(observed.every((sequences) => sequences.includes('102'))).t…
+       |                                                                      ^
+    129|     expect(
+    130|       client.getQueryData<Conversation>(key)?.entries.map((value) => v…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  20:52:41
+   Duration  259ms (import 41%, tests 34%, transform 24%, worker 1%)
+

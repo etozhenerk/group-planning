@@ -1,0 +1,125 @@
+{
+  "kind": "design-publication-supplement-review",
+  "version": "1.4.0",
+  "reviewedAt": "2026-10-27T12:06:01.957560+00:00",
+  "scope": "Техническое дополнение принятых ролей и экспортов; не новый дизайн и не UI-приёмка. Ручной app code, тестовый каталог и checkbox не редактировались.",
+  "sourceReview": [
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+      "sha256": "0277edf72f70e0977c402d0dca9c039d821fb40d927d4c28f00194cbb8f85825",
+      "selectors": [
+        ".meeting-mark",
+        "@media (max-width: 350px) .meeting-mark",
+        ".meeting-heading > span:first-child"
+      ],
+      "values": [
+        "40/40/13",
+        "30/34/10",
+        "#2e3938/#dcece5",
+        "font-weight650"
+      ]
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
+      "sha256": "a3a96aaf84ce0674d4ead8a54a7cc50b4d5d2c470de00709d56c613779dbf982",
+      "selectors": [
+        ".field input/.field textarea/.search lines432–441",
+        ".field select lines2804–2811"
+      ],
+      "values": [
+        "border #ffffff14; новая mobile-ревизия по-прежнему color.borderStrong"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "command": "tooling prettier check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:generate and generate --check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:test",
+      "status": "pass",
+      "tests": 30
+    },
+    {
+      "command": "npm run agent:check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:check before prune",
+      "status": "needs-prune",
+      "observation": "Только устранённые legacy entries; новых literals не обнаружено."
+    },
+    {
+      "command": "npm run design:prune",
+      "status": "pass",
+      "entriesRemoved": 212,
+      "occurrencesRemoved": 228,
+      "newAllowances": 0,
+      "previousInventorySha256": "1cfa5ca9dfce389b3aa571edb44ca4d211799700cb9c12748a8906a6346da5ec"
+    },
+    {
+      "command": "npm run design:check after prune",
+      "status": "pass",
+      "manifests": 1
+    },
+    {
+      "command": "generated flat web API bundle inspection",
+      "status": "pass",
+      "exactKeyValuePairs": 316,
+      "moduleLines": {
+        "tokens.ts": 5,
+        "foundations.ts": 130,
+        "components.ts": 192
+      }
+    },
+    {
+      "command": "supplement values vs inspected CSS",
+      "status": "pass",
+      "roles": 10
+    },
+    {
+      "command": "approved prototype source hash verification",
+      "status": "pass",
+      "files": 30
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "hashes": {
+    "scripts/design/formats.mjs": "48c8618edeb28fd7fdb814d3c542649e1680346361686be7fdb78c1c69476561",
+    "scripts/design/generate.mjs": "463ecd82e0deed89b52d16d4bb0b180e9d8b50fa76c330717f54aa2c3e45747a",
+    "scripts/design/tokens.test.mjs": "0d15f4d9cf9948d7bc3b6b79ffbebe4e8b0eb716418b00840eef5cc8a3e28a9b",
+    "design-system/tokens.json": "d83bc7d97955db0ee7b096e9a23d0f9fa56cf7c5c92976e31ee24aa8f9275f99",
+    "design-system/version.json": "4a8a94a2bd0d8e69231c54398319928d0313f1d97272344f66c161b0bc38e1a4",
+    "design-system/authority.json": "e7c7a7f0ac7502b0ced5f480be813b01e2037b9457f42c01f5420dc5ba2fa880",
+    "design-system/CHANGELOG.md": "91f5521c690f9902491fa4ab2cfb74b8c96b304906cd013a18e507f0c9c3c9d6",
+    "design-system/legacy-literals.json": "413a356f4b59d2979e75ab0db634c50f21239ab17d9f20eef01ba749edc2d3ae",
+    "docs/design/components/chat-actions.md": "d91b723b08b0f7c81e274cd9cda9338b28d9471155261716b520997e4de1fba6",
+    "openspec/changes/meeting-experience-refresh/design-manifest.json": "581358f4bcd26d7fb299858198b460ee598522efc4b5e75d599f4cf6c308d8e6",
+    "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md": "bde3f76f73190ca669eceb2889e84ee54b8fbde8e372f029bcf4dc59d4713efe",
+    "frontend/web/src/shared/config/design-tokens/tokens.ts": "7880907dc4255fe679dcd8a08fc5666f0aef3b14de89769ba34aef01e71588be",
+    "frontend/web/src/shared/config/design-tokens/foundations.ts": "80bf760992644092aa127a9f71d8c3c14e5c7fd1d25ac116acd86ddb87e83eb2",
+    "frontend/web/src/shared/config/design-tokens/components.ts": "58b79528ff11633a81f813b1962fe9f33548071569c289fd9a3f530e81173dd8",
+    "frontend/web/src/app/styles/design-tokens.css": "094a49d723e61ea2514423d7a6710ba9f53f10154618fe9fdc44223634d9beb2",
+    "frontend/ios/Somewhere/UI/DesignTokens.swift": "efa0a94041ad4e3505a6c7c8ad8a4fb01f6719e167cda827986135c12445b115",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/theme/DesignTokens.kt": "abc606120da7ab308720cb52523bdcd1d64118f926617a98a939a3824a74f014",
+    "frontend/android/app/src/main/res/values/colors.xml": "c5884538ea8af4e978e0a57229c69cc116a40c7662ea9eb09eb07aa7d0412fd2",
+    "design-system/catalog.md": "ba56c09cf615da5a28f4da427db2c8914754acb5113a7ca1ca74012cbb436c26"
+  },
+  "historicalReceiptsPreserved": [
+    "design-publication-2026-10-27-telegram-chat-checks.json",
+    "design-publication-2026-10-27-telegram-chat-patch-1.3.1-checks.json"
+  ],
+  "limitations": [
+    "Нет browser или тяжёлых app builds в этом проходе.",
+    "App inputs редактируются параллельно; hashes этого receipt не являются live capture/приёмкой клиентов.",
+    "Phase checkpoint; independent design-review/feature-test и актуальные gates обязательны отдельно."
+  ]
+}

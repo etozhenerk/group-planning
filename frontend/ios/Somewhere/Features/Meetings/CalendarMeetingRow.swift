@@ -32,8 +32,14 @@ struct CalendarMeetingRow: View {
 
     private var details: some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text(item.meeting.title).font(.subheadline.weight(.semibold)).foregroundStyle(
-                AppPalette.text)
+            HStack {
+                Text(item.meeting.title).font(.subheadline.weight(.semibold)).foregroundStyle(
+                    AppPalette.text)
+                if let count = item.meeting.unreadCount, count > .zero {
+                    Spacer(minLength: DesignTokens.spaceS8)
+                    ChatUnreadBadge(count: count)
+                }
+            }
             Text(item.meeting.place ?? "Место пока не выбрано").font(.caption).foregroundStyle(
                 AppPalette.muted)
             if item.meeting.timezone != TimeZone.current.identifier {

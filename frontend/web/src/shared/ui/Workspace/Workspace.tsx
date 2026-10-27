@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { useRef } from 'react';
 import { useVisualViewport } from '@/shared/lib/viewport';
 import { isDemo } from '@/shared/config';
+import { useMobileLayout } from '@/shared/lib/media';
 
 export type WorkspaceProps = {
   navigation: ReactNode;
@@ -17,11 +18,13 @@ export const Workspace = ({
   conversation = false,
 }: WorkspaceProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const mobile = useMobileLayout();
   useVisualViewport(ref, conversation);
 
   return (
     <div
       ref={ref}
+      data-mobile={mobile}
       className={[
         styles['workspace'],
         conversation ? styles['conversation-workspace'] : '',

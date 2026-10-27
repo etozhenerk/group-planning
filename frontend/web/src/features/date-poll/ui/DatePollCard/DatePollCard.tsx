@@ -1,5 +1,5 @@
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
-import { ChartNoAxesColumnIncreasing } from 'lucide-react';
 import { useDatePoll, useMeeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollBallot } from '@/features/date-poll/ui/PollBallot';
@@ -34,7 +34,7 @@ export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardPro
       aria-label="Опрос о дате"
     >
       <div className={styles['caption']}>
-        <ChartNoAxesColumnIncreasing size={18} aria-hidden="true" />
+        <ChatIcon name="calendar" size={18} aria-hidden="true" />
         Предлагает изменить дату
       </div>
       <h3>Новая дата встречи</h3>

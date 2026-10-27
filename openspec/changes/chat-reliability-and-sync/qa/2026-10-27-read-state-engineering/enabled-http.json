@@ -1,0 +1,782 @@
+{
+  "commit": "389ebe7ba91442e8c650fb8cc48596613cc1445c",
+  "responses": [
+    {
+      "path": "/api/v1/chat-capabilities",
+      "method": "get",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "69"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "58a93c2e-e76f-428f-b779-1232c75e4233"
+        ]
+      },
+      "body": {
+        "protocol_version": 1,
+        "sync": true,
+        "read_state": true,
+        "realtime": true
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/sync",
+      "method": "get",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "6096a2e4-d22f-4ba6-8e3a-fcd36e823075"
+        ]
+      },
+      "body": {
+        "mode": "snapshot",
+        "stream_epoch": "e4c4676e-6ad3-4164-85bd-67b81b6bcf7c",
+        "change_cursor": "eyJ2IjoxLCJ1IjoiOTcxMDQ3MzUtMzA0MC00YjE5LWJlNjItOTI3YmE1Mzg3ZWU5IiwibSI6IjMxODNkYjc0LWIxZGUtNGRkNy05MGIyLTBlOWJjMDcwMGI4YSIsImUiOiJlNGM0Njc2ZS02YWQzLTQxNjQtODViZC02N2I4MWI2YmNmN2MiLCJhIjoiNyIsInQiOiIwIiwieCI6MTc5MzczNzk4MH0.d8VhCj3JQc80xjHH4uhYGKLMK2NDVoGzap5pUvWnaEQ",
+        "entries": [
+          {
+            "id": "6ccedbe9-d7ea-4488-b1d5-36e97c6d4295",
+            "meeting_id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+            "sequence": "1",
+            "kind": "meeting_created",
+            "payload_version": 1,
+            "actor": {
+              "id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+              "display_name": "\u041b\u0435\u043d\u0430",
+              "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+            },
+            "occurred_at": "2026-10-27T20:33:00Z",
+            "payload": {
+              "title": "Read state",
+              "description": "",
+              "starts_on": "2026-10-28",
+              "starts_at": null,
+              "timezone": "UTC",
+              "place": ""
+            },
+            "client_request_id": null
+          },
+          {
+            "id": "ef53c0c2-6e09-48f1-8692-0d3b888a5e71",
+            "meeting_id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+            "sequence": "2",
+            "kind": "meeting_time_unspecified",
+            "payload_version": 1,
+            "actor": {
+              "id": "b47f6000-0000-4000-8000-000000000001",
+              "display_name": "\u0411\u043e\u0442"
+            },
+            "occurred_at": "2026-10-27T20:33:00Z",
+            "payload": {
+              "title": "Read state",
+              "description": "",
+              "starts_on": "2026-10-28",
+              "starts_at": null,
+              "timezone": "UTC",
+              "place": ""
+            },
+            "client_request_id": null
+          },
+          {
+            "id": "a65e7057-ca69-44d3-aba2-304c404a1aa3",
+            "meeting_id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+            "sequence": "3",
+            "kind": "participant_joined",
+            "payload_version": 1,
+            "actor": {
+              "id": "97104735-3040-4b19-be62-927ba5387ee9",
+              "display_name": "\u041c\u0438\u0448\u0430",
+              "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+            },
+            "occurred_at": "2026-10-27T20:33:00Z",
+            "payload": {
+              "previous_answer": null,
+              "answer": "going"
+            },
+            "client_request_id": null
+          }
+        ],
+        "projections": [],
+        "meeting": {
+          "id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+          "organizer_id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+          "title": "Read state",
+          "description": null,
+          "starts_on": "2026-10-28",
+          "starts_at": null,
+          "timezone": "UTC",
+          "place": null,
+          "cover_url": null,
+          "period": "upcoming",
+          "revision": "2",
+          "participant_count": 2,
+          "my_rsvp": "going",
+          "my_rsvp_revision": "1"
+        },
+        "projection_version": "7",
+        "latest_sequence": "3",
+        "range": {
+          "first_sequence": "1",
+          "last_sequence": "3"
+        },
+        "has_older": false,
+        "has_newer": false,
+        "unread_baseline_sequence": "2",
+        "unread_count": "0",
+        "my_read_state": "0",
+        "first_unread": null
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/sync",
+      "method": "get",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "a31aabb5-6123-404f-930c-be3efe9e5972"
+        ]
+      },
+      "body": {
+        "my_read_state": "0",
+        "unread_baseline_sequence": "2",
+        "unread_count": "1",
+        "first_unread": "a27b062d-acbd-43c0-b43f-308789152c70",
+        "mode": "changes",
+        "stream_epoch": "e4c4676e-6ad3-4164-85bd-67b81b6bcf7c",
+        "next_cursor": "eyJ2IjoxLCJ1IjoiOTcxMDQ3MzUtMzA0MC00YjE5LWJlNjItOTI3YmE1Mzg3ZWU5IiwibSI6IjMxODNkYjc0LWIxZGUtNGRkNy05MGIyLTBlOWJjMDcwMGI4YSIsImUiOiJlNGM0Njc2ZS02YWQzLTQxNjQtODViZC02N2I4MWI2YmNmN2MiLCJhIjoiOCIsInQiOiIwIiwieCI6MTc5MzczNzk4MH0.B9W9F523gQy7KvgiwSzLU5oO7nbDlEMxnHetzqFO7bM",
+        "through_cursor": "eyJ2IjoxLCJ1IjoiOTcxMDQ3MzUtMzA0MC00YjE5LWJlNjItOTI3YmE1Mzg3ZWU5IiwibSI6IjMxODNkYjc0LWIxZGUtNGRkNy05MGIyLTBlOWJjMDcwMGI4YSIsImUiOiJlNGM0Njc2ZS02YWQzLTQxNjQtODViZC02N2I4MWI2YmNmN2MiLCJhIjoiOCIsInQiOiIwIiwieCI6MTc5MzczNzk4MH0.B9W9F523gQy7KvgiwSzLU5oO7nbDlEMxnHetzqFO7bM",
+        "has_more": false,
+        "changes": [
+          {
+            "kind": "entry_upsert",
+            "entry_id": "a27b062d-acbd-43c0-b43f-308789152c70",
+            "resource_kind": "entry",
+            "resource_id": "a27b062d-acbd-43c0-b43f-308789152c70",
+            "projection_version": "8",
+            "projection": {
+              "resource_kind": "entry",
+              "resource_id": "a27b062d-acbd-43c0-b43f-308789152c70",
+              "projection_version": "8",
+              "entry": {
+                "id": "a27b062d-acbd-43c0-b43f-308789152c70",
+                "meeting_id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+                "sequence": "4",
+                "kind": "message",
+                "payload_version": 1,
+                "actor": {
+                  "id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+                  "display_name": "\u041b\u0435\u043d\u0430",
+                  "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+                },
+                "sender": {
+                  "kind": "user",
+                  "id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+                  "display_name": "\u041b\u0435\u043d\u0430"
+                },
+                "occurred_at": "2026-10-27T20:33:00Z",
+                "payload": {
+                  "text": "visible to guest"
+                },
+                "client_request_id": "f6597c00-0000-4000-8000-000000002302"
+              },
+              "reactions": [
+                {
+                  "entry_id": "a27b062d-acbd-43c0-b43f-308789152c70",
+                  "reactions": []
+                }
+              ]
+            }
+          }
+        ],
+        "meeting": {
+          "id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+          "organizer_id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+          "title": "Read state",
+          "description": null,
+          "starts_on": "2026-10-28",
+          "starts_at": null,
+          "timezone": "UTC",
+          "place": null,
+          "cover_url": null,
+          "period": "upcoming",
+          "revision": "2",
+          "participant_count": 2,
+          "my_rsvp": "going",
+          "my_rsvp_revision": "1"
+        },
+        "projection_version": "8"
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-marker",
+      "method": "put",
+      "status": 403,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "80c6f549-76b7-4833-9e47-6cc86bb121c4"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "forbidden",
+          "field_errors": {},
+          "request_id": "80c6f549-76b7-4833-9e47-6cc86bb121c4"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-marker",
+      "method": "put",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "125"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "82e3b33f-5653-4859-ba47-bc3bd7b06cb0"
+        ]
+      },
+      "body": {
+        "read_through_sequence": "4",
+        "unread_baseline_sequence": "2",
+        "unread_count": "0",
+        "first_unread": null,
+        "projection_version": "9"
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/sync",
+      "method": "get",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "1178"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "785e3d76-e910-437d-b4fc-90f6b504b692"
+        ]
+      },
+      "body": {
+        "my_read_state": "4",
+        "unread_baseline_sequence": "2",
+        "unread_count": "0",
+        "first_unread": null,
+        "mode": "changes",
+        "stream_epoch": "e4c4676e-6ad3-4164-85bd-67b81b6bcf7c",
+        "next_cursor": "eyJ2IjoxLCJ1IjoiOTcxMDQ3MzUtMzA0MC00YjE5LWJlNjItOTI3YmE1Mzg3ZWU5IiwibSI6IjMxODNkYjc0LWIxZGUtNGRkNy05MGIyLTBlOWJjMDcwMGI4YSIsImUiOiJlNGM0Njc2ZS02YWQzLTQxNjQtODViZC02N2I4MWI2YmNmN2MiLCJhIjoiOSIsInQiOiIwIiwieCI6MTc5MzczNzk4MH0.mIMucuZDPI6dJh-NtgJGRNKgEfKbpn5hHdvbPX40P3w",
+        "through_cursor": "eyJ2IjoxLCJ1IjoiOTcxMDQ3MzUtMzA0MC00YjE5LWJlNjItOTI3YmE1Mzg3ZWU5IiwibSI6IjMxODNkYjc0LWIxZGUtNGRkNy05MGIyLTBlOWJjMDcwMGI4YSIsImUiOiJlNGM0Njc2ZS02YWQzLTQxNjQtODViZC02N2I4MWI2YmNmN2MiLCJhIjoiOSIsInQiOiIwIiwieCI6MTc5MzczNzk4MH0.mIMucuZDPI6dJh-NtgJGRNKgEfKbpn5hHdvbPX40P3w",
+        "has_more": false,
+        "changes": [
+          {
+            "kind": "receipts_changed",
+            "projection_version": "9"
+          }
+        ],
+        "meeting": {
+          "id": "3183db74-b1de-4dd7-90b2-0e9bc0700b8a",
+          "organizer_id": "bcca4a0a-854b-4539-802b-e4472958aaac",
+          "title": "Read state",
+          "description": null,
+          "starts_on": "2026-10-28",
+          "starts_at": null,
+          "timezone": "UTC",
+          "place": null,
+          "cover_url": null,
+          "period": "upcoming",
+          "revision": "2",
+          "participant_count": 2,
+          "my_rsvp": "going",
+          "my_rsvp_revision": "1"
+        },
+        "projection_version": "9"
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-marker",
+      "method": "put",
+      "status": 422,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "142"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "868d4510-c850-43f4-bc12-9bdd7ee38ce4"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "validation_failed",
+          "field_errors": {
+            "read_through_sequence": "invalid"
+          },
+          "request_id": "868d4510-c850-43f4-bc12-9bdd7ee38ce4"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-marker",
+      "method": "put",
+      "status": 400,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "104"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "ec14fbf4-8967-4904-ae3a-0f6d619923ef"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "invalid_json",
+          "field_errors": {},
+          "request_id": "ec14fbf4-8967-4904-ae3a-0f6d619923ef"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-receipts/query",
+      "method": "post",
+      "status": 403,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "955051a0-59af-4057-999a-92774251db7f"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "forbidden",
+          "field_errors": {},
+          "request_id": "955051a0-59af-4057-999a-92774251db7f"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-receipts/query",
+      "method": "post",
+      "status": 403,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "d8cc972b-ae78-4141-adf9-668222397372"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "forbidden",
+          "field_errors": {},
+          "request_id": "d8cc972b-ae78-4141-adf9-668222397372"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-receipts/query",
+      "method": "post",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "f1247a54-4006-4659-b315-9766c5cae581"
+        ]
+      },
+      "body": {
+        "receipts": [
+          {
+            "entry_id": "a27b062d-acbd-43c0-b43f-308789152c70",
+            "reader_count": "1"
+          }
+        ],
+        "projection_version": "9"
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/messages/{entry_id}/readers",
+      "method": "get",
+      "status": 200,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "217"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "1f6a6330-4500-49b3-84d3-bfae81c24e06"
+        ]
+      },
+      "body": {
+        "readers": [
+          {
+            "id": "97104735-3040-4b19-be62-927ba5387ee9",
+            "display_name": "\u041c\u0438\u0448\u0430",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        ],
+        "reader_count": "1",
+        "next_cursor": null,
+        "projection_version": "9"
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/messages/{entry_id}/readers",
+      "method": "get",
+      "status": 403,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "d24b4bd3-8a04-4ef4-af96-9c978efe2c67"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "forbidden",
+          "field_errors": {},
+          "request_id": "d24b4bd3-8a04-4ef4-af96-9c978efe2c67"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/messages/{entry_id}/readers",
+      "method": "get",
+      "status": 400,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "c027a28b-40ac-453d-a50e-0c92a273e663"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "invalid_sync_cursor",
+          "field_errors": {},
+          "request_id": "c027a28b-40ac-453d-a50e-0c92a273e663"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-marker",
+      "method": "put",
+      "status": 404,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "c82e37cb-3d70-4a00-b978-5e69f3a15e21"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "not_found",
+          "field_errors": {},
+          "request_id": "c82e37cb-3d70-4a00-b978-5e69f3a15e21"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/read-receipts/query",
+      "method": "post",
+      "status": 404,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "cba9c31c-ada2-42fd-82e0-8b72d2ccf07f"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "not_found",
+          "field_errors": {},
+          "request_id": "cba9c31c-ada2-42fd-82e0-8b72d2ccf07f"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/meetings/{id}/messages/{entry_id}/readers",
+      "method": "get",
+      "status": 404,
+      "headers": {
+        "Cache-Control": [
+          "no-store"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 27 Oct 2026 20:33:00 GMT"
+        ],
+        "Referrer-Policy": [
+          "no-referrer"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Request-Id": [
+          "2775cab7-0a6f-4681-a067-1f79294f90c7"
+        ]
+      },
+      "body": {
+        "error": {
+          "code": "not_found",
+          "field_errors": {},
+          "request_id": "2775cab7-0a6f-4681-a067-1f79294f90c7"
+        }
+      }
+    }
+  ]
+}

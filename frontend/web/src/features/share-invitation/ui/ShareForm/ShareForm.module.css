@@ -39,3 +39,62 @@
 .message {
   font-size: 13px;
 }
+
+.panel[data-mobile='true'] {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--ds-component-mobile-sheet-content-inset-top)
+    var(--ds-component-mobile-sheet-content-inset-inline)
+    max(
+      var(--ds-component-mobile-sheet-content-inset-bottom),
+      env(safe-area-inset-bottom)
+    );
+  gap: var(--ds-component-mobile-form-group-gap);
+  font-size: var(--ds-typography-size-small);
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+  padding: var(--ds-component-mobile-form-section-gap);
+  border-radius: var(--ds-radius-control);
+  background: var(--ds-color-background);
+}
+
+.preview strong,
+.preview span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.preview strong {
+  font-size: var(--ds-typography-size-button);
+}
+
+.preview span {
+  font-size: var(--ds-typography-size-label);
+  color: var(--ds-color-muted);
+}
+
+.preview svg {
+  flex-shrink: 0;
+}
+
+.panel[data-mobile='true'] input {
+  min-height: var(--ds-component-mobile-field-minimum-height);
+  padding: var(--ds-component-mobile-field-inset-block)
+    var(--ds-component-mobile-field-inset-inline);
+  border-color: var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-field-radius);
+  background: var(--ds-color-background);
+  font-size: var(--ds-typography-size-mobile-web-input);
+}
+
+.panel[data-mobile='true'] .primary,
+.panel[data-mobile='true'] .share {
+  min-height: var(--ds-component-mobile-sheet-button-height);
+  border-radius: var(--ds-component-mobile-sheet-button-radius);
+  font-size: var(--ds-typography-size-button);
+}

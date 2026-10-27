@@ -1,3 +1,4 @@
+import { useChatSyncEnabled } from '@/entities/meeting/model/useChatSyncEnabled';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { guarded, privateKey, useAccess } from '@/entities/meeting/model/access';
 import { getPreparationTask } from '@/entities/meeting/api/preparationTask';
@@ -5,6 +6,7 @@ import { getPreparationTask } from '@/entities/meeting/api/preparationTask';
 export const usePreparationTask = (meeting: string, id: string, user: string) => {
   const client = useQueryClient();
   const access = useAccess(user, meeting);
+  const sync = useChatSyncEnabled(user, access.epoch);
   const key = privateKey(user, meeting, access.epoch, `preparation-task:${id}`);
   const query = useQuery({
     queryKey: key,
@@ -16,11 +18,13 @@ export const usePreparationTask = (meeting: string, id: string, user: string) =>
     retry: false,
     gcTime: 0,
     refetchInterval: (query) =>
-      query.state.data &&
-      ['completed', 'declined', 'cancelled'].includes(query.state.data.state)
+      sync ||
+      (query.state.data &&
+        ['completed', 'declined', 'cancelled'].includes(query.state.data.state))
         ? false
         : 3000,
-    refetchOnWindowFocus: true,
+    staleTime: sync ? Infinity : 0,
+    refetchOnWindowFocus: !sync,
   });
 
   return { ...query, access };

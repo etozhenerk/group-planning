@@ -63,7 +63,7 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
     .at(-1)!;
 
   const context = await browser.newContext({
-    baseURL: 'https://127.0.0.1:8444',
+    baseURL: new URL(page.url()).origin,
     ignoreHTTPSErrors: true,
   });
 

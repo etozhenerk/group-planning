@@ -67,7 +67,9 @@ test('draft survives an error, back warns and sharing returns to the chat', asyn
   });
   await trigger.click();
   await page.getByRole('button', { name: 'Скопировать ссылку' }).click();
-  await expect(page.getByRole('main')).toContainText('Скопируйте вручную', {
+  await expect(
+    page.getByRole('dialog', { name: 'Пригласить друзей', exact: true }),
+  ).toContainText('Скопируйте вручную', {
     ignoreCase: true,
   });
   await expect(page.getByLabel('Ссылка приглашения')).toBeEditable({ editable: false });
@@ -80,6 +82,14 @@ test('message retry after a lost response keeps its ID and confirms once', async
   const id = await create(page, 'Проверка отправки');
   let posts = 0;
   const keys: string[] = [];
+  const second: { release?: () => void } = {};
+  await page.route(`**/api/v1/meetings/${id}/feed?*`, async (route) => {
+    if (posts === 1) {
+      await route.abort('connectionreset');
+    } else {
+      await route.continue();
+    }
+  });
   await page.route(`**/api/v1/meetings/${id}/messages`, async (route) => {
     posts++;
     keys.push(route.request().headers()['idempotency-key'] ?? '');
@@ -88,25 +98,25 @@ test('message retry after a lost response keeps its ID and confirms once', async
       await route.fetch();
       await route.abort('connectionreset');
     } else {
+      await new Promise<void>((resolve) => {
+        second.release = resolve;
+      });
       await route.continue();
     }
   });
   await page.getByLabel('Сообщение', { exact: true }).fill('Повтор без дубля');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
-  await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
-  const pending = await page.getByTestId('pending-message').boundingBox();
-  const pendingList = await page.getByTestId('pending-messages').boundingBox();
-
-  if (!pending || !pendingList) {
-    throw new Error('Failed message is not visible');
-  }
-
-  expect(
-    Math.abs(pending.x + pending.width - pendingList.x - pendingList.width),
-  ).toBeLessThan(1);
-  await page.getByRole('button', { name: 'Повторить отправку' }).click();
-  await expect(page.getByText('Повтор без дубля', { exact: true })).toHaveCount(1);
+  const row = page.getByTestId('feed-message').filter({ hasText: 'Повтор без дубля' });
+  await expect(row).toHaveAttribute('data-delivery', 'uncertain');
+  await row.evaluate((element) => element.setAttribute('data-before-retry', 'yes'));
+  await expectMessageSide(page, 'Повтор без дубля', 'right');
+  await expect.poll(() => keys.length).toBe(2);
+  expect(keys[0]).not.toBe('');
   expect(keys[0]).toBe(keys[1]);
+  second.release?.();
+  await expect(row).toHaveAttribute('data-delivery', 'accepted');
+  await expect(row).toHaveAttribute('data-before-retry', 'yes');
+  await expect(page.getByText('Повтор без дубля', { exact: true })).toHaveCount(1);
   await expectMessageSide(page, 'Повтор без дубля', 'right');
   await page.reload();
   await expect(page.getByText('Повтор без дубля', { exact: true })).toHaveCount(1);
@@ -168,7 +178,7 @@ test('a revoked session closes private content and keeps invitation entry', asyn
   await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   const logout = await friend.request.post('/api/v1/auth/logout', {
-    headers: { Origin: 'https://127.0.0.1:8444', 'X-CSRF-Token': await csrf(friend) },
+    headers: { Origin: new URL(friend.url()).origin, 'X-CSRF-Token': await csrf(friend) },
   });
 
   expect(logout.status()).toBe(204);

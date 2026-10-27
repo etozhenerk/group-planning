@@ -15,6 +15,7 @@ enum ChatSheetTestSupport {
     static func launch(large: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "design"
+        app.launchEnvironment["SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
             "-UIPreferredContentSizeCategoryName",
@@ -118,7 +119,7 @@ enum ChatSheetTestSupport {
         _ submit: XCUIElement, app: XCUIApplication, scroll: XCUIElement
     ) -> Bool {
         guard submit.isHittable, app.frame.contains(submit.frame),
-            scroll.frame.contains(submit.frame)
+            submit.frame.minY >= app.buttons["action-form-close"].frame.maxY
         else { return false }
         let keyboard = app.keyboards.firstMatch
         let done = app.buttons["action-keyboard-done"]

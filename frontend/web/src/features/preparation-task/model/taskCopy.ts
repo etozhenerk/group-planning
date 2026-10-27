@@ -65,3 +65,18 @@ export const taskError = (error: unknown, creating = false) => {
 
 export const uncertainTaskError = (error: unknown) =>
   !!error && !(error instanceof ApiError && error.status >= 400 && error.status < 500);
+
+export const taskStateLabel = (task: PreparationTask) => {
+  switch (task.state) {
+    case 'offered':
+      return 'Предложена';
+    case 'accepted':
+      return 'Принята';
+    case 'completed':
+      return 'Выполнена';
+    case 'declined':
+      return 'Отклонена';
+    case 'cancelled':
+      return 'Отменена';
+  }
+};

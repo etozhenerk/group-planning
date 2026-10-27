@@ -1,0 +1,3 @@
+// swift-tools-version: 6.0
+import PackageDescription
+let package = Package(name: "SDKSpike", platforms: [.macOS(.v13), .iOS(.v17)], dependencies: [.package(path: "../local/centrifuge-swift"), .package(path: "../local/swift-protobuf")], targets: [.executableTarget(name: "Spike", dependencies: [.product(name: "SwiftCentrifuge", package: "centrifuge-swift")], swiftSettings: [.swiftLanguageMode(.v6)])])

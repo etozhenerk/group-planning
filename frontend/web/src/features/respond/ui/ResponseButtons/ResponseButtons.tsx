@@ -14,6 +14,7 @@ export type ResponseButtonsProps = {
   current: Answer | null;
   joinDisabledReason?: string | null;
   onSaved?: () => void;
+  inMeeting?: boolean;
 };
 
 export const ResponseButtons = ({
@@ -24,12 +25,13 @@ export const ResponseButtons = ({
   current,
   onSaved,
   joinDisabledReason = null,
+  inMeeting = false,
 }: ResponseButtonsProps) => {
   const action = useRespond(session, id, token, expected);
   const confirmed = action.saved ?? current;
 
   return (
-    <div className={styles['stack']}>
+    <div className={[styles.stack, inMeeting ? styles.meeting : ''].join(' ')}>
       <div className={styles['response-buttons']}>
         {(['going', 'maybe', 'not_going'] as const).map((answer) => (
           <button
@@ -56,7 +58,7 @@ export const ResponseButtons = ({
         </p>
       )}
       {action.saved && <p role="status">Вы ответили «{answerLabels[action.saved]}».</p>}
-      {confirmed === 'going' && (
+      {!inMeeting && confirmed === 'going' && (
         <Link
           className={[styles['button'], styles['primary']].join(' ')}
           to={`/meetings/${id}`}

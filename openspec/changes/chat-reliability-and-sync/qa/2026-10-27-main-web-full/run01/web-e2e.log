@@ -1,0 +1,765 @@
+
+> group-planning@0.0.0 web:test:e2e
+> npm run test:e2e --workspace @somewhere/web
+
+
+> @somewhere/web@0.0.0 test:e2e
+> npm run build:demo && playwright test
+
+
+> @somewhere/web@0.0.0 build:demo
+> npm run typecheck && vite build --mode demo
+
+
+> @somewhere/web@0.0.0 typecheck
+> tsc --noEmit
+
+vite v8.3.4 building client environment for demo...
+transforming...
+✓ 5057 modules transformed.
+rendering chunks...
+computing gzip size...
+../../.cache/web-demo/assets/prepareCover.worker-ERMZuGkI.js      2.08 kB
+../../.cache/web-demo/index.html                                  3.30 kB │ gzip:   0.98 kB
+../../.cache/web-demo/assets/AuthNotice-ChCjRVnb.css              0.03 kB │ gzip:   0.05 kB
+../../.cache/web-demo/assets/SkeletonDetails-BTOzulUF.css         0.10 kB │ gzip:   0.10 kB
+../../.cache/web-demo/assets/Status-CiK8qKY-.css                  0.25 kB │ gzip:   0.17 kB
+../../.cache/web-demo/assets/SessionGate-D-dEXIgU.css             0.25 kB │ gzip:   0.18 kB
+../../.cache/web-demo/assets/auth-return-CBLB_g2n.css             0.29 kB │ gzip:   0.20 kB
+../../.cache/web-demo/assets/Skeleton-DBxzRjIG.css                0.29 kB │ gzip:   0.21 kB
+../../.cache/web-demo/assets/createLucideIcon-CsKz39uB.css        0.31 kB │ gzip:   0.20 kB
+../../.cache/web-demo/assets/LogoutButton-DjJKNmkm.css            0.41 kB │ gzip:   0.28 kB
+../../.cache/web-demo/assets/not-found-DQxTjGwN.css               0.54 kB │ gzip:   0.31 kB
+../../.cache/web-demo/assets/LoadingScreen-KrosM1I6.css           0.61 kB │ gzip:   0.34 kB
+../../.cache/web-demo/assets/SignInButton-o2CsTZAO.css            0.68 kB │ gzip:   0.39 kB
+../../.cache/web-demo/assets/MediaPhoto-CC0NHu0H.css              0.71 kB │ gzip:   0.35 kB
+../../.cache/web-demo/assets/SkeletonRows-Lw7jyx9M.css            0.86 kB │ gzip:   0.42 kB
+../../.cache/web-demo/assets/PublicHeader-pUDHwxeh.css            0.98 kB │ gzip:   0.40 kB
+../../.cache/web-demo/assets/MeetingCover-BxLHVvv9.css            1.20 kB │ gzip:   0.47 kB
+../../.cache/web-demo/assets/meeting-create-DCYOlM3T.css          1.26 kB │ gzip:   0.53 kB
+../../.cache/web-demo/assets/Avatar-Bh3VBUM2.css                  1.27 kB │ gzip:   0.47 kB
+../../.cache/web-demo/assets/MemoryPreview-D6c1q9gG.css           1.35 kB │ gzip:   0.45 kB
+../../.cache/web-demo/assets/invitation-CnbH67bF.css              1.41 kB │ gzip:   0.52 kB
+../../.cache/web-demo/assets/WorkspaceSkeleton-DMfFQKY9.css       1.91 kB │ gzip:   0.67 kB
+../../.cache/web-demo/assets/Workspace-CDGkC7It.css               2.41 kB │ gzip:   0.59 kB
+../../.cache/web-demo/assets/PhotoViewer-CCbjyB9o.css             2.60 kB │ gzip:   0.98 kB
+../../.cache/web-demo/assets/Navigation-CVZYWTjf.css              2.77 kB │ gzip:   1.02 kB
+../../.cache/web-demo/assets/memories-D2JNQnea.css                2.97 kB │ gzip:   1.12 kB
+../../.cache/web-demo/assets/profile--QaaGA8L.css                 3.09 kB │ gzip:   0.90 kB
+../../.cache/web-demo/assets/ResponseButtons-ZIfny2gY.css         3.18 kB │ gzip:   0.95 kB
+../../.cache/web-demo/assets/landing-7tuxk79G.css                 3.91 kB │ gzip:   1.20 kB
+../../.cache/web-demo/assets/invitations-CEEq9cgc.css             4.24 kB │ gzip:   1.41 kB
+../../.cache/web-demo/assets/service-BfyY3jnP.css                 5.34 kB │ gzip:   1.44 kB
+../../.cache/web-demo/assets/support-PZ7tW4K8.css                 5.47 kB │ gzip:   1.59 kB
+../../.cache/web-demo/assets/ButtonSpinner-DXWvlc9u.css           8.85 kB │ gzip:   1.91 kB
+../../.cache/web-demo/assets/meetings-BJYGd7Uf.css               13.15 kB │ gzip:   3.34 kB
+../../.cache/web-demo/assets/meeting-8K2zyT1x.css                64.59 kB │ gzip:  10.25 kB
+../../.cache/web-demo/assets/CoverEditor-vdKbi3yM.css            90.36 kB │ gzip:  12.37 kB
+../../.cache/web-demo/assets/index-C842sX_h.css                 105.45 kB │ gzip:  14.59 kB
+../../.cache/web-demo/assets/chevron-left-DUmXoJJq.js             0.17 kB │ gzip:   0.17 kB
+../../.cache/web-demo/assets/meeting-share-B7h7wPGw.js            0.18 kB │ gzip:   0.17 kB
+../../.cache/web-demo/assets/context-Db9kqzsk.js                  0.19 kB │ gzip:   0.16 kB
+../../.cache/web-demo/assets/resetSession-DyZGEa6E.js             0.20 kB │ gzip:   0.18 kB
+../../.cache/web-demo/assets/loader-circle-CoeoH86Q.js            0.20 kB │ gzip:   0.19 kB
+../../.cache/web-demo/assets/Skeleton-BkPOfZe6.js                 0.28 kB │ gzip:   0.23 kB
+../../.cache/web-demo/assets/intent-D9tzGjVl.js                   0.29 kB │ gzip:   0.23 kB
+../../.cache/web-demo/assets/calendar-BELlmion.js                 0.29 kB │ gzip:   0.23 kB
+../../.cache/web-demo/assets/map-pin-DwB5HI75.js                  0.29 kB │ gzip:   0.25 kB
+../../.cache/web-demo/assets/meeting-upload-B2WYOeFG.js           0.33 kB │ gzip:   0.25 kB
+../../.cache/web-demo/assets/MemoryPreview-SCk88Ec5.js            0.39 kB │ gzip:   0.27 kB
+../../.cache/web-demo/assets/AuthNotice-BgZeaIyx.js               0.46 kB │ gzip:   0.37 kB
+../../.cache/web-demo/assets/Status-DgdLEfqT.js                   0.47 kB │ gzip:   0.32 kB
+../../.cache/web-demo/assets/LoadingScreen-BC5w4FeV.js            0.50 kB │ gzip:   0.33 kB
+../../.cache/web-demo/assets/sparkles-D1G83dNi.js                 0.55 kB │ gzip:   0.32 kB
+../../.cache/web-demo/assets/SkeletonDetails-jG8TtIzi.js          0.58 kB │ gzip:   0.30 kB
+../../.cache/web-demo/assets/en-DdHlI0Kl.js                       0.58 kB │ gzip:   0.41 kB
+../../.cache/web-demo/assets/not-found-CkCpy6Iv.js                0.60 kB │ gzip:   0.40 kB
+../../.cache/web-demo/assets/rolldown-runtime-BrVfq_k5.js         0.69 kB │ gzip:   0.41 kB
+../../.cache/web-demo/assets/Avatar-BuGmOJBM.js                   0.81 kB │ gzip:   0.50 kB
+../../.cache/web-demo/assets/meeting-created-BPN_gcyH.js          0.84 kB │ gzip:   0.52 kB
+../../.cache/web-demo/assets/SkeletonRows-BCwnOIvU.js             0.87 kB │ gzip:   0.44 kB
+../../.cache/web-demo/assets/version-DeISsAzB.js                  0.94 kB │ gzip:   0.56 kB
+../../.cache/web-demo/assets/me-6HpTeEw6.js                       1.01 kB │ gzip:   0.58 kB
+../../.cache/web-demo/assets/bs-C2vRib9f.js                       1.02 kB │ gzip:   0.59 kB
+../../.cache/web-demo/assets/rw-YN8v6IFF.js                       1.04 kB │ gzip:   0.62 kB
+../../.cache/web-demo/assets/tzl-nZzdlwDC.js                      1.05 kB │ gzip:   0.62 kB
+../../.cache/web-demo/assets/lb-DtiNrF_j.js                       1.06 kB │ gzip:   0.61 kB
+../../.cache/web-demo/assets/gom-latn-DpEFKetH.js                 1.09 kB │ gzip:   0.61 kB
+../../.cache/web-demo/assets/useInfiniteQuery--ji-Wl7s.js         1.12 kB │ gzip:   0.47 kB
+../../.cache/web-demo/assets/PublicHeader-CI5Ak5YZ.js             1.14 kB │ gzip:   0.64 kB
+../../.cache/web-demo/assets/ht-CLsmgLyc.js                       1.17 kB │ gzip:   0.67 kB
+../../.cache/web-demo/assets/bi-1vvu9Tw6.js                       1.17 kB │ gzip:   0.66 kB
+../../.cache/web-demo/assets/ms-q8tPFGIp.js                       1.18 kB │ gzip:   0.67 kB
+../../.cache/web-demo/assets/en-il-VcZvXBiS.js                    1.18 kB │ gzip:   0.68 kB
+../../.cache/web-demo/assets/en-ca-DUb2Erog.js                    1.19 kB │ gzip:   0.68 kB
+../../.cache/web-demo/assets/en-ie-C4TsSWO2.js                    1.19 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/en-sg-DQevoJ02.js                    1.20 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/ms-my-DEixPC_0.js                    1.20 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/en-au-BN8acDWk.js                    1.20 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/tr-C2xidV-Q.js                       1.20 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/id-1dNR8Oh8.js                       1.20 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/af-DnI6RRsu.js                       1.20 kB │ gzip:   0.68 kB
+../../.cache/web-demo/assets/uz-latn-C9RoE1vo.js                  1.20 kB │ gzip:   0.67 kB
+../../.cache/web-demo/assets/tet-DbGcjtjv.js                      1.20 kB │ gzip:   0.68 kB
+../../.cache/web-demo/assets/ro-B3QbWSbA.js                       1.21 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/sq-CAoYnxII.js                       1.21 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/it-ch-BE-jdSIl.js                    1.21 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/mt-BUPh7k1p.js                       1.21 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/it-BwnKFdp4.js                       1.21 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/cardLabels-BSJgTHx0.js               1.21 kB │ gzip:   0.62 kB
+../../.cache/web-demo/assets/cy-xzQUf7Dl.js                       1.21 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/fr-ca-CAK1voti.js                    1.22 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/nn-OQEvS3sa.js                       1.22 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/sw-D2DajVXb.js                       1.22 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/tk-amz4YN8W.js                       1.22 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/eo-CGEjpC5J.js                       1.22 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/fy-hTJnkPP9.js                       1.22 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/oc-lnc-B4P2d2k6.js                   1.22 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/fr-ch-CGXRRpO6.js                    1.23 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/es-mx-cmyIEXnA.js                    1.23 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/jv-CWOOwcgA.js                       1.23 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/tl-ph-BE1tlWXJ.js                    1.23 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/be-BiCn9YtN.js                       1.24 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/es-D7FMtDyZ.js                       1.24 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/nl-be-DKWAExBY.js                    1.24 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/da-B0EAdSAT.js                       1.24 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/es-us-Bv_nMLrd.js                    1.24 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/nb-CeVYIew0.js                       1.24 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/fo-BRkouwB0.js                       1.24 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/gl-0AW4u-1Y.js                       1.24 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/az-lDgjf4Dr.js                       1.25 kB │ gzip:   0.72 kB
+../../.cache/web-demo/assets/es-do-CZRbdEm4.js                    1.25 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/es-pr-HTlFZyZz.js                    1.25 kB │ gzip:   0.72 kB
+../../.cache/web-demo/assets/fr-BSToj7Et.js                       1.25 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/rn-DsXwNvbr.js                       1.26 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/ss-uv4bQEcC.js                       1.26 kB │ gzip:   0.72 kB
+../../.cache/web-demo/assets/nl-Bc9c0MgG.js                       1.26 kB │ gzip:   0.72 kB
+../../.cache/web-demo/assets/lv-CPIhyD93.js                       1.26 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/pt-br-Cy42wMMZ.js                    1.27 kB │ gzip:   0.72 kB
+../../.cache/web-demo/assets/en-nz-D763U2-h.js                    1.27 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/zh-hk-IwZO4Ypr.js                    1.27 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/ar-ly-DnHmN-Q4.js                    1.27 kB │ gzip:   0.66 kB
+../../.cache/web-demo/assets/en-gb-DX9BKqoX.js                    1.28 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/en-in-CC6b0LH9.js                    1.28 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/en-tt-BDWEuCuA.js                    1.28 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/cv-DW9WMApE.js                       1.28 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/ga-CXEP66Ya.js                       1.28 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/mi-CmKRNFKL.js                       1.28 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/pt-DPwXRc7F.js                       1.28 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/tlh-BQjChJgy.js                      1.29 kB │ gzip:   0.57 kB
+../../.cache/web-demo/assets/tzm-latn-DBaUyBXb.js                 1.30 kB │ gzip:   0.67 kB
+../../.cache/web-demo/assets/gd-rZeyr3O0.js                       1.30 kB │ gzip:   0.76 kB
+../../.cache/web-demo/assets/sv-BvCWwUx8.js                       1.32 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/bm-gzI1cU_W.js                       1.33 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/ja-BkV5LZ1H.js                       1.33 kB │ gzip:   0.69 kB
+../../.cache/web-demo/assets/ca-CzMIC9DI.js                       1.34 kB │ gzip:   0.76 kB
+../../.cache/web-demo/assets/ko-D_ETLDi0.js                       1.36 kB │ gzip:   0.70 kB
+../../.cache/web-demo/assets/vi-bsC6s162.js                       1.37 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/eu-BryMJCPI.js                       1.38 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/se-DPIr0MOO.js                       1.38 kB │ gzip:   0.77 kB
+../../.cache/web-demo/assets/sv-fi-6pWPGgLE.js                    1.38 kB │ gzip:   0.75 kB
+../../.cache/web-demo/assets/yo-DdURAKkR.js                       1.39 kB │ gzip:   0.76 kB
+../../.cache/web-demo/assets/tg-Dh6nAuGy.js                       1.41 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/x-pseudo-C4sRgCVE.js                 1.42 kB │ gzip:   0.84 kB
+../../.cache/web-demo/assets/uz-kfm7sTeh.js                       1.42 kB │ gzip:   0.77 kB
+../../.cache/web-demo/assets/mk-B5GFoRV3.js                       1.44 kB │ gzip:   0.80 kB
+../../.cache/web-demo/assets/LogoutButton-DfVJno_B.js             1.44 kB │ gzip:   0.84 kB
+../../.cache/web-demo/assets/ur-DGDZrX-T.js                       1.44 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/hr-akoAM8sg.js                       1.44 kB │ gzip:   0.81 kB
+../../.cache/web-demo/assets/ar-kw-gvbsN0z-.js                    1.45 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/sd-CSLGKPmz.js                       1.45 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/ky-C588bgve.js                       1.45 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/kk-CixDJ67h.js                       1.45 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/ar-ma-CfMbPrDy.js                    1.46 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/ar-tn-CuA4VHA3.js                    1.47 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/fa-BNuDy7Xc.js                       1.47 kB │ gzip:   0.73 kB
+../../.cache/web-demo/assets/ar-dz-Cn567Dq1.js                    1.47 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/ar-sa-DI0gLBnb.js                    1.47 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/de-ch-8sAJOhPD.js                    1.49 kB │ gzip:   0.80 kB
+../../.cache/web-demo/assets/zh-tw-CveNpHwh.js                    1.49 kB │ gzip:   0.83 kB
+../../.cache/web-demo/assets/de-at-BY4cDPT9.js                    1.50 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/de-CD_XcVDR.js                       1.50 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/mr-BTs_arF1.js                       1.51 kB │ gzip:   0.71 kB
+../../.cache/web-demo/assets/hy-am-CZjLXz5L.js                    1.51 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/zh-KXBlJ9lU.js                       1.52 kB │ gzip:   0.85 kB
+../../.cache/web-demo/assets/zh-cn-DkN-F36K.js                    1.53 kB │ gzip:   0.86 kB
+../../.cache/web-demo/assets/am-CIaeHhhc.js                       1.54 kB │ gzip:   0.81 kB
+../../.cache/web-demo/assets/ar-iq-CDusS12W.js                    1.55 kB │ gzip:   0.80 kB
+../../.cache/web-demo/assets/el-Bsc0u2cb.js                       1.55 kB │ gzip:   0.85 kB
+../../.cache/web-demo/assets/mn-Dk0amXdv.js                       1.55 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/bg-DtyULj70.js                       1.55 kB │ gzip:   0.86 kB
+../../.cache/web-demo/assets/br-ciOJLrRp.js                       1.55 kB │ gzip:   0.86 kB
+../../.cache/web-demo/assets/et-Cl3lhQrF.js                       1.58 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/auth-return-DxGFfTTG.js              1.59 kB │ gzip:   0.94 kB
+../../.cache/web-demo/assets/ug-cn-1QS87hjX.js                    1.60 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/si-ayhla9yD.js                       1.65 kB │ gzip:   0.80 kB
+../../.cache/web-demo/assets/km-DStsq2Ur.js                       1.67 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/SessionGate-BDsZUV0m.js              1.69 kB │ gzip:   0.98 kB
+../../.cache/web-demo/assets/queries-JdW0M9v2.js                  1.70 kB │ gzip:   0.81 kB
+../../.cache/web-demo/assets/lo-RDBpArL_.js                       1.70 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/hu-BJybMUvJ.js                       1.71 kB │ gzip:   0.76 kB
+../../.cache/web-demo/assets/hi-DmeWaZvz.js                       1.72 kB │ gzip:   0.81 kB
+../../.cache/web-demo/assets/pl-CFJrkYHT.js                       1.72 kB │ gzip:   0.94 kB
+../../.cache/web-demo/assets/dv-GYaYma1J.js                       1.73 kB │ gzip:   0.79 kB
+../../.cache/web-demo/assets/Workspace-DVavMC_p.js                1.75 kB │ gzip:   0.75 kB
+../../.cache/web-demo/assets/is-CoxOsHH8.js                       1.75 kB │ gzip:   0.90 kB
+../../.cache/web-demo/assets/my-tG3yCN41.js                       1.76 kB │ gzip:   0.84 kB
+../../.cache/web-demo/assets/sk-C3-R1LFb.js                       1.76 kB │ gzip:   0.87 kB
+../../.cache/web-demo/assets/ka-Dsz1p933.js                       1.76 kB │ gzip:   0.80 kB
+../../.cache/web-demo/assets/cs-DJ4JTYzi.js                       1.77 kB │ gzip:   0.88 kB
+../../.cache/web-demo/assets/ar-7g1T1yc0.js                       1.77 kB │ gzip:   0.99 kB
+../../.cache/web-demo/assets/th-NY31bokC.js                       1.78 kB │ gzip:   0.86 kB
+../../.cache/web-demo/assets/pa-in-D6f8_-6_.js                    1.79 kB │ gzip:   0.78 kB
+../../.cache/web-demo/assets/te-DaB7DE-1.js                       1.82 kB │ gzip:   0.84 kB
+../../.cache/web-demo/assets/gu-BeJFBxGz.js                       1.84 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/he-xwc1TMp6.js                       1.85 kB │ gzip:   0.86 kB
+../../.cache/web-demo/assets/kn-yrblMB3x.js                       1.87 kB │ gzip:   0.82 kB
+../../.cache/web-demo/assets/ne-uWfdKIAn.js                       1.89 kB │ gzip:   0.89 kB
+../../.cache/web-demo/assets/tzm-Bs6mBe7R.js                      1.89 kB │ gzip:   0.74 kB
+../../.cache/web-demo/assets/fi-CyWIzZ9F.js                       1.93 kB │ gzip:   0.92 kB
+../../.cache/web-demo/assets/ml-IW-i_-HX.js                       1.96 kB │ gzip:   0.88 kB
+../../.cache/web-demo/assets/ku-DSaa896k.js                       1.98 kB │ gzip:   1.08 kB
+../../.cache/web-demo/assets/sl-HwLM88jJ.js                       1.99 kB │ gzip:   0.91 kB
+../../.cache/web-demo/assets/lt-BlfmTABX.js                       2.00 kB │ gzip:   0.89 kB
+../../.cache/web-demo/assets/sr-BVu3n73P.js                       2.03 kB │ gzip:   0.95 kB
+../../.cache/web-demo/assets/SignInButton-DBtRTGk8.js             2.06 kB │ gzip:   1.16 kB
+../../.cache/web-demo/assets/ta-CHARIS9A.js                       2.12 kB │ gzip:   0.84 kB
+../../.cache/web-demo/assets/write-ONzr3Yxb.js                    2.14 kB │ gzip:   1.11 kB
+../../.cache/web-demo/assets/bn-Cl9Ith7c.js                       2.22 kB │ gzip:   0.99 kB
+../../.cache/web-demo/assets/uk-DdCP-aNc.js                       2.29 kB │ gzip:   1.13 kB
+../../.cache/web-demo/assets/ru-BWeMLp_U.js                       2.37 kB │ gzip:   1.18 kB
+../../.cache/web-demo/assets/WorkspaceSkeleton-Dd1GohrK.js        2.38 kB │ gzip:   0.88 kB
+../../.cache/web-demo/assets/bo-DpW11TOp.js                       2.39 kB │ gzip:   0.81 kB
+../../.cache/web-demo/assets/useMutation-B_YbyRdW.js              2.42 kB │ gzip:   1.01 kB
+../../.cache/web-demo/assets/sr-cyrl-DYkggHJh.js                  2.44 kB │ gzip:   1.10 kB
+../../.cache/web-demo/assets/bn-bd-CDSx5SgQ.js                    2.64 kB │ gzip:   1.15 kB
+../../.cache/web-demo/assets/mapMeeting-DC8G3buF.js               2.92 kB │ gzip:   1.03 kB
+../../.cache/web-demo/assets/Navigation-DleCKxdA.js               3.10 kB │ gzip:   1.32 kB
+../../.cache/web-demo/assets/MediaPhoto-Cckk66Jm.js               3.37 kB │ gzip:   1.81 kB
+../../.cache/web-demo/assets/mutation-CYCY2rVt.js                 3.45 kB │ gzip:   1.15 kB
+../../.cache/web-demo/assets/MeetingCover-B0djTyoe.js             3.49 kB │ gzip:   1.85 kB
+../../.cache/web-demo/assets/ResponseButtons-BywLiMlX.js          3.86 kB │ gzip:   1.83 kB
+../../.cache/web-demo/assets/access-CRRBUtJt.js                   4.46 kB │ gzip:   1.91 kB
+../../.cache/web-demo/assets/invitation-ZyJIzsdK.js               4.47 kB │ gzip:   1.90 kB
+../../.cache/web-demo/assets/invitations-DOlFjSv9.js              4.60 kB │ gzip:   2.10 kB
+../../.cache/web-demo/assets/mapFeed-JolvDDQ0.js                  5.60 kB │ gzip:   2.25 kB
+../../.cache/web-demo/assets/meeting-create-bS-oNF_C.js           5.61 kB │ gzip:   2.55 kB
+../../.cache/web-demo/assets/landing-0Y0I3Nka.js                  5.86 kB │ gzip:   2.25 kB
+../../.cache/web-demo/assets/profile-C7kiMxjH.js                  6.23 kB │ gzip:   2.47 kB
+../../.cache/web-demo/assets/dayjs.min-CAGNNYWX.js                7.18 kB │ gzip:   3.09 kB
+../../.cache/web-demo/assets/memories-BNRaciFK.js                 8.69 kB │ gzip:   3.86 kB
+../../.cache/web-demo/assets/support-CMeeKzQX.js                  9.13 kB │ gzip:   3.85 kB
+../../.cache/web-demo/assets/PhotoViewer-Cxi3DRWR.js             10.22 kB │ gzip:   4.22 kB
+../../.cache/web-demo/assets/lib-CoM3HexH.js                     12.17 kB │ gzip:   4.83 kB
+../../.cache/web-demo/assets/service-Cy_-mQaV.js                 12.54 kB │ gzip:   4.10 kB
+../../.cache/web-demo/assets/useMobileLayout-BWlbGQe7.js         12.98 kB │ gzip:   3.11 kB
+../../.cache/web-demo/assets/meetings-DeDICKyf.js                20.06 kB │ gzip:   7.65 kB
+../../.cache/web-demo/assets/ButtonSpinner-oA4omZ-D.js           37.22 kB │ gzip:  14.20 kB
+../../.cache/web-demo/assets/ThemeProvider-k7o_tcC8.js           95.39 kB │ gzip:  28.74 kB
+../../.cache/web-demo/assets/components-Ckd6huZk.js              96.64 kB │ gzip:  31.83 kB
+../../.cache/web-demo/assets/createLucideIcon-CVlTRpPJ.js       122.37 kB │ gzip:  36.64 kB
+../../.cache/web-demo/assets/plainDate-DVgebdcG.js              159.97 kB │ gzip:  46.04 kB
+../../.cache/web-demo/assets/index-C9TzH2pz.js                  230.45 kB │ gzip:  73.02 kB
+../../.cache/web-demo/assets/CoverEditor-DeRQvDkt.js            299.55 kB │ gzip:  95.39 kB
+../../.cache/web-demo/assets/meeting-2_mxpBX9.js              1,455.86 kB │ gzip: 166.92 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 734ms
+[WebServer] (node:5622) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5623) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 193 tests using 1 worker
+
+(node:5687) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [chromium] › tests/01-flow.spec.ts:11:1 › create, retry, invite, join, chat and revoke across two profiles (12.1s)
+  ✓    2 [chromium] › tests/02-reliability.spec.ts:15:1 › draft survives an error, back warns and sharing returns to the chat (2.9s)
+  ✘    3 [chromium] › tests/02-reliability.spec.ts:78:1 › message retry after a lost response keeps its ID and confirms once (5.9s)
+(node:6482) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    4 [chromium] › tests/02-reliability.spec.ts:117:1 › history and a stale settings form preserve authoritative state (1.8s)
+  ✓    5 [chromium] › tests/02-reliability.spec.ts:157:1 › a revoked session closes private content and keeps invitation entry (4.5s)
+  ✓    6 [chromium] › tests/02-reliability.spec.ts:187:1 › cancelled invitation sign-in stays on the invitation without an answer (1.4s)
+  ✓    7 [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 320px (1.6s)
+  ✓    8 [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 390px (1.5s)
+  ✓    9 [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 768px (1.4s)
+  ✓   10 [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 1440px (1.3s)
+  ✓   11 [chromium] › tests/03-layout.spec.ts:124:1 › dialog respects reduced motion and restores focus (585ms)
+  ✘   12 [chromium] › tests/04-resilience.spec.ts:11:1 › an offline message keeps its text and can be retried after reconnecting (5.6s)
+(node:7313) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   13 [chromium] › tests/04-resilience.spec.ts:31:1 › a late message response cannot reopen access after a 403 (4.0s)
+  ✓   14 [chromium] › tests/04-resilience.spec.ts:89:1 › editing text preserves seconds and the selected DST instant (1.4s)
+  ✓   15 [chromium] › tests/05-date-time.spec.ts:6:3 › custom date calendar and independent time at 320px (974ms)
+  ✓   16 [chromium] › tests/05-date-time.spec.ts:6:3 › custom date calendar and independent time at 390px (939ms)
+  ✓   17 [chromium] › tests/05-date-time.spec.ts:6:3 › custom date calendar and independent time at 1440px (1.8s)
+  ✓   18 [chromium] › tests/05-date-time.spec.ts:132:3 › automatic browser timezone › requires a date, then sends the selected local instant and actual zone (792ms)
+  ✓   19 [chromium] › tests/05-date-time.spec.ts:166:3 › repeated local time › requires an explicit DST choice in the custom select (933ms)
+  ✓   20 [chromium] › tests/06-single-actions.spec.ts:5:3 › one create action in every list state at 320px (789ms)
+  ✓   21 [chromium] › tests/06-single-actions.spec.ts:5:3 › one create action in every list state at 1440px (858ms)
+  ✓   22 [chromium] › tests/06-single-actions.spec.ts:74:1 › details stay in one surface when resizing the meeting (979ms)
+  ✓   23 [chromium] › tests/07-share-preview.spec.ts:4:1 › short invitation provides fresh metadata and PNG without JavaScript (594ms)
+  -   24 [chromium] › tests/08-cross-platform.spec.ts:5:1 › one meeting shared by web, iOS and Android
+  ✓   25 [chromium] › tests/09-calendar.spec.ts:6:3 › calendar selection, keyboard, Back and layout 320 (2.0s)
+  ✓   26 [chromium] › tests/09-calendar.spec.ts:6:3 › calendar selection, keyboard, Back and layout 390 (2.1s)
+  ✓   27 [chromium] › tests/09-calendar.spec.ts:6:3 › calendar selection, keyboard, Back and layout 1440 (2.0s)
+  ✓   28 [chromium] › tests/09-calendar.spec.ts:88:1 › month/year boundaries, leap February and reduced motion (746ms)
+  ✓   29 [chromium] › tests/09-calendar.spec.ts:120:1 › calendar dates use the meeting timezone on a different device (514ms)
+  ✓   30 [chromium] › tests/10-calendar-refresh.spec.ts:5:1 › midnight follows persisted server status, waits for worker, refreshes on foreground (5.6s)
+  ✓   31 [chromium] › tests/10-calendar-refresh.spec.ts:64:1 › 409 discards old pages and keeps day; failures retain confirmed data (6.2s)
+  ✓   32 [chromium] › tests/10-calendar-refresh.spec.ts:137:1 › a delayed month response cannot replace the current selection (675ms)
+  ✓   33 [chromium] › tests/11-calendar-api.spec.ts:6:1 › real API: complete day counts, pagination, changed cursor and rescheduled date (12.0s)
+  ✓   34 [chromium] › tests/12-calendar-create-stability.spec.ts:6:3 › empty account keeps create placement while switching filters at 320px (919ms)
+  ✓   35 [chromium] › tests/12-calendar-create-stability.spec.ts:6:3 › empty account keeps create placement while switching filters at 1440px (908ms)
+  ✓   36 [chromium] › tests/13-calendar-create-date.spec.ts:6:3 › empty calendar keeps creation visible when selecting a day and scrolling at 320px (1.2s)
+  ✓   37 [chromium] › tests/13-calendar-create-date.spec.ts:6:3 › empty calendar keeps creation visible when selecting a day and scrolling at 1440px (936ms)
+  ✓   38 [chromium] › tests/13-calendar-create-date.spec.ts:100:1 › creation from a calendar day prefills its date and keeps edits after reload (1.1s)
+  ✓   39 [chromium] › tests/13-calendar-create-date.spec.ts:123:1 › header creation uses the calendar day but list and undated creation do not (1.3s)
+  ✓   40 [chromium] › tests/14-date-poll.spec.ts:39:1 › create a meeting without an hour, then reload the unchanged date and system notice (1.0s)
+  ✓   41 [chromium] › tests/14-date-poll.spec.ts:59:1 › create with settings and apply live majority in two chats (10.9s)
+  ✓   42 [chromium] › tests/14-date-poll.spec.ts:185:1 › hidden anonymous tie reveals no interim votes and organizer resolves after deadline (19.8s)
+  ✓   43 [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 320px (2.5s)
+  ✓   44 [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 390px (2.5s)
+  ✓   45 [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 1440px (2.7s)
+  ✓   46 [chromium] › tests/16-dialog-motion.spec.ts:5:3 › dialog keeps content and scroll lock until exit ends at 390px (1.7s)
+  ✓   47 [chromium] › tests/16-dialog-motion.spec.ts:5:3 › dialog keeps content and scroll lock until exit ends at 1440px (1.6s)
+  ✓   48 [chromium] › tests/16-dialog-motion.spec.ts:55:1 › touch swipe follows the finger, returns after a short drag and dismisses after a long drag (2.0s)
+  ✓   49 [chromium] › tests/16-dialog-motion.spec.ts:110:3 › swipe starts at the top edge, handle and side padding at 320px (2.8s)
+  ✓   50 [chromium] › tests/16-dialog-motion.spec.ts:110:3 › swipe starts at the top edge, handle and side padding at 390px (2.8s)
+  ✓   51 [chromium] › tests/17-auth-states.spec.ts:5:1 › sign-in stays busy through slow API and navigation without changing its size (894ms)
+  ✓   52 [chromium] › tests/17-auth-states.spec.ts:80:1 › restoring a cached page unlocks sign-in and failed starts can be retried (527ms)
+  ✓   53 [chromium] › tests/17-auth-states.spec.ts:113:1 › return shows only the branded loader at all widths, respects reduced motion and proceeds (1.4s)
+  ✓   54 [chromium] › tests/17-auth-states.spec.ts:152:1 › return retries a failed session read without another OAuth attempt (564ms)
+  ✓   55 [chromium] › tests/17-auth-states.spec.ts:184:1 › missing session offers a fresh sign-in that preserves the invitation without RSVP (1.2s)
+  ✓   56 [chromium] › tests/18-loading-logout.spec.ts:6:1 › session and list skeletons preserve layout and reduced motion at all widths (692ms)
+  ✓   57 [chromium] › tests/18-loading-logout.spec.ts:60:1 › meeting, conversation and people skeletons resolve independently (1.1s)
+  ✓   58 [chromium] › tests/18-loading-logout.spec.ts:93:1 › invitation skeleton transitions to an error and can be retried (1.1s)
+  ✓   59 [chromium] › tests/18-loading-logout.spec.ts:121:1 › cold logout never renders the sign-in gate while landing loads and clears private state (1.5s)
+  ✓   60 [chromium] › tests/18-loading-logout.spec.ts:162:1 › failed logout keeps the current page and permits another attempt (588ms)
+  ✓   61 [chromium] › tests/19-shared-session.spec.ts:6:1 › two sessions of one profile share access and reject a stale join and message retry (4.9s)
+  ✓   62 [chromium] › tests/20-poll-boundaries.spec.ts:48:3 › poll gap can leave time unspecified (805ms)
+  ✓   63 [chromium] › tests/20-poll-boundaries.spec.ts:48:3 › poll overlap requires an explicit side (1.2s)
+  ✓   64 [chromium] › tests/20-poll-boundaries.spec.ts:90:1 › manual date change cancels a hidden poll during a vote without revealing totals (815ms)
+  ✓   65 [chromium] › tests/20-poll-boundaries.spec.ts:137:1 › a failed vote keeps selection and retry key; losing membership removes the poll (4.4s)
+  ✓   66 [chromium] › tests/21-saved-invitations.spec.ts:5:3 › saved invitation moves only after a confirmed answer at 320px (1.8s)
+  ✓   67 [chromium] › tests/21-saved-invitations.spec.ts:5:3 › saved invitation moves only after a confirmed answer at 390px (1.9s)
+  ✓   68 [chromium] › tests/21-saved-invitations.spec.ts:5:3 › saved invitation moves only after a confirmed answer at 1440px (1.9s)
+  ✓   69 [chromium] › tests/21-saved-invitations.spec.ts:95:1 › invitations distinguish skeleton, error and empty state and preserve calendar selection (888ms)
+  ✓   70 [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 320px (4.9s)
+  ✓   71 [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 390px (4.6s)
+  ✓   72 [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 1440px (5.1s)
+  ✓   73 [chromium] › tests/22-place-poll.spec.ts:127:3 › place closes on time with majority and refreshes header (13.2s)
+  ✓   74 [chromium] › tests/22-place-poll.spec.ts:127:3 › place closes on time with zero votes and refreshes header (13.0s)
+  ✓   75 [chromium] › tests/22-place-poll.spec.ts:163:1 › failed vote preserves state, retry keeps key, late reply cannot restore lost membership (4.4s)
+  ✓   76 [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 320px (2.5s)
+  ✓   77 [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 390px (2.3s)
+  ✓   78 [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 1440px (2.7s)
+  ✓   79 [chromium] › tests/23-preparation-tasks.spec.ts:124:1 › addressed task waits for its recipient and preserves uncertain acceptance (4.9s)
+  ✓   80 [chromium] › tests/23-preparation-tasks.spec.ts:207:1 › a conflicting general acceptance refreshes the assignee without taking their task (4.3s)
+  ✓   81 [chromium] › tests/23-preparation-tasks.spec.ts:253:1 › participant loading failure keeps the draft and task read failures retain confirmed content (5.4s)
+  ✓   82 [chromium] › tests/23-preparation-tasks.spec.ts:304:1 › pending acceptance shows only a spinner and its late response cannot restore access (3.9s)
+  ✓   83 [chromium] › tests/24-meeting-covers.spec.ts:100:3 › cover selection, validation, display and removal at 320px (3.1s)
+  ✓   84 [chromium] › tests/24-meeting-covers.spec.ts:100:3 › cover selection, validation, display and removal at 390px (3.0s)
+  ✓   85 [chromium] › tests/24-meeting-covers.spec.ts:100:3 › cover selection, validation, display and removal at 1440px (3.2s)
+  ✓   86 [chromium] › tests/24-meeting-covers.spec.ts:200:1 › lost creation response preserves the prepared photo and key after reload (1.0s)
+  ✓   87 [chromium] › tests/24-meeting-covers.spec.ts:244:1 › settings conflict retains chosen image and requires review before retry (1.3s)
+  ✓   88 [chromium] › tests/24-meeting-covers.spec.ts:288:1 › two meeting cards retain their own pixels and a blank meeting has no photo (869ms)
+  ✓   89 [chromium] › tests/24-meeting-covers.spec.ts:327:1 › late private photo cannot reappear after RSVP revokes access (1.4s)
+  ✓   90 [chromium] › tests/25-own-invitation.spec.ts:4:1 › organizer opens own invitation after login without RSVP or duplicate membership (1.2s)
+  ✓   91 [chromium] › tests/25-own-invitation.spec.ts:57:1 › role check shows a skeleton and retries a network failure before offering actions (547ms)
+  ✓   92 [chromium] › tests/26-account-deletion.spec.ts:12:1 › confirmation explains consequences, cancels without a request, and adapts to narrow screens (1.7s)
+  ✓   93 [chromium] › tests/26-account-deletion.spec.ts:44:1 › lost deletion response survives reload and repeats the same operation (1.5s)
+  ✓   94 [chromium] › tests/26-account-deletion.spec.ts:96:1 › expired session is not reported as deleted (872ms)
+  ✓   95 [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 320 (1.5s)
+  ✓   96 [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 402 (1.5s)
+  ✓   97 [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 430 (1.5s)
+  ✓   98 [chromium] › tests/27-mobile-scroll.spec.ts:145:1 › chat and sheet follow the visible viewport without creating a second page scroll (1.1s)
+  ✓   99 [chromium] › tests/27-mobile-scroll.spec.ts:192:1 › closing a mobile sheet restores the background position and permits normal page scrolling (1.7s)
+  ✓  100 [chromium] › tests/28-meeting-refresh.spec.ts:5:1 › new meeting goes directly to chat; composer panels preserve cursor and draft (1.2s)
+  ✓  101 [chromium] › tests/28-meeting-refresh.spec.ts:36:1 › profile distinguishes a failed request from missing contacts (527ms)
+  ✓  102 [chromium] › tests/28-meeting-refresh.spec.ts:79:1 › support keeps input after error, retries the same request, and returns server reference (408ms)
+  ✓  103 [chromium] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload (1.3s)
+  ✓  104 [chromium] › tests/28-meeting-refresh.spec.ts:167:1 › one hour cutoff is reflected after server refresh without losing current members (987ms)
+  ✓  105 [chromium] › tests/28-meeting-refresh.spec.ts:197:1 › private profile displays provider fields without inventing a birth year (450ms)
+  ✓  106 [chromium] › tests/29-media-refresh.spec.ts:12:3 › an immediate file choice closes to chat with one click at 320px (906ms)
+  ✓  107 [chromium] › tests/29-media-refresh.spec.ts:12:3 › an immediate file choice closes to chat with one click at 390px (874ms)
+  ✓  108 [chromium] › tests/29-media-refresh.spec.ts:49:1 › partial upload retries only the failed file and preserves the message draft (1.4s)
+  ✓  109 [chromium] › tests/29-media-refresh.spec.ts:129:1 › past meeting album stays separate from chat and supports grid, keyboard and browser Back (2.0s)
+  ✓  110 [chromium] › tests/29-media-refresh.spec.ts:248:1 › closing the upload preserves files and captions until leaving the meeting (1.2s)
+  ✓  111 [chromium] › tests/31-release-identity.spec.ts:7:3 › onboarding on a landscape phone › footer stays hidden above the desktop width breakpoint (170ms)
+  ✓  112 [chromium] › tests/31-release-identity.spec.ts:14:1 › demo identity is explicit; footer appears only on desktop onboarding (691ms)
+  ✓  113 [chromium] › tests/31-release-identity.spec.ts:57:1 › mobile bottom navigation belongs only to meeting lists, invitations and main profile (1.8s)
+  ✓  114 [chromium] › tests/32-refresh-resilience.spec.ts:4:1 › public support receives a real reference and retries a lost response without duplication (365ms)
+  ✓  115 [chromium] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent (1.2s)
+  ✓  116 [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions (12.4s)
+  ✓  117 [chromium] › tests/33-chat-action-sheets.spec.ts:136:3 › date poll freezes a committed request after a lost response and retries after reopening (2.3s)
+  ✓  118 [chromium] › tests/33-chat-action-sheets.spec.ts:136:3 › place poll freezes a committed request after a lost response and retries after reopening (1.8s)
+  ✓  119 [chromium] › tests/33-chat-action-sheets.spec.ts:243:1 › mobile task sheet preserves an uncertain request across close and resize (1.8s)
+  ✓  120 [chromium] › tests/33-chat-action-sheets.spec.ts:307:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft (2.4s)
+  ✓  121 [chromium] › tests/33-chat-action-sheets.spec.ts:417:3 › chat action keeps its heading and close button visible in a real 320x430 viewport (1.6s)
+  ✓  122 [chromium] › tests/33-chat-action-sheets.spec.ts:417:3 › chat action keeps its heading and close button visible in a real 390x430 viewport (1.3s)
+  ✓  123 [chromium] › tests/33-chat-action-sheets.spec.ts:457:1 › mobile task details keep inline actions and require a reversible cancellation confirmation (2.2s)
+  ✓  124 [chromium] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard (1.4s)
+  ✓  125 [chromium] › tests/34-telegram-chat.spec.ts:60:1 › emoji dock and expanded reactions keep the composer usable in compact viewports (3.0s)
+  ✓  126 [chromium] › tests/34-telegram-chat.spec.ts:111:1 › settings and sharing return to the same information sheet and retain the draft (1.2s)
+  ✓  127 [chromium] › tests/34-telegram-chat.spec.ts:151:1 › opening the emoji dock preserves the reading position and the new-message action stays above it (4.6s)
+  ✓  128 [chromium] › tests/34-telegram-chat.spec.ts:212:1 › reaction people replace the picker and browser Back returns to the same message (2.2s)
+  ✓  129 [chromium] › tests/34-telegram-chat.spec.ts:283:1 › desktop chat actions stay modal over the conversation and restore the draft (2.9s)
+  ✓  130 [chromium] › tests/34-telegram-chat.spec.ts:345:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold (4.2s)
+  ✓  131 [chromium] › tests/34-telegram-chat.spec.ts:414:1 › mouse context menus open the reaction picker and filtered people without toggling (1.3s)
+  ✓  132 [chromium] › tests/35-emoji-motion.spec.ts:12:3 › emoji panel retains exit and reverses from its current frame at 390 (935ms)
+  ✓  133 [chromium] › tests/35-emoji-motion.spec.ts:101:3 › reduced emoji motion is immediate and returns focus at 390 (689ms)
+  ✓  134 [chromium] › tests/35-emoji-motion.spec.ts:12:3 › emoji panel retains exit and reverses from its current frame at 1440 (936ms)
+  ✓  135 [chromium] › tests/35-emoji-motion.spec.ts:101:3 › reduced emoji motion is immediate and returns focus at 1440 (737ms)
+  ✓  136 [chromium] › tests/36-action-menu-motion.spec.ts:12:3 › composer action menu animates, reverses and opens a form without waiting at 390 (988ms)
+  ✓  137 [chromium] › tests/36-action-menu-motion.spec.ts:87:3 › reduced composer action menu switches immediately and restores focus at 390 (728ms)
+  ✓  138 [chromium] › tests/36-action-menu-motion.spec.ts:12:3 › composer action menu animates, reverses and opens a form without waiting at 1440 (1.0s)
+  ✓  139 [chromium] › tests/36-action-menu-motion.spec.ts:87:3 › reduced composer action menu switches immediately and restores focus at 1440 (850ms)
+  ✓  140 [chromium] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (892ms)
+  ✓  141 [chromium] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (910ms)
+  ✓  142 [chromium] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (660ms)
+  ✓  143 [chromium] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (1.0s)
+  ✓  144 [chromium] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (899ms)
+  ✘  145 [chromium] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight (9.5s)
+(node:17852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  146 [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 320 (2.6s)
+  ✓  147 [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 402 (2.3s)
+  ✓  148 [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 430 (2.6s)
+  ✓  149 [mobile-webkit] › tests/27-mobile-scroll.spec.ts:145:1 › chat and sheet follow the visible viewport without creating a second page scroll (1.6s)
+  ✓  150 [mobile-webkit] › tests/27-mobile-scroll.spec.ts:192:1 › closing a mobile sheet restores the background position and permits normal page scrolling (1.7s)
+  ✓  151 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:5:1 › new meeting goes directly to chat; composer panels preserve cursor and draft (1.9s)
+  ✓  152 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:36:1 › profile distinguishes a failed request from missing contacts (884ms)
+  ✓  153 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:79:1 › support keeps input after error, retries the same request, and returns server reference (554ms)
+  ✘  154 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload (30.2s)
+(node:19101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  155 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:167:1 › one hour cutoff is reflected after server refresh without losing current members (1.9s)
+  ✓  156 [mobile-webkit] › tests/28-meeting-refresh.spec.ts:197:1 › private profile displays provider fields without inventing a birth year (812ms)
+  ✓  157 [mobile-webkit] › tests/29-media-refresh.spec.ts:12:3 › an immediate file choice closes to chat with one click at 320px (1.5s)
+  ✓  158 [mobile-webkit] › tests/29-media-refresh.spec.ts:12:3 › an immediate file choice closes to chat with one click at 390px (1.5s)
+  ✓  159 [mobile-webkit] › tests/29-media-refresh.spec.ts:49:1 › partial upload retries only the failed file and preserves the message draft (1.7s)
+  ✓  160 [mobile-webkit] › tests/29-media-refresh.spec.ts:129:1 › past meeting album stays separate from chat and supports grid, keyboard and browser Back (3.0s)
+  ✓  161 [mobile-webkit] › tests/29-media-refresh.spec.ts:248:1 › closing the upload preserves files and captions until leaving the meeting (1.7s)
+  ✓  162 [mobile-webkit] › tests/32-refresh-resilience.spec.ts:4:1 › public support receives a real reference and retries a lost response without duplication (465ms)
+  ✘  163 [mobile-webkit] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent (30.2s)
+(node:20232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  164 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions (53.6s)
+  ✓  165 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:136:3 › date poll freezes a committed request after a lost response and retries after reopening (2.8s)
+  ✓  166 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:136:3 › place poll freezes a committed request after a lost response and retries after reopening (2.5s)
+  ✓  167 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:243:1 › mobile task sheet preserves an uncertain request across close and resize (2.7s)
+  ✓  168 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:307:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft (2.9s)
+  ✓  169 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:417:3 › chat action keeps its heading and close button visible in a real 320x430 viewport (1.8s)
+  ✓  170 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:417:3 › chat action keeps its heading and close button visible in a real 390x430 viewport (1.8s)
+  ✓  171 [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:457:1 › mobile task details keep inline actions and require a reversible cancellation confirmation (2.6s)
+  ✓  172 [mobile-webkit] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard (1.8s)
+  ✓  173 [mobile-webkit] › tests/34-telegram-chat.spec.ts:60:1 › emoji dock and expanded reactions keep the composer usable in compact viewports (3.6s)
+  ✓  174 [mobile-webkit] › tests/34-telegram-chat.spec.ts:111:1 › settings and sharing return to the same information sheet and retain the draft (1.7s)
+  ✓  175 [mobile-webkit] › tests/34-telegram-chat.spec.ts:151:1 › opening the emoji dock preserves the reading position and the new-message action stays above it (5.1s)
+  ✓  176 [mobile-webkit] › tests/34-telegram-chat.spec.ts:212:1 › reaction people replace the picker and browser Back returns to the same message (2.7s)
+  ✓  177 [mobile-webkit] › tests/34-telegram-chat.spec.ts:283:1 › desktop chat actions stay modal over the conversation and restore the draft (3.6s)
+  ✘  178 [mobile-webkit] › tests/34-telegram-chat.spec.ts:345:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold (6.1s)
+(node:22074) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  179 [mobile-webkit] › tests/34-telegram-chat.spec.ts:414:1 › mouse context menus open the reaction picker and filtered people without toggling (2.0s)
+  ✓  180 [mobile-webkit] › tests/35-emoji-motion.spec.ts:12:3 › emoji panel retains exit and reverses from its current frame at 390 (1.4s)
+  ✓  181 [mobile-webkit] › tests/35-emoji-motion.spec.ts:101:3 › reduced emoji motion is immediate and returns focus at 390 (1.2s)
+  ✓  182 [mobile-webkit] › tests/35-emoji-motion.spec.ts:12:3 › emoji panel retains exit and reverses from its current frame at 1440 (1.7s)
+  ✓  183 [mobile-webkit] › tests/35-emoji-motion.spec.ts:101:3 › reduced emoji motion is immediate and returns focus at 1440 (1.3s)
+  ✓  184 [mobile-webkit] › tests/36-action-menu-motion.spec.ts:12:3 › composer action menu animates, reverses and opens a form without waiting at 390 (1.5s)
+  ✓  185 [mobile-webkit] › tests/36-action-menu-motion.spec.ts:87:3 › reduced composer action menu switches immediately and restores focus at 390 (1.1s)
+  ✓  186 [mobile-webkit] › tests/36-action-menu-motion.spec.ts:12:3 › composer action menu animates, reverses and opens a form without waiting at 1440 (1.9s)
+  ✓  187 [mobile-webkit] › tests/36-action-menu-motion.spec.ts:87:3 › reduced composer action menu switches immediately and restores focus at 1440 (1.1s)
+  ✓  188 [mobile-webkit] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (1.3s)
+  ✓  189 [mobile-webkit] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (1.3s)
+  ✓  190 [mobile-webkit] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (948ms)
+  ✓  191 [mobile-webkit] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (1.4s)
+  ✓  192 [mobile-webkit] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (1.2s)
+  ✘  193 [mobile-webkit] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight (10.1s)
+
+
+  1) [chromium] › tests/02-reliability.spec.ts:78:1 › message retry after a lost response keeps its ID and confirms once 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Повторить отправку' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Повторить отправку' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Повторить отправку' })
+
+
+       96 |   await page.getByLabel('Сообщение', { exact: true }).fill('Повтор без дубля');
+       97 |   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
+    >  98 |   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
+          |                                                                          ^
+       99 |   const pending = await page.getByTestId('pending-message').boundingBox();
+      100 |   const pendingList = await page.getByTestId('pending-messages').boundingBox();
+      101 |
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/02-reliability.spec.ts:98:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/02-reliability-message-ret-5e3b5-ps-its-ID-and-confirms-once-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/02-reliability-message-ret-5e3b5-ps-its-ID-and-confirms-once-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/02-reliability-message-ret-5e3b5-ps-its-ID-and-confirms-once-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/02-reliability-message-ret-5e3b5-ps-its-ID-and-confirms-once-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/04-resilience.spec.ts:11:1 › an offline message keeps its text and can be retried after reconnecting 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Повторить отправку' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Повторить отправку' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Повторить отправку' })
+
+
+      21 |   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
+      22 |   await expect(page.getByText('Сообщение без сети', { exact: true })).toHaveCount(1);
+    > 23 |   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
+         |                                                                          ^
+      24 |   await context.setOffline(false);
+      25 |   await page.getByRole('button', { name: 'Повторить отправку' }).click();
+      26 |   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toHaveCount(0);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/04-resilience.spec.ts:23:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/04-resilience-an-offline-m-ea84d--retried-after-reconnecting-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/04-resilience-an-offline-m-ea84d--retried-after-reconnecting-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/04-resilience-an-offline-m-ea84d--retried-after-reconnecting-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/04-resilience-an-offline-m-ea84d--retried-after-reconnecting-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' })
+    Expected: "accepted"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }) with timeout 5000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' })
+
+
+      233 |     await expect(
+      234 |       target.getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }),
+    > 235 |     ).toHaveAttribute('data-delivery', 'accepted');
+          |       ^
+      236 |   }
+      237 |
+      238 |   expect(posts).toBe(1);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/37-chat-persistence.spec.ts:235:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-webkit] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: '👍', exact: true })
+
+
+      146 |     .getByRole('dialog', { name: 'Реакция', exact: true })
+      147 |     .getByRole('button', { name: '👍', exact: true })
+    > 148 |     .click();
+          |      ^
+      149 |   await expect(row.getByRole('button', { name: '👍: 1' })).toHaveAttribute(
+      150 |     'aria-pressed',
+      151 |     'true',
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/28-meeting-refresh.spec.ts:148:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/28-meeting-refresh-reactio-043f3--API-and-persists-on-reload-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/28-meeting-refresh-reactio-043f3--API-and-persists-on-reload-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/28-meeting-refresh-reactio-043f3--API-and-persists-on-reload-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/28-meeting-refresh-reactio-043f3--API-and-persists-on-reload-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-webkit] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '❤️', exact: true })
+
+
+      62 |   });
+      63 |   await page.getByTestId('message-actions').press('Enter');
+    > 64 |   await page.getByRole('button', { name: '❤️', exact: true }).click();
+         |                                                               ^
+      65 |   await expect(
+      66 |     page.getByRole('button', { name: 'Не удалось сохранить. Повторить' }),
+      67 |   ).toBeVisible();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/32-refresh-resilience.spec.ts:64:63
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/32-refresh-resilience-fail-72dce-and-retries-the-same-intent-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/32-refresh-resilience-fail-72dce-and-retries-the-same-intent-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/32-refresh-resilience-fail-72dce-and-retries-the-same-intent-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/32-refresh-resilience-fail-72dce-and-retries-the-same-intent-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-webkit] › tests/34-telegram-chat.spec.ts:345:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions') with timeout 5000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')
+        - locator resolved to <div data-pressing="false" class="_target_1kxql_70" data-testid="message-actions" data-chat-surface-trigger="true" aria-label="Реакции на сообщение: Принесу чай">…</div>
+        13 × unexpected value "false"
+           - locator resolved to <div tabindex="0" role="group" data-pressing="false" aria-expanded="false" aria-haspopup="dialog" class="_target_1kxql_70" data-testid="message-actions" data-chat-surface-trigger="true" aria-keyshortcuts="Enter Space Shift+F10" aria-label="Реакции на сообщение: Принесу чай">…</div>
+        - unexpected value "false"
+
+
+      360 |     clientY: 100,
+      361 |   });
+    > 362 |   await expect(message).toHaveAttribute('data-pressing', 'true');
+          |                         ^
+      363 |   await message.dispatchEvent('pointermove', {
+      364 |     pointerType: 'touch',
+      365 |     clientX: 100,
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:362:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile-webkit] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' })
+    Expected: "accepted"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }) with timeout 5000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' })
+
+
+      233 |     await expect(
+      234 |       target.getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }),
+    > 235 |     ).toHaveAttribute('data-delivery', 'accepted');
+          |       ^
+      236 |   }
+      237 |
+      238 |   expect(posts).toBe(1);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/37-chat-persistence.spec.ts:235:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-mobile-webkit/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-mobile-webkit/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/37-chat-persistence-two-ta-1ea5f-while-its-POST-is-in-flight-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [chromium] › tests/02-reliability.spec.ts:78:1 › message retry after a lost response keeps its ID and confirms once 
+    [chromium] › tests/04-resilience.spec.ts:11:1 › an offline message keeps its text and can be retried after reconnecting 
+    [chromium] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight 
+    [mobile-webkit] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload 
+    [mobile-webkit] › tests/32-refresh-resilience.spec.ts:34:1 › failed reaction restores confirmed state and retries the same intent 
+    [mobile-webkit] › tests/34-telegram-chat.spec.ts:345:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold 
+    [mobile-webkit] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight 
+  1 skipped
+  185 passed (9.6m)
+npm error Lifecycle script `test:e2e` failed with error:
+npm error code 1
+npm error path /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error workspace @somewhere/web@0.0.0
+npm error location /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error command failed
+npm error command sh -c npm run build:demo && playwright test

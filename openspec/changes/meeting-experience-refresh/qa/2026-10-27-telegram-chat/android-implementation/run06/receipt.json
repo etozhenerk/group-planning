@@ -1,0 +1,25 @@
+{
+  "run": "run06",
+  "purpose": "Engineering UI regression after r2 corrections; not independent acceptance",
+  "startedAt": "2026-10-27T15:21:09.021059+00:00",
+  "sourceAggregateSha256": "712a153e5ffb9cdb075428a8a7f0280de9406c3008a7125305953c9aab1c667f",
+  "designVersion": "1.4.1",
+  "serial": "emulator-5554",
+  "avd": "Somewhere_API_36",
+  "environment": {
+    "JAVA_HOME": "/Users/misha/Library/Java/JavaVirtualMachines/jdk-17.0.21+9/Contents/Home",
+    "ANDROID_HOME": "/Users/misha/Library/Android/sdk",
+    "ANDROID_SERIAL": "emulator-5554",
+    "GRADLE_OPTS": "-Dorg.gradle.vfs.watch=false"
+  },
+  "commands": [
+    "sh scripts/test-ui.sh chat",
+    "./gradlew --no-daemon -PsomewhereTestBuildType=qa -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests :app:connectedQaAndroidTest"
+  ],
+  "status": "interrupted",
+  "interruptedAt": "2026-10-27T15:27:50.048989+00:00",
+  "commandsExecuted": [],
+  "testsExecuted": 0,
+  "reason": "User stopped before UIrunner invocation; only preflight and source snapshots completed",
+  "cleanup": "interrupted.json"
+}

@@ -4,6 +4,8 @@ button.primary {
 }
 
 button.icon {
+  display: inline-grid;
+  place-items: center;
   width: 44px;
   padding: 10px;
   flex-shrink: 0;
@@ -54,10 +56,15 @@ button.icon {
   margin: 0;
 }
 
-.composer .icon {
+.composer-row .icon {
   border-radius: 50%;
   width: 44px;
   min-height: 44px;
+}
+
+.composer .icon svg {
+  width: var(--ds-component-chat-composer-emoji-icon);
+  height: var(--ds-component-chat-composer-emoji-icon);
 }
 
 .pending-messages {
@@ -101,4 +108,95 @@ button.icon {
   width: 338px;
   max-width: calc(100% - 40px);
   z-index: 4;
+}
+
+.dock {
+  height: min(
+    var(--ds-component-emoji-dock-preferred-height),
+    calc(
+      var(--visual-viewport-height, 100dvh) *
+        var(--ds-component-emoji-dock-maximum-viewport-ratio)
+    )
+  );
+  min-height: 0;
+  overflow: clip;
+  background: var(--ds-color-surface);
+}
+
+.panel[inert],
+.dock[inert] {
+  pointer-events: none;
+}
+
+.composer-area[data-mobile='true'] {
+  padding: 0;
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.composer-area[data-mobile='true'] .composer-row {
+  gap: var(--ds-component-chat-composer-gap);
+  padding: var(--ds-component-chat-composer-padding-top)
+    var(--ds-component-chat-composer-padding-inline)
+    max(var(--ds-component-chat-composer-padding-bottom), env(safe-area-inset-bottom));
+  align-items: flex-end;
+  background: transparent;
+  border-radius: 0;
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  min-height: 0;
+}
+
+.composer-area[data-mobile='true'] .composer {
+  gap: 0;
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: var(--ds-component-chat-composer-radius);
+}
+
+.composer-area[data-mobile='true'] .composer:focus-within {
+  border-color: var(--ds-color-border-strong);
+}
+
+.composer-area[data-mobile='true'] .composer textarea {
+  min-height: var(--ds-component-chat-composer-input-min-height);
+  max-height: var(--ds-component-chat-composer-input-max-height);
+  padding: var(--ds-component-chat-composer-input-inset-top) 0
+    var(--ds-component-chat-composer-input-inset-bottom)
+    var(--ds-component-chat-composer-input-inset-start);
+  font-size: var(--ds-typography-size-mobile-web-input);
+  line-height: var(--ds-component-chat-composer-input-line-height);
+}
+
+.composer-area[data-mobile='true'] .composer textarea:focus {
+  outline: none;
+}
+
+.composer-area[data-mobile='true'] .composer .icon {
+  color: var(--ds-color-muted);
+  background: transparent;
+}
+
+.composer-area[data-mobile='true'] .composer-row .primary {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: var(--ds-target-web);
+  height: var(--ds-target-web);
+}
+
+.composer-area[data-compact='true'] .dock {
+  height: min(
+    var(--ds-component-emoji-dock-compact-height),
+    calc(
+      var(--visual-viewport-height, 100dvh) *
+        var(--ds-component-emoji-dock-maximum-viewport-ratio)
+    )
+  );
+}
+
+.composer-area[data-compact='true'] .composer-row {
+  padding-top: var(--ds-component-chat-composer-compact-padding-block);
+  padding-bottom: max(
+    var(--ds-component-chat-composer-compact-padding-block),
+    env(safe-area-inset-bottom)
+  );
 }

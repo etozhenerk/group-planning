@@ -21,11 +21,13 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.data.repository.AvatarRepository
 import dev.groupplanning.android.state.media.ImageController
+import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
 internal fun UserAvatar(
@@ -34,6 +36,9 @@ internal fun UserAvatar(
     modifier: Modifier = Modifier,
     size: Dp = 32.dp,
     avatarColor: Color = Color(0xffc2af9f),
+    textSize: TextUnit = (size.value * .35f).sp,
+    textColor: Color = DesignTokens.colorRosterText,
+    textWeight: FontWeight = FontWeight.SemiBold,
 ) {
     val repository = remember { AvatarRepository() }
     val scope = rememberCoroutineScope()
@@ -49,9 +54,9 @@ internal fun UserAvatar(
     ) {
         Text(
             name.trim().take(1),
-            color = Color(0xff30292a),
-            fontSize = (size.value * .35f).sp,
-            fontWeight = FontWeight.SemiBold,
+            color = textColor,
+            fontSize = textSize,
+            fontWeight = textWeight,
         )
         bitmap?.let {
             Image(

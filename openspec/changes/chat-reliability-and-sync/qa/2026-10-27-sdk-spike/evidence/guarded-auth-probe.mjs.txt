@@ -1,0 +1,7 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {Centrifuge} from 'centrifuge';import WS from 'ws';
+const base=fs.readFileSync('../endpoint.txt','utf8');let attempts=0, generation=1, checking=false;
+class MissingSession extends WS {constructor(url,protocols){super(url,protocols);attempts++}}
+const client=new Centrifuge(base.replace('http','ws')+'/api/v1/realtime',{websocket:MissingSession,minReconnectDelay:150,maxReconnectDelay:150});
+client.on('error',()=>{if(checking)return;checking=true;const current=generation;fetch(base+'/api/v1/realtime').then(r=>{if(current===generation&&(r.status===401||r.status===403)){generation++;client.disconnect();}}).finally(()=>{checking=false})});
+client.connect();await new Promise(r=>setTimeout(r,1100));assert.equal(client.state,'disconnected');assert.equal(attempts,1);
+console.log(JSON.stringify({result:'passed',scenario:'authoritative HTTP auth status stops transport retry',attempts,state:client.state,generationInvalidated:generation===2},null,2));

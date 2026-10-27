@@ -1,0 +1,1313 @@
+diff --git a/backend/internal/httpapi/preparation_task_test.go b/backend/internal/httpapi/preparation_task_test.go
+index f00fa2d..5ad5255 100644
+--- a/backend/internal/httpapi/preparation_task_test.go
++++ b/backend/internal/httpapi/preparation_task_test.go
+@@ -6,12 +6,14 @@ import (
+ 	"os"
+ 	"strings"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+ )
+ 
+ func TestPreparationTaskOpenAPIResponses(t *testing.T) {
+ 	h := newMeetingHTTPTest(t)
++	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
+ 	ownerClient, guestClient, otherClient := h.client(true), h.client(true), h.client(true)
+ 	owner := h.login(ownerClient, "owner", map[string]string{"kind": "home"})
+ 	guest := h.login(guestClient, "guest", map[string]string{"kind": "home"})
+diff --git a/backend/internal/httpapi/saved_invitations_test.go b/backend/internal/httpapi/saved_invitations_test.go
+index 3780a9c..5766455 100644
+--- a/backend/internal/httpapi/saved_invitations_test.go
++++ b/backend/internal/httpapi/saved_invitations_test.go
+@@ -8,10 +8,12 @@ import (
+ 	"os"
+ 	"strings"
+ 	"testing"
++	"time"
+ )
+ 
+ func TestSavedInvitationsOpenAPIResponses(t *testing.T) {
+ 	h := newMeetingHTTPTest(t)
++	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
+ 	ownerClient, guestClient, otherClient := h.client(true), h.client(true), h.client(true)
+ 	owner := h.login(ownerClient, "owner", map[string]string{"kind": "home"})
+ 	guest := h.login(guestClient, "guest", map[string]string{"kind": "home"})
+diff --git a/backend/internal/meetings/feed_bounded_test.go b/backend/internal/meetings/feed_bounded_test.go
+new file mode 100644
+index 0000000..f4cfd1e
+--- /dev/null
++++ b/backend/internal/meetings/feed_bounded_test.go
+@@ -0,0 +1,134 @@
++package meetings_test
++
++import (
++	"context"
++	"errors"
++	"testing"
++	"time"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++var errFullFeed = errors.New("bounded operation called full Feed")
++
++type (
++	boundedStore  struct{ meetings.Store }
++	boundedReader struct{ meetings.Reader }
++	boundedWriter struct{ meetings.Writer }
++)
++
++func (boundedReader) Feed(string) ([]meetings.FeedEntry, error) { return nil, errFullFeed }
++func (boundedWriter) Feed(string) ([]meetings.FeedEntry, error) { return nil, errFullFeed }
++func (s boundedStore) View(ctx context.Context, fn func(meetings.Reader) error) error {
++	return s.Store.View(ctx, func(r meetings.Reader) error { return fn(boundedReader{r}) })
++}
++
++func (s boundedStore) Update(ctx context.Context, fn func(meetings.Writer) error) error {
++	return s.Store.Update(ctx, func(w meetings.Writer) error { return fn(boundedWriter{w}) })
++}
++
++func TestFeedAndTextRetryNeverReadFullHistory(t *testing.T) {
++	f := setup(t)
++	id := f.created.Details.Meeting.ID
++	respond(t, f, meetings.Going, 0, 2)
++	first, err := f.app.SendMessage(ctx, guest, id, "Same intent", key(810), key(810))
++	must(t, err)
++	f.app = meetings.NewService(boundedStore{f.store}, func() time.Time { return time.Unix(f.clock.Load(), 0) })
++	for _, expired := range []bool{false, true} {
++		if expired {
++			f.clock.Add(int64((31 * 24 * time.Hour) / time.Second))
++		}
++
++		again, err := f.app.SendMessage(ctx, guest, id, "Same intent", key(810), key(810))
++		must(t, err)
++		if again.ID != first.ID || again.Sequence != first.Sequence {
++			t.Fatal("retry changed identity")
++		}
++
++		_, err = f.app.SendMessage(ctx, guest, id, "Different", key(810), key(810))
++		assertError(t, err, meetings.ErrIdempotencyConflict)
++	}
++
++	page, err := f.app.Feed(ctx, owner, id, meetings.FeedQuery{Limit: 1})
++	must(t, err)
++	if len(page.Entries) != 1 || page.Entries[0].ID != first.ID || !page.HasMore || page.LatestSequence != first.Sequence {
++		t.Fatal("wrong bounded page", page)
++	}
++
++	another, err := f.app.SendMessage(ctx, owner, id, "Own intent", key(810), key(810))
++	must(t, err)
++	if another.ID == first.ID {
++		t.Fatal("actor idempotency scope collapsed")
++	}
++
++	respond(t, f, meetings.NotGoing, 1, 811)
++	f.app = meetings.NewService(deniedFeedStore{f.store}, func() time.Time { return time.Unix(f.clock.Load(), 0) })
++	_, err = f.app.SendMessage(ctx, guest, id, "Same intent", key(810), key(810))
++	assertError(t, err, meetings.ErrForbidden)
++	_, err = f.app.Feed(ctx, guest, id, meetings.FeedQuery{Limit: 1})
++	assertError(t, err, meetings.ErrForbidden)
++}
++
++func TestMediaRetryNeverReadsFullHistory(t *testing.T) {
++	f, content := mediaFixture(t)
++	id := f.created.Details.Meeting.ID
++	respond(t, f, meetings.Going, 0, 2)
++	data := []byte("Document")
++	item, err := f.app.PrepareMedia(ctx, guest, id, meetings.MediaInput{ClientRequestID: key(820), FileName: "rules.txt", ContentType: "text/plain", SizeBytes: len(data), Purpose: "message"}, key(820))
++	must(t, err)
++	_, err = f.app.UploadMedia(ctx, guest, id, item.ID, "text/plain", data)
++	must(t, err)
++	first, err := f.app.PublishMediaWithCaption(ctx, guest, id, item.ID, key(821), "Caption")
++	must(t, err)
++	f.app = meetings.NewService(boundedStore{f.store}, func() time.Time { return time.Unix(f.clock.Load(), 0) }, meetings.WithMediaContent(content))
++	for _, expired := range []bool{false, true} {
++		if expired {
++			f.clock.Add(int64((31 * 24 * time.Hour) / time.Second))
++		}
++
++		again, err := f.app.PublishMediaWithCaption(ctx, guest, id, item.ID, key(821), "Caption")
++		must(t, err)
++		if again.Entry == nil || first.Entry == nil || again.Entry.ID != first.Entry.ID || again.Entry.Sequence != first.Entry.Sequence || len(again.Entry.Attachments) != 1 {
++			t.Fatal("media retry lost entry")
++		}
++	}
++
++	_, err = f.app.PublishMediaWithCaption(ctx, guest, id, item.ID, key(822), "Changed")
++	var conflict *meetings.Conflict
++	if !errors.As(err, &conflict) || conflict.Code != "media_already_published" {
++		t.Fatal("caption changed", err)
++	}
++
++	respond(t, f, meetings.NotGoing, 1, 823)
++	f.app = meetings.NewService(deniedFeedStore{f.store}, func() time.Time { return time.Unix(f.clock.Load(), 0) }, meetings.WithMediaContent(content))
++	_, err = f.app.PublishMediaWithCaption(ctx, guest, id, item.ID, key(821), "Caption")
++	assertError(t, err, meetings.ErrForbidden)
++}
++
++// Fail on any feed data read: a revoked caller must be rejected before even
++// the bounded methods or a persisted idempotency lookup can inspect history.
++type (
++	deniedFeedReader struct{ meetings.Reader }
++	deniedFeedWriter struct{ meetings.Writer }
++	deniedFeedStore  struct{ meetings.Store }
++)
++
++func (deniedFeedReader) FeedWindow(string, meetings.FeedQuery) (meetings.FeedWindow, error) {
++	return meetings.FeedWindow{}, errFullFeed
++}
++
++func (deniedFeedWriter) MessageByRequest(string, string, string) (meetings.FeedEntry, error) {
++	return meetings.FeedEntry{}, errFullFeed
++}
++
++func (deniedFeedWriter) FeedEntry(string, string) (meetings.FeedEntry, error) {
++	return meetings.FeedEntry{}, errFullFeed
++}
++
++func (s deniedFeedStore) View(ctx context.Context, fn func(meetings.Reader) error) error {
++	return s.Store.View(ctx, func(r meetings.Reader) error { return fn(deniedFeedReader{r}) })
++}
++
++func (s deniedFeedStore) Update(ctx context.Context, fn func(meetings.Writer) error) error {
++	return s.Store.Update(ctx, func(w meetings.Writer) error { return fn(deniedFeedWriter{w}) })
++}
+diff --git a/backend/internal/meetings/feed_service.go b/backend/internal/meetings/feed_service.go
+index 5e2a27c..b63c6fa 100644
+--- a/backend/internal/meetings/feed_service.go
++++ b/backend/internal/meetings/feed_service.go
+@@ -3,6 +3,7 @@ package meetings
+ import (
+ 	"context"
+ 	"encoding/json"
++	"errors"
+ )
+ 
+ // FeedQuery distinguishes an initial page from an explicit after/before cursor.
+@@ -28,36 +29,15 @@ func (s *Service) Feed(ctx context.Context, actor Actor, id string, query FeedQu
+ 			return err
+ 		}
+ 
+-		entries, err := reader.Feed(id)
++		window, err := reader.FeedWindow(id, query)
+ 		if err != nil {
+ 			return err
+ 		}
+ 
+ 		result.Details = details
+-		if len(entries) > 0 {
+-			result.LatestSequence = entries[len(entries)-1].Sequence
+-		}
+-
+-		for _, entry := range entries {
+-			if query.After != nil && entry.Sequence <= *query.After {
+-				continue
+-			}
+-
+-			if query.Before != nil && entry.Sequence >= *query.Before {
+-				continue
+-			}
+-
+-			result.Entries = append(result.Entries, entry)
+-		}
+-
+-		if len(result.Entries) > query.Limit {
+-			result.HasMore = true
+-			if query.After != nil {
+-				result.Entries = result.Entries[:query.Limit]
+-			} else {
+-				result.Entries = result.Entries[len(result.Entries)-query.Limit:]
+-			}
+-		}
++		result.Entries = window.Entries
++		result.LatestSequence = window.LatestSequence
++		result.HasMore = window.HasMore
+ 
+ 		return hydrateMediaEntries(reader, result.Entries)
+ 	})
+@@ -98,32 +78,30 @@ func (s *Service) SendMessage(ctx context.Context, actor Actor, id, text, client
+ 			return err
+ 		}
+ 
+-		entries, err := writer.Feed(id)
+-		if err != nil {
++		entry, err := writer.MessageByRequest(id, actor.ID, clientRequestID)
++		if err != nil && !errors.Is(err, ErrNotFound) {
+ 			return err
+ 		}
+ 
+-		for _, entry := range entries {
+-			if entry.Kind == "message" && entry.ActorID == actor.ID && entry.ClientRequestID == clientRequestID {
+-				var payload struct {
+-					Text string `json:"text"`
+-				}
+-				if json.Unmarshal(entry.Payload, &payload) != nil {
+-					return ErrInvalidRecord
+-				}
++		if err == nil {
++			var payload struct {
++				Text string `json:"text"`
++			}
++			if entry.Kind != "message" || json.Unmarshal(entry.Payload, &payload) != nil {
++				return ErrInvalidRecord
++			}
+ 
+-				if payload.Text != text {
+-					return ErrIdempotencyConflict
+-				}
++			if payload.Text != text {
++				return ErrIdempotencyConflict
++			}
+ 
+-				if exists && receipt.ResourceID != entry.ID {
+-					return ErrInvalidRecord
+-				}
++			if exists && receipt.ResourceID != entry.ID {
++				return ErrInvalidRecord
++			}
+ 
+-				result = entry
++			result = entry
+ 
+-				return nil
+-			}
++			return nil
+ 		}
+ 
+ 		if exists {
+diff --git a/backend/internal/meetings/feed_window.go b/backend/internal/meetings/feed_window.go
+new file mode 100644
+index 0000000..766d8cf
+--- /dev/null
++++ b/backend/internal/meetings/feed_window.go
+@@ -0,0 +1,13 @@
++package meetings
++
++// FeedWindow contains at most query.Limit entries in ascending sequence order.
++// HasMore refers to the requested direction. LatestSequence is the tail of the
++// same storage snapshot, including when the requested range is empty.
++// Initial and before windows select the nearest older entries; after selects
++// the nearest newer entries. Adapters fetch at most limit+1 entry payloads; the memory store still
++// clones its entire snapshot before entering this reader.
++type FeedWindow struct {
++	Entries        []FeedEntry
++	LatestSequence uint64
++	HasMore        bool
++}
+diff --git a/backend/internal/meetings/media_publish.go b/backend/internal/meetings/media_publish.go
+index 1e7656a..fa901cd 100644
+--- a/backend/internal/meetings/media_publish.go
++++ b/backend/internal/meetings/media_publish.go
+@@ -3,6 +3,7 @@ package meetings
+ import (
+ 	"context"
+ 	"encoding/json"
++	"errors"
+ 	"strings"
+ )
+ 
+@@ -84,38 +85,33 @@ func (s *Service) PublishMediaWithCaption(ctx context.Context, actor Actor, meet
+ 				return err
+ 			}
+ 		} else if item.EntryID != "" {
+-			entries, err := w.Feed(meetingID)
++			entry, err := w.FeedEntry(meetingID, item.EntryID)
++			if errors.Is(err, ErrNotFound) {
++				return ErrInvalidRecord
++			}
++
+ 			if err != nil {
+ 				return err
+ 			}
+ 
+-			for _, entry := range entries {
+-				if entry.ID == item.EntryID {
+-					var payload mediaMessagePayload
+-					if err := json.Unmarshal(entry.Payload, &payload); err != nil {
+-						return ErrInvalidRecord
+-					}
+-
+-					expectedText := item.FileName
+-					if item.Kind == "photo" {
+-						expectedText = "Фото"
+-					} else if caption != "" {
+-						expectedText = caption
+-					}
+-
+-					if payload.Text != expectedText {
+-						return &Conflict{Code: "media_already_published"}
+-					}
+-
+-					entry.Attachments = []Media{item}
+-					result.Entry = &entry
+-					break
+-				}
++			var payload mediaMessagePayload
++			if err := json.Unmarshal(entry.Payload, &payload); err != nil {
++				return ErrInvalidRecord
+ 			}
+ 
+-			if result.Entry == nil {
+-				return ErrInvalidRecord
++			expectedText := item.FileName
++			if item.Kind == "photo" {
++				expectedText = "Фото"
++			} else if caption != "" {
++				expectedText = caption
++			}
++
++			if payload.Text != expectedText {
++				return &Conflict{Code: "media_already_published"}
+ 			}
++
++			entry.Attachments = []Media{item}
++			result.Entry = &entry
+ 		}
+ 
+ 		result.Media = item
+diff --git a/backend/internal/meetings/store.go b/backend/internal/meetings/store.go
+index 396c058..648c955 100644
+--- a/backend/internal/meetings/store.go
++++ b/backend/internal/meetings/store.go
+@@ -47,6 +47,9 @@ type Reader interface {
+ 	RSVP(meetingID, userID string) (RSVP, error)
+ 	RSVPs(meetingID string) ([]RSVP, error)
+ 	Feed(meetingID string) ([]FeedEntry, error)
++	FeedWindow(meetingID string, query FeedQuery) (FeedWindow, error)
++	FeedEntry(meetingID, entryID string) (FeedEntry, error)
++	MessageByRequest(meetingID, actorID, requestID string) (FeedEntry, error)
+ 	Receipt(RequestKey) (Receipt, error)
+ }
+ 
+diff --git a/backend/internal/storage/memory/accounts.go b/backend/internal/storage/memory/accounts.go
+index d3be38f..4661f8c 100644
+--- a/backend/internal/storage/memory/accounts.go
++++ b/backend/internal/storage/memory/accounts.go
+@@ -30,7 +30,7 @@ func (s *Identity) AccountUpdate(ctx context.Context, store meetings.Store, fn f
+ 	data := s.data.clone()
+ 	auth := &identityTransaction{data: &data}
+ 	defer func() { auth.data = nil }()
+-	tx := &transaction{data: meetingStore.data.clone(), writable: true}
++	tx := &transaction{ctx: ctx, data: meetingStore.data.clone(), writable: true}
+ 	defer tx.close()
+ 	if err := fn(accountIdentityStore{auth}, accountMeetingStore{tx}); err != nil {
+ 		return err
+diff --git a/backend/internal/storage/memory/feed.go b/backend/internal/storage/memory/feed.go
+index 7cdb267..3bb2d37 100644
+--- a/backend/internal/storage/memory/feed.go
++++ b/backend/internal/storage/memory/feed.go
+@@ -2,6 +2,7 @@ package memory
+ 
+ import (
+ 	"encoding/json"
++	"math"
+ 
+ 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+ )
+@@ -36,15 +37,27 @@ func (tx *transaction) AppendEntry(entry meetings.FeedEntry) (meetings.FeedEntry
+ 	}
+ 
+ 	key := messageKey{entry.MeetingID, entry.ActorID, entry.ClientRequestID}
+-	if tx.data.entryIDs[entry.ID] || (entry.ClientRequestID != "" && tx.data.messageIDs[key]) {
++	_, entryExists := tx.data.entryIDs[entry.ID]
++	_, messageExists := tx.data.messageIDs[key]
++	if entryExists || (entry.ClientRequestID != "" && messageExists) {
+ 		return meetings.FeedEntry{}, meetings.ErrAlreadyExists
+ 	}
+ 
+-	entry.Sequence = uint64(len(tx.data.feed[entry.MeetingID])) + 1
++	entries := tx.data.feed[entry.MeetingID]
++	entry.Sequence = 1
++	if len(entries) > 0 {
++		last := entries[len(entries)-1].Sequence
++		if last == math.MaxUint64 {
++			return meetings.FeedEntry{}, meetings.ErrInvalidRecord
++		}
++
++		entry.Sequence = last + 1
++	}
++
+ 	tx.data.feed[entry.MeetingID] = append(tx.data.feed[entry.MeetingID], cloneEntry(entry))
+-	tx.data.entryIDs[entry.ID] = true
++	tx.data.entryIDs[entry.ID] = entryLocation{entry.MeetingID, len(entries)}
+ 	if entry.ClientRequestID != "" {
+-		tx.data.messageIDs[key] = true
++		tx.data.messageIDs[key] = len(entries)
+ 	}
+ 
+ 	return cloneEntry(entry), nil
+diff --git a/backend/internal/storage/memory/feed_window.go b/backend/internal/storage/memory/feed_window.go
+new file mode 100644
+index 0000000..de710fd
+--- /dev/null
++++ b/backend/internal/storage/memory/feed_window.go
+@@ -0,0 +1,81 @@
++package memory
++
++import (
++	"sort"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++func (tx *transaction) FeedWindow(id string, query meetings.FeedQuery) (meetings.FeedWindow, error) {
++	tx.mu.Lock()
++	defer tx.mu.Unlock()
++	if err := tx.check(false); err != nil {
++		return meetings.FeedWindow{}, err
++	}
++
++	if query.Limit < 1 || query.Limit > 100 || (query.After != nil && query.Before != nil) {
++		return meetings.FeedWindow{}, meetings.ErrInvalidRecord
++	}
++
++	if _, ok := tx.data.meetings[id]; !ok {
++		return meetings.FeedWindow{}, meetings.ErrNotFound
++	}
++
++	entries := tx.data.feed[id]
++	result := meetings.FeedWindow{Entries: []meetings.FeedEntry{}}
++	if len(entries) > 0 {
++		result.LatestSequence = entries[len(entries)-1].Sequence
++	}
++
++	start, end := 0, len(entries)
++	if query.After != nil {
++		start = sort.Search(len(entries), func(i int) bool { return entries[i].Sequence > *query.After })
++	}
++
++	if query.Before != nil {
++		end = sort.Search(len(entries), func(i int) bool { return entries[i].Sequence >= *query.Before })
++	}
++
++	if end-start > query.Limit {
++		result.HasMore = true
++		if query.After != nil {
++			end = start + query.Limit
++		} else {
++			start = end - query.Limit
++		}
++	}
++
++	result.Entries = cloneEntries(entries[start:end])
++
++	return result, nil
++}
++
++func (tx *transaction) FeedEntry(meetingID, entryID string) (meetings.FeedEntry, error) {
++	tx.mu.Lock()
++	defer tx.mu.Unlock()
++	if err := tx.check(false); err != nil {
++		return meetings.FeedEntry{}, err
++	}
++
++	location, ok := tx.data.entryIDs[entryID]
++	if !ok || location.meetingID != meetingID {
++		return meetings.FeedEntry{}, meetings.ErrNotFound
++	}
++
++	return cloneEntry(tx.data.feed[meetingID][location.offset]), nil
++}
++
++func (tx *transaction) MessageByRequest(meetingID, actorID, requestID string) (meetings.FeedEntry, error) {
++	tx.mu.Lock()
++	defer tx.mu.Unlock()
++	if err := tx.check(false); err != nil {
++		return meetings.FeedEntry{}, err
++	}
++
++	offset, ok := tx.data.messageIDs[messageKey{meetingID, actorID, requestID}]
++	if !ok || requestID == "" {
++		return meetings.FeedEntry{}, meetings.ErrNotFound
++	}
++
++	return cloneEntry(tx.data.feed[meetingID][offset]), nil
++}
+diff --git a/backend/internal/storage/memory/feed_window_test.go b/backend/internal/storage/memory/feed_window_test.go
+new file mode 100644
+index 0000000..05b4fb6
+--- /dev/null
++++ b/backend/internal/storage/memory/feed_window_test.go
+@@ -0,0 +1,227 @@
++package memory
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"math"
++	"reflect"
++	"testing"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++func TestFeedWindowBoundsLookupsAndCopies(t *testing.T) {
++	store := New()
++	err := store.Update(t.Context(), func(w meetings.Writer) error {
++		for _, id := range []string{"m", "other", "empty"} {
++			if err := w.SaveMeeting(meetings.Meeting{ID: id}); err != nil {
++				return err
++			}
++		}
++
++		for i := range 5 {
++			_, err := w.AppendEntry(meetings.FeedEntry{ID: fmt.Sprint(i), MeetingID: "m", ActorID: "a", ClientRequestID: fmt.Sprint(i), Kind: "message", Payload: []byte(`{"text":"original"}`), Attachments: []meetings.Media{{ID: "attachment"}}})
++			if err != nil {
++				return err
++			}
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	// Storage cursors are positions, not slice offsets. Exercise gaps and both sides
++	// of MaxInt64 without allocating an impossible history.
++	positions := []uint64{1, 3, 9, math.MaxInt64 + 1, math.MaxUint64}
++	for i, pos := range positions {
++		store.data.feed["m"][i].Sequence = pos
++	}
++
++	p := func(n uint64) *uint64 { return &n }
++	cases := []struct {
++		name  string
++		query meetings.FeedQuery
++		want  []uint64
++		more  bool
++	}{
++		{"initial", meetings.FeedQuery{Limit: 2}, []uint64{math.MaxInt64 + 1, math.MaxUint64}, true},
++		{"after-zero", meetings.FeedQuery{Limit: 2, After: p(0)}, []uint64{1, 3}, true},
++		{"after-gap", meetings.FeedQuery{Limit: 2, After: p(4)}, []uint64{9, math.MaxInt64 + 1}, true},
++		{"exact-remainder", meetings.FeedQuery{Limit: 2, After: p(9)}, []uint64{math.MaxInt64 + 1, math.MaxUint64}, false},
++		{"after-max", meetings.FeedQuery{Limit: 2, After: p(math.MaxUint64)}, []uint64{}, false},
++		{"before-high", meetings.FeedQuery{Limit: 2, Before: p(math.MaxUint64)}, []uint64{9, math.MaxInt64 + 1}, true},
++		{"before-gap", meetings.FeedQuery{Limit: 2, Before: p(8)}, []uint64{1, 3}, false},
++		{"before-zero", meetings.FeedQuery{Limit: 2, Before: p(0)}, []uint64{}, false},
++	}
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			err := store.View(t.Context(), func(r meetings.Reader) error {
++				page, err := r.FeedWindow("m", c.query)
++				if err != nil {
++					return err
++				}
++
++				got := []uint64{}
++				for _, entry := range page.Entries {
++					got = append(got, entry.Sequence)
++				}
++
++				if !reflect.DeepEqual(got, c.want) || page.HasMore != c.more || page.LatestSequence != math.MaxUint64 {
++					t.Fatalf("page=%+v positions=%v", page, got)
++				}
++
++				for _, entry := range page.Entries {
++					entry.Payload[0] = '!'
++					entry.Attachments[0].ID = "mutated"
++				}
++
++				return nil
++			})
++			if err != nil {
++				t.Fatal(err)
++			}
++		})
++	}
++
++	err = store.View(t.Context(), func(r meetings.Reader) error {
++		empty, err := r.FeedWindow("empty", meetings.FeedQuery{Limit: 1})
++		if err != nil {
++			return err
++		}
++
++		if empty.Entries == nil || len(empty.Entries) != 0 || empty.LatestSequence != 0 || empty.HasMore {
++			t.Fatal("empty page", empty)
++		}
++
++		for range 2 {
++			for _, lookup := range []func() (meetings.FeedEntry, error){func() (meetings.FeedEntry, error) { return r.FeedEntry("m", "0") }, func() (meetings.FeedEntry, error) { return r.MessageByRequest("m", "a", "0") }} {
++				item, err := lookup()
++				if err != nil {
++					return err
++				}
++
++				if string(item.Payload) != `{"text":"original"}` || item.Attachments[0].ID != "attachment" {
++					t.Fatal("alias escaped")
++				}
++
++				item.Payload[0] = '!'
++				item.Attachments[0].ID = "changed"
++			}
++		}
++
++		for _, lookup := range []func() error{
++			func() error { _, err := r.FeedEntry("other", "0"); return err },
++			func() error { _, err := r.MessageByRequest("m", "wrong", "0"); return err },
++			func() error { _, err := r.MessageByRequest("m", "a", ""); return err },
++			func() error { _, err := r.FeedWindow("missing", meetings.FeedQuery{Limit: 1}); return err },
++		} {
++			if err := lookup(); !errors.Is(err, meetings.ErrNotFound) {
++				t.Fatal("scope", err)
++			}
++		}
++
++		for _, query := range []meetings.FeedQuery{{Limit: 0}, {Limit: 101}, {Limit: 1, After: p(1), Before: p(2)}} {
++			if _, err := r.FeedWindow("m", query); !errors.Is(err, meetings.ErrInvalidRecord) {
++				t.Fatal("invalid query", err)
++			}
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	// Sequence exhaustion must fail atomically, without wrapping to zero.
++	err = store.Update(t.Context(), func(w meetings.Writer) error {
++		_, err := w.AppendEntry(meetings.FeedEntry{ID: "overflow", MeetingID: "m", Payload: []byte(`{}`)})
++		return err
++	})
++	if !errors.Is(err, meetings.ErrInvalidRecord) {
++		t.Fatal("overflow", err)
++	}
++}
++
++func TestFeedWindowSnapshotRollbackAndCancellation(t *testing.T) {
++	store := New()
++	if err := store.Update(t.Context(), func(w meetings.Writer) error { return w.SaveMeeting(meetings.Meeting{ID: "m"}) }); err != nil {
++		t.Fatal(err)
++	}
++
++	entry := meetings.FeedEntry{ID: "id", MeetingID: "m", ActorID: "a", ClientRequestID: "req", Payload: []byte(`{}`)}
++	abort := errors.New("abort")
++	err := store.Update(t.Context(), func(w meetings.Writer) error {
++		if _, err := w.AppendEntry(entry); err != nil {
++			return err
++		}
++
++		return abort
++	})
++	if !errors.Is(err, abort) {
++		t.Fatal(err)
++	}
++
++	var retained meetings.Reader
++	err = store.View(t.Context(), func(r meetings.Reader) error {
++		retained = r
++		if _, err := r.FeedEntry("m", "id"); !errors.Is(err, meetings.ErrNotFound) {
++			t.Fatal("rolled back ID", err)
++		}
++
++		if _, err := r.MessageByRequest("m", "a", "req"); !errors.Is(err, meetings.ErrNotFound) {
++			t.Fatal("rolled back intent", err)
++		}
++
++		done := make(chan error, 1)
++		go func() {
++			done <- store.Update(t.Context(), func(w meetings.Writer) error { _, err := w.AppendEntry(entry); return err })
++		}()
++		if err := <-done; err != nil {
++			return err
++		}
++
++		page, err := r.FeedWindow("m", meetings.FeedQuery{Limit: 1})
++		if err != nil {
++			return err
++		}
++
++		if len(page.Entries) != 0 || page.LatestSequence != 0 {
++			t.Fatal("snapshot changed", page)
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	if _, err := retained.FeedWindow("m", meetings.FeedQuery{Limit: 1}); !errors.Is(err, meetings.ErrTransactionClosed) {
++		t.Fatal("retained page", err)
++	}
++
++	if _, err := retained.FeedEntry("m", "id"); !errors.Is(err, meetings.ErrTransactionClosed) {
++		t.Fatal("retained entry", err)
++	}
++
++	if _, err := retained.MessageByRequest("m", "a", "req"); !errors.Is(err, meetings.ErrTransactionClosed) {
++		t.Fatal("retained intent", err)
++	}
++
++	ctx, cancel := context.WithCancel(t.Context())
++	err = store.View(ctx, func(r meetings.Reader) error {
++		cancel()
++		for _, lookup := range []func() error{func() error { _, err := r.FeedWindow("m", meetings.FeedQuery{Limit: 1}); return err }, func() error { _, err := r.FeedEntry("m", "id"); return err }, func() error { _, err := r.MessageByRequest("m", "a", "req"); return err }} {
++			if err := lookup(); !errors.Is(err, context.Canceled) {
++				t.Fatal("cancelled reader", err)
++			}
++		}
++
++		return nil
++	})
++	if !errors.Is(err, context.Canceled) {
++		t.Fatal(err)
++	}
++}
+diff --git a/backend/internal/storage/memory/state.go b/backend/internal/storage/memory/state.go
+index 25b8d34..5e914f9 100644
+--- a/backend/internal/storage/memory/state.go
++++ b/backend/internal/storage/memory/state.go
+@@ -7,8 +7,12 @@ import (
+ )
+ 
+ type (
+-	responseKey struct{ meetingID, userID string }
+-	messageKey  struct{ meetingID, actorID, requestID string }
++	responseKey   struct{ meetingID, userID string }
++	messageKey    struct{ meetingID, actorID, requestID string }
++	entryLocation struct {
++		meetingID string
++		offset    int
++	}
+ )
+ 
+ type state struct {
+@@ -24,8 +28,8 @@ type state struct {
+ 	inviteIDs        map[string]bool
+ 	responses        map[responseKey]meetings.RSVP
+ 	feed             map[string][]meetings.FeedEntry
+-	entryIDs         map[string]bool
+-	messageIDs       map[messageKey]bool
++	entryIDs         map[string]entryLocation
++	messageIDs       map[messageKey]int
+ 	jobs             map[transitionKey]meetings.TransitionJob
+ 	receipts         map[meetings.RequestKey]meetings.Receipt
+ }
+@@ -44,8 +48,8 @@ func newState() *state {
+ 		inviteIDs:        make(map[string]bool),
+ 		responses:        make(map[responseKey]meetings.RSVP),
+ 		feed:             make(map[string][]meetings.FeedEntry),
+-		entryIDs:         make(map[string]bool),
+-		messageIDs:       make(map[messageKey]bool),
++		entryIDs:         make(map[string]entryLocation),
++		messageIDs:       make(map[messageKey]int),
+ 		jobs:             make(map[transitionKey]meetings.TransitionJob),
+ 		receipts:         make(map[meetings.RequestKey]meetings.Receipt),
+ 	}
+@@ -105,6 +109,8 @@ func cloneMeeting(meeting meetings.Meeting) meetings.Meeting {
+ 
+ func cloneEntry(entry meetings.FeedEntry) meetings.FeedEntry {
+ 	entry.Payload = append([]byte(nil), entry.Payload...)
++	entry.Attachments = append([]meetings.Media(nil), entry.Attachments...)
++
+ 	return entry
+ }
+ 
+diff --git a/backend/internal/storage/memory/store.go b/backend/internal/storage/memory/store.go
+index bdc81ca..064efe3 100644
+--- a/backend/internal/storage/memory/store.go
++++ b/backend/internal/storage/memory/store.go
+@@ -43,7 +43,7 @@ func (s *Store) View(ctx context.Context, fn func(meetings.Reader) error) error
+ 		return err
+ 	}
+ 
+-	tx := &transaction{data: s.data.clone()}
++	tx := &transaction{ctx: ctx, data: s.data.clone()}
+ 	<-s.gate
+ 	defer tx.close()
+ 	if err := fn(tx); err != nil {
+@@ -61,7 +61,7 @@ func (s *Store) Update(ctx context.Context, fn func(meetings.Writer) error) erro
+ 	}
+ 
+ 	defer func() { <-s.gate }()
+-	tx := &transaction{data: s.data.clone(), writable: true}
++	tx := &transaction{ctx: ctx, data: s.data.clone(), writable: true}
+ 	defer tx.close()
+ 	if err := fn(tx); err != nil {
+ 		return err
+@@ -78,6 +78,7 @@ func (s *Store) Update(ctx context.Context, fn func(meetings.Writer) error) erro
+ }
+ 
+ type transaction struct {
++	ctx      context.Context
+ 	mu       sync.Mutex
+ 	data     *state
+ 	writable bool
+@@ -101,5 +102,5 @@ func (tx *transaction) check(write bool) error {
+ 		return meetings.ErrReadOnly
+ 	}
+ 
+-	return nil
++	return tx.ctx.Err()
+ }
+diff --git a/backend/internal/storage/postgres/feed_plan_test.go b/backend/internal/storage/postgres/feed_plan_test.go
+new file mode 100644
+index 0000000..5832bd0
+--- /dev/null
++++ b/backend/internal/storage/postgres/feed_plan_test.go
+@@ -0,0 +1,108 @@
++package postgres
++
++import (
++	"context"
++	"encoding/json"
++	"fmt"
++	"strconv"
++	"strings"
++	"testing"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++type feedPlan struct {
++	NodeType     string     `json:"Node Type"`
++	RelationName string     `json:"Relation Name"`
++	ActualRows   float64    `json:"Actual Rows"`
++	ActualLoops  float64    `json:"Actual Loops"`
++	RowsRemoved  float64    `json:"Rows Removed by Filter"`
++	Plans        []feedPlan `json:"Plans"`
++}
++
++// This is an opt-in fixture against somewhere_integration, never a local DB or
++// production. It checks the actual production query plans at all three planned
++// history sizes. Timings are observations, not a portable latency benchmark.
++func TestFeedBoundedQueryPlansIntegration(t *testing.T) {
++	db := integrationDB(t)
++	for _, count := range []int{1000, 10000, 100000} {
++		t.Run(strconv.Itoa(count), func(t *testing.T) {
++			id := fmt.Sprintf("bounded-plan-%x", randBytes(12))
++			t.Cleanup(func() {
++				if err := db.Meetings().Update(context.Background(), func(w meetings.Writer) error { return w.DeleteMeeting(id) }); err != nil {
++					t.Error("fixture cleanup", err)
++				}
++			})
++			err := db.Meetings().Update(t.Context(), func(w meetings.Writer) error {
++				if err := w.SaveMeeting(meetings.Meeting{ID: id}); err != nil {
++					return err
++				}
++
++				_, err := w.(*transaction).exec(`INSERT INTO feed_entries(id,meeting_id,sequence,actor_id,client_request_id,document)
++    SELECT $1||'-'||n,$1,n,'actor',n::text,jsonb_build_object('ID',$1||'-'||n,'MeetingID',$1,'Sequence',n,'ActorID','actor','ClientRequestID',n::text,'Kind','message','Payload',jsonb_build_object('text','fixture'))
++    FROM generate_series(1,$2::int) AS n`, id, count)
++
++				return err
++			})
++			if err != nil {
++				t.Fatal("seed bounded plan fixture", err)
++			}
++
++			if _, err := db.pool.Exec(t.Context(), "ANALYZE feed_entries"); err != nil {
++				t.Fatal("analyze isolated fixture", err)
++			}
++
++			cases := []struct {
++				name, sql string
++				args      []any
++				budget    float64
++			}{
++				{"initial", feedInitialSQL, []any{id, 51}, 51},
++				{"after", feedAfterSQL, []any{id, strconv.Itoa(count / 2), 51}, 51},
++				{"before", feedBeforeSQL, []any{id, strconv.Itoa(count / 2), 51}, 51},
++				{"empty-tail", feedAfterSQL, []any{id, strconv.Itoa(count), 51}, 51},
++				{"tail", feedTailSQL, []any{id}, 1},
++				{"entry", feedEntrySQL, []any{id, id + "-500"}, 1},
++				{"intent", feedRequestSQL, []any{id, "actor", "500"}, 1},
++			}
++			for _, c := range cases {
++				t.Run(c.name, func(t *testing.T) {
++					var raw []byte
++					if err := db.pool.QueryRow(t.Context(), "EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) "+c.sql, c.args...).Scan(&raw); err != nil {
++						t.Fatal("explain", err)
++					}
++
++					var plans []struct {
++						Plan          feedPlan
++						PlanningTime  float64 `json:"Planning Time"`
++						ExecutionTime float64 `json:"Execution Time"`
++					}
++					if err := json.Unmarshal(raw, &plans); err != nil || len(plans) != 1 {
++						t.Fatal("invalid query plan", err)
++					}
++
++					feedScans := 0
++					var inspect func(feedPlan)
++					inspect = func(node feedPlan) {
++						if node.RelationName == "feed_entries" {
++							feedScans++
++							if !strings.Contains(node.NodeType, "Index") || node.ActualRows*node.ActualLoops > c.budget || node.RowsRemoved > 0 {
++								t.Errorf("unbounded feed scan: %+v", node)
++							}
++						}
++
++						for _, child := range node.Plans {
++							inspect(child)
++						}
++					}
++					inspect(plans[0].Plan)
++					if feedScans == 0 {
++						t.Fatal("plan did not inspect feed index")
++					}
++
++					t.Logf("history=%d query=%s planning_ms=%.3f execution_ms=%.3f feed_scans=%d budget_rows=%.0f", count, c.name, plans[0].PlanningTime, plans[0].ExecutionTime, feedScans, c.budget)
++				})
++			}
++		})
++	}
++}
+diff --git a/backend/internal/storage/postgres/feed_window.go b/backend/internal/storage/postgres/feed_window.go
+new file mode 100644
+index 0000000..8eeb94d
+--- /dev/null
++++ b/backend/internal/storage/postgres/feed_window.go
+@@ -0,0 +1,89 @@
++package postgres
++
++import (
++	"slices"
++	"strconv"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++const (
++	feedInitialSQL = `SELECT document FROM feed_entries WHERE meeting_id=$1 ORDER BY sequence DESC LIMIT $2`
++	feedAfterSQL   = `SELECT document FROM feed_entries WHERE meeting_id=$1 AND sequence>$2::text::numeric ORDER BY sequence ASC LIMIT $3`
++	feedBeforeSQL  = `SELECT document FROM feed_entries WHERE meeting_id=$1 AND sequence<$2::text::numeric ORDER BY sequence DESC LIMIT $3`
++	feedTailSQL    = `SELECT coalesce((SELECT sequence FROM feed_entries WHERE meeting_id=$1 ORDER BY sequence DESC LIMIT 1),0)::text`
++	feedEntrySQL   = `SELECT document FROM feed_entries WHERE meeting_id=$1 AND id=$2`
++	feedRequestSQL = `SELECT document FROM feed_entries WHERE meeting_id=$1 AND actor_id=$2 AND client_request_id=$3 AND client_request_id<>''`
++)
++
++func (tx *transaction) FeedWindow(id string, query meetings.FeedQuery) (meetings.FeedWindow, error) {
++	if query.Limit < 1 || query.Limit > 100 || (query.After != nil && query.Before != nil) {
++		return meetings.FeedWindow{}, meetings.ErrInvalidRecord
++	}
++
++	if _, err := tx.Meeting(id); err != nil {
++		return meetings.FeedWindow{}, err
++	}
++
++	latest, err := tx.feedTail(id)
++	if err != nil {
++		return meetings.FeedWindow{}, err
++	}
++
++	sql := feedInitialSQL
++	args := []any{id, query.Limit + 1}
++	if query.After != nil {
++		sql = feedAfterSQL
++		args = []any{id, strconv.FormatUint(*query.After, 10), query.Limit + 1}
++	} else if query.Before != nil {
++		sql = feedBeforeSQL
++		args = []any{id, strconv.FormatUint(*query.Before, 10), query.Limit + 1}
++	}
++
++	entries, err := many[meetings.FeedEntry](tx, sql, args...)
++	if err != nil {
++		return meetings.FeedWindow{}, err
++	}
++
++	more := len(entries) > query.Limit
++	if more {
++		entries = entries[:query.Limit]
++	}
++
++	if query.After == nil {
++		slices.Reverse(entries)
++	}
++
++	return meetings.FeedWindow{Entries: entries, LatestSequence: latest, HasMore: more}, nil
++}
++
++func (tx *transaction) feedTail(id string) (uint64, error) {
++	tx.mu.Lock()
++	defer tx.mu.Unlock()
++	if err := tx.check(false); err != nil {
++		return 0, err
++	}
++
++	var raw string
++	err := tx.tx.QueryRow(tx.ctx, feedTailSQL, id).Scan(&raw)
++	if err != nil {
++		tx.err = storageError(err)
++		return 0, tx.err
++	}
++
++	sequence, err := strconv.ParseUint(raw, 10, 64)
++	if err != nil {
++		tx.err = ErrUnavailable
++		return 0, tx.err
++	}
++
++	return sequence, nil
++}
++
++func (tx *transaction) FeedEntry(meetingID, entryID string) (meetings.FeedEntry, error) {
++	return one[meetings.FeedEntry](tx, feedEntrySQL, meetingID, entryID)
++}
++
++func (tx *transaction) MessageByRequest(meetingID, actorID, requestID string) (meetings.FeedEntry, error) {
++	return one[meetings.FeedEntry](tx, feedRequestSQL, meetingID, actorID, requestID)
++}
+diff --git a/backend/internal/storage/postgres/feed_window_test.go b/backend/internal/storage/postgres/feed_window_test.go
+new file mode 100644
+index 0000000..f0784e8
+--- /dev/null
++++ b/backend/internal/storage/postgres/feed_window_test.go
+@@ -0,0 +1,227 @@
++package postgres
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"math"
++	"reflect"
++	"strconv"
++	"testing"
++
++	"github.com/etozhenerk/group-planning/backend/internal/meetings"
++)
++
++func TestFeedWindowIntegration(t *testing.T) {
++	db := integrationDB(t)
++	id := fmt.Sprintf("bounded-%x", randBytes(12))
++	store := db.Meetings()
++	t.Cleanup(func() {
++		if err := store.Update(context.Background(), func(w meetings.Writer) error { return w.DeleteMeeting(id) }); err != nil {
++			t.Error("fixture cleanup", err)
++		}
++	})
++	positions := []uint64{1, 3, 9, math.MaxInt64 + 1, math.MaxUint64}
++	err := store.Update(t.Context(), func(w meetings.Writer) error {
++		if err := w.SaveMeeting(meetings.Meeting{ID: id}); err != nil {
++			return err
++		}
++
++		// Insert sparse positions directly in this isolated test database. The API
++		// cannot generate MaxUint64 entries merely to test its numeric boundary.
++		for i, pos := range positions {
++			value := meetings.FeedEntry{ID: fmt.Sprintf("%s-%d", id, i), MeetingID: id, Sequence: pos, ActorID: "actor", ClientRequestID: fmt.Sprint(i), Kind: "message", Payload: []byte(`{"text":"original"}`)}
++			if err := w.(*transaction).save(value, `INSERT INTO feed_entries(id,meeting_id,sequence,actor_id,client_request_id,document) VALUES($1,$2,$3::text::numeric,$4,$5,$6)`, value.ID, id, strconv.FormatUint(pos, 10), value.ActorID, value.ClientRequestID); err != nil {
++				return err
++			}
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	p := func(v uint64) *uint64 { return &v }
++	cases := []struct {
++		name  string
++		query meetings.FeedQuery
++		want  []uint64
++		more  bool
++	}{
++		{"initial", meetings.FeedQuery{Limit: 2}, []uint64{math.MaxInt64 + 1, math.MaxUint64}, true},
++		{"after-zero", meetings.FeedQuery{Limit: 2, After: p(0)}, []uint64{1, 3}, true},
++		{"after-gap", meetings.FeedQuery{Limit: 2, After: p(4)}, []uint64{9, math.MaxInt64 + 1}, true},
++		{"after-high", meetings.FeedQuery{Limit: 2, After: p(math.MaxInt64 + 1)}, []uint64{math.MaxUint64}, false},
++		{"after-max", meetings.FeedQuery{Limit: 2, After: p(math.MaxUint64)}, []uint64{}, false},
++		{"before-max", meetings.FeedQuery{Limit: 2, Before: p(math.MaxUint64)}, []uint64{9, math.MaxInt64 + 1}, true},
++		{"before-gap", meetings.FeedQuery{Limit: 2, Before: p(8)}, []uint64{1, 3}, false},
++		{"before-zero", meetings.FeedQuery{Limit: 2, Before: p(0)}, []uint64{}, false},
++	}
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			err := store.View(t.Context(), func(r meetings.Reader) error {
++				page, err := r.FeedWindow(id, c.query)
++				if err != nil {
++					return err
++				}
++
++				got := []uint64{}
++				for _, item := range page.Entries {
++					got = append(got, item.Sequence)
++				}
++
++				if !reflect.DeepEqual(got, c.want) || page.HasMore != c.more || page.LatestSequence != math.MaxUint64 {
++					t.Fatalf("page=%+v positions=%v", page, got)
++				}
++
++				return nil
++			})
++			if err != nil {
++				t.Fatal(err)
++			}
++		})
++	}
++
++	err = store.View(t.Context(), func(r meetings.Reader) error {
++		first, err := r.FeedEntry(id, id+"-0")
++		if err != nil {
++			return err
++		}
++
++		first.Payload[0] = '!'
++		again, err := r.MessageByRequest(id, "actor", "0")
++		if err != nil {
++			return err
++		}
++
++		if first.ID != again.ID || string(again.Payload) != `{"text":"original"}` {
++			t.Fatal("lookup copy")
++		}
++
++		for _, lookup := range []func() error{
++			func() error { _, err := r.FeedEntry(id+"-other", first.ID); return err },
++			func() error { _, err := r.MessageByRequest(id, "other", "0"); return err },
++			func() error { _, err := r.MessageByRequest(id, "actor", ""); return err },
++		} {
++			if err := lookup(); !errors.Is(err, meetings.ErrNotFound) {
++				t.Fatal("lookup scope", err)
++			}
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	err = store.Update(t.Context(), func(w meetings.Writer) error {
++		_, err := w.AppendEntry(meetings.FeedEntry{ID: id + "overflow", MeetingID: id, Payload: []byte(`{}`)})
++		return err
++	})
++	if !errors.Is(err, meetings.ErrInvalidRecord) {
++		t.Fatal("sequence overflow", err)
++	}
++}
++
++func TestFeedWindowSnapshotRollbackIntegration(t *testing.T) {
++	db := integrationDB(t)
++	id := fmt.Sprintf("bounded-snapshot-%x", randBytes(12))
++	store := db.Meetings()
++	t.Cleanup(func() {
++		if err := store.Update(context.Background(), func(w meetings.Writer) error { return w.DeleteMeeting(id) }); err != nil {
++			t.Error("fixture cleanup", err)
++		}
++	})
++	if err := store.Update(t.Context(), func(w meetings.Writer) error { return w.SaveMeeting(meetings.Meeting{ID: id}) }); err != nil {
++		t.Fatal(err)
++	}
++
++	value := meetings.FeedEntry{ID: id + "-entry", MeetingID: id, ActorID: "actor", ClientRequestID: "request", Payload: []byte(`{}`)}
++	aborted := errors.New("abort")
++	err := store.Update(t.Context(), func(w meetings.Writer) error {
++		if _, err := w.AppendEntry(value); err != nil {
++			return err
++		}
++
++		return aborted
++	})
++	if !errors.Is(err, aborted) {
++		t.Fatal(err)
++	}
++
++	var retained meetings.Reader
++	err = store.View(t.Context(), func(r meetings.Reader) error {
++		retained = r
++		empty, err := r.FeedWindow(id, meetings.FeedQuery{Limit: 1})
++		if err != nil {
++			return err
++		}
++
++		if empty.Entries == nil || len(empty.Entries) != 0 || empty.HasMore || empty.LatestSequence != 0 {
++			t.Fatal("empty after rollback", empty)
++		}
++
++		if _, err := r.FeedEntry(id, value.ID); !errors.Is(err, meetings.ErrNotFound) {
++			t.Fatal("rolled back ID", err)
++		}
++
++		if _, err := r.MessageByRequest(id, "actor", "request"); !errors.Is(err, meetings.ErrNotFound) {
++			t.Fatal("rolled back intent", err)
++		}
++
++		done := make(chan error, 1)
++		go func() {
++			done <- store.Update(t.Context(), func(w meetings.Writer) error { _, err := w.AppendEntry(value); return err })
++		}()
++		if err := <-done; err != nil {
++			return err
++		}
++
++		page, err := r.FeedWindow(id, meetings.FeedQuery{Limit: 1})
++		if err != nil {
++			return err
++		}
++
++		if len(page.Entries) != 0 || page.LatestSequence != 0 {
++			t.Fatal("tail and page escaped snapshot", page)
++		}
++
++		return nil
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	if _, err := retained.FeedWindow(id, meetings.FeedQuery{Limit: 1}); !errors.Is(err, meetings.ErrTransactionClosed) {
++		t.Fatal("retained window", err)
++	}
++
++	if _, err := retained.FeedEntry(id, value.ID); !errors.Is(err, meetings.ErrTransactionClosed) {
++		t.Fatal("retained lookup", err)
++	}
++
++	ctx, cancel := context.WithCancel(t.Context())
++	err = store.View(ctx, func(r meetings.Reader) error {
++		cancel()
++		for _, lookup := range []func() error{func() error { _, err := r.FeedWindow(id, meetings.FeedQuery{Limit: 1}); return err }, func() error { _, err := r.FeedEntry(id, value.ID); return err }, func() error { _, err := r.MessageByRequest(id, "actor", "request"); return err }} {
++			if err := lookup(); !errors.Is(err, context.Canceled) {
++				t.Fatal("cancelled lookup", err)
++			}
++		}
++
++		return nil
++	})
++	if !errors.Is(err, context.Canceled) {
++		t.Fatal("cancelled view", err)
++	}
++}
++
++func TestFeedStorageCancellationErrors(t *testing.T) {
++	for _, cause := range []error{context.Canceled, context.DeadlineExceeded} {
++		wrapped := fmt.Errorf("query: %w", cause)
++		if !errors.Is(storageError(wrapped), cause) {
++			t.Fatal("lost cancellation cause")
++		}
++	}
++}
+diff --git a/backend/internal/storage/postgres/transaction.go b/backend/internal/storage/postgres/transaction.go
+index 883714b..ee3b981 100644
+--- a/backend/internal/storage/postgres/transaction.go
++++ b/backend/internal/storage/postgres/transaction.go
+@@ -95,6 +95,10 @@ func (tx *transaction) check(write bool) error {
+ }
+ 
+ func storageError(err error) error {
++	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
++		return err
++	}
++
+ 	if errors.Is(err, pgx.ErrNoRows) {
+ 		return meetings.ErrNotFound
+ 	}
+@@ -165,7 +169,7 @@ func many[T any](tx *transaction, query string, args ...any) ([]T, error) {
+ 	}
+ 
+ 	if rows.Err() != nil {
+-		tx.err = ErrUnavailable
++		tx.err = storageError(rows.Err())
+ 		return nil, tx.err
+ 	}
+ 

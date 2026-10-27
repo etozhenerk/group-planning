@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.FeedEntry
-import dev.groupplanning.android.data.api.models.FeedPage
 import dev.groupplanning.android.data.api.models.Meeting
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.session.MeetingAccess
@@ -22,11 +21,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.json.JsonPrimitive
 
 internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope: CoroutineScope) :
@@ -37,6 +34,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         MediaViewModel(id, it, childScope())
     }
     val reactions = ReactionController(repository, viewModelScope)
+    val reading = ChatReadController(repository.reading, viewModelScope)
     val sender = MessageSender(repository, viewModelScope) {
         mutable.value = state.value.merge(listOf(it))
     }
@@ -60,7 +58,34 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     private var access: MeetingAccess? = null
     private var active: CoroutineScope? = null
     private var activeJob: Job? = null
-    private val refreshLock = Mutex()
+    private val sync = FeedSync(repository, mutable, sender) { entries, projections, synchronized ->
+        val lease = access ?: return@FeedSync
+        reading.synchronize(state.value.readEnabled, state.value.readInfo, state.value.readVersion)
+        registerPolls(entries, lease)
+        for (projection in projections) {
+            projection.datePoll?.let { polls.value[it.id]?.receive(it) }
+            projection.placePoll?.let { places.value[it.id]?.receive(it) }
+            projection.task?.let { tasks.value[it.id]?.receive(it) }
+            projection.reactions?.forEach { reactions.receive(it.entryId, it.reactions) }
+        }
+        if (synchronized) {
+            polls.value.filterValues {
+                it.state.value.poll == null
+            }.forEach { (id, model) -> model.load(id) }
+            places.value.filterValues {
+                it.state.value.poll == null
+            }.forEach { (id, model) -> model.load(id) }
+            tasks.value.filterValues {
+                it.state.value.task == null
+            }.forEach { (id, model) -> model.load(id) }
+        } else {
+            polls.value.forEach { (id, model) -> model.load(id) }
+            places.value.forEach { (id, model) -> model.load(id) }
+            tasks.value.forEach { (id, model) -> model.load(id) }
+            reactions.refresh()
+        }
+        pruneCards()
+    }
 
     init {
         viewModelScope.launch {
@@ -76,6 +101,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
                     access = null
                     sender.revoke()
                     reactions.revoke()
+                    reading.revoke()
                     closeSettings()
                     clearPolls()
                     mutable.value = FeedState(revoked = true)
@@ -90,16 +116,11 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
         try {
             if (access == null) {
                 access = repository.open(id)
-                sender.open(checkNotNull(access))
                 media?.open()
                 reactions.open(checkNotNull(access))
             }
-            var wait = 3_000L
-            while (true) {
-                val success = refreshNow()
-                wait = if (success) 3_000L else (wait * 2).coerceAtMost(30_000L)
-                delay(wait)
-            }
+            reading.enter(checkNotNull(access))
+            sync.run(checkNotNull(access))
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (_: ClientFailure) {
@@ -108,80 +129,54 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
             active = null
             activeJob = null
             sender.suspend()
+            reading.leave()
             mutable.value = state.value.copy(loading = false, historyLoading = false)
         }
     }
 
     fun refresh() {
-        active?.launch {
-            if (!sender.state.value.ready) {
-                access?.let { sender.open(it) }
-            } else if (sender.state.value.storageError) {
-                sender.edit(sender.state.value.draft)
-            }
-            refreshNow()
-        }
+        if (sender.state.value.storageError) sender.edit(sender.state.value.draft)
+        sync.refresh()
     }
 
-    private suspend fun refreshNow(): Boolean {
-        val lease = access ?: return false
-        if (!refreshLock.tryLock()) return true
-        mutable.value = state.value.copy(loading = true)
-        try {
-            do {
-                val first = !state.value.ready
-                val page = repository.page(lease, after = state.value.cursor.takeUnless { first })
-                if (access != lease) return false
-                mutable.value = state.value.merge(page.entries).copy(
-                    ready = true,
-                    loadError = false,
-                    cursor = page.entries.lastOrNull()?.sequence ?: state.value.cursor,
-                    hasHistory = if (first) page.hasMore else state.value.hasHistory,
-                )
-                sender.acknowledge(page.entries)
-                registerPolls(page.entries, lease)
-                refreshDetails(lease, page)
-                // Initial has_more describes older history, not unread newer pages.
-            } while (!first && page.hasMore)
-            reactions.refresh()
-            return true
-        } catch (cancelled: CancellationException) {
-            throw cancelled
-        } catch (_: ClientFailure) {
-            if (access == lease) mutable.value = state.value.copy(loadError = true)
-            return false
-        } finally {
-            mutable.value = state.value.copy(loading = false)
-            refreshLock.unlock()
-        }
+    fun history() = sync.history()
+    fun newer() = sync.history(newer = true)
+    fun tail() = sync.tail()
+
+    fun anchor(id: UUID?) {
+        mutable.value = state.value.copy(anchor = id)
     }
 
-    private suspend fun refreshDetails(lease: MeetingAccess, page: FeedPage) {
-        val current = repository.snapshot.value.data.details[id]?.value
-        if (current?.revision != page.meetingRevision) repository.details(lease)
-    }
-
-    fun history() {
+    fun viewport(value: dev.groupplanning.android.data.repository.ChatViewport) {
         val lease = access ?: return
-        val before = state.value.entries.firstOrNull()?.sequence ?: return
-        if (!state.value.hasHistory || state.value.historyLoading) return
-        mutable.value = state.value.copy(historyLoading = true, historyError = false)
-        active?.launch {
+        if (state.value.viewport == value) return
+        mutable.value = state.value.copy(anchor = value.entry, viewport = value)
+        viewModelScope.launch {
             try {
-                val page = repository.page(lease, before = before)
-                if (access == lease) {
-                    registerPolls(page.entries, lease)
-                    mutable.value = state.value.merge(page.entries).copy(hasHistory = page.hasMore)
-                    sender.acknowledge(page.entries)
-                }
-            } catch (cancelled: CancellationException) {
-                throw cancelled
-            } catch (_: ClientFailure) {
-                if (access == lease) mutable.value = state.value.copy(historyError = true)
-            } finally {
-                mutable.value = state.value.copy(historyLoading = false)
-            }
+                repository.saveViewport(lease, value)
+            } catch (_: ClientFailure) { }
         }
+    }
+
+    fun focused(id: UUID?) {
+        mutable.value = state.value.copy(focused = id)
+    }
+
+    private fun pruneCards() {
+        val ids = state.value.entries.flatMap { entry ->
+            listOf("poll_id", "task_id").mapNotNull { key ->
+                (entry.payload[key] as? JsonPrimitive)?.content?.let {
+                    runCatching { UUID.fromString(it) }.getOrNull()
+                }
+            }
+        }.toSet()
+        polls.value.filterKeys { it !in ids }.values.forEach { it.stop() }
+        mutablePolls.value = polls.value.filterKeys { it in ids }
+        places.value.filterKeys { it !in ids }.values.forEach { it.stop() }
+        mutablePlaces.value = places.value.filterKeys { it in ids }
+        tasks.value.filterKeys { it !in ids }.values.forEach { it.stop() }
+        mutableTasks.value = tasks.value.filterKeys { it in ids }
+        reactions.retain(state.value.entries.map { it.id }.toSet())
     }
 
     fun openSettings(meeting: Meeting) {
@@ -331,6 +326,7 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     fun stop() {
         clearPolls()
         sender.suspend()
+        reading.leave()
         activeJob?.cancel()
         viewModelScope.cancel()
     }

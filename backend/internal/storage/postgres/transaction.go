@@ -95,6 +95,10 @@ func (tx *transaction) check(write bool) error {
 }
 
 func storageError(err error) error {
+	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+		return err
+	}
+
 	if errors.Is(err, pgx.ErrNoRows) {
 		return meetings.ErrNotFound
 	}
@@ -165,7 +169,7 @@ func many[T any](tx *transaction, query string, args ...any) ([]T, error) {
 	}
 
 	if rows.Err() != nil {
-		tx.err = ErrUnavailable
+		tx.err = storageError(rows.Err())
 		return nil, tx.err
 	}
 

@@ -129,7 +129,7 @@ final class DatePollOwner {
         loading = false
     }
 
-    private func receive(_ value: DatePoll) throws {
+    func receive(_ value: DatePoll) throws {
         guard value.meetingID == meetingID else { throw ClientFailure.invalidResponse }
         poll = value
         if !edited { selection = Set(value.myOptionIDs) }

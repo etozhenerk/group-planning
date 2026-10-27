@@ -13,6 +13,10 @@ final class SessionStore {
     private(set) var deletionFailure: ClientFailure?
     private(set) var accountDeleted = false
     let privateData: PrivateData
+    @ObservationIgnored let realtimeFactory: @MainActor () -> any ChatRealtimeTransport
+    @ObservationIgnored private var chatOwnerID: UUID?
+    @ObservationIgnored let chat: ChatRepository
+    @ObservationIgnored private var chatBarrier: Task<Void, any Error>?
     @ObservationIgnored let api: APIClient
     @ObservationIgnored let credentials: CredentialStore
     @ObservationIgnored private var credential: StoredSession?
@@ -25,10 +29,21 @@ final class SessionStore {
         let cancel: @Sendable () -> Void
     }
 
-    init(api: APIClient, credentials: CredentialStore, privateData: PrivateData) {
+    init(
+        api: APIClient, credentials: CredentialStore, privateData: PrivateData,
+        chat: ChatRepository? = nil,
+        realtimeFactory: @escaping @MainActor () -> any ChatRealtimeTransport = { ChatRealtime() }
+    ) {
+        self.realtimeFactory = realtimeFactory
         self.api = api
         self.credentials = credentials
         self.privateData = privateData
+        self.chat =
+            chat
+            ?? ChatRepository(
+                storage: EncryptedChatStorage(
+                    directory: URL.applicationSupportDirectory.appendingPathComponent("ChatOutbox"),
+                    keys: KeychainChatKeys(origin: api.origin)))
     }
 
     func restore() async {
@@ -45,6 +60,7 @@ final class SessionStore {
     }
 
     private func restore(candidate: StoredSession?) async {
+        let previousOwner = profile?.id ?? chatOwnerID
         reset()
         let version = generation
         status = .restoring
@@ -84,8 +100,16 @@ final class SessionStore {
             guard generation == version else { return }
             try Task.checkCancellation()
             if let (credential, profile) = result {
+                try await chatBarrier?.value
+                guard generation == version else { return }
+                if let previousOwner, let profile, previousOwner != profile.id {
+                    try await chat.invalidate(
+                        owner: previousOwner, generation: version, erase: true)
+                    guard generation == version else { return }
+                }
                 self.credential = credential
                 self.profile = profile
+                chatOwnerID = profile?.id
                 pendingDeletion = credential.deletion
                 status = credential.deletion == nil ? .authenticated : .deleting
             } else {
@@ -165,7 +189,7 @@ final class SessionStore {
             if (error as? ClientFailure)?.statusCode == 403, let meetingID = request.meetingID,
                 request.invalidatesMeetingOnForbidden
             {
-                privateData.revoke(meetingID)
+                updateMeetingAccess(meetingID, allowed: false)
                 for request in inFlight.values where request.meetingID == meetingID {
                     request.cancel()
                 }
@@ -177,7 +201,20 @@ final class SessionStore {
     func updateMeetingAccess(_ id: UUID, allowed: Bool) {
         if allowed && !privateData.denied.contains(id) { return }
         for request in inFlight.values where request.meetingID == id { request.cancel() }
-        if allowed { privateData.allow(id) } else { privateData.revoke(id) }
+        if allowed {
+            privateData.allow(id)
+        } else {
+            privateData.revoke(id)
+            if let owner = profile?.id {
+                let previous = chatBarrier
+                let chat = self.chat
+                let version = generation
+                chatBarrier = Task {
+                    try await previous?.value
+                    try await chat.revoke(owner: owner, meeting: id, generation: version)
+                }
+            }
+        }
     }
 
     func logout() async throws {
@@ -215,6 +252,7 @@ final class SessionStore {
                     path: ["me"], method: .delete, deletionToken: pending.token, expectedStatus: 204
                 ), credential: candidate)
             guard generation == version else { throw ClientFailure.staleSession }
+            try await chat.invalidate(owner: pending.userID, generation: generation, erase: true)
             try await cleanup(pending.userID)
             guard generation == version else { throw ClientFailure.staleSession }
             try await credentials.remove(generation: generation)
@@ -241,11 +279,48 @@ final class SessionStore {
     }
 
     private func invalidate() async throws {
-        reset()
-        try await credentials.remove(generation: generation)
+        reset(eraseChat: true)
+        let version = generation
+        let barrier = chatBarrier
+        try await barrier?.value
+        guard generation == version else { throw ClientFailure.staleSession }
+        try await credentials.remove(generation: version)
     }
 
-    private func reset() {
+    func chatContext(meeting: UUID) async throws -> (ChatRepository.Lease, ChatLocalRecord) {
+        let version = generation
+        guard status == .authenticated, let owner = profile?.id else {
+            throw ClientFailure.staleSession
+        }
+        let lease = try privateData.lease(for: meeting)
+        try await chatBarrier?.value
+        guard version == generation, privateData.isCurrent(lease) else {
+            throw ClientFailure.staleSession
+        }
+        let value = try await chat.open(owner: owner, meeting: meeting, generation: version)
+        guard version == generation, privateData.isCurrent(lease) else {
+            throw ClientFailure.staleSession
+        }
+        return value
+    }
+
+    func realtimeToken() throws -> String {
+        guard status == .authenticated, let credential, credential.expiresAt > Date() else {
+            throw ClientFailure.http(401, nil)
+        }
+        return credential.token
+    }
+
+    private func reset(eraseChat: Bool = false) {
+        let owner = profile?.id ?? chatOwnerID ?? pendingDeletion?.userID
+        if eraseChat { chatOwnerID = nil }
+        let previous = chatBarrier
+        let chat = self.chat
+        let next = generation + 1
+        chatBarrier = Task {
+            try await previous?.value
+            try await chat.invalidate(owner: owner, generation: next, erase: eraseChat)
+        }
         pendingDeletion = nil
         accountDeleted = false
         deletionFailure = nil

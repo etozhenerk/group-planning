@@ -1,12 +1,10 @@
-import { useEmojiPanel } from '@/features/send-message/ui/SendMessage/hooks/useEmojiPanel';
+import { ChatIcon } from '@/shared/ui/ChatIcon';
+import { useComposer } from '@/features/send-message/ui/SendMessage/hooks/useComposer';
 import { EmojiPicker } from '@/shared/ui/EmojiPicker';
-import { useEmojiInsertion } from '@/features/send-message/ui/SendMessage/hooks/useEmojiInsertion';
+import { EmojiDock } from '@/shared/ui/EmojiDock';
 import styles from '@/features/send-message/ui/SendMessage/SendMessage.module.css';
 import type { ReactNode } from 'react';
-import { ArrowUp, Smile } from 'lucide-react';
 import type { Session } from '@/entities/session';
-import { useSendMessage } from '@/features/send-message/model/useSendMessage';
-import { PendingBubble } from '@/features/send-message/ui/PendingBubble';
 
 export type SendMessageProps = {
   id: string;
@@ -23,25 +21,31 @@ export const SendMessage = ({
   emojiOpen = false,
   toggleEmoji,
 }: SendMessageProps) => {
-  const panel = useEmojiPanel(emojiOpen, toggleEmoji);
-  const action = useSendMessage(id, session);
-  const emoji = useEmojiInsertion(action.text, action.setText);
+  const { mobile, compact, action, emoji, panel, presence, togglePanel } = useComposer(
+    id,
+    session,
+    emojiOpen,
+    toggleEmoji,
+  );
 
   return (
-    <div className={styles['composer-area']} ref={panel.root}>
-      <div className={styles['pending-messages']} data-testid="pending-messages">
-        {action.pending.map((message) => (
-          <PendingBubble key={message.id} message={message} retry={action.retry} />
-        ))}
-      </div>
-      {emojiOpen && (
-        <div className={styles.panel}>
+    <div
+      className={styles['composer-area']}
+      ref={panel.root}
+      data-mobile={mobile}
+      data-compact={compact}
+    >
+      {action.storageError && (
+        <p role="alert">Не удалось сохранить сообщение на устройстве</p>
+      )}
+      {presence.visible && !mobile && (
+        <div className={styles.panel} {...presence.props}>
           <EmojiPicker onSelect={emoji.insert} onClose={toggleEmoji} />
         </div>
       )}
-      <div className={styles['composer-row']}>
+      <form className={styles['composer-row']} onSubmit={action.submit}>
         {extraAction}
-        <form className={styles['composer']} onSubmit={action.submit}>
+        <div className={styles['composer']}>
           <label className={styles['grow']}>
             <span className={styles['sr-only']}>Сообщение</span>
             <textarea
@@ -49,6 +53,11 @@ export const SendMessage = ({
               ref={emoji.input}
               onSelect={emoji.remember}
               onBlur={emoji.remember}
+              onPointerDown={() => {
+                if (emojiOpen) {
+                  toggleEmoji?.();
+                }
+              }}
               rows={1}
               maxLength={4000}
               value={action.text}
@@ -61,23 +70,29 @@ export const SendMessage = ({
           <button
             type="button"
             className={styles.icon}
-            aria-label="Выбрать эмодзи"
+            aria-label={emojiOpen ? 'Вернуться к клавиатуре' : 'Выбрать эмодзи'}
             ref={panel.trigger}
+            data-chat-surface-trigger
             aria-expanded={emojiOpen}
-            onClick={toggleEmoji}
+            onClick={togglePanel}
           >
-            <Smile size={23} aria-hidden="true" />
+            <ChatIcon name={emojiOpen ? 'keyboard' : 'smile'} />
           </button>
-          <button
-            type="submit"
-            className={[styles['icon'], styles['primary']].join(' ')}
-            aria-label="Отправить сообщение"
-            disabled={!action.text.trim() || action.disabled}
-          >
-            <ArrowUp aria-hidden="true" size={22} />
-          </button>
-        </form>
-      </div>
+        </div>
+        <button
+          type="submit"
+          className={[styles['icon'], styles['primary']].join(' ')}
+          aria-label="Отправить сообщение"
+          disabled={!action.text.trim() || action.disabled}
+        >
+          <ChatIcon name="send" aria-hidden="true" size={22} />
+        </button>
+      </form>
+      {presence.visible && mobile && (
+        <div className={styles.dock} {...presence.props}>
+          <EmojiDock composer onSelect={emoji.insert} onErase={emoji.erase} />
+        </div>
+      )}
     </div>
   );
 };

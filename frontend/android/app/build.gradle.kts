@@ -150,6 +150,7 @@ dependencies {
     androidTestImplementation(libs.android.test.uiautomator)
     add("qaImplementation", libs.compose.test.manifest)
     implementation(libs.okhttp)
+    implementation(libs.centrifuge)
     implementation(libs.serialization.json)
     implementation(libs.coroutines.android)
     implementation(libs.lifecycle.viewmodel)

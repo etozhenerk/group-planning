@@ -1,0 +1,61 @@
+
+ RUN  v5.0.5 /Users/misha/.codex/worktrees/chat-bounded-storage/group-planning/frontend/web
+
+ ❯ src/entities/meeting/model/conversationAccess.test.ts (4 tests | 1 failed) 113ms
+   ❯ receive cursor access lease (4)
+     × clears prior data when an incremental request loses access 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/entities/meeting/model/conversationAccess.test.ts > receive cursor access lease > clears prior data when an incremental request loses access
+AssertionError: promise resolved "{ entries: [ { …(10) } ], …(8) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "entries": [
++     {
++       "actor": {
++         "displayName": "Author",
++         "id": "author",
++       },
++       "clientRequestId": null,
++       "event": "",
++       "id": "entry-100",
++       "kind": "message",
++       "meetingId": "meeting",
++       "occurredAt": "2026-10-27T18:00:00Z",
++       "sequence": "100",
++       "supported": true,
++       "text": "message-100",
++     },
++   ],
++   "hasMore": false,
++   "hasOlder": false,
++   "latestSequence": "999",
++   "meetingRevision": "1",
++   "myRsvp": "going",
++   "myRsvpRevision": "1",
++   "participantCount": 2,
++   "receiveCursor": "100",
+  }
+
+ ❯ src/entities/meeting/model/conversationAccess.test.ts:91:25
+     89|     await read();
+     90|     vi.mocked(getFeed).mockRejectedValueOnce(new ApiError(403, 'forbid…
+     91|     await expect(read()).rejects.toThrow();
+       |                         ^
+     92|     expect(client.getQueryData(key)).toBeUndefined();
+     93|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 11 passed (12)
+   Start at  20:42:44
+   Duration  348ms (import 46%, tests 28%, transform 25%, worker 1%)
+

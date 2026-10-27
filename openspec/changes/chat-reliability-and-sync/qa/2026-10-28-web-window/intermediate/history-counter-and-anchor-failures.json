@@ -1,0 +1,509 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.window.config.ts",
+      "--workers",
+      "1",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/playwright.window.config.ts",
+    "rootDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "39-chat-window.spec.ts",
+      "file": "39-chat-window.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "bounded history preserves focus and visible anchor across prepend and late resize",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9299,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts:179:5",
+                    "location": {
+                      "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                      "column": 5,
+                      "line": 179
+                    },
+                    "snippet": "  177 |   await expect(\n  178 |     page.getByRole('button', { name: '2 новых сообщения', exact: true }),\n> 179 |   ).toBeVisible();\n      |     ^\n  180 |   const afterRemote = await capture();\n  181 |   expect(afterRemote.id).toBe(beforeSend.id);\n  182 |   expect(Math.abs(afterRemote.offset - beforeSend.offset)).toBeLessThanOrEqual(2);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                        "column": 5,
+                        "line": 179
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n\n\n  177 |   await expect(\n  178 |     page.getByRole('button', { name: '2 новых сообщения', exact: true }),\n> 179 |   ).toBeVisible();\n      |     ^\n  180 |   const afterRemote = await capture();\n  181 |   expect(afterRemote.id).toBe(beforeSend.id);\n  182 |   expect(Math.abs(afterRemote.offset - beforeSend.offset)).toBeLessThanOrEqual(2);\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts:179:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:17:51.260Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-chromium/test-failed-2.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                    "column": 5,
+                    "line": 179
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a78fd20fed027cd19008-e8ebf7a3130016bd7584",
+          "file": "39-chat-window.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "bounded history preserves focus and visible anchor across prepend and late resize",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10388,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts:179:5",
+                    "location": {
+                      "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                      "column": 5,
+                      "line": 179
+                    },
+                    "snippet": "  177 |   await expect(\n  178 |     page.getByRole('button', { name: '2 новых сообщения', exact: true }),\n> 179 |   ).toBeVisible();\n      |     ^\n  180 |   const afterRemote = await capture();\n  181 |   expect(afterRemote.id).toBe(beforeSend.id);\n  182 |   expect(Math.abs(afterRemote.offset - beforeSend.offset)).toBeLessThanOrEqual(2);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                        "column": 5,
+                        "line": 179
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '2 новых сообщения', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: '2 новых сообщения', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '2 новых сообщения', exact: true })\u001b[22m\n\n\n  177 |   await expect(\n  178 |     page.getByRole('button', { name: '2 новых сообщения', exact: true }),\n> 179 |   ).toBeVisible();\n      |     ^\n  180 |   const afterRemote = await capture();\n  181 |   expect(afterRemote.id).toBe(beforeSend.id);\n  182 |   expect(Math.abs(afterRemote.offset - beforeSend.offset)).toBeLessThanOrEqual(2);\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts:179:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:18:03.060Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-mobile-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-mobile-webkit/test-failed-2.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/39-chat-window-bounded-his-83ad8-oss-prepend-and-late-resize-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/39-chat-window.spec.ts",
+                    "column": 5,
+                    "line": 179
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a78fd20fed027cd19008-f2107798a8826c22a04a",
+          "file": "39-chat-window.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "40-chat-history-error.spec.ts",
+      "file": "40-chat-history-error.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "history failure remains local and retry preserves composer and visible anchor",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 977,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"e20582a7-264e-4e91-9ebb-32f520dc3afc\"\u001b[39m\nReceived: \u001b[31m\"0615bf95-6e7a-4bda-afd8-4564af1aaab2\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"e20582a7-264e-4e91-9ebb-32f520dc3afc\"\u001b[39m\nReceived: \u001b[31m\"0615bf95-6e7a-4bda-afd8-4564af1aaab2\"\u001b[39m\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts:70:20",
+                    "location": {
+                      "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                      "column": 20,
+                      "line": 70
+                    },
+                    "snippet": "  68 |   await expect(page.getByRole('alert')).toHaveCount(0);\n  69 |   const after = await capture();\n> 70 |   expect(after.id).toBe(before.id);\n     |                    ^\n  71 |   expect(Math.abs(after.offset - before.offset)).toBeLessThanOrEqual(2);\n  72 |   await expect(composer).toHaveValue('Черновик остаётся');\n  73 |   await test.info().attach('history-retry-anchor', {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                        "column": 20,
+                        "line": 70
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"e20582a7-264e-4e91-9ebb-32f520dc3afc\"\u001b[39m\nReceived: \u001b[31m\"0615bf95-6e7a-4bda-afd8-4564af1aaab2\"\u001b[39m\n\n  68 |   await expect(page.getByRole('alert')).toHaveCount(0);\n  69 |   const after = await capture();\n> 70 |   expect(after.id).toBe(before.id);\n     |                    ^\n  71 |   expect(Math.abs(after.offset - before.offset)).toBeLessThanOrEqual(2);\n  72 |   await expect(composer).toHaveValue('Черновик остаётся');\n  73 |   await test.info().attach('history-retry-anchor', {\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts:70:20"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:18:01.612Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                    "column": 20,
+                    "line": 70
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9bd27de4334abfd16013-e34a3c83c28e4b3ac226",
+          "file": "40-chat-history-error.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "history failure remains local and retry preserves composer and visible anchor",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1362,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m928246f2-f5b6-4eb7-8c06-beefc23dc13\u001b[27m0\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m659561e4-c812-4f30-9058-0b92685542d\u001b[27m0\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m928246f2-f5b6-4eb7-8c06-beefc23dc13\u001b[27m0\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m659561e4-c812-4f30-9058-0b92685542d\u001b[27m0\"\u001b[39m\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts:70:20",
+                    "location": {
+                      "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                      "column": 20,
+                      "line": 70
+                    },
+                    "snippet": "  68 |   await expect(page.getByRole('alert')).toHaveCount(0);\n  69 |   const after = await capture();\n> 70 |   expect(after.id).toBe(before.id);\n     |                    ^\n  71 |   expect(Math.abs(after.offset - before.offset)).toBeLessThanOrEqual(2);\n  72 |   await expect(composer).toHaveValue('Черновик остаётся');\n  73 |   await test.info().attach('history-retry-anchor', {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                        "column": 20,
+                        "line": 70
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m928246f2-f5b6-4eb7-8c06-beefc23dc13\u001b[27m0\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m659561e4-c812-4f30-9058-0b92685542d\u001b[27m0\"\u001b[39m\n\n  68 |   await expect(page.getByRole('alert')).toHaveCount(0);\n  69 |   const after = await capture();\n> 70 |   expect(after.id).toBe(before.id);\n     |                    ^\n  71 |   expect(Math.abs(after.offset - before.offset)).toBeLessThanOrEqual(2);\n  72 |   await expect(composer).toHaveValue('Черновик остаётся');\n  73 |   await test.info().attach('history-retry-anchor', {\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts:70:20"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:18:14.446Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-mobile-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/40-chat-history-error-hist-2fd9f-composer-and-visible-anchor-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/40-chat-history-error.spec.ts",
+                    "column": 20,
+                    "line": 70
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9bd27de4334abfd16013-df82a66975e468a70dac",
+          "file": "40-chat-history-error.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T21:17:50.528Z",
+    "duration": 25614.459,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

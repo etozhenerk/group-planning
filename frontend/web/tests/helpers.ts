@@ -96,14 +96,30 @@ export const create = async (
 };
 
 export const inviteLink = async (page: Page): Promise<string> => {
-  await page
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
+  const invite = page
     .getByRole('button', { name: 'Пригласить друзей', exact: true })
-    .first()
-    .click();
+    .first();
+
+  const throughInfo = !(await invite.isVisible());
+
+  if (throughInfo) {
+    await page.getByRole('button', { name: 'Информация о встрече', exact: true }).click();
+  }
+
+  await invite.click();
   const field = page.getByLabel('Ссылка приглашения');
   await expect(field).toBeVisible();
   const url = await field.inputValue();
   await page.keyboard.press('Escape');
+
+  if (throughInfo) {
+    await expect(field).not.toBeVisible();
+    await expect(page.locator('dialog:modal')).toHaveCount(1);
+    await page.keyboard.press('Escape');
+  }
+
+  await expect(page.locator('dialog:modal')).toHaveCount(0);
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 
   return url;
@@ -123,7 +139,7 @@ export const csrf = async (page: Page): Promise<string> => {
 
 export const writeHeaders = async (page: Page, key: string = randomUUID()) => {
   return {
-    Origin: 'https://127.0.0.1:8444',
+    Origin: new URL(page.url()).origin,
     'X-CSRF-Token': await csrf(page),
     'Idempotency-Key': key,
   };
@@ -157,28 +173,32 @@ export const expectMessageSide = async (
   side: 'left' | 'right',
 ) => {
   const message = page.getByTestId('feed-message').filter({ hasText: text });
-  const [row, bubble, avatar] = await Promise.all([
-    message.boundingBox(),
-    message.getByTestId('message-bubble').boundingBox(),
-    message.getByTestId('avatar').boundingBox(),
-  ]);
+  await expect(async () => {
+    const { row, bubble, avatar } = await message.evaluate((element) => ({
+      row: element.getBoundingClientRect().toJSON() as DOMRect,
+      bubble: element
+        .querySelector('[data-testid="message-bubble"]')!
+        .getBoundingClientRect()
+        .toJSON() as DOMRect,
+      avatar: element
+        .querySelector('[data-testid="avatar"]')!
+        .getBoundingClientRect()
+        .toJSON() as DOMRect,
+    }));
 
-  if (!row || !bubble || !avatar) {
-    throw new Error('Message is not visible');
-  }
+    const edge = side === 'right' ? row.x + row.width : row.x;
+    const avatarEdge = side === 'right' ? avatar.x + avatar.width : avatar.x;
+    expect(Math.abs(edge - avatarEdge)).toBeLessThan(1);
 
-  const edge = side === 'right' ? row.x + row.width : row.x;
-  const avatarEdge = side === 'right' ? avatar.x + avatar.width : avatar.x;
-  expect(Math.abs(edge - avatarEdge)).toBeLessThan(1);
+    if (side === 'right') {
+      expect(avatar.x).toBeGreaterThan(bubble.x + bubble.width);
+    } else {
+      expect(bubble.x).toBeGreaterThan(avatar.x + avatar.width);
+    }
 
-  if (side === 'right') {
-    expect(avatar.x).toBeGreaterThan(bubble.x + bubble.width);
-  } else {
-    expect(bubble.x).toBeGreaterThan(avatar.x + avatar.width);
-  }
-
-  expect(bubble.x).toBeGreaterThanOrEqual(row.x);
-  expect(bubble.x + bubble.width).toBeLessThanOrEqual(row.x + row.width + 1);
+    expect(bubble.x).toBeGreaterThanOrEqual(row.x);
+    expect(bubble.x + bubble.width).toBeLessThanOrEqual(row.x + row.width + 1);
+  }).toPass();
 };
 
 export const actionSurface = (page: Page, title: string) =>

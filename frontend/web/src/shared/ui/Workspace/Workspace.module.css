@@ -101,3 +101,23 @@
 .conversationContent > .mobileBrand {
   display: none;
 }
+
+.conversation-workspace[data-mobile='true'] {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset-inline: 0;
+  top: var(--visual-viewport-top, 0);
+  height: var(--visual-viewport-height, 100dvh);
+  padding-bottom: 0;
+  overscroll-behavior: none;
+}
+
+.conversation-workspace.demo[data-mobile='true'] {
+  top: calc(var(--visual-viewport-top, 0) + var(--ds-space-s32));
+  height: calc(var(--visual-viewport-height, 100dvh) - var(--ds-space-s32));
+}
+
+.conversation-workspace[data-mobile='true'] > .navigation-slot {
+  display: none;
+}

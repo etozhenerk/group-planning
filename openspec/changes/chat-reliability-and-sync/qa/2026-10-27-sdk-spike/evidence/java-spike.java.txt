@@ -1,0 +1,45 @@
+import io.github.centrifugal.centrifuge.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
+
+public class Spike {
+ static String base; static OkHttpClient http;
+ static String control(String op) throws Exception { try(var response=http.newCall(new Request.Builder().url(base+"/control/"+op+"?who=java").build()).execute()){ if(!response.isSuccessful())throw new AssertionError(response.code()); return response.body().string(); } }
+ static void waitFor(String description,BooleanSupplier predicate) throws Exception { for(int i=0;i<500;i++){ if(predicate.getAsBoolean())return;Thread.sleep(20); }throw new AssertionError("timeout: "+description); }
+ static void check(boolean b){if(!b)throw new AssertionError();}
+ public static void main(String[] args) throws Exception {
+  base=Files.readString(Path.of("../endpoint.txt"));http=new OkHttpClient();
+  Options options=new Options();options.setHeaders(Map.of("Authorization","Bearer spike-native-java"));options.setMinReconnectDelay(800);options.setMaxReconnectDelay(800);options.setOkHttpClient(http);
+  AtomicInteger connections=new AtomicInteger();AtomicInteger disconnected=new AtomicInteger();AtomicInteger denied=new AtomicInteger();
+  List<Boolean> recoveries=new CopyOnWriteArrayList<>();List<String> hints=new CopyOnWriteArrayList<>();
+  Client client=new Client(base.replace("http","ws")+"/api/v1/realtime",options,new io.github.centrifugal.centrifuge.EventListener(){
+   public void onConnected(Client c,ConnectedEvent e){connections.incrementAndGet();}
+   public void onDisconnected(Client c,DisconnectedEvent e){disconnected.incrementAndGet();}
+  });
+  Subscription sub=client.newSubscription("meeting:java",new SubscriptionEventListener(){
+   public void onSubscribed(Subscription s,SubscribedEvent e){recoveries.add(e.getRecovered());}
+   public void onPublication(Subscription s,PublicationEvent e){hints.add(new String(e.getData(),StandardCharsets.UTF_8));}
+  });
+  try {
+   sub.subscribe();client.connect();waitFor("handshake",()->recoveries.size()==1);control("sync");
+   Client outsider=new Client(base.replace("http","ws")+"/api/v1/realtime",options,new io.github.centrifugal.centrifuge.EventListener(){});
+   Subscription foreign=outsider.newSubscription("meeting:other",new SubscriptionEventListener(){ public void onUnsubscribed(Subscription s,UnsubscribedEvent e){denied.set(e.getCode());} });
+   foreign.subscribe();outsider.connect();waitFor("foreign denied",()->denied.get()==103);outsider.close(1000);
+   CompletableFuture<Boolean> rejected=new CompletableFuture<>();client.publish("meeting:java","{}".getBytes(StandardCharsets.UTF_8),(err,res)->rejected.complete(err!=null));check(rejected.get(5,TimeUnit.SECONDS));
+   control("publish");waitFor("hint",()->hints.size()==1);check(hints.get(0).contains("\"9007199254740993\""));check(!hints.get(0).contains("text"));
+   control("disconnect");waitFor("connecting",()->client.getState()==ClientState.CONNECTING);control("publish");waitFor("recovery",()->recoveries.size()==2&&hints.size()==2);check(recoveries.get(1));control("sync");
+   control("disconnect");waitFor("connecting again",()->client.getState()==ClientState.CONNECTING);control("publish");control("drop");control("publish");waitFor("recovery lost",()->recoveries.size()==3);check(!recoveries.get(2));control("sync");
+   Thread.sleep(3000);String stats=control("stats");check(stats.matches("(?s).*\"refresh_java\":[1-9][0-9]*.*"));
+   control("revoke");waitFor("revoke",()->disconnected.get()>0);int n=connections.get();Thread.sleep(1200);check(connections.get()==n);
+   client.close(1000);Thread.sleep(200);check(!http.dispatcher().executorService().isShutdown());control("stats");
+   System.out.println("{\"result\":\"passed\",\"client\":\"centrifuge-java@0.8.0\",\"host\":\"JDK17; Gradle8.14.3; OkHttp4.12.0\",\"auth\":\"Bearer header\",\"recoveries\":"+recoveries+",\"hintCount\":"+hints.size()+",\"httpCatchups\":3,\"foreignChannelCode\":"+denied.get()+",\"customOkHttpSurvivesClose\":true,\"connections\":"+connections.get()+"}");
+  } finally {client.close(1000);http.dispatcher().executorService().shutdown();http.connectionPool().evictAll();}
+ }
+}

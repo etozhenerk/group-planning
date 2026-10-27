@@ -5,6 +5,14 @@ func (tx *transaction) UserRemoved(id string) (bool, error) {
 }
 
 func (tx *transaction) RemoveUser(id string) error {
+	if _, err := tx.exec("DELETE FROM meeting_read_markers WHERE user_id=$1", id); err != nil {
+		return err
+	}
+
+	if _, err := tx.exec("DELETE FROM realtime_outbox WHERE target='user' AND target_id=$1", id); err != nil {
+		return err
+	}
+
 	if _, err := tx.exec("INSERT INTO removed_meeting_users(user_id) VALUES($1) ON CONFLICT DO NOTHING", id); err != nil {
 		return err
 	}
@@ -30,6 +38,7 @@ func (tx *transaction) AnonymizeFeed(meetingID, userID, name string) error {
 
 func (tx *transaction) DeleteMeeting(id string) error {
 	queries := []string{
+		"DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1",
 		`DELETE FROM request_receipts WHERE document->>'ResourceID' IN (
 		 SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1
 		 UNION SELECT id FROM place_polls WHERE meeting_id=$1

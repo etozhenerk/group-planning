@@ -1,0 +1,492 @@
+/private/tmp/IndependentComposerReview.swift:9:27: warning: main actor-isolated property 'orientation' can not be mutated from a nonisolated context
+ 7 |     override func setUpWithError() throws {
+ 8 |         continueAfterFailure = false
+ 9 |         XCUIDevice.shared.orientation = .portrait
+   |                           `- warning: main actor-isolated property 'orientation' can not be mutated from a nonisolated context
+10 |         app = XCUIApplication(bundleIdentifier: "dev.groupplanning.ios.uitesthost")
+11 |     }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIDevice.h:55:43: note: mutation of this property is only permitted within the actor
+ 53 | #if TARGET_OS_IOS
+ 54 | /*! The orientation of the device. */
+ 55 | @property (nonatomic) UIDeviceOrientation orientation;
+    |                                           `- note: mutation of this property is only permitted within the actor
+ 56 | /*!
+ 57 |  * Provides access to an object representing the Siri interface on the device.
+
+/private/tmp/IndependentComposerReview.swift:9:20: warning: main actor-isolated class property 'shared' can not be mutated from a nonisolated context
+ 7 |     override func setUpWithError() throws {
+ 8 |         continueAfterFailure = false
+ 9 |         XCUIDevice.shared.orientation = .portrait
+   |                    `- warning: main actor-isolated class property 'shared' can not be mutated from a nonisolated context
+10 |         app = XCUIApplication(bundleIdentifier: "dev.groupplanning.ios.uitesthost")
+11 |     }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIDevice.h:42:41: note: mutation of this class property is only permitted within the actor
+ 40 | 
+ 41 | /*! The current device. */
+ 42 | @property (class, readonly) XCUIDevice *sharedDevice;
+    |                                         `- note: mutation of this class property is only permitted within the actor
+ 43 | 
+ 44 | + (instancetype)new XCUI_UNAVAILABLE("Access XCUIDevice through +sharedDevice");
+
+/private/tmp/IndependentComposerReview.swift:10:9: warning: main actor-isolated property 'app' can not be mutated from a nonisolated context
+ 4 | @MainActor
+ 5 | final class IndependentComposerReview: XCTestCase {
+ 6 |     private var app: XCUIApplication!
+   |                 `- note: mutation of this property is only permitted within the actor
+ 7 |     override func setUpWithError() throws {
+ 8 |         continueAfterFailure = false
+ 9 |         XCUIDevice.shared.orientation = .portrait
+10 |         app = XCUIApplication(bundleIdentifier: "dev.groupplanning.ios.uitesthost")
+   |         `- warning: main actor-isolated property 'app' can not be mutated from a nonisolated context
+11 |     }
+12 |     private func capture(_ name: String) {
+
+/private/tmp/IndependentComposerReview.swift:10:15: warning: call to main actor-isolated initializer 'init(bundleIdentifier:)' in a synchronous nonisolated context [#ActorIsolatedCall]
+ 8 |         continueAfterFailure = false
+ 9 |         XCUIDevice.shared.orientation = .portrait
+10 |         app = XCUIApplication(bundleIdentifier: "dev.groupplanning.ios.uitesthost")
+   |               `- warning: call to main actor-isolated initializer 'init(bundleIdentifier:)' in a synchronous nonisolated context [#ActorIsolatedCall]
+11 |     }
+12 |     private func capture(_ name: String) {
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIApplication.h:35:1: note: calls to initializer 'init(bundleIdentifier:)' from outside of its actor context are implicitly asynchronous
+ 33 |  * Returns a proxy for an application associated with the specified bundle identifier.
+ 34 |  */
+ 35 | - (instancetype)initWithBundleIdentifier:(NSString *)bundleIdentifier NS_DESIGNATED_INITIALIZER;
+    | `- note: calls to initializer 'init(bundleIdentifier:)' from outside of its actor context are implicitly asynchronous
+ 36 | 
+ 37 | #if TARGET_OS_OSX || TARGET_OS_MACCATALYST
+
+/private/tmp/IndependentComposerReview.swift:28:9: error: cannot find 'XCTAssertTrue' in scope
+26 |         app.launch()
+27 |         let card = app.buttons["meeting-card-cea00000-0000-4000-8000-000000000001"]
+28 |         XCTAssertTrue(card.waitForExistence(timeout: 20))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+29 |         card.tap()
+30 |         let plus = app.buttons["meeting-add"]
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:31:9: error: cannot find 'XCTAssertTrue' in scope
+29 |         card.tap()
+30 |         let plus = app.buttons["meeting-add"]
+31 |         XCTAssertTrue(plus.waitForExistence(timeout: 10))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+32 |         capture("ios-chat-before")
+33 |         if let data = try? Data(contentsOf: context), let string = String(data:data,encoding:.utf8) { print("INDEPENDENT_CONTEXT " + string) }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:37:9: error: cannot find 'XCTAssertEqual' in scope
+35 |         input.tap()
+36 |         input.typeText("До XX после")
+37 |         XCTAssertEqual(input.value as? String, "До XX после")
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+38 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+39 |         capture("ios-composer-ime")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:38:9: error: cannot find 'XCTAssertTrue' in scope
+36 |         input.typeText("До XX после")
+37 |         XCTAssertEqual(input.value as? String, "До XX после")
+38 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+39 |         capture("ios-composer-ime")
+40 |         app.buttons["composer-emoji-toggle"].tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:42:9: error: cannot find 'XCTAssertTrue' in scope
+40 |         app.buttons["composer-emoji-toggle"].tap()
+41 |         let search = app.textFields["emoji-search"]
+42 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+43 |         XCTAssertEqual(app.keyboards.count, 0)
+44 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:43:9: error: cannot find 'XCTAssertEqual' in scope
+41 |         let search = app.textFields["emoji-search"]
+42 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+43 |         XCTAssertEqual(app.keyboards.count, 0)
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+44 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+45 |         capture("ios-emoji-open")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:43:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+41 |         let search = app.textFields["emoji-search"]
+42 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+43 |         XCTAssertEqual(app.keyboards.count, 0)
+   |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+44 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+45 |         capture("ios-emoji-open")
+
+/private/tmp/IndependentComposerReview.swift:44:9: error: cannot find 'XCTAssertTrue' in scope
+42 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+43 |         XCTAssertEqual(app.keyboards.count, 0)
+44 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+45 |         capture("ios-emoji-open")
+46 |         search.tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:44:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+42 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+43 |         XCTAssertEqual(app.keyboards.count, 0)
+44 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+   |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+45 |         capture("ios-emoji-open")
+46 |         search.tap()
+
+/private/tmp/IndependentComposerReview.swift:48:9: error: cannot find 'XCTAssertTrue' in scope
+46 |         search.tap()
+47 |         search.typeText("пицца")
+48 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+49 |         let pizza = app.buttons["emoji-🍕"]
+50 |         XCTAssertTrue(pizza.waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:50:9: error: cannot find 'XCTAssertTrue' in scope
+48 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+49 |         let pizza = app.buttons["emoji-🍕"]
+50 |         XCTAssertTrue(pizza.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+51 |         capture("ios-search-ime")
+52 |         pizza.tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:53:9: error: cannot find 'XCTAssertEqual' in scope
+51 |         capture("ios-search-ime")
+52 |         pizza.tap()
+53 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+54 |         XCTAssertTrue(search.exists)
+55 |         app.buttons["composer-emoji-toggle"].tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:54:9: error: cannot find 'XCTAssertTrue' in scope
+52 |         pizza.tap()
+53 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+54 |         XCTAssertTrue(search.exists)
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+55 |         app.buttons["composer-emoji-toggle"].tap()
+56 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:56:9: error: cannot find 'XCTAssertTrue' in scope
+54 |         XCTAssertTrue(search.exists)
+55 |         app.buttons["composer-emoji-toggle"].tap()
+56 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+57 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+58 |         capture("ios-keyboard-return")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:57:9: error: cannot find 'XCTAssertEqual' in scope
+55 |         app.buttons["composer-emoji-toggle"].tap()
+56 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+57 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+58 |         capture("ios-keyboard-return")
+59 |         plus.tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:60:9: error: cannot find 'XCTAssertTrue' in scope
+58 |         capture("ios-keyboard-return")
+59 |         plus.tap()
+60 |         XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+61 |         capture("ios-menu-open")
+62 |         plus.tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:63:9: error: cannot find 'XCTAssertTrue' in scope
+61 |         capture("ios-menu-open")
+62 |         plus.tap()
+63 |         XCTAssertTrue(plus.isHittable)
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+64 |         plus.tap()
+65 |         XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:65:9: error: cannot find 'XCTAssertTrue' in scope
+63 |         XCTAssertTrue(plus.isHittable)
+64 |         plus.tap()
+65 |         XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+66 |         app.buttons["new-date-poll"].tap()
+67 |         let close = app.buttons["action-form-close"]
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:68:9: error: cannot find 'XCTAssertTrue' in scope
+66 |         app.buttons["new-date-poll"].tap()
+67 |         let close = app.buttons["action-form-close"]
+68 |         XCTAssertTrue(close.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+69 |         capture("ios-date-open")
+70 |         close.tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:71:9: error: cannot find 'XCTAssertTrue' in scope
+69 |         capture("ios-date-open")
+70 |         close.tap()
+71 |         XCTAssertTrue(plus.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+72 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+73 |         app.buttons["composer-emoji-toggle"].tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:72:9: error: cannot find 'XCTAssertEqual' in scope
+70 |         close.tap()
+71 |         XCTAssertTrue(plus.waitForExistence(timeout: 5))
+72 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+73 |         app.buttons["composer-emoji-toggle"].tap()
+74 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:74:9: error: cannot find 'XCTAssertTrue' in scope
+72 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+73 |         app.buttons["composer-emoji-toggle"].tap()
+74 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+75 |         app.typeKey(.escape, modifierFlags: [])
+76 |         XCTAssertFalse(search.exists)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:76:9: error: cannot find 'XCTAssertFalse' in scope
+74 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+75 |         app.typeKey(.escape, modifierFlags: [])
+76 |         XCTAssertFalse(search.exists)
+   |         `- error: cannot find 'XCTAssertFalse' in scope
+77 |         XCTAssertEqual(app.keyboards.count, 0)
+78 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+/private/tmp/IndependentComposerReview.swift:77:9: error: cannot find 'XCTAssertEqual' in scope
+75 |         app.typeKey(.escape, modifierFlags: [])
+76 |         XCTAssertFalse(search.exists)
+77 |         XCTAssertEqual(app.keyboards.count, 0)
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+78 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+79 |         capture("ios-escape-dismiss")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:77:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+75 |         app.typeKey(.escape, modifierFlags: [])
+76 |         XCTAssertFalse(search.exists)
+77 |         XCTAssertEqual(app.keyboards.count, 0)
+   |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+78 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+79 |         capture("ios-escape-dismiss")
+
+/private/tmp/IndependentComposerReview.swift:78:9: error: cannot find 'XCTAssertEqual' in scope
+76 |         XCTAssertFalse(search.exists)
+77 |         XCTAssertEqual(app.keyboards.count, 0)
+78 |         XCTAssertEqual(input.value as? String, "До XX после🍕")
+   |         `- error: cannot find 'XCTAssertEqual' in scope
+79 |         capture("ios-escape-dismiss")
+80 |         app.buttons["composer-emoji-toggle"].tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+/private/tmp/IndependentComposerReview.swift:81:9: error: cannot find 'XCTAssertTrue' in scope
+79 |         capture("ios-escape-dismiss")
+80 |         app.buttons["composer-emoji-toggle"].tap()
+81 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+82 |         app.buttons["composer-emoji-toggle"].tap()
+83 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+/private/tmp/IndependentComposerReview.swift:83:9: error: cannot find 'XCTAssertTrue' in scope
+81 |         XCTAssertTrue(search.waitForExistence(timeout: 5))
+82 |         app.buttons["composer-emoji-toggle"].tap()
+83 |         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+   |         `- error: cannot find 'XCTAssertTrue' in scope
+84 |         capture("ios-reopen-keyboard-return")
+85 |     }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+[#ActorIsolatedCall]: <https://docs.swift.org/compiler/documentation/diagnostics/actor-isolated-call>
+Traceback (most recent call last):
+  File "/tmp/somewhere-ios-independent-run08/compile-runner.py", line 19, in <module>
+    subprocess.run(command,check=True)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['xcrun', 'swiftc', '-emit-library', '-module-name', 'SomewhereUITests', '-swift-version', '6', '-target', 'arm64-apple-ios27.0-simulator', '-sdk', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk', '-F', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks', '-F', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks', '-L', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib', '-framework', 'XCTest', '-lXCTestSwiftSupport', '-Xlinker', '-rpath', '-Xlinker', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks', '-Xlinker', '-rpath', '-Xlinker', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib', '-o', '/private/tmp/somewhere-ios-independent-run08/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests', '/private/tmp/IndependentComposerReview.swift']' returned non-zero exit status 1.

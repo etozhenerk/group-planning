@@ -22,6 +22,10 @@ struct MeetingCardView: View {
                         )
                         .accessibilityLabel("Вы организатор").accessibilityHidden(false)
                     }
+                    if let count = meeting.unreadCount, count > .zero {
+                        Spacer(minLength: DesignTokens.spaceS8)
+                        ChatUnreadBadge(count: count)
+                    }
                 }
                 HStack(alignment: .top, spacing: 6) {
                     ExperienceIcon(kind: .pin, size: 15).padding(.top, 1)

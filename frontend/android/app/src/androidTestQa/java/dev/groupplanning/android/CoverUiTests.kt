@@ -1,5 +1,6 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasTestTag
@@ -88,7 +89,7 @@ class CoverUiTests {
             compose.waitUntil(10_000) {
                 compose.onAllNodes(hasTestTag("cover-loading")).fetchSemanticsNodes().isEmpty()
             }
-            compose.onNodeWithTag("settings-save").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
             fixture.waitTag("feed-timeline")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
             fixture.waitTag("open-settings")
@@ -97,7 +98,7 @@ class CoverUiTests {
             fixture.waitTag("meeting-settings")
             compose.onNodeWithTag("cover-remove").performScrollTo().performClick()
             compose.onNodeWithTag("meeting-cover").assertDoesNotExist()
-            compose.onNodeWithTag("settings-save").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
             fixture.waitTag("feed-timeline")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
             fixture.waitTag("open-settings")

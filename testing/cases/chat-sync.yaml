@@ -1,489 +1,727 @@
 - id: TC-CHAT-SYNC-2D68FE69
   title: "Подтверждённая последовательность обновлений: Своя отправка опередила получение чужой"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Подтверждённая последовательность обновлений
     scenario: Своя отправка опередила получение чужой
     sha256: 1b0831757e3ea8a0cd162aac226599266f25c4f5ed957b28d3190055e4e28d0d
-  platforms:
+  platforms: &a2
     - web
     - ios
     - android
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Система SHALL восстанавливать все доступные изменения после подтверждённого курсора. Получение
-      собственной отправки или метаданных о хвосте SHALL NOT подтверждать получение промежуточных
-      изменений.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Владелец клиента получил M до sequence=100; transport позволяет отдельно выпускать GET и POST
+      ответы, доступ A действует.
   steps:
-    - action: клиент получил записи до 100, чужая 101 сохранена, а ответ на собственную 102 пришёл раньше
-        следующей синхронизации
-      expected: последующая синхронизация получает 101 и сохраняет единственный экземпляр 102 в серверном
-        порядке
+    - action: Сохранить чужую 101; вернуть ACK собственной 102 до следующего GET. Записать display entries и
+        следующий запрос.
+      expected: ACK виден один раз, но receive cursor остаётся 100 и запрос начинается после 100, не
+        102/latest_sequence.
+    - action: Вернуть 101/102 двумя страницами; повторить страницу и выполнить before=100. Затем вернуть пустой
+        incremental.
+      expected: Итог 100/101/102 в серверном порядке, дублей нет. Cursor двигается лишь с применёнными GET;
+        history/пустой ответ его не меняют.
+    - action: Повторить на пустом initial и sequence выше 2^53; прервать применение второй страницы.
+      expected: После пустого initial используется after=0; precision сохранена, cursor не опережает
+        применённые данные после ошибки.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/src/entities/meeting/model/loadChat.test.ts
+          selector: "uses snapshot and then the confirmed cursor, committing each bounded page before the next"
+          runner: web-check
+          level: integration
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-5EFD24A6
   title: "Подтверждённая последовательность обновлений: Изменение уже показанной карточки"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Подтверждённая последовательность обновлений
     scenario: Изменение уже показанной карточки
     sha256: bc5e55b53874b8d5d6f13d15192b462ade5db6a77b694ac42d5c4151bba7a78b
-  platforms:
+  platforms: &a1
+    - backend
     - web
     - ios
     - android
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Система SHALL восстанавливать все доступные изменения после подтверждённого курсора. Получение
-      собственной отправки или метаданных о хвосте SHALL NOT подтверждать получение промежуточных
-      изменений.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Окно содержит старую карточку опроса; за его пределами есть запись автора C. Сохранены projection
+      versions и cursor.
   steps:
-    - action: завершился опрос или изменилось авторство старой записи после удаления аккаунта
-      expected: синхронизация обновляет затронутые данные без требования нового сообщения в хвосте
+    - action: Закрыть опрос штатной операцией/worker без нового сообщения и выполнить sync.
+      expected: Проекция старой карточки обновлена; нет polling отдельной карточки и зависимости от нового хвоста.
+    - action: Обезличить C, получить history_invalidated; повторить старую страницу с меньшей
+        projection_version.
+      expected: Выдана актуальная разрешённая проекция без прежнего имени; старая версия не возвращает
+        удалённые данные.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/src/entities/meeting/model/applyChatProjections.test.ts
+          selector: "cancels an older card response and preserves a newer command revision"
+          runner: web-check
+          level: integration
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-BC07BEB1
   title: "Восстановление после разрыва и перезапуска: Разрыв между снимком и подпиской"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Восстановление после разрыва и перезапуска
     scenario: Разрыв между снимком и подпиской
     sha256: 087d124d4640914d79821e3fc74a8e6be59f625c6d28169aadecc3f481c4147f
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a1
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
-      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
-      проверкой показанных данных.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Есть HTTP snapshot и управляемая задержка подтверждения подписки. Для backend используется protocol
+      client fixture, для клиента — его настоящий adapter.
   steps:
-    - action: изменение сохранено после получения начального снимка, но до готовности подписки
-      expected: клиент получает его при обязательной последующей сверке
+    - action: Между snapshot и subscribe commit создать запись B; подтвердить подписку без доставки hint.
+      expected: Обязательный HTTP catch-up от snapshot cursor получает запись ровно один раз.
+    - action: Разорвать связь на управляемые 5 минут, добавить 100 изменений и восстановить, включая успешный
+        SDK recovery.
+      expected: HTTP catch-up выполняется даже после SDK recovery; все изменения применены. В записанном
+        профиле RTT 150 мс восстановление не дольше 2 с; недоступный замер не объявляется pass.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/38-chat-sync.spec.ts
+          selector: "real SDK snapshot-subscribe catch-up closes the gap and healthy idle has no HTTP polling"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-AA76CADB
   title: "Восстановление после разрыва и перезапуска: Сбой после commit до уведомления"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Восстановление после разрыва и перезапуска
     scenario: Сбой после commit до уведомления
     sha256: 0878f8c98471b8d19ae10bf2ecfd20b99956e6bb191eb453d87cc8c29f94c3c5
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: &a3
+    - backend
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
-      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
-      проверкой показанных данных.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Memory используется для rollback/dispatch fault; сохранность рестарта проверяется только на
+      изолированной somewhere_integration. Есть управляемые точки до publish и после publish до отметки.
   steps:
-    - action: сервер сохранил сообщение и перезапустился до уведомления клиентов
-      expected: сообщение остаётся в истории и обнаруживается восстановлением; повтор публикации не
-        создаёт дубля
+    - action: Commit сообщения вместе с change/outbox; остановить dispatcher до publish, затем перезапустить
+        API/dispatcher на SQL.
+      expected: Сообщение, change и недоставленный outbox сохранены; drain публикует hint без нового сообщения.
+    - action: Повторить crash после publish до отметки и потерю NOTIFY; затем rollback предметной транзакции.
+      expected: Повтор hint безопасен; периодический drain восстанавливает доставку, rollback не оставляет ни
+        запись, ни change/outbox.
+    - action: Ограничить очередь медленного клиента и исчерпать recovery retention.
+      expected: Потребитель отключается восстановимо; недоставленный outbox не теряется молча, HTTP
+        catch-up/reset сохраняет доступные изменения.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-F6CFB5E9
   title: "Восстановление после разрыва и перезапуска: Курсор вышел за срок восстановления"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Восстановление после разрыва и перезапуска
     scenario: Курсор вышел за срок восстановления
     sha256: 6b191ed122fcaea296b445f1e7d3ed95249be1ba1340b69d9ddcf65272a4f7eb
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a1
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL выполнять сверку с постоянной историей после подключения и восстановления связи.
-      Недоступный или устаревший курсор SHALL приводить к явному сбросу синхронизации с повторной
-      проверкой показанных данных.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Сохранены cursor/epoch, допустимый outbox и viewport anchor. Retention управляется fixture, без
+      смены системных часов.
   steps:
-    - action: сервер больше не поддерживает переданный курсор
-      expected: клиент получает явный результат сброса, пересобирает актуальное окно и сохраняет ещё
-        допустимые исходящие
+    - action: Обрезать journal или сменить epoch; запросить прежний cursor.
+      expected: 410 sync_reset_required, не пустая успешная страница. Некорректный cursor даёт 400; 401/403/404
+        не создают бесконечного retry.
+    - action: Выполнить разрешённый новый snapshot и повторить запоздалый ответ прежнего epoch.
+      expected: Окно пересверено, допустимые outbox/anchor сохранены; старый ответ отброшен.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/src/entities/meeting/model/loadChat.test.ts
+          selector: "replaces invalidated history and handles 410 with a fresh authorized snapshot"
+          runner: web-check
+          level: integration
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-E77C7AE6
   title: "Устойчивое намерение отправить: Завершение процесса до ответа"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Устойчивое намерение отправить
     scenario: Завершение процесса до ответа
     sha256: e8bf54c9216111e94adced3da0b5ec75ddfe1cca02a7f7adb8b75d2305261ea8
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
-      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
-      другое содержимое SHALL отклоняться.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Работает настоящий платформенный outbox adapter; web IndexedDB, native protected storage. Test
+      transport умеет удержать ACK; приложение/хранилище можно холодно открыть тем же аккаунтом.
   steps:
-    - action: приложение закрыто после локального сохранения и серверного commit, но до получения ответа
-      expected: после входа тем же аккаунтом клиент сверяет прежний ID и показывает одну подтверждённую
-        запись
+    - action: Сохранить intent, начать отправку, commit на сервере и завершить процесс до ACK; открыть тем же
+        аккаунтом.
+      expected: До очистки draft intent был на диске. После проверки аккаунта/прав повтор использует прежние ID
+        и тело; серверная запись одна.
+    - action: На web открыть вторую вкладку, передать ей очередь после закрытия первой; затем выполнить logout.
+      expected: Атомарное владение не создаёт двух активных отправок одного intent; logout очищает общее
+        хранилище и владельцев обеих вкладок. Native подтверждает изоляцию после cold start.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/37-chat-persistence.spec.ts
+          selector: "reload after server commit and lost ACK reconciles one message without dropping a new draft"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-6EF9F915
   title: "Устойчивое намерение отправить: Ошибка локального хранилища"
   lifecycle: active
-  level: e2e
+  level: unit
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Устойчивое намерение отправить
     scenario: Ошибка локального хранилища
     sha256: c2586c022719ede33a766441209bfc789f0ddf879945d4862cdb915c9703face
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
-      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
-      другое содержимое SHALL отклоняться.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Контролируемый storage adapter возвращает quota/private-mode либо native write/protection error;
+      draft содержит новый текст.
   steps:
-    - action: сохранить намерение не удалось
-      expected: текст остаётся в редакторе, сеть не получает отправку и доступен повтор сохранения
+    - action: Попытаться отправить при ошибке записи intent и проверить эффект сети.
+      expected: POST не вызван, текст не очищен; ошибка сохранения видна в состоянии owner.
+    - action: Разрешить storage и повторить сохранение.
+      expected: Ровно одно намерение сохранено до очистки поля и POST; стабильный ID не заменён повтором сети.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/37-chat-persistence.spec.ts
+          selector: "unavailable IndexedDB leaves the draft untouched and sends no POST"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-DC61BB4A
   title: "Устойчивое намерение отправить: Несколько исходящих без сети"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Устойчивое намерение отправить
     scenario: Несколько исходящих без сети
     sha256: 1f40c49fe764ec1b367dbcfa2f2682775a53f559b0e4e70128e810ddf78835b7
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Каждый клиент SHALL сохранять исходящее с устойчивым ID до очистки поля и сетевой отправки.
-      Повтор с тем же аккаунтом, встречей, ID и содержимым SHALL возвращать прежний результат;
-      другое содержимое SHALL отклоняться.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - M уже открыта с проверенными правами; сеть отключена test transport, storage доступно.
   steps:
-    - action: пользователь последовательно отправляет несколько сообщений в доступном открытом чате при
-        разрыве связи
-      expected: очередь сохраняет отдельные ID и порядок намерений; после восстановления и проверки
-        доступа сообщения отправляются без взаимной перезаписи
+    - action: Последовательно отправить три разных текста; пересоздать owner из хранилища.
+      expected: Три отдельных intent/ID и порядок восстановлены, текущий draft не перезаписан.
+    - action: Восстановить сеть; удержать первый ACK, затем вернуть неопределённый и окончательно отклонённый
+        результаты.
+      expected: На встречу один POST; uncertain сначала сверяется тем же ID, rejected не блокирует следующую
+        запись. Конечный серверный порядок сохранён.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/37-chat-persistence.spec.ts
+          selector: "durable draft survives reload and several offline intents retain independent ids"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-14D92D7D
   title: "Подтверждение сохранения и повтор: Таймаут после сохранения"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Подтверждение сохранения и повтор
     scenario: Таймаут после сохранения
     sha256: 83bb5057e8e243ba7db86ddf9cfaff0f34d8308ae3d272243ce5b3a08cb1d983
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a1
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL отличать ожидание, неопределённый результат, подтверждённое сохранение и
-      окончательную ошибку. Таймаут SHALL NOT означать отсутствие записи на сервере. Подтверждение
-      SHALL относиться к своему автору и исходящему ID.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Есть свой intent A; transport теряет ответ после commit. Для backend проверяется HTTP/idempotency,
+      для клиентов также owner outbox.
   steps:
-    - action: ответ потерян после commit
-      expected: строка остаётся ожидающей сверки, повтор использует прежний ID и не заявляет новую отправку
+    - action: Commit без выдачи ACK, затем повторить прежний запрос после expiry receipt.
+      expected: Возвращаются прежние ID/sequence/тело; client state uncertain не утверждает отсутствия записи.
+    - action: Подставить ACK другого автора/встречи/intent и повтор с изменённым телом.
+      expected: Чужой ACK не завершает свой intent; сервер отклоняет конфликт, новая запись не создаётся.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/37-chat-persistence.spec.ts
+          selector: "reload after server commit and lost ACK reconciles one message without dropping a new draft"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-EB93F8D1
   title: "Подтверждение сохранения и повтор: Ошибка с новым черновиком"
   lifecycle: active
-  level: e2e
+  level: unit
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Подтверждение сохранения и повтор
     scenario: Ошибка с новым черновиком
     sha256: 3d2e4fdb8f3b8b75f7d5c77ae8179d7b707a2472db6f4c3bd23c0267e14ebabf
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL отличать ожидание, неопределённый результат, подтверждённое сохранение и
-      окончательную ошибку. Таймаут SHALL NOT означать отсутствие записи на сервере. Подтверждение
-      SHALL относиться к своему автору и исходящему ID.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - В очереди старый intent, а draft уже содержит другой текст.
   steps:
-    - action: окончательная ошибка относится к прежнему исходящему, а поле уже содержит новый текст
-      expected: восстановление прежнего текста не перезаписывает новый без выбора пользователя
+    - action: Вернуть окончательную ошибку старого intent; запросить восстановление текста.
+      expected: Новый draft не заменяется автоматически; старый intent сохраняет тело и действие явного
+        восстановления.
+    - action: Подтвердить явное восстановление по принятому UI-контракту либо отменить его.
+      expected: Только подтверждённый выбор меняет draft; отмена сохраняет новый текст.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/37-chat-persistence.spec.ts
+          selector: "rejected intent retry keeps its key and restore never overwrites a newer draft"
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-65C6F806
   title: "Жизненный цикл и совместимость транспорта: Исправное соединение без активности"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Жизненный цикл и совместимость транспорта
     scenario: Исправное соединение без активности
     sha256: 01a2d83a85187cc6772e00f96c0b726e4aa76904ebab9faa06f953a149500e5c
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
-      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
-      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Подписка и HTTP catch-up успешно завершены; активный чат без новых событий, транспортные запросы
+      записываются без credentials.
   steps:
-    - action: чат открыт и изменений нет
-      expected: клиент не вызывает периодический GET ленты; транспортный heartbeat не считается таким GET
+    - action: Продвинуть управляемое время на 60 секунд без событий.
+      expected: Нет периодических GET feed/sync и опроса карточек; допустим только heartbeat.
+    - action: Создать burst hints с повторами и перестановкой.
+      expected: Не более одного sync в работе на встречу; coalescing не теряет новое изменение.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/38-chat-sync.spec.ts
+          selector: "real SDK snapshot-subscribe catch-up closes the gap and healthy idle has no HTTP polling"
+          runner: web-chat-e2e
+          level: e2e
+        - path: frontend/web/src/entities/meeting/model/createChatUpdates.test.ts
+          selector: "catches up after every subscribe ACK and performs no idle polling while healthy"
+          runner: web-check
+          level: unit
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-60FCAA1D
   title: "Жизненный цикл и совместимость транспорта: Сервер или прокси не поддерживает realtime"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Жизненный цикл и совместимость транспорта
     scenario: Сервер или прокси не поддерживает realtime
     sha256: 9a70400adce369cf53bdfc21d90b8cd1f2dee4a793856994ca024474206634d2
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
-      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
-      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Авторизованный HTTP работает; adapter возвращает устойчивый отказ realtime, доступно управляемое
+      время/jitter.
   steps:
-    - action: подключение недоступно, но авторизованный HTTP работает
-      expected: клиент получает обновления через один управляемый опрос, без параллельных циклов и
-        запросов из фона
+    - action: Сохранять отказ более 10 секунд; проверить расписание sync и перевести приложение в фон.
+      expected: Один fallback 3→6→12→30 с с jitter; в фоне polling/авторетраи/read marker прекращены.
+    - action: Вернуть foreground, успешную подписку и catch-up.
+      expected: Сессия перепроверена, fallback остановлен, нет параллельного цикла или второго соединения.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/38-chat-sync.spec.ts
+          selector: "sustained websocket failure enables bounded HTTP fallback"
+          runner: web-chat-e2e
+          level: e2e
+        - path: frontend/web/src/entities/meeting/model/createChatUpdates.test.ts
+          selector: "uses one bounded fallback after ten seconds and cancels it after catch-up"
+          runner: web-check
+          level: unit
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SYNC-6F728A92
   title: "Жизненный цикл и совместимость транспорта: Возврат приложения из фона"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: high
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
     requirement: Жизненный цикл и совместимость транспорта
     scenario: Возврат приложения из фона
     sha256: ac28bf1f8189096881dfe4c95e6985f629727f423376a4d4418d91546e3668cf
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Новые клиенты SHALL получать изменения в активной сессии без постоянного опроса ленты при
-      исправном realtime-канале. При его отказе SHALL существовать ограниченный запасной режим;
-      старые поддерживаемые клиенты SHALL сохранять HTTP-поведение.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Есть draft, uncertain intent и cursor; управляемые scene/lifecycle и transport.
   steps:
-    - action: приложение возвращается в foreground
-      expected: оно заново проверяет сессию, восстанавливает синхронизацию и продолжает разрешённые исходящие
+    - action: Перевести в фон, commit чужой записи, затем foreground.
+      expected: В фоне нет read-through и сети владельца; при возврате сессия проверена, catch-up выполнен
+        перед допустимым продолжением очереди.
+    - action: Повторить при expiry/revoke сессии и позднем callback предыдущего подключения.
+      expected: Нет восстановления старых приватных данных или отправки под новым аккаунтом.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-IDEMPOTENCY-LOOKUP
+  title: "Устойчивое намерение отправить: Адресный повтор text и media после потерянного ответа"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Устойчивое намерение отправить
+    scenario: Адресный повтор text и media после потерянного ответа
+    sha256: a3263260d8d438bdcbfbcfe7059984f49a2ecca4946ae1bf76476f89bd2c4399
+  platforms: *a3
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - В M есть большая история, message intent A и загруженные photo/file; fault после commit,
+      управляемый receipt expiry.
+  steps:
+    - action: Отправить text и publish media, потерять ACK, повторить до и после expiry receipt.
+      expected: Один исходный entry ID/sequence; direct lookup text tuple и media entry_id, полный Feed не
+        вызывается. Media attachments и legacy captionless hash сохранены.
+    - action: Изменить text/caption, использовать чужого автора/встречу и отозвать доступ перед повтором.
+      expected: Конфликты и отказ прав сохраняются; receipt не обходит access check, чужая запись не раскрывается.
+    - action: Проверить memory clone/rollback и SQL индексированный lookup при 100k истории.
+      expected: Возвращённая копия не меняет store; rollback атомарен; стоимость lookup не зависит от полной
+        десериализации истории.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-SYNC-THROUGH
+  title: "Восстановление после разрыва и перезапуска: Фиксированная граница страниц синхронизации"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Восстановление после разрыва и перезапуска
+    scenario: Фиксированная граница страниц синхронизации
+    sha256: 0d21a0dbdf1bdb203e8c547e80967c4ad2b7c20da0cccf26de9b793d6330ff6c
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Есть >100 journal changes, snapshot cursor; контролируется commit между страницами и сбой
+      применения.
+  steps:
+    - action: Начать sync с through=T; во время получения страниц добавить T+1, повторить и переставить ответы.
+      expected: Текущий цикл заканчивается на T; T+1 приходит следующим циклом; projection versions защищают от
+        отката.
+    - action: Прервать merge/storage apply последней страницы и продолжить после восстановления.
+      expected: Cursor не продвинут впереди данных; повтор безопасен, has_more исчерпывается, один sync в работе.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/src/entities/meeting/model/loadChat.test.ts
+          selector: "rejects changing through barriers and non-advancing pages without committing them"
+          runner: web-check
+          level: integration
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-CAPABILITIES
+  title: "Жизненный цикл и совместимость транспорта: Совместимость старого HTTP и выключенных возможностей"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md
+    requirement: Жизненный цикл и совместимость транспорта
+    scenario: Совместимость старого HTTP и выключенных возможностей
+    sha256: 1ce80805147974f243adc91d31c81325cf798d7bdd1fcc8fa24e366efcf45b31
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Зафиксированы прежний поддерживаемый HTTP client fixture и новый клиент; capabilities можно
+      отключить/вернуть404.
+  steps:
+    - action: Пройти feed/send/retry прежним клиентом на новом сервере и новым при capabilities404/disabled.
+      expected: Старые DTO/права/ID сохранены, новый клиент использует единственный legacy HTTP путь; read UI
+        отсутствует без поддержки.
+    - action: Имитировать rollback на writer без journal и последующее включение с новым epoch.
+      expected: Нужен новый snapshot/reset; изменения периода rollback не пропущены, история не удалена.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/src/entities/meeting/api/chat.test.ts
+          selector: "falls back on an old server 404 even when the router returns plain text"
+          runner: web-check
+          level: integration
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
       health: unknown
       tests: []

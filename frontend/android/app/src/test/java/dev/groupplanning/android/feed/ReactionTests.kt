@@ -55,6 +55,24 @@ class ReactionTests {
         assertEquals(true, model.state.value.entries[id]?.single()?.mine)
     }
 
+    @Test fun syncProjectionDuringMutationSurvivesLostReply() = runTest {
+        val h = FeedHarness(StandardTestDispatcher(testScheduler))
+        h.login()
+        val model = ReactionController(h.repository, backgroundScope)
+        model.open(h.repository.open(h.id))
+        val id = h.entry(1).id
+        val response = CompletableDeferred<WireResponse>()
+        h.transport.handle("${h.path}/messages/$id/reactions") { response.await() }
+        model.toggle(id, "❤️")
+        runCurrent()
+        val confirmed = listOf(MessageReaction("👍", 2, false, emptyList()))
+        model.receive(id, confirmed)
+        response.complete(WireResponse(503, "application/json", ""))
+        runCurrent()
+        assertEquals(confirmed, model.state.value.entries[id])
+        assertNotNull(model.state.value.failed)
+    }
+
     @Test fun lostReplyRollsBackAndRetriesTheSameExplicitIntent() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()

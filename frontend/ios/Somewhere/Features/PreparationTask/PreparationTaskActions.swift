@@ -3,25 +3,38 @@ import SwiftUI
 struct PreparationTaskActions: View {
     let owner: PreparationTaskOwner
     let task: PreparationTask
+    var inline = false
+    var confirm: ((PreparationAction) -> Void)?
 
     var body: some View {
-        VStack(spacing: 8) {
-            ForEach([PreparationAction.accept, .complete, .decline, .cancel], id: \.rawValue) {
-                action in
-                if action.allowed(task) {
+        VStack(alignment: .leading, spacing: DesignTokens.componentTaskDetailsActionsGap) {
+            ForEach(PreparationAction.allCases, id: \.rawValue) { action in
+                if action.allowed(task), !inline || action == .accept || action == .complete {
                     let label = PreparationTaskCopy.label(action, task: task)
-                    Button {
-                        Task { await owner.act(action) }
-                    } label: {
-                        Text(label).frame(maxWidth: .infinity).frame(minHeight: 32)
-                            .opacity(owner.busy && owner.sendingAction == action ? 0 : 1)
-                            .overlay {
-                                if owner.busy && owner.sendingAction == action { ProgressView() }
-                            }
-                    }.buttonStyle(.bordered).tint(.primary)
-                        .disabled(!owner.editable)
-                        .accessibilityLabel(label)
-                        .accessibilityIdentifier("preparation-\(action.rawValue)")
+                    if action == .decline || action == .cancel {
+                        Button(label) { confirm?(action) }
+                            .designFont(DesignTokens.typographySizeSmall)
+                            .foregroundStyle(DesignTokens.colorError).frame(
+                                minHeight: DesignTokens.targetIos
+                            )
+                            .disabled(!owner.editable).accessibilityIdentifier(
+                                "preparation-\(action.rawValue)")
+                    } else if inline {
+                        ChatInlineAction(
+                            title: action == .accept ? "Взять на себя" : label,
+                            busy: owner.busy && owner.sendingAction == action
+                        ) {
+                            Task { await owner.act(action) }
+                        }.disabled(!owner.editable).accessibilityIdentifier(
+                            "preparation-\(action.rawValue)")
+                    } else {
+                        ActionFormButton(
+                            title: label, busy: owner.busy && owner.sendingAction == action
+                        ) {
+                            Task { await owner.act(action) }
+                        }.disabled(!owner.editable).accessibilityIdentifier(
+                            "preparation-\(action.rawValue)")
+                    }
                 }
             }
         }

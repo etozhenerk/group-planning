@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 1,
+  "id": "chat-reliability-and-sync",
+  "designVersion": "2.5.1",
+  "phase": "checkpoint",
+  "approval": "27.10.2026: реализация ранее разрешённого UX v1 прочитанности и ограниченного окна на web/iOS/Android; повторно используются принятые chat/people/sheet роли, без новых продуктовых решений.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/chat-reliability-and-sync/design-review-2.5.1.json",
+  "screens": [
+    {
+      "id": "outbox-desktop-1280",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "queued",
+        "uncertain",
+        "rejected",
+        "accepted",
+        "storage-error",
+        "reload",
+        "logout-two-tabs",
+        "long-text",
+        "reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/web/tests/37-chat-persistence.spec.ts",
+        "frontend/web/package.json",
+        "package-lock.json",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.2",
+          "4.6"
+        ]
+      }
+    },
+    {
+      "id": "outbox-mobile-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "queued",
+        "uncertain",
+        "rejected",
+        "accepted",
+        "storage-error",
+        "reload",
+        "logout-two-tabs",
+        "long-text",
+        "reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/web/tests/37-chat-persistence.spec.ts",
+        "frontend/web/package.json",
+        "package-lock.json",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.2",
+          "4.6"
+        ]
+      }
+    },
+    {
+      "id": "outbox-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "queued",
+        "uncertain",
+        "rejected",
+        "accepted",
+        "storage-error",
+        "reload",
+        "long-text",
+        "reduced-motion",
+        "logout",
+        "large-text",
+        "screen-reader",
+        "keyboard"
+      ],
+      "inputs": [
+        "frontend/ios/Somewhere",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/ios/scripts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css",
+        "openspec/changes/chat-reliability-and-sync/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "ios": [
+          "5.1",
+          "5.5"
+        ]
+      }
+    },
+    {
+      "id": "outbox-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "queued",
+        "uncertain",
+        "rejected",
+        "accepted",
+        "storage-error",
+        "reload",
+        "long-text",
+        "reduced-motion",
+        "logout",
+        "large-text",
+        "screen-reader",
+        "keyboard"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "frontend/android/app/src/qa",
+        "frontend/android/app/src/androidTestQa",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/scripts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+        "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css",
+        "openspec/changes/chat-reliability-and-sync/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "android": [
+          "6.1",
+          "6.5"
+        ]
+      }
+    },
+    {
+      "id": "chat-read-web-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "badge-zero",
+        "badge-unread",
+        "divider",
+        "new-tail",
+        "history-loading",
+        "history-error-retry",
+        "readers-loading",
+        "readers-ready",
+        "readers-empty",
+        "readers-error-retry",
+        "readers-pagination",
+        "close-focus-anchor",
+        "keyboard",
+        "large-text",
+        "reduced-motion",
+        "access-revoked",
+        "message-context-zero",
+        "message-context-readers-transition",
+        "message-context-focus-return"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/web/tests/37-chat-persistence.spec.ts",
+        "frontend/web/package.json",
+        "package-lock.json",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+        "openspec/changes/chat-reliability-and-sync/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/chat-read-state.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.4",
+          "4.5",
+          "4.6"
+        ]
+      }
+    },
+    {
+      "id": "chat-read-web-1280",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "badge-zero",
+        "badge-unread",
+        "divider",
+        "new-tail",
+        "history-loading",
+        "history-error-retry",
+        "readers-loading",
+        "readers-ready",
+        "readers-empty",
+        "readers-error-retry",
+        "readers-pagination",
+        "close-focus-anchor",
+        "keyboard",
+        "large-text",
+        "reduced-motion",
+        "access-revoked",
+        "message-context-zero",
+        "message-context-readers-transition",
+        "message-context-focus-return"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/web/tests/37-chat-persistence.spec.ts",
+        "frontend/web/package.json",
+        "package-lock.json",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+        "openspec/changes/chat-reliability-and-sync/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/chat-read-state.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.4",
+          "4.5",
+          "4.6"
+        ]
+      }
+    },
+    {
+      "id": "chat-read-ios-phone",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "badge-zero",
+        "badge-unread",
+        "divider",
+        "new-tail",
+        "history-loading",
+        "history-error-retry",
+        "readers-loading",
+        "readers-ready",
+        "readers-empty",
+        "readers-error-retry",
+        "readers-pagination",
+        "close-focus-anchor",
+        "keyboard",
+        "large-text",
+        "reduced-motion",
+        "access-revoked",
+        "message-context-zero",
+        "message-context-readers-transition",
+        "message-context-focus-return"
+      ],
+      "inputs": [
+        "frontend/ios/Somewhere",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/ios/scripts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+        "openspec/changes/chat-reliability-and-sync/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/chat-read-state.md"
+      ],
+      "tasks": {
+        "ios": [
+          "5.3",
+          "5.4",
+          "5.5"
+        ]
+      }
+    },
+    {
+      "id": "chat-read-android-phone",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "badge-zero",
+        "badge-unread",
+        "divider",
+        "new-tail",
+        "history-loading",
+        "history-error-retry",
+        "readers-loading",
+        "readers-ready",
+        "readers-empty",
+        "readers-error-retry",
+        "readers-pagination",
+        "close-focus-anchor",
+        "keyboard",
+        "large-text",
+        "reduced-motion",
+        "access-revoked",
+        "message-context-zero",
+        "message-context-readers-transition",
+        "message-context-focus-return"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "frontend/android/app/src/qa",
+        "frontend/android/app/src/androidTestQa",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/scripts",
+        "backend/internal/httpapi",
+        "contracts/openapi.yaml"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+        "openspec/changes/chat-reliability-and-sync/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/chat-read-state.md"
+      ],
+      "tasks": {
+        "android": [
+          "6.3",
+          "6.4",
+          "6.5"
+        ]
+      }
+    }
+  ]
+}

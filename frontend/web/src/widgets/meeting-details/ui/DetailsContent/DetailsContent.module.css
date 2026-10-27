@@ -1,38 +1,43 @@
-.error {
-  color: var(--error);
-}
-
-.error[role='alert']:empty {
-  display: none;
-}
-
 .stack {
   display: grid;
   gap: 22px;
 }
 
+.info {
+  gap: var(--ds-component-action-field-gap);
+}
+
 .meeting-description {
-  color: var(--muted);
+  color: var(--ds-color-muted);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
-.details-content h3 {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 400;
-  margin: 0 0 4px;
-}
-
-.participants {
-  list-style: none;
-  margin: 18px 0 0;
-  padding: 0;
+.response {
   display: grid;
-  gap: 16px;
+  gap: var(--ds-component-action-field-gap);
 }
 
-.details-content > a {
+.response h3 {
+  font-size: var(--ds-typography-size-section-heading);
+  color: var(--ds-color-text);
+  font-weight: var(--ds-typography-weight-bold);
+  margin: 0;
+}
+
+.settings {
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  border: var(--ds-space-s1) solid var(--ds-color-subtle-border);
+  border-radius: var(--ds-component-button-radius);
+  background: transparent;
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.memories {
   gap: 8px;
   font-size: 13px;
   color: var(--accent);
@@ -45,4 +50,36 @@
   height: 150px;
   border-radius: 16px;
   overflow: hidden;
+}
+
+.info[data-mobile='true'] {
+  gap: var(--ds-component-mobile-form-group-gap);
+}
+
+.info[data-mobile='true'] .meeting-description {
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-typography-line-height-body);
+  margin: 0;
+}
+
+.info[data-mobile='true'] .settings {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--ds-space-s12);
+  min-height: var(--ds-component-mobile-roster-action-height);
+  border: 0;
+  padding: var(--ds-space-s8) 0;
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.settings span {
+  flex: 1;
+  text-align: start;
+}
+
+.settings svg {
+  flex-shrink: 0;
+  color: var(--ds-color-muted);
+  width: var(--ds-component-mobile-roster-action-icon);
+  height: var(--ds-component-mobile-roster-action-icon);
 }

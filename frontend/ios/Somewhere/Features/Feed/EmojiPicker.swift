@@ -3,109 +3,162 @@ import SwiftUI
 struct EmojiPicker: View {
     var privateData: PrivateData?
     var close: (() -> Void)?
+    var delete: (() -> Void)?
+    var selected: Set<String> = []
     let select: (String) -> Void
     @State private var query = ""
-    @State private var category = EmojiCatalog.categories.first ?? ""
+    @State private var category = ""
     @State private var recent: [String] = []
-    @Environment(\.dismiss) private var dismiss
+    @FocusState private var searchFocused: Bool
     private let symbols = ["😀", "🧑", "🐻", "🍎", "⚽️", "🚗", "💡", "❤️", "🏳️"]
+
     private var results: [EmojiCatalogEntry] {
-        EmojiCatalog.entries.filter { entry in
+        if query.isEmpty, category.isEmpty {
+            return recent.compactMap { symbol in EmojiCatalog.entries.first { $0.emoji == symbol } }
+        }
+        return EmojiCatalog.entries.filter { entry in
             if query.isEmpty { return entry.categoryName == category }
             return entry.name.localizedCaseInsensitiveContains(query)
                 || entry.keywords.contains { $0.localizedCaseInsensitiveContains(query) }
                 || entry.emoji == query
         }
     }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 6) {
-                TextField("Поиск эмодзи", text: $query).font(.system(size: 13)).padding(10)
-                    .background(AppPalette.navigation, in: RoundedRectangle(cornerRadius: 12))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 12).stroke(
-                            .white.opacity(0.078), lineWidth: 1)
-                    }
-                Button {
-                    finish()
-                } label: {
-                    ExperienceIcon(kind: .close, size: 18).frame(width: 32, height: 40)
-                        .contentShape(Rectangle().inset(by: -6))
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+            HStack(spacing: DesignTokens.spaceS4) {
+                HStack(spacing: DesignTokens.spaceS8) {
+                    ChatIcon(kind: .search, size: DesignTokens.componentEmojiDockSearchIcon)
+                    TextField("Поиск эмодзи", text: $query)
+                        .designFont(DesignTokens.typographySizeSmall).focused($searchFocused)
+                        .autocorrectionDisabled().textInputAutocapitalization(.never)
+                        .accessibilityIdentifier("emoji-search")
+                }.foregroundStyle(DesignTokens.colorMuted)
+                    .padding(.horizontal, DesignTokens.componentEmojiDockSearchInset)
+                    .frame(minHeight: DesignTokens.targetIos)
+                    .background(
+                        DesignTokens.colorBackground,
+                        in: RoundedRectangle(
+                            cornerRadius: DesignTokens.componentEmojiDockSearchRadius))
+                if let delete {
+                    Button(action: delete) {
+                        ChatIcon(kind: .backspace)
+                            .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                            .contentShape(Rectangle())
+                    }.accessibilityLabel("Удалить предыдущий символ").accessibilityIdentifier(
+                        "emoji-delete")
                 }
-                .accessibilityLabel("Закрыть")
-            }
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
-                    if query.isEmpty, !recent.isEmpty {
-                        Text("Недавние").font(.system(size: 12)).foregroundStyle(AppPalette.muted)
-                            .padding(.top, 15)
-                        LazyVGrid(
-                            columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 7),
-                            spacing: 2
-                        ) {
-                            ForEach(recent.prefix(7), id: \.self) { emoji in emojiButton(emoji) }
-                        }
+                if let close {
+                    Button(action: close) {
+                        ChatIcon(kind: .close)
+                            .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                            .contentShape(Rectangle())
+                    }.accessibilityLabel("Закрыть выбор реакции").accessibilityIdentifier(
+                        "reaction-picker-close")
+                }
+            }.padding(.horizontal, DesignTokens.componentEmojiDockToolbarInsetInline)
+                .padding(.top, DesignTokens.componentEmojiDockToolbarInsetTop)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: DesignTokens.spaceS0) {
+                    categoryButton("", label: "Недавние", symbol: "◷")
+                    ForEach(Array(EmojiCatalog.categories.enumerated()), id: \.element) {
+                        index, value in
+                        categoryButton(value, label: value, symbol: symbols[index % symbols.count])
                     }
-                    Text(query.isEmpty ? category : "Результаты поиска").font(.system(size: 12))
-                        .foregroundStyle(AppPalette.muted).padding(.top, 15)
+                }
+            }.fixedSize(horizontal: false, vertical: true)
+                .overlay(alignment: .bottom) {
+                    Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+                }
+            ScrollView {
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
+                    Text(
+                        query.isEmpty
+                            ? (category.isEmpty ? "Недавние" : category) : "Результаты поиска"
+                    )
+                    .designFont(DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2)
+                    .foregroundStyle(DesignTokens.colorMuted)
                     LazyVGrid(
-                        columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 7),
-                        spacing: 2
+                        columns: [
+                            GridItem(
+                                .adaptive(minimum: DesignTokens.targetIos),
+                                spacing: DesignTokens.spaceS0)
+                        ], spacing: DesignTokens.spaceS0
                     ) {
                         ForEach(results) { entry in
-                            emojiButton(entry.emoji).accessibilityLabel(entry.name)
+                            Button {
+                                recent.removeAll { $0 == entry.emoji }
+                                recent.insert(entry.emoji, at: 0)
+                                privateData?.recentEmoji = Array(recent.prefix(24))
+                                select(entry.emoji)
+                            } label: {
+                                Text(entry.emoji).designFont(DesignTokens.typographySizeEmojiChoice)
+                                    .frame(maxWidth: .infinity, minHeight: DesignTokens.targetIos)
+                                    .contentShape(Rectangle())
+                                    .background(
+                                        selected.contains(entry.emoji)
+                                            ? DesignTokens.colorSelectedSegment : .clear,
+                                        in: RoundedRectangle(
+                                            cornerRadius: DesignTokens
+                                                .componentEmojiDockChoiceRadius)
+                                    )
+                                    .overlay {
+                                        if selected.contains(entry.emoji) {
+                                            RoundedRectangle(
+                                                cornerRadius: DesignTokens
+                                                    .componentEmojiDockChoiceRadius
+                                            )
+                                            .strokeBorder(
+                                                DesignTokens.colorAccent,
+                                                lineWidth: DesignTokens.spaceS1)
+                                        }
+                                    }
+                            }.buttonStyle(ChatPressStyle()).accessibilityLabel(entry.name)
+                                .accessibilityIdentifier("emoji-" + entry.emoji)
+                                .accessibilityAddTraits(
+                                    selected.contains(entry.emoji) ? .isSelected : [])
                         }
                     }
                     if results.isEmpty {
-                        Text("Ничего не найдено").font(.system(size: 13)).foregroundStyle(
-                            AppPalette.muted)
+                        VStack(spacing: DesignTokens.spaceS4) {
+                            Text(query.isEmpty ? "Недавних эмодзи пока нет" : "Ничего не найдено")
+                            if !query.isEmpty {
+                                Button("Очистить поиск") {
+                                    query = ""
+                                    searchFocused = true
+                                }
+                                .frame(minHeight: DesignTokens.targetIos)
+                            }
+                        }.designFont(DesignTokens.typographySizeSmall)
+                            .foregroundStyle(DesignTokens.colorMuted).frame(maxWidth: .infinity)
                     }
-                }
-            }.frame(height: 232)
-            Rectangle().fill(AppPalette.border).frame(height: 1).padding(.top, 12)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    ForEach(Array(EmojiCatalog.categories.enumerated()), id: \.element) {
-                        index, value in
-                        Button {
-                            category = value
-                            query = ""
-                        } label: {
-                            Text(symbols[index % symbols.count]).font(.system(size: 18)).frame(
-                                width: 32, height: 32
-                            )
-                            .background(
-                                category == value ? .white.opacity(0.08) : .clear,
-                                in: RoundedRectangle(cornerRadius: 8)
-                            )
-                            .contentShape(Rectangle().inset(by: -6))
-                        }.accessibilityLabel(value).accessibilityAddTraits(
-                            category == value ? .isSelected : [])
-                    }
-                }
-            }.padding(.top, 12)
-        }.padding(16).background(Color(designHex: 0x36373f), in: RoundedRectangle(cornerRadius: 19))
-            .overlay {
-                RoundedRectangle(cornerRadius: 19).stroke(.white.opacity(0.078), lineWidth: 1)
+                }.padding(.horizontal, DesignTokens.componentEmojiDockResultInsetInline)
+                    .padding(.top, DesignTokens.componentEmojiDockResultInsetTop)
+                    .padding(.bottom, DesignTokens.componentEmojiDockResultInsetBottom)
+            }.scrollBounceBehavior(.basedOnSize).accessibilityIdentifier("emoji-results")
+        }.background(DesignTokens.colorSurface).buttonStyle(ChatPressStyle())
+            .onAppear {
+                recent = privateData?.recentEmoji ?? []
+                if recent.isEmpty { category = EmojiCatalog.categories.first ?? "" }
             }
-            .shadow(color: .black.opacity(0.33), radius: 30, y: 20)
-            .onAppear { recent = privateData?.recentEmoji ?? [] }
     }
-    private func emojiButton(_ emoji: String) -> some View {
+
+    private func categoryButton(_ value: String, label: String, symbol: String) -> some View {
         Button {
-            choose(emoji)
+            category = value
+            query = ""
         } label: {
-            Text(emoji).font(.system(size: 25)).frame(maxWidth: .infinity, minHeight: 40)
-                .contentShape(Rectangle().inset(by: -2))
-        }
-        .buttonStyle(.plain)
-    }
-    private func finish() { if let close { close() } else { dismiss() } }
-    private func choose(_ emoji: String) {
-        recent.removeAll { $0 == emoji }
-        recent.insert(emoji, at: 0)
-        privateData?.recentEmoji = Array(recent.prefix(24))
-        select(emoji)
-        finish()
+            Text(symbol).designFont(DesignTokens.typographySizeEmojiCategory)
+                .frame(minWidth: DesignTokens.targetIos, minHeight: DesignTokens.targetIos)
+                .contentShape(Rectangle())
+                .overlay(alignment: .bottom) {
+                    if category == value {
+                        Capsule().fill(DesignTokens.colorAccent)
+                            .frame(
+                                width: DesignTokens.targetIos / 2,
+                                height: DesignTokens.componentEmojiDockCategoryIndicator)
+                    }
+                }
+        }.accessibilityLabel(label).accessibilityAddTraits(category == value ? .isSelected : [])
     }
 }

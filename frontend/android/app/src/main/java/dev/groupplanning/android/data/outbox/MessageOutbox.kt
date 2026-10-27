@@ -15,7 +15,7 @@ internal class MessageOutbox(
 
     suspend fun read(owner: UUID, meeting: UUID): MessageRecord = mutex.withLock {
         withContext(io) {
-            storage.load().firstOrNull { it.owner == owner && it.meeting == meeting }
+            storage.load().firstOrNull { it.owner == owner && it.meeting == meeting }?.normalized()
                 ?: MessageRecord(owner, meeting)
         }
     }
@@ -29,12 +29,16 @@ internal class MessageOutbox(
             val records = storage.load()
             val old = records.firstOrNull { it.owner == owner && it.meeting == meeting }
                 ?: MessageRecord(owner, meeting)
-            val next = transform(old)
+            val next = transform(old.normalized()).normalized()
             require(next.owner == owner && next.meeting == meeting)
             val rest = records.filterNot { it.owner == owner && it.meeting == meeting }
-            storage.save(if (next.draft.isEmpty() && next.pending == null) rest else rest + next)
+            storage.save(if (next.draft.isEmpty() && next.queue.isEmpty()) rest else rest + next)
             next
         }
+    }
+
+    suspend fun retainOwner(owner: UUID) = mutex.withLock {
+        withContext(io) { storage.save(storage.load().filter { it.owner == owner }) }
     }
 
     suspend fun clear(meeting: UUID? = null) = mutex.withLock {

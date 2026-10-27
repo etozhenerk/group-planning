@@ -23,3 +23,16 @@
   color: var(--muted);
   font-size: 13px;
 }
+
+.time-fields[data-sheet='true'] .form-time {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--ds-component-mobile-form-two-field-gap);
+}
+
+.time-fields[data-sheet='true'][data-narrow='true'] .form-time {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.time-fields[data-sheet='true'] .time-zone-note {
+  font-size: var(--ds-typography-size-caption);
+}

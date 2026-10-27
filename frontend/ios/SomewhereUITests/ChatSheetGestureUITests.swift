@@ -66,14 +66,14 @@ final class ChatSheetGestureUITests: XCTestCase {
         let app = ChatSheetTestSupport.launch()
         ChatSheetTestSupport.openChat(app)
         ChatSheetTestSupport.openAction("new-date-poll", app: app)
-        app.buttons["Новая дата"].tap()
+        app.buttons["Вариант 1"].tap()
         XCTAssertTrue(app.buttons["picker-done"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["Закрыть выбор"].isHittable)
+        XCTAssertTrue(app.buttons["picker-close"].isHittable)
         ExperienceScreenshot.save("sheet-date-picker", test: self)
-        app.buttons["Закрыть выбор"].tap()
+        app.buttons["picker-close"].tap()
         XCTAssertTrue(app.buttons["action-form-close"].waitForExistence(timeout: 5))
         ExperienceScreenshot.save("sheet-date-after-picker", test: self)
-        let multiple = app.switches["Можно выбрать несколько дат"]
+        let multiple = app.switches["Несколько ответов"]
         ChatSheetTestSupport.reveal(multiple, in: app.scrollViews["action-form-scroll"], app: app)
         multiple.tap()
         let expected = multiple.value as? String

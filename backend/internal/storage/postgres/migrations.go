@@ -18,7 +18,19 @@ var accountDeletionSchema string
 //go:embed migrations/003_meeting_experience.sql
 var meetingExperienceSchema string
 
-var migrations = []string{initialSchema, accountDeletionSchema, meetingExperienceSchema}
+//go:embed migrations/004_chat_journal.sql
+var chatJournalSchema string
+
+//go:embed migrations/005_chat_retention.sql
+var chatRetentionSchema string
+
+//go:embed migrations/006_chat_dispatch.sql
+var chatDispatchSchema string
+
+//go:embed migrations/007_chat_read_state.sql
+var chatReadStateSchema string
+
+var migrations = []string{initialSchema, accountDeletionSchema, meetingExperienceSchema, chatJournalSchema, chatRetentionSchema, chatDispatchSchema, chatReadStateSchema}
 
 func migrationChecksum(version int) string {
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(migrations[version-1])))

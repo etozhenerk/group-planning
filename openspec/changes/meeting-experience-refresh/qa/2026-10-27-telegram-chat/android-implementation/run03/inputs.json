@@ -1,0 +1,28 @@
+{
+  "run": "run03",
+  "startedAt": "2026-10-27T12:55:49.327949+00:00",
+  "device": {
+    "avd": "Somewhere_API_36",
+    "serial": "emulator-5554"
+  },
+  "sourceAggregateSha256": "45a72cec3154c9135534f72e07cb467a1d3b6b822b7852bc02e4ca3a4ca878ff",
+  "designSystemVersion": "1.4.1",
+  "designTokensSha256": "512241d8a87750fc17a91057b40e5fd566c7f763c7bcd1bc7b088d7cca0c3630",
+  "androidGeneratedTokensSha256": "d987508678439d77200f1a7a6cf3072f3e7d06cef17e556cd2d793bb8eba6704",
+  "manifestSha256": "514520e097ed5fab9e064887091919a8bd71d7b8293b4214f665595b6f6f7ca5",
+  "fixtureScope": "calendar",
+  "scenario": "design",
+  "fixtureFiles": {
+    "backend/internal/httpapi/android_fixture_test.go": "42b02a2ff6ab3a8b0649d09068a8ee13741d4b9a9aa10e198197d863cf08df0d",
+    "backend/internal/httpapi/native_design_fixture_test.go": "bcb7dfe00e596e64f7302a868f51ca094b4dbaea2adc8926c7291fafd1b7a302",
+    "frontend/android/scripts/test-ui.sh": "1a79a9a4164fbb26f366fb60d2cd4dc1d25507d4fe37b0f6e90f006825119cbe"
+  },
+  "commands": [
+    "sh scripts/test-ui.sh chat",
+    "./gradlew --no-daemon -PsomewhereTestBuildType=qa -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests :app:connectedQaAndroidTest"
+  ],
+  "artifacts": {
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run03/artifacts/qa/app-qa.apk": "74ceec478be40f4a90633c301b9b38e6fd6c47f23b3db3b0482725aeb4c36325",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run03/artifacts/androidTest/qa/app-qa-androidTest.apk": "23f354bc04f613d509cc2e532c1077e09b0b7966abf9943d14da340699a479b0"
+  }
+}

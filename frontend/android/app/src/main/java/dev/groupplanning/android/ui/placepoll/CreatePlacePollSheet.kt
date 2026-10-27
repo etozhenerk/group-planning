@@ -28,7 +28,30 @@ internal fun CreatePlacePollSheet(model: PlacePollViewModel, close: () -> Unit) 
     LaunchedEffect(state.poll?.id, state.busy) {
         if (state.poll != null && !state.busy) close()
     }
-    ActionSheet(stringResource(R.string.place_poll_title), close, canClose = !state.busy) {
+    ActionSheet(
+        stringResource(
+            R.string.place_poll_title,
+        ),
+        close,
+        canClose = !state.busy,
+        actions = {
+            CompactButton(
+                stringResource(
+                    if (state.pending ==
+                        null
+                    ) {
+                        R.string.place_poll_title
+                    } else {
+                        R.string.poll_retry
+                    },
+                ),
+                modifier = Modifier.fillMaxWidth().testTag("place-poll-create"),
+                busy = state.busy,
+                primary = true,
+                click = model::create,
+            )
+        },
+    ) {
         DesignField(
             draft.place,
             { value -> model.change { it.copy(place = value) } },
@@ -75,20 +98,5 @@ internal fun CreatePlacePollSheet(model: PlacePollViewModel, close: () -> Unit) 
             )
         }
         state.validation?.let { Text(it, color = Palette.error) }
-        CompactButton(
-            stringResource(
-                if (state.pending ==
-                    null
-                ) {
-                    R.string.place_poll_title
-                } else {
-                    R.string.poll_retry
-                },
-            ),
-            modifier = Modifier.fillMaxWidth().testTag("place-poll-create"),
-            busy = state.busy,
-            primary = true,
-            click = model::create,
-        )
     }
 }

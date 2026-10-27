@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,6 +42,7 @@ import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.LocalViewer
 import dev.groupplanning.android.ui.components.UserAvatar
 import dev.groupplanning.android.ui.covers.CoverImage
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
 import java.time.ZoneId
@@ -91,6 +94,7 @@ internal fun MeetingCard(
                         fontWeight = FontWeight.Bold,
                         color = Palette.text,
                     )
+                    UnreadBadge(meeting.unreadCount)
                     if (own) {
                         AppIcon(
                             R.drawable.ic_crown,
@@ -201,8 +205,15 @@ internal fun MeetingCard(
             val clock = meeting.startsAt?.instant?.atZone(ZoneId.of(meeting.timezone))
                 ?.format(DateTimeFormatter.ofPattern("HH:mm"))
             Text(
-                if (clock == null) day else "$day · $clock",
-                Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                when {
+                    clock != null -> "$day · $clock"
+                    date != null -> stringResource(R.string.meeting_card_time_unspecified, day)
+                    else -> day
+                },
+                Modifier.width(IntrinsicSize.Max).padding(
+                    horizontal = DesignTokens.spaceS10,
+                    vertical = DesignTokens.spaceS4,
+                ),
                 color = if (weekend) Color(0xffdcece5) else Color(0xffede0f1),
                 fontSize = 11.sp,
                 lineHeight = 15.4.sp,

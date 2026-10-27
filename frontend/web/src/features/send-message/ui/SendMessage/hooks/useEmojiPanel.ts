@@ -1,15 +1,36 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 
-export const useEmojiPanel = (open: boolean, close?: () => void) => {
+export const useEmojiPanel = (open: boolean, close?: () => void, closeOutside = true) => {
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
+  useLayoutEffect(() => {
+    const closed = wasOpen.current && !open;
+    wasOpen.current = open;
+
+    if (!closed) {
+      return;
+    }
+
+    if (
+      document.activeElement === document.body ||
+      root.current?.querySelector('[inert]')?.contains(document.activeElement)
+    ) {
+      trigger.current?.focus({ preventScroll: true });
+    }
+  }, [open]);
   useEffect(() => {
     if (!open) {
       return;
     }
 
     const outside = (event: PointerEvent) => {
-      if (event.target instanceof Node && !root.current?.contains(event.target)) {
+      if (
+        closeOutside &&
+        event.target instanceof Node &&
+        !root.current?.contains(event.target) &&
+        !(event.target instanceof Element && event.target.closest('button'))
+      ) {
         close?.();
       }
     };
@@ -28,7 +49,7 @@ export const useEmojiPanel = (open: boolean, close?: () => void) => {
       document.removeEventListener('pointerdown', outside);
       document.removeEventListener('keydown', escape);
     };
-  }, [open, close]);
+  }, [open, close, closeOutside]);
 
   return { root, trigger };
 };

@@ -23,7 +23,7 @@ final class DatePollUITests: XCTestCase {
         create.tap()
         let submit = app.buttons["poll-create"]
         XCTAssertTrue(submit.waitForExistence(timeout: 5))
-        let multiple = app.switches["Можно выбрать несколько дат"]
+        let multiple = app.switches["Несколько ответов"]
         for _ in 0..<5 {
             if multiple.isHittable { break }
             app.scrollViews["action-form-scroll"].swipeUp()

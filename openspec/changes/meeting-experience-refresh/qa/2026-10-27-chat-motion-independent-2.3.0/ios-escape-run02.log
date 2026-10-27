@@ -1,0 +1,62 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 test-without-building -xctestrun /tmp/somewhere-ios-independent-run08/independent.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /private/tmp/ios-independent-escape02.xcresult
+
+Writing result bundle at path:
+	/private/tmp/ios-independent-escape02.xcresult
+
+2026-10-27 22:13:52.501 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:13:53.681697+0300 SomewhereUITests-Runner[91679:1342975] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-10-27 22:13:56.496.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-27 22:13:56.496.
+Test Suite 'IndependentEscapeReview' started at 2026-10-27 22:13:56.497.
+Test Case '-[SomewhereUITests.IndependentEscapeReview testEscapeFromExistingDock]' started.
+    t =     0.01s Start Test at 2026-10-27 22:13:56.502
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-10-27 22:13:56.583 xcodebuild[91660:1342717] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 22:13:56.583 xcodebuild[91660:1342717] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 22:13:56.591 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.50s         Setting up automation session
+objc[91679]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1096b0398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a478310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.76s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.08s Checking existence of `"emoji-search" TextField`
+    t =     4.41s Tap "composer-emoji-toggle" Button
+    t =     4.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.41s     Find the "composer-emoji-toggle" Button
+    t =     5.49s         Find the "composer-emoji-toggle" Button (retry 1)
+    t =     6.52s         Find the "composer-emoji-toggle" Button (retry 2)
+    t =     6.54s Requesting snapshot of accessibility hierarchy for app with pid 91687
+<unknown>:0: error: -[SomewhereUITests.IndependentEscapeReview testEscapeFromExistingDock] : Failed to tap "composer-emoji-toggle" Button: No matches found for Elements matching predicate '"composer-emoji-toggle" IN identifiers' from input {(
+    Button, label: 'Пропустить знакомство',
+    Button, label: 'Далее',
+    Button, label: 'Предыдущий слайд', Disabled
+)}
+    t =     6.59s Tear Down
+Test Case '-[SomewhereUITests.IndependentEscapeReview testEscapeFromExistingDock]' failed (6.819 seconds).
+Test Suite 'IndependentEscapeReview' failed at 2026-10-27 22:14:03.322.
+	 Executed 1 test, with 1 failure (0 unexpected) in 6.819 (6.825) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-10-27 22:14:03.322.
+	 Executed 1 test, with 1 failure (0 unexpected) in 6.819 (6.826) seconds
+Test Suite 'All tests' failed at 2026-10-27 22:14:03.323.
+	 Executed 1 test, with 1 failure (0 unexpected) in 6.819 (6.827) seconds
+2026-10-27 22:14:03.358 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.358 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.358 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.368 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.368 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.368 xcodebuild[91660:1342717] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:14:03.628 xcodebuild[91660:1342717] [MT] IDETestOperationsObserverDebug: 11.162 elapsed -- Testing started completed.
+2026-10-27 22:14:03.628 xcodebuild[91660:1342717] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 22:14:03.628 xcodebuild[91660:1342717] [MT] IDETestOperationsObserverDebug: 11.162 sec, +11.162 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/ios-independent-escape02.xcresult
+
+Failing tests:
+	IndependentEscapeReview.testEscapeFromExistingDock()
+
+** TEST EXECUTE FAILED **
+
+Testing started

@@ -57,7 +57,7 @@ class CrossPlatformUiTests {
             compose.onNodeWithText("Hello from web").performTouchInput { longClick() }
             fixture.waitText("👍")
             compose.onNodeWithText("👍").performClick()
-            fixture.waitText("👍 1")
+            fixture.waitText("👍 1 ✓")
             fixture.screenshot("cross-android-reactions")
             compose.onNodeWithTag("message-composer").performTextInput("Hello from Android")
             compose.onNodeWithTag("message-send").performClick()

@@ -10,9 +10,16 @@ struct ExperienceIcon: View {
     var size: CGFloat = 21
     var weight: CGFloat = 1.7
     var body: some View {
-        drawing.stroke(style: StrokeStyle(lineWidth: weight, lineCap: .round, lineJoin: .round))
-            .frame(width: 24, height: 24).scaleEffect(size / 24).frame(width: size, height: size)
-            .accessibilityHidden(true)
+        Group {
+            if kind == .smile {
+                Image("ComposerSmile").resizable()
+            } else {
+                drawing.stroke(
+                    style: StrokeStyle(lineWidth: weight, lineCap: .round, lineJoin: .round))
+            }
+        }
+        .frame(width: 24, height: 24).scaleEffect(size / 24).frame(width: size, height: size)
+        .accessibilityHidden(true)
     }
     private var drawing: Path {
         Path { p in
@@ -83,12 +90,7 @@ struct ExperienceIcon: View {
                     center: CGPoint(x: 12, y: 7), radius: 4, startAngle: .degrees(180),
                     endAngle: .degrees(0), clockwise: false)
                 p.addLine(to: CGPoint(x: 16, y: 10))
-            case .smile:
-                p.addEllipse(in: CGRect(x: 3, y: 3, width: 18, height: 18))
-                line(CGPoint(x: 8, y: 9), CGPoint(x: 8.1, y: 9))
-                line(CGPoint(x: 16, y: 9), CGPoint(x: 16.1, y: 9))
-                p.move(to: CGPoint(x: 8, y: 14))
-                p.addQuadCurve(to: CGPoint(x: 16, y: 14), control: CGPoint(x: 12, y: 19))
+            case .smile: break
             case .send:
                 line(CGPoint(x: 12, y: 19), CGPoint(x: 12, y: 5))
                 line(CGPoint(x: 6, y: 11), CGPoint(x: 12, y: 5), CGPoint(x: 18, y: 11))

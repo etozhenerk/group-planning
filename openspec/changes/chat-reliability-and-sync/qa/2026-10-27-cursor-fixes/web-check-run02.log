@@ -1,0 +1,48 @@
+
+> group-planning@0.0.0 web:check
+> npm run check --workspace @somewhere/web
+
+
+> @somewhere/web@0.0.0 check
+> npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test
+
+
+> @somewhere/web@0.0.0 typecheck
+> tsc --noEmit
+
+
+> @somewhere/web@0.0.0 lint
+> eslint .
+
+
+> @somewhere/web@0.0.0 styles
+> tsx scripts/check-styles.ts
+
+CSS block spacing: OK
+
+> @somewhere/web@0.0.0 architecture
+> tsx scripts/check-architecture.ts
+
+FSD, public API, aliases, TypeScript-only, component folders and CSS Modules: OK
+
+> @somewhere/web@0.0.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> @somewhere/web@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+
+
+ Test Files  30 passed (30)
+      Tests  119 passed (119)
+   Start at  21:37:07
+   Duration  4.61s (import 65%, tests 19%, transform 12%, worker 3%)
+
+    Isolate  30 workers spawned · ~73ms startup each (spawn + environment, per file)
+             at least ~2.12s faster with isolate: false — reuses workers across files instead of one per file
+

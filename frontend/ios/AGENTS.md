@@ -12,7 +12,7 @@ Swift и SwiftUI, Swift 6 concurrency. Экраны, навигация и со�
 находятся в клиенте; данные и результаты операций приходят из API. См.
 [ADR 0002](../../docs/architecture/0002-client-ui.md).
 Инструменты закреплены в `.xcode-version` и `Config/toolchain.env`.
-Схема `Somewhere` использует системные фреймворки и закреплённый Yandex LoginSDK; запуск и команды —
+Схема `Somewhere` использует системные фреймворки и закреплённые Yandex LoginSDK, SwiftCentrifuge и SwiftProtobuf; запуск и команды —
 в [README](README.md). UI-test host и поддержка тестового входа отделены
 от обычного target. Изменения дизайна следуют общим макетам.
 
@@ -84,6 +84,9 @@ Swift и SwiftUI, Swift 6 concurrency. Экраны, навигация и со�
 Загрузка CI-устройства ограничена 180 с, с одним повтором на том же UDID;
 операции очистки ограничены 30 с. Локальный путь не перезагружает устройство.
 Тестовый хост подписывается локально (`CODE_SIGN_IDENTITY=-`), без Apple-аккаунта.
+Unit-скрипт задаёт отдельный `dev.groupplanning.ios.unittesthost` через
+`SOMEWHERE_APP_BUNDLE_IDENTIFIER`; обычный bundle ID остаётся значением по умолчанию.
+Unit-запуск не устанавливает и не сбрасывает обычное приложение.
 Не отключай подпись в этом тесте: Keychain требует simulated entitlements.
 `sh scripts/test-ui.sh` запускает XCUITest с настоящим Go API на случайном
 loopback-порту. Нужен Go 1.27.2; `GO_BIN` может задавать путь. Тестовая схема

@@ -1,0 +1,114 @@
+{
+  "designSystem": "2.1.0",
+  "finalSourceReceipt": "source-receipt-icons.json",
+  "sourceTreeSha256": "6e6dd71e5f188e5ce2bc2867be87dad82f7fc24bfd865aa9ec53f584bff69b39",
+  "artifacts": [
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/chat-first/app-qa.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/chat-first/app-qa.apk",
+      "sha256": "dae91dd42d439a34be0db3941070bbcc6409fb4e1f9288689654b30f9e64d3ac"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/chat-final/app-qa.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/chat-final/app-qa.apk",
+      "sha256": "e876af36c2b3bae563403824f887c7e0ab3b9505c81fa8285d8272de46e2ecb6"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/chat-icons-final/app-qa.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/chat-icons-final/app-qa.apk",
+      "sha256": "a6ea95da0c190732915d1e915bc7bd479984a9edc19c64dcc62b6c2473ee8c1a"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/chat-icons-final/app-qa-androidTest.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/chat-icons-final/app-qa-androidTest.apk",
+      "sha256": "df83d23fecf075082e220364fe76aabf634d2557f80b9f1e0c79edfe994e4a78"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/production-final/app-qa.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/production-final/app-qa.apk",
+      "sha256": "a6ea95da0c190732915d1e915bc7bd479984a9edc19c64dcc62b6c2473ee8c1a"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/production-final/app-release-unsigned.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/production-final/app-release-unsigned.apk",
+      "sha256": "3975dd14027b37cefc0db827d25d825752abdd7fda7886da1a7b3f58d3735c81"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/production-final/app-debug-androidTest.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/production-final/app-debug-androidTest.apk",
+      "sha256": "681ce389476a6ab2af22a69d0ca024139335356e40a0abfd7d207d65428f7630"
+    },
+    {
+      "source": "/tmp/somewhere-android-2_1-ui/production-final/app-debug.apk",
+      "path": ".cache/qa/chat-correction-2.1.0/android-final/production-final/app-debug.apk",
+      "sha256": "3163a6dbb0e8ec7c98527278eeb61a18bcdabf52406d131eaf24b9ac622f282a"
+    }
+  ],
+  "uiRuns": [
+    {
+      "scope": "chat-final",
+      "tests": 6,
+      "failures": 0,
+      "appSha256": "e876af36c2b3bae563403824f887c7e0ab3b9505c81fa8285d8272de46e2ecb6",
+      "testApkSha256": "063feb93a11c3cb82ff64fd1e815b62efdd4c949b0a55b218e8a433105a74573"
+    },
+    {
+      "scope": "places",
+      "tests": 3,
+      "failures": 0,
+      "appSha256": "e876af36c2b3bae563403824f887c7e0ab3b9505c81fa8285d8272de46e2ecb6",
+      "testApkSha256": "063feb93a11c3cb82ff64fd1e815b62efdd4c949b0a55b218e8a433105a74573"
+    },
+    {
+      "scope": "tasks-final",
+      "tests": 4,
+      "failures": 0,
+      "appSha256": "e876af36c2b3bae563403824f887c7e0ab3b9505c81fa8285d8272de46e2ecb6",
+      "testApkSha256": "df83d23fecf075082e220364fe76aabf634d2557f80b9f1e0c79edfe994e4a78"
+    },
+    {
+      "scope": "polls",
+      "tests": 4,
+      "failures": 0,
+      "appSha256": "e876af36c2b3bae563403824f887c7e0ab3b9505c81fa8285d8272de46e2ecb6",
+      "testApkSha256": "df83d23fecf075082e220364fe76aabf634d2557f80b9f1e0c79edfe994e4a78"
+    },
+    {
+      "scope": "chat-icons-final",
+      "tests": 6,
+      "failures": 0,
+      "appSha256": "a6ea95da0c190732915d1e915bc7bd479984a9edc19c64dcc62b6c2473ee8c1a",
+      "testApkSha256": "df83d23fecf075082e220364fe76aabf634d2557f80b9f1e0c79edfe994e4a78"
+    }
+  ],
+  "finalChecks": {
+    "formatCheck": "pass",
+    "assembleDebug": "pass",
+    "assembleRelease": "pass",
+    "lintDebug": "pass",
+    "lintRelease": "pass",
+    "testDebugUnitTest": "126 passed",
+    "assembleDebugAndroidTest": "pass",
+    "assembleQa": "pass",
+    "assembleQaAndroidTest": "pass",
+    "gitDiffCheckAndroid": "pass",
+    "agentCheckAfterEvidenceDocs": "pass"
+  },
+  "review": "Independent reviewer owns emulator-5554. No independent design or functional pass is claimed by this engineering record.",
+  "corrections": [
+    {
+      "field": "source-receipt-icons.json:device.selectedImeSubtype",
+      "correction": "Russian Gboard was inferred from settings, not visually verified at handoff. Reviewer observed English-only layout and is checking Russian IME through its native UI. App ru-RU is confirmed by handoff screenshot."
+    },
+    {
+      "field": "source-receipt-icons.json:limitations[0]",
+      "correction": "Final Debug/Release packaging and Debug instrumentation completed successfully afterward; see production-artifacts-original.json and final build logs."
+    }
+  ],
+  "limitations": [
+    "17 UI checks belong to prior e876 app, while final a6ea app has six chat UI checks. Places/tasks/date-poll suites have not been repeated after icon-only corrections and token-equivalent padding replacement.",
+    "Earlier test APK 063feb93 hash is preserved, but that APK binary was not retained; final df83 test APK is retained.",
+    "No TalkBack/motion review outcome is inferred from executor tests.",
+    "Release artifact is unsigned; no deployment or store submission was performed."
+  ]
+}

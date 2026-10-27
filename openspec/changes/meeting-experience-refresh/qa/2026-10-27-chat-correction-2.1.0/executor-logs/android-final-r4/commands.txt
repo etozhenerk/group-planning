@@ -1,0 +1,12 @@
+# Gradle: рабочий каталог frontend/android
+env JAVA_HOME=/Users/misha/Library/Java/JavaVirtualMachines/jdk-17.0.21+9/Contents/Home ANDROID_HOME=/Users/misha/Library/Android/sdk JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 GRADLE_OPTS=-Dorg.gradle.vfs.watch=false ./gradlew --no-daemon --max-workers=2 formatApply formatCheck -PsomewhereTestBuildType=qa :app:assembleQa :app:assembleQaAndroidTest
+env JAVA_HOME=/Users/misha/Library/Java/JavaVirtualMachines/jdk-17.0.21+9/Contents/Home ANDROID_HOME=/Users/misha/Library/Android/sdk JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 GRADLE_OPTS=-Dorg.gradle.vfs.watch=false ./gradlew --no-daemon --max-workers=2 formatCheck :app:assembleDebug :app:assembleRelease :app:lintDebug :app:lintRelease :app:testDebugUnitTest :app:assembleDebugAndroidTest
+
+# ADB: рабочий каталог корня репозитория; app APK предварительно установлен root
+/Users/misha/Library/Android/sdk/platform-tools/adb -s emulator-5554 install -r -t .cache/qa/chat-correction-2.3.0/android-final-r4/androidTest/qa/app-qa-androidTest.apk
+/Users/misha/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell am instrument -w -r -e class dev.groupplanning.android.MotionPreferenceUiTests,dev.groupplanning.android.ReactionPopupLifecycleUiTests,dev.groupplanning.android.ReactionPickerLifecycleUiTests,dev.groupplanning.android.ReactionFeedbackLifecycleUiTests,dev.groupplanning.android.EmojiDockLifecycleUiTests,dev.groupplanning.android.ComposerMenuLifecycleUiTests dev.groupplanning.android.uitesthost.test/androidx.test.runner.AndroidJUnitRunner
+
+# Структура и whitespace: корень репозитория
+npm run agent:check
+npm run design:check
+git diff --check

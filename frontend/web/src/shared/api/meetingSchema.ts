@@ -25,6 +25,8 @@ export const summarySchema = z.object({
   revision,
   my_rsvp: answerSchema.nullable(),
   my_rsvp_revision: revision,
+  unread_count: revision.optional(),
+  first_unread: uuid.nullish(),
 });
 
 export const meetingSchema = summarySchema.extend({

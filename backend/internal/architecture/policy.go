@@ -13,6 +13,7 @@ var dependencies = map[string][]string{
 	"internal/support/telegram": {"internal/support"},
 	"internal/storage/files":    {"internal/meetings"},
 	"internal/identity":         {},
+	"internal/realtime":         {"internal/meetings", "internal/identity"},
 	"internal/accounts":         {"internal/identity"},
 	"internal/identity/yandex":  {"internal/identity"},
 	"internal/storage/postgres": {"internal/meetings", "internal/identity"},
@@ -20,7 +21,7 @@ var dependencies = map[string][]string{
 	"internal/storage/memory":   {"internal/meetings", "internal/identity", "internal/support"},
 	"internal/httpapi":          {"internal/meetings", "internal/identity", "internal/accounts", "internal/support"},
 	"internal/webui":            {"internal/meetings"},
-	"internal/server":           {"internal/accounts", "internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/storage/files", "internal/httpapi", "internal/webui", "internal/support", "internal/support/telegram"},
+	"internal/server":           {"internal/accounts", "internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/storage/files", "internal/httpapi", "internal/webui", "internal/support", "internal/support/telegram", "internal/realtime"},
 	"internal/architecture":     {},
 	"cmd/server":                {"internal/meetings", "internal/server", "internal/storage/memory", "internal/storage/postgres"},
 	"cmd/storage-demo":          {"internal/meetings", "internal/storage/memory"},
@@ -44,6 +45,10 @@ func within(name, parent string) bool {
 
 func importAllowed(source, imported string) bool {
 	if !strings.HasPrefix(imported, modulePath+"/") {
+		if source == "internal/realtime" && imported == "github.com/centrifugal/centrifuge" {
+			return true
+		}
+
 		if source == "internal/imagecontent" && within(imported, "golang.org/x/image") {
 			return true
 		}

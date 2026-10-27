@@ -1,0 +1,921 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme Somewhere -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/TestDerivedData -resultBundlePath .build/TestResults-20261027T195859-66106.xcresult -parallel-testing-enabled NO SOMEWHERE_APP_BUNDLE_IDENTIFIER=dev.groupplanning.ios.unittesthost ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+    SOMEWHERE_APP_BUNDLE_IDENTIFIER = dev.groupplanning.ios.unittesthost
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestResults-20261027T195859-66106.xcresult
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (5 targets)
+    Target 'SomewhereTests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'Somewhere' in project 'Somewhere'
+    Target 'Somewhere' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: c0f80e225484de4fb0a445545b50c933
+Build description path: /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/XCBuildData/c0f80e225484de4fb0a445545b50c933.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftConstValuesFileList (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.LinkFileList (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.LinkFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json
+
+SwiftDriver Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Somewhere (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ChatRequests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere/Data/API/Requests/ChatRequests.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere/Data/API/Requests/ChatRequests.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatRequests.swift
+
+SwiftCompile normal arm64 Compiling\ ChatSync.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere/Data/API/Models/ChatSync.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Somewhere/Data/API/Models/ChatSync.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatSync.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling ChatRequests.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ChatSync.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for Somewhere (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.abi.json (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.abi.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftsourceinfo (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftsourceinfo /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Ld /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib normal (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -filelist /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.LinkFileList -install_name @rpath/Somewhere.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -lc++ -framework Foundation -framework Security -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    construct-stub-executor-link-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'Somewhere' from project 'Somewhere')
+
+Ld /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere normal (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app-Simulated.xcent.der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere
+
+ExtractAppIntentsMetadata (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Somewhere --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.unittesthost --output /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere --dependency-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_dependency_info.dat --stringsdata-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList --metadata-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.DependencyMetadataFileList --static-metadata-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-27 22:59:07.581 appintentsmetadataprocessor[66641:1541384] Starting appintentsmetadataprocessor export
+2026-10-27 22:59:07.582 appintentsmetadataprocessor[66641:1541384] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopySwiftLibs /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Frameworks --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/SystemExtensions --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Info.plist /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Config/Info.plist (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/Config/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/assetcatalog_generated_info.plist -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Info.plist
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftConstValuesFileList (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.LinkFileList (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.LinkFileList
+
+WriteAuxiliaryFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    write-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json
+
+SwiftDriver SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Info.plist /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/empty-SomewhereTests.plist (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/empty-SomewhereTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Info.plist
+
+CpResource /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/cases.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/contracts/fixtures/cases.json (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/contracts/fixtures/cases.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest
+
+SwiftCompile normal arm64 Compiling\ PlacePollTests.swift,\ PreparationTaskTests.swift,\ InvitationLinkTests.swift,\ InvitationOwnerTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/PlacePollTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/PreparationTaskTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationLinkTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/PlacePollTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PlacePollTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/PreparationTaskTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreparationTaskTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationLinkTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationLinkTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationOwnerTests.swift
+
+SwiftCompile normal arm64 Compiling\ ReactionObservationTests.swift,\ SupportExperienceTests.swift,\ ChatContractTests.swift,\ DatePollTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ReactionObservationTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/SupportExperienceTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/ChatContractTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/DatePollTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ReactionObservationTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionObservationTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/SupportExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SupportExperienceTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/ChatContractTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatContractTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/DatePollTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DatePollTests.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SomewhereTests (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling ReactionObservationTests.swift, SupportExperienceTests.swift, ChatContractTests.swift, DatePollTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ SessionHarness.swift,\ TestTransport.swift,\ BrandMotionTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/SessionHarness.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/TestTransport.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/BrandMotionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/SessionHarness.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SessionHarness.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/TestTransport.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile TestTransport.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/BrandMotionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile BrandMotionTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlacePollTests.swift, PreparationTaskTests.swift, InvitationLinkTests.swift, InvitationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ EncryptedChatStorageTests.swift,\ FeedOwnerTests.swift,\ FeedTestContext.swift,\ MeetingSettingsTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/EncryptedChatStorageTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/FeedOwnerTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/FeedTestContext.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/MeetingSettingsTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/EncryptedChatStorageTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile EncryptedChatStorageTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/FeedOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedOwnerTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/FeedTestContext.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedTestContext.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Feed/MeetingSettingsTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingSettingsTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SessionHarness.swift, TestTransport.swift, BrandMotionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ SavedInvitationsOwnerTests.swift,\ AccountDeletionTests.swift,\ KeychainTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/SavedInvitations/SavedInvitationsOwnerTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/AccountDeletionTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/KeychainTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/SavedInvitations/SavedInvitationsOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SavedInvitationsOwnerTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/AccountDeletionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile AccountDeletionTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/KeychainTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile KeychainTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SomewhereTests (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedInvitationsOwnerTests.swift, AccountDeletionTests.swift, KeychainTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ DraftRepositoryTests.swift,\ MeetingDraftTests.swift,\ ChatInteractionTests.swift,\ ExperienceTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/DraftRepositoryTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/MeetingDraftTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ChatInteractionTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/DraftRepositoryTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DraftRepositoryTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/MeetingDraftTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingDraftTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ChatInteractionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatInteractionTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ExperienceTests.swift
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling EncryptedChatStorageTests.swift, FeedOwnerTests.swift, FeedTestContext.swift, MeetingSettingsTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.abi.json (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.abi.json /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftsourceinfo (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftsourceinfo /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ InvitationTestContext.swift,\ ContractTests.swift,\ APIClientTests.swift,\ URLSessionTransportTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationTestContext.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Models/ContractTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Networking/APIClientTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Networking/URLSessionTransportTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Invitation/InvitationTestContext.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationTestContext.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Models/ContractTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ContractTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Networking/APIClientTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile APIClientTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Networking/URLSessionTransportTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile URLSessionTransportTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling DraftRepositoryTests.swift, MeetingDraftTests.swift, ChatInteractionTests.swift, ExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ CalendarSelectionTests.swift,\ CoverAccessTests.swift,\ CoverProcessingTests.swift,\ CreationOwnerTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarSelectionTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Covers/CoverAccessTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Covers/CoverProcessingTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/CreationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarSelectionTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CalendarSelectionTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Covers/CoverAccessTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverAccessTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Covers/CoverProcessingTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverProcessingTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Create/CreationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreationOwnerTests.swift
+
+SwiftCompile normal arm64 Compiling\ MediaExperienceTests.swift,\ MeetingActionDraftTests.swift,\ ProfilePersonalTests.swift,\ ReactionExperienceTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/MediaExperienceTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/MeetingActionDraftTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ProfilePersonalTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ReactionExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/MediaExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MediaExperienceTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/MeetingActionDraftTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingActionDraftTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ProfilePersonalTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfilePersonalTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Experience/ReactionExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionExperienceTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling InvitationTestContext.swift, ContractTests.swift, APIClientTests.swift, URLSessionTransportTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ YandexSignInTests.swift,\ CalendarDateTests.swift,\ CalendarFixtures.swift,\ CalendarOwnerTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Auth/YandexSignInTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarDateTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarFixtures.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Auth/YandexSignInTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile YandexSignInTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarDateTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CalendarDateTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarFixtures.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CalendarFixtures.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Calendar/CalendarOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CalendarOwnerTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling CalendarSelectionTests.swift, CoverAccessTests.swift, CoverProcessingTests.swift, CreationOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ CoverFixtures.swift,\ Fixtures.swift,\ MemoryDraftStorage.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/CoverFixtures.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/Fixtures.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/MemoryDraftStorage.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/CoverFixtures.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverFixtures.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/Fixtures.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile Fixtures.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Support/MemoryDraftStorage.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MemoryDraftStorage.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling YandexSignInTests.swift, CalendarDateTests.swift, CalendarFixtures.swift, CalendarOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ SessionStoreTests.swift,\ MeetingRepositoryTests.swift,\ PaginationTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/SessionStoreTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/State/MeetingRepositoryTests.swift /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/State/PaginationTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/Session/SessionStoreTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SessionStoreTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/State/MeetingRepositoryTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingRepositoryTests.swift
+
+SwiftCompile normal arm64 /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereTests/State/PaginationTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PaginationTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling MediaExperienceTests.swift, MeetingActionDraftTests.swift, ProfilePersonalTests.swift, ReactionExperienceTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CoverFixtures.swift, Fixtures.swift, MemoryDraftStorage.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SessionStoreTests.swift, MeetingRepositoryTests.swift, PaginationTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftDriver\ Compilation SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests normal (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -filelist /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere -Xlinker -object_path_lto -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -lc++ -framework Foundation -framework Security -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest-Simulated.xcent.der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests
+
+CopySwiftLibs /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Frameworks --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/PlugIns --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SystemExtensions --scan-folder /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SomewhereTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.tests --output /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests --dependency-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_dependency_info.dat --stringsdata-file /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList --metadata-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.DependencyMetadataFileList --static-metadata-file-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-27 22:59:14.418 appintentsmetadataprocessor[66664:1541597] Starting appintentsmetadataprocessor export
+2026-10-27 22:59:14.420 appintentsmetadataprocessor[66664:1541597] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CodeSign /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest
+
+CodeSign /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib
+
+CodeSign /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib
+/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app.xcent --timestamp\=none --generate-entitlement-der /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app
+
+Validate /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios
+    builtin-validationUtility /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app -shallow-bundle -infoplist-subpath Info.plist
+
+PruneExplicitPrecompiledModules /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+2026-10-27 22:59:14.676 xcodebuild[66366:1540563] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+Test Suite 'All tests' started at 2026-10-27 22:59:20.224.
+Test Suite 'All tests' passed at 2026-10-27 22:59:20.224.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "HTTP requests and API errors" started.
+◇ Test requestUsesBearerAndMatchingMessageKey() started.
+✔ Test requestUsesBearerAndMatchingMessageKey() passed after 0.009 seconds.
+◇ Test statusSurvivesMalformedErrorBody() started.
+✔ Test statusSurvivesMalformedErrorBody() passed after 0.001 seconds.
+◇ Test successfulWrongMimeOrDataFailsValidation() started.
+✔ Test successfulWrongMimeOrDataFailsValidation() passed after 0.010 seconds.
+◇ Test originAndPathCannotChangeDestination() started.
+✔ Test originAndPathCannotChangeDestination() passed after 0.001 seconds.
+◇ Test mobileAttemptAndFeedCursorsUseCanonicalWireValues() started.
+✔ Test mobileAttemptAndFeedCursorsUseCanonicalWireValues() passed after 0.001 seconds.
+◇ Test credentialsRejectHeaderInjectionAndRedactDebugging() started.
+✔ Test credentialsRejectHeaderInjectionAndRedactDebugging() passed after 0.001 seconds.
+✔ Suite "HTTP requests and API errors" passed after 0.025 seconds.
+◇ Suite AccountDeletionTests started.
+◇ Test completionClearsCredentialsAndPrivateState() started.
+✔ Test completionClearsCredentialsAndPrivateState() passed after 0.005 seconds.
+◇ Test failedResponseRestoresPendingOperationBeforeSessionCheck() started.
+✔ Test failedResponseRestoresPendingOperationBeforeSessionCheck() passed after 0.001 seconds.
+◇ Test unauthorizedDoesNotClaimSuccessAndConcurrentClickDoesNotSendAgain() started.
+✔ Test unauthorizedDoesNotClaimSuccessAndConcurrentClickDoesNotSendAgain() passed after 0.011 seconds.
+✔ Suite AccountDeletionTests passed after 0.019 seconds.
+◇ Suite BrandMotionTests started.
+◇ Test reducedMotionAndInactiveSceneStayStill() started.
+✔ Test reducedMotionAndInactiveSceneStayStill() passed after 0.001 seconds.
+◇ Test rotationCompletesExactlyOnceEvenDuringLongLoading() started.
+✔ Test rotationCompletesExactlyOnceEvenDuringLongLoading() passed after 0.001 seconds.
+✔ Suite BrandMotionTests passed after 0.001 seconds.
+◇ Suite CalendarDateTests started.
+◇ Test civilArithmeticAndSixStableWeeks() started.
+✔ Test civilArithmeticAndSixStableWeeks() passed after 0.001 seconds.
+◇ Test selectionRetainsBothPeriodsAndCreationContext() started.
+✔ Test selectionRetainsBothPeriodsAndCreationContext() passed after 0.002 seconds.
+◇ Test refreshHonorsServerDeadlineWithoutBusyLoop() started.
+✔ Test refreshHonorsServerDeadlineWithoutBusyLoop() passed after 0.003 seconds.
+✔ Suite CalendarDateTests passed after 0.008 seconds.
+◇ Suite CalendarOwnerTests started.
+◇ Test metadataAndDelayedFilterKeepOneEmptyAction() started.
+✔ Test metadataAndDelayedFilterKeepOneEmptyAction() passed after 0.014 seconds.
+◇ Test oldPeriodCannotReplaceNewData() started.
+✔ Test oldPeriodCannotReplaceNewData() passed after 0.016 seconds.
+◇ Test paginationConflictRestartsAndKeepsSelection() started.
+✔ Test paginationConflictRestartsAndKeepsSelection() passed after 0.005 seconds.
+◇ Test monthMetadataAndMeetingZoneSurviveRefreshFailure() started.
+✔ Test monthMetadataAndMeetingZoneSurviveRefreshFailure() passed after 0.002 seconds.
+◇ Test persistedStatusChangesOnlyOnResponseAndLogoutRejectsLateData() started.
+✔ Test persistedStatusChangesOnlyOnResponseAndLogoutRejectsLateData() passed after 0.012 seconds.
+✔ Suite CalendarOwnerTests passed after 0.051 seconds.
+◇ Suite CalendarSelectionTests started.
+◇ Test periodLeavesUndatedAndCalendarStartsFromDatedMeetings() started.
+✔ Test periodLeavesUndatedAndCalendarStartsFromDatedMeetings() passed after 0.003 seconds.
+◇ Test dayPaginationRestartsWithoutChangingDayOrCombiningSnapshots() started.
+✔ Test dayPaginationRestartsWithoutChangingDayOrCombiningSnapshots() passed after 0.003 seconds.
+✔ Suite CalendarSelectionTests passed after 0.006 seconds.
+◇ Suite ChatContractTests started.
+◇ Test syncRoutesAndAroundUsePublishedAPI() started.
+✔ Test syncRoutesAndAroundUsePublishedAPI() passed after 0.001 seconds.
+◇ Test snapshotAndChangesDecodeIndependentCursorsAndLargeVersions() started.
+✔ Test snapshotAndChangesDecodeIndependentCursorsAndLargeVersions() passed after 0.006 seconds.
+✔ Suite ChatContractTests passed after 0.006 seconds.
+◇ Suite "Mobile chat interactions" started.
+◇ Test backwardDeletionRemovesACompleteGrapheme(_:) started.
+◇ Test case passing 1 argument emoji → "👨‍👩‍👧‍👦" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "👍🏽" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "🇷🇺" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "❤️" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​✔ Test backwardDeletionRemovesACompleteGrapheme(_:) with 4 test cases passed after 0.001 seconds.
+◇ Test selectionAndRepeatedInsertionPreserveSurroundingText() started.
+✔ Test selectionAndRepeatedInsertionPreserveSurroundingText() passed after 0.001 seconds.
+◇ Test childSheetReturnsToInformationWithoutDiscardingComposer() started.
+✔ Test childSheetReturnsToInformationWithoutDiscardingComposer() passed after 0.001 seconds.
+◇ Test peopleFiltersMergeUsersWithoutTogglingReactions() started.
+✔ Test peopleFiltersMergeUsersWithoutTogglingReactions() passed after 0.001 seconds.
+✔ Suite "Mobile chat interactions" passed after 0.004 seconds.
+◇ Suite "Shared API contract" started.
+◇ Test allSharedFixturesDecode() started.
+✔ Test allSharedFixturesDecode() passed after 0.014 seconds.
+◇ Test dateOnlyCreationAndHiddenPollPreserveContract() started.
+✔ Test dateOnlyCreationAndHiddenPollPreserveContract() passed after 0.003 seconds.
+◇ Test preparationTasksSeparateProposalFromAcceptance() started.
+✔ Test preparationTasksSeparateProposalFromAcceptance() passed after 0.010 seconds.
+◇ Test placePollKeepsCountsOwnVoteAndFinalState() started.
+✔ Test placePollKeepsCountsOwnVoteAndFinalState() passed after 0.006 seconds.
+◇ Test nullAndMissingDescriptionsRemainAbsent() started.
+✔ Test nullAndMissingDescriptionsRemainAbsent() passed after 0.003 seconds.
+◇ Test unsupportedEntriesStayDataAndKeepLargeSequences() started.
+✔ Test unsupportedEntriesStayDataAndKeepLargeSequences() passed after 0.003 seconds.
+◇ Test conflictSnapshotAllowsNoPreviousAnswer() started.
+✔ Test conflictSnapshotAllowsNoPreviousAnswer() passed after 0.001 seconds.
+◇ Test datesKeepOffsetsFractionsAndOriginalText() started.
+✔ Test datesKeepOffsetsFractionsAndOriginalText() passed after 0.003 seconds.
+◇ Test malformedCountersAndAnswersAreRejected() started.
+✔ Test malformedCountersAndAnswersAreRejected() passed after 0.024 seconds.
+◇ Test patchDistinguishesUnchangedAndClear() started.
+✔ Test patchDistinguishesUnchangedAndClear() passed after 0.002 seconds.
+◇ Test invitationContextAcceptsBothTokens() started.
+✔ Test invitationContextAcceptsBothTokens() passed after 0.001 seconds.
+✔ Suite "Shared API contract" passed after 0.075 seconds.
+◇ Suite CoverAccessTests started.
+◇ Test onlyExactOriginMeetingAndVersionCanReceiveAuthorization() started.
+✔ Test onlyExactOriginMeetingAndVersionCanReceiveAuthorization() passed after 0.001 seconds.
+◇ Test privateImageUsesSessionAndRejectsWrongMime() started.
+✔ Test privateImageUsesSessionAndRejectsWrongMime() passed after 0.013 seconds.
+◇ Test lateImageIsDiscardedAfterAccessRevocationAndAfterLogout() started.
+✔ Test lateImageIsDiscardedAfterAccessRevocationAndAfterLogout() passed after 0.024 seconds.
+◇ Test aDisplayedImageDisappearsAsSoonAsItsAccessLeaseExpires() started.
+2026-10-27 22:59:20.523975+0300 Somewhere[66742:1542510] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-10-27 22:59:20.524092+0300 Somewhere[66742:1542510] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test aDisplayedImageDisappearsAsSoonAsItsAccessLeaseExpires() passed after 0.047 seconds.
+✔ Suite CoverAccessTests passed after 0.086 seconds.
+◇ Suite CoverProcessingTests started.
+◇ Test largeCameraPhotoIsDownsampledAndOrientationIsApplied() started.
+2026-10-27 22:59:20.541677+0300 Somewhere[66742:1542510] [] CVPixelBufferCreate returned err -6680. width 1600, height 900, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-10-27 22:59:20.556579+0300 Somewhere[66742:1542510] [] CVPixelBufferCreate returned err -6680. width 900, height 1600, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test largeCameraPhotoIsDownsampledAndOrientationIsApplied() passed after 0.033 seconds.
+◇ Test deniedMissingCorruptAndOversizedFilesAreRejected() started.
+✔ Test deniedMissingCorruptAndOversizedFilesAreRejected() passed after 0.018 seconds.
+◇ Test creationAndSettingsEncodePhotoRetainAndRemoval() started.
+✔ Test creationAndSettingsEncodePhotoRetainAndRemoval() passed after 0.008 seconds.
+✔ Suite CoverProcessingTests passed after 0.060 seconds.
+◇ Suite CreationOwnerTests started.
+◇ Test calendarPrefillPreservesDraftAndDoesNotModifyPendingSubmission() started.
+✔ Test calendarPrefillPreservesDraftAndDoesNotModifyPendingSubmission() passed after 0.001 seconds.
+◇ Test lostResponseRestoresFrozenBodyAndKey() started.
+✔ Test lostResponseRestoresFrozenBodyAndKey() passed after 0.004 seconds.
+◇ Test diskFailurePreventsRequestAndValidationUnlocksFields() started.
+✔ Test diskFailurePreventsRequestAndValidationUnlocksFields() passed after 0.001 seconds.
+◇ Test doubleSubmitAndLateResponseAfterLogoutCannotPublish() started.
+✔ Test doubleSubmitAndLateResponseAfterLogoutCannotPublish() passed after 0.011 seconds.
+◇ Test changeCanReadCurrentDraftWithoutOverlappingAccess() started.
+✔ Test changeCanReadCurrentDraftWithoutOverlappingAccess() passed after 0.001 seconds.
+◇ Test unauthorizedClearsSessionAndCannotPublish() started.
+✔ Test unauthorizedClearsSessionAndCannotPublish() passed after 0.001 seconds.
+✔ Suite CreationOwnerTests passed after 0.020 seconds.
+◇ Suite DatePollTests started.
+◇ Test uncertainVoteRetriesExactlyAndKeepsHiddenResultsPrivate() started.
+✔ Test uncertainVoteRetriesExactlyAndKeepsHiddenResultsPrivate() passed after 0.010 seconds.
+◇ Test conflictRefreshKeepsSelectionAndClosedPollDisablesChanges() started.
+✔ Test conflictRefreshKeepsSelectionAndClosedPollDisablesChanges() passed after 0.005 seconds.
+◇ Test revokedAccessRejectsLatePollAndResolveCanExplicitlyClearTime() started.
+✔ Test revokedAccessRejectsLatePollAndResolveCanExplicitlyClearTime() passed after 0.014 seconds.
+✔ Suite DatePollTests passed after 0.029 seconds.
+◇ Suite DraftRepositoryTests started.
+◇ Test profilesAndOldOwnersStayIsolated() started.
+✔ Test profilesAndOldOwnersStayIsolated() passed after 0.006 seconds.
+◇ Test fileSurvivesRepositoryRecreationWithoutSessionSecret() started.
+✔ Test fileSurvivesRepositoryRecreationWithoutSessionSecret() passed after 0.002 seconds.
+✔ Suite DraftRepositoryTests passed after 0.009 seconds.
+◇ Suite EncryptedChatStorageTests started.
+◇ Test restartRestoresIntentWithoutPlaintextAndUsesFreshNonce() started.
+✔ Test restartRestoresIntentWithoutPlaintextAndUsesFreshNonce() passed after 0.016 seconds.
+◇ Test authenticationRejectsTamperingAndMovingToAnotherMeeting() started.
+✔ Test authenticationRejectsTamperingAndMovingToAnotherMeeting() passed after 0.013 seconds.
+◇ Test accountRemovalPreservesOtherAccountAndRemovesEncryptionKey() started.
+✔ Test accountRemovalPreservesOtherAccountAndRemovesEncryptionKey() passed after 0.007 seconds.
+​➜ Test encryptedFileUsesCompleteDeviceProtection() skipped: "Complete file protection must be verified on a physical iOS device."
+​✔ Suite EncryptedChatStorageTests passed after 0.038 seconds.
+◇ Suite "Meeting experience contracts and privacy" started.
+◇ Test invitationCutoffIsInclusiveAndKeepsCurrentParticipants() started.
+✔ Test invitationCutoffIsInclusiveAndKeepsCurrentParticipants() passed after 0.001 seconds.
+◇ Test optionalProfileFieldsStayPrivateAndMissing() started.
+✔ Test optionalProfileFieldsStayPrivateAndMissing() passed after 0.002 seconds.
+◇ Test profileCallbackAfterLogoutCannotRepopulateState() started.
+✔ Test profileCallbackAfterLogoutCannotRepopulateState() passed after 0.011 seconds.
+◇ Test completeEmojiCatalogHasRussianSearchAndRecentIsSessionScoped() started.
+✔ Test completeEmojiCatalogHasRussianSearchAndRecentIsSessionScoped() passed after 0.020 seconds.
+✔ Suite "Meeting experience contracts and privacy" passed after 0.035 seconds.
+◇ Suite FeedOwnerTests started.
+◇ Test cursorUsesReadEntriesNotMetadataOrPostAndHistoryDoesNotMoveIt() started.
+✔ Test cursorUsesReadEntriesNotMetadataOrPostAndHistoryDoesNotMoveIt() passed after 0.005 seconds.
+◇ Test emptyInitialPageStartsIncrementalReadsAtZero() started.
+✔ Test emptyInitialPageStartsIncrementalReadsAtZero() passed after 0.001 seconds.
+◇ Test retryRetainsBodyAndIDAndPollingReconcilesLostResponse() started.
+✔ Test retryRetainsBodyAndIDAndPollingReconcilesLostResponse() passed after 0.001 seconds.
+◇ Test backgroundCancelsLateReadButPreservesDraftAndUncertainIntent() started.
+✔ Test backgroundCancelsLateReadButPreservesDraftAndUncertainIntent() passed after 0.012 seconds.
+◇ Test forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+◇ Test case passing 1 argument status → 401 to forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+​◇ Test case passing 1 argument status → 403 to forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+​✔ Test forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) with 2 test cases passed after 0.026 seconds.
+◇ Test historyDoesNotAppearAfterAccessLeaseChanges() started.
+✔ Test historyDoesNotAppearAfterAccessLeaseChanges() passed after 0.012 seconds.
+◇ Test unknownEventVersionIsSafeAndDoesNotExposeItsPayload() started.
+✔ Test unknownEventVersionIsSafeAndDoesNotExposeItsPayload() passed after 0.001 seconds.
+✔ Suite FeedOwnerTests passed after 0.061 seconds.
+◇ Suite InvitationLinkTests started.
+◇ Test validCurrentLegacyAndNativeLinks() started.
+✔ Test validCurrentLegacyAndNativeLinks() passed after 0.001 seconds.
+◇ Test rejectsUntrustedAndAmbiguousLinks() started.
+✔ Test rejectsUntrustedAndAmbiguousLinks() passed after 0.001 seconds.
+◇ Test protectedContextIgnoresLateWriteAndRestores() started.
+✔ Test protectedContextIgnoresLateWriteAndRestores() passed after 0.001 seconds.
+◇ Test runtimeRestoresInvitationWithoutReply() started.
+✔ Test runtimeRestoresInvitationWithoutReply() passed after 0.001 seconds.
+✔ Suite InvitationLinkTests passed after 0.003 seconds.
+◇ Suite InvitationOwnerTests started.
+◇ Test anonymousPreviewNeverReadsPrivateDataOrSavesReply() started.
+✔ Test anonymousPreviewNeverReadsPrivateDataOrSavesReply() passed after 0.001 seconds.
+◇ Test uncertainReplyRetriesSameBodyAndKeyWithoutGrantingAccess() started.
+✔ Test uncertainReplyRetriesSameBodyAndKeyWithoutGrantingAccess() passed after 0.007 seconds.
+◇ Test withdrawalPurgesFeedAndRejectsLateRead() started.
+✔ Test withdrawalPurgesFeedAndRejectsLateRead() passed after 0.015 seconds.
+◇ Test conflictReloadsCurrentAnswerWithoutAutomaticOverwrite() started.
+✔ Test conflictReloadsCurrentAnswerWithoutAutomaticOverwrite() passed after 0.001 seconds.
+◇ Test changedSessionRejectsLateResponseAndAccess() started.
+✔ Test changedSessionRejectsLateResponseAndAccess() passed after 0.012 seconds.
+◇ Test expiredSessionClosesAccess() started.
+✔ Test expiredSessionClosesAccess() passed after 0.003 seconds.
+◇ Test unavailableInvitationDoesNotExposeCachedDetails() started.
+✔ Test unavailableInvitationDoesNotExposeCachedDetails() passed after 0.003 seconds.
+✔ Suite InvitationOwnerTests passed after 0.046 seconds.
+◇ Suite KeychainTests started.
+◇ Test persistenceAndOriginIsolation() started.
+✔ Test persistenceAndOriginIsolation() passed after 0.006 seconds.
+◇ Test staleSaveCannotRestoreRemovedSession() started.
+✔ Test staleSaveCannotRestoreRemovedSession() passed after 0.001 seconds.
+✔ Suite KeychainTests passed after 0.007 seconds.
+◇ Suite "Private media upload and access" started.
+◇ Test documentCaptionLimitKeepsWholeEmojiAndSkipsPhotos() started.
+✔ Test documentCaptionLimitKeepsWholeEmojiAndSkipsPhotos() passed after 0.001 seconds.
+◇ Test downloadReconstructsOwnOriginAndSuppressesRevokedCallback() started.
+✔ Test downloadReconstructsOwnOriginAndSuppressesRevokedCallback() passed after 0.012 seconds.
+◇ Test partialUploadPreservesSuccessAndRetriesSamePreparedFile() started.
+✔ Test partialUploadPreservesSuccessAndRetriesSamePreparedFile() passed after 0.007 seconds.
+✔ Suite "Private media upload and access" passed after 0.020 seconds.
+◇ Suite "Meeting action drafts in memory" started.
+◇ Test retainedDatePickerKeepsIdentityWhenOptionsAreRemovedOrCleared() started.
+✔ Test retainedDatePickerKeepsIdentityWhenOptionsAreRemovedOrCleared() passed after 0.001 seconds.
+◇ Test reopeningKeepsEveryFormUntilSuccessOrMeetingExit() started.
+✔ Test reopeningKeepsEveryFormUntilSuccessOrMeetingExit() passed after 0.001 seconds.
+◇ Test failedCreationKeepsRequestAcrossCloseAndReopen() started.
+✔ Test failedCreationKeepsRequestAcrossCloseAndReopen() passed after 0.001 seconds.
+✔ Suite "Meeting action drafts in memory" passed after 0.002 seconds.
+◇ Suite MeetingDraftTests started.
+◇ Test dateIsRequiredAndOptionalTimePreservesOffset() started.
+✔ Test dateIsRequiredAndOptionalTimePreservesOffset() passed after 0.006 seconds.
+◇ Test missingAndRepeatedHoursDoNotMoveSilently() started.
+✔ Test missingAndRepeatedHoursDoNotMoveSilently() passed after 0.004 seconds.
+◇ Test invalidCalendarAndUnicodeScalarLimits() started.
+✔ Test invalidCalendarAndUnicodeScalarLimits() passed after 0.001 seconds.
+✔ Suite MeetingDraftTests passed after 0.011 seconds.
+◇ Suite MeetingRepositoryTests started.
+◇ Test retryPreservesPreviousSnapshotAndClearsError() started.
+✔ Test retryPreservesPreviousSnapshotAndClearsError() passed after 0.003 seconds.
+◇ Test overlappingLoadsCannotReplaceNewerSnapshot() started.
+✔ Test overlappingLoadsCannotReplaceNewerSnapshot() passed after 0.012 seconds.
+◇ Test cancellationEndsLoadingWithoutError() started.
+✔ Test cancellationEndsLoadingWithoutError() passed after 0.011 seconds.
+✔ Suite MeetingRepositoryTests passed after 0.027 seconds.
+◇ Suite MeetingSettingsTests started.
+◇ Test textOnlyEditDoesNotReinterpretAmbiguousTimeAndClearIsNull() started.
+✔ Test textOnlyEditDoesNotReinterpretAmbiguousTimeAndClearIsNull() passed after 0.001 seconds.
+◇ Test clearingTimePreservesCivilDayAndDateOnlyDraftRestores() started.
+✔ Test clearingTimePreservesCivilDayAndDateOnlyDraftRestores() passed after 0.004 seconds.
+◇ Test conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() started.
+✔ Test conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() passed after 0.001 seconds.
+◇ Test uncertainSaveFreezesRequestAndRetryKeepsKeyAndBody() started.
+✔ Test uncertainSaveFreezesRequestAndRetryKeepsKeyAndBody() passed after 0.001 seconds.
+◇ Test organizerPermissionFailureDoesNotRevokeFeed() started.
+✔ Test organizerPermissionFailureDoesNotRevokeFeed() passed after 0.002 seconds.
+◇ Test lateSettingsResponseCannotRestoreRevokedMeeting() started.
+✔ Test lateSettingsResponseCannotRestoreRevokedMeeting() passed after 0.011 seconds.
+✔ Suite MeetingSettingsTests passed after 0.023 seconds.
+◇ Suite PaginationTests started.
+◇ Test moreFailureKeepsItemsAndRetryMergesWithoutDuplicates() started.
+✔ Test moreFailureKeepsItemsAndRetryMergesWithoutDuplicates() passed after 0.002 seconds.
+◇ Test refreshedListRejectsLatePage() started.
+✔ Test refreshedListRejectsLatePage() passed after 0.012 seconds.
+✔ Suite PaginationTests passed after 0.014 seconds.
+◇ Suite PlacePollTests started.
+◇ Test failedVotePreservesAnswerAndExactRetry() started.
+✔ Test failedVotePreservesAnswerAndExactRetry() passed after 0.007 seconds.
+◇ Test conflictReadsCurrentAndClosedPollRejectsVote() started.
+✔ Test conflictReadsCurrentAndClosedPollRejectsVote() passed after 0.004 seconds.
+◇ Test lostMembershipRejectsLateReadAndFailureKeepsCard() started.
+✔ Test lostMembershipRejectsLateReadAndFailureKeepsCard() passed after 0.013 seconds.
+◇ Test createRequestAndDeadlineStates() started.
+✔ Test createRequestAndDeadlineStates() passed after 0.001 seconds.
+◇ Test explanationIsPrivateOptionalAndPreservedOnRetry() started.
+✔ Test explanationIsPrivateOptionalAndPreservedOnRetry() passed after 0.004 seconds.
+✔ Suite PlacePollTests passed after 0.032 seconds.
+◇ Suite PreparationTaskTests started.
+◇ Test unconfirmedAcceptanceRetainsOfferedStateAndExactRetry() started.
+✔ Test unconfirmedAcceptanceRetainsOfferedStateAndExactRetry() passed after 0.006 seconds.
+◇ Test conflictLoadsCurrentTaskAndPreventsAnotherAcceptance() started.
+✔ Test conflictLoadsCurrentTaskAndPreventsAnotherAcceptance() passed after 0.004 seconds.
+◇ Test readFailureKeepsCardAndRevocationRejectsLateMutation() started.
+✔ Test readFailureKeepsCardAndRevocationRejectsLateMutation() passed after 0.013 seconds.
+◇ Test creationRequiresValidDraftAndEncodesGeneralRecipientExplicitly() started.
+✔ Test creationRequiresValidDraftAndEncodesGeneralRecipientExplicitly() passed after 0.002 seconds.
+◇ Test participantsRetryRetainsDraftAndWrongTaskReplyIsNotApplied() started.
+✔ Test participantsRetryRetainsDraftAndWrongTaskReplyIsNotApplied() passed after 0.004 seconds.
+✔ Suite PreparationTaskTests passed after 0.032 seconds.
+◇ Suite "Private Yandex profile data" started.
+◇ Test newPrivateFieldsDecode() started.
+✔ Test newPrivateFieldsDecode() passed after 0.001 seconds.
+◇ Test partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+◇ Test case passing 2 arguments input → "1990-12-23", expected → "23 декабря 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-12-23", expected → "23 декабря" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-00-00", expected → "1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-12-00", expected → "декабрь 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-00-23", expected → "23 число, 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-00-23", expected → "23 число" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-12-00", expected → "декабрь" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-00-00", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-02-29", expected → "29 февраля" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "2023-02-29", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-13-01", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-01-32", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "bad", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​✔ Test partialBirthdayNeverInventsMissingComponents(input:expected:) with 14 test cases passed after 0.003 seconds.
+◇ Test missingAndUnknownDataIsExplicit() started.
+✔ Test missingAndUnknownDataIsExplicit() passed after 0.001 seconds.
+✔ Suite "Private Yandex profile data" passed after 0.004 seconds.
+◇ Suite "Reactions and composer" started.
+◇ Test emojiReplacesSelectedTextWithoutSplittingUnicodeOrSending() started.
+✔ Test emojiReplacesSelectedTextWithoutSplittingUnicodeOrSending() passed after 0.001 seconds.
+◇ Test visibleMessagesLoadReactionsWithoutWaitingForFeedPolling() started.
+✔ Test visibleMessagesLoadReactionsWithoutWaitingForFeedPolling() passed after 0.011 seconds.
+◇ Test failedReactionRollsBackAndRetrySendsDesiredState() started.
+✔ Test failedReactionRollsBackAndRetrySendsDesiredState() passed after 0.028 seconds.
+◇ Test staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+◇ Test case passing 1 argument startDuringMutation → false to staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+​◇ Test case passing 1 argument startDuringMutation → true to staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+​✔ Test staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) with 2 test cases passed after 0.062 seconds.
+✔ Suite "Reactions and composer" passed after 0.103 seconds.
+◇ Suite "Reaction pending state" started.
+◇ Test confirmingAnOptimisticReactionNotifiesPendingObservers() started.
+2026-10-27 22:59:21.273307+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.331833+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.331927+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332021+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332062+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332142+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332234+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332369+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332424+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332494+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.332536+0300 Somewhere[66742:1541928] [API] cannot add handler to 0 from 0 - dropping
+2026-10-27 22:59:21.335332+0300 Somewhere[66742:1541928] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+✔ Test confirmingAnOptimisticReactionNotifiesPendingObservers() passed after 0.241 seconds.
+✔ Suite "Reaction pending state" passed after 0.241 seconds.
+◇ Suite SavedInvitationsOwnerTests started.
+◇ Test paginationDeduplicatesAndRefreshRetainsLoadedPages() started.
+✔ Test paginationDeduplicatesAndRefreshRetainsLoadedPages() passed after 0.010 seconds.
+◇ Test refreshFailureRetainsCardsAndServerResponseRemovesThem() started.
+✔ Test refreshFailureRetainsCardsAndServerResponseRemovesThem() passed after 0.004 seconds.
+◇ Test logoutRejectsLateResponseAndCancellationAllowsRetry() started.
+✔ Test logoutRejectsLateResponseAndCancellationAllowsRetry() passed after 0.026 seconds.
+◇ Test unexpectedAnswerCannotBecomeSavedInvitation() started.
+✔ Test unexpectedAnswerCannotBecomeSavedInvitation() passed after 0.002 seconds.
+✔ Suite SavedInvitationsOwnerTests passed after 0.043 seconds.
+◇ Suite SessionStoreTests started.
+◇ Test restoreVerifiesProfileAndRejectsExpiredCredential() started.
+✔ Test restoreVerifiesProfileAndRejectsExpiredCredential() passed after 0.001 seconds.
+◇ Test keychainFailureDoesNotCreateSession() started.
+✔ Test keychainFailureDoesNotCreateSession() passed after 0.001 seconds.
+◇ Test unauthorizedClearsAllPrivateStateAndCredential() started.
+✔ Test unauthorizedClearsAllPrivateStateAndCredential() passed after 0.002 seconds.
+◇ Test forbiddenReadClearsOnlyAffectedMeetingAndRejectsLateResponse() started.
+✔ Test forbiddenReadClearsOnlyAffectedMeetingAndRejectsLateResponse() passed after 0.015 seconds.
+◇ Test organizerOnlyForbiddenDoesNotRevokeChat() started.
+✔ Test organizerOnlyForbiddenDoesNotRevokeChat() passed after 0.014 seconds.
+◇ Test logoutClearsLocalStateEvenWhenServerFails() started.
+✔ Test logoutClearsLocalStateEvenWhenServerFails() passed after 0.002 seconds.
+◇ Test obsoleteRestoreCannotEraseNewSession() started.
+✔ Test obsoleteRestoreCannotEraseNewSession() passed after 0.011 seconds.
+◇ Test canceledRestoreDoesNotAuthenticateLate() started.
+✔ Test canceledRestoreDoesNotAuthenticateLate() passed after 0.011 seconds.
+✔ Suite SessionStoreTests passed after 0.058 seconds.
+◇ Suite "Feedback privacy and retry" started.
+◇ Test validationAndRateLimitKeepFieldsWithoutSuccess() started.
+✔ Test validationAndRateLimitKeepFieldsWithoutSuccess() passed after 0.003 seconds.
+◇ Test lostResponseRetainsDraftAndIdempotencyWithoutPrivateDiagnostics() started.
+✔ Test lostResponseRetainsDraftAndIdempotencyWithoutPrivateDiagnostics() passed after 0.001 seconds.
+◇ Test cancelledFeedbackCannotPresentDelayedReceipt() started.
+✔ Test cancelledFeedbackCannotPresentDelayedReceipt() passed after 0.011 seconds.
+✔ Suite "Feedback privacy and retry" passed after 0.016 seconds.
+◇ Suite URLSessionTransportTests started.
+◇ Test adapterReturnsHTTPDataAndCancelsUnderlyingTask() started.
+✔ Test adapterReturnsHTTPDataAndCancelsUnderlyingTask() passed after 0.035 seconds.
+◇ Test redirectDelegateRejectsDestination() started.
+✔ Test redirectDelegateRejectsDestination() passed after 0.001 seconds.
+✔ Suite URLSessionTransportTests passed after 0.036 seconds.
+◇ Suite YandexSignInTests started.
+◇ Test proofMatchesPKCEVector() started.
+✔ Test proofMatchesPKCEVector() passed after 0.001 seconds.
+◇ Test coldCallbackRestoresInvitationAndCannotReplay() started.
+✔ Test coldCallbackRestoresInvitationAndCannotReplay() passed after 0.011 seconds.
+◇ Test cancellationClearsAttemptWithoutExchange() started.
+✔ Test cancellationClearsAttemptWithoutExchange() passed after 0.011 seconds.
+◇ Test issuedSessionSurvivesMeNetworkFailure() started.
+✔ Test issuedSessionSurvivesMeNetworkFailure() passed after 0.012 seconds.
+✔ Suite YandexSignInTests passed after 0.036 seconds.
+✔ Test run with 143 tests in 36 suites passed after 1.306 seconds.
+2026-10-27 22:59:21.558 xcodebuild[66366:1540563] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:59:21.558 xcodebuild[66366:1540563] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:59:21.559 xcodebuild[66366:1540563] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:59:21.835 xcodebuild[66366:1540563] [MT] IDETestOperationsObserverDebug: 7.195 elapsed -- Testing started completed.
+2026-10-27 22:59:21.835 xcodebuild[66366:1540563] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 22:59:21.835 xcodebuild[66366:1540563] [MT] IDETestOperationsObserverDebug: 7.195 sec, +7.195 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/.build/TestResults-20261027T195859-66106.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

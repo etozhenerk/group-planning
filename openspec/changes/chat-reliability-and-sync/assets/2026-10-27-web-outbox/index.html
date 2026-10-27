@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>somewhere · исходящее</title><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="chat.css"><link rel="stylesheet" href="panels.css"></head>
+<body><div class="chat-app"><div class="chat-surface"><header class="chat-header"><strong>Вечер без планов</strong></header><div class="chat-body"><main class="conversation" aria-label="Чат встречи"><div class="message-list">
+<article class="message"><div class="avatar">Л</div><div class="message-main"><div class="message-meta"><span>Лена</span><time>18:12</time></div><div class="bubble"><p>Я возьму кружки.</p></div></div></article>
+<article class="message own" id="outgoing" data-ui-key="author:intent"><div class="avatar">В</div><div class="message-main"><div class="message-meta"><span>Вы</span><time>18:14</time></div><div class="bubble"><p>Возьму термос.</p></div><div class="message-meta" id="delivery" role="status">Отправляем…</div></div></article>
+</div></main></div><footer class="input-area"><p id="storage-error" role="alert" hidden>Не удалось сохранить сообщение на устройстве</p><form class="composer"><div class="text-entry"><textarea aria-label="Сообщение" placeholder="Сообщение…" rows="1"></textarea></div><button class="send-button" type="submit" aria-label="Отправить сообщение">↑</button></form></footer></div></div>
+<script>
+const state = new URLSearchParams(location.search).get('state') || 'queued';
+const delivery = document.getElementById('delivery');
+if (state === 'accepted') delivery.hidden = true;
+if (state === 'uncertain') delivery.textContent = 'Проверяем отправку';
+if (state === 'rejected') delivery.innerHTML = 'Не удалось отправить. <button type="button">Повторить</button> <button type="button">Вернуть текст</button>';
+if (state === 'storage') { document.getElementById('outgoing').hidden = true; document.getElementById('storage-error').hidden = false; document.querySelector('textarea').value = 'Возьму термос.'; }
+document.querySelector('form').onsubmit = e => e.preventDefault();
+</script></body></html>

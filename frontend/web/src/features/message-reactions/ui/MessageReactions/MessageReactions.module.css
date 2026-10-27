@@ -1,45 +1,11 @@
 .reactions {
   display: flex;
-  gap: 5px;
+  gap: var(--ds-component-reaction-chip-gap);
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 7px;
-}
-
-.reactions > button {
-  min-height: 30px;
-  min-width: 44px;
-  position: relative;
-  border-radius: 20px;
-  padding: 3px 9px;
-  font-size: 12px;
-  background: #ffffff09;
-  color: var(--text);
-}
-
-.reactions > button::after {
-  content: '';
-  position: absolute;
-  inset: -7px 0;
+  margin-top: var(--ds-space-s6);
 }
 
 .reactions[data-empty='true'] {
-  position: absolute;
-  right: 0;
-  top: 100%;
   margin-top: 0;
-  opacity: var(--reaction-actions-opacity, 0);
-}
-
-.reactions:focus-within {
-  opacity: 1;
-}
-
-.reactions > button[aria-pressed='true'] {
-  background: #d6cce924;
-  box-shadow: inset 0 0 0 1px #d6cce94a;
-}
-
-.error {
-  color: var(--error);
 }

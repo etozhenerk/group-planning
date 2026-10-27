@@ -1,17 +1,33 @@
-import { Share } from 'lucide-react';
+import { ChatIcon } from '@/shared/ui/ChatIcon';
+import type { Meeting } from '@/entities/meeting';
+import { useMobileLayout } from '@/shared/lib/media';
+import { timeLabel } from '@/shared/lib/time';
 import { useShare } from '@/features/share-invitation/model/useShare';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { errorText } from '@/shared/api';
 import styles from '@/features/share-invitation/ui/ShareForm/ShareForm.module.css';
 
-export type ShareFormProps = { id: string };
+export type ShareFormProps = { id: string; meeting?: Meeting };
 
-export const ShareForm = ({ id }: ShareFormProps) => {
+export const ShareForm = ({ id, meeting }: ShareFormProps) => {
+  const mobile = useMobileLayout();
   const action = useShare(id, true);
 
   return (
-    <section className={styles.panel}>
+    <section className={styles.panel} data-mobile={mobile}>
       <p>Отправьте ссылку тем, кого хотите позвать.</p>
+      {mobile && meeting && (
+        <div className={styles.preview}>
+          <ChatIcon name="calendar" aria-hidden="true" />
+          <div>
+            <strong>{meeting.title}</strong>
+            <span>
+              {timeLabel(meeting.startsAt, meeting.timezone, meeting.startsOn)} ·{' '}
+              {meeting.place || 'Место пока не выбрано'}
+            </span>
+          </div>
+        </div>
+      )}
       {action.query.isPending && (
         <div role="status" aria-label="Загрузка ссылки" aria-busy="true">
           <Skeleton height={44} />
@@ -40,7 +56,7 @@ export const ShareForm = ({ id }: ShareFormProps) => {
           </button>
           {action.canShare && (
             <button type="button" className={styles.share} onClick={action.share}>
-              <Share size={18} aria-hidden="true" />
+              <ChatIcon name="share" size={18} aria-hidden="true" />
               Поделиться
             </button>
           )}

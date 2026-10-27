@@ -1,0 +1,43 @@
+{
+  "recordedAt": "2026-10-27T14:47:23.289091+00:00",
+  "sourceHash": "d22e90bda6696076f61e6fa9ac7b1cb539a69a204f02f779774f862e60ec6f38",
+  "inputHash": "7281d60a82c41d4dc7fdb8f0427df0771649e255caf7e94ccfc351a8b3da2671",
+  "recordType": "Retrospective faithful transcription of current reviewer tool outputs; not a new UI check",
+  "android": {
+    "lastCompleteCapture": "android/097-ime-tools/capture.json",
+    "lastAction": "android/interactions.jsonl step 098-ime-dock-gesture",
+    "lastActionAt": "2026-10-27T14:39:04.174406+00:00",
+    "lastActionExitCode": 0,
+    "afterCaptureFailure": "uiautomator dump returned exit status 255; no after-state screenshot/hierarchy",
+    "nextCaptureFailure": "adb -s emulator-5554 emu avd name returned exit status 1",
+    "availabilityCommand": [
+      "/Users/misha/Library/Android/sdk/platform-tools/adb",
+      "-s",
+      "emulator-5554",
+      "get-state"
+    ],
+    "availabilityExitCode": 1,
+    "availabilityStderr": "error: device 'emulator-5554' not found",
+    "boundary": "Device disappeared after 097. Cause not established; no client crash claimed. No restart/new UI actions.",
+    "imeRestore": "Initial stylus/floating Gboard; visible Show on-screen keyboard and tools opened; attempted handle drag. Docked mode and restoration could not be verified after disconnect. Orientation/fontScale not changed."
+  },
+  "ios": {
+    "reviewerEvidence": [
+      "ios-fresh-preflight.json",
+      "ios-retry-preflight.json",
+      "ios-card-preflight.json",
+      "ios-card-settled.json"
+    ],
+    "observed": "CUA click card transitions to meeting loading screen; loading remains. Retry leaves list load error.",
+    "rootReportedDiagnosis": "Origin https://127.0.0.1:54947 Connection refused; fixture PID 22855 exited. This is the URL pinned in r2 plan.",
+    "diagnosisProvenance": "Trusted parent /root message in this review session; not independently invented health response.",
+    "replacementNotUsed": "New fixture 58830 reported ready by root, but not installed/configured or attributed to r2."
+  },
+  "web": {
+    "ownTool": "Browser is not available: 2",
+    "operator": "/root",
+    "operatorEvidence": "web-operator/tls-warning.json",
+    "observedByReviewer": "Fresh operator screenshot and AX personally inspected: NET::ERR_CERT_AUTHORITY_INVALID on actual https://127.0.0.1:8445/. No bypass.",
+    "availabilityDistinction": "Reviewer IAB unavailable and operator TLS interstitial are separate facts."
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "kind": "independent-sdk-technical-spike",
+  "date": "2026-10-27",
+  "scope": "OpenSpec task1.2; no product implementation or formal feature acceptance",
+  "overall": "isolated SDK compatibility demonstrated with documented integration conditions",
+  "formalFeaturePass": false,
+  "taskCheckboxesChanged": false,
+  "serverStopped": true,
+  "checks": [
+    {
+      "id": "go-sdk-build",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/go-build.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "evidence/go.mod.txt",
+          "sha256": "d67f44d4f383d3960b84427fa190b139a86f874fa729be0a952b2e6a4d94cd6d"
+        },
+        {
+          "path": "evidence/go.sum.txt",
+          "sha256": "7bab09fde6a02a98bb04e448f4efcf7d08cc225228116fcd200819e65df66403"
+        }
+      ]
+    },
+    {
+      "id": "js-real-handshake-recovery",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/js-result.json",
+          "sha256": "150ce773fc5a7a019c33bf5c6c8a1f9cb7f16cb54d405a1bad52ff3178fe2131"
+        }
+      ]
+    },
+    {
+      "id": "react19-typescript6-strict",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/typescript.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "evidence/react-adapter.ts.txt",
+          "sha256": "b41e428607bf89f13fb1a73862da6acef73cf2c01ea7356139160957f6dc8ee8"
+        }
+      ]
+    },
+    {
+      "id": "java-real-handshake-recovery",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/java-result.json",
+          "sha256": "d96855bb45a51fb6358d0c98f67c4ec56e3f8d5b6ff1f6cb9caab2935de563f4"
+        },
+        {
+          "path": "evidence/java-run.log",
+          "sha256": "c39785abb30fbbd52500dceeb4819f71c1ba254315ff7895380cf8911c1cc26f"
+        }
+      ]
+    },
+    {
+      "id": "android-current-toolchain-library",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/android-build.log",
+          "sha256": "df2d2c8f23843e1840639e8917763c538a75205686163843187f53aaae15f1ae"
+        },
+        {
+          "path": "evidence/android-gradle.lockfile.txt",
+          "sha256": "04aa385a05515d7e10226e178b41af43b5ba2646b464d13953e9271f0c053408"
+        }
+      ]
+    },
+    {
+      "id": "swift6-host-handshake-recovery",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/swift-result.json",
+          "sha256": "4c79ce64397e06f7f3a3cfe9b8b3542bbe8a3dc9f63e434d70fb85a906272bec"
+        },
+        {
+          "path": "evidence/swift-runtime.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "evidence/swift-rebuild.log",
+          "sha256": "9eb58ad6fccdd2c61bd9b9628389b4a577442536f00951f902723390591ab232"
+        }
+      ]
+    },
+    {
+      "id": "swift6-adapter-strict-concurrency",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/swift-adapter-strict.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "evidence/swift-spike.swift.txt",
+          "sha256": "54b47e3232f11df9ddf15fc24f56e9bedc5302b9880e27030d311eecf8c42d6b"
+        }
+      ]
+    },
+    {
+      "id": "ios-simulator-sdk-crosscompile",
+      "result": "passed-with-limitations",
+      "evidence": [
+        {
+          "path": "evidence/swift-ios-build.log",
+          "sha256": "01f99fb130933640198bb0c62a43283cd82775039c110bdd6ef50c3efc77f4af"
+        },
+        {
+          "path": "evidence/swift-ios-sdk.json",
+          "sha256": "46b2a2b97e16dae988ddca5999ac46a65e65406efd15f52d10b15d6a197e8cbb"
+        },
+        {
+          "path": "evidence/swift-ios-macho.txt",
+          "sha256": "4fb974571bb3d045f373aa2111432cda8c254644e920f51a3fbff336a50fc42c"
+        }
+      ]
+    },
+    {
+      "id": "upgrade-401-retry-risk",
+      "result": "confirmed",
+      "evidence": [
+        {
+          "path": "evidence/auth-probe.json",
+          "sha256": "dfa3089767a0e0db9d81a6f3e73962d21672b19370381f6f3e9014ce4040c99a"
+        },
+        {
+          "path": "evidence/auth-probe.mjs.txt",
+          "sha256": "a557f8a9b7ab31ce35d127475b33ce9a478fcbbbe60e12b4b51762f71835fdf9"
+        }
+      ]
+    },
+    {
+      "id": "authoritative-auth-adapter-stop",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/guarded-auth-probe.json",
+          "sha256": "c932c60cf911ca2f0dc8afe1e71f71b3507139c99e6aacf87a904f04af38f8e5"
+        },
+        {
+          "path": "evidence/guarded-auth-probe.mjs.txt",
+          "sha256": "865f883edfb0b806d58dfba5716b8c293f83e342a47a71b3848075a29eb35989"
+        }
+      ]
+    },
+    {
+      "id": "remote-swiftpm-resolution",
+      "result": "not-completed",
+      "evidence": [
+        {
+          "path": "evidence/swift-remote-resolution.log",
+          "sha256": "e02e7c5ff0ed1c68308e33dc6d39fc443d2aaadd4d8ebc6a7c9a4b6c080f7ee6"
+        },
+        {
+          "path": "swift-source-lock.json",
+          "sha256": "dbeb7c11b444158865e6acfa66f5cd4290cbd4c5afd01fe9602aa27e38fa2729"
+        }
+      ]
+    },
+    {
+      "id": "application-platform-runtime",
+      "result": "not-executed",
+      "evidence": []
+    },
+    {
+      "id": "agent-check",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "evidence/agent-check.log",
+          "sha256": "c56c79616725a73f8fdd101044fdc0fbb1c92f2c56461489c1d1f3d477ccac01"
+        }
+      ]
+    },
+    {
+      "id": "application-pins-unchanged",
+      "result": "passed",
+      "evidence": [
+        {
+          "path": "pin-files-comparison.json",
+          "sha256": "82fb84b91db4d4cf4656b36472c3cf17bf32185d5065c3a8baa1710c348f6736"
+        }
+      ]
+    }
+  ]
+}

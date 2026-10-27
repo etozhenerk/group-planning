@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="dev.groupplanning.android.TelegramChatUiTests" tests="4" failures="2" errors="0" skipped="0" time="15.526" timestamp="2026-10-27T12:46:50" hostname="localhost">
+  <properties>
+    <property name="device" value="Somewhere_API_36(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="composerRejectsTextBeyondTheExistingMessageLimit" classname="dev.groupplanning.android.TelegramChatUiTests" time="3.693" />
+  <testcase name="dockReplacesSelectionRepeatsAndRestoresKeyboardCursor" classname="dev.groupplanning.android.TelegramChatUiTests" time="6.758">
+    <failure>java.lang.AssertionError: Failed to assert the following: (Focused = 'true')
+Semantics of the node:
+Node #1696 at (l=496.0, t=1436.0, r=592.0, b=1532.0)px, Tag: 'emoji-open'
+ContentDescription = '[Выбрать эмодзи]'
+Focused = 'false'
+Role = 'Button'
+StateDescription = 'Панель эмодзи закрыта'
+Actions = [OnClick, RequestFocus]
+MergeDescendants = 'true'
+Has 1 sibling
+Selector used: (TestTag = 'emoji-open')
+
+at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:264)
+at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+at androidx.compose.ui.test.AssertionsKt.assertIsFocused(Assertions.kt:117)
+at dev.groupplanning.android.TelegramChatUiTests.dockReplacesSelectionRepeatsAndRestoresKeyboardCursor(TelegramChatUiTests.kt:70)
+</failure>
+  </testcase>
+  <testcase name="settingsAndShareReturnThroughOneInformationSheet" classname="dev.groupplanning.android.TelegramChatUiTests" time="1.329">
+    <failure>java.lang.AssertionError: Failed to assert the following: (Focused = 'true')
+Semantics of the node:
+Node #2154 at (l=224.0, t=154.0, r=480.0, b=250.0)px, Tag: 'meeting-heading'
+ContentDescription = '[Сведения о встрече Настолки у Саши]'
+Focused = 'false'
+Role = 'Button'
+Text = '[Настолки у Саши, Суббота, 31 октября · 6 участников]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 8 siblings
+Selector used: (TestTag = 'meeting-heading')
+
+at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:264)
+at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+at androidx.compose.ui.test.AssertionsKt.assertIsFocused(Assertions.kt:117)
+at dev.groupplanning.android.TelegramChatUiTests.settingsAndShareReturnThroughOneInformationSheet(TelegramChatUiTests.kt:121)
+</failure>
+  </testcase>
+  <testcase name="quickAndFullReactionsStayAtMessageAndReturnToComposer" classname="dev.groupplanning.android.TelegramChatUiTests" time="3.148" />
+</testsuite>

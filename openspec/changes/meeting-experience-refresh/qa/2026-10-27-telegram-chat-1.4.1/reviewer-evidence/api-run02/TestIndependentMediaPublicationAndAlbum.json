@@ -1,0 +1,1294 @@
+[
+  {
+    "at": "2026-10-27T13:43:17.364296Z",
+    "method": "post",
+    "path": "/api/v1/meetings",
+    "status": 201,
+    "sha256": "ce2d90d67efd773b7153f727ecdb3246fe739d3d47581e5f5b39ae0b9bb5d208"
+  },
+  {
+    "at": "2026-10-27T13:43:17.364418Z",
+    "method": "post",
+    "path": "/api/v1/meetings",
+    "status": 201,
+    "sha256": "34c5185c5305b14f710d64cd96460a0ebb6b0aacaabc6775de8144659fb0252e"
+  },
+  {
+    "at": "2026-10-27T13:43:17.364524Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "sha256": "ba6074b8439b662c44b6ae4040e18a1dd5ea69381c363064b9a64c10b9316ccc"
+  },
+  {
+    "at": "2026-10-27T13:43:17.364632Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "application/pdf",
+        "size_bytes": 51,
+        "kind": "file",
+        "purpose": "message",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "d0b1d6ffdf64c9c719add4046c4ee6ee65a1b44fff47cd709040db9c2730eea3"
+  },
+  {
+    "at": "2026-10-27T13:43:17.364741Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "application/pdf",
+        "size_bytes": 51,
+        "kind": "file",
+        "purpose": "message",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "8da6f5d56ee886ad7835498f312e79c659be3a5489d614cd9e25e72e27beaf43"
+  },
+  {
+    "at": "2026-10-27T13:43:17.364991Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "application/pdf",
+        "size_bytes": 51,
+        "kind": "file",
+        "purpose": "message",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/14d5aaa6-885a-4857-b608-b465ee94aea9/content",
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      },
+      "entry": {
+        "id": "6c895613-22f1-47f5-8331-3d3dbf65ccf8",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "sequence": "4",
+        "kind": "message",
+        "payload_version": 1,
+        "actor": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "sender": {
+          "kind": "user",
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "occurred_at": "2026-10-27T10:00:00Z",
+        "payload": {
+          "attachments": [
+            {
+              "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+              "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+              "file_name": "synthetic.bin",
+              "content_type": "application/pdf",
+              "size_bytes": 51,
+              "kind": "file",
+              "purpose": "message",
+              "status": "published",
+              "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/14d5aaa6-885a-4857-b608-b465ee94aea9/content",
+              "thumbnail_url": null,
+              "created_at": "2026-10-27T10:00:00Z",
+              "uploaded_by": {
+                "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+                "display_name": "Участник p0"
+              }
+            }
+          ],
+          "text": "Правила встречи"
+        },
+        "client_request_id": "e2720000-0000-4000-8000-000000000004"
+      }
+    },
+    "sha256": "4560902d91ee098242cd410374444ec4087bc69d7d3bfcde1b41abb09ea316ea"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365122Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "application/pdf",
+        "size_bytes": 51,
+        "kind": "file",
+        "purpose": "message",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/14d5aaa6-885a-4857-b608-b465ee94aea9/content",
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      },
+      "entry": {
+        "id": "6c895613-22f1-47f5-8331-3d3dbf65ccf8",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "sequence": "4",
+        "kind": "message",
+        "payload_version": 1,
+        "actor": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "sender": {
+          "kind": "user",
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "occurred_at": "2026-10-27T10:00:00Z",
+        "payload": {
+          "attachments": [
+            {
+              "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+              "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+              "file_name": "synthetic.bin",
+              "content_type": "application/pdf",
+              "size_bytes": 51,
+              "kind": "file",
+              "purpose": "message",
+              "status": "published",
+              "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/14d5aaa6-885a-4857-b608-b465ee94aea9/content",
+              "thumbnail_url": null,
+              "created_at": "2026-10-27T10:00:00Z",
+              "uploaded_by": {
+                "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+                "display_name": "Участник p0"
+              }
+            }
+          ],
+          "text": "Правила встречи"
+        },
+        "client_request_id": "e2720000-0000-4000-8000-000000000004"
+      }
+    },
+    "sha256": "4560902d91ee098242cd410374444ec4087bc69d7d3bfcde1b41abb09ea316ea"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365234Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "idempotency_key_reused",
+        "field_errors": {},
+        "request_id": "cadda273-86c3-4e60-b111-abab8fce3fa5"
+      }
+    },
+    "sha256": "e7835618049d074297370b6d5ad0d0c181108e025b4119d8d534921aad3e1516"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365346Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "media_already_published",
+        "field_errors": {},
+        "request_id": "966826e4-d292-42c8-8f8e-b75efed69c99"
+      }
+    },
+    "sha256": "020f3edb851ce3190a5ca6bad799b65a1187c8c2063169c70b2c763026b080c6"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365509Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "41e94775-3a0e-4316-b78c-6ba6be941b35",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "a6c822425ca07c70474bd3247c455c2554e0853924cde69facad4665bbd222fa"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365658Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "41e94775-3a0e-4316-b78c-6ba6be941b35",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "7bb9838aa5ec4d993e158c075da067c96dcc227c2f6601cf482b9b93505ccc5a"
+  },
+  {
+    "at": "2026-10-27T13:43:17.36577Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "41e94775-3a0e-4316-b78c-6ba6be941b35",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+        "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+        "created_at": "2026-10-27T10:00:00Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      },
+      "entry": {
+        "id": "f83fa6c4-ab7e-4301-aa03-0fecb0b8342b",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "sequence": "5",
+        "kind": "message",
+        "payload_version": 1,
+        "actor": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "sender": {
+          "kind": "user",
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        },
+        "occurred_at": "2026-10-27T10:00:00Z",
+        "payload": {
+          "attachments": [
+            {
+              "id": "41e94775-3a0e-4316-b78c-6ba6be941b35",
+              "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+              "file_name": "synthetic.bin",
+              "content_type": "image/png",
+              "size_bytes": 121,
+              "kind": "photo",
+              "purpose": "message",
+              "status": "published",
+              "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+              "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+              "created_at": "2026-10-27T10:00:00Z",
+              "uploaded_by": {
+                "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+                "display_name": "Участник p0"
+              }
+            }
+          ],
+          "text": "Фото"
+        },
+        "client_request_id": "e2720000-0000-4000-8000-000000000007"
+      }
+    },
+    "sha256": "4fb10e6919148b68aaff8ed5faf6717a2a46b08c3fc328195413cb76606a6333"
+  },
+  {
+    "at": "2026-10-27T13:43:17.365875Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "meeting_not_past",
+        "field_errors": {},
+        "request_id": "b12fd780-7748-4d51-b074-2df712e7f093"
+      }
+    },
+    "sha256": "ed25727547bc43c27d1c32b2887b38e92413db325a60fb2c75c8df8e371dd412"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}",
+    "status": 200,
+    "body": {
+      "memory_photo_count": 0,
+      "memory_preview": [],
+      "organizer_id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+      "period": "past",
+      "participant_preview": [
+        {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        },
+        {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        }
+      ],
+      "id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+      "title": "Независимая проверка",
+      "starts_on": "2026-10-27",
+      "starts_at": null,
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "participant_count": 2,
+      "revision": "3",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": null,
+      "created_at": "2026-10-27T10:00:00Z"
+    },
+    "sha256": "3cc8f9931a64cb165b88260e1fc338da9c27e64aca169b87c70b3f7ae3cd1fce"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366114Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 200,
+    "body": {
+      "photos": [],
+      "next_cursor": null
+    },
+    "sha256": "39e7481bf4d9b655c7318c0f8ed1a36ae2f4b38289fc5c71054db61a68d0f345"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366236Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:01Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "3db4424d172cb201be8325b512ddfc60aa095f1ff1ec222d419d9f494d434ae1"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366427Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:01Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "67f6c5bf947ad2832bc26e10feda3bc735c088e42b409fc3020cd42171386c58"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366534Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+        "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+        "created_at": "2026-10-28T00:00:01Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      },
+      "entry": null
+    },
+    "sha256": "38afa28eb1cde7003714ce7adc0a9bc6bc70445cf1945547e058f9273e16a9d3"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366651Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 200,
+    "body": {
+      "photos": [
+        {
+          "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "created_at": "2026-10-28T00:00:01Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        }
+      ],
+      "next_cursor": null
+    },
+    "sha256": "c61d0189961901b4d34bc6e4985a36250958a5281486b9700ebff4b403d4cfc8"
+  },
+  {
+    "at": "2026-10-27T13:43:17.36677Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:02Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "d957a7665a9c2669d720a672d78fd3738118a2bbe3069dd44d0a12ff05bef2a8"
+  },
+  {
+    "at": "2026-10-27T13:43:17.366929Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:02Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "d72569645541fcea04a98cafaa388e44f91c15b06effa83cb71edd9104f28d60"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367031Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+        "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+        "created_at": "2026-10-28T00:00:02Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      },
+      "entry": null
+    },
+    "sha256": "99a21fd81ca60b6ee0aa62c68d49d495dc2722531322e09fe13a3912b9b29efd"
+  },
+  {
+    "at": "2026-10-27T13:43:17.36714Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:03Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "42e691f26fa4b55c2770c7bf6062296ca41179a2178f18044b30dbf3caad3724"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367298Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:03Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "26184fdeb0248672199d262df9d3eaab4cb8a9aaed4463eea5ce3bc3d9e1e1b4"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367402Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+        "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+        "created_at": "2026-10-28T00:00:03Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      },
+      "entry": null
+    },
+    "sha256": "1f584fa8405f18e1518bb97b4f8b32a7fd4e1b48c8cfe5278599e6f0c76c8248"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367515Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "f42df0a0-ec9a-41c5-858d-37215f4da570",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:04Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "c3cfe359cf03327054107d15c421ce257d2d9fe1623d0c70c6cb9679bea07bff"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367659Z",
+    "method": "put",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "f42df0a0-ec9a-41c5-858d-37215f4da570",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "uploaded",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:04Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      }
+    },
+    "sha256": "99dd78f28f0765ac2d8da7fa7762165ae1682b54fc25de7d4a265fc70d0a6ba2"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367767Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 200,
+    "body": {
+      "media": {
+        "id": "f42df0a0-ec9a-41c5-858d-37215f4da570",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "memory",
+        "status": "published",
+        "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+        "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+        "created_at": "2026-10-28T00:00:04Z",
+        "uploaded_by": {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1"
+        }
+      },
+      "entry": null
+    },
+    "sha256": "6f8c1d0cd6a823b29e2c87a909eb625fa83c9a33773896216fc53cd967331028"
+  },
+  {
+    "at": "2026-10-27T13:43:17.367972Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 200,
+    "body": {
+      "photos": [
+        {
+          "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "created_at": "2026-10-28T00:00:01Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        },
+        {
+          "id": "4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+          "created_at": "2026-10-28T00:00:02Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        }
+      ],
+      "next_cursor": "eyJNZWV0aW5nSUQiOiIwMWQ5N2YxYS1kMDBkLTRiMGEtODcwZS05YTk3NzZlNzRjYTEiLCJJRCI6IjRlMTI1MTVmLWU3YjUtNDQyMy04ZWIyLWY2ZjQ0YzVjZjFlNyIsIkNyZWF0ZWRBdCI6IjIwMjYtMTAtMjhUMDA6MDA6MDJaIn0"
+    },
+    "sha256": "bf1ad04959402ee828b42c9a748b533fe47e8b0dd9db2447eb7ff6b0a859bcd8"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368107Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 200,
+    "body": {
+      "photos": [
+        {
+          "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "created_at": "2026-10-28T00:00:03Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        },
+        {
+          "id": "f42df0a0-ec9a-41c5-858d-37215f4da570",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+          "created_at": "2026-10-28T00:00:04Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        }
+      ],
+      "next_cursor": null
+    },
+    "sha256": "82620c99d7d4aa06af8d5f6f0359f289ad2faa1387c96f21673c7136720efdca"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368227Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 200,
+    "body": {
+      "photos": [
+        {
+          "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "created_at": "2026-10-28T00:00:03Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        },
+        {
+          "id": "f42df0a0-ec9a-41c5-858d-37215f4da570",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/f42df0a0-ec9a-41c5-858d-37215f4da570/content",
+          "created_at": "2026-10-28T00:00:04Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        }
+      ],
+      "next_cursor": null
+    },
+    "sha256": "82620c99d7d4aa06af8d5f6f0359f289ad2faa1387c96f21673c7136720efdca"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368328Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 422,
+    "body": {
+      "error": {
+        "code": "validation_failed",
+        "field_errors": {
+          "cursor": "invalid"
+        },
+        "request_id": "5cf45e93-1967-41e3-b048-bad99e6500a5"
+      }
+    },
+    "sha256": "e7d5e981ee08691aae7a8a14e947a0e0d127cfe43f3f86b09812c1473c0ab615"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368446Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}",
+    "status": 200,
+    "body": {
+      "memory_photo_count": 4,
+      "memory_preview": [
+        {
+          "id": "d1c349d3-07ae-47d7-9520-77a9b8bc5af6",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/d1c349d3-07ae-47d7-9520-77a9b8bc5af6/content",
+          "created_at": "2026-10-28T00:00:01Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        },
+        {
+          "id": "4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/4e12515f-e7b5-4423-8eb2-f6f44c5cf1e7/content",
+          "created_at": "2026-10-28T00:00:02Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        },
+        {
+          "id": "c2e64d56-0a01-48fc-b799-b8d72cbb771b",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "file_name": "synthetic.bin",
+          "content_type": "image/png",
+          "size_bytes": 121,
+          "kind": "photo",
+          "purpose": "memory",
+          "status": "published",
+          "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/c2e64d56-0a01-48fc-b799-b8d72cbb771b/content",
+          "created_at": "2026-10-28T00:00:03Z",
+          "uploaded_by": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          }
+        }
+      ],
+      "organizer_id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+      "period": "past",
+      "participant_preview": [
+        {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        },
+        {
+          "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+          "display_name": "Участник p1",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        }
+      ],
+      "id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+      "title": "Независимая проверка",
+      "starts_on": "2026-10-27",
+      "starts_at": null,
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "participant_count": 2,
+      "revision": "3",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": null,
+      "created_at": "2026-10-27T10:00:00Z"
+    },
+    "sha256": "5d9ced2967ba444c0606e24ef0418e2019c3d9ebdf99c2b8a027413166ca24bb"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368569Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "sha256": "f704a3950cd1d83e3ce81e952bc350da8d5a99e1196972b74e938e85627f0bb5"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368684Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 200,
+    "sha256": "f704a3950cd1d83e3ce81e952bc350da8d5a99e1196972b74e938e85627f0bb5"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368786Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "forbidden",
+        "field_errors": {},
+        "request_id": "f2a6b70c-7629-491e-9793-6a847468292e"
+      }
+    },
+    "sha256": "c063c1a704e0691b31f78e447ff58c305c3703b8eb50d6fa938105f08928fd1a"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368883Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/content",
+    "status": 401,
+    "body": {
+      "error": {
+        "code": "unauthenticated",
+        "field_errors": {},
+        "request_id": "1a435627-b1e9-47c3-9a42-60fab1b36273"
+      }
+    },
+    "sha256": "cc87e3d14519d6f05e618e2af513767f22ddffd07ea28cac702ec87188c45d69"
+  },
+  {
+    "at": "2026-10-27T13:43:17.368985Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "forbidden",
+        "field_errors": {},
+        "request_id": "332966a3-269e-42ea-bb98-69c4e57d5d0d"
+      }
+    },
+    "sha256": "27849a4f0481707a1b5ca891ecc4e0831aa6081c2b549494ca9b5f9b519fa314"
+  },
+  {
+    "at": "2026-10-27T13:43:17.369068Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/memories",
+    "status": 401,
+    "body": {
+      "error": {
+        "code": "unauthenticated",
+        "field_errors": {},
+        "request_id": "03890b3f-4451-4029-b551-c657a63a9c91"
+      }
+    },
+    "sha256": "384035863531e77ae937655ecb4728a91f9229cc19f340bf9e8fa8ac1aec6de9"
+  },
+  {
+    "at": "2026-10-27T13:43:17.369178Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}",
+    "status": 201,
+    "body": {
+      "media": {
+        "id": "b4b16235-8484-4b1c-b86f-398e6eb39f3e",
+        "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+        "file_name": "synthetic.bin",
+        "content_type": "image/png",
+        "size_bytes": 121,
+        "kind": "photo",
+        "purpose": "message",
+        "status": "pending",
+        "download_url": null,
+        "thumbnail_url": null,
+        "created_at": "2026-10-28T00:00:04Z",
+        "uploaded_by": {
+          "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+          "display_name": "Участник p0"
+        }
+      }
+    },
+    "sha256": "6b208694a2c3232bff836d9113f89f3b5cb0eddda509f321c485f52102583da1"
+  },
+  {
+    "at": "2026-10-27T13:43:17.369284Z",
+    "method": "post",
+    "path": "/api/v1/meetings/{id}/media/{media_id}/publish",
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "media_not_uploaded",
+        "field_errors": {},
+        "request_id": "a5d1b84f-2dc6-4da4-90b6-5c1dd4c9849d"
+      }
+    },
+    "sha256": "9ede30127e8d8a43709a089da2e61c06653007bc60f4ab9b381657716ac20b77"
+  },
+  {
+    "at": "2026-10-27T13:43:17.369421Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/feed",
+    "status": 200,
+    "body": {
+      "entries": [
+        {
+          "id": "6617f501-ffbe-473c-867f-3b91e6aef8d1",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "sequence": "1",
+          "kind": "meeting_created",
+          "payload_version": 1,
+          "actor": {
+            "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+            "display_name": "Участник p0",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "title": "Независимая проверка",
+            "description": "",
+            "starts_on": "2026-10-27",
+            "starts_at": null,
+            "timezone": "UTC",
+            "place": ""
+          },
+          "client_request_id": null
+        },
+        {
+          "id": "52e60d52-f33e-43fb-abb1-b3d1a84cbbf3",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "sequence": "2",
+          "kind": "meeting_time_unspecified",
+          "payload_version": 1,
+          "actor": {
+            "id": "b47f6000-0000-4000-8000-000000000001",
+            "display_name": "Бот"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "title": "Независимая проверка",
+            "description": "",
+            "starts_on": "2026-10-27",
+            "starts_at": null,
+            "timezone": "UTC",
+            "place": ""
+          },
+          "client_request_id": null
+        },
+        {
+          "id": "5e0d1f70-2f84-4d07-b1ff-6d9af4133fb2",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "sequence": "3",
+          "kind": "participant_joined",
+          "payload_version": 1,
+          "actor": {
+            "id": "90ccbb1c-61f4-447d-ae94-dbec66bcd548",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "previous_answer": null,
+            "answer": "going"
+          },
+          "client_request_id": null
+        },
+        {
+          "id": "6c895613-22f1-47f5-8331-3d3dbf65ccf8",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "sequence": "4",
+          "kind": "message",
+          "payload_version": 1,
+          "actor": {
+            "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+            "display_name": "Участник p0",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "sender": {
+            "kind": "user",
+            "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+            "display_name": "Участник p0"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "attachments": [
+              {
+                "id": "14d5aaa6-885a-4857-b608-b465ee94aea9",
+                "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+                "file_name": "synthetic.bin",
+                "content_type": "application/pdf",
+                "size_bytes": 51,
+                "kind": "file",
+                "purpose": "message",
+                "status": "published",
+                "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/14d5aaa6-885a-4857-b608-b465ee94aea9/content",
+                "thumbnail_url": null,
+                "created_at": "2026-10-27T10:00:00Z",
+                "uploaded_by": {
+                  "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+                  "display_name": "Участник p0",
+                  "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+                }
+              }
+            ],
+            "text": "Правила встречи"
+          },
+          "client_request_id": "e2720000-0000-4000-8000-000000000004"
+        },
+        {
+          "id": "f83fa6c4-ab7e-4301-aa03-0fecb0b8342b",
+          "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+          "sequence": "5",
+          "kind": "message",
+          "payload_version": 1,
+          "actor": {
+            "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+            "display_name": "Участник p0",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "sender": {
+            "kind": "user",
+            "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+            "display_name": "Участник p0"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "attachments": [
+              {
+                "id": "41e94775-3a0e-4316-b78c-6ba6be941b35",
+                "meeting_id": "01d97f1a-d00d-4b0a-870e-9a9776e74ca1",
+                "file_name": "synthetic.bin",
+                "content_type": "image/png",
+                "size_bytes": 121,
+                "kind": "photo",
+                "purpose": "message",
+                "status": "published",
+                "download_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+                "thumbnail_url": "/api/v1/meetings/01d97f1a-d00d-4b0a-870e-9a9776e74ca1/media/41e94775-3a0e-4316-b78c-6ba6be941b35/content",
+                "created_at": "2026-10-27T10:00:00Z",
+                "uploaded_by": {
+                  "id": "04b6e499-0b8e-405c-96e6-5ccd22729455",
+                  "display_name": "Участник p0",
+                  "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+                }
+              }
+            ],
+            "text": "Фото"
+          },
+          "client_request_id": "e2720000-0000-4000-8000-000000000007"
+        }
+      ],
+      "has_more": false,
+      "meeting_revision": "3",
+      "participant_count": 2,
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "latest_sequence": "5"
+    },
+    "sha256": "d1e5902da62655439844dad2b90e87c01e98c508fe9df2bd505741c5b6601433"
+  }
+]

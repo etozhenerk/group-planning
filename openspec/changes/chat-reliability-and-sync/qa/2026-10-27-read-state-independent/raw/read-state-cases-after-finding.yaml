@@ -1,0 +1,486 @@
+- id: TC-CHAT-READ-STATE-068DA926
+  title: "Общая монотонная позиция прочтения: Запоздалое устройство"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Общая монотонная позиция прочтения
+    scenario: Запоздалое устройство
+    sha256: 186b905dd9998423c443a7204c2d4da6934d3ae800a96b62ec9948054f6b6449
+  platforms: &a1
+    - backend
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - У A есть доступные sequence 140 и 150; два клиента используют одну личность, actual marker <140.
+  steps:
+    - action: PUT 150, затем запоздалый PUT 140 и повтор PUT 150.
+      expected: Фактический marker остаётся 150 во всех ответах; повторы не создают новую запись change/outbox.
+    - action: Прочитать sync/list и receipt aggregates другим клиентом A и автором B.
+      expected: Личный unread и публичный receipt обновлены разрешёнными projections; read→sync→read не
+        образует цикл.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-99A5AEEE
+  title: "Общая монотонная позиция прочтения: Некорректная позиция"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Общая монотонная позиция прочтения
+    scenario: Некорректная позиция
+    sha256: 34bc94e61ec0367e54721791f8266d15be7366ee4484c0919c3fc4f695f351cc
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Tail M известен, X не участник; доступны валидные и несуществующие позиции.
+  steps:
+    - action: Отправить marker за tail, несуществующий, overflow uint64 и для недоступной встречи.
+      expected: Запрос отклонён без изменения marker/unread и без раскрытия чужой позиции.
+    - action: Повторить допустимую позицию после отзыва RSVP.
+      expected: Отказ по текущим правам предшествует выдаче read state.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-55EC5376
+  title: "Чтение зависит от видимости: Сообщение получено в фоне"
+  lifecycle: active
+  level: unit
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Сообщение получено в фоне
+    sha256: 07e4610d87151bf64297104e3a4cb58c3fb368137f4ecdfba25283789880407e
+  platforms: &a2
+    - web
+    - ios
+    - android
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Visibility clock управляется; приложение неактивно или открыта другая встреча.
+  steps:
+    - action: Применить сообщение и ACK, дать 1000 мс без активной видимости.
+      expected: Read marker не отправлен; получение/отправка сами не читают чат.
+    - action: Активировать M и оставить нижний край сообщения видимым 499, затем 500 мс.
+      expected: До порога продвижения нет; после порога формируется допустимый read-through с batching не чаще
+        1/с.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-850EBE76
+  title: "Чтение зависит от видимости: Длинное сообщение и окно поверх чата"
+  lifecycle: active
+  level: unit
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Длинное сообщение и окно поверх чата
+    sha256: 895372355c79ddb5318c56827bf10b5f503321299f4373092359d64ca1ecd855
+  platforms: *a2
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Visibility adapter сообщает границы длинного сообщения, IME и перекрывающей модалки.
+  steps:
+    - action: Показать только начало длинного сообщения; затем его конец под открытым sheet/IME.
+      expected: Ни одно состояние не подтверждает чтение.
+    - action: Закрыть перекрытие и показать конец непрерывно 500 мс; прервать видимость на 300 мс и повторить.
+      expected: Таймер сбрасывается при потере видимости; read-through только после нового полного интервала.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-34B98D4D
+  title: "Чтение зависит от видимости: Явный переход к новым сообщениям"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Чтение зависит от видимости
+    scenario: Явный переход к новым сообщениям
+    sha256: c37012ff61eb5aab96947b07070295dae31c26ba993cbc9085435625ecfe8b93
+  platforms: *a2
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Живой клиент читает историю M, внизу есть чужие непрочитанные и кнопка перехода; утверждён новый
+      read UI-контракт.
+  steps:
+    - action: Нажать переход к новым сообщениям и дождаться видимости конца сообщения 500 мс.
+      expected: Чат показывает хвост, серверный marker достигает видимой строки, предшествующие считаются
+        прочитанными по read-through.
+    - action: Открыть перекрывающий sheet и получить ещё одно сообщение.
+      expected: Под sheet marker не продвигается; счётчик второго устройства соответствует серверу.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-284DD6EE
+  title: "Личные непрочитанные: Смешанные обновления"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Личные непрочитанные
+    scenario: Смешанные обновления
+    sha256: b791c06b349768012a7296ed786610e6e1f110a28a01948db3be9fbf42be02ba
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Baseline/read A известны. После них создать два сообщения B, одно A, системное событие, итог опроса
+      и реакцию.
+  steps:
+    - action: Запросить list/snapshot read state A.
+      expected: Unread равен 2, first_unread указывает первое сообщение B; своё/системное/опрос/реакция не
+        считаются.
+    - action: Продвинуть actual marker к первому, затем второму B.
+      expected: Unread последовательно 1 и 0; first_unread согласован с тем же состоянием.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-299278E4
+  title: "Личные непрочитанные: Чтение на другом устройстве"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Личные непрочитанные
+    scenario: Чтение на другом устройстве
+    sha256: 1c795731d34a788ab8859d57662bed208e5b1f861571040e5875448e48a9b6b7
+  platforms: *a2
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Два устройства/клиента под A; counterpart разрешён из другой платформы. Для каждой заявленной
+      платформы нужен собственный проход, все девять комбинаций не требуются.
+  steps:
+    - action: На первом клиенте прочитать конец чужого сообщения; на втором открыть список встреч.
+      expected: Второй клиент получает актуальный marker/unread без повторного входа.
+    - action: На втором клиенте отправить запоздалое чтение и открыть M снова.
+      expected: Позиция не откатывается; начальный разделитель не бегает за marker внутри сессии.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-8A47BDBD
+  title: "Предсказуемая инициализация: Существующая большая история"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: Существующая большая история
+    sha256: 109a7d9972d85727e5bd38d80142d4e53f71abf10a6894cad287e4dfa70abee7
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - История M содержит 10k записей, A уже участник; включение read state и конкурентная запись
+      управляются барьером.
+  steps:
+    - action: Инициализировать baseline текущего tail атомарно с новым сообщением B.
+      expected: Старая история не объявлена новой; конкурентное сообщение учитывается согласно порядку commit и
+        не теряется между baseline/snapshot.
+    - action: Проверить actual marker и receipt автора B.
+      expected: Actual marker остаётся 0; миграция базы не создаёт прочтение.
+    - action: Для старой встречи без chat stream запросить batch receipts и первую страницу readers до первого Sync.
+      expected: Оба endpoint доступны после активации; baseline не превращается в прочтение, epoch создаётся один раз без journal/outbox. Посторонний не создаёт stream; continuation без существующего epoch требует reset.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-5869F951
+  title: "Предсказуемая инициализация: База не является подтверждением чтения"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: База не является подтверждением чтения
+    sha256: e03daccc64684eccd8379fd4653abeae40d531053a6b6b781a4fa3da1a5d1a03
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Новый C впервые вступает в M с историей; конец сообщений ещё не показывался C.
+  steps:
+    - action: Выполнить RSVP и запросить baseline/read marker/author readers.
+      expected: Baseline равен согласованному хвосту, actual=0; C отсутствует в readers старых сообщений.
+    - action: Подтвердить допустимую видимую позицию C отдельным PUT.
+      expected: Только фактический marker создаёт соответствующий receipt.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-51E51F41
+  title: "Предсказуемая инициализация: Повторное вступление"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Предсказуемая инициализация
+    scenario: Повторное вступление
+    sha256: 9dc6bb9eef4f6d8e70898103f317026d1d097fd41e11516de46a9ddae182f29e
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - C имеет baseline и actual marker; аккаунт существует.
+  steps:
+    - action: Выйти из M, добавить чужие сообщения, снова ответить Приду.
+      expected: Прежние baseline/actual сохранены; доступные чужие сообщения после них считаются unread.
+    - action: Повторить RSVP и проверить прежние read значения.
+      expected: Повтор не обнуляет marker и не создаёт ложные receipts.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-B0815A4A
+  title: "Кто прочитал собственное сообщение: Два прочитавших"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Два прочитавших
+    sha256: df3fbd442458ded6dee1c8a2db1fea67da5aeb377dbf93fa46e13448f2aff034
+  platforms: *a2
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - A автор подтверждённого сообщения, B/C текущие участники; утверждён readers UI.
+  steps:
+    - action: B и C фактически читают сообщение; A открывает Прочитали 2.
+      expected: Показаны B/C с именами и аватарами, без A, контактов и выдуманного времени; count согласован с
+        API.
+    - action: В fixture добавить участников для следующей страницы и открыть продолжение.
+      expected: Пагинация без дублей, контейнер списка прокручивается, чат под ним сохраняет позицию.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-EC05E2CA
+  title: "Кто прочитал собственное сообщение: Участник вышел"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Участник вышел
+    sha256: 394fe8040eaea1112d50542ee4ac6b94e22084a3a3b669964862ada7ff381be6
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - B/C прочитали сообщение A; сохранена первая readers-page.
+  steps:
+    - action: Отозвать доступ B, удалить аккаунт C; запросить новый count/pages.
+      expected: Оба исключены, автор не считается, старый snapshot требует refresh и не возвращает удалённый
+        профиль.
+    - action: Повторить receipt batch для видимых собственных сообщений.
+      expected: Агрегаты согласованы с текущим составом без загрузки полного JSON feed.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-E32551D3
+  title: "Кто прочитал собственное сообщение: Нет прочитавших или запрошено чужое сообщение"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Кто прочитал собственное сообщение
+    scenario: Нет прочитавших или запрошено чужое сообщение
+    sha256: ac5a9ca747cd6016af0f0b821a09a70756d33f18f997ea572f90798b9893428d
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Сообщение A никто не прочитал; B запрашивает чужие readers, X не имеет доступа; для batch доступны
+      100/101 ID.
+  steps:
+    - action: Запросить readers как A, B и X, включая cursor следующей страницы.
+      expected: A получает пустое состояние, неавтор/посторонний — отказ без чужих markers.
+    - action: Отправить receipt query со своими 100 ID, затем 101 и чужим ID.
+      expected: Допустимый batch ограничен; превышение/чужое сообщение отклонены, персональные данные не раскрыты.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-READ-STATE-D6A20C5D
+  title: "Прочитанность не является доставкой: Сообщение сохранено, получатель не открыл чат"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md
+    requirement: Прочитанность не является доставкой
+    scenario: Сообщение сохранено, получатель не открыл чат
+    sha256: da2440d47b47ceefbf4ab98ebbfbee9c9dfbb7df6ce20cfa38722d61414b8097
+  platforms: *a2
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - A отправляет сообщение; B не открыл чат. Новый UI использует отдельные send/read состояния.
+  steps:
+    - action: Получить POST ACK и успешный transport subscribe B без видимости сообщения.
+      expected: У A запись сохранена, но нет выдуманного Прочитали/Доставлено; B не включён в readers.
+    - action: Открыть чат B и выполнить условие видимости.
+      expected: Receipt появляется только после фактического read marker.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

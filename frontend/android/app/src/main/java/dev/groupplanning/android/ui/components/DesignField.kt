@@ -34,6 +34,10 @@ internal fun DesignField(
     singleLine: Boolean = false,
     background: Color = Color(0xff1d1e22),
 ) {
+    if (LocalMobileSheet.current) {
+        MobileField(value, change, label, placeholder, modifier, enabled, error, singleLine)
+        return
+    }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(label, fontSize = 13.sp, lineHeight = 19.5.sp)
         BasicTextField(

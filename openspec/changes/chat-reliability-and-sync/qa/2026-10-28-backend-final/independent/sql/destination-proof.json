@@ -1,0 +1,16 @@
+{
+  "configuredComputeInstances": [
+    {
+      "resource": "yandex_compute_instance.app",
+      "name": "somewhere-mvp",
+      "publicIPv4": [
+        "158.160.246.254"
+      ]
+    }
+  ],
+  "expectedTarget": "somewhere-admin@158.160.246.254",
+  "pinnedHostKeyPresent": true,
+  "documentedWorkflow": "backend/docs/postgres.md:56-63 specifies copying Linux test binary to project VM and own somewhere_integration DB",
+  "scope": "test-only binary; new empty database guarded by absent-name check+nonce ownership; no production data or config export; cleanup without FORCE",
+  "directUserAuthorization": "27.10.2026: пользователь разрешил необходимые релизы бэкенда и миграции production-БД; текущая работа включает проверку чат-сервера."
+}

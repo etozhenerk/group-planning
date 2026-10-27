@@ -1,0 +1,116 @@
+/* DRAFT: опубликованная оболочка и существующие компоненты, без новых цветов. */
+@import url("../revision.css");
+@import url("../participants.css");
+@import url("date-source.css");
+
+.extended-date {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.extended-date .sheet-content {
+  padding: 0;
+  overflow-y: auto;
+}
+
+.extended-date .sheet-footer {
+  padding-inline: 0;
+  padding-bottom: 0;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.extended-date .sheet-footer[data-more="true"] {
+  /* Точная тень из утверждённого date-poll-v1 .sheet-footer. */
+  box-shadow: 0 -8px 22px #303137;
+}
+
+.extended-date .sheet-footer .notice {
+  margin-bottom: var(--revision-space-s12);
+}
+
+.extended-date .deadline {
+  margin-bottom: var(--revision-space-s12);
+}
+
+.extended-remove-date {
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.extended-date-error {
+  color: var(--error);
+}
+
+.extended-date .date-field[data-invalid="true"] {
+  outline: 1px solid var(--error);
+}
+
+.extended-date .date-field > svg {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+/* feed.css задавал размеры всем SVG; перенос ограничен телом полной формы. */
+.extended-date svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+
+/* Из date-poll-v1/date-poll.css, без переноса его глобальных стилей чата. */
+.extended-date .link-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  background: transparent;
+  color: #e0dce8;
+  padding: 8px 0;
+}
+
+.extended-task .task-title {
+  display: flex;
+  align-items: center;
+  gap: var(--revision-space-s12);
+}
+
+.extended-task h3,
+.extended-task-status {
+  margin: 0;
+}
+
+.extended-link {
+  background: transparent;
+  padding: 0;
+  min-height: var(--revision-target-web);
+  font-weight: inherit;
+  text-align: left;
+}
+
+.participants-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 739px) {
+  .revision-sheet .panel.extended-date {
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 350px) {
+  .extended-date .deadline {
+    grid-template-columns: 1fr;
+  }
+}

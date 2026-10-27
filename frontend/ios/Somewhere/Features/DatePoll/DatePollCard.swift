@@ -17,17 +17,21 @@ struct DatePollCard: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            if own { Spacer(minLength: 24) } else { ParticipantAvatar(user: entry.actor) }
-            VStack(alignment: .leading, spacing: 14) {
-                Text(own ? "Вы" : entry.actor.displayName).font(.caption.bold())
-                Text("Новая дата встречи").font(.headline)
+        ChatInlineCard {
+            ChatPollEyebrow(entry: entry, icon: "ChatCalendar")
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
+                Text("Новая дата встречи")
+                    .designFont(DesignTokens.typographySizeBody, weight: .semibold)
                 if owner.current, let poll = owner.poll {
                     DatePollBallot(owner: owner, poll: poll)
                     if poll.canResolve {
                         DatePollResolution(owner: owner, poll: poll, meeting: meeting)
                     }
-                    Text(DatePollCopy.status(poll, timezone: meeting.timezone)).font(.caption)
+                    Text(DatePollCopy.status(poll, timezone: meeting.timezone))
+                        .designFont(
+                            DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2
+                        )
+                        .foregroundStyle(DesignTokens.colorMuted)
                     if poll.settings.anonymous { Text("Анонимное голосование").font(.caption) }
                     if poll.state == "open" && poll.settings.hideResults {
                         Text("Результаты появятся после окончания").font(.caption)
@@ -46,26 +50,34 @@ struct DatePollCard: View {
                                     await owner.load(pollID)
                                 }
                             }
-                        }.disabled(owner.busy).frame(minHeight: 44)
+                        }.buttonStyle(ChatPressStyle()).disabled(owner.busy)
+                            .frame(minHeight: DesignTokens.targetIos)
                     }
                 }
-            }.padding(16).foregroundStyle(own ? AppPalette.actionText : AppPalette.text)
-                .background(
-                    own ? AppPalette.ownMessage : AppPalette.message,
-                    in: UnevenRoundedRectangle(
-                        topLeadingRadius: own ? 20 : 6,
-                        bottomLeadingRadius: 20, bottomTrailingRadius: 20,
-                        topTrailingRadius: own ? 6 : 20))
-            if own { ParticipantAvatar(user: entry.actor) } else { Spacer(minLength: 24) }
+            }.padding(.top, DesignTokens.spaceS10)
         }.accessibilityElement(children: .contain).accessibilityIdentifier(
             "date-poll-\(pollID.uuidString.lowercased())"
         )
         .task(id: phase) {
             guard phase == .active else { return }
-            repeat {
+            if let value = owner.session.privateData.chatProjections[owner.meetingID]?.datePolls[
+                pollID]
+            {
+                try? owner.receive(value)
+            } else {
                 await owner.load(pollID)
+            }
+            while !Task.isCancelled, owner.current,
+                !owner.session.privateData.syncMeetings.contains(owner.meetingID)
+            {
                 do { try await Task.sleep(for: .seconds(3)) } catch { return }
-            } while !Task.isCancelled && owner.current
+                if owner.session.privateData.syncMeetings.contains(owner.meetingID) { return }
+                await owner.load(pollID)
+            }
+        }
+        .onChange(of: owner.session.privateData.chatProjections[owner.meetingID]?.datePolls[pollID])
+        { _, value in
+            if let value, !owner.busy { try? owner.receive(value) }
         }
         .onChange(of: owner.current) { _, current in if !current { owner.clear() } }
     }

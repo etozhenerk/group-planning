@@ -22,3 +22,47 @@
   color: var(--error);
   font-size: 13px;
 }
+
+.container[data-mobile='true'] .actions .primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+.container[data-inline='false'][data-mobile='true'] .actions {
+  gap: var(--ds-component-task-details-actions-gap);
+}
+
+.container[data-inline='false'][data-mobile='true'] .actions button {
+  min-height: var(--ds-component-mobile-sheet-button-height);
+  border-radius: var(--ds-component-mobile-sheet-button-radius);
+  font-size: var(--ds-typography-size-button);
+}
+
+.container[data-inline='false'][data-mobile='true'] .actions .cancel {
+  color: var(--ds-color-error);
+}
+
+.container[data-inline='true'] .actions:not(:empty) {
+  margin-top: var(--ds-space-s8);
+}
+
+.actions .decline {
+  background: transparent;
+}
+
+.container[data-inline='true'] .actions {
+  align-items: flex-start;
+}
+
+.container[data-inline='true'] .actions button {
+  width: auto;
+  min-height: var(--ds-target-web);
+  padding: var(--ds-component-mobile-chat-inline-action-inset-block)
+    var(--ds-component-mobile-chat-inline-action-inset-inline);
+  border-radius: var(--ds-component-mobile-chat-inline-action-radius);
+  border-color: transparent;
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-semibold);
+}

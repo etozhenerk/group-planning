@@ -1,0 +1,101 @@
+{
+  "candidate": "2144ef0607648a4a69c65845351e3ea25cb3bf66",
+  "status": "failed",
+  "findings": [
+    {
+      "id": "RS-01",
+      "priority": "P2",
+      "title": "Legacy receipts/readers before Sync fail after successful activation"
+    }
+  ],
+  "tests": [
+    {
+      "test": "TestChatReadBaselineActualMaxAndNoOp",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadRejoinReadersAndAccountRemoval",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadSnapshotAnchorCursorScopeAndPrivateHints",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadCommitFailureRollsBackMarkerJournalAndHints",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadActivationRacesMessageWithoutInventedReceipt",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestIndependentReadActivationLegacyReceipts",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "fail"
+    },
+    {
+      "test": "TestIndependentReadLateHintRollbackAndNoop",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestIndependentReadersPaginationRevokeAndScopedCursor",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatFixtureOptInCapabilities",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadHTTP",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "status": "pass"
+    },
+    {
+      "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadMarkersRollbackCopiesUint64AndCancellation",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadConfigDefaultAndKeyRequirement",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/server",
+      "status": "pass"
+    },
+    {
+      "test": "TestChatReadActivationFailurePreventsHTTPStart",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/server",
+      "status": "pass"
+    },
+    {
+      "test": "TestIndependentReadDisableReenablePreservesBaseline",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "status": "pass"
+    },
+    {
+      "test": "TestIndependentReadSparseUint64MessageBoundary",
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "status": "pass"
+    }
+  ],
+  "ownProbeCount": 6,
+  "ownProbePass": 5,
+  "ownProbeFail": 1,
+  "existingTestsPass": 10,
+  "fullCasesPassed": [],
+  "productSourceChanges": 0,
+  "agentCheck": "pass",
+  "diffCheck": "pass"
+}

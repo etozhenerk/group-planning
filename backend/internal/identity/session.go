@@ -44,6 +44,8 @@ func (s *Service) Exchange(ctx context.Context, id, code, verifier string) (Issu
 // Principal is the verified local caller; CSRF is derived from the supplied
 // web session secret so the store never needs its plaintext or a CSRF secret.
 type Principal struct {
+	// SessionID is a one-way reference for revocation; it is never an API credential.
+	SessionID  string
 	User       User
 	ClientKind string
 	ExpiresAt  time.Time
@@ -68,7 +70,7 @@ func (s *Service) Authenticate(ctx context.Context, token string, web bool) (Pri
 			return ErrUnauthenticated
 		}
 
-		result = Principal{User: user, ClientKind: session.ClientKind, ExpiresAt: session.ExpiresAt}
+		result = Principal{SessionID: session.SecretHash, User: user, ClientKind: session.ClientKind, ExpiresAt: session.ExpiresAt}
 		if web {
 			result.CSRF = csrfToken(token)
 		}
@@ -90,7 +92,12 @@ func (s *Service) AuthorizeMutation(principal Principal, origin, csrf string) er
 
 // Logout revokes a session after the caller has passed authentication and CSRF.
 func (s *Service) Logout(ctx context.Context, token string) error {
-	return s.store.Update(ctx, func(records Records) error { records.DeleteSession(digest(token)); return nil })
+	err := s.store.Update(ctx, func(records Records) error { records.DeleteSession(digest(token)); return nil })
+	if err == nil {
+		s.notifyRevocation(digest(token), "")
+	}
+
+	return err
 }
 
 // Cleanup removes expired attempts/sessions; validity checks never rely on its timing.

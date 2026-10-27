@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { categoryIcons } from '@/shared/ui/EmojiPicker/lib/categoryIcons';
 import { useEmoji } from '@/shared/ui/EmojiPicker/hooks/useEmoji';
 import styles from '@/shared/ui/EmojiPicker/EmojiPicker.module.css';
@@ -30,7 +30,7 @@ export const EmojiPicker = ({ onSelect, onClose }: EmojiPickerProps) => {
             onClick={onClose}
             aria-label="Закрыть эмодзи"
           >
-            <X size={20} />
+            <ChatIcon name="close" size={20} />
           </button>
         )}
       </div>

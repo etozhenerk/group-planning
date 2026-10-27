@@ -1,0 +1,26 @@
+Suite backend-unit-integration
+Plan 75166c5e4c7ce3e8e64bf9025747d3be2bd7bbba49db5a0491a24f926bffddb5
+?   	github.com/etozhenerk/group-planning/backend/cmd/check-dependencies	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/migrate	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/server	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/storage-demo	[no test files]
+ok  	github.com/etozhenerk/group-planning/backend/internal/accounts	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/architecture	1.336s
+--- FAIL: TestPreparationTaskOpenAPIResponses (0.01s)
+    preparation_task_test.go:34: PUT /api/v1/invitations/CocYe4z1av8sgBE5jQUtJg/rsvp: got 409, want 200: {"error":{"code":"meeting_past","field_errors":{},"request_id":"ea9c0531-f740-44b7-9228-21258df057ac"}}
+--- FAIL: TestSavedInvitationsOpenAPIResponses (0.02s)
+    saved_invitations_test.go:79: PUT /api/v1/meetings/194223b3-7bfd-4528-9910-6b63f9bc1df6/rsvp: got 409, want 200: {"error":{"code":"meeting_past","field_errors":{},"request_id":"fdf2cb27-c1ee-414f-8cfe-bd935b35258a"}}
+FAIL
+FAIL	github.com/etozhenerk/group-planning/backend/internal/httpapi	8.380s
+ok  	github.com/etozhenerk/group-planning/backend/internal/identity	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/identity/yandex	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/imagecontent	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/meetings	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/server	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/files	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/memory	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/postgres	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/support	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/support/telegram	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/webui	(cached)
+FAIL

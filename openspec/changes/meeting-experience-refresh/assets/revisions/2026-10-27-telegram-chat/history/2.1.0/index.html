@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Чат somewhere · draft 27 октября</title>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="workbench.css" />
+  </head>
+  <body>
+    <aside class="workbench">
+      <a class="brand" href="index.html"
+        ><img src="../../brand.svg" alt="" width="25" height="28" /><span
+          >somewhere</span
+        ></a
+      >
+      <div class="draft-label">МАКЕТ · 27 ОКТЯБРЯ 2026</div>
+      <h1>Ближе к разговору</h1>
+      <p class="intro">
+        Эмодзи рядом с вводом. Реакции рядом с сообщением. Всё остальное — в
+        одной панели.
+      </p>
+      <section>
+        <h2>Размер</h2>
+        <div class="size-options">
+          <button data-width="390" data-height="844" class="active">390</button
+          ><button data-width="320" data-height="760">320</button
+          ><button data-width="390" data-height="430">Низкий</button
+          ><button data-width="844" data-height="390">Альбомный</button>
+        </div>
+      </section>
+      <section>
+        <h2>Попробовать</h2>
+        <div class="scenario-options">
+          <button data-scenario="emoji">Эмодзи</button
+          ><button data-scenario="quick">Быстрые реакции</button
+          ><button data-scenario="reactions">Полный выбор реакций</button
+          ><button data-scenario="info">Сведения о встрече</button
+          ><button data-scenario="settings">Настройки</button
+          ><button data-scenario="task">Задача</button
+          ><button data-scenario="date">Новая дата</button
+          ><button data-scenario="place">Новое место</button
+          ><button data-scenario="new-task">Новая задача</button>
+        </div>
+      </section>
+      <details>
+        <summary>Демонстрационные состояния</summary>
+        <label
+          >Открытый профиль<select id="role">
+            <option value="sasha">Саша · организатор, адресат задачи</option>
+            <option value="lena">Лена · автор задачи</option>
+            <option value="tim">Тимофей · другой участник</option>
+          </select></label
+        ><label
+          >Состояние задачи<select id="task">
+            <option value="proposed">Предложена Саше</option>
+            <option value="accepted">Принята Сашей</option>
+            <option value="other">Предложена Тимофею</option>
+            <option value="done">Выполнена Сашей</option>
+          </select></label
+        ><label class="fixture-toggle"
+          ><input type="checkbox" id="place-poll" checked />Есть открытый опрос
+          о месте</label
+        >
+      </details>
+      <div class="workbench-actions">
+        <button id="reset">Начать заново</button
+        ><a href="chat.html" target="_blank">Открыть без рамки ↗</a>
+      </div>
+      <p class="boundary">
+        Это draft для выбора композиции. Данные живут только в этой вкладке.
+        Приложение, сервер, реальные IME и права доступа здесь не проверяются.
+      </p>
+      <a class="readme-link" href="README.md" target="_blank"
+        >Источники и границы макета ↗</a
+      >
+    </aside>
+    <main class="preview-area">
+      <div class="preview-caption">
+        <span id="size-label">390 × 844</span
+        ><span id="scale-label">Масштаб 100.0%</span>
+      </div>
+      <div class="viewport-holder" id="viewport-holder">
+        <iframe
+          id="preview"
+          src="chat.html"
+          title="Интерактивный прототип чата somewhere"
+          width="390"
+          height="844"
+        ></iframe>
+      </div>
+    </main>
+    <script src="generated/workbench.js" defer></script>
+  </body>
+</html>

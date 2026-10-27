@@ -1,0 +1,47 @@
+Suite web-check
+Plan 75166c5e4c7ce3e8e64bf9025747d3be2bd7bbba49db5a0491a24f926bffddb5
+
+> group-planning@0.0.0 web:check
+> npm run check --workspace @somewhere/web
+
+
+> @somewhere/web@0.0.0 check
+> npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test
+
+
+> @somewhere/web@0.0.0 typecheck
+> tsc --noEmit
+
+
+> @somewhere/web@0.0.0 lint
+> eslint .
+
+
+> @somewhere/web@0.0.0 styles
+> tsx scripts/check-styles.ts
+
+CSS block spacing: OK
+
+> @somewhere/web@0.0.0 architecture
+> tsx scripts/check-architecture.ts
+
+FSD, public API, aliases, TypeScript-only, component folders and CSS Modules: OK
+
+> @somewhere/web@0.0.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> @somewhere/web@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+
+
+ Test Files  26 passed (26)
+      Tests  97 passed (97)
+   Start at  16:20:21
+   Duration  553ms (import 52%, transform 35%, tests 10%, worker 2%)
+

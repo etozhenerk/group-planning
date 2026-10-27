@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_scope=${1:-all}
 case "$somewhere_scope" in
-    all|account|persistence|calendar|auth|polls|places|tasks|covers|saved|experience) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|account|persistence|calendar|auth|polls|places|tasks|covers|saved|experience]\n' >&2; exit 2 ;;
+    all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|chat) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|chat]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -51,7 +51,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 (cd ../../backend && "${GO_BIN:-go}" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
 somewhere_fixture_scope=$somewhere_scope
-if [ "$somewhere_scope" = experience ]; then somewhere_fixture_scope=calendar; fi
+if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = chat ]; then somewhere_fixture_scope=calendar; fi
 SOMEWHERE_ANDROID_FIXTURE=1 SOMEWHERE_ANDROID_FIXTURE_SCOPE="$somewhere_fixture_scope" SOMEWHERE_ANDROID_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestAndroidFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
@@ -74,14 +74,16 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 if [ "$somewhere_scope" = all ]; then
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
         :app:connectedQaAndroidTest
 fi
 
-if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = account ] || [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
+if [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = profile ] || [ "$somewhere_scope" = account ] || [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
     somewhere_classes=dev.groupplanning.android.CalendarUiTests
-    if [ "$somewhere_scope" = experience ]; then somewhere_classes=dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests; fi
+    if [ "$somewhere_scope" = chat ]; then somewhere_classes=dev.groupplanning.android.TelegramChatUiTests; fi
+    if [ "$somewhere_scope" = experience ]; then somewhere_classes=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests; fi
     if [ "$somewhere_scope" = account ]; then somewhere_classes=dev.groupplanning.android.AccountDeletionUiTests; fi
+    if [ "$somewhere_scope" = profile ]; then somewhere_classes=dev.groupplanning.android.ProfileFieldsUiTests; fi
     if [ "$somewhere_scope" = saved ]; then somewhere_classes=dev.groupplanning.android.SavedInvitationsUiTests; fi
     if [ "$somewhere_scope" = covers ]; then somewhere_classes=dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests; fi
     if [ "$somewhere_scope" = tasks ]; then somewhere_classes=dev.groupplanning.android.PreparationTaskUiTests; fi

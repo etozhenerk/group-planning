@@ -1,0 +1,152 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/centrifugal/centrifuge"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"strings"
+	"sync"
+	"syscall"
+	"time"
+)
+
+type principalKey struct{}
+
+func main() {
+	node, err := centrifuge.New(centrifuge.Config{ClientQueueMaxSize: 65536, ClientChannelLimit: 2})
+	if err != nil {
+		panic(err)
+	}
+	var mu sync.Mutex
+	revoked := map[string]bool{}
+	counts := map[string]int{}
+	seq := map[string]uint64{}
+	inc := func(k string) { mu.Lock(); counts[k]++; mu.Unlock() }
+	active := func(user string) bool { mu.Lock(); defer mu.Unlock(); return !revoked[user] }
+	node.OnConnecting(func(ctx context.Context, e centrifuge.ConnectEvent) (centrifuge.ConnectReply, error) {
+		user, _ := ctx.Value(principalKey{}).(string)
+		if user == "" || !active(user) {
+			return centrifuge.ConnectReply{}, centrifuge.ErrorUnauthorized
+		}
+		inc("connect_" + user + "_" + string(e.Transport.Protocol()))
+		return centrifuge.ConnectReply{Credentials: &centrifuge.Credentials{UserID: user, ExpireAt: time.Now().Unix() + 2}, Subscriptions: map[string]centrifuge.SubscribeOptions{"personal:" + user: {}}}, nil
+	})
+	node.OnConnect(func(c *centrifuge.Client) {
+		c.OnRefresh(func(e centrifuge.RefreshEvent, cb centrifuge.RefreshCallback) {
+			inc("refresh_" + c.UserID())
+			cb(centrifuge.RefreshReply{Expired: !active(c.UserID()), ExpireAt: time.Now().Unix() + 2}, nil)
+		})
+		c.OnSubscribe(func(e centrifuge.SubscribeEvent, cb centrifuge.SubscribeCallback) {
+			if !active(c.UserID()) || e.Channel != "meeting:"+c.UserID() {
+				inc("subscribe_denied")
+				cb(centrifuge.SubscribeReply{}, centrifuge.ErrorPermissionDenied)
+				return
+			}
+			cb(centrifuge.SubscribeReply{Options: centrifuge.SubscribeOptions{EnableRecovery: true}}, nil)
+		})
+		c.OnPublish(func(e centrifuge.PublishEvent, cb centrifuge.PublishCallback) {
+			inc("publish_denied")
+			cb(centrifuge.PublishReply{}, centrifuge.ErrorPermissionDenied)
+		})
+	})
+	if err = node.Run(); err != nil {
+		panic(err)
+	}
+	ws := centrifuge.NewWebsocketHandler(node, centrifuge.WebsocketConfig{CheckOrigin: func(r *http.Request) bool {
+		return r.Header.Get("Origin") == "" || r.Header.Get("Origin") == "http://spike.local"
+	}})
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/v1/realtime", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.RawQuery != "" {
+			http.Error(w, "query forbidden", 400)
+			return
+		}
+		user := ""
+		mode := "native"
+		if h := r.Header.Get("Authorization"); strings.HasPrefix(h, "Bearer spike-native-") {
+			user = strings.TrimPrefix(h, "Bearer spike-native-")
+		}
+		if ck, err := r.Cookie("spike_session"); err == nil && ck.Value == "web-js" {
+			user = "js"
+			mode = "cookie"
+			if r.Header.Get("Origin") != "http://spike.local" {
+				http.Error(w, "origin forbidden", 403)
+				return
+			}
+		}
+		if user == "" || !active(user) {
+			http.Error(w, "unauthorized", 401)
+			return
+		}
+		inc("auth_" + mode)
+		ws.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), principalKey{}, user)))
+	})
+	mux.HandleFunc("/control/", func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		user := r.URL.Query().Get("who")
+		channel := "meeting:" + user
+		switch strings.TrimPrefix(r.URL.Path, "/control/") {
+		case "publish":
+			mu.Lock()
+			seq[user]++
+			s := seq[user]
+			mu.Unlock()
+			payload, _ := json.Marshal(map[string]any{"schema_version": 1, "meeting_id": user, "stream_epoch": "spike-v1", "latest_change_sequence": fmt.Sprint(uint64(9007199254740992) + s)})
+			_, err = node.Publish(channel, payload, centrifuge.WithHistory(1000, 120*time.Second))
+		case "disconnect":
+			err = node.Disconnect(user, centrifuge.WithCustomDisconnect(centrifuge.DisconnectForceReconnect))
+		case "drop":
+			err = node.RemoveHistory(channel)
+		case "revoke":
+			mu.Lock()
+			revoked[user] = true
+			mu.Unlock()
+			err = node.Disconnect(user, centrifuge.WithCustomDisconnect(centrifuge.DisconnectForceNoReconnect))
+		case "stats":
+			mu.Lock()
+			_ = json.NewEncoder(w).Encode(counts)
+			mu.Unlock()
+			return
+		case "sync":
+			inc("http_catchup_" + user)
+			mu.Lock()
+			s := seq[user]
+			mu.Unlock()
+			_ = json.NewEncoder(w).Encode(map[string]string{"change_cursor": fmt.Sprint(uint64(9007199254740992) + s)})
+			return
+		}
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		w.WriteHeader(204)
+	})
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		panic(err)
+	}
+	addr := listener.Addr().String()
+	for _, p := range []string{":8444", ":8445", ":52531", ":61441"} {
+		if strings.HasSuffix(addr, p) {
+			panic("reserved port selected")
+		}
+	}
+	if err = os.WriteFile("../endpoint.txt", []byte("http://"+addr), 0600); err != nil {
+		panic(err)
+	}
+	fmt.Println("loopback_ready", addr)
+	srv := &http.Server{Handler: mux, ReadHeaderTimeout: 5 * time.Second}
+	go srv.Serve(listener)
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+	<-stop
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	_ = node.Shutdown(ctx)
+	_ = srv.Shutdown(ctx)
+}

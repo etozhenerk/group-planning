@@ -91,3 +91,28 @@ button.share-invitation-trigger.subtle {
   height: var(--ds-component-button-icon-size);
   flex-basis: var(--ds-component-button-icon-size);
 }
+
+button.share-invitation-trigger.subtle[data-mobile='true'] {
+  justify-content: flex-start;
+  min-height: var(--ds-component-mobile-roster-action-height);
+  border: 0;
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: 0;
+  padding: var(--ds-space-s8) 0;
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.subtle[data-mobile='true'] .trigger-label {
+  flex: 1;
+  text-align: start;
+}
+
+.subtle[data-mobile='true'] svg {
+  color: var(--ds-color-muted);
+}
+
+.compact[data-mobile='true'] svg {
+  width: var(--ds-component-mobile-chat-icon-size);
+  height: var(--ds-component-mobile-chat-icon-size);
+  flex-basis: var(--ds-component-mobile-chat-icon-size);
+}

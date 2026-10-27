@@ -1,0 +1,126 @@
+[WebServer] (node:83818) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:83819) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 21 tests using 1 worker
+
+(node:83851) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/21] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 320px
+[2/21] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 390px
+[3/21] [chromium] › tests/15-poll-modal.spec.ts:5:3 › date action adapts to sheet or modal, preserves draft, handles calendar and validation at 1440px
+[4/21] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 320px
+[5/21] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 390px
+[6/21] [chromium] › tests/22-place-poll.spec.ts:34:3 › place form, failed creation, voting and cancellation at 1440px
+[7/21] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 320px
+[8/21] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 390px
+[9/21] [chromium] › tests/23-preparation-tasks.spec.ts:42:3 › task form preserves draft, retries exactly and requires self consent at 1440px
+[10/21] [chromium] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard
+[11/21] [chromium] › tests/34-telegram-chat.spec.ts:147:1 › opening the emoji dock preserves the reading position and the new-message action stays above it
+[12/21] [chromium] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+[13/21] [chromium] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft
+  1) [chromium] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft 
+
+    Error: expect(locator).not.toHaveCSS(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg')
+    Expected: not "none"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveCSS" getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg') with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg')
+
+
+      292 |       const date = dialog.getByRole('combobox', { name: 'Вариант 1', exact: true });
+      293 |       const calendarButton = dialog.locator('.g-date-picker__field .g-button').first();
+    > 294 |       await expect(calendarButton.locator('svg')).not.toHaveCSS('mask-image', 'none');
+          |                                                       ^
+      295 |       await calendarButton.click();
+      296 |       const calendar = page.locator('.g-popup').filter({ has: page.getByRole('grid') });
+      297 |       await expect(calendar).toBeVisible();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:294:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:84203) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[14/21] [chromium] › tests/34-telegram-chat.spec.ts:314:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+[15/21] [chromium] › tests/34-telegram-chat.spec.ts:383:1 › mouse context menus open the reaction picker and filtered people without toggling
+(node:84260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[16/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:7:1 › emoji dock preserves selection, supports repeated insertion and restores the keyboard
+[17/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:147:1 › opening the emoji dock preserves the reading position and the new-message action stays above it
+[18/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+[19/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft
+  2) [mobile-webkit] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft 
+
+    Error: expect(locator).not.toHaveCSS(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg')
+    Expected: not "none"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveCSS" getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg') with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).locator('.g-date-picker__field .g-button').first().locator('svg')
+
+
+      292 |       const date = dialog.getByRole('combobox', { name: 'Вариант 1', exact: true });
+      293 |       const calendarButton = dialog.locator('.g-date-picker__field .g-button').first();
+    > 294 |       await expect(calendarButton.locator('svg')).not.toHaveCSS('mask-image', 'none');
+          |                                                       ^
+      295 |       await calendarButton.click();
+      296 |       const calendar = page.locator('.g-popup').filter({ has: page.getByRole('grid') });
+      297 |       await expect(calendar).toBeVisible();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:294:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r6/icon-smoke-results/34-telegram-chat-desktop-c-00d9a-ation-and-restore-the-draft-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:84376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[20/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:314:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+[21/21] [mobile-webkit] › tests/34-telegram-chat.spec.ts:383:1 › mouse context menus open the reaction picker and filtered people without toggling
+  2 failed
+    [chromium] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft 
+    [mobile-webkit] › tests/34-telegram-chat.spec.ts:269:1 › desktop chat actions stay modal over the conversation and restore the draft 
+  19 passed (1.2m)

@@ -3,6 +3,7 @@ package meetings
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"strings"
 )
 
@@ -84,38 +85,33 @@ func (s *Service) PublishMediaWithCaption(ctx context.Context, actor Actor, meet
 				return err
 			}
 		} else if item.EntryID != "" {
-			entries, err := w.Feed(meetingID)
+			entry, err := w.FeedEntry(meetingID, item.EntryID)
+			if errors.Is(err, ErrNotFound) {
+				return ErrInvalidRecord
+			}
+
 			if err != nil {
 				return err
 			}
 
-			for _, entry := range entries {
-				if entry.ID == item.EntryID {
-					var payload mediaMessagePayload
-					if err := json.Unmarshal(entry.Payload, &payload); err != nil {
-						return ErrInvalidRecord
-					}
-
-					expectedText := item.FileName
-					if item.Kind == "photo" {
-						expectedText = "Фото"
-					} else if caption != "" {
-						expectedText = caption
-					}
-
-					if payload.Text != expectedText {
-						return &Conflict{Code: "media_already_published"}
-					}
-
-					entry.Attachments = []Media{item}
-					result.Entry = &entry
-					break
-				}
-			}
-
-			if result.Entry == nil {
+			var payload mediaMessagePayload
+			if err := json.Unmarshal(entry.Payload, &payload); err != nil {
 				return ErrInvalidRecord
 			}
+
+			expectedText := item.FileName
+			if item.Kind == "photo" {
+				expectedText = "Фото"
+			} else if caption != "" {
+				expectedText = caption
+			}
+
+			if payload.Text != expectedText {
+				return &Conflict{Code: "media_already_published"}
+			}
+
+			entry.Attachments = []Media{item}
+			result.Entry = &entry
 		}
 
 		result.Media = item

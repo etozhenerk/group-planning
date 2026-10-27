@@ -1,5 +1,129 @@
 # Изменения дизайн-системы
 
+## 2.5.1 · 2026-10-27
+
+Заполнен пробел raw для уже описанного пункта «Кто прочитал» при нулевом
+receipt: строка под реакциями внутри меню собственного сообщения, переход
+после exit в readers и возврат фокуса. Значения и утверждённое поведение
+прежние; добавлены конкретные состояния manifest всех трёх клиентов.
+Raw2.5.0 сохранён. Новый исходный фрагмент проверен во встроенном браузере;
+это не независимая приёмка приложений.
+
+## 2.5.0 · 2026-10-27
+
+Принятый UX v1 read/unread и окна чата опубликован в raw/контракте трёх
+клиентов: badge, divider, readers sheet, догрузка и переход к новым. Используются
+существующие роли; новых токенов нет. Независимая приёмка открыта.
+
+## 2.4.1 · 2026-10-27
+
+Уточнён исходный межплатформенный scope UX v1: очередь в одной строке на
+web/iOS/Android. Нативные состояния явно внесены в manifest; новые токены и
+композиции не добавлены. Независимая приёмка всех клиентов открыта.
+
+## 2.4.0 · 2026-10-27
+
+Публикация same-row web outbox из разрешённого chat UX v1.
+Новых токенов нет. Источники raw проверены только по коду; live UI/design review
+остаются checkpoint, прежние pass не перенесены.
+
+Уточнён телефонный iOS scope: кнопки, жесты и экранная клавиатура. Hardware
+Escape сохраняется как дополнительная проверка; исторические результаты неизменны.
+
+## 2.3.0 · 2026-10-27
+
+По прямому уточнению пользователя добавлен motion-вариант меню composer по плюсу:
+opacity/сдвиг 8, enter 180/exit 150 ms, retained exit, rapid reopen, Reduce Motion.
+Используются существующие space.s8, mobileSheet/fast и standard; новых токенов нет.
+Raw 2.2.0 и отчёты сохранены. Композиция и состав меню прежние.
+
+## 2.2.0 · 2026-10-27
+
+Дополнен motion-контракт панели эмодзи: mobile height/opacity, desktop opacity,
+enter 180 / exit 150 ms, мгновенный Reduce Motion, безопасное повторное открытие.
+Опубликованы роли emojiPanelEnter/Exit на существующей шкале. Композиция прежняя.
+Raw обновлён, snapshot 2.1.0 и прежние отчёты сохранены; новая приёмка обязательна.
+
+## 2.1.0 · 2026-10-27
+
+Совместимое дополнение ролей существующих raw-карточек: максимальная ширина,
+мини-заголовок, бейдж «Опрос», кнопки голосования и компактное действие задачи.
+Макет и продуктовые правила не меняются; avatar/bubble оболочка опроса и
+полноширинный inline CTA были ошибкой реализации. Приёмка 2.0.0 не переносится.
+
+
+## 2.0.0 — 27.10.2026
+
+Breaking: desktop-действия «+» открываются модалками; постоянные кнопки smile/people
+у сообщений отменены. Native long press bubble → picker, chip → filtered people;
+tap chip → toggle. Опубликованы reactionEnter/Exit/Feedback, enterScale/Offset,
+pressedScale/selectedOutlineWidth и chatActionDialog. Smile — единый SVG 24×24;
+caret/placeholder и responsive deadline без weekday уточнены контрактом.
+Raw обновлён; 1.4.1 snapshot и все старые reports/evidence сохранены. Manifests
+checkpoint с новыми report/plan/run путями; новая live-приёмка ещё не выполнена.
+
+## 1.4.1 — 27.10.2026
+
+Опубликована недостающая общая иконка `component.mobileChat.iconSize` 22 из
+принятого tokens.css; emoji toggle сохраняет отдельную роль 23. Восстановлена
+прежняя mobile-web адаптация полей minimum 16 px из gathering-activity-feed/
+mobile-scroll.md: `typography.size.mobileWebInput`. Native body 15 и user zoom
+не меняются. Raw-прототип исправлен только в размерах текста полей; прежние
+3CSS/source-hashes сохранены в history/1.4.0, старые render/pass не переписаны.
+Новый source aggregate, authority и manifest 1.4.1 с отдельным report path;
+UI-задачи checkpoint до повторной независимой проверки.
+
+## 1.4.0 — 27.10.2026
+
+Дополнены недостающие роли mark в шапке принятого mobile чата: обычные
+40×40/radius13 и узкие 30×34/radius10, исходные цвета `.meeting-mark`.
+Добавлен fieldBorder из прежнего согласованного styles.css (#ffffff14), чтобы
+сохранить noncompact поля при переносе на роли; mobileChatTitle650 фиксирует
+принятое начертание заголовка чата. Макет, одобрение и прежние
+значения не изменены. Generated web-токены разделены
+на основы и компоненты с сохранением плоского public API; файлы снова отвечают
+ограничению размера модулей без исключений из правил кода.
+
+## 1.3.1 — 27.10.2026
+
+Исправлен native-экспорт уже принятых `breakpoint.chatCompactHeight` (500)
+и `breakpoint.chatNarrowWidth` (350): Swift получает CGFloat, Compose — dp.
+Генератор больше не исключает весь namespace breakpoint; только прежние
+web-routing `mobile/tablet` остаются web-only. Значения токенов, дизайн,
+одобрение 1.3.0 и desktop-маршруты не изменены. Манифест и generated headers
+синхронизированы с patch-версией; прежние receipts/hashes сохранены.
+
+## 1.3.0 — 27.10.2026
+
+Пользователь одобрил `2026-10-27-telegram-chat`: «Подходит, переносим» на mobile
+web/iOS/Android. Опубликованы composer над emoji-доком, anchored quick/full
+reactions, компактные people/info/settings/task/action sheets. Новые смысловые
+группы `component.chatComposer/mobileChat/emojiDock/reactionPicker/reactionChip`,
+`mobileSheet/mobileField/mobileForm/meetingSettings/mobilePeopleChip/mobileRoster`,
+`reactionPeople/taskDetails/chatAddMenu`, мобильная типографика/system stack,
+движение sheet и компактные breakpoints происходят из принятого CSS. Палитра
+и значения существующих токенов не изменены. Desktop-маршруты/композиция сохранены.
+
+Authority фиксирует точные исходники и одобрение; UX/specs/contracts уточняют
+keyboard-toggle→composer, focus/selection/scroll, one sheet, filters, полный
+multi-date и прежние права/API. Все 360 прежних пар manifest сохранены; добавлены
+отдельные состояния и viewport, новый report path. Phase checkpoint, UI-задачи
+открыты до независимых gates. REJECTED drafts, прежние reports/evidence/hashes
+сохранены. Ограничения макета не сокращают реализацию приложений.
+
+## 1.2.0 — 27.10.2026
+
+Опубликован совместимый вариант сведений встречи: компактные участники
+раскрываются в полный состав/ответы в той же панели. Отдельные проверенные
+HTML-композиции сохраняют приглашение и настройки организатора либо собственный
+RSVP участника вне раскрытия. Default без большой обложки соответствует принятому
+meeting-details; обложка отдельного приглашения не меняется. Плашки используют
+роли 1.1.0; для полного состава добавлены `color.roster*`,
+`component.participantRoster`, `typography.*.participantRosterAvatar` из
+`.avatar/.row/.stack` исходного styles.css. Значения существующих токенов
+не изменены. Новый источник и версия
+инвалидируют прежнюю приёмку, исторические evidence сохранены.
+
 ## 1.1.0 — 26–27.10.2026
 
 Опубликованы роли форм из утверждённого styles.css: ширина колонки,

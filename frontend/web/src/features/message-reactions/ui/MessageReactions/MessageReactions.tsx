@@ -1,18 +1,26 @@
-import { projectReaction } from '@/features/message-reactions/lib/projectReaction';
-import { useState } from 'react';
+import type { RefObject } from 'react';
 import type { Reaction } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { useReactionAction } from '@/features/message-reactions/model/useReactionAction';
+import { useMessageReactions } from '@/features/message-reactions/model/useMessageReactions';
 import { ReactionPopover } from '@/features/message-reactions/ui/ReactionPopover';
 import { Dialog } from '@/shared/ui/Dialog';
 import { ReactionPeople } from '@/features/message-reactions/ui/ReactionPeople';
 import styles from '@/features/message-reactions/ui/MessageReactions/MessageReactions.module.css';
+import { ReactionRetry } from '@/features/message-reactions/ui/ReactionRetry';
+import { ReactionChip } from '@/features/message-reactions/ui/ReactionChip';
 
 export type MessageReactionsProps = {
   id: string;
   entry: string;
   session: Session;
   reactions: Reaction[];
+  open: boolean;
+  change: (open: boolean) => void;
+  anchor: RefObject<HTMLElement | null>;
+  boundary: RefObject<HTMLElement | null>;
+  context: string;
+  readers?: (() => void) | undefined;
+  people: { open: boolean; show: () => void; close: () => void };
 };
 
 export const MessageReactions = ({
@@ -20,73 +28,63 @@ export const MessageReactions = ({
   entry,
   session,
   reactions,
+  open,
+  change,
+  anchor,
+  boundary,
+  context,
+  people,
+  readers,
 }: MessageReactionsProps) => {
-  const action = useReactionAction(id, entry, session);
-  const [people, setPeople] = useState(false);
-  const displayed =
-    action.mutation.isPending && action.mutation.variables
-      ? projectReaction(reactions, action.mutation.variables, session)
-      : reactions;
-
-  const choose = (emoji: string) => {
-    if (action.mutation.isPending) {
-      return;
-    }
-
-    action.mutation.mutate({
-      emoji,
-      active: !reactions.find((value) => value.emoji === emoji)?.mine,
-    });
-    action.setPicker(false);
-  };
+  const action = useMessageReactions(id, entry, session, reactions, change, anchor);
 
   if (action.denied) {
     return null;
   }
 
   return (
-    <div className={styles.reactions} data-empty={displayed.length === 0}>
-      {displayed.map((reaction) => (
-        <button
+    <div className={styles.reactions} data-empty={action.displayed.length === 0}>
+      {action.displayed.map((reaction) => (
+        <ReactionChip
           key={reaction.emoji}
-          type="button"
-          aria-label={`${reaction.emoji}: ${reaction.count}`}
-          aria-pressed={reaction.mine}
-          disabled={action.mutation.isPending}
-          onClick={() => choose(reaction.emoji)}
-        >
-          {reaction.emoji} {reaction.count}
-        </button>
+          reaction={reaction}
+          pending={action.mutation.isPending}
+          choose={action.choose}
+          people={(emoji, trigger) => {
+            action.peopleTrigger.current = trigger;
+            action.setPeopleFilter(emoji);
+            people.show();
+          }}
+        />
       ))}
       <ReactionPopover
-        open={action.picker}
-        change={action.setPicker}
-        choose={choose}
+        readers={readers}
+        open={open}
+        change={change}
+        choose={action.choose}
         pending={action.mutation.isPending}
-        {...(reactions.length > 0
-          ? {
-              people: () => {
-                action.setPicker(false);
-                setPeople(true);
-              },
-            }
-          : {})}
+        anchor={anchor}
+        boundary={boundary}
+        context={context}
+        selected={action.displayed
+          .filter((value) => value.mine)
+          .map((value) => value.emoji)}
       />
       {action.mutation.error && (
-        <button
-          type="button"
-          className={styles.error}
-          onClick={() => {
-            if (action.mutation.variables) {
-              action.mutation.mutate(action.mutation.variables);
-            }
-          }}
-        >
-          Не удалось сохранить. Повторить
-        </button>
+        <ReactionRetry retry={action.retry} pending={action.mutation.isPending} />
       )}
-      <Dialog open={people} title="Реакции" onClose={() => setPeople(false)} chatAction>
-        <ReactionPeople reactions={reactions} />
+      <Dialog
+        open={people.open}
+        title="Кто отреагировал"
+        onClose={people.close}
+        chatAction
+        returnFocus={action.returnFocus}
+      >
+        <ReactionPeople
+          key={`${people.open}:${action.peopleFilter}`}
+          reactions={reactions}
+          initialFilter={action.peopleFilter}
+        />
       </Dialog>
     </div>
   );

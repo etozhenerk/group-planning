@@ -1,3 +1,5 @@
+import { ImagePlus } from 'lucide-react';
+import { useMobileLayout } from '@/shared/lib/media';
 import { useRef } from 'react';
 import type { PreparedCover } from '@/entities/meeting/model/cover';
 import { coverDataURL } from '@/entities/meeting/model/cover';
@@ -12,6 +14,7 @@ export type CoverEditorProps = {
   onChange: (cover: PreparedCover | null) => void;
   onBusy: (busy: boolean) => void;
   invalid?: boolean;
+  compact?: boolean;
 };
 
 export const CoverEditor = ({
@@ -21,37 +24,47 @@ export const CoverEditor = ({
   onChange,
   onBusy,
   invalid = false,
+  compact = false,
 }: CoverEditorProps) => {
+  const mobile = useMobileLayout() && compact;
   const input = useRef<HTMLInputElement>(null);
   const selection = useCoverSelection(onChange, onBusy);
   const existing = value === undefined ? original : undefined;
   const hasPhoto = !!value || !!existing?.url;
 
   return (
-    <section className={styles.editor} aria-label="Обложка">
-      <span>
-        Обложка <small>необязательно</small>
+    <section className={styles.editor} aria-label="Обложка" data-compact={mobile}>
+      <span className={styles.label}>
+        Обложка{' '}
+        <small>
+          {mobile ? (hasPhoto ? 'Фото встречи' : 'Не добавлена') : 'необязательно'}
+        </small>
       </span>
-      {selection.busy ? (
-        <div
-          className={styles.skeleton}
-          role="status"
-          aria-label="Подготовка фото"
-          aria-busy="true"
-        />
-      ) : value ? (
-        <img
-          className={styles.preview}
-          src={coverDataURL(value)}
-          alt="Выбранная обложка"
-        />
-      ) : existing?.url ? (
-        <MeetingCover
-          url={existing.url}
-          meeting={existing.meeting}
-          user={existing.user}
-        />
-      ) : null}
+      <div className={styles.media}>
+        {selection.busy ? (
+          <div
+            className={styles.skeleton}
+            role="status"
+            aria-label="Подготовка фото"
+            aria-busy="true"
+          />
+        ) : value ? (
+          <img
+            className={styles.preview}
+            src={coverDataURL(value)}
+            alt="Выбранная обложка"
+          />
+        ) : existing?.url ? (
+          <MeetingCover
+            fill={mobile}
+            url={existing.url}
+            meeting={existing.meeting}
+            user={existing.user}
+          />
+        ) : mobile ? (
+          <ImagePlus aria-hidden="true" />
+        ) : null}
+      </div>
       <input
         ref={input}
         type="file"
@@ -59,10 +72,7 @@ export const CoverEditor = ({
         aria-label="Выбрать фото"
         hidden
         disabled={disabled || selection.busy}
-        onChange={(event) => {
-          void selection.choose(event.target.files?.[0]);
-          event.target.value = '';
-        }}
+        onChange={selection.choose}
       />
       <div className={styles.actions}>
         <button

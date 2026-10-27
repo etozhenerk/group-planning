@@ -111,7 +111,7 @@ final class PlacePollOwner {
         loading = false
     }
 
-    private func receive(_ value: PlacePoll) throws {
+    func receive(_ value: PlacePoll) throws {
         guard value.meetingID == meetingID else { throw ClientFailure.invalidResponse }
         poll = value
     }

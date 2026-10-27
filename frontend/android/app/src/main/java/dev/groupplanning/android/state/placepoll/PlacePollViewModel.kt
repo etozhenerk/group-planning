@@ -143,8 +143,8 @@ internal class PlacePollViewModel(
         }
     }
 
-    private fun receive(poll: PlacePoll) {
-        if (stopped) return
+    fun receive(poll: PlacePoll) {
+        if (stopped || state.value.poll?.revision?.let { it > poll.revision } == true) return
         val before = state.value
         mutable.value = before.copy(
             poll = poll,

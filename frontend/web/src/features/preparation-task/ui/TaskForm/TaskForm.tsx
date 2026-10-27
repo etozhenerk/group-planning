@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { Session } from '@/entities/session';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import { TaskRecipient } from '@/features/preparation-task/ui/TaskRecipient';
@@ -12,10 +13,11 @@ export type TaskFormProps = {
 };
 
 export const TaskForm = ({ meeting, session, done, active }: TaskFormProps) => {
+  const mobile = useMobileLayout();
   const form = useTaskForm(meeting, session, done, active);
 
   return (
-    <form onSubmit={form.submit} className={styles.form}>
+    <form onSubmit={form.submit} className={styles.form} data-mobile={mobile}>
       <div className={styles.body}>
         <label className={styles.field}>
           Что сделать

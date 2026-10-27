@@ -17,7 +17,7 @@ enum DatePollCopy {
         case "awaiting_choice": String(localized: "Выбор за организатором")
         case "awaiting_time": String(localized: "Нужно уточнить время")
         case "open":
-            String(localized: "До \(MeetingLabels.time(poll.closesAt, timezone: timezone))")
+            String(localized: "До \(PollDeadlineLabel.text(poll.closesAt, timezone: timezone))")
         default: String(localized: "Опрос пока не поддерживается")
         }
     }

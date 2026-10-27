@@ -4,6 +4,7 @@ struct FeedAttachmentMessageView: View {
     let entry: FeedEntry
     let session: SessionStore
     let own: Bool
+    var selected = false
     @State private var availableWidth: CGFloat = 370
     private var mediaWidth: CGFloat { min(290, max(0, availableWidth * 0.94 - 42)) }
     var body: some View {
@@ -30,8 +31,24 @@ struct FeedAttachmentMessageView: View {
                     .background(
                         own ? AppPalette.ownMessage : AppPalette.surface,
                         in: UnevenRoundedRectangle(
-                            topLeadingRadius: 18, bottomLeadingRadius: own ? 18 : 5,
-                            bottomTrailingRadius: own ? 5 : 18, topTrailingRadius: 18))
+                            topLeadingRadius: DesignTokens.componentMobileChatBubbleRadius,
+                            bottomLeadingRadius: DesignTokens.componentMobileChatBubbleRadius,
+                            bottomTrailingRadius: DesignTokens.componentMobileChatBubbleRadius,
+                            topTrailingRadius: DesignTokens.componentMobileChatBubbleRadius)
+                    )
+                    .overlay {
+                        if selected {
+                            RoundedRectangle(
+                                cornerRadius: DesignTokens.componentMobileChatBubbleRadius
+                            )
+                            .stroke(DesignTokens.colorAccent, lineWidth: DesignTokens.spaceS2)
+                            .padding(-DesignTokens.componentMobileChatBubbleFocusOffset)
+                        }
+                    }
+                    .anchorPreference(key: ReactionAnchorPreference.self, value: .bounds) {
+                        anchor in
+                        [entry.id: anchor]
+                    }
             }
             if own { avatar } else { Spacer(minLength: 0) }
         }.frame(maxWidth: .infinity)

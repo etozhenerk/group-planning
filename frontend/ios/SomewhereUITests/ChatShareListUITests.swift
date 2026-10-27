@@ -15,6 +15,7 @@ final class ChatShareListUITests: XCTestCase {
         let share = app.buttons["feed-share"]
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         share.tap()
+        app.buttons["share-invitation"].tap()
         let copy = app.cells.matching(
             NSPredicate(format: "label IN %@", ["Скопировать", "Copy", "Copy Link", "Копировать"])
         ).firstMatch
@@ -26,6 +27,7 @@ final class ChatShareListUITests: XCTestCase {
         let cancelled = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: copy)
         XCTAssertEqual(XCTWaiter.wait(for: [cancelled], timeout: 5), .completed)
+        app.buttons["meeting-share-close"].tap()
         XCTAssertTrue(share.waitForExistence(timeout: 5))
         XCTAssertEqual(message.value as? String, "Приглашу друзей")
         ExperienceScreenshot.save("sheet-share-cancel", test: self)
@@ -36,6 +38,7 @@ final class ChatShareListUITests: XCTestCase {
         let dismissed = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: copy)
         XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 5), .completed)
+        app.buttons["meeting-share-close"].tap()
         XCTAssertGreaterThan(UIPasteboard.general.changeCount, previousChangeCount)
         XCTAssertEqual(message.value as? String, "Приглашу друзей")
         ExperienceScreenshot.save("sheet-share-copied", test: self)
@@ -45,6 +48,7 @@ final class ChatShareListUITests: XCTestCase {
         let closedAgain = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: copy)
         XCTAssertEqual(XCTWaiter.wait(for: [closedAgain], timeout: 5), .completed)
+        app.buttons["meeting-share-close"].tap()
         XCTAssertEqual(message.value as? String, "Приглашу друзей")
     }
 
@@ -55,6 +59,8 @@ final class ChatShareListUITests: XCTestCase {
         XCTAssertGreaterThanOrEqual(share.frame.height, 44)
         print("SOMEWHERE_SHARE_TOUCH hittable=\(share.isHittable) frame=\(share.frame)")
         share.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        XCTAssertTrue(app.buttons["share-invitation"].waitForExistence(timeout: 5))
+        app.buttons["share-invitation"].tap()
     }
 
     func testListWithoutCoverReturnsToSamePosition() {

@@ -2,12 +2,15 @@ package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,7 +43,7 @@ class PreparationTaskUiTests {
             fixture.waitTag("preparation-recipient")
             compose.onNodeWithTag("preparation-recipient").performClick()
             compose.onNodeWithText("Лена").performClick()
-            compose.onNodeWithTag("preparation-create").performScrollTo().performClick()
+            compose.onNodeWithTag("preparation-create").assertIsDisplayed().performClick()
             fixture.waitTag("preparation-error")
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
             fixture.screenshot("android-task-create-error")
@@ -53,11 +56,12 @@ class PreparationTaskUiTests {
             compose.onNodeWithTag("new-preparation-task").performClick()
             fixture.waitTag("preparation-error")
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
-            compose.onNodeWithTag("preparation-create").performScrollTo().performClick()
+            compose.onNodeWithTag("preparation-create").assertIsDisplayed().performClick()
             fixture.waitAbsent("chat-action-sheet")
             fixture.waitText("Заказать пиццу")
             compose.onNodeWithText("Заказать пиццу").performClick()
-            fixture.waitText("Кому предложено: Лена")
+            fixture.waitText(fixture.context.getString(R.string.task_recipient))
+            compose.onNodeWithText("Лена").assertIsDisplayed()
             compose.onNodeWithTag("preparation-accept").assertDoesNotExist()
             fixture.screenshot("android-task-offered")
         }
@@ -67,6 +71,15 @@ class PreparationTaskUiTests {
         fixture.launch("task-recipient").use {
             open("200")
             fixture.waitText("Заказать пиццу")
+            val inline = compose.onNodeWithTag("preparation-inline-accept")
+            inline.assertIsDisplayed().assertTextContains("Взять на себя")
+            assertTrue(
+                "The inline task action must remain compact",
+                inline.fetchSemanticsNode().boundsInRoot.width <
+                    compose.onNodeWithText(
+                        "Заказать пиццу",
+                    ).fetchSemanticsNode().boundsInRoot.width,
+            )
             compose.onNodeWithText("Заказать пиццу").performClick()
             fixture.waitTag("preparation-accept")
             compose.onNodeWithTag("preparation-accept").performClick()
@@ -75,7 +88,9 @@ class PreparationTaskUiTests {
             fixture.screenshot("android-task-accept-error")
             compose.onNodeWithText("Повторить").performClick()
             fixture.waitTag("preparation-complete")
-            compose.onNodeWithText("Задача у вас").assertIsDisplayed()
+            compose.onNode(
+                hasText("Задача у вас") and hasAnyAncestor(hasTestTag("chat-action-sheet")),
+            ).assertIsDisplayed()
             fixture.screenshot("android-task-accepted")
             compose.onNodeWithTag("preparation-complete").performClick()
             fixture.waitText("Выполнено · Лена")
@@ -91,6 +106,8 @@ class PreparationTaskUiTests {
             compose.onNodeWithText("Заказать пиццу").performClick()
             fixture.waitTag("preparation-decline")
             compose.onNodeWithTag("preparation-decline").performClick()
+            fixture.waitTag("preparation-confirm")
+            compose.onNodeWithTag("preparation-confirm").performClick()
             fixture.waitText("Отказ · Лена")
             fixture.screenshot("android-task-declined")
         }
@@ -117,6 +134,8 @@ class PreparationTaskUiTests {
                 compose.onNodeWithText("Заказать пиццу").performClick()
                 fixture.waitTag("preparation-cancel")
                 compose.onNodeWithTag("preparation-cancel").performClick()
+                fixture.waitTag("preparation-confirm")
+                compose.onNodeWithTag("preparation-confirm").performClick()
                 fixture.waitText("Отменено · Саша")
                 fixture.device.pressBack()
                 fixture.screenshot("android-task-large-cancelled")

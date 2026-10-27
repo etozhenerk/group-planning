@@ -72,11 +72,19 @@ for (const width of [320, 402, 430]) {
     await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     await expectFitsWidth(page.locator('html'));
     const header = page.locator('main#main > header');
-    const heading = header.getByTestId('conversation-title');
-    await expect(heading.locator('h1')).toHaveText(created.meeting.title);
+    const heading = header.getByRole('button', {
+      name: `Сведения о встрече «${created.meeting.title}»`,
+      exact: true,
+    });
 
-    for (const text of [heading.locator('h1'), heading.locator('p')]) {
-      await expectFitsWidth(text);
+    await expect(heading.getByRole('heading', { level: 1 })).toHaveText(
+      created.meeting.title,
+    );
+    await expectFitsWidth(heading);
+
+    for (const text of await heading.locator('span').all()) {
+      await expect(text).toHaveCSS('text-overflow', 'ellipsis');
+      await expect(text).toHaveCSS('overflow-x', 'hidden');
       await expect
         .poll(() => text.evaluate((node) => node.scrollHeight - node.clientHeight))
         .toBeLessThanOrEqual(1);
@@ -85,6 +93,7 @@ for (const width of [320, 402, 430]) {
     const back = header.getByRole('link', { name: 'К моим встречам', exact: true });
     const controls = [
       back,
+      heading,
       header.getByRole('button', { name: 'Пригласить друзей', exact: true }),
       header.getByRole('button', { name: 'Информация о встрече', exact: true }),
     ];
@@ -101,10 +110,13 @@ for (const width of [320, 402, 430]) {
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
     await page.getByRole('button', { name: 'Информация о встрече' }).click();
     const dialog = page.getByRole('dialog', { name: created.meeting.title });
+    await expect(
+      dialog.getByRole('heading', { name: created.meeting.title, exact: true }),
+    ).toHaveText(created.meeting.title);
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     await expectFitsWidth(dialog);
     // The body scrolls under a fixed header, so close stays reachable.
-    const content = dialog.getByTestId('dialog-content');
+    const content = dialog.getByTestId('meeting-info-scroll');
     expect(await content.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(
       true,
     );

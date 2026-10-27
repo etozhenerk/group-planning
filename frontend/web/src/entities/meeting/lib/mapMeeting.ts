@@ -11,6 +11,8 @@ export const mapSummary = (wire: WireSummary): MeetingSummary => {
     id: wire.id,
     ...(wire.period ? { period: wire.period } : {}),
     ...(wire.organizer_id ? { organizerId: wire.organizer_id } : {}),
+    ...(wire.unread_count === undefined ? {} : { unreadCount: wire.unread_count }),
+    ...(wire.first_unread === undefined ? {} : { firstUnread: wire.first_unread }),
     participantPreview: wire.participant_preview ?? [],
     memoryPhotoCount: wire.memory_photo_count ?? 0,
     memoryPreview: wire.memory_preview ?? [],

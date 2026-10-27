@@ -92,8 +92,13 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
+        XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
+        app.buttons["edit-meeting"].tap()
+        XCTAssertTrue(app.buttons["settings-close"].waitForExistence(timeout: 5))
+        reveal(app.images["meeting-cover"], app)
         XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
-        capture("ios-cover-details")
+        capture("ios-cover-persisted-settings")
     }
     func testReplacementAndRemoval() {
         let app = launch("cover-edit")
@@ -114,12 +119,16 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(app.buttons["edit-meeting"].waitForExistence(timeout: 10))
         capture("ios-cover-replaced")
         app.buttons["edit-meeting"].tap()
+        XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
         reveal(app.buttons["cover-remove"], app)
         app.buttons["cover-remove"].tap()
         XCTAssertFalse(app.images["meeting-cover"].exists)
         reveal(app.buttons["settings-save"], app)
         app.buttons["settings-save"].tap()
         XCTAssertTrue(app.buttons["edit-meeting"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.images["meeting-cover"].exists)
+        app.buttons["edit-meeting"].tap()
+        XCTAssertTrue(app.buttons["cover-select"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.images["meeting-cover"].exists)
     }
     func testLargeTextAndSystemPickerCancellation() {

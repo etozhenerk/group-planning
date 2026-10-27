@@ -81,7 +81,7 @@ export const ConversationActionForms = ({
         />
       </div>
       <div className={styles.form} hidden={kind !== 'share'}>
-        {kind === 'share' && <ShareForm id={meeting.id} />}
+        {kind === 'share' && <ShareForm id={meeting.id} meeting={meeting} />}
       </div>
     </>
   );

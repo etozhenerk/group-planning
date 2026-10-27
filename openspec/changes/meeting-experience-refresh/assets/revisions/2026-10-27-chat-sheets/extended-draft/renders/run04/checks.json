@@ -1,0 +1,4487 @@
+{
+  "kind": "draft-render-and-interaction",
+  "productAcceptance": false,
+  "published": false,
+  "startedAt": "2026-10-27T09:47:01.414Z",
+  "finishedAt": "2026-10-27T09:47:11.868Z",
+  "base": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/",
+  "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+  "os": "Darwin 27.0.0 arm64",
+  "inputs": [
+    {
+      "path": "chat-menu.html",
+      "sha256": "5fd1678b20f15afd23c31aadb34d5765a56a7143494c8109e6c1f99fbc7ab7cc"
+    },
+    {
+      "path": "chat.html",
+      "sha256": "73d8e8bf3ba2919882a9790a7881fcc27cdd8bc5693c3ea5675717ad62661b0a"
+    },
+    {
+      "path": "date-full.html",
+      "sha256": "991ccb24bdccd94e59451181de6185918be2709f8a34eace4bbcbbf6d499b44e"
+    },
+    {
+      "path": "date-source.css",
+      "sha256": "7c8abfa3c5ec19b4fe1a221eda2829d9128d755eb6ca2a055348f2a80b1d11ac"
+    },
+    {
+      "path": "extended.css",
+      "sha256": "b06ca6b2827ce11f00b2a3fe15541fc6242feddd696dfe057059ca98f4ae23cb"
+    },
+    {
+      "path": "extended.js",
+      "sha256": "e3a461aede971e6d2ba614a99859f5af688ff3033bc48dc034b6ad7ebebae8b3"
+    },
+    {
+      "path": "extended.ts",
+      "sha256": "5cde511b5c62250c5f131cc6498515f09e54d05a0ba8723c0741fd8dc8e4e228"
+    },
+    {
+      "path": "file-error.html",
+      "sha256": "191cad59cb1bfc412c3d9b6da5e0cef583f8da5ac007bd87c38bda5316b6ea56"
+    },
+    {
+      "path": "generate.ts",
+      "sha256": "b18fd2c9f597469ce15f41fd10943023a7e814f1123addb6222880c97d7c4098"
+    },
+    {
+      "path": "index.html",
+      "sha256": "277b155f4fc4ec10b2609e6135d4dc5654cb6eb391ba1b8af6128be34d01a7d4"
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "1331aceda3ae40aa9a7731c2817f01feede1ef62523b721e29f78bb248888520"
+    },
+    {
+      "path": "reaction-people.html",
+      "sha256": "f1b1270ca7096bf85d8c80452b857fadbb4eee6d192b0ff9af9ebca6bc674139"
+    },
+    {
+      "path": "render.ts",
+      "sha256": "84fad320d9f353205ff00a4efc16471a7d2138ecb5f983c8154e96377bf5adac"
+    },
+    {
+      "path": "settings.html",
+      "sha256": "799e57d5e2cddb9fa03a1241fbce994cfceed4a2219e01304a3e725362b11c96"
+    },
+    {
+      "path": "task-accepted.html",
+      "sha256": "5105e608fc6f42fce7b517e802c31106a0b085a448a13172188b9f3510c51c0b"
+    },
+    {
+      "path": "task-cancelled.html",
+      "sha256": "697857c29aa922645cdb1cfca93b1684a3f2fa8602920eb96eee641518598116"
+    },
+    {
+      "path": "task-completed.html",
+      "sha256": "3284b2d21df12fac703f1e98a43dafa6f4a3575ba634090ecfddfcaa81e3439e"
+    },
+    {
+      "path": "task-declined.html",
+      "sha256": "35e1c7abb94c5e1b51982bb8360d331a7f59006031ea1e65e1fd7f07aed7fb16"
+    },
+    {
+      "path": "task-offered.html",
+      "sha256": "2ff5d390748511c4ebbd76823d1f1efd22a0b01b99624c75a2e2a4dae862edfe"
+    },
+    {
+      "path": "task-organizer.html",
+      "sha256": "dbd7b8024e759985141c4943f1bc8d4d0eec54715eb885265dad31e92a141509"
+    }
+  ],
+  "sourceProvenance": {
+    "schemaVersion": 1,
+    "status": "draft-unrendered-unpublished",
+    "generatedAt": "2026-10-27T09:45:24.082Z",
+    "sourcePolicy": "Только raw-макеты, опубликованная shell и требования. Клиенты и actual screenshots не читались.",
+    "conflicts": [
+      {
+        "subject": "date heading",
+        "earlier": "gathering-activity-feed/ux.md от23.10: Новая дата встречи",
+        "later": "meeting-experience-refresh/assets/action-date.html и ревизия27.10: Предложить дату",
+        "choice": "Сохранён более новый заголовок Предложить дату; старое уточнение не отменяет принятые бизнес-поля и доступность CTA."
+      }
+    ],
+    "sources": [
+      {
+        "path": "docs/design/components/chat-actions.md",
+        "sha256": "84e86d5b0de2cd6b8dd4c3ade338403d39b79560996133d2a2005194fb3cb429"
+      },
+      {
+        "path": "docs/design/content.md",
+        "sha256": "046bf68739407aae8b84f8b9952a0700efffb08e2da462e2783475c8ffdbc35a"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/date-poll-v1/create.html",
+        "sha256": "cbec026cfd8af78771ea6c0fe94bfd1cda2b6f5437f402abc049c86f3506b9e6"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/date-poll-v1/date-poll.css",
+        "sha256": "f2e4c3112813f9426dd0df02d89d80be5375e1c9488bddebf05c766e136766f5"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/feed.css",
+        "sha256": "297018c36fa8df15df99fbbca53b5b1747b8e232b70fe14fe5f2b24a0f42a496"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/flow-create.html",
+        "sha256": "6310bc254da81327433ba099ab580d1511543187dda43f22d08c05f86755a90d"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/new-task.html",
+        "sha256": "6cf1cf32cff5fa1e422cebbd68ca31a3b98cb59050df36f9feacd85a79ff2c33"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/assets/task-accepted-open.html",
+        "sha256": "14309395c56a9a428e64feae670107170d52d74db906acf3feddfa2a746e6003"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/specs/event-feed/spec.md",
+        "sha256": "b3d0989a8c57c89ced00b8ccf5875052b2283ca580531802a7e7b8da664073f8"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/specs/meeting-creation/spec.md",
+        "sha256": "3438ad2a3648e5042c3b13ae23816d86d059a9a20dcd6ac0772ed6e6c699be76"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/specs/preparation-tasks/spec.md",
+        "sha256": "29c80c0889db52e766c8f8b55eb1b7fc83608f501857a3d871245a4f2ee8da67"
+      },
+      {
+        "path": "openspec/changes/gathering-activity-feed/ux.md",
+        "sha256": "79e6c9f7414ab637641580432057037972502159e8aa453d541ae7b4c2675152"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "sha256": "dc939441c07707c8c44f012bc56da3e474321ed4c95ea335f0697080e1a1918a"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "sha256": "12a7194dc0f23fbd4c7646fcbe162edfb87550bbea3ef2bba9ddf969286d6dbb"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/chat-reactions.html",
+        "sha256": "7c43d60cf88bd1a49f155e7a0ffa6dc296dfe9809b11ec891102d800a6500974"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "sha256": "12d3edce43e9501b998d834b1b192a083b608faae7111b7c9daa3ae97496acf6"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "sha256": "27fa4f65f62a16fde25c994cfe9e292068eb2ec1855e4b0dddb05dbd57a1e2bc"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat.html",
+        "sha256": "8acde9cdec2133901673b452b24ebee259e8f70a41fa8afe6ffb0a68a26603ea"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/extended-draft/extended.css",
+        "sha256": "b06ca6b2827ce11f00b2a3fe15541fc6242feddd696dfe057059ca98f4ae23cb"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/extended-draft/extended.ts",
+        "sha256": "5cde511b5c62250c5f131cc6498515f09e54d05a0ba8723c0741fd8dc8e4e228"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/extended-draft/generate.ts",
+        "sha256": "b18fd2c9f597469ce15f41fd10943023a7e814f1123addb6222880c97d7c4098"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-organizer.html",
+        "sha256": "5e9d68ee8576623e6a38022e60aeb96faaf2419eefca0992b31f4c8bdadb054c"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.css",
+        "sha256": "a8c6c2780a086dd16ea23f08fb8cb3115850372af9d19161411cdfb1498807a4"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "sha256": "7c2d95f1d451e13674c33d6ea7c6412cbdd55d49345aeb9742afb4608a2385f5"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "sha256": "a376e1c53c8ff6c581e6c41fa51651c90292e922d4ef9f6a37e4b004781aff3b"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.ts",
+        "sha256": "d12c1ae1f06a97a6d280b8da2fb471604664460dc7d26652f8093b1f75a85db4"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "sha256": "a3a96aaf84ce0674d4ead8a54a7cc50b4d5d2c470de00709d56c613779dbf982"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "sha256": "47d6531a132350bc831a3db78301ae5dfa1b92735537a4f0156bbe4f45149133"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "sha256": "d7ff9ae03d480a21592a8cef5799447965d572df919a4e00fd0bf87f101e9d1c"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "sha256": "6532529fbe83882e1407e6fd8d67b03a40bec3f1b394c8c6fc8c6c652880dcf8"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+        "sha256": "6026aa5fac2e85f13fe6a45d3c8d79c9b1a84d47c973c8cad238b8ccdfc4eb11"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "sha256": "2c08312fa76e181f01b1d3ba0223ce56af7762373416238b3c276b6432d1c8ff"
+      }
+    ],
+    "variants": [
+      {
+        "file": "date-full.html",
+        "title": "Предложить дату",
+        "status": "Композиция raw + принятые требования multi-date; требует рендера"
+      },
+      {
+        "file": "file-error.html",
+        "title": "Отправить файл",
+        "status": "Композиция принятых preview и error/retry"
+      },
+      {
+        "file": "settings.html",
+        "title": "Настройки встречи",
+        "status": "DRAFT: новое тело из принятых полей/предпросмотра"
+      },
+      {
+        "file": "task-offered.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Тимофей · адресат"
+      },
+      {
+        "file": "task-accepted.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Тимофей · исполнитель"
+      },
+      {
+        "file": "task-organizer.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Саша · автор и организатор"
+      },
+      {
+        "file": "task-declined.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Тимофей · участник"
+      },
+      {
+        "file": "task-completed.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Тимофей · участник"
+      },
+      {
+        "file": "task-cancelled.html",
+        "title": "Задача",
+        "status": "DRAFT: новая композиция; Саша · автор и организатор"
+      },
+      {
+        "file": "reaction-people.html",
+        "title": "Реакция 👍",
+        "status": "DRAFT: новый список из принятых строк состава"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "file": "date-full-320x844-initial.png",
+      "sha256": "37aaad7875ec93855821b37c416d6590a9c6f342dfa9e8808317912c499aa588",
+      "capturedAt": "2026-10-27T09:47:01.685Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 796,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 667.625,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 668,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 280,
+        "height": 62,
+        "bottom": 824,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "date-full-320x844-missing-error.png",
+      "sha256": "9b2733aadcbeed57ec55b4f4eed3a14c8b792427cf225dcd5cc7b46472490ce0",
+      "capturedAt": "2026-10-27T09:47:01.835Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 796,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 667.625,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 668,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 280,
+        "height": 62,
+        "bottom": 824,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-320x844-long-bottom.png",
+      "sha256": "5f365a9665327114d5f780cee798813709afac31b8e1ba6a74442f29e5ea2315",
+      "capturedAt": "2026-10-27T09:47:02.118Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 796,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 667.625,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 668,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 280,
+        "height": 62,
+        "bottom": 824,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "date-full-390x844-initial.png",
+      "sha256": "fe1655c0fb41a446a281720d741eedc8f7c00bf0c96aeaec0bdacd02407cfd6a",
+      "capturedAt": "2026-10-27T09:47:02.383Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 796,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 688,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 688,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 350,
+        "height": 62,
+        "bottom": 824,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "date-full-390x844-missing-error.png",
+      "sha256": "ffee6b6f6c0f536e0c5b85c7d32cd4ec458c79264ece4960906ddb31da4f3336",
+      "capturedAt": "2026-10-27T09:47:02.532Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 796,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 688,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 688,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 350,
+        "height": 62,
+        "bottom": 824,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-390x844-long-bottom.png",
+      "sha256": "20c0e933c311771d4bd8afedc190f667f9b3d673cde6c3c4fbcc2bc046a2f194",
+      "capturedAt": "2026-10-27T09:47:02.816Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 796,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 688,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 688,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 762,
+        "width": 350,
+        "height": 62,
+        "bottom": 824,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "date-full-768x1024-initial.png",
+      "sha256": "a71710051aa3e2b5305671ac75c51ed8406fd12f4c7d9105ace2630757ac9b04",
+      "capturedAt": "2026-10-27T09:47:03.071Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1043,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 1042.84375,
+        "bottom": 1042.84375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 869.75,
+        "bottom": 1012.84375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 870,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 530.5625
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": {
+        "x": 278,
+        "y": 924.84375,
+        "width": 434,
+        "height": 62,
+        "bottom": 986.84375,
+        "right": 712
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "date-full-768x1024-missing-error.png",
+      "sha256": "a69cad970e3f4062100a849389632a549388928af6f2a12e0b6bf2b7cffc2e66",
+      "capturedAt": "2026-10-27T09:47:03.255Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1069,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 1068.84375,
+        "bottom": 1068.84375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 895.75,
+        "bottom": 1038.84375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 896,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 530.5625
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": {
+        "x": 278,
+        "y": 950.84375,
+        "width": 434,
+        "height": 62,
+        "bottom": 1012.84375,
+        "right": 712
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-768x1024-long-bottom.png",
+      "sha256": "11f2605625ccda831a2a7bd30bbee818f88d0e7a6b03c407d3adce0716bfcc74",
+      "capturedAt": "2026-10-27T09:47:03.563Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1475,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 1474.84375,
+        "bottom": 1474.84375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 1301.75,
+        "bottom": 1444.84375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 1302,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 530.5625
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": {
+        "x": 278,
+        "y": 1356.84375,
+        "width": 434,
+        "height": 62,
+        "bottom": 1418.84375,
+        "right": 712
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "date-full-1440x1000-initial.png",
+      "sha256": "74d2f2c502fcaa05d83fe4e54522b932d5969e06f96d75bf7ee5891c276ee035",
+      "capturedAt": "2026-10-27T09:47:03.817Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1075,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 1074.84375,
+        "bottom": 1074.84375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 869.75,
+        "bottom": 1026.84375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 870,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 807.5625
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": {
+        "x": 555,
+        "y": 938.84375,
+        "width": 552,
+        "height": 62,
+        "bottom": 1000.84375,
+        "right": 1107
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "date-full-1440x1000-missing-error.png",
+      "sha256": "99ccfe02a6d65e6e484267d62d3aa6a0fcc89f359143b85061c31435792ce6ef",
+      "capturedAt": "2026-10-27T09:47:04.001Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1101,
+      "sheet": {
+        "x": 222,
+        "y": -1,
+        "width": 1218,
+        "height": 1100.84375,
+        "bottom": 1099.84375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 156.09375,
+        "width": 604,
+        "height": 895.75,
+        "bottom": 1051.84375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 896,
+      "title": {
+        "x": 529,
+        "y": 87,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 126.09375,
+        "right": 807.5625
+      },
+      "close": {
+        "x": 529,
+        "y": 43,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 87,
+        "right": 595.828125
+      },
+      "dateFooter": {
+        "x": 555,
+        "y": 963.84375,
+        "width": 552,
+        "height": 62,
+        "bottom": 1025.84375,
+        "right": 1107
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-1440x1000-long-bottom.png",
+      "sha256": "542da0585a36ff1e233d390e9c9a19c02c6cf7b3610f8c1fed4c135dd5a988ea",
+      "capturedAt": "2026-10-27T09:47:04.307Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1507,
+      "sheet": {
+        "x": 222,
+        "y": -27,
+        "width": 1218,
+        "height": 1506.84375,
+        "bottom": 1479.84375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 130.09375,
+        "width": 604,
+        "height": 1301.75,
+        "bottom": 1431.84375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 1302,
+      "title": {
+        "x": 529,
+        "y": 61,
+        "width": 278.5625,
+        "height": 39.09375,
+        "bottom": 100.09375,
+        "right": 807.5625
+      },
+      "close": {
+        "x": 529,
+        "y": 17,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 61,
+        "right": 595.828125
+      },
+      "dateFooter": {
+        "x": 555,
+        "y": 1343.84375,
+        "width": 552,
+        "height": 62,
+        "bottom": 1405.84375,
+        "right": 1107
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "file-error-320x844-initial.png",
+      "sha256": "a2f3d03fd14003cccd2ecfa03181bc8ec55dfee9b4d0d8044341d38f4f829c2d",
+      "capturedAt": "2026-10-27T09:47:04.536Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/file-error.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 264,
+        "width": 320,
+        "height": 580,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 352,
+        "width": 280,
+        "height": 472,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 472,
+      "title": {
+        "x": 20,
+        "y": 289.90625,
+        "width": 224,
+        "height": 32.1875,
+        "bottom": 322.09375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 284,
+        "width": 44,
+        "height": 44,
+        "bottom": 328,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "file-error-390x844-initial.png",
+      "sha256": "1e235cc6670b4d16755d3b69ad8d46d62fcb5d6e9088097a16e0374c5cf84424",
+      "capturedAt": "2026-10-27T09:47:04.825Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/file-error.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 324,
+        "width": 390,
+        "height": 520,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 412,
+        "width": 350,
+        "height": 412,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 412,
+      "title": {
+        "x": 20,
+        "y": 349.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 382.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 344,
+        "width": 44,
+        "height": 44,
+        "bottom": 388,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "file-error-768x1024-initial.png",
+      "sha256": "299d36904a5fb1310bec0c8feb3da7a9f9eea0f9e5b7ec6cdaa1d9e85ebcac0e",
+      "capturedAt": "2026-10-27T09:47:05.103Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/file-error.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1024,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 617.59375,
+        "bottom": 617.59375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 444.5,
+        "bottom": 587.59375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 445,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 256.125,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 508.125
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "file-error-1440x1000-initial.png",
+      "sha256": "54b8d1689c70648f4fcd79f153399a14d5713658ac39811c7226ce883fb0536d",
+      "capturedAt": "2026-10-27T09:47:05.391Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/file-error.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 649.59375,
+        "bottom": 649.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 444.5,
+        "bottom": 601.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 445,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 256.125,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 785.125
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "settings-320x844-initial.png",
+      "sha256": "4ed328f9a804cce753d8b90be521fa5ff873fb926a0dd08e7317265db71d2bdf",
+      "capturedAt": "2026-10-27T09:47:05.656Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 796,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 667.625,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "settings-320x844-actions.png",
+      "sha256": "ca95da796af511c49ef3f581626f1490c6e4839db261f233d8e2569e854046d5",
+      "capturedAt": "2026-10-27T09:47:05.806Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 796,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 667.625,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 125,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "settings-390x844-initial.png",
+      "sha256": "a972b894b4881c9da2c7a1e2614175af1ba76bef49a593b85fbee0af7fb7f3a5",
+      "capturedAt": "2026-10-27T09:47:06.008Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 796,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 688,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "settings-390x844-actions.png",
+      "sha256": "927ea2ef6a30d529eb4a83e7ec761e121d48465feb27556707d1631df4ce5379",
+      "capturedAt": "2026-10-27T09:47:06.158Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 796,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 688,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 105,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "settings-768x1024-initial.png",
+      "sha256": "420b367fe223d5c59fa31fd2a74e1fc3a572022eb970765375bd4ab7e9a9bd46",
+      "capturedAt": "2026-10-27T09:47:06.379Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1053,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 1053.09375,
+        "bottom": 1053.09375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 880,
+        "bottom": 1023.09375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 880,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 304.28125,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 556.28125
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "settings-768x1024-actions.png",
+      "sha256": "ad6859358fca5f1ef01e97175ad42e3065012cae152cbc5003d1e440125e2b1c",
+      "capturedAt": "2026-10-27T09:47:06.547Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1053,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 1053.09375,
+        "bottom": 1053.09375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 880,
+        "bottom": 1023.09375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 880,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 304.28125,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 556.28125
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "settings-1440x1000-initial.png",
+      "sha256": "e7785d09e0dae952de357d71c33ea9ffe28a095e806f43353d65c194b42e8f8e",
+      "capturedAt": "2026-10-27T09:47:06.771Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1085,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 1085.09375,
+        "bottom": 1085.09375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 880,
+        "bottom": 1037.09375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 880,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 304.28125,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 833.28125
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "settings-1440x1000-actions.png",
+      "sha256": "7198855343de6676fb348a8d20bd581c21038809d5e2852093fe95d8eea92e51",
+      "capturedAt": "2026-10-27T09:47:06.954Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1085,
+      "sheet": {
+        "x": 222,
+        "y": -11,
+        "width": 1218,
+        "height": 1085.09375,
+        "bottom": 1074.09375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 146.09375,
+        "width": 604,
+        "height": 880,
+        "bottom": 1026.09375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 880,
+      "title": {
+        "x": 529,
+        "y": 77,
+        "width": 304.28125,
+        "height": 39.09375,
+        "bottom": 116.09375,
+        "right": 833.28125
+      },
+      "close": {
+        "x": 529,
+        "y": 33,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 77,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "reaction-people-320x844-initial.png",
+      "sha256": "edcd11ab7bc1150c2472563cb60032e099b0d08bbda44d5210505d3ec1f6e635",
+      "capturedAt": "2026-10-27T09:47:07.143Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/reaction-people.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": "Apple Color Emoji",
+          "postScriptName": "AppleColorEmoji",
+          "isCustomFont": false,
+          "glyphCount": 1
+        },
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 8
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 610,
+        "width": 320,
+        "height": 234,
+        "bottom": 844,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 698,
+        "width": 280,
+        "height": 126,
+        "bottom": 824,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 126,
+      "title": {
+        "x": 20,
+        "y": 635.90625,
+        "width": 224,
+        "height": 32.1875,
+        "bottom": 668.09375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 630,
+        "width": 44,
+        "height": 44,
+        "bottom": 674,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "reaction-people-390x844-initial.png",
+      "sha256": "192661b015d15601276b472ec3d2335cdef838db8f8d64c0e4b69a1f0549b920",
+      "capturedAt": "2026-10-27T09:47:07.284Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/reaction-people.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": "Apple Color Emoji",
+          "postScriptName": "AppleColorEmoji",
+          "isCustomFont": false,
+          "glyphCount": 1
+        },
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 8
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 610,
+        "width": 390,
+        "height": 234,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 698,
+        "width": 350,
+        "height": 126,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 126,
+      "title": {
+        "x": 20,
+        "y": 635.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 668.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 630,
+        "width": 44,
+        "height": 44,
+        "bottom": 674,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "reaction-people-768x1024-initial.png",
+      "sha256": "fcdcb96794a0aa482263e46848d7ef333f59644aae65761328206aa282199cfa",
+      "capturedAt": "2026-10-27T09:47:07.416Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/reaction-people.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": "Apple Color Emoji",
+          "postScriptName": "AppleColorEmoji",
+          "isCustomFont": false,
+          "glyphCount": 1
+        },
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 8
+        }
+      ],
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pageScrollWidth": 768,
+      "pageScrollHeight": 1024,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 546,
+        "height": 351.09375,
+        "bottom": 351.09375,
+        "right": 768
+      },
+      "panel": {
+        "x": 252,
+        "y": 143.09375,
+        "width": 486,
+        "height": 178,
+        "bottom": 321.09375,
+        "right": 738
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 178,
+      "title": {
+        "x": 252,
+        "y": 74,
+        "width": 170.734375,
+        "height": 39.09375,
+        "bottom": 113.09375,
+        "right": 422.734375
+      },
+      "close": {
+        "x": 252,
+        "y": 30,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 74,
+        "right": 318.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "reaction-people-1440x1000-initial.png",
+      "sha256": "4a6c77eace0055f336dbcb82f474552717e8f575f85da7bb33e44316fdc18c9a",
+      "capturedAt": "2026-10-27T09:47:07.552Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/reaction-people.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": "Apple Color Emoji",
+          "postScriptName": "AppleColorEmoji",
+          "isCustomFont": false,
+          "glyphCount": 1
+        },
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 8
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 383.09375,
+        "bottom": 383.09375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 178,
+        "bottom": 335.09375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 178,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 170.734375,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 699.734375
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-offered-390x844-initial.png",
+      "sha256": "2956264d6909ca7d9e2ae78b2289aceddbf12499c7a57ddea4db879b8e1398cd",
+      "capturedAt": "2026-10-27T09:47:07.691Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-offered.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 506.5,
+        "width": 390,
+        "height": 337.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 594.5,
+        "width": 350,
+        "height": 229.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 230,
+      "title": {
+        "x": 20,
+        "y": 532.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 564.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 526.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 570.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-offered-1440x1000-initial.png",
+      "sha256": "a737edf28b9d3b68329bdb39adfe0dbb7b6cd23d339ad3ba3350dfca003fda0b",
+      "capturedAt": "2026-10-27T09:47:07.889Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-offered.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 486.59375,
+        "bottom": 486.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 281.5,
+        "bottom": 438.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 282,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-accepted-390x844-initial.png",
+      "sha256": "9c13e649307a400e559bd7571146e194f42a646506fe1d25b20e01e71386f3a1",
+      "capturedAt": "2026-10-27T09:47:08.095Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 506.5,
+        "width": 390,
+        "height": 337.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 594.5,
+        "width": 350,
+        "height": 229.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 230,
+      "title": {
+        "x": 20,
+        "y": 532.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 564.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 526.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 570.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-accepted-1440x1000-initial.png",
+      "sha256": "9eb088fde9caf6c793bfdc9fe78092daf58d51c93140287c122b069dc100074f",
+      "capturedAt": "2026-10-27T09:47:08.295Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 486.59375,
+        "bottom": 486.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 281.5,
+        "bottom": 438.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 282,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-organizer-390x844-initial.png",
+      "sha256": "d4b80d2f239dbc6183822d33f147410d726e02034d878a01f42b5b9f07f337ef",
+      "capturedAt": "2026-10-27T09:47:08.499Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-organizer.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 570.5,
+        "width": 390,
+        "height": 273.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 658.5,
+        "width": 350,
+        "height": 165.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 166,
+      "title": {
+        "x": 20,
+        "y": 596.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 628.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 590.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 634.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-organizer-1440x1000-initial.png",
+      "sha256": "e8a6d50b927125a809bff43f02dcb201523a5e0879c31bae50c511927c673595",
+      "capturedAt": "2026-10-27T09:47:08.697Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-organizer.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 422.59375,
+        "bottom": 422.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 217.5,
+        "bottom": 374.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 218,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-declined-390x844-initial.png",
+      "sha256": "518af678be0b6d2798f47a17cd0d8df0b5afb94692cf4ff525c58084a996ebd7",
+      "capturedAt": "2026-10-27T09:47:08.903Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-declined.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 635.5,
+        "width": 390,
+        "height": 208.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 723.5,
+        "width": 350,
+        "height": 100.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 101,
+      "title": {
+        "x": 20,
+        "y": 661.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 693.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 655.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 699.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-declined-1440x1000-initial.png",
+      "sha256": "4db7829571bb1fcce674af937fc6528fca549c20968ff864170eecc6393c8fb7",
+      "capturedAt": "2026-10-27T09:47:09.031Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-declined.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 357.59375,
+        "bottom": 357.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 152.5,
+        "bottom": 309.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 153,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-completed-390x844-initial.png",
+      "sha256": "7b7b62084881248f5d7aa1da0f0e00e4a493705fc6c6d539e661d46c34882714",
+      "capturedAt": "2026-10-27T09:47:09.167Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-completed.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 635.5,
+        "width": 390,
+        "height": 208.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 723.5,
+        "width": 350,
+        "height": 100.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 101,
+      "title": {
+        "x": 20,
+        "y": 661.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 693.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 655.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 699.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-completed-1440x1000-initial.png",
+      "sha256": "028b193850bce5ed16b3128356b31ece79deda5dc75d7e0c1ee46105724607e5",
+      "capturedAt": "2026-10-27T09:47:09.297Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-completed.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 357.59375,
+        "bottom": 357.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 152.5,
+        "bottom": 309.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 153,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "task-cancelled-390x844-initial.png",
+      "sha256": "008956da696c03d6043cee2f7b46e5beb3a6548424b8f7c022f91edba7781cc5",
+      "capturedAt": "2026-10-27T09:47:09.428Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-cancelled.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 844,
+      "sheet": {
+        "x": 0,
+        "y": 635.5,
+        "width": 390,
+        "height": 208.5,
+        "bottom": 844,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 723.5,
+        "width": 350,
+        "height": 100.5,
+        "bottom": 824,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 101,
+      "title": {
+        "x": 20,
+        "y": 661.40625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 693.59375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 655.5,
+        "width": 44,
+        "height": 44,
+        "bottom": 699.5,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-cancelled-1440x1000-initial.png",
+      "sha256": "64b4f03d569d2cf7a4994ac74fe4e3d179590086a885fee60f43531b75aaa919",
+      "capturedAt": "2026-10-27T09:47:09.556Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-cancelled.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pageScrollWidth": 1440,
+      "pageScrollHeight": 1000,
+      "sheet": {
+        "x": 222,
+        "y": 0,
+        "width": 1218,
+        "height": 357.59375,
+        "bottom": 357.59375,
+        "right": 1440
+      },
+      "panel": {
+        "x": 529,
+        "y": 157.09375,
+        "width": 604,
+        "height": 152.5,
+        "bottom": 309.59375,
+        "right": 1133
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 153,
+      "title": {
+        "x": 529,
+        "y": 88,
+        "width": 114,
+        "height": 39.09375,
+        "bottom": 127.09375,
+        "right": 643
+      },
+      "close": {
+        "x": 529,
+        "y": 44,
+        "width": 66.828125,
+        "height": 44,
+        "bottom": 88,
+        "right": 595.828125
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Назад"
+    },
+    {
+      "file": "date-full-320x430-initial.png",
+      "sha256": "6498829ca48a6717fb3d319a9799e020cb4d9b122b6435204ba125752512b9c5",
+      "capturedAt": "2026-10-27T09:47:09.679Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 253.625,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 254,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 280,
+        "height": 62,
+        "bottom": 410,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "date-full-320x430-missing-error.png",
+      "sha256": "8c672dd451ecf12e4ef5fff83e782b4708269ec093d28c5f1dad089b5d939feb",
+      "capturedAt": "2026-10-27T09:47:09.812Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 253.625,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 254,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 280,
+        "height": 62,
+        "bottom": 410,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-320x430-long-bottom.png",
+      "sha256": "22ebde9bda40675e952021f6f491f5d4939dc41fbabd16331d29afc9f57d2e2d",
+      "capturedAt": "2026-10-27T09:47:10.078Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 253.625,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 254,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 280,
+        "height": 62,
+        "bottom": 410,
+        "right": 300
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "date-full-390x430-initial.png",
+      "sha256": "372592279570d73342d0bae0cb60dce8f5ee18754930db81355170ed795e39f2",
+      "capturedAt": "2026-10-27T09:47:10.306Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 274,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 350,
+        "height": 62,
+        "bottom": 410,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "date-full-390x430-missing-error.png",
+      "sha256": "2554b5330649231782a155aa98635165f2a1dbb6efc2351d3f6945b01d4d4dc2",
+      "capturedAt": "2026-10-27T09:47:10.439Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 274,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 350,
+        "height": 62,
+        "bottom": 410,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 1"
+    },
+    {
+      "file": "date-full-390x430-long-bottom.png",
+      "sha256": "472b26eedac648b34ac1f2284df7234c840f4f1513b0a92edeb9be7c39b9dc76",
+      "capturedAt": "2026-10-27T09:47:10.705Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/date-full.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 15
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 274,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": {
+        "x": 20,
+        "y": 348,
+        "width": 350,
+        "height": 62,
+        "bottom": 410,
+        "right": 370
+      },
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Вариант 9"
+    },
+    {
+      "file": "settings-320x430-initial.png",
+      "sha256": "0fb4f0984ea41e890714e3af583edb9eab6cd29808c5c836391bdd47e84f09df",
+      "capturedAt": "2026-10-27T09:47:10.928Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 253.625,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "settings-320x430-actions.png",
+      "sha256": "1afef0abab91147baa3b7d740c910794d91c21bc0d2473f19a2120b367cae738",
+      "capturedAt": "2026-10-27T09:47:11.062Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 156.375,
+        "width": 280,
+        "height": 253.625,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 539,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 68,
+        "width": 224,
+        "height": 64.375,
+        "bottom": 132.375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 78.1875,
+        "width": 44,
+        "height": 44,
+        "bottom": 122.1875,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "settings-390x430-initial.png",
+      "sha256": "f446f3b80bd90039e3da9066821c024abb85763c9c8f1ec9e8b480979d59e587",
+      "capturedAt": "2026-10-27T09:47:11.246Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "settings-390x430-actions.png",
+      "sha256": "4c462a2027dfb2f4b074e9c9085b9dbd6ae0aef2e7e6ccb8a028a231f25f0921",
+      "capturedAt": "2026-10-27T09:47:11.381Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/settings.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 17
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 519,
+      "panelScrollHeight": 793,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Выбрать другое фото"
+    },
+    {
+      "file": "task-accepted-320x430-long-initial.png",
+      "sha256": "3856201ba9493c014a2848697730145e46986f1bdf187525b524fa3de5f8375a",
+      "capturedAt": "2026-10-27T09:47:11.563Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 280,
+        "height": 274,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 326,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 224,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-accepted-320x430-long-actions.png",
+      "sha256": "3856201ba9493c014a2848697730145e46986f1bdf187525b524fa3de5f8375a",
+      "capturedAt": "2026-10-27T09:47:11.613Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 320,
+        "height": 430
+      },
+      "pageScrollWidth": 320,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 320,
+        "height": 382,
+        "bottom": 430,
+        "right": 320
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 280,
+        "height": 274,
+        "bottom": 410,
+        "right": 300
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 326,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 224,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 244
+      },
+      "close": {
+        "x": 256,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 300
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-accepted-390x430-long-initial.png",
+      "sha256": "762477655428708842857d0bbfd002e9a0838b4e2d5ccf4dd5e0046954eaf8c4",
+      "capturedAt": "2026-10-27T09:47:11.767Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 302,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    },
+    {
+      "file": "task-accepted-390x430-long-actions.png",
+      "sha256": "762477655428708842857d0bbfd002e9a0838b4e2d5ccf4dd5e0046954eaf8c4",
+      "capturedAt": "2026-10-27T09:47:11.816Z",
+      "url": "http://127.0.0.1:53013/revisions/2026-10-27-chat-sheets/extended-draft/task-accepted.html",
+      "runtime": "Chromium 156.0.8078.4; Node v22.22.3",
+      "os": "Darwin 27.0.0 arm64",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "deviceScaleFactor": 1,
+      "textScale": 1,
+      "reducedMotion": "reduce",
+      "fonts": [
+        {
+          "familyName": ".SF NS",
+          "postScriptName": ".SFNS-Bold",
+          "isCustomFont": false,
+          "glyphCount": 6
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 430
+      },
+      "pageScrollWidth": 390,
+      "pageScrollHeight": 430,
+      "sheet": {
+        "x": 0,
+        "y": 48,
+        "width": 390,
+        "height": 382,
+        "bottom": 430,
+        "right": 390
+      },
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 274,
+        "bottom": 410,
+        "right": 370
+      },
+      "panelScrollTop": 0,
+      "panelScrollHeight": 302,
+      "title": {
+        "x": 20,
+        "y": 73.90625,
+        "width": 294,
+        "height": 32.1875,
+        "bottom": 106.09375,
+        "right": 314
+      },
+      "close": {
+        "x": 326,
+        "y": 68,
+        "width": 44,
+        "height": 44,
+        "bottom": 112,
+        "right": 370
+      },
+      "dateFooter": null,
+      "computedFont": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "focus": "Закрыть"
+    }
+  ],
+  "interactions": [
+    {
+      "at": "2026-10-27T09:47:01.640Z",
+      "scenario": "date-full-320x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:01.782Z",
+      "scenario": "date-full-320x844",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:01.876Z",
+      "scenario": "date-full-320x844",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:02.234Z",
+      "scenario": "date-full-320x844",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:02.336Z",
+      "scenario": "date-full-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:02.471Z",
+      "scenario": "date-full-390x844",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:02.571Z",
+      "scenario": "date-full-390x844",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:02.926Z",
+      "scenario": "date-full-390x844",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:03.025Z",
+      "scenario": "date-full-768x1024",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:03.162Z",
+      "scenario": "date-full-768x1024",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:03.296Z",
+      "scenario": "date-full-768x1024",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:03.667Z",
+      "scenario": "date-full-768x1024",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:03.766Z",
+      "scenario": "date-full-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:03.899Z",
+      "scenario": "date-full-1440x1000",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:04.036Z",
+      "scenario": "date-full-1440x1000",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:04.407Z",
+      "scenario": "date-full-1440x1000",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:04.502Z",
+      "scenario": "file-error-320x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "file-error",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:04.692Z",
+      "scenario": "file-error-320x844",
+      "action": "Ввод подписи, закрытие/открытие через Файл, Повторить",
+      "actual": "Подпись сохранена до повтора; повтор только закрывает макет, не имитирует загрузку"
+    },
+    {
+      "at": "2026-10-27T09:47:04.789Z",
+      "scenario": "file-error-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "file-error",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:04.979Z",
+      "scenario": "file-error-390x844",
+      "action": "Ввод подписи, закрытие/открытие через Файл, Повторить",
+      "actual": "Подпись сохранена до повтора; повтор только закрывает макет, не имитирует загрузку"
+    },
+    {
+      "at": "2026-10-27T09:47:05.074Z",
+      "scenario": "file-error-768x1024",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "file-error",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:05.263Z",
+      "scenario": "file-error-768x1024",
+      "action": "Ввод подписи, закрытие/открытие через Файл, Повторить",
+      "actual": "Подпись сохранена до повтора; повтор только закрывает макет, не имитирует загрузку"
+    },
+    {
+      "at": "2026-10-27T09:47:05.357Z",
+      "scenario": "file-error-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "file-error",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:05.528Z",
+      "scenario": "file-error-1440x1000",
+      "action": "Ввод подписи, закрытие/открытие через Файл, Повторить",
+      "actual": "Подпись сохранена до повтора; повтор только закрывает макет, не имитирует загрузку"
+    },
+    {
+      "at": "2026-10-27T09:47:05.624Z",
+      "scenario": "settings-320x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:05.878Z",
+      "scenario": "settings-320x844",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:05.974Z",
+      "scenario": "settings-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:06.228Z",
+      "scenario": "settings-390x844",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:06.323Z",
+      "scenario": "settings-768x1024",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:06.611Z",
+      "scenario": "settings-768x1024",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:06.709Z",
+      "scenario": "settings-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.012Z",
+      "scenario": "settings-1440x1000",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:07.107Z",
+      "scenario": "reaction-people-320x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "reaction-people",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.151Z",
+      "scenario": "reaction-people-320x844",
+      "action": "Просмотр списка по 👍 и Escape",
+      "actual": "Три имени, без контактов или новых действий; возврат в тот же чат"
+    },
+    {
+      "at": "2026-10-27T09:47:07.245Z",
+      "scenario": "reaction-people-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "reaction-people",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.291Z",
+      "scenario": "reaction-people-390x844",
+      "action": "Просмотр списка по 👍 и Escape",
+      "actual": "Три имени, без контактов или новых действий; возврат в тот же чат"
+    },
+    {
+      "at": "2026-10-27T09:47:07.384Z",
+      "scenario": "reaction-people-768x1024",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "reaction-people",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.423Z",
+      "scenario": "reaction-people-768x1024",
+      "action": "Просмотр списка по 👍 и Escape",
+      "actual": "Три имени, без контактов или новых действий; возврат в тот же чат"
+    },
+    {
+      "at": "2026-10-27T09:47:07.518Z",
+      "scenario": "reaction-people-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "reaction-people",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.559Z",
+      "scenario": "reaction-people-1440x1000",
+      "action": "Просмотр списка по 👍 и Escape",
+      "actual": "Три имени, без контактов или новых действий; возврат в тот же чат"
+    },
+    {
+      "at": "2026-10-27T09:47:07.653Z",
+      "scenario": "task-offered-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-offered",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.760Z",
+      "scenario": "task-offered-390x844",
+      "action": "Принять задачу",
+      "actual": "Локальное состояние task-accepted, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:07.857Z",
+      "scenario": "task-offered-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-offered",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:07.963Z",
+      "scenario": "task-offered-1440x1000",
+      "action": "Принять задачу",
+      "actual": "Локальное состояние task-accepted, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:08.057Z",
+      "scenario": "task-accepted-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-accepted",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:08.164Z",
+      "scenario": "task-accepted-390x844",
+      "action": "Отметить выполненной",
+      "actual": "Локальное состояние task-completed, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:08.259Z",
+      "scenario": "task-accepted-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-accepted",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:08.369Z",
+      "scenario": "task-accepted-1440x1000",
+      "action": "Отметить выполненной",
+      "actual": "Локальное состояние task-completed, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:08.461Z",
+      "scenario": "task-organizer-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-organizer",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:08.570Z",
+      "scenario": "task-organizer-390x844",
+      "action": "Отменить задачу",
+      "actual": "Локальное состояние task-cancelled, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:08.665Z",
+      "scenario": "task-organizer-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-organizer",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:08.771Z",
+      "scenario": "task-organizer-1440x1000",
+      "action": "Отменить задачу",
+      "actual": "Локальное состояние task-cancelled, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:08.863Z",
+      "scenario": "task-declined-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-declined",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:08.905Z",
+      "scenario": "task-declined-390x844",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:08.998Z",
+      "scenario": "task-declined-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-declined",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.032Z",
+      "scenario": "task-declined-1440x1000",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:09.124Z",
+      "scenario": "task-completed-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-completed",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.169Z",
+      "scenario": "task-completed-390x844",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:09.265Z",
+      "scenario": "task-completed-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-completed",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.298Z",
+      "scenario": "task-completed-1440x1000",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:09.389Z",
+      "scenario": "task-cancelled-390x844",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-cancelled",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.430Z",
+      "scenario": "task-cancelled-390x844",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:09.524Z",
+      "scenario": "task-cancelled-1440x1000",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-cancelled",
+        "modal": false
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.557Z",
+      "scenario": "task-cancelled-1440x1000",
+      "action": "Терминальное состояние",
+      "actual": "Действий изменения нет"
+    },
+    {
+      "at": "2026-10-27T09:47:09.652Z",
+      "scenario": "date-full-320x430",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:09.757Z",
+      "scenario": "date-full-320x430",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:09.842Z",
+      "scenario": "date-full-320x430",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:10.182Z",
+      "scenario": "date-full-320x430",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:10.276Z",
+      "scenario": "date-full-390x430",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "date-full",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:10.383Z",
+      "scenario": "date-full-390x430",
+      "action": "Удалить третий вариант и добавить снова",
+      "actual": "3 → 2 → 3; удаление скрыто при двух, фокус в добавленном поле"
+    },
+    {
+      "at": "2026-10-27T09:47:10.467Z",
+      "scenario": "date-full-390x430",
+      "action": "Пустая и повторная дата при отправке",
+      "actual": "Ошибка под полем; фокус первого ошибочного поля; форма остаётся открыта"
+    },
+    {
+      "at": "2026-10-27T09:47:10.807Z",
+      "scenario": "date-full-390x430",
+      "action": "Прокрутка/CTA, закрытие, повторное открытие и Escape",
+      "actual": "9 дат и черновик чата сохранены; header/X и CTA проверены в mobile кадрах; тень исчезла в конце тела"
+    },
+    {
+      "at": "2026-10-27T09:47:10.901Z",
+      "scenario": "settings-320x430",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:11.124Z",
+      "scenario": "settings-320x430",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:11.220Z",
+      "scenario": "settings-390x430",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "settings",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:11.441Z",
+      "scenario": "settings-390x430",
+      "action": "Правка названия, убрать/вернуть cover, X, Forward, Отмена",
+      "actual": "Тот же демонстрационный cover и черновик остаются; системный picker/API отсутствуют"
+    },
+    {
+      "at": "2026-10-27T09:47:11.535Z",
+      "scenario": "task-accepted-320x430-long",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-accepted",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:11.645Z",
+      "scenario": "task-accepted-320x430-long",
+      "action": "Отметить выполненной",
+      "actual": "Локальное состояние task-completed, без API и смены прав"
+    },
+    {
+      "at": "2026-10-27T09:47:11.738Z",
+      "scenario": "task-accepted-390x430-long",
+      "action": "Открыта форма по ссылке",
+      "actual": {
+        "active": "task-accepted",
+        "modal": true
+      }
+    },
+    {
+      "at": "2026-10-27T09:47:11.847Z",
+      "scenario": "task-accepted-390x430-long",
+      "action": "Отметить выполненной",
+      "actual": "Локальное состояние task-completed, без API и смены прав"
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Статичные черновики, не живое приложение и не API",
+    "Системная клавиатура/VoiceOver/TalkBack не проверены",
+    "HTML date input не утверждает календарь сервиса",
+    "PNG не являются pixel regression"
+  ]
+}

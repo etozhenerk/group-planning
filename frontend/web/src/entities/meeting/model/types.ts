@@ -1,8 +1,13 @@
+import type { ChatReadState } from '@/entities/meeting/model/readProjection';
+import type { FeedWindow } from '@/entities/meeting/model/feedWindow';
+import type { ChatState } from '@/entities/meeting/model/chatState';
 import type { PreparedCover } from '@/entities/meeting/model/cover';
 import type { Media } from '@/shared/api';
 import type { Answer } from '@/shared/api';
 
 export type MeetingSummary = {
+  unreadCount?: string;
+  firstUnread?: string | null;
   period?: 'upcoming' | 'past' | 'undated';
   id: string;
   title: string;
@@ -64,6 +69,7 @@ export type ResponseState = {
 };
 
 export type FeedEntry = {
+  delivery?: 'queued' | 'sending' | 'uncertain' | 'rejected';
   attachments?: Media[];
   id: string;
   meetingId: string;
@@ -91,7 +97,15 @@ export type FeedPage = {
   myRsvpRevision: string;
 };
 
-export type Conversation = FeedPage & { hasOlder: boolean };
+export type Conversation = FeedPage & {
+  read?: ChatReadState | undefined;
+  newMessages?: number;
+  window?: FeedWindow;
+  protectedEntries?: FeedEntry[];
+  sync?: ChatState;
+  hasOlder: boolean;
+  receiveCursor: string;
+};
 
 export type MeetingDraft = {
   cover?: PreparedCover | null | undefined;

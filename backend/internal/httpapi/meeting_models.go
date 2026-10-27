@@ -10,6 +10,8 @@ import (
 )
 
 type meetingSummaryResponse struct {
+	UnreadCount        *string         `json:"unread_count,omitempty"`
+	FirstUnread        **string        `json:"first_unread,omitempty"`
 	MemoryPhotoCount   int             `json:"memory_photo_count"`
 	MemoryPreview      []mediaResponse `json:"memory_preview"`
 	OrganizerID        string          `json:"organizer_id"`
@@ -107,7 +109,17 @@ func (h meetingHandlers) summaryDTO(details meetings.Details, users ...map[strin
 		}
 	}
 
+	var unread *string
+	var first **string
+	if details.ReadState != nil {
+		count := decimal(details.ReadState.UnreadCount)
+		unread = &count
+		entryID := optionalString(details.ReadState.FirstUnread)
+		first = &entryID
+	}
+
 	return meetingSummaryResponse{
+		UnreadCount: unread, FirstUnread: first,
 		MemoryPhotoCount: details.MemoryPhotoCount, MemoryPreview: mediaPreview,
 		ID:          m.ID,
 		OrganizerID: m.OrganizerID, Period: m.Status, ParticipantPreview: preview,

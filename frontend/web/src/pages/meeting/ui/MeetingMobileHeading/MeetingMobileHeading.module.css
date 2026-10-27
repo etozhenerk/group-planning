@@ -1,0 +1,61 @@
+.mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ds-component-mobile-chat-mark-width);
+  height: var(--ds-component-mobile-chat-mark-height);
+  border-radius: var(--ds-component-mobile-chat-mark-radius);
+  background: var(--ds-color-meeting-mark);
+  color: var(--ds-color-meeting-mark-foreground);
+}
+
+.mark[data-narrow='true'] {
+  width: var(--ds-component-mobile-chat-narrow-mark-width);
+  height: var(--ds-component-mobile-chat-narrow-mark-height);
+  border-radius: var(--ds-component-mobile-chat-narrow-mark-radius);
+}
+
+.mark svg {
+  width: var(--ds-component-mobile-chat-icon-size);
+  height: var(--ds-component-mobile-chat-icon-size);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  min-height: var(--ds-target-web);
+  padding: 0 var(--ds-space-s2);
+  text-align: left;
+  background: transparent;
+}
+
+.title {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--ds-typography-size-mobile-chat-title);
+  font-weight: var(--ds-typography-weight-mobile-chat-title);
+}
+
+.description {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-label);
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.heading[data-narrow='true'] .title {
+  font-size: var(--ds-typography-size-mobile-chat-narrow-title);
+}
+
+.heading[data-narrow='true'] .description {
+  font-size: var(--ds-typography-size-emoji-group-label);
+}

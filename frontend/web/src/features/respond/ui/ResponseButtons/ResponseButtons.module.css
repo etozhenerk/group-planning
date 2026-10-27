@@ -44,3 +44,31 @@ button.primary,
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
+
+.meeting .response-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-component-participant-roster-row-gap);
+}
+
+.meeting .response-buttons button {
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  border: var(--ds-space-s1) solid var(--ds-color-subtle-border);
+  border-radius: var(--ds-component-button-radius);
+  background: transparent;
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.meeting .response-buttons button.primary {
+  border-color: var(--ds-color-action);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+}
+
+.meeting .response-buttons button[aria-pressed='true']:not(:focus-visible) {
+  outline: none;
+}

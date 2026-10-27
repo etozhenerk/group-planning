@@ -9,13 +9,18 @@ import (
 )
 
 type meetingHandlers struct {
+	realtime bool
 	app      *meetings.Service
 	identity *identity.Service
 	auth     authHandlers
 }
 
-func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service) {
-	h := meetingHandlers{app, service, authHandlers{service: service}}
+func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identity.Service, realtime ...bool) {
+	h := meetingHandlers{app: app, identity: service, auth: authHandlers{service: service}}
+	if len(realtime) > 0 {
+		h.realtime = realtime[0]
+	}
+
 	mux.HandleFunc("/api/v1/meetings/{id}/media/limits", h.mediaLimits)
 	mux.HandleFunc("/api/v1/meetings/{id}/media/uploads", h.prepareMedia)
 	mux.HandleFunc("/api/v1/meetings/{id}/media/{media_id}/content", h.mediaContent)
@@ -29,6 +34,11 @@ func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identi
 	mux.HandleFunc("/api/v1/meetings/{id}/participants", h.participants)
 	mux.HandleFunc("/api/v1/meetings/{id}/rsvp", h.respond)
 	mux.HandleFunc("/api/v1/meetings/{id}/feed", h.feed)
+	mux.HandleFunc("/api/v1/meetings/{id}/sync", h.sync)
+	mux.HandleFunc("/api/v1/meetings/{id}/read-marker", h.readMarker)
+	mux.HandleFunc("/api/v1/meetings/{id}/read-receipts/query", h.readReceipts)
+	mux.HandleFunc("/api/v1/meetings/{id}/messages/{entry_id}/readers", h.messageReaders)
+	mux.HandleFunc("/api/v1/chat-capabilities", h.chatCapabilities)
 	mux.HandleFunc("/api/v1/meetings/{id}/messages", h.message)
 	mux.HandleFunc("/api/v1/meetings/{id}/reactions", h.reactions)
 	mux.HandleFunc("/api/v1/meetings/{id}/messages/{entry_id}/reactions", h.setReaction)
@@ -115,6 +125,10 @@ func (h meetingHandlers) writeMeetingError(w http.ResponseWriter, err error) {
 	var validation meetings.ValidationError
 	var conflict *meetings.Conflict
 	switch {
+	case errors.Is(err, meetings.ErrSyncCursorInvalid):
+		writeError(w, 400, "invalid_sync_cursor", nil)
+	case errors.Is(err, meetings.ErrSyncResetRequired):
+		writeError(w, 410, "sync_reset_required", nil)
 	case errors.As(err, &validation):
 		writeError(w, 422, "validation_failed", validation.Fields)
 	case errors.As(err, &conflict):

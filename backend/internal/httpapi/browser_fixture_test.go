@@ -14,6 +14,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -27,20 +28,39 @@ import (
 // browserProvider is compiled only into Go tests, never cmd/server.
 type browserProvider struct{ origin string }
 
+var browserProfiles = []struct{ code, name string }{
+	{"sasha", "Саша"},
+	{"lena", "Лена"},
+	{"misha", "Миша"},
+	{"anya", "Аня"},
+	{"dima", "Дима"},
+	{"katya", "Катя"},
+	{"oleg", "Олег"},
+	{"ira", "Ира"},
+	{"profile-fields-full", "Профиль: все поля"},
+	{"profile-fields-partial", "Профиль: неполная дата"},
+	{"profile-fields-clear", "Профиль: очищение"},
+}
+
 func (p browserProvider) AuthorizationURL(state, challenge string) string {
 	return p.origin + "/__test/provider?" + url.Values{"state": {state}, "challenge": {challenge}}.Encode()
 }
 
-func (browserProvider) Verify(_ context.Context, code, verifier string) (identity.Profile, error) {
-	names := map[string]string{"sasha": "Саша", "lena": "Лена"}
-	if name, ok := names[code]; ok && verifier != "" {
-		return identity.Profile{Subject: "browser-test-" + code, DisplayName: name}, nil
+func (p browserProvider) Verify(ctx context.Context, code, verifier string) (identity.Profile, error) {
+	if strings.HasPrefix(code, "profile-fields-") && verifier != "" {
+		return profileFieldsLogin(ctx, code, p.origin)
+	}
+
+	for _, profile := range browserProfiles {
+		if profile.code == code && verifier != "" {
+			return identity.Profile{Subject: "browser-test-" + code, DisplayName: profile.name}, nil
+		}
 	}
 
 	return identity.Profile{}, errors.New("invalid browser test code")
 }
 
-var providerPage = template.Must(template.New("provider").Parse(`<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Тестовый вход Somewhere</title><body style="font-family:system-ui;background:#24252a;color:#f5f4f1;padding:48px 24px;max-width:500px;margin:auto"><h1>Тестовый вход</h1><p>Локальный демостенд. Выберите профиль для проверки приглашений и переписки. Реальный Яндекс ID не используется.</p><p><a style="display:block;padding:18px;background:#e0dce8;color:#27252d;border-radius:16px;text-align:center;text-decoration:none" href="{{.Sasha}}">Войти как Саша</a></p><p><a style="display:block;padding:18px;background:#e0dce8;color:#27252d;border-radius:16px;text-align:center;text-decoration:none" href="{{.Lena}}">Войти как Лена</a></p><p><a style="color:#b9b9c2" href="{{.Cancel}}">Отменить вход</a></p></body></html>`))
+var providerPage = template.Must(template.New("provider").Parse(`<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Тестовый вход Somewhere</title><body style="font-family:system-ui;background:#24252a;color:#f5f4f1;padding:48px 24px;max-width:500px;margin:auto"><h1>Тестовый вход</h1><p>Локальный демостенд. Выберите профиль для проверки приглашений и переписки. Реальный Яндекс ID не используется.</p>{{range .Profiles}}<p><a style="display:block;padding:18px;background:#e0dce8;color:#27252d;border-radius:16px;text-align:center;text-decoration:none" href="{{.URL}}">Войти как {{.Name}}</a></p>{{end}}<p><a style="color:#b9b9c2" href="{{.Cancel}}">Отменить вход</a></p></body></html>`))
 
 // TestBrowserFixture is an opt-in, loopback-only HTTP integration harness. The
 // normal go test run skips it; no production env or route can enable this provider.
@@ -99,12 +119,15 @@ func TestBrowserFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	app, stream := browserChatFixture(t, store, service)
 	if visual {
 		seedNativeDesignFixture(t, store, identities, service, app)
+		if err := app.InitializeChatReadState(t.Context()); err != nil {
+			t.Fatal(err)
+		}
 	}
 
-	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)
@@ -116,7 +139,14 @@ func TestBrowserFixture(t *testing.T) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Cache-Control", "no-store")
 		w.Header().Set("Referrer-Policy", "no-referrer")
-		values := struct{ Sasha, Lena, Cancel string }{callback("sasha"), callback("lena"), "/api/v1/auth/yandex/callback?" + url.Values{"state": {state}, "error": {"access_denied"}}.Encode()}
+		values := struct {
+			Profiles []struct{ Name, URL string }
+			Cancel   string
+		}{Cancel: "/api/v1/auth/yandex/callback?" + url.Values{"state": {state}, "error": {"access_denied"}}.Encode()}
+		for _, profile := range browserProfiles {
+			values.Profiles = append(values.Profiles, struct{ Name, URL string }{profile.name, callback(profile.code)})
+		}
+
 		if err := providerPage.Execute(w, values); err != nil {
 			return
 		}

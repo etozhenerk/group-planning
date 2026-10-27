@@ -10,7 +10,9 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.MeetingDraft
 import java.time.Instant
 import java.time.LocalDate
@@ -19,7 +21,12 @@ import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MeetingDateDialog(draft: MeetingDraft, close: () -> Unit, confirm: (String) -> Unit) {
+internal fun MeetingDateDialog(
+    draft: MeetingDraft,
+    close: () -> Unit,
+    title: String = stringResource(R.string.meeting_calendar_title),
+    confirm: (String) -> Unit,
+) {
     val day = draft.day?.let(LocalDate::parse) ?: LocalDate.now(ZoneId.of(draft.timezone))
     val picker = rememberDatePickerState(
         initialSelectedDateMillis = day.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli(),
@@ -41,7 +48,7 @@ internal fun MeetingDateDialog(draft: MeetingDraft, close: () -> Unit, confirm: 
     }, dismissButton = { TextButton(close) { Text("Отмена") } }) {
         DatePicker(picker, title = {
             Text(
-                "Дата встречи",
+                title,
                 Modifier.padding(start = 24.dp, top = 16.dp).testTag("date-picker"),
             )
         })

@@ -3,6 +3,9 @@ import Observation
 
 @MainActor @Observable
 final class PrivateData {
+    @ObservationIgnored var chatAnchors: [UUID: FeedScrollAnchor] = [:]
+    var syncMeetings: Set<UUID> = []
+    var chatProjections: [UUID: ChatProjectionCache] = [:]
     var recentEmoji: [String] = []
     var meetings = ResourceState<[MeetingSummary]>()
     var meetingsCursor: String?
@@ -36,6 +39,9 @@ final class PrivateData {
     }
 
     func revoke(_ id: UUID) {
+        chatAnchors.removeValue(forKey: id)
+        syncMeetings.remove(id)
+        chatProjections.removeValue(forKey: id)
         denied.insert(id)
         accessGeneration[id] = UUID()
         details.removeValue(forKey: id)
@@ -53,6 +59,9 @@ final class PrivateData {
     }
 
     func clear() {
+        chatAnchors = [:]
+        syncMeetings = []
+        chatProjections = [:]
         recentEmoji = []
         generation = UUID()
         meetings = ResourceState()

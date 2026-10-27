@@ -2,47 +2,111 @@ import SwiftUI
 
 struct MeetingFeedHeader: View {
     let owner: FeedOwner
+    var viewport = CGSize.zero
+    var sheetDismissal = 0
     @Environment(\.dismiss) private var dismiss
-    @ScaledMetric(relativeTo: .headline) private var titleSize = 18.0
+    @State private var returnAction: HeaderAction?
+    @AccessibilityFocusState private var focusedAction: HeaderAction?
+
+    private enum HeaderAction: Hashable { case heading, information, share }
+
     var body: some View {
-        HStack(spacing: 7) {
+        HStack(spacing: DesignTokens.spaceS6) {
             Button {
                 owner.actionDrafts.clear()
                 dismiss()
             } label: {
-                ExperienceIcon(kind: .back)
-                    .frame(width: 44, height: 44).contentShape(Rectangle())
+                ChatIcon(kind: .back)
+                    .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                    .contentShape(Rectangle())
             }.accessibilityLabel("Назад").accessibilityIdentifier("feed-back")
-            VStack(alignment: .leading, spacing: 3) {
-                Text(owner.meeting?.title ?? "Разговор").font(
-                    .system(size: titleSize, weight: .bold)
+            ChatIcon(kind: .calendar)
+                .foregroundStyle(DesignTokens.colorMeetingMarkForeground)
+                .frame(
+                    width: narrow
+                        ? DesignTokens.componentMobileChatNarrowMarkWidth
+                        : DesignTokens.componentMobileChatMarkWidth,
+                    height: narrow
+                        ? DesignTokens.componentMobileChatNarrowMarkHeight
+                        : DesignTokens.componentMobileChatMarkHeight
                 )
-                .lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityAddTraits(.isHeader).accessibilityIdentifier("feed-title")
-                if let meeting = owner.meeting {
-                    Text(
-                        ExperienceDate.participants(meeting.participantCount) + " · "
-                            + ExperienceDate.label(
-                                meeting.startsAt, day: meeting.startsOn, timezone: meeting.timezone)
-                    )
-                    .font(.system(size: 12)).foregroundStyle(AppPalette.muted).lineLimit(1)
-                }
-            }
-            if owner.invitation.organizer, let url = owner.invitation.shareURL {
-                ShareLink(item: url) {
-                    ExperienceIcon(kind: .share)
-                        .frame(width: 44, height: 44).contentShape(Rectangle())
+                .background(
+                    DesignTokens.colorMeetingMark,
+                    in: RoundedRectangle(
+                        cornerRadius: narrow
+                            ? DesignTokens.componentMobileChatNarrowMarkRadius
+                            : DesignTokens.componentMobileChatMarkRadius)
+                )
+                .accessibilityHidden(true)
+            Button {
+                open(.information, from: .heading)
+            } label: {
+                heading
+            }.accessibilityIdentifier("meeting-heading")
+                .accessibilityFocused($focusedAction, equals: .heading)
+            if owner.invitation.organizer {
+                Button {
+                    open(.share, from: .share)
+                } label: {
+                    ChatIcon(kind: .share)
+                        .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                        .contentShape(Rectangle())
                 }.accessibilityLabel("Пригласить друзей").accessibilityIdentifier("feed-share")
+                    .accessibilityFocused($focusedAction, equals: .share)
             }
             Button {
-                owner.infoPresented = true
+                open(.information, from: .information)
             } label: {
-                ExperienceIcon(kind: .more)
-                    .frame(width: 44, height: 44).contentShape(Rectangle())
+                ChatIcon(kind: .info)
+                    .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                    .contentShape(
+                        Rectangle())
             }.accessibilityLabel("Информация о встрече").accessibilityIdentifier(
-                "meeting-info-open")
-        }.buttonStyle(.plain).foregroundStyle(AppPalette.text)
-            .padding(.horizontal, 12).frame(minHeight: 81).background(AppPalette.background)
-            .overlay(alignment: .bottom) { Rectangle().fill(AppPalette.border).frame(height: 1) }
+                "meeting-info-open"
+            ).accessibilityFocused($focusedAction, equals: .information)
+        }.buttonStyle(ChatPressStyle()).foregroundStyle(AppPalette.text)
+            .padding(.horizontal, DesignTokens.componentMobileChatHeaderInset).frame(
+                minHeight: viewport.height < DesignTokens.breakpointChatCompactHeight
+                    ? DesignTokens.componentMobileChatCompactHeaderHeight
+                    : DesignTokens.componentMobileChatHeaderHeight
+            ).background(AppPalette.background)
+            .overlay(alignment: .bottom) {
+                Rectangle().fill(AppPalette.border).frame(height: DesignTokens.spaceS1)
+            }
+            .onChange(of: sheetDismissal) { _, _ in
+                focusedAction = returnAction
+                returnAction = nil
+            }
     }
+
+    private var heading: some View {
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS2) {
+            Text(owner.meeting?.title ?? "Разговор").designTokenFont(
+                narrow
+                    ? DesignTokens.typographySizeMobileChatNarrowTitle
+                    : DesignTokens.typographySizeMobileChatTitle,
+                weight: DesignTokens.typographyWeightMobileChatTitle, relativeTo: .headline
+            )
+            .lineLimit(1).truncationMode(.tail).frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityAddTraits(.isHeader).accessibilityIdentifier("feed-title")
+            if let meeting = owner.meeting {
+                Text(
+                    ExperienceDate.label(
+                        meeting.startsAt, day: meeting.startsOn, timezone: meeting.timezone)
+                        + " · " + ExperienceDate.participants(meeting.participantCount)
+                )
+                .designFont(DesignTokens.typographySizeLabel, relativeTo: .caption)
+                .foregroundStyle(AppPalette.muted).lineLimit(1)
+            }
+        }.frame(minHeight: DesignTokens.targetIos).contentShape(Rectangle())
+    }
+
+    private func open(_ route: ChatSheetRoute, from action: HeaderAction) {
+        returnAction = action
+        focusedAction = nil
+        SystemKeyboard.dismiss()
+        owner.openSheet(route)
+    }
+
+    private var narrow: Bool { viewport.width < DesignTokens.breakpointChatNarrowWidth }
 }

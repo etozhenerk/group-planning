@@ -1,0 +1,2062 @@
+{
+  "schemaVersion": 1,
+  "id": "chat-correction-2.1.0-final",
+  "purpose": "feature",
+  "component": "backend",
+  "createdAt": "2026-10-27T17:25:56.794Z",
+  "implementer": "implementation-team:/root",
+  "catalogHash": "3e6321ef2b7afb742b9efbb493158988d0dad3095d187e99aca0a1893fb1c05d",
+  "sourceHash": "0f08698326dcea5505053a500e4c35088788eba70f56c60a150df551301e0995",
+  "selectedCases": [
+    "TC-API-ALBUM-PAGINATION",
+    "TC-API-MEDIA-ACCESS",
+    "TC-API-MEDIA-DURABILITY",
+    "TC-API-MEDIA-LIMITS",
+    "TC-API-MEDIA-PUBLICATION",
+    "TC-API-PARTICIPANT-SUMMARY",
+    "TC-API-PROFILE-PRIVACY",
+    "TC-API-REACTION-IDEMPOTENCY",
+    "TC-API-RSVP-CUTOFF",
+    "TC-API-RSVP-LEGACY",
+    "TC-API-SUPPORT-ACCEPTANCE",
+    "TC-API-SUPPORT-DURABILITY",
+    "TC-CHAT-03C1F855",
+    "TC-CHAT-1064C7F5",
+    "TC-CHAT-13212426",
+    "TC-CHAT-1F396228",
+    "TC-CHAT-44FA05AC",
+    "TC-CHAT-7DDB3260",
+    "TC-CHAT-87982DEF",
+    "TC-CHAT-8FCD1231",
+    "TC-CHAT-C60E942D",
+    "TC-CHAT-COMPOSER-CARET",
+    "TC-CHAT-DATE-FORM",
+    "TC-CHAT-DESKTOP-MODALS",
+    "TC-CHAT-EMOJI-DISMISS-FOCUS",
+    "TC-CHAT-EMOJI-GRAPHEME",
+    "TC-CHAT-EMOJI-LOW-HEIGHT",
+    "TC-CHAT-EMOJI-SELECTION",
+    "TC-CHAT-F00844F6",
+    "TC-CHAT-INFO-EXPAND",
+    "TC-CHAT-SETTINGS-FORM",
+    "TC-CHAT-SHEET-RETURN",
+    "TC-CHAT-TASK-ROLES",
+    "TC-CHAT-WEB-NO-ZOOM",
+    "TC-CREATE-2066E79A",
+    "TC-CREATE-2A0E9F3E",
+    "TC-CREATE-9138348C",
+    "TC-CREATE-932B50E6",
+    "TC-CREATE-9724DED7",
+    "TC-FEED-1BFACA40",
+    "TC-FEED-5C22B221",
+    "TC-INFO-28355B41",
+    "TC-INFO-4D0E6354",
+    "TC-INFO-5AF98147",
+    "TC-INFO-666F6B46",
+    "TC-INFO-87665C8F",
+    "TC-INFO-91E4ECFC",
+    "TC-INFO-9C1A86D2",
+    "TC-INFO-9D87E6B1",
+    "TC-INFO-C4EDD04F",
+    "TC-INFO-D5C31112",
+    "TC-INFO-E5D26634",
+    "TC-INFO-ONBOARDING-NO-SERVICE",
+    "TC-INFO-PUBLIC-POLICY-RELEASE",
+    "TC-INV-13F9DCAB",
+    "TC-INV-235E4D53",
+    "TC-INV-82AE12A5",
+    "TC-INV-84CC3D0C",
+    "TC-INV-DEC030F5",
+    "TC-INV-F00F3753",
+    "TC-INV-F8EEC653",
+    "TC-LIST-155758C7",
+    "TC-LIST-170C9AF2",
+    "TC-LIST-17F34870",
+    "TC-LIST-40EE551B",
+    "TC-LIST-53C0DC15",
+    "TC-LIST-57D734C1",
+    "TC-LIST-5B54DA87",
+    "TC-LIST-697C602C",
+    "TC-LIST-6BAF1838",
+    "TC-LIST-74A5E939",
+    "TC-LIST-AA6FA112",
+    "TC-LIST-AB3EFA81",
+    "TC-LIST-D671C5B8",
+    "TC-MEDIA-2BD057D2",
+    "TC-MEDIA-7640A673",
+    "TC-MEDIA-82F4AC83",
+    "TC-MEDIA-A8006656",
+    "TC-MEDIA-BC197682",
+    "TC-MEDIA-D7DEA204",
+    "TC-MEDIA-F3CC5A3E",
+    "TC-PROFILE-3E5EFE8D",
+    "TC-PROFILE-4F3DAAFE",
+    "TC-PROFILE-842701DD",
+    "TC-PROFILE-C6FA6B4C",
+    "TC-PROFILE-CC2372B4",
+    "TC-PROFILE-EBBA2EA5",
+    "TC-PROFILE-F319B092",
+    "TC-PROFILE-YANDEX-FIELDS",
+    "TC-REACT-126AB1CF",
+    "TC-REACT-18CAB411",
+    "TC-REACT-1AAA13AA",
+    "TC-REACT-7E7A775E",
+    "TC-REACT-EFCCD7B0",
+    "TC-REACT-FULL-PICKER",
+    "TC-REACT-HOLD-MOTION",
+    "TC-REACT-PEOPLE-FILTER",
+    "TC-SUPPORT-2B1C9FBF",
+    "TC-SUPPORT-689C3B5F",
+    "TC-SUPPORT-703D40F6",
+    "TC-SUPPORT-751A99A9",
+    "TC-SUPPORT-B8F9FF7E",
+    "TC-SUPPORT-C47A0ACC",
+    "TC-SUPPORT-E6C8467F",
+    "TC-TASK-00CF9F67",
+    "TC-TASK-0D640ABE",
+    "TC-TASK-148F3348",
+    "TC-TASK-1DAB5DF2",
+    "TC-TASK-A7464DF9",
+    "TC-TASK-B8D2770E",
+    "TC-VIBE-03EF9D2B",
+    "TC-VIBE-3C98DE12",
+    "TC-VIBE-3E0FC811",
+    "TC-VIBE-5A39D7F0",
+    "TC-VIBE-75A8C069",
+    "TC-VIBE-B5FF73B4",
+    "TC-VIBE-C82FDBE2",
+    "TC-VIBE-D2414F1E",
+    "TC-VIBE-DAC4D8E1",
+    "TC-VIBE-F5929004"
+  ],
+  "expected": [
+    {
+      "id": "TC-CHAT-03C1F855/web-responsive/manual",
+      "caseId": "TC-CHAT-03C1F855",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-03C1F855/ios-phone/manual",
+      "caseId": "TC-CHAT-03C1F855",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-03C1F855/android-phone/manual",
+      "caseId": "TC-CHAT-03C1F855",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-13212426/web-responsive/manual",
+      "caseId": "TC-CHAT-13212426",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-13212426/ios-phone/manual",
+      "caseId": "TC-CHAT-13212426",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-13212426/android-phone/manual",
+      "caseId": "TC-CHAT-13212426",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1F396228/web-responsive/manual",
+      "caseId": "TC-CHAT-1F396228",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1F396228/ios-phone/manual",
+      "caseId": "TC-CHAT-1F396228",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1F396228/android-phone/manual",
+      "caseId": "TC-CHAT-1F396228",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-44FA05AC/web-responsive/manual",
+      "caseId": "TC-CHAT-44FA05AC",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-44FA05AC/ios-phone/manual",
+      "caseId": "TC-CHAT-44FA05AC",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-44FA05AC/android-phone/manual",
+      "caseId": "TC-CHAT-44FA05AC",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-F00844F6/web-responsive/manual",
+      "caseId": "TC-CHAT-F00844F6",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-F00844F6/ios-phone/manual",
+      "caseId": "TC-CHAT-F00844F6",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-F00844F6/android-phone/manual",
+      "caseId": "TC-CHAT-F00844F6",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-8FCD1231/web-responsive/manual",
+      "caseId": "TC-CHAT-8FCD1231",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-8FCD1231/ios-phone/manual",
+      "caseId": "TC-CHAT-8FCD1231",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-8FCD1231/android-phone/manual",
+      "caseId": "TC-CHAT-8FCD1231",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-87982DEF/web-responsive/manual",
+      "caseId": "TC-CHAT-87982DEF",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-87982DEF/ios-phone/manual",
+      "caseId": "TC-CHAT-87982DEF",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-87982DEF/android-phone/manual",
+      "caseId": "TC-CHAT-87982DEF",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1064C7F5/web-responsive/manual",
+      "caseId": "TC-CHAT-1064C7F5",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1064C7F5/ios-phone/manual",
+      "caseId": "TC-CHAT-1064C7F5",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-1064C7F5/android-phone/manual",
+      "caseId": "TC-CHAT-1064C7F5",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-7DDB3260/web-responsive/manual",
+      "caseId": "TC-CHAT-7DDB3260",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-7DDB3260/ios-phone/manual",
+      "caseId": "TC-CHAT-7DDB3260",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-7DDB3260/android-phone/manual",
+      "caseId": "TC-CHAT-7DDB3260",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-C60E942D/web-responsive/manual",
+      "caseId": "TC-CHAT-C60E942D",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-C60E942D/ios-phone/manual",
+      "caseId": "TC-CHAT-C60E942D",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-C60E942D/android-phone/manual",
+      "caseId": "TC-CHAT-C60E942D",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-INFO-EXPAND/web-responsive/manual",
+      "caseId": "TC-CHAT-INFO-EXPAND",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-INFO-EXPAND/ios-phone/manual",
+      "caseId": "TC-CHAT-INFO-EXPAND",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-INFO-EXPAND/android-phone/manual",
+      "caseId": "TC-CHAT-INFO-EXPAND",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-SELECTION/web-responsive/manual",
+      "caseId": "TC-CHAT-EMOJI-SELECTION",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-SELECTION/ios-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-SELECTION",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-SELECTION/android-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-SELECTION",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-GRAPHEME/web-responsive/manual",
+      "caseId": "TC-CHAT-EMOJI-GRAPHEME",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-GRAPHEME/ios-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-GRAPHEME",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-GRAPHEME/android-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-GRAPHEME",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-LOW-HEIGHT/web-responsive/manual",
+      "caseId": "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-LOW-HEIGHT/ios-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-LOW-HEIGHT/android-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-DISMISS-FOCUS/web-responsive/manual",
+      "caseId": "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-DISMISS-FOCUS/ios-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-EMOJI-DISMISS-FOCUS/android-phone/manual",
+      "caseId": "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SHEET-RETURN/web-responsive/manual",
+      "caseId": "TC-CHAT-SHEET-RETURN",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SHEET-RETURN/ios-phone/manual",
+      "caseId": "TC-CHAT-SHEET-RETURN",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SHEET-RETURN/android-phone/manual",
+      "caseId": "TC-CHAT-SHEET-RETURN",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-DATE-FORM/web-responsive/manual",
+      "caseId": "TC-CHAT-DATE-FORM",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-DATE-FORM/ios-phone/manual",
+      "caseId": "TC-CHAT-DATE-FORM",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-DATE-FORM/android-phone/manual",
+      "caseId": "TC-CHAT-DATE-FORM",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-TASK-ROLES/web-responsive/manual",
+      "caseId": "TC-CHAT-TASK-ROLES",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-TASK-ROLES/ios-phone/manual",
+      "caseId": "TC-CHAT-TASK-ROLES",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-TASK-ROLES/android-phone/manual",
+      "caseId": "TC-CHAT-TASK-ROLES",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SETTINGS-FORM/web-responsive/manual",
+      "caseId": "TC-CHAT-SETTINGS-FORM",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SETTINGS-FORM/ios-phone/manual",
+      "caseId": "TC-CHAT-SETTINGS-FORM",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SETTINGS-FORM/android-phone/manual",
+      "caseId": "TC-CHAT-SETTINGS-FORM",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-WEB-NO-ZOOM/web-responsive/manual",
+      "caseId": "TC-CHAT-WEB-NO-ZOOM",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-DESKTOP-MODALS/web-responsive/manual",
+      "caseId": "TC-CHAT-DESKTOP-MODALS",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-COMPOSER-CARET/web-responsive/manual",
+      "caseId": "TC-CHAT-COMPOSER-CARET",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-COMPOSER-CARET/ios-phone/manual",
+      "caseId": "TC-CHAT-COMPOSER-CARET",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-COMPOSER-CARET/android-phone/manual",
+      "caseId": "TC-CHAT-COMPOSER-CARET",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-1AAA13AA/web-responsive/manual",
+      "caseId": "TC-REACT-1AAA13AA",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-1AAA13AA/ios-phone/manual",
+      "caseId": "TC-REACT-1AAA13AA",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-1AAA13AA/android-phone/manual",
+      "caseId": "TC-REACT-1AAA13AA",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-7E7A775E/web-responsive/manual",
+      "caseId": "TC-REACT-7E7A775E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-7E7A775E/ios-phone/manual",
+      "caseId": "TC-REACT-7E7A775E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-7E7A775E/android-phone/manual",
+      "caseId": "TC-REACT-7E7A775E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-EFCCD7B0/web-responsive/manual",
+      "caseId": "TC-REACT-EFCCD7B0",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-EFCCD7B0/ios-phone/manual",
+      "caseId": "TC-REACT-EFCCD7B0",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-EFCCD7B0/android-phone/manual",
+      "caseId": "TC-REACT-EFCCD7B0",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-18CAB411/web-responsive/manual",
+      "caseId": "TC-REACT-18CAB411",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-18CAB411/ios-phone/manual",
+      "caseId": "TC-REACT-18CAB411",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-18CAB411/android-phone/manual",
+      "caseId": "TC-REACT-18CAB411",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-126AB1CF/web-responsive/manual",
+      "caseId": "TC-REACT-126AB1CF",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-126AB1CF/ios-phone/manual",
+      "caseId": "TC-REACT-126AB1CF",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-126AB1CF/android-phone/manual",
+      "caseId": "TC-REACT-126AB1CF",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-FULL-PICKER/web-responsive/manual",
+      "caseId": "TC-REACT-FULL-PICKER",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-FULL-PICKER/ios-phone/manual",
+      "caseId": "TC-REACT-FULL-PICKER",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-FULL-PICKER/android-phone/manual",
+      "caseId": "TC-REACT-FULL-PICKER",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-PEOPLE-FILTER/web-responsive/manual",
+      "caseId": "TC-REACT-PEOPLE-FILTER",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-PEOPLE-FILTER/ios-phone/manual",
+      "caseId": "TC-REACT-PEOPLE-FILTER",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-PEOPLE-FILTER/android-phone/manual",
+      "caseId": "TC-REACT-PEOPLE-FILTER",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-HOLD-MOTION/web-responsive/manual",
+      "caseId": "TC-REACT-HOLD-MOTION",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-HOLD-MOTION/ios-phone/manual",
+      "caseId": "TC-REACT-HOLD-MOTION",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-REACT-HOLD-MOTION/android-phone/manual",
+      "caseId": "TC-REACT-HOLD-MOTION",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-5C22B221/web-responsive/manual",
+      "caseId": "TC-FEED-5C22B221",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-5C22B221/ios-phone/manual",
+      "caseId": "TC-FEED-5C22B221",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-5C22B221/android-phone/manual",
+      "caseId": "TC-FEED-5C22B221",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-1BFACA40/web-responsive/manual",
+      "caseId": "TC-FEED-1BFACA40",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-1BFACA40/ios-phone/manual",
+      "caseId": "TC-FEED-1BFACA40",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-FEED-1BFACA40/android-phone/manual",
+      "caseId": "TC-FEED-1BFACA40",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-84CC3D0C/web-responsive/manual",
+      "caseId": "TC-INV-84CC3D0C",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-84CC3D0C/ios-phone/manual",
+      "caseId": "TC-INV-84CC3D0C",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-84CC3D0C/android-phone/manual",
+      "caseId": "TC-INV-84CC3D0C",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F8EEC653/web-responsive/manual",
+      "caseId": "TC-INV-F8EEC653",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F8EEC653/ios-phone/manual",
+      "caseId": "TC-INV-F8EEC653",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F8EEC653/android-phone/manual",
+      "caseId": "TC-INV-F8EEC653",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-235E4D53/web-responsive/manual",
+      "caseId": "TC-INV-235E4D53",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-235E4D53/ios-phone/manual",
+      "caseId": "TC-INV-235E4D53",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-235E4D53/android-phone/manual",
+      "caseId": "TC-INV-235E4D53",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F00F3753/web-responsive/manual",
+      "caseId": "TC-INV-F00F3753",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F00F3753/ios-phone/manual",
+      "caseId": "TC-INV-F00F3753",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-F00F3753/android-phone/manual",
+      "caseId": "TC-INV-F00F3753",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-82AE12A5/web-responsive/manual",
+      "caseId": "TC-INV-82AE12A5",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-82AE12A5/ios-phone/manual",
+      "caseId": "TC-INV-82AE12A5",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-82AE12A5/android-phone/manual",
+      "caseId": "TC-INV-82AE12A5",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-13F9DCAB/web-responsive/manual",
+      "caseId": "TC-INV-13F9DCAB",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-13F9DCAB/ios-phone/manual",
+      "caseId": "TC-INV-13F9DCAB",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-13F9DCAB/android-phone/manual",
+      "caseId": "TC-INV-13F9DCAB",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-DEC030F5/web-responsive/manual",
+      "caseId": "TC-INV-DEC030F5",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-DEC030F5/ios-phone/manual",
+      "caseId": "TC-INV-DEC030F5",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INV-DEC030F5/android-phone/manual",
+      "caseId": "TC-INV-DEC030F5",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9138348C/web-responsive/manual",
+      "caseId": "TC-CREATE-9138348C",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9138348C/ios-phone/manual",
+      "caseId": "TC-CREATE-9138348C",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9138348C/android-phone/manual",
+      "caseId": "TC-CREATE-9138348C",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2066E79A/web-responsive/manual",
+      "caseId": "TC-CREATE-2066E79A",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2066E79A/ios-phone/manual",
+      "caseId": "TC-CREATE-2066E79A",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2066E79A/android-phone/manual",
+      "caseId": "TC-CREATE-2066E79A",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2A0E9F3E/web-responsive/manual",
+      "caseId": "TC-CREATE-2A0E9F3E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2A0E9F3E/ios-phone/manual",
+      "caseId": "TC-CREATE-2A0E9F3E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-2A0E9F3E/android-phone/manual",
+      "caseId": "TC-CREATE-2A0E9F3E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9724DED7/web-responsive/manual",
+      "caseId": "TC-CREATE-9724DED7",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9724DED7/ios-phone/manual",
+      "caseId": "TC-CREATE-9724DED7",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-9724DED7/android-phone/manual",
+      "caseId": "TC-CREATE-9724DED7",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-932B50E6/web-responsive/manual",
+      "caseId": "TC-CREATE-932B50E6",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-932B50E6/ios-phone/manual",
+      "caseId": "TC-CREATE-932B50E6",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CREATE-932B50E6/android-phone/manual",
+      "caseId": "TC-CREATE-932B50E6",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-PROFILE-PRIVACY/api/manual",
+      "caseId": "TC-API-PROFILE-PRIVACY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-RSVP-CUTOFF/api/manual",
+      "caseId": "TC-API-RSVP-CUTOFF",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-RSVP-LEGACY/api/manual",
+      "caseId": "TC-API-RSVP-LEGACY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-PARTICIPANT-SUMMARY/api/manual",
+      "caseId": "TC-API-PARTICIPANT-SUMMARY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-REACTION-IDEMPOTENCY/api/manual",
+      "caseId": "TC-API-REACTION-IDEMPOTENCY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-MEDIA-LIMITS/api/manual",
+      "caseId": "TC-API-MEDIA-LIMITS",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-MEDIA-PUBLICATION/api/manual",
+      "caseId": "TC-API-MEDIA-PUBLICATION",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-MEDIA-ACCESS/api/manual",
+      "caseId": "TC-API-MEDIA-ACCESS",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-ALBUM-PAGINATION/api/manual",
+      "caseId": "TC-API-ALBUM-PAGINATION",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-SUPPORT-ACCEPTANCE/api/manual",
+      "caseId": "TC-API-SUPPORT-ACCEPTANCE",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-MEDIA-DURABILITY/api/manual",
+      "caseId": "TC-API-MEDIA-DURABILITY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-API-SUPPORT-DURABILITY/api/manual",
+      "caseId": "TC-API-SUPPORT-DURABILITY",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-82F4AC83/web-responsive/manual",
+      "caseId": "TC-MEDIA-82F4AC83",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-82F4AC83/ios-phone/manual",
+      "caseId": "TC-MEDIA-82F4AC83",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-82F4AC83/android-phone/manual",
+      "caseId": "TC-MEDIA-82F4AC83",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-2BD057D2/web-responsive/manual",
+      "caseId": "TC-MEDIA-2BD057D2",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-2BD057D2/ios-phone/manual",
+      "caseId": "TC-MEDIA-2BD057D2",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-2BD057D2/android-phone/manual",
+      "caseId": "TC-MEDIA-2BD057D2",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-D7DEA204/web-responsive/manual",
+      "caseId": "TC-MEDIA-D7DEA204",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-D7DEA204/ios-phone/manual",
+      "caseId": "TC-MEDIA-D7DEA204",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-D7DEA204/android-phone/manual",
+      "caseId": "TC-MEDIA-D7DEA204",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-7640A673/web-responsive/manual",
+      "caseId": "TC-MEDIA-7640A673",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-7640A673/ios-phone/manual",
+      "caseId": "TC-MEDIA-7640A673",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-7640A673/android-phone/manual",
+      "caseId": "TC-MEDIA-7640A673",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-A8006656/web-responsive/manual",
+      "caseId": "TC-MEDIA-A8006656",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-A8006656/ios-phone/manual",
+      "caseId": "TC-MEDIA-A8006656",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-A8006656/android-phone/manual",
+      "caseId": "TC-MEDIA-A8006656",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-BC197682/web-responsive/manual",
+      "caseId": "TC-MEDIA-BC197682",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-BC197682/ios-phone/manual",
+      "caseId": "TC-MEDIA-BC197682",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-BC197682/android-phone/manual",
+      "caseId": "TC-MEDIA-BC197682",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-F3CC5A3E/web-responsive/manual",
+      "caseId": "TC-MEDIA-F3CC5A3E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-F3CC5A3E/ios-phone/manual",
+      "caseId": "TC-MEDIA-F3CC5A3E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MEDIA-F3CC5A3E/android-phone/manual",
+      "caseId": "TC-MEDIA-F3CC5A3E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-75A8C069/web-responsive/manual",
+      "caseId": "TC-VIBE-75A8C069",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-75A8C069/ios-phone/manual",
+      "caseId": "TC-VIBE-75A8C069",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-75A8C069/android-phone/manual",
+      "caseId": "TC-VIBE-75A8C069",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3C98DE12/web-responsive/manual",
+      "caseId": "TC-VIBE-3C98DE12",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3C98DE12/ios-phone/manual",
+      "caseId": "TC-VIBE-3C98DE12",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3C98DE12/android-phone/manual",
+      "caseId": "TC-VIBE-3C98DE12",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-F5929004/web-responsive/manual",
+      "caseId": "TC-VIBE-F5929004",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-F5929004/ios-phone/manual",
+      "caseId": "TC-VIBE-F5929004",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-F5929004/android-phone/manual",
+      "caseId": "TC-VIBE-F5929004",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3E0FC811/web-responsive/manual",
+      "caseId": "TC-VIBE-3E0FC811",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3E0FC811/ios-phone/manual",
+      "caseId": "TC-VIBE-3E0FC811",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-3E0FC811/android-phone/manual",
+      "caseId": "TC-VIBE-3E0FC811",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-03EF9D2B/web-responsive/manual",
+      "caseId": "TC-VIBE-03EF9D2B",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-03EF9D2B/ios-phone/manual",
+      "caseId": "TC-VIBE-03EF9D2B",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-03EF9D2B/android-phone/manual",
+      "caseId": "TC-VIBE-03EF9D2B",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-D2414F1E/web-responsive/manual",
+      "caseId": "TC-VIBE-D2414F1E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-D2414F1E/ios-phone/manual",
+      "caseId": "TC-VIBE-D2414F1E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-D2414F1E/android-phone/manual",
+      "caseId": "TC-VIBE-D2414F1E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-C82FDBE2/web-responsive/manual",
+      "caseId": "TC-VIBE-C82FDBE2",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-C82FDBE2/ios-phone/manual",
+      "caseId": "TC-VIBE-C82FDBE2",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-C82FDBE2/android-phone/manual",
+      "caseId": "TC-VIBE-C82FDBE2",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-DAC4D8E1/web-responsive/manual",
+      "caseId": "TC-VIBE-DAC4D8E1",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-DAC4D8E1/ios-phone/manual",
+      "caseId": "TC-VIBE-DAC4D8E1",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-DAC4D8E1/android-phone/manual",
+      "caseId": "TC-VIBE-DAC4D8E1",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-5A39D7F0/web-responsive/manual",
+      "caseId": "TC-VIBE-5A39D7F0",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-5A39D7F0/ios-phone/manual",
+      "caseId": "TC-VIBE-5A39D7F0",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-5A39D7F0/android-phone/manual",
+      "caseId": "TC-VIBE-5A39D7F0",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-B5FF73B4/web-responsive/manual",
+      "caseId": "TC-VIBE-B5FF73B4",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-B5FF73B4/ios-phone/manual",
+      "caseId": "TC-VIBE-B5FF73B4",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-B5FF73B4/android-phone/manual",
+      "caseId": "TC-VIBE-B5FF73B4",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-170C9AF2/web-responsive/manual",
+      "caseId": "TC-LIST-170C9AF2",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-170C9AF2/ios-phone/manual",
+      "caseId": "TC-LIST-170C9AF2",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-170C9AF2/android-phone/manual",
+      "caseId": "TC-LIST-170C9AF2",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-74A5E939/web-responsive/manual",
+      "caseId": "TC-LIST-74A5E939",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-74A5E939/ios-phone/manual",
+      "caseId": "TC-LIST-74A5E939",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-74A5E939/android-phone/manual",
+      "caseId": "TC-LIST-74A5E939",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-57D734C1/web-responsive/manual",
+      "caseId": "TC-LIST-57D734C1",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-57D734C1/ios-phone/manual",
+      "caseId": "TC-LIST-57D734C1",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-57D734C1/android-phone/manual",
+      "caseId": "TC-LIST-57D734C1",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-155758C7/web-responsive/manual",
+      "caseId": "TC-LIST-155758C7",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-155758C7/ios-phone/manual",
+      "caseId": "TC-LIST-155758C7",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-155758C7/android-phone/manual",
+      "caseId": "TC-LIST-155758C7",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-17F34870/web-responsive/manual",
+      "caseId": "TC-LIST-17F34870",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-17F34870/ios-phone/manual",
+      "caseId": "TC-LIST-17F34870",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-17F34870/android-phone/manual",
+      "caseId": "TC-LIST-17F34870",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-D671C5B8/web-responsive/manual",
+      "caseId": "TC-LIST-D671C5B8",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-D671C5B8/ios-phone/manual",
+      "caseId": "TC-LIST-D671C5B8",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-D671C5B8/android-phone/manual",
+      "caseId": "TC-LIST-D671C5B8",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-697C602C/web-responsive/manual",
+      "caseId": "TC-LIST-697C602C",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-697C602C/ios-phone/manual",
+      "caseId": "TC-LIST-697C602C",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-697C602C/android-phone/manual",
+      "caseId": "TC-LIST-697C602C",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-5B54DA87/web-responsive/manual",
+      "caseId": "TC-LIST-5B54DA87",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-5B54DA87/ios-phone/manual",
+      "caseId": "TC-LIST-5B54DA87",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-5B54DA87/android-phone/manual",
+      "caseId": "TC-LIST-5B54DA87",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AA6FA112/web-responsive/manual",
+      "caseId": "TC-LIST-AA6FA112",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AA6FA112/ios-phone/manual",
+      "caseId": "TC-LIST-AA6FA112",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AA6FA112/android-phone/manual",
+      "caseId": "TC-LIST-AA6FA112",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-6BAF1838/web-responsive/manual",
+      "caseId": "TC-LIST-6BAF1838",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-6BAF1838/ios-phone/manual",
+      "caseId": "TC-LIST-6BAF1838",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-6BAF1838/android-phone/manual",
+      "caseId": "TC-LIST-6BAF1838",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-53C0DC15/web-responsive/manual",
+      "caseId": "TC-LIST-53C0DC15",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-53C0DC15/ios-phone/manual",
+      "caseId": "TC-LIST-53C0DC15",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-53C0DC15/android-phone/manual",
+      "caseId": "TC-LIST-53C0DC15",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-40EE551B/web-responsive/manual",
+      "caseId": "TC-LIST-40EE551B",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-40EE551B/ios-phone/manual",
+      "caseId": "TC-LIST-40EE551B",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-40EE551B/android-phone/manual",
+      "caseId": "TC-LIST-40EE551B",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AB3EFA81/web-responsive/manual",
+      "caseId": "TC-LIST-AB3EFA81",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AB3EFA81/ios-phone/manual",
+      "caseId": "TC-LIST-AB3EFA81",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-LIST-AB3EFA81/android-phone/manual",
+      "caseId": "TC-LIST-AB3EFA81",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-1DAB5DF2/web-responsive/manual",
+      "caseId": "TC-TASK-1DAB5DF2",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-1DAB5DF2/ios-phone/manual",
+      "caseId": "TC-TASK-1DAB5DF2",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-1DAB5DF2/android-phone/manual",
+      "caseId": "TC-TASK-1DAB5DF2",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-B8D2770E/web-responsive/manual",
+      "caseId": "TC-TASK-B8D2770E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-B8D2770E/ios-phone/manual",
+      "caseId": "TC-TASK-B8D2770E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-B8D2770E/android-phone/manual",
+      "caseId": "TC-TASK-B8D2770E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-A7464DF9/web-responsive/manual",
+      "caseId": "TC-TASK-A7464DF9",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-A7464DF9/ios-phone/manual",
+      "caseId": "TC-TASK-A7464DF9",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-A7464DF9/android-phone/manual",
+      "caseId": "TC-TASK-A7464DF9",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-0D640ABE/web-responsive/manual",
+      "caseId": "TC-TASK-0D640ABE",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-0D640ABE/ios-phone/manual",
+      "caseId": "TC-TASK-0D640ABE",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-0D640ABE/android-phone/manual",
+      "caseId": "TC-TASK-0D640ABE",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-148F3348/web-responsive/manual",
+      "caseId": "TC-TASK-148F3348",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-148F3348/ios-phone/manual",
+      "caseId": "TC-TASK-148F3348",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-148F3348/android-phone/manual",
+      "caseId": "TC-TASK-148F3348",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-00CF9F67/web-responsive/manual",
+      "caseId": "TC-TASK-00CF9F67",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-00CF9F67/ios-phone/manual",
+      "caseId": "TC-TASK-00CF9F67",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-TASK-00CF9F67/android-phone/manual",
+      "caseId": "TC-TASK-00CF9F67",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-28355B41/web-responsive/manual",
+      "caseId": "TC-INFO-28355B41",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-9C1A86D2/web-responsive/manual",
+      "caseId": "TC-INFO-9C1A86D2",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-91E4ECFC/ios-phone/manual",
+      "caseId": "TC-INFO-91E4ECFC",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-91E4ECFC/android-phone/manual",
+      "caseId": "TC-INFO-91E4ECFC",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-9D87E6B1/web-responsive/manual",
+      "caseId": "TC-INFO-9D87E6B1",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-C4EDD04F/web-responsive/manual",
+      "caseId": "TC-INFO-C4EDD04F",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-C4EDD04F/ios-phone/manual",
+      "caseId": "TC-INFO-C4EDD04F",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-C4EDD04F/android-phone/manual",
+      "caseId": "TC-INFO-C4EDD04F",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-4D0E6354/web-responsive/manual",
+      "caseId": "TC-INFO-4D0E6354",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-4D0E6354/ios-phone/manual",
+      "caseId": "TC-INFO-4D0E6354",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-4D0E6354/android-phone/manual",
+      "caseId": "TC-INFO-4D0E6354",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-87665C8F/web-responsive/manual",
+      "caseId": "TC-INFO-87665C8F",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-87665C8F/ios-phone/manual",
+      "caseId": "TC-INFO-87665C8F",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-87665C8F/android-phone/manual",
+      "caseId": "TC-INFO-87665C8F",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-D5C31112/web-responsive/manual",
+      "caseId": "TC-INFO-D5C31112",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-D5C31112/ios-phone/manual",
+      "caseId": "TC-INFO-D5C31112",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-D5C31112/android-phone/manual",
+      "caseId": "TC-INFO-D5C31112",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-5AF98147/web-responsive/manual",
+      "caseId": "TC-INFO-5AF98147",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-5AF98147/ios-phone/manual",
+      "caseId": "TC-INFO-5AF98147",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-5AF98147/android-phone/manual",
+      "caseId": "TC-INFO-5AF98147",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-666F6B46/web-responsive/manual",
+      "caseId": "TC-INFO-666F6B46",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-E5D26634/web-responsive/manual",
+      "caseId": "TC-INFO-E5D26634",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-ONBOARDING-NO-SERVICE/ios-phone/manual",
+      "caseId": "TC-INFO-ONBOARDING-NO-SERVICE",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-ONBOARDING-NO-SERVICE/android-phone/manual",
+      "caseId": "TC-INFO-ONBOARDING-NO-SERVICE",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-INFO-PUBLIC-POLICY-RELEASE/web-responsive/manual",
+      "caseId": "TC-INFO-PUBLIC-POLICY-RELEASE",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-C47A0ACC/web-responsive/manual",
+      "caseId": "TC-SUPPORT-C47A0ACC",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-C47A0ACC/ios-phone/manual",
+      "caseId": "TC-SUPPORT-C47A0ACC",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-C47A0ACC/android-phone/manual",
+      "caseId": "TC-SUPPORT-C47A0ACC",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-B8F9FF7E/web-responsive/manual",
+      "caseId": "TC-SUPPORT-B8F9FF7E",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-B8F9FF7E/ios-phone/manual",
+      "caseId": "TC-SUPPORT-B8F9FF7E",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-B8F9FF7E/android-phone/manual",
+      "caseId": "TC-SUPPORT-B8F9FF7E",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-689C3B5F/web-responsive/manual",
+      "caseId": "TC-SUPPORT-689C3B5F",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-689C3B5F/ios-phone/manual",
+      "caseId": "TC-SUPPORT-689C3B5F",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-689C3B5F/android-phone/manual",
+      "caseId": "TC-SUPPORT-689C3B5F",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-703D40F6/web-responsive/manual",
+      "caseId": "TC-SUPPORT-703D40F6",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-703D40F6/ios-phone/manual",
+      "caseId": "TC-SUPPORT-703D40F6",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-703D40F6/android-phone/manual",
+      "caseId": "TC-SUPPORT-703D40F6",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-E6C8467F/web-responsive/manual",
+      "caseId": "TC-SUPPORT-E6C8467F",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-E6C8467F/ios-phone/manual",
+      "caseId": "TC-SUPPORT-E6C8467F",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-E6C8467F/android-phone/manual",
+      "caseId": "TC-SUPPORT-E6C8467F",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-751A99A9/web-responsive/manual",
+      "caseId": "TC-SUPPORT-751A99A9",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-751A99A9/ios-phone/manual",
+      "caseId": "TC-SUPPORT-751A99A9",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-751A99A9/android-phone/manual",
+      "caseId": "TC-SUPPORT-751A99A9",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-SUPPORT-2B1C9FBF/api/manual",
+      "caseId": "TC-SUPPORT-2B1C9FBF",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-CC2372B4/web-responsive/manual",
+      "caseId": "TC-PROFILE-CC2372B4",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-CC2372B4/ios-phone/manual",
+      "caseId": "TC-PROFILE-CC2372B4",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-CC2372B4/android-phone/manual",
+      "caseId": "TC-PROFILE-CC2372B4",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-EBBA2EA5/web-responsive/manual",
+      "caseId": "TC-PROFILE-EBBA2EA5",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-EBBA2EA5/ios-phone/manual",
+      "caseId": "TC-PROFILE-EBBA2EA5",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-EBBA2EA5/android-phone/manual",
+      "caseId": "TC-PROFILE-EBBA2EA5",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-842701DD/web-responsive/manual",
+      "caseId": "TC-PROFILE-842701DD",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-842701DD/ios-phone/manual",
+      "caseId": "TC-PROFILE-842701DD",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-842701DD/android-phone/manual",
+      "caseId": "TC-PROFILE-842701DD",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-C6FA6B4C/web-responsive/manual",
+      "caseId": "TC-PROFILE-C6FA6B4C",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-C6FA6B4C/ios-phone/manual",
+      "caseId": "TC-PROFILE-C6FA6B4C",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-C6FA6B4C/android-phone/manual",
+      "caseId": "TC-PROFILE-C6FA6B4C",
+      "environment": "android-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-4F3DAAFE/api/manual",
+      "caseId": "TC-PROFILE-4F3DAAFE",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-3E5EFE8D/api/manual",
+      "caseId": "TC-PROFILE-3E5EFE8D",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-F319B092/api/manual",
+      "caseId": "TC-PROFILE-F319B092",
+      "environment": "api",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-YANDEX-FIELDS/web-responsive/manual",
+      "caseId": "TC-PROFILE-YANDEX-FIELDS",
+      "environment": "web-responsive",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-YANDEX-FIELDS/ios-phone/manual",
+      "caseId": "TC-PROFILE-YANDEX-FIELDS",
+      "environment": "ios-phone",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-PROFILE-YANDEX-FIELDS/android-phone/manual",
+      "caseId": "TC-PROFILE-YANDEX-FIELDS",
+      "environment": "android-phone",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "android-ui",
+    "android-unit",
+    "backend-unit-integration",
+    "ios-ui",
+    "ios-unit",
+    "web-check",
+    "web-e2e"
+  ],
+  "environments": [
+    {
+      "application": "product",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "backend": "TestBrowserFixture binary-sha256:81e880b4655e918e0f00dd084ca0dc509cd0de3d1499574c84dca3958df2e6be",
+      "id": "web-responsive",
+      "profile": "web-responsive",
+      "platform": "web",
+      "url": "https://127.0.0.1:8445/",
+      "build": "demo-files-sha256:afc51d4c8af20352216d826fe7383b333149670c0cac7bce47ee0502a9f942f6",
+      "os": "macOS 27.0.1",
+      "device": "Codex internal browser; chromium/mobile-webkit regression runners",
+      "data": "Isolated TestBrowserFixture, synthetic Саша/Лена; viewport per case"
+    },
+    {
+      "application": "product",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "backend": "TestTelegramChatReviewFixture binary-sha256:07655833e97c7ef9fdc678605b5e9e1a22106202cd82a5827a1ee322570bd9b7",
+      "id": "ios-phone",
+      "profile": "ios-phone",
+      "platform": "ios",
+      "url": "https://127.0.0.1:61441",
+      "build": "SomewhereUITestHost 0.1.0(1); bundle-files-sha256:245f439667c43b0269e1f335608ecda7b4b85906ed339849d480c4a59130ebd6",
+      "os": "iOS 27.0 simulator on macOS 27.0.1",
+      "device": "iPhone 18 Pro simulator 31262733-50DC-46A5-938E-4C462D70F109",
+      "data": "Isolated TestTelegramChatReviewFixture, telegram-chat-review-v1; fixed application clock 2026-10-27T10:00:00Z; Sasha/Lena/Tim sessions; native QA only"
+    },
+    {
+      "application": "product",
+      "locale": "Russian app resource override; Gboard and system language recorded independently by reviewer",
+      "timezone": "Europe/Moscow",
+      "backend": "TestTelegramChatReviewFixture binary-sha256:07655833e97c7ef9fdc678605b5e9e1a22106202cd82a5827a1ee322570bd9b7",
+      "id": "android-phone",
+      "profile": "android-phone",
+      "platform": "android",
+      "url": "https://127.0.0.1:52531",
+      "build": "QA APK sha256:441b4f139ca01973c318000e9e60e3f44515857260315ef18303723dc912ff45",
+      "os": "Android 16 API36 BE2A.250530.026.F3",
+      "device": "Somewhere_API_36 / emulator-5554, 720x1600 320dpi; manual ADB authorized by user",
+      "data": "Isolated TestTelegramChatReviewFixture r2, telegram-chat-review-v1; fixed application clock 2026-10-27T10:00:00Z; no production data"
+    },
+    {
+      "application": "product",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "backend": "TestTelegramChatReviewFixture binary-sha256:07655833e97c7ef9fdc678605b5e9e1a22106202cd82a5827a1ee322570bd9b7",
+      "id": "api",
+      "profile": "api",
+      "platform": "backend",
+      "url": "https://127.0.0.1:52531",
+      "build": "TestTelegramChatReviewFixture binary-sha256:07655833e97c7ef9fdc678605b5e9e1a22106202cd82a5827a1ee322570bd9b7",
+      "os": "macOS 27.0.1",
+      "device": "Go memory fixture loopback",
+      "data": "Isolated TestTelegramChatReviewFixture r2, telegram-chat-review-v1; fixed application clock 2026-10-27T10:00:00Z; no production data"
+    }
+  ],
+  "artifact": null
+}

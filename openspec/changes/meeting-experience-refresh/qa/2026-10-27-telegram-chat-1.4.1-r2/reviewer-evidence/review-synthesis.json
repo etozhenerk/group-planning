@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/telegram_independent_review",
+  "recordedAt": "2026-10-27T14:57:06.813616+00:00",
+  "inputHash": "7281d60a82c41d4dc7fdb8f0427df0771649e255caf7e94ccfc351a8b3da2671",
+  "sourceHash": "d22e90bda6696076f61e6fa9ac7b1cb539a69a204f02f779774f862e60ec6f38",
+  "planHash": "b6858d722d87becaa58b273effe6aa3bfa4b899e25f8b5ce9ff1efc280fc2c58",
+  "acceptanceStopped": "Root завершил фактическую r2 UI-сессию и разрешил подготовку двух исправлений Android для r3. Оформление после остановки использует только сохранённые r2 evidence; новых UI/API проверок нет. Отчёт historical, не подтверждение текущего изменяемого source.",
+  "scope": {
+    "designPairs": 1010,
+    "functionalUiPairs": 287,
+    "backendPairs": "16 проверяет отдельный /root/api_r2_independent; сюда не копируются"
+  },
+  "liveSession": {
+    "android": "001–097: свежие screenshot+hierarchy, ручные решения и единичные ADB действия на emulator-5554. 098: команда выполнена, after-state недоступен; 099 не получен. Никаких native UI runners.",
+    "ios": "Свежий CUA Retry и tap карточки. Ввод подтверждён, API 54947 остановлен, загрузка встречи не завершилась.",
+    "web": "Собственный IAB browser 2 unavailable; оператор /root открыл actual, свежие screenshot+AX показывают TLS warning. Reviewer лично просмотрел, bypass не выполнялся."
+  },
+  "rawComparison": {
+    "render": "openspec/changes/meeting-experience-refresh/assets/verification/live-review/2026-10-27-telegram-chat-1.4.1-r2/reference",
+    "capturedAt": "2026-10-27T14:30:06.972Z–2026-10-27T14:30:10.784Z",
+    "viewed": [
+      "list",
+      "chat",
+      "emoji",
+      "reactions",
+      "info",
+      "settings",
+      "task",
+      "date"
+    ],
+    "differences": "Raw chat — «Вечер без планов», четыре текущих участника и другая история; native seed — «Настолки у Саши», шесть текущих, другие имена/сообщения. Raw 390×844 CSS, native 360×800 dp, системные insets, sans-serif, 48dp targets. Pixel-identical сравнение не заявляется. Совпадающие правила поведения/порядка/ролей оценены отдельно; число/имена/времена не объявлены багом. People-sheet отдельного raw capture нет."
+  },
+  "findings": [
+    {
+      "id": "R2-ANDROID-LIST-TIME",
+      "classification": "confirmed",
+      "severity": "normal",
+      "case": "TC-LIST-5B54DA87",
+      "screenState": "list-native/android/no-cover",
+      "steps": [
+        "Открыть текущий список встреч.",
+        "Прокрутить к «Воскресенье без планов», 8 ноября, без назначенного времени и обложки."
+      ],
+      "expected": "Дата, «время уточняем» и текстовые детали без вымышленного часа (case step 1; published list raw).",
+      "actual": "Дата «Вс, 8 ноября» и «Место пока не выбрано» есть. «Время уточняем» отсутствует и на изображении, и в hierarchy. Фото или крупной заглушки нет.",
+      "captures": [
+        3,
+        80
+      ],
+      "reference": "list-390x844.png"
+    },
+    {
+      "id": "R2-ANDROID-SETTINGS-ORDER",
+      "classification": "confirmed-design",
+      "severity": "normal",
+      "screenState": "chat-settings-native/android/open",
+      "steps": [
+        "Организатору открыть сведения «Настолки у Саши».",
+        "Нажать «Настройки встречи»."
+      ],
+      "expected": "Общий порядок содержимого native сохраняется (docs/design/platforms.md): raw settings показывает название, описание, затем дату/время, место и небольшой блок обложки.",
+      "actual": "Порядок — название, дата/время, место, описание, «Убрать время». Описание перенесено за место. Это не следствие других имён/количества участников или системного date picker. Обложка ниже начального fold; её недоступность не утверждается.",
+      "captures": [
+        10,
+        13
+      ],
+      "reference": "settings-390x844.png"
+    },
+    {
+      "id": "R2-ANDROID-DATE-FOLD",
+      "classification": "incomplete-observation",
+      "case": "TC-CHAT-DATE-FORM",
+      "captures": [
+        72,
+        73,
+        74,
+        75
+      ],
+      "reference": "date-390x844.png",
+      "actual": "При открытии видны две разные даты, три включённых и два выключенных toggle; последний частично за footer, срок ниже fold. Родной календарь открывается и отменяется. Не выполнены прокрутка к сроку и взаимодействие с пятым toggle.",
+      "qualification": "Case step 1 требует доступность без раскрывающих секций; chat-actions.md разрешает прокрутку тела при низкой высоте, при этом также говорит «все пять настроек видны сразу». Native 360×800 dp со своими insets/targets отличается от raw 390×844. Начальный fold сам по себе не доказал функциональную недоступность; failed не присвоен."
+    },
+    {
+      "id": "R2-ANDROID-PLUS-EMOJI",
+      "classification": "incomplete-observation",
+      "case": "TC-CHAT-F00844F6",
+      "captures": [
+        22,
+        23,
+        24,
+        70,
+        71,
+        72,
+        75
+      ],
+      "actual": "При открытом plus первый tap по видимой кнопке emoji только закрывает menu (022→023); следующий tap открывает dock (024). Обратно dock→plus одним tap открывает menu (070→071). Menu→date→X возвращает чат без остаточной поверхности.",
+      "qualification": "Правило требует переключение plus→emoji→plus с одной поверхностью. Зафиксирован первый результат, но повтор того же plus→emoji не завершён. Не утверждается воспроизводимость отдельного дефекта; форма не обязана автоматически восстанавливать прежний dock."
+    },
+    {
+      "id": "R2-ANDROID-SETTINGS-IME",
+      "classification": "inconclusive",
+      "captures": [
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "actual": "При длинной ASCII-последовательности однажды возник discard dialog после частичного ввода. Продолжение редактирования и короткий xyz воспроизвели нормальный ввод. Системная stylus/floating IME была активна.",
+      "qualification": "Не объявляется багом сохранения/закрытия: повтор не подтвердил причинную связь, длинная строка не повторена."
+    }
+  ],
+  "fixtureGaps": [
+    {
+      "id": "mixed-rsvp",
+      "cases": [
+        "TC-CHAT-INFO-EXPAND"
+      ],
+      "missingPrecondition": "В текущем seed все шесть ответов «Приду»; нет требуемого сочетания организатор + три «Приду» + «Возможно» + «Не смогу».",
+      "needed": "Подготовить это распределение и отдельную сессию для изменения одного RSVP с сохранением заданных имён. Test OAuth subjects доступны, но Verify возвращает имя «Саша», поэтому простая повторная авторизация меняет имена. В r2 это изменение не выполнялось."
+    },
+    {
+      "id": "shared-chat-and-two-sessions",
+      "cases": [
+        "TC-CHAT-1F396228",
+        "TC-CHAT-EMOJI-SELECTION",
+        "TC-CHAT-EMOJI-DISMISS-FOCUS",
+        "TC-REACT-FULL-PICKER"
+      ],
+      "missingPrecondition": "Работа велась одной сессией Саши; два одновременно управляемых клиента/профиля не подготовлены. История содержит три сообщения и task, но требуемое сообщение с вложением не было подготовлено до начала цепочки. Использован QA XX draft вместо точного «До XX после».",
+      "needed": "Один общий чат с устойчивыми ID, текстом, вложением, системным событием и историей выше viewport; две независимые сессии. Надёжный штатный ввод русского текста/поиска и точного selection."
+    },
+    {
+      "id": "reaction-distribution",
+      "cases": [
+        "TC-REACT-PEOPLE-FILTER",
+        "TC-REACT-7E7A775E"
+      ],
+      "missingPrecondition": "В реально проверенном сообщении ❤️2 и добавленная Сашей 🍕1; case задаёт 👍2/🍕2, собственное участие и отличающиеся реакции другого сообщения.",
+      "needed": "Задать указанное распределение с собственными/чужими реакциями и вторым профилем для проверки удаления, pending и подтверждённого результата."
+    },
+    {
+      "id": "task-roles",
+      "cases": [
+        "TC-CHAT-TASK-ROLES",
+        "TC-TASK-1DAB5DF2",
+        "TC-TASK-B8D2770E",
+        "TC-TASK-A7464DF9",
+        "TC-TASK-0D640ABE",
+        "TC-TASK-148F3348",
+        "TC-TASK-00CF9F67"
+      ],
+      "missingPrecondition": "Есть принятая Мишей task и созданная в r2 адресованная Лене task; точные Тимофей/Лена/автор/организатор/другой участник, парные эквивалентные задачи для inline/detail, отдельные статусы и управляемые сессии не были подготовлены.",
+      "needed": "Комплект предложенных/принятых задач с независимыми профилями всех ролей; сравнение inline/detail и второго клиента. Созданная QA-r2-task отменена через явное подтверждение и осталась в истории."
+    },
+    {
+      "id": "fault-and-access-controls",
+      "cases": [
+        "TC-CHAT-DATE-FORM",
+        "TC-CHAT-SETTINGS-FORM",
+        "TC-CHAT-SHEET-RETURN",
+        "TC-REACT-18CAB411",
+        "TC-REACT-EFCCD7B0",
+        "TC-REACT-126AB1CF"
+      ],
+      "missingPrecondition": "В запущенном scenario design не были активированы управляемые error, задержанный ответ, loss-after-commit и отзыв доступа второй сессией. Наличие таких helpers в исходниках не считается подготовленным живым состоянием.",
+      "needed": "Документированный безопасный runtime control для текущего fixture и отдельные роли/сессии; не менять эталоны или подменять actual API ответами теста."
+    },
+    {
+      "id": "real-file-picker-data",
+      "cases": [
+        "TC-CHAT-SETTINGS-FORM",
+        "TC-MEDIA-82F4AC83",
+        "TC-MEDIA-2BD057D2"
+      ],
+      "missingPrecondition": "Два синтетических PNG и документы с известными hashes для штатного picker не выбраны/не загружены в этой сессии; cover/remove и error/retry не выполнены.",
+      "needed": "Известные локальные QA-файлы в доступном picker, без пользовательских фотографий/документов."
+    },
+    {
+      "id": "environment-not-product-data",
+      "cases": [
+        "TC-CHAT-EMOJI-LOW-HEIGHT",
+        "TC-FEED-1BFACA40",
+        "TC-INFO-ONBOARDING-NO-SERVICE"
+      ],
+      "missingPrecondition": "Полноценный docked IME, landscape, увеличенный текст, TalkBack и reduced motion не доведены до проверяемого состояния; Android отключился после попытки dock. Это окружение/незавершённая подготовка, не отсутствие бизнес-данных.",
+      "needed": "Стабильный QA emulator с видимым переключением IME и восстановлением настроек; отдельно чистый onboarding. Web нужен доступный внутренний браузер после ручного решения пользователем TLS; iOS — живой pinned API."
+    }
+  ],
+  "cleanup": {
+    "task": "QA-r2-task создана адресованной Лене, затем явно отменена; в истории retained один card и событие отмены (076–079).",
+    "draft": "ASCII QA draft не отправлялся. При переходе в другую встречу не протёк; settings изменения отброшены через подтверждение.",
+    "reaction": "Синтетическая 🍕 реакция добавлена Сашей к сообщению Лены. Не удалена до disconnect; остаётся только в одноразовом memory fixture.",
+    "clipboard": "Копирована только синтетическая invitation URL; внешней отправки не было.",
+    "ime": "Исходный stylus/floating режим. Show on-screen keyboard и tools открыты; результат попытки dock/восстановление не наблюдались после disconnect. FontScale/orientation не менялись."
+  },
+  "limits": "Сборка, unit/E2E и старые screenshots не засчитываются вместо ручных кейсов. Новые iOS URL/перезапуск Android не смешиваются с r2. Неполные кейсы blocked, даже если отдельные шаги прошли. Исходники/эталоны/кейсы/tasks не редактировались."
+}

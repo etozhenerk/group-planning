@@ -28,6 +28,18 @@ func (tx *transaction) RemoveUser(id string) error {
 	}
 
 	tx.data.removedUsers[id] = true
+	for key := range tx.data.readMarkers {
+		if key.userID == id {
+			delete(tx.data.readMarkers, key)
+		}
+	}
+
+	for key, hint := range tx.data.hints {
+		if hint.Target == "user" && hint.TargetID == id {
+			delete(tx.data.hints, key)
+		}
+	}
+
 	for key, value := range tx.data.reactions {
 		if value.UserID == id {
 			delete(tx.data.reactions, key)
@@ -76,6 +88,12 @@ func (tx *transaction) DeleteMeeting(id string) error {
 	defer tx.mu.Unlock()
 	if err := tx.check(true); err != nil {
 		return err
+	}
+
+	for key := range tx.data.readMarkers {
+		if key.meetingID == id {
+			delete(tx.data.readMarkers, key)
+		}
 	}
 
 	resources := map[string]bool{id: true}
@@ -141,6 +159,14 @@ func (tx *transaction) DeleteMeeting(id string) error {
 	for key, receipt := range tx.data.receipts {
 		if resources[receipt.ResourceID] || strings.HasSuffix(key.Operation, ":"+id) {
 			delete(tx.data.receipts, key)
+		}
+	}
+
+	delete(tx.data.streams, id)
+	delete(tx.data.changes, id)
+	for key, hint := range tx.data.hints {
+		if hint.Target == "meeting" && hint.MeetingID == id {
+			delete(tx.data.hints, key)
 		}
 	}
 

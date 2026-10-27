@@ -9,7 +9,11 @@ import {
 } from '@/entities/meeting/model/access';
 import type { ResponseState } from '@/entities/meeting/model/types';
 
-beforeEach(resetAccess);
+let epoch = accessEpoch('user', 'meeting');
+beforeEach(() => {
+  resetAccess();
+  epoch = accessEpoch('user', 'meeting');
+});
 describe('private cache access generation', () => {
   it('rejects a late success after access has been revoked', async () => {
     const client = new QueryClient();
@@ -18,14 +22,14 @@ describe('private cache access generation', () => {
       client,
       'user',
       'meeting',
-      0,
+      epoch,
       () =>
         new Promise<string>((resolve) => {
           deferred.resolve = resolve;
         }),
     );
 
-    denyAccess(client, 'user', 'meeting', 0);
+    denyAccess(client, 'user', 'meeting', epoch);
     deferred.resolve?.('private text');
     await expect(operation).rejects.toMatchObject({ name: 'AbortError' });
   });
@@ -39,8 +43,8 @@ describe('private cache access generation', () => {
       canAccess: true,
     };
 
-    denyAccess(client, 'user', 'meeting', 0);
-    expect(applyResponse(client, 'user', response, 0)).toBe(false);
+    denyAccess(client, 'user', 'meeting', epoch);
+    expect(applyResponse(client, 'user', response, epoch)).toBe(false);
     expect(applyResponse(client, 'user', response, accessEpoch('user', 'meeting'))).toBe(
       true,
     );
@@ -55,13 +59,13 @@ describe('private cache access generation', () => {
   });
   it('clears only private data of the revoked meeting', () => {
     const client = new QueryClient();
-    client.setQueryData(['private', 'user', 'meeting', 0, 'feed'], ['text']);
-    client.setQueryData(['private', 'user', 'other', 0, 'feed'], ['other']);
-    denyAccess(client, 'user', 'meeting', 0);
+    client.setQueryData(['private', 'user', 'meeting', epoch, 'feed'], ['text']);
+    client.setQueryData(['private', 'user', 'other', epoch, 'feed'], ['other']);
+    denyAccess(client, 'user', 'meeting', epoch);
     expect(
-      client.getQueryData(['private', 'user', 'meeting', 0, 'feed']),
+      client.getQueryData(['private', 'user', 'meeting', epoch, 'feed']),
     ).toBeUndefined();
-    expect(client.getQueryData(['private', 'user', 'other', 0, 'feed'])).toEqual([
+    expect(client.getQueryData(['private', 'user', 'other', epoch, 'feed'])).toEqual([
       'other',
     ]);
   });

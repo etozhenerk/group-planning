@@ -18,6 +18,9 @@ npm run design:ready -- --manifest openspec/changes/<change>/design-manifest.jso
 отклоняются. Это не заявление полной совместимости с DTCG 2025.10.
 CSS/TS получают CSS-значения, Swift — Color/CGFloat/секунды, Compose — Color/dp/sp/ms.
 Масштабируемые текстовые стили и safe area — ответственность платформенного адаптера.
+Общие геометрические `breakpoint.chatCompactHeight/chatNarrowWidth` экспортируются
+в native как CGFloat/dp; только web-routing `breakpoint.mobile/tablet` исключены.
+Имена native — `breakpointChatCompactHeight` и `breakpointChatNarrowWidth`.
 
 Новые компоненты используют роли `color`, `space`, `typography`, `radius`, `motion`,
 `component`; primitive `palette` не экспортируется. Геометрические 0/1,

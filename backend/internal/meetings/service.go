@@ -38,6 +38,7 @@ type Actor struct{ ID, Name string }
 
 // Details is an application snapshot, separate from both storage and HTTP DTOs.
 type Details struct {
+	ReadState        *ReadState
 	Meeting          Meeting
 	MyResponse       RSVP
 	ParticipantCount int
@@ -83,9 +84,11 @@ type ListPage struct {
 
 // Service coordinates meeting operations against the injected transactional store.
 type Service struct {
-	store Store
-	media MediaContent
-	now   func() time.Time
+	readState bool
+	chatKey   []byte
+	store     Store
+	media     MediaContent
+	now       func() time.Time
 }
 
 // NewService builds application operations without depending on HTTP or identity.
@@ -104,7 +107,13 @@ func (s *Service) update(ctx context.Context, callback func(Writer) error) error
 			return err
 		}
 
-		return callback(writer)
+		tracked := newChatWriter(writer, s.now())
+		tracked.readState = s.ChatReadStateEnabled()
+		if err := callback(tracked); err != nil {
+			return err
+		}
+
+		return tracked.flush()
 	})
 }
 

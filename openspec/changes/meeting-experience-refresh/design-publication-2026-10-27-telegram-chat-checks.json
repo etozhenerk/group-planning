@@ -1,0 +1,84 @@
+{
+  "kind": "design-publication-engineering-checks",
+  "version": "1.3.0",
+  "recordedAt": "2026-10-27T11:27:12.781427+00:00",
+  "approval": "27.10.2026 — «Подходит, переносим» на mobile web/iOS/Android",
+  "scope": "Публикация утверждённого макета; не live-приёмка приложения и не E2E. Тяжёлые сборки/браузер не запускались.",
+  "phase": "checkpoint",
+  "contextHashBeforeClientImplementation": "547efb917813104b2a8dc4ba12a435f6c7223dc78a6d78e184ae3d50c227c35d",
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "reportForIndependentReview": "openspec/changes/meeting-experience-refresh/design-review-2026-10-27-telegram-chat.json",
+  "screens": 94,
+  "expectedStatePlatformPairs": 982,
+  "previousPairsPreserved": 360,
+  "commands": [
+    {
+      "command": "npm run design:generate",
+      "status": "pass",
+      "outputs": [
+        "frontend/web/src/app/styles/design-tokens.css",
+        "frontend/web/src/shared/config/design-tokens/tokens.ts",
+        "frontend/ios/Somewhere/UI/DesignTokens.swift",
+        "frontend/android/app/src/main/java/dev/groupplanning/android/ui/theme/DesignTokens.kt",
+        "frontend/android/app/src/main/res/values/colors.xml",
+        "design-system/catalog.md"
+      ]
+    },
+    {
+      "command": "npm run design:check",
+      "status": "pass",
+      "manifests": 1
+    },
+    {
+      "command": "npm run design:test",
+      "status": "pass",
+      "tests": 28
+    },
+    {
+      "command": "npm run agent:check",
+      "status": "pass",
+      "observation": "OpenSpec structurally valid; instruction files/skills/documentation links OK"
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "command": "approved source-hashes verification",
+      "status": "pass",
+      "files": 30,
+      "aggregateSha256": "be9e0e9a8afa0da56ad2524438adcd0c1292a249e4338c4a330ac740d58be5f8"
+    }
+  ],
+  "files": {
+    "design-system/tokens.json": "9e75d1f6dba5617d8ed646f19ae14be16c91e4c700fb226431669fc7546fe102",
+    "design-system/version.json": "c1edc4cc70741bda5b4c8f6662b57aa68cef08954e9d2f3d97be6eadde814456",
+    "design-system/authority.json": "9f7ad557897269cba03ceee6a72becd5526061f5b64db47d21fecad30a495946",
+    "design-system/CHANGELOG.md": "df1bb779466ca73fafea121005aff5948b942f7de0529f6969fae1c1ca67c1b2",
+    "design-system/catalog.md": "4709149f7d93b0e8f0de9492dd776985d77d73d877f426dfdcf22b1cbed04fda",
+    "docs/design/components/README.md": "0d9c956dac7801b6eb4a823a3818ada4bbc42daa5b5ca072d221fb87318c4659",
+    "docs/design/components/chat-actions.md": "2e1e101095651b852f125d21c1aaeb03db2babad7e045f3cdf0552624315c804",
+    "docs/design/platforms.md": "08a974b1d8a653e8f4724c98da5812fa974b2612438306333f4bf3099b987725",
+    "openspec/changes/meeting-experience-refresh/design-manifest.json": "9e2026d89b28fec297059747f2cd015f9f8b3d5dc6b690bb11fc6a2e46aec4c4",
+    "openspec/changes/meeting-experience-refresh/ux.md": "e0d9a428ee583b77902c8feb63bb2c5a5fda5b7e290eb6883845f0108024a0fe",
+    "openspec/changes/meeting-experience-refresh/design.md": "6851f141b1d998e799f7289d57d4460f9bb6c0135942e611db664658a39bab0e",
+    "openspec/changes/meeting-experience-refresh/tasks.md": "0fc7837e261c8f6ea9be1d6b8307503d9f078c6fefcb885d8b20d6d0998d3622",
+    "openspec/changes/meeting-experience-refresh/proposal.md": "2e24693f04b471bd288e3071ad9b21be751ec12ad974383073e13c841c63b89a",
+    "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md": "da89f80180c545650a6282df0811ed613554557f45003dc19e92de9bf0592160",
+    "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md": "3e12a1dd6ea034bd8837a6730e9c3f589c7a159c67c92ce258435d036f3e04c1",
+    "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md": "f88409f0173549bb5097a4dc2298410f0a32636b2ba920ca81416f7dd9842022",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/README.md": "82c868d9f91acb9e103f453db0ef4c399c55a88f18c8e9751337f539c16da0c1",
+    "frontend/web/src/app/styles/design-tokens.css": "da8e5ec84df757264e3bc8a8358095e9f641429ab751cc4dcf08bbae622cdfde",
+    "frontend/web/src/shared/config/design-tokens/tokens.ts": "d49d5fa96a2a61fe2f5d155a044b8c24b918a64eab80a30d92d8d4b84c418ea5",
+    "frontend/ios/Somewhere/UI/DesignTokens.swift": "f5276335aa56d4eab77b25304e52a0c5373cf5598fa191258c5ae582b6c5ff78",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/theme/DesignTokens.kt": "2a53cc9712725b491e8024e67abbed824bf298aae91c9a3c04a892452a7da0d3",
+    "frontend/android/app/src/main/res/values/colors.xml": "a771efb0ca05eb75562265a68552570ae3dc1cd2a7c8f36c494c2527e5c4cc23"
+  },
+  "limitations": [
+    "HTML preview не доказывает реальную IME/VoiceOver/TalkBack/системные picker/native insets.",
+    "Нет нового независимого design/feature pass; UI задачи остаются open.",
+    "Context hash изменится при клиентских правках; новый live report должен фиксировать окончательные app inputs.",
+    "Testing files принадлежали отдельному агенту; текущая задача их не редактировала.",
+    "Прежние REJECTED drafts, reports и evidence с их hashes сохранены."
+  ]
+}

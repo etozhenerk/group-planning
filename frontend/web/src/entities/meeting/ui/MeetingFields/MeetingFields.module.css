@@ -38,3 +38,44 @@
 .form-fields :global(.g-text-input__control) {
   margin-top: 0;
 }
+
+.group {
+  display: contents;
+}
+
+.form-fields[data-mobile='true'] {
+  gap: var(--ds-component-mobile-form-group-gap);
+}
+
+.form-fields[data-mobile='true'] .group {
+  display: grid;
+  gap: var(--ds-component-mobile-form-section-gap);
+}
+
+.form-fields[data-mobile='true'] .group + .group {
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  padding-top: var(--ds-component-mobile-form-group-gap);
+}
+
+.form-fields[data-mobile='true'] label {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-caption);
+}
+
+.form-fields[data-mobile='true'] input,
+.form-fields[data-mobile='true'] textarea {
+  margin-top: var(--ds-component-mobile-field-gap);
+  min-height: var(--ds-component-mobile-field-minimum-height);
+  padding: var(--ds-component-mobile-field-inset-block)
+    var(--ds-component-mobile-field-inset-inline);
+  border-color: var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-field-radius);
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-mobile-web-input);
+}
+
+.form-fields[data-mobile='true'] textarea {
+  min-height: var(--ds-component-mobile-field-text-area-minimum-height);
+  line-height: var(--ds-typography-line-height-mobile-field-description);
+}

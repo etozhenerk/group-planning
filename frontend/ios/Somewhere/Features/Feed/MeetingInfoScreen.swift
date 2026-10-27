@@ -3,12 +3,14 @@ import SwiftUI
 struct MeetingInfoScreen: View {
     let owner: FeedOwner
     @State private var reloadID = UUID()
-    @State private var settingsPresented = false
-    @Environment(\.dismiss) private var dismiss
+    @AccessibilityFocusState private var restoredAction: ChatSheetRoute?
+
     var body: some View {
         ActionFormSheet(
             title: owner.meeting?.title ?? "О встрече", scrollIdentifier: "meeting-info",
-            closeIdentifier: "meeting-info-close"
+            closeIdentifier: "meeting-info-close",
+            scrollOffset: Binding(
+                get: { owner.informationScrollOffset }, set: { owner.informationScrollOffset = $0 })
         ) {
             if owner.current {
                 if owner.session.privateData.details[owner.id]?.error != nil {
@@ -19,37 +21,52 @@ struct MeetingInfoScreen: View {
             }
             if owner.current, let meeting = owner.meeting {
                 MeetingInfoFacts(meeting: meeting)
-                if let url = meeting.coverURL {
-                    CoverImageView(
-                        source: .remote(url, meeting.id), api: owner.session.api,
-                        session: owner.session)
-                }
-                MeetingPeopleView(id: owner.id, session: owner.session)
+                MeetingInfoPeople(
+                    id: owner.id, session: owner.session,
+                    expanded: Binding(
+                        get: { owner.informationExpanded }, set: { owner.informationExpanded = $0 })
+                )
                 if owner.invitation.organizer {
-                    OrganizerInvitationView(owner: owner.invitation, secondary: true)
-                    Button {
-                        settingsPresented = true
-                    } label: {
-                        Label(
-                            "Редактировать встречу", systemImage: "slider.horizontal.3"
-                        )
-                        .frame(minHeight: DesignTokens.targetIos)
-                    }.accessibilityIdentifier("edit-meeting")
+                    VStack(spacing: DesignTokens.spaceS0) {
+                        action(
+                            "Пригласить друзей", icon: .share, route: .share,
+                            identifier: "meeting-info-share")
+                        action(
+                            "Настройки встречи", icon: .settings, route: .settings,
+                            identifier: "edit-meeting")
+                    }.overlay(alignment: .top) {
+                        Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+                    }
                 } else {
-                    RSVPFormView(owner: owner.invitation)
+                    RSVPFormView(owner: owner.invitation, compact: true)
                 }
             }
         }.task(id: reloadID) {
             await owner.reloadDetails(version: owner.generation)
             await owner.openInfo()
-        }.sheet(isPresented: $settingsPresented, onDismiss: { owner.reload() }) {
-            if let meeting = owner.meeting {
-                MeetingSettingsScreen(
-                    owner: owner.actionDrafts.settings(meeting: meeting),
-                    completed: owner.actionDrafts.clearSettings)
+            if let route = owner.informationReturn {
+                restoredAction = route
+                owner.informationReturn = nil
             }
-        }.onChange(of: owner.current) { _, current in
-            if !current { dismiss() }
         }
+    }
+
+    private func action(
+        _ title: String, icon: ChatIcon.Kind, route: ChatSheetRoute, identifier: String
+    ) -> some View {
+        Button {
+            owner.openSheet(route, child: true)
+        } label: {
+            HStack(spacing: DesignTokens.spaceS12) {
+                ChatIcon(kind: icon, size: DesignTokens.componentMobileRosterActionIcon)
+                    .foregroundStyle(DesignTokens.colorMuted)
+                Text(title).designFont(DesignTokens.typographySizeButton)
+                Spacer(minLength: DesignTokens.spaceS0)
+                ChatIcon(kind: .right, size: DesignTokens.componentMobileRosterActionIcon)
+                    .foregroundStyle(DesignTokens.colorMuted)
+            }.frame(minHeight: DesignTokens.componentMobileRosterActionHeight).contentShape(
+                Rectangle())
+        }.buttonStyle(ChatPressStyle()).accessibilityIdentifier(identifier).accessibilityFocused(
+            $restoredAction, equals: route)
     }
 }

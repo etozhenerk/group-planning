@@ -50,7 +50,7 @@ func (s *Service) ClaimTransition(ctx context.Context, options TransitionOptions
 // CompleteTransition atomically commits the status and acknowledges the leased job.
 // Old schedules and deliveries after a committed transition are harmless no-ops.
 func (s *Service) CompleteTransition(ctx context.Context, claimed TransitionJob) error {
-	return s.store.Update(ctx, func(w Writer) error {
+	return s.update(ctx, func(w Writer) error {
 		job, err := w.TransitionJob(claimed.MeetingID, claimed.ScheduleVersion)
 		if err != nil {
 			return err

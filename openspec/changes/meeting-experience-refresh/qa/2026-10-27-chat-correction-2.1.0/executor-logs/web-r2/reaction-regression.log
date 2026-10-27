@@ -1,0 +1,68 @@
+[WebServer] (node:62878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:62879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 6 tests using 1 worker
+
+(node:62911) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/6] [chromium] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload
+[2/6] [chromium] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+  1) [chromium] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })
+
+
+      245 |     .click();
+      246 |   const share = page.getByRole('dialog', { name: 'Пригласить друзей', exact: true });
+    > 247 |   await expect(share).toBeVisible();
+          |                       ^
+      248 |   await expect(picker).toHaveCount(0);
+      249 |   await page.keyboard.press('Escape');
+      250 |   await expect(share).not.toBeVisible();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:247:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r2/reaction-regression-results/34-telegram-chat-reaction--2777b-returns-to-the-same-message-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r2/reaction-regression-results/34-telegram-chat-reaction--2777b-returns-to-the-same-message-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r2/reaction-regression-results/34-telegram-chat-reaction--2777b-returns-to-the-same-message-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-correction-2.1.0/executor-logs/web-r2/reaction-regression-results/34-telegram-chat-reaction--2777b-returns-to-the-same-message-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:62973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/6] [chromium] › tests/34-telegram-chat.spec.ts:287:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+(node:63011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[4/6] [mobile-webkit] › tests/28-meeting-refresh.spec.ts:134:1 › reaction toggle is confirmed by the API and persists on reload
+[5/6] [mobile-webkit] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message
+[6/6] [mobile-webkit] › tests/34-telegram-chat.spec.ts:287:1 › touch hold opens reactions and chip people without a second toggle; moving cancels a hold
+  1 failed
+    [chromium] › tests/34-telegram-chat.spec.ts:198:1 › reaction people replace the picker and browser Back returns to the same message 
+  5 passed (25.3s)

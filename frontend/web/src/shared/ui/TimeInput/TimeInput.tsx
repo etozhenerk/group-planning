@@ -1,7 +1,10 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/shared/ui/TimeInput/TimeInput.module.css';
 import { useId } from 'react';
 import { TextInput } from '@gravity-ui/uikit';
 import { Clock } from 'lucide-react';
+import { ChatIcon } from '@/shared/ui/ChatIcon';
+import { designTokens } from '@/shared/config/design-tokens';
 import { timeInputValue } from '@/shared/ui/TimeInput/lib/timeInputValue';
 
 export type TimeInputProps = {
@@ -9,6 +12,7 @@ export type TimeInputProps = {
   label?: string;
   onChange: (value: string) => void;
   disabled?: boolean;
+  mobileSheet?: boolean;
   invalid?: boolean;
   required?: boolean;
 };
@@ -18,13 +22,19 @@ export const TimeInput = ({
   label = 'Время',
   onChange,
   disabled = false,
+  mobileSheet = false,
   invalid = false,
   required = false,
 }: TimeInputProps) => {
   const id = useId();
+  const mobile = useMobileLayout();
 
   return (
-    <div className={styles['control-field']} data-testid="time-input">
+    <div
+      className={styles['control-field']}
+      data-sheet={mobileSheet && mobile}
+      data-testid="time-input"
+    >
       <label htmlFor={id}>{label}</label>
       <TextInput
         id={id}
@@ -35,7 +45,13 @@ export const TimeInput = ({
         placeholder="19:00"
         disabled={disabled}
         {...(invalid ? { validationState: 'invalid' as const } : {})}
-        endContent={<Clock size={18} aria-hidden="true" />}
+        endContent={
+          mobileSheet ? (
+            <ChatIcon name="clock" size={designTokens.componentMobileFieldIconSize} />
+          ) : (
+            <Clock size={18} aria-hidden="true" />
+          )
+        }
         controlProps={{
           inputMode: 'numeric',
           maxLength: 5,

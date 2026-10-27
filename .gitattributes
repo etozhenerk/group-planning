@@ -4,3 +4,8 @@
 *.yaml text eol=lf
 *.json text eol=lf
 *.sh text eol=lf
+
+# QA evidence is hashed as raw bytes. Preserve tool output, including CRLF and
+# whitespace in logs, traces and embedded source excerpts.
+openspec/changes/*/qa/** -text -whitespace
+openspec/changes/*/assets/verification/** -text -whitespace

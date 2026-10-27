@@ -52,7 +52,7 @@ test('short invitation provides fresh metadata and PNG without JavaScript', asyn
     .locator('meta[property="og:image"]')
     .getAttribute('content');
 
-  expect(image).toBe('https://127.0.0.1:8444/share-card.png');
+  expect(image).toBe(new URL('/share-card.png', invitation).href);
   const picture = await context.request.get(image ?? '');
   expect(picture.status()).toBe(200);
   expect(picture.headers()['content-type']).toContain('image/png');

@@ -5,5 +5,14 @@ export const useDialogLayout = (desktopPage: boolean) => {
   const mobile = useMobileLayout();
   const tablet = useMediaQuery(`(width <= ${designTokens.breakpointTablet})`);
 
-  return { inline: desktopPage && !mobile, tablet: desktopPage && !mobile && tablet };
+  const compact = useMediaQuery(
+    `(max-height: ${designTokens.breakpointChatCompactHeight})`,
+  );
+
+  return {
+    mobile,
+    compact,
+    inline: desktopPage && !mobile,
+    tablet: desktopPage && !mobile && tablet,
+  };
 };

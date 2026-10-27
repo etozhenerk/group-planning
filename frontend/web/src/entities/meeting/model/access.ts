@@ -1,3 +1,4 @@
+import { purgePrivateStore } from '@/shared/lib/private-store';
 import { useSyncExternalStore } from 'react';
 import type { QueryClient } from '@tanstack/react-query';
 import { ApiError } from '@/shared/api';
@@ -6,7 +7,14 @@ import type { ResponseState } from '@/entities/meeting/model/types';
 type Access = { epoch: number; denied: boolean; revision: string };
 const states = new Map<string, Access>();
 const listeners = new Set<() => void>();
-const initial: Access = { epoch: 0, denied: false, revision: '0' };
+let generation = 0;
+let initial: Access = { epoch: generation, denied: false, revision: '0' };
+const nextEpoch = () => {
+  generation += 1;
+
+  return generation;
+};
+
 const read = (user: string, id: string): Access => {
   return states.get(`${user}:${id}`) ?? initial;
 };
@@ -48,6 +56,7 @@ export const denyAccess = (
   user: string,
   id: string,
   epoch: number,
+  purge = true,
 ) => {
   const state = read(user, id);
 
@@ -55,7 +64,12 @@ export const denyAccess = (
     return;
   }
 
-  publish(user, id, { ...state, epoch: epoch + 1, denied: true });
+  publish(user, id, { ...state, epoch: nextEpoch(), denied: true });
+
+  if (purge) {
+    void purgePrivateStore(user, id).catch(() => undefined);
+  }
+
   clearMeeting(client, user, id);
 };
 
@@ -71,9 +85,13 @@ export const applyResponse = (
     return false;
   }
 
+  if (!result.canAccess) {
+    void purgePrivateStore(user, result.meetingId).catch(() => undefined);
+  }
+
   clearMeeting(client, user, result.meetingId);
   publish(user, result.meetingId, {
-    epoch: state.epoch + 1,
+    epoch: nextEpoch(),
     denied: !result.canAccess,
     revision: result.revision,
   });
@@ -113,6 +131,8 @@ export const guarded = async <T>(
 };
 
 export const resetAccess = () => {
+  // Old requests can outlive logout and a new login by the same account.
+  initial = { epoch: nextEpoch(), denied: false, revision: '0' };
   states.clear();
 
   for (const listener of listeners) {

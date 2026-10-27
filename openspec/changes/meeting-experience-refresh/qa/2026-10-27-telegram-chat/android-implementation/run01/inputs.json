@@ -1,0 +1,36 @@
+{
+  "sourceAggregateSha256": "1f899c9ba4202468ecc6e2551935c29a7358441403e0c51661506e62938bb14e",
+  "designTokensSha256": "423627785e65c84ee9698c5ed92ac6bdaf2a83cb05b1df34c69aa3608053dc02",
+  "androidGeneratedTokensSha256": "abc606120da7ab308720cb52523bdcd1d64118f926617a98a939a3824a74f014",
+  "manifestSha256": "581358f4bcd26d7fb299858198b460ee598522efc4b5e75d599f4cf6c308d8e6",
+  "artifacts": {
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/artifacts/androidTest/debug/app-debug-androidTest.apk": "681ce389476a6ab2af22a69d0ca024139335356e40a0abfd7d207d65428f7630",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/artifacts/androidTest/qa/app-qa-androidTest.apk": "1aff3cf494f8729460a58a7933549c239aa4a82831d20b13af8042c3a1e8a047",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/artifacts/debug/app-debug.apk": "27852b86b757f3b93bcfa330f1892ce70b08a8a88e827547d71c286c024e0a4f",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/artifacts/qa/app-qa.apk": "210f0641c63c479b9952d81bbe61dfdb308194723638e59c9f72f4e033e7ba4b",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/artifacts/release/app-release-unsigned.apk": "919c6165be00ddc8457462a248f0e56c3dd59835cf3b01589bda13815c06ffe1"
+  },
+  "evidenceRoot": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-telegram-chat/android-implementation",
+  "unitResultBinaries": {
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/unit-results/binary/output.bin": "60bcda5d2cfda6d030dede902dbb446d843246cf61934975da869c5c6e348c63",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/unit-results/binary/output.bin.idx": "a506d8cd1afad7ba1a3091972a78f2bc12976893127195167707e3202396f7fc",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/unit-results/binary/results.bin": "7b3db39a242512bfe089f1337c867f05b7b60ff45caeb543763c28492a8a2e16"
+  },
+  "run": "run01",
+  "startedAt": "2026-10-27T12:20:54.260217+00:00",
+  "device": {
+    "avd": "Somewhere_API_36",
+    "serial": "emulator-5554"
+  },
+  "fixtureScope": "calendar",
+  "scenario": "design",
+  "commands": [
+    "sh scripts/test-ui.sh chat",
+    "./gradlew --no-daemon -PsomewhereTestBuildType=qa -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.ui.feed.ComposerEditingDeviceTests :app:connectedQaAndroidTest"
+  ],
+  "fixtureFiles": {
+    "backend/internal/httpapi/android_fixture_test.go": "42b02a2ff6ab3a8b0649d09068a8ee13741d4b9a9aa10e198197d863cf08df0d",
+    "backend/internal/httpapi/native_design_fixture_test.go": "bcb7dfe00e596e64f7302a868f51ca094b4dbaea2adc8926c7291fafd1b7a302",
+    "frontend/android/scripts/test-ui.sh": "1a79a9a4164fbb26f366fb60d2cd4dc1d25507d4fe37b0f6e90f006825119cbe"
+  }
+}

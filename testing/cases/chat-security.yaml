@@ -1,223 +1,236 @@
 - id: TC-CHAT-SECURITY-791FF479
   title: "Аутентифицированные защищённые соединения: Подписка с чужого сайта или на чужую встречу"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Аутентифицированные защищённые соединения
     scenario: Подписка с чужого сайта или на чужую встречу
     sha256: 3ec58333d9d6fc9b5a14437d27a04df2ae6cb84ac5b8be269ed2ad3b697934c4
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: &a2
+    - backend
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Внешние HTTP и realtime-соединения SHALL использовать TLS с проверкой сертификата. Сервер
-      SHALL аутентифицировать соединение, проверять web Origin и разрешение подписки; секреты SHALL
-      NOT передаваться в URL или попадать в диагностические журналы.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Тестовый TLS endpoint, разрешённый web Origin и посторонний Origin; сессии A/X. Tokens только в
+      разрешённых headers/connect credentials.
   steps:
-    - action: клиент использует запрещённый Origin либо не имеет доступа к запрошенной встрече
-      expected: сервер отклоняет подключение или подписку без приватного содержимого
+    - action: Подключиться с чужого Origin, подставленным user_id или подписаться X на M.
+      expected: Соединение/подписка отклонены без payload; session identity определяется сервером.
+    - action: Выполнить допустимые web cookie/native credentials connect и HTTP CSRF mutation.
+      expected: Разрешённая аутентификация работает; WS не отменяет CSRF HTTP-команд, credentials отсутствуют в
+        URL/логах.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-0E0CB54C
   title: "Аутентифицированные защищённые соединения: Истечение сессии"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Аутентифицированные защищённые соединения
     scenario: Истечение сессии
     sha256: f2f339ebe5de07640bbbd2062e29dd9596db382a9da215ad0d544584238ca795
-  platforms:
+  platforms: &a1
+    - backend
     - web
     - ios
     - android
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Внешние HTTP и realtime-соединения SHALL использовать TLS с проверкой сертификата. Сервер
-      SHALL аутентифицировать соединение, проверять web Origin и разрешение подписки; секреты SHALL
-      NOT передаваться в URL или попадать в диагностические журналы.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Активная сессия и подписки; TTL/revoke задаются тестовым сервисом, не production часами.
   steps:
-    - action: сессия истекла или отозвана
-      expected: соединение больше не даёт авторизованных обновлений, повтор требует действующую сессию
+    - action: Отозвать сессию, затем отдельно довести её до expiry.
+      expected: Подписки/соединение закрыты; переаутентификация нужна, периодическая проверка не реже минуты и
+        expiry не продлеваются автоматически.
+    - action: Вернуть поздний hint/HTTP callback и попытаться переподключиться.
+      expected: Авторизованные данные не выдаются и не восстанавливаются у клиента.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-1DC708F2
   title: "Актуальные права и минимальное уведомление: Отзыв между уведомлением и загрузкой"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Актуальные права и минимальное уведомление
     scenario: Отзыв между уведомлением и загрузкой
     sha256: ee6b9177879a3af92533f8d2c5e1e8fc85079daff855edbb05c5b030c99ee255
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a1
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Сервер SHALL проверять актуальное членство при выдаче истории, изменений и read state. Общая
-      публикация SHALL NOT содержать текст сообщений, индивидуальные позиции чтения или значения
-      скрытых голосов.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - A получил hint M, HTTP sync задержан; backend fixture контролирует commit отзыва RSVP.
   steps:
-    - action: пользователь потерял доступ после получения сигнала об изменении
-      expected: последующий запрос приватных данных отклонён и клиент очищает состояние встречи
+    - action: Отозвать доступ до выдачи HTTP payload; завершить ожидающий запрос.
+      expected: Отказ по актуальным правам; hint не является разрешением. Клиент очищает приватное состояние M.
+    - action: Повторить read/history/send с прежним receipt и запоздалой callback.
+      expected: Нет доступа, автоматической отправки или возврата удалённых данных.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-6DD0CC09
   title: "Актуальные права и минимальное уведомление: Голосование в скрытом опросе"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Актуальные права и минимальное уведомление
     scenario: Голосование в скрытом опросе
     sha256: 6e884697c8e594f46bf81fd2d825221df360dd7a189ec051c469a7559834273d
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Сервер SHALL проверять актуальное членство при выдаче истории, изменений и read state. Общая
-      публикация SHALL NOT содержать текст сообщений, индивидуальные позиции чтения или значения
-      скрытых голосов.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Скрытый опрос открыт; A голосует, B наблюдает поток и разрешённые sync/read endpoints.
   steps:
-    - action: участник голосует до закрытия скрытого опроса
-      expected: другие участники не получают его выбор через realtime, журнал синхронизации или read state
+    - action: Проголосовать A и получить hints/journal projection/read state как B.
+      expected: Чужой скрытый выбор не содержится в hint, sync или read state; payload выдаётся по существующим
+        правилам.
+    - action: Закрыть опрос и перечитать старую карточку.
+      expected: После закрытия выдан только разрешённый итог; новые приватные данные не копируются в journal.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-92CE8303
   title: "Изоляция аккаунтов и устаревших ответов: Ответ предыдущего аккаунта"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Изоляция аккаунтов и устаревших ответов
     scenario: Ответ предыдущего аккаунта
     sha256: 4cb3d1409747cc77bdabb20f0aa61072cc272f9dca1abe548c89a965bb353f1a
-  platforms:
+  platforms: &a3
     - web
     - ios
     - android
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиенты SHALL изолировать историю, черновики, исходящие и cursors по аккаунту и доступу.
-      Logout, удаление аккаунта или утрата доступа SHALL отменять работу и очищать соответствующие
-      приватные данные; запоздалый ответ SHALL NOT восстанавливать их.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Удержаны sync/send/read/storage callbacks аккаунта A и lease M.
   steps:
-    - action: отправка или синхронизация завершилась после входа другим пользователем
-      expected: ответ отбрасывается и ни текст, ни read marker не попадают в новый аккаунт
+    - action: Выполнить logout, войти X; после этого отпустить все старые ответы, включая запись
+        IndexedDB/native storage.
+      expected: Ни текст, ни cursor, ни read marker, ни outbox A не появляются у X; старые эффекты
+        отменены/отброшены.
+    - action: Повторить с отзывом доступа M без смены аккаунта.
+      expected: Epoch доступа изолирует M; другая разрешённая встреча сохраняется.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-6A1C1A1A
   title: "Изоляция аккаунтов и устаревших ответов: Исходящее после выхода из встречи"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Изоляция аккаунтов и устаревших ответов
     scenario: Исходящее после выхода из встречи
     sha256: 0803bcce89fa28379ad59ae5a4b9fc6af3b40513eb2fdffcc72a8510245714cf
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a3
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиенты SHALL изолировать историю, черновики, исходящие и cursors по аккаунту и доступу.
-      Logout, удаление аккаунта или утрата доступа SHALL отменять работу и очищать соответствующие
-      приватные данные; запоздалый ответ SHALL NOT восстанавливать их.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - В durable outbox A есть сообщение M; приложение неактивно, затем доступ M отозван.
   steps:
-    - action: сохранённая очередь принадлежит встрече, доступ к которой утрачен
-      expected: она не отправляется автоматически и приватное локальное состояние встречи удаляется
+    - action: Холодно открыть A, проверить права и восстановить очередь.
+      expected: Сообщение M не отправлено; её приватные draft/outbox/history очищены, данные других встреч не
+        удалены.
+    - action: Позже снова вступить в M.
+      expected: Удалённое после revoke намерение не оживает и не отправляется без нового действия.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-0830EED9
@@ -230,20 +243,20 @@
     requirement: Честная модель шифрования
     scenario: Текущий серверный режим
     sha256: dce90f4486cb80a7d795ef09e87d1da83b2728e52e84ace8af2a21c3af9ff109
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a3
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Продукт SHALL явно различать защиту транспорта/хранилища и E2EE. При доступном серверу тексте
-      он SHALL NOT заявлять сквозное шифрование. Заявление о защите хранения SHALL опираться на
-      проверенную конфигурацию и восстановление резервных копий.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Текущий серверный режим с доступным серверу текстом; crypto decision не принят этим этапом.
   steps:
-    - action: сервер обрабатывает открытый текст сообщения через TLS
-      expected: UI и документация не обещают недоступность содержимого оператору сервера
+    - action: Просмотреть пользовательские описания безопасности и поведение чата на проверяемой сборке.
+      expected: Нет обещания E2EE или недоступности текста оператору; TLS и защита хранения названы по
+        фактическим данным.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
     web:
       status: manual
@@ -260,112 +273,110 @@
 - id: TC-CHAT-SECURITY-A91C53BB
   title: "Честная модель шифрования: Защита backup не проверена"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Честная модель шифрования
     scenario: Защита backup не проверена
     sha256: 833886ee7695c85c9928169b389faea9d280b7dbcee4c5fd09c0c2c76ecf0fc5
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Продукт SHALL явно различать защиту транспорта/хранилища и E2EE. При доступном серверу тексте
-      он SHALL NOT заявлять сквозное шифрование. Заявление о защите хранения SHALL опираться на
-      проверенную конфигурацию и восстановление резервных копий.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Есть отчёт проверки конфигурации хранения; свидетельство restore/encryption намеренно отсутствует
+      или относится к другому артефакту.
   steps:
-    - action: нет подтверждения конфигурации ключей и восстановления резервной копии
-      expected: статус проверки остаётся незавершённым и защита backup не объявляется реализованной
+    - action: Сопоставить заявленную защиту с доступными доказательствами, не выполняя production операций.
+      expected: Неподтверждённая защита backup остаётся явно непроверенной; отсутствие evidence не превращается
+        в pass.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-BDBF283F
   title: "Минимизация сохранённых приватных данных: Диагностика сбоя"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Минимизация сохранённых приватных данных
     scenario: Диагностика сбоя
     sha256: 6267df21f29ef4880949cf5f540ca7d357348ce63c7d8c2eecf8c2c128c76c03
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a1
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Диагностика и журнал уведомлений SHALL обходиться без копий текста и токенов. Нативные
-      исходящие SHALL использовать системную защиту хранения; web SHALL учитывать ограничения
-      профиля браузера и ошибку сохранения, не обещая защиты от XSS посредством IndexedDB.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Тестовые текст/credential-маркеры распознаваемы, но не являются настоящими секретами; сбор
+      логов/URL/hints локальный.
   steps:
-    - action: фиксируются ошибка отправки, reconnect или задержка синхронизации
-      expected: диагностика содержит безопасные идентификаторы/метрики без тела сообщения и credentials
+    - action: Создать timeout/reconnect/reset и ошибку storage/sync; проверить diagnostics, URL, journal и
+        outbox.
+      expected: Содержимое сообщений и credentials отсутствуют; сохранены безопасные IDs/метрики для
+        расследования.
+    - action: Для native проверить защищённое outbox/key storage; для web отказ quota и заявленные ограничения
+        IndexedDB.
+      expected: Используется системная защита native; web не обещает защиты от XSS и не отправляет
+        несохранённый intent.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
     web:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: planned
       health: unknown
       tests: []
     android:
-      status: manual
+      status: planned
       health: unknown
       tests: []
 - id: TC-CHAT-SECURITY-A3B3BFE7
   title: "Минимизация сохранённых приватных данных: Удаление данных аккаунта"
   lifecycle: active
-  level: e2e
+  level: integration
   risk: critical
   source:
     path: openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md
     requirement: Минимизация сохранённых приватных данных
     scenario: Удаление данных аккаунта
     sha256: 3a7d431c78bae62951bf1364542bf633c4c191f73fab7a38f17374e38d1a7d89
-  platforms:
-    - web
-    - ios
-    - android
+  platforms: *a2
   preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Диагностика и журнал уведомлений SHALL обходиться без копий текста и токенов. Нативные
-      исходящие SHALL использовать системную защиту хранения; web SHALL учитывать ограничения
-      профиля браузера и ошибку сохранения, не обещая защиты от XSS посредством IndexedDB.
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - У C есть сообщения в старом диапазоне, markers, недоставленные hints; клиенты A/B сохраняют старые
+      cursor.
   steps:
-    - action: аккаунт удаляется
-      expected: новые read markers и данные синхронизации обрабатываются теми же правилами
-        удаления/обезличивания, что и основная история; повтор журнала не возвращает старое имя
+    - action: Удалить C штатной операцией и выполнить replay/snapshot старого диапазона.
+      expected: Markers/адресные outbox-данные C удалены, история обезличена; journal возвращает текущую
+        projection без прежнего имени.
+    - action: Удалить M с активными подписками и перезапустить dispatcher.
+      expected: History/markers/stream удалены; terminal личная invalidation не уничтожена FK cascade и
+        доставляется без приватного текста.
   cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
   automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
+    backend:
+      status: planned
       health: unknown
       tests: []

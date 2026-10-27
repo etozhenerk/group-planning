@@ -33,6 +33,9 @@
     "web-mobile": {
       "platform": "web"
     },
+    "web-responsive": {
+      "platform": "web"
+    },
     "ios-phone": {
       "platform": "ios"
     },
@@ -196,16 +199,62 @@
       ],
       "required": true,
       "scope": "source"
+    },
+    "web-chat-e2e": {
+      "platforms": [
+        "web"
+      ],
+      "cwd": ".",
+      "command": [
+        "npm",
+        "run",
+        "--workspace",
+        "@somewhere/web",
+        "test:chat"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "web-window-e2e": {
+      "platforms": [
+        "web"
+      ],
+      "cwd": ".",
+      "command": [
+        "npm",
+        "run",
+        "--workspace",
+        "@somewhere/web",
+        "test:window"
+      ],
+      "required": true,
+      "scope": "source"
+    },
+    "web-read-e2e": {
+      "platforms": [
+        "web"
+      ],
+      "cwd": ".",
+      "command": [
+        "npm",
+        "run",
+        "--workspace",
+        "@somewhere/web",
+        "test:read"
+      ],
+      "required": true,
+      "scope": "source"
     }
   },
-  "manifests": [],
+  "manifests": [
+    "openspec/changes/meeting-experience-refresh/testing-manifest.json",
+    "openspec/changes/chat-reliability-and-sync/testing-manifest.json"
+  ],
   "legacyChanges": [
     "gathering-activity-feed",
-    "meeting-experience-refresh",
     "account-deletion",
     "deployment-and-store-release",
     "telegram-monitoring-bot",
-    "chat-reliability-and-sync",
     "release-version-policy"
   ],
   "nonProductChanges": [

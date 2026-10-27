@@ -1,0 +1,10 @@
+plugins { id 'application' }
+repositories { mavenCentral() }
+dependencies {
+ implementation 'io.github.centrifugal:centrifuge-java:0.8.0'
+ implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+ constraints { implementation('org.jetbrains.kotlin:kotlin-stdlib:2.2.20') }
+}
+java { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+application { mainClass = 'Spike' }
+dependencyLocking { lockAllConfigurations() }

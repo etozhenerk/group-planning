@@ -19,6 +19,7 @@ internal class MeetingRepository(private val session: SessionRepository) {
     val state = session.state
 
     suspend fun loadMeetings() {
+        val beforeRead = state.value.data.readVersions
         session.beginData {
             it.copy(meetingsEpoch = UUID.randomUUID(), moreRequest = null, moreError = null)
         }
@@ -28,7 +29,10 @@ internal class MeetingRepository(private val session: SessionRepository) {
             read = { it.meetings },
             write = { data, resource ->
                 val page = resource.value?.let { page ->
-                    page.copy(meetings = page.meetings.filter { it.id !in data.denied })
+                    page.copy(
+                        meetings = data.preserveNewerReadState(page.meetings, beforeRead)
+                            .filter { it.id !in data.denied },
+                    )
                 }
                 data.copy(meetings = resource.copy(value = page))
             },
@@ -75,7 +79,10 @@ internal class MeetingRepository(private val session: SessionRepository) {
                 if (data.meetingsEpoch != epoch || data.moreRequest != request) {
                     data
                 } else {
-                    val combined = (data.meetings.value?.meetings.orEmpty() + page.meetings)
+                    val combined = (
+                        data.meetings.value?.meetings.orEmpty() +
+                            data.preserveNewerReadState(page.meetings, snapshot.readVersions)
+                        )
                         .distinctBy { it.id }.filter { it.id !in data.denied }
                     data.copy(
                         meetings = data.meetings.copy(value = page.copy(meetings = combined)),

@@ -2,6 +2,8 @@ package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
@@ -12,6 +14,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,7 +47,7 @@ class PlacePollUiTests {
             compose.onNodeWithTag("place-poll-explanation").performScrollTo()
                 .performTextInput("Есть стол на всех и тихий зал")
             fixture.device.pressBack()
-            compose.onNodeWithTag("place-poll-create").performScrollTo().performClick()
+            compose.onNodeWithTag("place-poll-create").assertIsDisplayed().performClick()
             fixture.waitTag("place-poll-error")
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             fixture.screenshot("android-place-create-error")
@@ -56,17 +59,25 @@ class PlacePollUiTests {
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             compose.onNodeWithTag("place-poll-explanation")
                 .assertTextContains("Есть стол на всех и тихий зал")
-            compose.onNodeWithTag("place-poll-create").performScrollTo().performClick()
+            compose.onNodeWithTag("place-poll-create").assertIsDisplayed().performClick()
             fixture.waitTag("place-vote-for")
             compose.onNodeWithText("Есть стол на всех и тихий зал").assertExists()
+            compose.onNodeWithText("Опрос").assertIsDisplayed()
+            assertTrue(
+                "Poll deadline must follow the vote controls",
+                compose.onNodeWithTag("place-poll-status").fetchSemanticsNode().boundsInRoot.top >=
+                    compose.onNodeWithTag(
+                        "place-vote-for",
+                    ).fetchSemanticsNode().boundsInRoot.bottom,
+            )
             compose.onNodeWithTag("place-vote-for").performClick()
             fixture.waitTag("place-poll-error")
-            compose.onNodeWithText("Ваш голос: За").assertDoesNotExist()
+            compose.onNodeWithTag("place-vote-for").assertIsNotSelected()
             fixture.screenshot("android-place-vote-error")
             compose.onNodeWithText("Повторить").performClick()
-            fixture.waitText("Ваш голос: За")
+            waitSelected("place-vote-for")
             compose.onNodeWithTag("place-vote-against").performClick()
-            fixture.waitText("Ваш голос: Против")
+            waitSelected("place-vote-against")
             compose.waitUntil(5000) {
                 runCatching { compose.onNodeWithTag("place-vote-for").assertIsEnabled() }.isSuccess
             }
@@ -74,6 +85,12 @@ class PlacePollUiTests {
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
             fixture.waitText("У Саши")
             compose.onNodeWithText("У Саши").assertIsDisplayed()
+        }
+    }
+
+    private fun waitSelected(tag: String) {
+        compose.waitUntil(5_000) {
+            runCatching { compose.onNodeWithTag(tag).assertIsSelected() }.isSuccess
         }
     }
 

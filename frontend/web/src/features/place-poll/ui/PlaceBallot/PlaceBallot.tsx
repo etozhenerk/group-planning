@@ -33,7 +33,10 @@ export const PlaceBallot = ({ poll, session }: PlaceBallotProps) => {
               {action.isPending && action.variables?.answer === answer ? (
                 <ButtonSpinner />
               ) : (
-                `${label} · ${count}`
+                <>
+                  {label}
+                  <span>{count}</span>
+                </>
               )}
             </button>
           ) : (
@@ -43,11 +46,6 @@ export const PlaceBallot = ({ poll, session }: PlaceBallotProps) => {
           );
         })}
       </div>
-      {poll.myVote && (
-        <p className={styles.note}>
-          Ваш голос: {poll.myVote === 'for' ? 'За' : 'Против'}
-        </p>
-      )}
       {action.error && (
         <div role="alert" className={styles.error}>
           <p>{conflict ? placePollError(action.error) : 'Не удалось сохранить голос.'}</p>

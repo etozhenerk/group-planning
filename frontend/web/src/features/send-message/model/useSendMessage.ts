@@ -1,127 +1,95 @@
-import { usePendingMessages } from '@/features/send-message/model/usePendingMessages';
-import { useMessageDraft } from '@/features/send-message/model/useMessageDraft';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import type { FormEvent, KeyboardEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { Session } from '@/entities/session';
-import type { Conversation } from '@/entities/meeting';
-import {
-  guarded,
-  mergeEntries,
-  privateKey,
-  sendMessage,
-  useAccess,
-} from '@/entities/meeting';
+import { accessEpoch, privateKey, useAccess } from '@/entities/meeting';
+import { usePendingMessages } from '@/features/send-message/model/usePendingMessages';
+import { useDurableDraft } from '@/features/send-message/model/useDurableDraft';
+import { useOutboxQueue } from '@/features/send-message/model/useOutboxQueue';
+import { enqueueMessage } from '@/features/send-message/model/messageStore';
+import type { MessageIntent } from '@/features/send-message/model/messageStore';
 import type { PendingMessage } from '@/features/send-message/model/types';
 
 export const useSendMessage = (id: string, session: Session) => {
   const client = useQueryClient();
-  const access = useAccess(session.user.id, id);
-  const { text, setText } = useMessageDraft(session.user.id, id, access.epoch);
-  const { pending, setPending } = usePendingMessages(session.user.id, id, access.epoch);
-  const controllers = useRef(new Set<AbortController>());
-  const disposed = useRef(false);
-  useEffect(() => {
-    disposed.current = false;
-    const active = controllers.current;
+  const user = session.user.id;
+  const access = useAccess(user, id);
+  const draft = useDurableDraft(user, id, access.epoch);
+  const { pending } = usePendingMessages(user, id, access.epoch);
+  const queue = useOutboxQueue(id, session, access.epoch, draft.scope, () =>
+    draft.setStorageError(true),
+  );
 
-    return () => {
-      disposed.current = true;
-
-      for (const controller of active) {
-        controller.abort();
-      }
-
-      active.clear();
-    };
-  }, [id, session.user.id]);
-  useEffect(() => {
-    const key = privateKey(session.user.id, id, access.epoch, 'feed');
-
-    return client.getQueryCache().subscribe(() => {
-      const entries = client.getQueryData<Conversation>(key)?.entries;
-
-      if (!entries) {
-        return;
-      }
-
-      const confirmed = new Set(entries.map((entry) => entry.clientRequestId));
-      setPending((values) =>
-        values.some((value) => confirmed.has(value.id))
-          ? values.filter((value) => !confirmed.has(value.id))
-          : values,
-      );
-    });
-  }, [client, id, session.user.id, access.epoch, setPending]);
-  const deliver = async (message: PendingMessage) => {
-    const controller = new AbortController();
-    controllers.current.add(controller);
-    setPending((values) =>
-      values.map((value) =>
-        value.id === message.id ? { ...value, state: 'sending' } : value,
-      ),
-    );
-
-    try {
-      const entry = await guarded(client, session.user.id, id, access.epoch, () =>
-        sendMessage(id, message.text, message.id, session.csrf, controller.signal),
-      );
-
-      if (disposed.current) {
-        return;
-      }
-
-      client.setQueryData<Conversation>(
-        privateKey(session.user.id, id, access.epoch, 'feed'),
-        (previous) =>
-          previous
-            ? { ...previous, entries: mergeEntries(previous.entries, [entry]) }
-            : undefined,
-      );
-      setPending((values) => values.filter((value) => value.id !== message.id));
-    } catch {
-      if (!disposed.current && !controller.signal.aborted) {
-        setPending((values) =>
-          values.map((value) =>
-            value.id === message.id ? { ...value, state: 'failed' } : value,
-          ),
-        );
-      }
-    } finally {
-      controllers.current.delete(controller);
-    }
-  };
-
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const saving = useRef(false);
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const input = draft.current.current;
 
-    if (!text.trim() || access.denied) {
+    if (!input.text.trim() || access.denied || saving.current) {
       return;
     }
 
-    const message: PendingMessage = { id: crypto.randomUUID(), text, state: 'sending' };
-    setPending((values) => [...values, message]);
-    setText('');
-    void deliver(message);
+    saving.current = true;
+
+    try {
+      const scope = await draft.flush();
+
+      if (!scope || accessEpoch(user, id) !== access.epoch) {
+        return;
+      }
+
+      const intent: MessageIntent = {
+        id: crypto.randomUUID(),
+        text: input.text,
+        createdAt: new Date().toISOString(),
+        state: 'queued',
+      };
+
+      await enqueueMessage(scope, intent, input.revision);
+
+      if (accessEpoch(user, id) !== access.epoch) {
+        return;
+      }
+
+      client.setQueryData<PendingMessage[]>(
+        privateKey(user, id, access.epoch, 'pending-messages'),
+        (previous) => [
+          ...(previous ?? []).filter((item) => item.id !== intent.id),
+          { ...intent, delivery: intent.state, state: 'sending' },
+        ],
+      );
+      draft.clear(input.revision);
+      draft.setStorageError(false);
+      void queue.current?.drain();
+    } catch {
+      draft.setStorageError(true);
+    } finally {
+      saving.current = false;
+    }
   };
 
   const keyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
       event.preventDefault();
 
-      if (text.trim()) {
+      if (draft.draft.text.trim()) {
         event.currentTarget.form?.requestSubmit();
       }
     }
   };
 
   return {
-    text,
-    setText,
+    text: draft.draft.text,
+    setText: draft.setText,
+    selection: draft.draft.selection,
+    rememberSelection: draft.rememberSelection,
+    storageError: draft.storageError,
     pending,
     submit,
     keyDown,
-    retry: deliver,
+    retry: async (message: PendingMessage) => {
+      await queue.current?.retry(message.id);
+    },
     disabled: access.denied,
   };
 };

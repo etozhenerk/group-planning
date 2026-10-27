@@ -1,0 +1,363 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.window.config.ts",
+      "--workers",
+      "1",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/playwright.window.config.ts",
+    "rootDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "39-chat-window.spec.ts",
+      "file": "39-chat-window.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "bounded history preserves focus and visible anchor across prepend and late resize",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4332,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:12.709Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "bounded-window",
+                      "contentType": "application/json",
+                      "body": "eyJtYXhSb3dzIjo1MDAsImZvY3VzZWRLZXkiOiIxZjg3NmI1Yi1jMGQyLTQzM2QtOTMyYi0wYmY0ODA5MjNjZDQ6ZjhhNDljYmYtMTQ1My00NzNkLTgxOTUtYWIxODg4NzdlY2ZhIiwiYmVmb3JlUmVzaXplIjp7ImlkIjoiMmU0NWNjYzAtNGI5ZS00NjFkLWJhYTgtNDVkN2Y0OWQ3N2E5Iiwib2Zmc2V0IjotNDIuMTU2MjV9LCJhZnRlclJlc2l6ZSI6eyJpZCI6IjJlNDVjY2MwLTRiOWUtNDYxZC1iYWE4LTQ1ZDdmNDlkNzdhOSIsIm9mZnNldCI6LTQxLjg0Mzc1fSwiYmVmb3JlUmVzZXQiOnsiaWQiOiIyZTQ1Y2NjMC00YjllLTQ2MWQtYmFhOC00NWQ3ZjQ5ZDc3YTkiLCJvZmZzZXQiOi00MS44NDM3NX0sImFmdGVyUmVzZXQiOnsiaWQiOiIyZTQ1Y2NjMC00YjllLTQ2MWQtYmFhOC00NWQ3ZjQ5ZDc3YTkiLCJvZmZzZXQiOi00MS4zNTkzNzV9LCJiZWZvcmVTZW5kIjp7ImlkIjoiMmU0NWNjYzAtNGI5ZS00NjFkLWJhYTgtNDVkN2Y0OWQ3N2E5Iiwib2Zmc2V0IjotNDEuMzU5Mzc1fSwiYWZ0ZXJTZW5kIjp7ImlkIjoiMmU0NWNjYzAtNGI5ZS00NjFkLWJhYTgtNDVkN2Y0OWQ3N2E5Iiwib2Zmc2V0IjotNDEuMzU5Mzc1fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a78fd20fed027cd19008-e8ebf7a3130016bd7584",
+          "file": "39-chat-window.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "bounded history preserves focus and visible anchor across prepend and late resize",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5475,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:18.323Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "bounded-window",
+                      "contentType": "application/json",
+                      "body": "eyJtYXhSb3dzIjo1MDAsImZvY3VzZWRLZXkiOiIxZjg3NmI1Yi1jMGQyLTQzM2QtOTMyYi0wYmY0ODA5MjNjZDQ6NDRkOTQxNjYtNWNjYS00MTdkLWI1ZjQtMmRiMDg0YjAxYWNiIiwiYmVmb3JlUmVzaXplIjp7ImlkIjoiOTc2MzBlMGUtZWJhOS00YzJmLTk3MjctM2FhZDNjZjg0ZmFiIiwib2Zmc2V0IjotMTEuNX0sImFmdGVyUmVzaXplIjp7ImlkIjoiOTc2MzBlMGUtZWJhOS00YzJmLTk3MjctM2FhZDNjZjg0ZmFiIiwib2Zmc2V0IjotMTEuNX0sImJlZm9yZVJlc2V0Ijp7ImlkIjoiOTc2MzBlMGUtZWJhOS00YzJmLTk3MjctM2FhZDNjZjg0ZmFiIiwib2Zmc2V0IjotMTEuNX0sImFmdGVyUmVzZXQiOnsiaWQiOiI5NzYzMGUwZS1lYmE5LTRjMmYtOTcyNy0zYWFkM2NmODRmYWIiLCJvZmZzZXQiOi0xMX0sImJlZm9yZVNlbmQiOnsiaWQiOiI5NzYzMGUwZS1lYmE5LTRjMmYtOTcyNy0zYWFkM2NmODRmYWIiLCJvZmZzZXQiOi0xMX0sImFmdGVyU2VuZCI6eyJpZCI6Ijk3NjMwZTBlLWViYTktNGMyZi05NzI3LTNhYWQzY2Y4NGZhYiIsIm9mZnNldCI6LTExfX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a78fd20fed027cd19008-f2107798a8826c22a04a",
+          "file": "39-chat-window.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "40-chat-history-error.spec.ts",
+      "file": "40-chat-history-error.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "history failure remains local and retry preserves composer and visible anchor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 834,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:17.151Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "history-retry-anchor",
+                      "contentType": "application/json",
+                      "body": "eyJiZWZvcmUiOnsiaWQiOiJmMzdlMGFhMy0wMDdhLTQ2NjItOGJkMS03MGU4Zjk1YjQxOWYiLCJvZmZzZXQiOjk5fSwiYWZ0ZXIiOnsiaWQiOiJmMzdlMGFhMy0wMDdhLTQ2NjItOGJkMS03MGU4Zjk1YjQxOWYiLCJvZmZzZXQiOjk4LjY4NzV9fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bd27de4334abfd16013-e34a3c83c28e4b3ac226",
+          "file": "40-chat-history-error.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "history failure remains local and retry preserves composer and visible anchor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T21:41:24.022Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "history-retry-anchor",
+                      "contentType": "application/json",
+                      "body": "eyJiZWZvcmUiOnsiaWQiOiI3NWQ3NTM2Zi1hNGQ4LTQ2ZWMtYTc1Yy05NTIxYTcwOGM5NjMiLCJvZmZzZXQiOjkxfSwiYWZ0ZXIiOnsiaWQiOiI3NWQ3NTM2Zi1hNGQ4LTQ2ZWMtYTc1Yy05NTIxYTcwOGM5NjMiLCJvZmZzZXQiOjkyfX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bd27de4334abfd16013-df82a66975e468a70dac",
+          "file": "40-chat-history-error.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T21:41:12.034Z",
+    "duration": 13278.587,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

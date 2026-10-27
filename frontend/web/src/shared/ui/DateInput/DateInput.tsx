@@ -2,7 +2,7 @@ import styles from '@/shared/ui/DateInput/DateInput.module.css';
 import { DatePicker } from '@gravity-ui/date-components';
 import { MobileProvider } from '@gravity-ui/uikit';
 import { useDateInput } from '@/shared/ui/DateInput/hooks/useDateInput';
-import { useMediaQuery } from '@/shared/lib/media';
+import { useMobileLayout } from '@/shared/lib/media';
 import { DateButton } from '@/shared/ui/DateButton';
 
 export type DateInputProps = {
@@ -11,6 +11,7 @@ export type DateInputProps = {
   timezone: string;
   onChange: (value: string) => void;
   disabled?: boolean;
+  mobileSheet?: boolean;
   invalid?: boolean;
   clearable?: boolean;
   hideLabel?: boolean;
@@ -24,6 +25,7 @@ export const DateInput = ({
   timezone,
   onChange,
   disabled = false,
+  mobileSheet = false,
   invalid = false,
   clearable = true,
   hideLabel = false,
@@ -31,10 +33,10 @@ export const DateInput = ({
   compact = false,
 }: DateInputProps) => {
   const field = useDateInput(value, timezone, onChange, disabled);
-  const mobile = useMediaQuery('(max-width: 739px)');
+  const mobile = useMobileLayout();
 
   return (
-    <div className={styles['control-field']}>
+    <div className={styles['control-field']} data-sheet={mobileSheet && mobile}>
       <label
         htmlFor={field.id}
         className={hideLabel ? styles['hidden-label'] : undefined}
@@ -43,6 +45,7 @@ export const DateInput = ({
       </label>
       {compact && mobile ? (
         <DateButton
+          mobileSheet={mobileSheet}
           id={field.id}
           label={label}
           value={field.value}
@@ -55,7 +58,10 @@ export const DateInput = ({
           change={field.change}
         />
       ) : (
-        <div onClick={field.openFromField}>
+        <div
+          className={mobileSheet ? styles.chatPicker : undefined}
+          onClick={field.openFromField}
+        >
           <MobileProvider mobile={false}>
             <DatePicker
               id={field.id}

@@ -1521,22 +1521,29 @@
     - ios
     - android
   preconditions:
-    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
-      API и время.
-    - |-
-      Форма SHALL показывать все настройки без раскрывающихся блоков. Кнопки удаления
-      вариантов SHALL появляться только при наличии более двух дат. Ошибка отсутствующей
-      или повторяющейся даты SHALL отображаться у поля; отправка SHALL переводить фокус
-      к первому ошибочному полю. Прокрутка SHALL затрагивать только содержимое формы,
-      а календарь SHALL оставаться видимым и доступным внутри модального окна.
+    - Изолированный Go memory fixture и реально собранный клиент по testing/environments.md;
+      синтетические профили, зафиксированные build/API, часы, locale ru-RU, timezone и устройство.
+      Production и реальные сообщения не используются.
+    - "Mobile web: 320 × 760 и 390 × 844; iOS/Android: выбранный QA-телефон. Для низкой высоты — 390
+      × 430 и landscape 844 × 390 на web, реальные доступные ориентация/IME на native. Viewport не
+      подменяет системную клавиатуру; недоступное действие фиксируется blocked."
+    - На desktop web отдельно проверить общие действия при 1440 px; принятые отдельные страницы и
+      sidebar сохраняются. 768 px проверить по опубликованному breakpoint; мобильную композицию не
+      навязывать desktop.
+    - Участник открывает форму даты; вариантов/настроек больше доступной высоты, задан черновик и
+      участок чата выше конца.
   steps:
-    - action: варианты и настройки не помещаются по высоте
-      expected: прокручиваются поля, кнопка создания остаётся видимой тень над кнопкой появляется, пока
-        ниже остаётся непросмотренное содержимое фон не прокручивается, нажатие по нему закрывает
-        окно с сохранением черновика
+    - action: Добавить третий вариант, открыть календарь у нижней строки и прокрутить форму до конца,
+        затем обратно.
+      expected: Прокручиваются только поля, календарь доступен внутри панели, кнопка создания остаётся
+        видимой. Тень над кнопкой есть, пока ниже остаётся непросмотренное содержимое.
+    - action: Проверить все пять настроек и ошибку пустой/дублированной даты, затем нажать фон и снова
+        открыть форму.
+      expected: Настройки не скрыты в раскрывающие блоки; отправка фокусирует первое ошибочное поле. Фон
+        чата не прокручен; закрытие не публикует запрос, при открытии восстановлен черновик.
   cleanup:
-    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
-      настройки.
+    - Очистить только собственные fixture-данные после сохранения журнала/evidence; восстановить
+      ориентацию, размер текста и настройки клавиатуры.
   automation:
     web:
       status: manual
@@ -1559,362 +1566,34 @@
     path: openspec/changes/gathering-activity-feed/specs/event-feed/spec.md
     requirement: Завершённое движение диалога
     scenario: Закрытие шторки жестом
-    sha256: 76d3ba188539e5dc5973751537c4aaa94960d2ff948673aada1583ca657fe0cd
+    sha256: fb352927592f17328c93cd730d944345b1b5c363be3adc2fa7c56b604d8e8af6
   platforms:
     - web
     - ios
     - android
   preconditions:
-    - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
-      API и время.
-    - |-
-      Диалог SHALL анимировать открытие и закрытие, сохраняя содержимое и блокировку
-      фона до конца выхода. Уменьшение движения SHALL отключать анимации.
-      Вся верхняя область мобильной шторки, включая отступы над ручкой и по бокам,
-      SHALL поддерживать свайп вниз. Крестик SHALL отображаться только на десктопе.
+    - Изолированный Go memory fixture и реально собранный клиент по testing/environments.md;
+      синтетические профили, зафиксированные build/API, часы, locale ru-RU, timezone и устройство.
+      Production и реальные сообщения не используются.
+    - "Mobile web: 320 × 760 и 390 × 844; iOS/Android: выбранный QA-телефон. Для низкой высоты — 390
+      × 430 и landscape 844 × 390 на web, реальные доступные ориентация/IME на native. Viewport не
+      подменяет системную клавиатуру; недоступное действие фиксируется blocked."
+    - Открыта нижняя панель из чата с черновиком; выбран режим обычного движения и доступен режим
+      reduced motion.
   steps:
-    - action: пользователь тянет верхнюю область мобильной шторки вниз
-      expected: панель следует за пальцем после достаточного или быстрого свайпа уходит за нижний край и
-        возвращает фокус на кнопку открытия короткий жест возвращает панель без закрытия и потери
-        ввода
+    - action: Потянуть вниз коротким жестом верхнюю область панели, включая отступы над ручкой и сбоку,
+        затем отпустить.
+      expected: Панель следует жесту и возвращается без закрытия/потери данных; скролл полей не подменяет
+        жест верхней области.
+    - action: Повторить достаточный/быстрый свайп, затем переоткрыть и проверить крестик/системный Back.
+      expected: Панель уходит за нижний край; содержимое и блокировка фона живут до конца выхода.
+        Возвращается фокус открытия и исходный участок чата; Back не открывает отдельный экран.
+    - action: Повторить закрытие с reduced motion и на desktop через крестик.
+      expected: Уменьшение движения отключает анимацию без изменения результата; desktop сохраняет свой
+        диалог/маршрут, крестик доступен.
   cleanup:
-    - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
-      настройки.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-304D49BA
-  title: "Ограниченная загрузка и отображение истории: Первое непрочитанное далеко от хвоста"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Ограниченная загрузка и отображение истории
-    scenario: Первое непрочитанное далеко от хвоста
-    sha256: a482e5b9fc118786b2a0332a04ca6478b0755f16841a1d4c67683e50f6b7db62
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Лента SHALL загружать историю ограниченными страницами вокруг нужной позиции и ограничивать
-      объём сохранённых в памяти строк. Размер запроса и ответа SHALL NOT расти пропорционально всей
-      истории встречи.
-  steps:
-    - action: пользователь открывает встречу с большой историей и непрочитанным сообщением в середине
-      expected: клиент загружает окно вокруг него, не вычитывая последовательно всю историю
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-A697B69A
-  title: "Ограниченная загрузка и отображение истории: Длительная прокрутка"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Ограниченная загрузка и отображение истории
-    scenario: Длительная прокрутка
-    sha256: 8d7bcb4793bbe89b4ba43b23b42537c1fcb2c86ff51d3d3dfdb25f68ca9dfec2
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Лента SHALL загружать историю ограниченными страницами вокруг нужной позиции и ограничивать
-      объём сохранённых в памяти строк. Размер запроса и ответа SHALL NOT расти пропорционально всей
-      истории встречи.
-  steps:
-    - action: пользователь просмотрел тысячи записей
-      expected: клиент удаляет далёкие невидимые диапазоны из памяти, сохраняет якорь и умеет загрузить их
-        снова
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-025A8CA5
-  title: "Автоматическая дозагрузка с локальной ошибкой: Повтор после сбоя страницы"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Автоматическая дозагрузка с локальной ошибкой
-    scenario: Повтор после сбоя страницы
-    sha256: becc0287fea8858c541f29c19c581c89043d26c8ae5a53b94c90649794742cc8
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - При приближении к границе загруженного диапазона клиент SHALL автоматически запрашивать
-      следующую страницу без конкурентных одинаковых запросов. Ошибка SHALL оставлять показанные
-      записи и действие повтора у границы.
-  steps:
-    - action: запрос старых сообщений завершился ошибкой
-      expected: лента не заменяется экраном ошибки, ввод доступен и повтор использует прежнюю границу
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-9FADE3B3
-  title: "Стабильный якорь и идентичность строки: Старые строки и выросшая карточка"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Стабильный якорь и идентичность строки
-    scenario: Старые строки и выросшая карточка
-    sha256: 0d4e820585c251cdefaf7bca9751f62f28ff00ddb64a7b49fbcb1898a9720719
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Лента SHALL сохранять видимую строку и её смещение при prepend, изменении размеров, клавиатуре
-      и подтверждении исходящего. Собственное сообщение SHALL сохранять UI-идентичность при
-      получении серверного ID.
-  steps:
-    - action: над видимой строкой добавились старые записи или изменилась высота карточки
-      expected: читатель остаётся на прежней строке с прежним смещением в пределах допуска приёмки
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-E81D170C
-  title: "Стабильный якорь и идентичность строки: Подтверждение исходящего"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Стабильный якорь и идентичность строки
-    scenario: Подтверждение исходящего
-    sha256: f356467d24d4bd2163b95c68d97ebfd06df5236460941d0c04e433ae9c203cbd
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Лента SHALL сохранять видимую строку и её смещение при prepend, изменении размеров, клавиатуре
-      и подтверждении исходящего. Собственное сообщение SHALL сохранять UI-идентичность при
-      получении серверного ID.
-  steps:
-    - action: сервер подтвердил локально показанное сообщение
-      expected: оно не исчезает и не переносится между отдельными UI-контейнерами; серверный порядок
-        сохраняется
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-D0C7E8FB
-  title: "Управляемое следование за новыми сообщениями: Новое сообщение при чтении прошлого"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Управляемое следование за новыми сообщениями
-    scenario: Новое сообщение при чтении прошлого
-    sha256: 7345dab34b52c74ef295a90651a43ed363e03d0ba57c19be7b11cb3f2b836a1b
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Лента SHALL следовать за хвостом только когда пользователь уже находится у него либо явно
-      перешёл вниз. При чтении прошлого новые записи SHALL сохранять положение и давать отдельное
-      действие перехода.
-  steps:
-    - action: приходит чужое или подтверждается собственное сообщение, пока пользователь читает историю
-      expected: положение не меняется и доступна кнопка перехода к новым сообщениям
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-722B1526
-  title: "Начальная позиция и восстановление: Возврат после просмотра списка прочитавших"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Начальная позиция и восстановление
-    scenario: Возврат после просмотра списка прочитавших
-    sha256: 9ac51f55cfcdb950eb2d191e7121940b7df44f60da9e227aa6195f5f3660a569
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - При открытии клиент SHALL восстанавливать доступный сохранённый якорь, иначе первое
-      непрочитанное, иначе хвост. Перестройка окна SHALL NOT автоматически отмечать непоказанные
-      сообщения прочитанными.
-  steps:
-    - action: пользователь закрывает список прочитавших
-      expected: чат сохраняет положение и возвращает фокус к исходному сообщению
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-CCD3E2A3
-  title: "Загрузка и доступность мобильного чата: Узкий web с клавиатурой"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Загрузка и доступность мобильного чата
-    scenario: Узкий web с клавиатурой
-    sha256: 82fa4cd35968003cb40a9acf32b213d03ad5cfcc6658a80c396d0f1d0ff0ad85
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL показывать скелетоны только в загружаемой области, сохранять composer и доступные
-      данные, поддерживать системный размер текста, screen reader и Reduce Motion. Клавиатура SHALL
-      NOT создавать лишнюю прокрутку страницы или перекрывать ввод.
-  steps:
-    - action: пользователь открывает клавиатуру на iPhone при длинной ссылке и крупном тексте
-      expected: ввод виден, горизонтального scroll нет и вертикально прокручивается только лента
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
-  automation:
-    web:
-      status: manual
-      health: unknown
-      tests: []
-    ios:
-      status: manual
-      health: unknown
-      tests: []
-    android:
-      status: manual
-      health: unknown
-      tests: []
-- id: TC-EVENT-FEED-84D3BA20
-  title: "Загрузка и доступность мобильного чата: Виртуализация и клавиатурный фокус"
-  lifecycle: active
-  level: e2e
-  risk: high
-  source:
-    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
-    requirement: Загрузка и доступность мобильного чата
-    scenario: Виртуализация и клавиатурный фокус
-    sha256: b5e4df2e52619b3f1639b44eb9bc97e04b4ddd0c71786f6811284bc7e1261e0c
-  platforms:
-    - web
-    - ios
-    - android
-  preconditions:
-    - Изолированное окружение по testing/environments.md.
-    - Клиент SHALL показывать скелетоны только в загружаемой области, сохранять composer и доступные
-      данные, поддерживать системный размер текста, screen reader и Reduce Motion. Клавиатура SHALL
-      NOT создавать лишнюю прокрутку страницы или перекрывать ввод.
-  steps:
-    - action: сфокусированная строка оказывается у границы окна
-      expected: клиент сохраняет её до перевода фокуса и не перехватывает фокус при поступлении новых записей
-  cleanup:
-    - Удалить только созданные этим прогоном тестовые данные.
+    - Очистить только собственные fixture-данные после сохранения журнала/evidence; восстановить
+      ориентацию, размер текста и настройки клавиатуры.
   automation:
     web:
       status: manual

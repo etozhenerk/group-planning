@@ -1,5 +1,5 @@
 import { FloatingPortal, FloatingFocusManager } from '@floating-ui/react';
-import { Smile } from 'lucide-react';
+import type { RefObject } from 'react';
 import { ReactionChooser } from '@/features/message-reactions/ui/ReactionChooser';
 import { useReactionPopover } from '@/features/message-reactions/ui/ReactionPopover/hooks/useReactionPopover';
 import styles from '@/features/message-reactions/ui/ReactionPopover/ReactionPopover.module.css';
@@ -9,7 +9,11 @@ export type ReactionPopoverProps = {
   change: (value: boolean) => void;
   choose: (emoji: string) => void;
   pending: boolean;
-  people?: () => void;
+  anchor: RefObject<HTMLElement | null>;
+  boundary: RefObject<HTMLElement | null>;
+  context: string;
+  selected: string[];
+  readers?: (() => void) | undefined;
 };
 
 export const ReactionPopover = ({
@@ -17,47 +21,44 @@ export const ReactionPopover = ({
   change,
   choose,
   pending,
-  people,
+  anchor,
+  boundary,
+  context,
+  selected,
+  readers,
 }: ReactionPopoverProps) => {
-  const popover = useReactionPopover(open, change);
+  const popover = useReactionPopover(open, change, anchor, boundary);
 
-  return (
-    <>
-      <button
-        type="button"
-        className={styles.trigger}
-        ref={(element) => popover.refs.setReference(element)}
-        aria-label="Добавить реакцию"
-        aria-expanded={open}
-        onClick={() => change(!open)}
-        {...popover.getReferenceProps()}
+  return popover.transition.isMounted ? (
+    <FloatingPortal>
+      <FloatingFocusManager
+        context={popover.context}
+        modal={false}
+        initialFocus={0}
+        getInsideElements={popover.inside}
+        returnFocus={anchor}
       >
-        <Smile size={20} />
-      </button>
-      {open && (
-        <FloatingPortal>
-          <FloatingFocusManager context={popover.context} modal={false}>
-            <div
-              ref={(element) => popover.refs.setFloating(element)}
-              style={popover.floatingStyles}
-              className={styles.panel}
-              aria-label="Реакция"
-              {...popover.getFloatingProps()}
-            >
-              <ReactionChooser
-                choose={choose}
-                pending={pending}
-                close={() => change(false)}
-              />
-              {people && (
-                <button type="button" className={styles.people} onClick={people}>
-                  Кто отреагировал
-                </button>
-              )}
-            </div>
-          </FloatingFocusManager>
-        </FloatingPortal>
-      )}
-    </>
-  );
+        <div
+          ref={(element) => popover.refs.setFloating(element)}
+          style={popover.floatingStyles}
+          className={styles.panel}
+          aria-label="Реакция"
+          data-chat-overlay="reaction"
+          data-closing={!open}
+          {...popover.getFloatingProps()}
+        >
+          <div style={popover.transition.styles} className={styles.surface}>
+            <ReactionChooser
+              readers={readers}
+              choose={choose}
+              pending={pending}
+              close={() => change(false)}
+              selected={selected}
+              context={context}
+            />
+          </div>
+        </div>
+      </FloatingFocusManager>
+    </FloatingPortal>
+  ) : null;
 };

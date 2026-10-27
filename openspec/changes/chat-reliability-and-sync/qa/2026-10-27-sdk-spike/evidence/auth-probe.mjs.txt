@@ -1,0 +1,6 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {Centrifuge} from 'centrifuge';import WS from 'ws';
+const base=fs.readFileSync('../endpoint.txt','utf8');let attempts=0;let errors=0;
+class MissingSession extends WS {constructor(url,protocols){super(url,protocols);attempts++}}
+const client=new Centrifuge(base.replace('http','ws')+'/api/v1/realtime',{websocket:MissingSession,minReconnectDelay:150,maxReconnectDelay:150,timeout:1000});
+client.on('error',()=>errors++);client.connect();await new Promise(r=>setTimeout(r,1100));const state=client.state;client.disconnect();assert(attempts>=2);assert.equal(state,'connecting');
+console.log(JSON.stringify({result:'confirmed-integration-hazard',scenario:'HTTP 401 at upgrade with missing session',attempts,errors,stateBeforeAdapterStop:state,interpretation:'SDK transport retries; application adapter must stop on authoritative HTTP session 401/403. No credentials logged.'},null,2));

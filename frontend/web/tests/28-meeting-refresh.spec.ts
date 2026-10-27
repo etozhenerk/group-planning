@@ -18,7 +18,7 @@ test('new meeting goes directly to chat; composer panels preserve cursor and dra
 
   await page.getByRole('button', { name: 'Выбрать эмодзи', exact: true }).click();
   await page.getByRole('searchbox', { name: 'Найти эмодзи' }).fill('алое сердце');
-  await page.getByRole('button', { name: 'алое сердце', exact: true }).click();
+  await page.getByRole('button', { name: /^(Вставить: )?алое сердце$/ }).click();
   await expect(input).toHaveValue('Привет ❤️друзья');
   await page.getByRole('button', { name: 'Добавить к встрече', exact: true }).click();
   await expect(page.getByRole('searchbox')).toHaveCount(0);
@@ -141,7 +141,8 @@ test('reaction toggle is confirmed by the API and persists on reload', async ({
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   const row = page.getByTestId('feed-message').filter({ hasText: 'Принесу чай' });
   await expect(row).toBeVisible();
-  await row.getByRole('button', { name: 'Добавить реакцию' }).click();
+  await expect(row).toHaveAttribute('data-delivery', 'accepted');
+  await row.getByTestId('message-actions').press('Enter');
   await page
     .getByRole('dialog', { name: 'Реакция', exact: true })
     .getByRole('button', { name: '👍', exact: true })
@@ -155,11 +156,10 @@ test('reaction toggle is confirmed by the API and persists on reload', async ({
     'aria-pressed',
     'true',
   );
-  await row.getByRole('button', { name: 'Добавить реакцию' }).click();
-  await page.getByRole('button', { name: 'Кто отреагировал' }).click();
-  await expect(page.getByRole('dialog', { name: 'Реакции', exact: true })).toContainText(
-    'Саша',
-  );
+  await row.getByRole('button', { name: '👍: 1' }).press('Shift+F10');
+  await expect(
+    page.getByRole('dialog', { name: 'Кто отреагировал', exact: true }),
+  ).toContainText('Саша');
   await page.keyboard.press('Escape');
   await row.getByRole('button', { name: '👍: 1' }).click();
   await expect(row.getByRole('button', { name: '👍: 1' })).toHaveCount(0);

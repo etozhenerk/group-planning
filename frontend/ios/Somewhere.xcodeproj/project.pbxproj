@@ -10,6 +10,8 @@
 		B00000000000000000000013 /* cases.json in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000012 /* cases.json */; };
 		E00000000000000000000003 /* YandexLoginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000002 /* YandexLoginSDK */; };
 		E00000000000000000000004 /* YandexLoginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000002 /* YandexLoginSDK */; };
+		F00000000000000000000003 /* SwiftCentrifuge in Frameworks */ = {isa = PBXBuildFile; productRef = F00000000000000000000002 /* SwiftCentrifuge */; };
+		F00000000000000000000004 /* SwiftCentrifuge in Frameworks */ = {isa = PBXBuildFile; productRef = F00000000000000000000002 /* SwiftCentrifuge */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E00000000000000000000003 /* YandexLoginSDK in Frameworks */,
+				F00000000000000000000003 /* SwiftCentrifuge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E00000000000000000000004 /* YandexLoginSDK in Frameworks */,
+				F00000000000000000000004 /* SwiftCentrifuge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +150,7 @@
 			name = Somewhere;
 			packageProductDependencies = (
 				E00000000000000000000002 /* YandexLoginSDK */,
+				F00000000000000000000002 /* SwiftCentrifuge */,
 			);
 			productName = Somewhere;
 			productReference = A00000000000000000000006 /* Somewhere.app */;
@@ -191,6 +196,7 @@
 			name = SomewhereUITestHost;
 			packageProductDependencies = (
 				E00000000000000000000002 /* YandexLoginSDK */,
+				F00000000000000000000002 /* SwiftCentrifuge */,
 			);
 			productName = SomewhereUITestHost;
 			productReference = C00000000000000000000003 /* SomewhereUITestHost.app */;
@@ -243,6 +249,8 @@
 			);
 			mainGroup = A00000000000000000000003;
 			packageReferences = (
+				F00000000000000000000001 /* XCRemoteSwiftPackageReference "centrifuge-swift" */,
+				F00000000000000000000005 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				E00000000000000000000001 /* XCRemoteSwiftPackageReference "yandex-login-sdk-ios" */,
 			);
 			productRefGroup = A00000000000000000000005 /* Products */;
@@ -483,6 +491,8 @@
 				version = 3.2.0;
 			};
 		};
+		F00000000000000000000001 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/centrifugal/centrifuge-swift.git"; requirement = {kind = exactVersion; version = 0.11.0; }; };
+		F00000000000000000000005 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/apple/swift-protobuf"; requirement = {kind = exactVersion; version = 1.35.0; }; };
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -491,6 +501,7 @@
 			package = E00000000000000000000001 /* XCRemoteSwiftPackageReference "yandex-login-sdk-ios" */;
 			productName = YandexLoginSDK;
 		};
+		F00000000000000000000002 = {isa = XCSwiftPackageProductDependency; package = F00000000000000000000001; productName = SwiftCentrifuge; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A00000000000000000000001 /* Project object */;

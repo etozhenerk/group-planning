@@ -203,6 +203,12 @@ test('approved HTML and implemented screens at four widths', async ({
       });
     }
 
+    if (width < 740) {
+      await page
+        .getByRole('button', { name: 'Информация о встрече', exact: true })
+        .click();
+    }
+
     await page
       .getByRole('button', { name: 'Пригласить друзей', exact: true })
       .first()
@@ -218,6 +224,13 @@ test('approved HTML and implemented screens at four widths', async ({
       animations: 'disabled',
     });
     await page.keyboard.press('Escape');
+
+    if (width < 740) {
+      await expect(page.getByLabel('Ссылка приглашения')).not.toBeVisible();
+      await expect(page.getByRole('dialog', { name: fresh.meeting.title })).toBeVisible();
+      await page.keyboard.press('Escape');
+    }
+
     await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Добавить к встрече', exact: true }).click();
     await page.screenshot({
@@ -267,7 +280,9 @@ test('approved HTML and implemented screens at four widths', async ({
         fullPage: true,
         animations: 'disabled',
       });
-      await reference.goto(`/__design/action-${kind}.html`);
+      await reference.goto(
+        `/__design/revisions/2026-10-27-telegram-chat/chat.html?view=${kind}`,
+      );
       await reference.screenshot({
         path: `${output}/action-${kind}-${width}-reference.png`,
         fullPage: true,
@@ -299,11 +314,14 @@ test('approved HTML and implemented screens at four widths', async ({
 
       await expect(row).toBeVisible();
       await capture('chat-filled', 'chat.html');
-      await row.getByRole('button', { name: 'Добавить реакцию' }).click();
+      await row.getByTestId('message-actions').press('Enter');
       await expect(
         page.getByRole('dialog', { name: 'Реакция', exact: true }),
       ).toBeVisible();
-      await capture('reactions', 'chat-reactions.html');
+      await capture(
+        'reactions',
+        'revisions/2026-10-27-telegram-chat/chat.html?view=quick',
+      );
       await page.keyboard.press('Escape');
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       const chooser = page.waitForEvent('filechooser');
@@ -402,8 +420,8 @@ test('shared native design fixture matches the populated chat', async ({
       .getByTestId('feed-message')
       .filter({ hasText: 'Я принесу настолки. Во что будем играть?' });
 
-    await message.getByRole('button', { name: 'Добавить реакцию' }).click();
-    await capture('reactions', 'chat-reactions.html');
+    await message.getByTestId('message-actions').press('Enter');
+    await capture('reactions', 'revisions/2026-10-27-telegram-chat/chat.html?view=quick');
     await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'Выбрать эмодзи' }).click();
     await capture('emoji', 'chat-emoji.html');

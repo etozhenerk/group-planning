@@ -1,3 +1,5 @@
+import { useMobileLayout, useMediaQuery } from '@/shared/lib/media';
+import { designTokens } from '@/shared/config/design-tokens';
 import styles from '@/entities/meeting/ui/MeetingTimeFields/MeetingTimeFields.module.css';
 import type { MeetingDraft } from '@/entities/meeting/model/types';
 import { useMeetingTimeFields } from '@/entities/meeting/ui/MeetingTimeFields/hooks/useMeetingTimeFields';
@@ -10,6 +12,7 @@ export type MeetingTimeFieldsProps = {
   onChange: (value: MeetingDraft) => void;
   errors: Record<string, string>;
   disabled?: boolean;
+  mobileSheet?: boolean;
 };
 
 export const MeetingTimeFields = ({
@@ -17,13 +20,21 @@ export const MeetingTimeFields = ({
   onChange,
   errors,
   disabled = false,
+  mobileSheet = false,
 }: MeetingTimeFieldsProps) => {
+  const mobile = useMobileLayout();
+  const narrow = useMediaQuery(`(max-width: ${designTokens.breakpointChatNarrowWidth})`);
   const fields = useMeetingTimeFields(value, onChange);
 
   return (
-    <div className={styles['time-fields']}>
+    <div
+      className={styles['time-fields']}
+      data-sheet={mobileSheet && mobile}
+      data-narrow={narrow}
+    >
       <div className={styles['form-time']}>
         <DateInput
+          mobileSheet={mobileSheet}
           compact
           value={fields.date}
           timezone={value.timezone}
@@ -32,6 +43,7 @@ export const MeetingTimeFields = ({
           disabled={disabled}
         />
         <TimeInput
+          mobileSheet={mobileSheet}
           value={fields.time}
           onChange={fields.changeTime}
           invalid={!!errors.starts_at}
@@ -46,6 +58,7 @@ export const MeetingTimeFields = ({
       )}
       {errors.ambiguous && (
         <SelectInput
+          mobileSheet={mobileSheet}
           label="Повторяющееся время"
           value={value.timeChoice}
           onChange={fields.changeChoice}

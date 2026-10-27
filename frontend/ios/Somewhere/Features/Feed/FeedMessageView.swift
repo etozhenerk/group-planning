@@ -5,63 +5,86 @@ struct FeedMessageView: View {
     let text: String
     let date: Date
     let own: Bool
-    @ScaledMetric(relativeTo: .body) private var bodySize = 14.0
-    @ScaledMetric(relativeTo: .caption) private var authorSize = 11.0
-    @ScaledMetric(relativeTo: .caption2) private var timeSize = 11.0
-    @State private var availableWidth: CGFloat = 0
+    var entryID: UUID?
+    var selected = false
+    @ScaledMetric(relativeTo: .body) private var bodySize = DesignTokens.typographySizeChatMessage
+    @ScaledMetric(relativeTo: .caption) private var authorSize = DesignTokens.typographySizeLabel
+    @State private var availableWidth = DesignTokens.spaceS0
+
     private var textWidth: CGFloat? {
         guard availableWidth > 0 else { return nil }
         let natural = (text as NSString).size(withAttributes: [
             .font: UIFont.systemFont(ofSize: bodySize)
         ]).width
-        return min(ceil(natural), max(0, availableWidth * 0.94 - 58))
+        let reserved =
+            DesignTokens.componentMobileChatMessageAvatar
+            + DesignTokens.componentMobileChatMessageGap
+            + DesignTokens.componentMobileChatBubbleInsetInline * 2 + DesignTokens.spaceS12
+        return min(ceil(natural), max(0, availableWidth - reserved))
     }
+
     var body: some View {
-        HStack(alignment: .bottom, spacing: 7) {
-            if own {
-                Spacer(minLength: 0)
-            } else {
-                ParticipantAvatar(
-                    user: user, size: 25, color: Color(designHex: own ? 0xd8c6ad : 0xc2b1d5))
-            }
-            VStack(alignment: own ? .trailing : .leading, spacing: 5) {
-                HStack(alignment: .firstTextBaseline, spacing: 9) {
-                    Text(user.displayName).font(
-                        .system(size: authorSize, weight: .semibold)
-                    )
-                    .foregroundStyle(AppPalette.muted)
-                    Text(FeedPresentation.time(date)).font(.system(size: timeSize)).foregroundStyle(
-                        AppPalette.muted)
-                }.frame(minHeight: 16.5).padding(.horizontal, 0)
-                Text(text).font(.system(size: bodySize)).lineSpacing(5.4)
+        HStack(alignment: .top, spacing: DesignTokens.componentMobileChatMessageGap) {
+            if own { Spacer(minLength: DesignTokens.spaceS0) } else { avatar }
+            VStack(alignment: own ? .trailing : .leading, spacing: DesignTokens.spaceS4) {
+                HStack(spacing: DesignTokens.spaceS10) {
+                    Text(user.displayName).font(.system(size: authorSize, weight: .semibold))
+                        .foregroundStyle(own ? DesignTokens.colorMuted : DesignTokens.colorAccent)
+                    Text(FeedPresentation.time(date)).font(.system(size: authorSize))
+                        .foregroundStyle(DesignTokens.colorMuted)
+                }
+                Text(text).font(.system(size: bodySize))
                     .frame(width: textWidth, alignment: .leading).fixedSize(
                         horizontal: false, vertical: true
                     )
-                    .padding(.vertical, 2.7)
-                    .foregroundStyle(own ? AppPalette.actionText : AppPalette.text)
-                    .padding(.horizontal, 13).padding(.vertical, 10)
+                    .foregroundStyle(own ? DesignTokens.colorOwnText : DesignTokens.colorText)
+                    .padding(.horizontal, DesignTokens.componentMobileChatBubbleInsetInline)
+                    .padding(.vertical, DesignTokens.componentMobileChatBubbleInsetBlock)
                     .background(
-                        own ? AppPalette.ownMessage : AppPalette.surface,
-                        in: UnevenRoundedRectangle(
-                            topLeadingRadius: 18,
-                            bottomLeadingRadius: own ? 18 : 5, bottomTrailingRadius: own ? 5 : 18,
-                            topTrailingRadius: 18))
+                        own ? DesignTokens.colorOwnMessage : DesignTokens.colorMessage, in: bubble
+                    )
+                    .overlay {
+                        if selected {
+                            bubble.stroke(DesignTokens.colorAccent, lineWidth: DesignTokens.spaceS2)
+                                .padding(-DesignTokens.componentMobileChatBubbleFocusOffset)
+                        }
+                    }
+                    .anchorPreference(key: ReactionAnchorPreference.self, value: .bounds) {
+                        anchor in
+                        entryID.map { [$0: anchor] } ?? [:]
+                    }
             }.layoutPriority(1)
-            if own {
-                ParticipantAvatar(
-                    user: user, size: 25, color: Color(designHex: own ? 0xd8c6ad : 0xc2b1d5))
-            } else {
-                Spacer(minLength: 0)
+            if own { avatar } else { Spacer(minLength: DesignTokens.spaceS0) }
+        }.frame(maxWidth: .infinity)
+            .onGeometryChange(for: CGFloat.self) {
+                $0.size.width
+            } action: {
+                availableWidth = $0
             }
-        }
-        .frame(maxWidth: .infinity)
-        .onGeometryChange(for: CGFloat.self) {
-            $0.size.width
-        } action: {
-            availableWidth = $0
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            "\(user.displayName), \(FeedPresentation.time(date)). \(text)")
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(user.displayName), \(FeedPresentation.time(date)). \(text)")
+    }
+
+    private var bubble: UnevenRoundedRectangle {
+        UnevenRoundedRectangle(
+            topLeadingRadius: own
+                ? DesignTokens.componentMobileChatBubbleRadius
+                : DesignTokens.componentMobileChatBubbleCornerRadius,
+            bottomLeadingRadius: DesignTokens.componentMobileChatBubbleRadius,
+            bottomTrailingRadius: DesignTokens.componentMobileChatBubbleRadius,
+            topTrailingRadius: own
+                ? DesignTokens.componentMobileChatBubbleCornerRadius
+                : DesignTokens.componentMobileChatBubbleRadius)
+    }
+
+    private var avatar: some View {
+        MeetingInfoAvatar(
+            user: user, size: DesignTokens.componentMobileChatMessageAvatar,
+            textSize: DesignTokens.typographySizeCaption,
+            weight: DesignTokens.typographyWeightSemibold,
+            color: own ? DesignTokens.colorRosterSand : DesignTokens.colorRosterMint,
+            textColor: DesignTokens.colorRosterText
+        )
+        .padding(.top, authorSize * DesignTokens.typographyLineHeightLabel + DesignTokens.spaceS4)
     }
 }

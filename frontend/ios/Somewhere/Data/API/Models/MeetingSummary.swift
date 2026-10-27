@@ -12,6 +12,8 @@ struct MeetingSummary: Codable, Equatable, Sendable {
     let myRSVP: RSVPAnswer?
     let myRSVPRevision: ServerCounter
 
+    var unreadCount: ServerCounter?
+    var firstUnread: UUID?
     var period: String?
     var startsOn: String?
     var organizerID: UUID?
@@ -21,6 +23,8 @@ struct MeetingSummary: Codable, Equatable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case id
+        case unreadCount = "unread_count"
+        case firstUnread = "first_unread"
         case organizerID = "organizer_id"
         case participantPreview = "participant_preview"
         case memoryPhotoCount = "memory_photo_count"

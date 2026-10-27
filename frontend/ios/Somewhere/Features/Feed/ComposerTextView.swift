@@ -5,23 +5,27 @@ struct ComposerTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var selection: NSRange
     @Binding var focused: Bool
-    func makeUIView(context: Context) -> UITextView {
-        let view = UITextView()
+    func makeUIView(context: Context) -> ComposerInputView {
+        let view = ComposerInputView()
         view.delegate = context.coordinator
         view.backgroundColor = .clear
         view.font = UIFontMetrics(forTextStyle: .body).scaledFont(
-            for: UIFont.systemFont(ofSize: 15))
+            for: UIFont.systemFont(ofSize: DesignTokens.typographySizeBody))
         view.adjustsFontForContentSizeCategory = true
-        view.textColor = .label
-        view.tintColor = .label
-        view.textContainerInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        view.textColor = UIColor(DesignTokens.colorText)
+        view.tintColor = UIColor(DesignTokens.colorAccent)
+        view.textContainerInset = UIEdgeInsets(
+            top: DesignTokens.componentChatComposerInputInsetTop,
+            left: DesignTokens.componentChatComposerInputInsetStart,
+            bottom: DesignTokens.componentChatComposerInputInsetBottom, right: 0)
+        view.textContainer.lineFragmentPadding = 0
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.accessibilityLabel = "Сообщение"
         view.accessibilityIdentifier = "message-input"
         view.isScrollEnabled = false
         return view
     }
-    func updateUIView(_ view: UITextView, context: Context) {
+    func updateUIView(_ view: ComposerInputView, context: Context) {
         context.coordinator.parent = self
         context.coordinator.updating = true
         defer { context.coordinator.updating = false }
@@ -33,18 +37,27 @@ struct ComposerTextView: UIViewRepresentable {
             view.selectedRange = selection
         }
         if focused && !view.isFirstResponder { view.becomeFirstResponder() }
+        if !focused && view.isFirstResponder { view.resignFirstResponder() }
+        view.updatePlaceholder()
     }
-    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize?
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: ComposerInputView, context: Context)
+        -> CGSize?
     {
         guard let width = proposal.width else { return nil }
         let needed = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
             .height
         let maximum = max(
-            130,
-            UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.systemFont(ofSize: 15))
-                .lineHeight * 6)
+            DesignTokens.componentChatComposerInputMaxHeight,
+            UIFontMetrics(forTextStyle: .body).scaledFont(
+                for: UIFont.systemFont(ofSize: DesignTokens.typographySizeBody)
+            )
+            .lineHeight
+                * (DesignTokens.componentChatComposerInputMaxHeight
+                    / DesignTokens.componentChatComposerInputLineHeight))
         uiView.isScrollEnabled = needed > maximum
-        return CGSize(width: width, height: min(max(44, needed), maximum))
+        return CGSize(
+            width: width,
+            height: min(max(DesignTokens.componentChatComposerInputMinHeight, needed), maximum))
     }
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     @MainActor final class Coordinator: NSObject, UITextViewDelegate {
@@ -55,6 +68,7 @@ struct ComposerTextView: UIViewRepresentable {
             guard !updating else { return }
             parent.text = textView.text
             parent.selection = textView.selectedRange
+            (textView as? ComposerInputView)?.updatePlaceholder()
         }
         func textViewDidChangeSelection(_ textView: UITextView) {
             guard !updating else { return }

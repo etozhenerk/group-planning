@@ -1,0 +1,81 @@
+{
+  "designVersion": "2.1.0",
+  "candidate": "r8",
+  "sourceFreezeAt": "2026-10-27T17:23:05.401001+00:00",
+  "scope": "Web: модальные действия чата, long press/context menu реакций, сохранение focus/draft/scroll при переходах, raw inline poll/task, точные SVG чата, scoped calendar mask.",
+  "checks": [
+    {
+      "check": "npm run web:check",
+      "status": "passed",
+      "evidence": "web-check-r2.log",
+      "tests": 100,
+      "testFiles": 27
+    },
+    {
+      "check": "npm run web:build",
+      "status": "passed",
+      "evidence": "web-build.log"
+    },
+    {
+      "check": "npm run build:demo --workspace @somewhere/web",
+      "status": "passed",
+      "evidence": "web-build-demo.log"
+    },
+    {
+      "check": "Затронутые date/modal E2E: ширины 320/390/1440, desktop actions Chromium/WebKit",
+      "status": "passed",
+      "tests": 5,
+      "evidence": "calendar-e2e-r2.log"
+    },
+    {
+      "check": "Полная navigation/hold/share регрессия после исправления маршрутов",
+      "status": "passed-on-r5",
+      "tests": 32,
+      "evidence": "../web-r5/navigation-e2e.log"
+    },
+    {
+      "check": "Raw icon smoke после замены всех chat glyphs",
+      "status": "19-passed-2-failed-on-r7",
+      "evidence": "../web-r7/icon-smoke.log",
+      "note": "Два calendar теста использовали неверный год fixture; исправлены. Scoped mask обнаружена при самопроверке screenshot и исправлена в r8, все 5 затронутых сценариев passed."
+    },
+    {
+      "check": "Исходный полный E2E",
+      "status": "154-passed-8-failed-1-skipped-on-r1",
+      "evidence": "../web-r1/e2e.log",
+      "note": "Ошибки сохранены. 6 устаревших ожиданий desktopPage обновлены, 2 ошибки race picker/people исправлены. Последующие затронутые прогоны проверяют исправления; полный suite на r8 не повторялся."
+    },
+    {
+      "check": "Сверка 24 SVG glyphs и calendar mask с raw",
+      "status": "passed",
+      "evidence": "raw-icon-audit.json"
+    },
+    {
+      "check": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "check": "Final test ESLint/Prettier",
+      "status": "passed"
+    },
+    {
+      "check": "npm run design:check",
+      "status": "blocked-resolved-legacy-inventory",
+      "note": "Требуется design:prune у координатора; старый inventory не расширялся."
+    }
+  ],
+  "origin": {
+    "url": "https://127.0.0.1:8445/",
+    "status": 200,
+    "indexMatchesDemo": true,
+    "evidence": "origin-check.json",
+    "serverRestarted": false,
+    "apiWrites": false
+  },
+  "independentAcceptance": "Не заявлена. Координатор ведёт независимые design-review и feature-test; Mac lock блокировал web live review.",
+  "history": "r1–r7 logs, failures, traces, screenshots и receipts сохранены. r4–r8 demo snapshots сохранены в .cache/qa/chat-correction-2.1.0/.",
+  "warnings": [
+    "Vite сообщает о крупных chunks; build успешен.",
+    "Один cross-platform E2E требует отдельного native fixture и остался skipped в полном r1."
+  ]
+}

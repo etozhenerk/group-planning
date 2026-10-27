@@ -5,6 +5,7 @@ struct CoverImageView: View {
     let session: SessionStore?
     let thumbnail: Bool
     let thumbnailSize: CGFloat
+    let settingsThumbnail: Bool
     @State private var owner: CoverImageOwner
 
     private struct LoadKey: Hashable {
@@ -14,12 +15,13 @@ struct CoverImageView: View {
 
     init(
         source: CoverImageSource, api: APIClient? = nil, session: SessionStore? = nil,
-        thumbnail: Bool = false, thumbnailSize: CGFloat = 64
+        thumbnail: Bool = false, thumbnailSize: CGFloat = 64, settingsThumbnail: Bool = false
     ) {
         self.source = source
         self.session = session
         self.thumbnail = thumbnail
         self.thumbnailSize = thumbnailSize
+        self.settingsThumbnail = settingsThumbnail
         _owner = State(initialValue: CoverImageOwner(api: api, session: session))
     }
 
@@ -34,6 +36,21 @@ struct CoverImageView: View {
     }
 
     var body: some View {
+        Group {
+            if settingsThumbnail {
+                image.clipShape(
+                    RoundedRectangle(cornerRadius: DesignTokens.componentMeetingSettingsCoverRadius)
+                )
+            } else {
+                image
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+            }
+        }
+        .task(id: key) { await owner.load(source) }
+        .onDisappear { owner.clear() }
+    }
+
+    private var image: some View {
         GeometryReader { geometry in
             Group {
                 if owner.requestedSource == source, let image = owner.image {
@@ -54,8 +71,5 @@ struct CoverImageView: View {
         }
         .aspectRatio(thumbnail ? 1 : 16.0 / 9.0, contentMode: .fit)
         .frame(width: thumbnail ? thumbnailSize : nil, height: thumbnail ? thumbnailSize : nil)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .task(id: key) { await owner.load(source) }
-        .onDisappear { owner.clear() }
     }
 }

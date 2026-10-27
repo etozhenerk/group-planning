@@ -4,9 +4,12 @@ import dev.groupplanning.android.data.api.WireResponse
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.CalendarCounts
 import dev.groupplanning.android.data.api.models.CalendarPage
+import dev.groupplanning.android.data.api.models.ChatReadInfo
 import dev.groupplanning.android.data.api.models.MeetingPeriod
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.api.requests.CalendarFilter
 import dev.groupplanning.android.data.repository.CalendarRepository
+import dev.groupplanning.android.data.repository.ChatViewport
 import dev.groupplanning.android.support.Fixtures
 import dev.groupplanning.android.support.SessionHarness
 import java.util.UUID
@@ -153,5 +156,63 @@ class CalendarRepositoryTests {
         h.session.logout()
         assertNull(h.session.state.value.data.calendar.page)
         assertNull(h.session.state.value.data.calendar.counts)
+    }
+
+    @Test fun aCalendarResponseStartedBeforeReadCannotRestoreUnreadOrRevokedAnchor() = runTest {
+        val h = SessionHarness(StandardTestDispatcher(testScheduler))
+        h.login()
+        val repository = CalendarRepository(h.session)
+        val meeting = sample.meetings.single()
+        val zero = ServerCounter.Zero
+        val info = ChatReadInfo(zero, zero, zero, null)
+        val gate = CompletableDeferred<Unit>()
+        val started = CompletableDeferred<Unit>()
+        h.transport.handle("meetings") {
+            started.complete(Unit)
+            gate.await()
+            WireResponse(
+                200,
+                "application/json",
+                apiJson.encodeToString(
+                    sample.copy(
+                        meetings = listOf(
+                            meeting.copy(
+                                unreadCount = ServerCounter(
+                                    "9",
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        }
+        val old = launch { repository.load(filter, null) }
+        started.await()
+        h.session.beginData {
+            it.copy(
+                chatReadInfo = mapOf(meeting.id to info),
+                readVersions = mapOf(
+                    meeting.id to ServerCounter("12"),
+                ),
+                chatViewports = mapOf(
+                    meeting.id to
+                        ChatViewport(
+                            UUID.randomUUID(),
+                            -8f,
+                            false,
+                        ),
+                ),
+            )
+        }
+        gate.complete(Unit)
+        old.join()
+        assertEquals(
+            zero,
+            h.session.state.value.data.calendar.page?.meetings?.single()?.unreadCount,
+        )
+        h.session.updateAccess(meeting.id, false, h.session.state.value.generation)
+        assertTrue(h.session.state.value.data.chatViewports.isEmpty())
+        assertTrue(h.session.state.value.data.chatReadInfo.isEmpty())
+        assertTrue(h.session.state.value.data.readVersions.isEmpty())
     }
 }

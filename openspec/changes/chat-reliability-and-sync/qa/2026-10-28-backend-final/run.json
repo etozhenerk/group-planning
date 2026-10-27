@@ -1,0 +1,730 @@
+{
+  "schemaVersion": 1,
+  "planHash": "f1a43054db2ac5efa6df3787cd85e138c9bda7d53b0e887f00d9e6939e31fc11",
+  "checks": [
+    {
+      "id": "TC-CHAT-READ-STATE-068DA926/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "150 во всех ответах, projection_version не меняется, sync пуст, list unread0, canonical receipt1; fault откатил marker/journal/outbox.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-99A5AEEE/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "422 для недопустимых значений,403 после revoke/outsider,401 после удаления; MaxUint64 допустим только для реально существующей записи в отдельном sparse fixture.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        },
+        {
+          "path": "independent/read-probes.jsonl",
+          "kind": "log",
+          "sha256": "07783381f758b58f14bf34c431712cb23f0fd46a331d1aa519253649cd1f2e37"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-284DD6EE/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Unread2→1→0; first_unread первый→второй→пусто; poll/system/reaction/own не увеличили count.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-mixed-probes-r2.jsonl",
+          "kind": "log",
+          "sha256": "abb633735f769aefbd5b0f339a368caf0806ad9b8c755289af957be67aa56f3c"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-8A47BDBD/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "10k baseline10003 actual0 unread0 согласно observed commit; receipt0. Legacy first authorized read initializes once безjournal/hints; unauthorized/continuation не создают stream; оба access barriers403.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-mixed-probes-r2.jsonl",
+          "kind": "log",
+          "sha256": "abb633735f769aefbd5b0f339a368caf0806ad9b8c755289af957be67aa56f3c"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-probes.jsonl",
+          "kind": "log",
+          "sha256": "07783381f758b58f14bf34c431712cb23f0fd46a331d1aa519253649cd1f2e37"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-5869F951/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Count остался1 после join, вырос2 только после PUT; baseline/actual разделены.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-51E51F41/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Actual сохранён, unread98, first_unread у первой новой записи, list98; reactivation repeated не сбрасывает значения.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-EC05E2CA/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "103→101, removed IDs отсутствуют; HTTP saved cursor после deletion исключает C и count2→1; bounded receipt query проходит.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-E32551D3/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Empty count0;403 для неавтора/outsider/mixedforeign,100 accepted/101422, uppercase canonicalcount1, mixedcase duplicate422.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/chat-api-r4-c789/manual",
+      "status": "failed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets. Remaining: SQL shape verifier failure не маскируется. PAGE дополнительно требует page p95 distribution (нынешнийfeed test только EXPLAIN; unread/receipts p95 отдельно20samples). LOOKUP нужен завершённый photo/file/legacy-captionless independent coverage после исправления verifier.",
+      "defect": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets.",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-791FF479/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "ЗапрещённыеOrigin403, ambiguous credential401, connect spoof101, foreign subscription103; cookie/native connect успешны; read mutation безCSRF403.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-0E0CB54C/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Соединения закрылись3503; отдельный полный reconnect/lateHTTP после обоих вариантов не завершён. Remaining: Повторное подключение после expiry/revoke и явный late callback protocol-probe. Прогон остановлен после concrete SQL verifier finding по поручению root; отсутствие доказательств не pass.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-1DC708F2/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Meeting unsubscribe2003 безpublication, recovery103; terminal personal доставлен; revoked read/send403. Remaining: Нужен единый задержанный HTTP sync между hint и завершением ответа с воспроизводимым барьером. Выполненные независимые части сохранены; полныйcase не принят.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-6DD0CC09/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "В guest проекции нет MyOptionIDs/votes/voters; послеclose votes присутствуют. Journal/hints безтекста/имени/invitation, unread учитывает только сообщения.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-mixed-probes-r2.jsonl",
+          "kind": "log",
+          "sha256": "abb633735f769aefbd5b0f339a368caf0806ad9b8c755289af957be67aa56f3c"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-A91C53BB/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "security.md явно отделяет подтверждённый age job от неподтверждённых disk/key lifecycle. Этот QA не выполнял restore текущего кандидата и не заявляет backup/E2EE pass.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-BDBF283F/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Исполненные checks не нашли message text/cursor/private read fields вlogs, журнал не копирует text/name/token. Remaining: Независимый полный capture timeout/reconnect/storage-sync fault diagnostics с synthetic credential markers ещё нужен. Native/web storage вне backend-плана и не подтверждено здесь.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-mixed-probes-r2.jsonl",
+          "kind": "log",
+          "sha256": "abb633735f769aefbd5b0f339a368caf0806ad9b8c755289af957be67aa56f3c"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-A3B3BFE7/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Выполненные memory/SQL проверки проходят, удалённыеIDs/names не возвращены, terminal pending survives. Remaining: Единый сценарий active subscriptions + удалениеM + фактический restart API/dispatcher наSQL не выполнен; fresh pool не выдаётся за process restart.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/read-http-probes.jsonl",
+          "kind": "log",
+          "sha256": "58035221cbf5e70eeed19b97bac5b6389e60303efed08fffe8733f665d85a4dd"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-5EFD24A6/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Стараякарточка закрыта/итог доступен; journal replay current RemovedAccountName и historyinvalidated. Client stale-merge исключён из backend verdict.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-mixed-probes-r2.jsonl",
+          "kind": "log",
+          "sha256": "abb633735f769aefbd5b0f339a368caf0806ad9b8c755289af957be67aa56f3c"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-BC07BEB1/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "HTTP bounded catchup подтверждён; совмещённый protocol scenario и RTT150ms timing не измерены. Remaining: Нужен protocol-client пробелsubscribe, 5min controlledoffline/100changes и зарегистрированный RTT150ms recovery benchmark.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-AA76CADB/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "Части прошли: stableevent duplicate, rollback безmessage/change/hints, SQLreopen state, recoverable queuebound. Remaining: Не выполнен фактический отдельный процесс API/dispatcher наSQL с faultbarriers доpublish/послеpublish и lostNOTIFY; freshpool недостаточно для полногоcase.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-F6CFB5E9/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "HTTP400 invalid_sync_cursor и410 sync_reset_required сrequest_id; fresh snapshot возвращает entries. Revoked service403 доparse; retention не удаляет историю.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-14D92D7D/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "HTTP31d повтор201 тотжеID/sequence, changedbody409; service ownactor samekey отдельная запись, revokedrepeat403. Client ACK-validation внеbackend.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/chat-api-r4-c789/manual",
+      "status": "failed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets. Remaining: SQL shape verifier failure не маскируется. PAGE дополнительно требует page p95 distribution (нынешнийfeed test только EXPLAIN; unread/receipts p95 отдельно20samples). LOOKUP нужен завершённый photo/file/legacy-captionless independent coverage после исправления verifier.",
+      "defect": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets.",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        },
+        {
+          "path": "independent/supporting-runtime.jsonl",
+          "kind": "log",
+          "sha256": "426a7c762a9a4bb8c67704d7a1994f0df5b194715812285d016ea72fdab68684"
+        },
+        {
+          "path": "independent/sql/sql-live.log",
+          "kind": "log",
+          "sha256": "ca50ad4d936277c185054f6bfd787a3f95bb027f81eb966408e594dd118624c0"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-THROUGH/chat-api-r4-c789/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "100/5 заканчиваетсянаT, повторlastpage samecursor/count5, следующийцикл ровноT+1. Backend выдаёт воспроизводимыйcursor; atomicclientmerge не заявляется.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-CAPABILITIES/chat-api-r4-c789/manual",
+      "status": "not_run",
+      "executor": {
+        "kind": "agent",
+        "id": "backend-chat-final-independent"
+      },
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "actual": "ВыполненныеHTTP/service проверки проходят; точный rollback artifact не запускался. Remaining: Schema-exact oldwriter compatibility и новыйepoch после периода безjournal требуют отдельного текущего runtime доказательства. Документационное пояснение не runtimepass.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "independent/interaction.json",
+          "kind": "interaction",
+          "sha256": "f640b73166dfacfd61150c06a1d47b0e591bdfb153d1840ee33da11fb0e1f5e9"
+        },
+        {
+          "path": "independent/final-probes.jsonl",
+          "kind": "log",
+          "sha256": "7d09d154c340c1b1de1988bfdc8eb565850902c84c13c1377fe2a696b9222484"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-10-27T21:28:48.764Z",
+      "finishedAt": "2026-10-27T21:28:51.394Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793136528765.txt",
+          "kind": "log",
+          "sha256": "77dce141acbd7e75c7554f2c0d3668f9d9802358bdfb921c5f38c42d5f0dfeb5"
+        }
+      ]
+    }
+  ]
+}

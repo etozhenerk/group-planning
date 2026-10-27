@@ -86,8 +86,15 @@ final class PreparationTaskUITests: XCTestCase {
 
     func testAcceptanceRetryAndCompletion() {
         let app = open("task-recipient", suffix: "200")
-        XCTAssertTrue(app.buttons["preparation-accept"].waitForExistence(timeout: 10))
-        app.buttons["preparation-accept"].tap()
+        app.buttons["preparation-details-close"].tap()
+        let accept = app.buttons["preparation-accept"]
+        XCTAssertTrue(accept.waitForExistence(timeout: 10))
+        XCTAssertEqual(accept.label, "Взять на себя")
+        let task = app.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "preparation-task-")
+        ).firstMatch
+        XCTAssertLessThan(accept.frame.width, task.frame.width)
+        accept.tap()
         XCTAssertTrue(
             app.staticTexts["Не удалось сохранить действие."].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["preparation-complete"].exists)
@@ -96,6 +103,8 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(app.buttons["preparation-complete"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["Задача у вас"].exists)
         capture("ios-task-accepted")
+        task.tap()
+        XCTAssertTrue(app.buttons["preparation-details-close"].waitForExistence(timeout: 5))
         app.buttons["preparation-complete"].tap()
         XCTAssertTrue(app.staticTexts["Выполнено · Лена"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["preparation-complete"].exists)
@@ -106,6 +115,9 @@ final class PreparationTaskUITests: XCTestCase {
         let app = open("task-decline", suffix: "300")
         XCTAssertTrue(app.buttons["preparation-decline"].waitForExistence(timeout: 10))
         app.buttons["preparation-decline"].tap()
+        XCTAssertTrue(app.buttons["preparation-confirm"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Отказ · Лена"].exists)
+        app.buttons["preparation-confirm"].tap()
         XCTAssertTrue(app.staticTexts["Отказ · Лена"].waitForExistence(timeout: 10))
         capture("ios-task-declined")
         app.terminate()
@@ -122,6 +134,14 @@ final class PreparationTaskUITests: XCTestCase {
         let app = open("task-cancel", suffix: "400", large: true)
         XCTAssertTrue(app.buttons["preparation-cancel"].waitForExistence(timeout: 10))
         app.buttons["preparation-cancel"].tap()
+        let confirm = app.buttons["preparation-confirm"]
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Отменено · Саша"].exists)
+        for _ in 0..<4 {
+            if confirm.isHittable { break }
+            app.scrollViews["preparation-details"].swipeUp()
+        }
+        confirm.tap()
         XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 10))
         app.buttons["preparation-details-close"].tap()
         XCTAssertTrue(

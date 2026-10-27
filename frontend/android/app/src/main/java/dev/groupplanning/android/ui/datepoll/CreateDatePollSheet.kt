@@ -8,6 +8,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -28,9 +29,32 @@ internal fun CreateDatePollSheet(model: DatePollViewModel, close: () -> Unit) {
     LaunchedEffect(state.poll?.id, state.busy) {
         if (state.poll != null && !state.busy) close()
     }
-    ActionSheet(stringResource(R.string.action_date_title), close, canClose = !state.busy) {
+    ActionSheet(
+        stringResource(
+            R.string.action_date_title,
+        ),
+        close,
+        canClose = !state.busy,
+        actions = {
+            CompactButton(
+                stringResource(
+                    if (state.pending ==
+                        null
+                    ) {
+                        R.string.poll_create
+                    } else {
+                        R.string.poll_retry
+                    },
+                ),
+                modifier = Modifier.fillMaxWidth().testTag("poll-create"),
+                busy = state.busy,
+                primary = true,
+                click = model::create,
+            )
+        },
+    ) {
         draft.dates.forEachIndexed { index, day ->
-            Row {
+            Row(verticalAlignment = Alignment.Bottom) {
                 Column(Modifier.weight(1f)) {
                     DatePollDayField(
                         stringResource(R.string.poll_option, index + 1),
@@ -83,6 +107,9 @@ internal fun CreateDatePollSheet(model: DatePollViewModel, close: () -> Unit) {
                 enabled = state.editable,
             ) { Text(stringResource(R.string.poll_add_date)) }
         }
+        DatePollSettingsFields(draft.settings, state.editable) { settings ->
+            model.change { it.copy(settings = settings) }
+        }
         PollDeadlineField(draft.deadline, state.editable) { deadline ->
             model.change { it.copy(deadline = deadline) }
         }
@@ -102,9 +129,6 @@ internal fun CreateDatePollSheet(model: DatePollViewModel, close: () -> Unit) {
                 Text(stringResource(R.string.poll_time_later))
             }
         }
-        DatePollSettingsFields(draft.settings, state.editable) { settings ->
-            model.change { it.copy(settings = settings) }
-        }
 
         state.issue?.let {
             Text(
@@ -114,20 +138,5 @@ internal fun CreateDatePollSheet(model: DatePollViewModel, close: () -> Unit) {
             )
         }
         state.validation?.let { Text(it, color = Palette.error) }
-        CompactButton(
-            stringResource(
-                if (state.pending ==
-                    null
-                ) {
-                    R.string.poll_create
-                } else {
-                    R.string.poll_retry
-                },
-            ),
-            modifier = Modifier.fillMaxWidth().testTag("poll-create"),
-            busy = state.busy,
-            primary = true,
-            click = model::create,
-        )
     }
 }

@@ -25,7 +25,32 @@ internal fun CreatePreparationTaskSheet(model: PreparationFormViewModel, close: 
     LaunchedEffect(state.task?.id, state.busy) {
         if (state.task != null && !state.busy) close()
     }
-    ActionSheet(stringResource(R.string.preparation_propose), close, canClose = !state.busy) {
+    ActionSheet(
+        stringResource(
+            R.string.preparation_propose,
+        ),
+        close,
+        canClose = !state.busy,
+        actions = {
+            CompactButton(
+                stringResource(
+                    if (state.pending ==
+                        null
+                    ) {
+                        R.string.preparation_propose
+                    } else {
+                        R.string.poll_retry
+                    },
+                ),
+                modifier = Modifier.fillMaxWidth().testTag("preparation-create"),
+                busy = state.busy,
+                enabled =
+                state.pending != null || (form.participants != null && !form.peopleError),
+                primary = true,
+                click = model::create,
+            )
+        },
+    ) {
         DesignField(
             form.title,
             model::title,
@@ -66,22 +91,5 @@ internal fun CreatePreparationTaskSheet(model: PreparationFormViewModel, close: 
                 color = Palette.error,
             )
         }
-        CompactButton(
-            stringResource(
-                if (state.pending ==
-                    null
-                ) {
-                    R.string.preparation_propose
-                } else {
-                    R.string.poll_retry
-                },
-            ),
-            modifier = Modifier.fillMaxWidth().testTag("preparation-create"),
-            busy = state.busy,
-            enabled =
-            state.pending != null || (form.participants != null && !form.peopleError),
-            primary = true,
-            click = model::create,
-        )
     }
 }

@@ -34,19 +34,27 @@ type iosFixtureConfig struct {
 	Cases       map[string]iosFixtureCredential `json:"cases"`
 }
 
-type iosFixtureProvider struct{}
+type iosFixtureProvider struct{ origin string }
 
 func (iosFixtureProvider) AuthorizationURL(state, _ string) string {
 	return "https://provider.example.test/?" + url.Values{"state": {state}}.Encode()
 }
 
-func (iosFixtureProvider) Verify(_ context.Context, code, _ string) (identity.Profile, error) {
+func (p iosFixtureProvider) Verify(ctx context.Context, code, _ string) (identity.Profile, error) {
+	if strings.HasPrefix(code, "profile-fields-") {
+		return profileFieldsLogin(ctx, code, p.origin)
+	}
+
 	name := "Саша"
 	if strings.HasPrefix(code, "invite-guest") {
 		name = "Лена"
 	}
 
 	return identity.Profile{Subject: "ios-ui-" + code, DisplayName: name}, nil
+}
+
+func (p iosFixtureProvider) VerifyToken(ctx context.Context, token string) (identity.Profile, error) {
+	return profileFieldsLogin(ctx, token, p.origin)
 }
 
 // TestIOSFixture serves real native API operations in an isolated test process.
@@ -73,8 +81,8 @@ func TestIOSFixture(t *testing.T) {
 	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
 		PublicOrigin: origin, SessionTTL: time.Hour,
-		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback"},
-	}, identities, iosFixtureProvider{}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
+		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback", "android": "group-planning-android://auth/callback"},
+	}, identities, iosFixtureProvider{origin: origin}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,9 +98,9 @@ func TestIOSFixture(t *testing.T) {
 		"66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777")
 	feedOwner := iosCredential(t, service, "feed-owner")
 	seedIOSFeed(t, store, service, feedOwner)
-	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	app, stream := chatFixture(t, store, service, "IOS")
 	seedNativeMemoryFixture(t, store, service, app, feedOwner)
-	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
@@ -143,6 +151,10 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["invite-rsvp-reentry"] = iosCredential(t, service, "invite-guest-rsvp")
 	config.Cases["invite-error"] = iosCredential(t, service, "invite-guest-error")
 
+	if err := app.InitializeChatReadState(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+
 	data, err := json.Marshal(config)
 	if err != nil {
 		t.Fatal(err)
@@ -174,7 +186,7 @@ func TestIOSFixture(t *testing.T) {
 		pollFaults.verify(t)
 	}
 
-	if scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" && scope != "account" {
+	if scope != "chat" && scope != "covers" && scope != "tasks" && scope != "places" && scope != "saved" && scope != "polls" && scope != "feed" && scope != "accessibility" && scope != "calendar" && scope != "auth" && scope != "account" && scope != "profile" {
 		faults.verify(t, scope)
 	}
 

@@ -4,66 +4,101 @@ struct PreparationTaskCard: View {
     let taskID: UUID
     let entry: FeedEntry
     let own: Bool
+    let openDetails: (PreparationTaskOwner) -> Void
     @State private var owner: PreparationTaskOwner
-    @State private var details = false
-    @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.scenePhase) private var phase
 
-    init(taskID: UUID, entry: FeedEntry, own: Bool, session: SessionStore) {
+    init(
+        taskID: UUID, entry: FeedEntry, own: Bool, session: SessionStore,
+        openDetails: @escaping (PreparationTaskOwner) -> Void
+    ) {
         self.taskID = taskID
         self.entry = entry
         self.own = own
+        self.openDetails = openDetails
         _owner = State(
             initialValue: PreparationTaskOwner(meetingID: entry.meetingID, session: session))
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Новая задача · " + entry.actor.displayName).font(.system(size: 11))
-                .foregroundStyle(AppPalette.muted).frame(minHeight: 16.5).padding(.vertical, 4)
-            HStack(alignment: .bottom, spacing: 7) {
-                ParticipantAvatar(
-                    user: owner.task?.assignee ?? entry.actor, size: 25,
-                    color: Color(designHex: 0xa8c7b6))
-                Button {
-                    details = true
-                } label: {
-                    VStack(alignment: .leading, spacing: 4) {
-                        if owner.current, let task = owner.task {
-                            Text(task.title).designFont(14, weight: .bold).frame(minHeight: 22.4)
-                            Text(
-                                PreparationTaskCopy.status(task, user: owner.session.profile?.id)
-                            )
-                            .designFont(11).frame(minHeight: 15.4).foregroundStyle(AppPalette.muted)
-                        } else {
-                            PreparationTaskLoading()
-                        }
-                    }.padding(.horizontal, 13).padding(.vertical, 10)
-                        .background(
-                            AppPalette.surface,
-                            in: UnevenRoundedRectangle(
-                                topLeadingRadius: 18, bottomLeadingRadius: 5,
-                                bottomTrailingRadius: 18, topTrailingRadius: 18))
-                }.buttonStyle(.plain).accessibilityIdentifier(
-                    "preparation-task-" + taskID.uuidString.lowercased()
-                )
+        ChatInlineCard {
+            HStack(spacing: DesignTokens.componentMobileChatInlineEyebrowGap) {
+                Image("ChatTask").resizable().scaledToFit()
+                    .frame(
+                        width: DesignTokens.componentMobileChatInlineEyebrowIcon,
+                        height: DesignTokens.componentMobileChatInlineEyebrowIcon
+                    )
+                    .foregroundStyle(DesignTokens.colorAccent).accessibilityHidden(true)
+                Text("Новая задача · " + entry.actor.displayName)
+                Spacer(minLength: DesignTokens.spaceS0)
+                Text(FeedPresentation.time(entry.occurredAt.date))
+            }.designFont(DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2)
+                .foregroundStyle(DesignTokens.colorMuted)
+            Button {
+                openDetails(owner)
+            } label: {
+                HStack(spacing: DesignTokens.spaceS10) {
+                    Text(owner.task?.title ?? "Загружаем задачу…").designFont(
+                        DesignTokens.typographySizeBody, weight: .semibold
+                    )
+                    .multilineTextAlignment(.leading)
+                    Spacer(minLength: DesignTokens.spaceS0)
+                    Image("ChatRight").resizable().scaledToFit()
+                        .frame(
+                            width: DesignTokens.componentMobileChatInlineTaskChevron,
+                            height: DesignTokens.componentMobileChatInlineTaskChevron
+                        )
+                        .foregroundStyle(DesignTokens.colorMuted).accessibilityHidden(true)
+                }.padding(.top, DesignTokens.spaceS8).padding(.bottom, DesignTokens.spaceS2)
+                    .frame(minHeight: DesignTokens.targetIos).contentShape(Rectangle())
+            }.buttonStyle(ChatPressStyle()).disabled(owner.task == nil)
+                .accessibilityIdentifier("preparation-task-" + taskID.uuidString.lowercased())
                 .accessibilityHint("Открыть задачу")
-                .disabled(owner.task == nil)
-                Spacer(minLength: 16)
+            if let task = owner.task {
+                Text(PreparationTaskCopy.status(task, user: owner.session.profile?.id))
+                    .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                        DesignTokens.colorMuted
+                    )
+                    .padding(.bottom, DesignTokens.spaceS10)
+                PreparationTaskActions(owner: owner, task: task, inline: true)
             }
-        }.sheet(isPresented: $details) { PreparationTaskDetails(owner: owner, taskID: taskID) }
-            .task(id: phase) {
-                guard phase == .active else { return }
-                repeat {
-                    await owner.load(taskID)
-                    if let state = owner.task?.state,
-                        ["completed", "declined", "cancelled"].contains(state)
-                    {
-                        return
-                    }
-                    do { try await Task.sleep(for: .seconds(3)) } catch { return }
-                } while !Task.isCancelled && owner.current
+            if let problem = owner.problem {
+                Text(problem).font(.footnote).accessibilityIdentifier("preparation-error")
+                    .padding(.top, DesignTokens.spaceS8)
+                if owner.pending != nil || owner.task == nil {
+                    Button("Повторить") {
+                        Task {
+                            if owner.pending != nil {
+                                await owner.retry()
+                            } else {
+                                await owner.load(taskID)
+                            }
+                        }
+                    }.buttonStyle(ChatPressStyle()).disabled(owner.busy)
+                        .frame(minHeight: DesignTokens.targetIos)
+                }
             }
-            .onChange(of: owner.current) { _, current in if !current { owner.clear() } }
+        }
+        .task(id: phase) {
+            guard phase == .active else { return }
+            if let value = owner.session.privateData.chatProjections[owner.meetingID]?.tasks[taskID]
+            {
+                try? owner.receive(value)
+            } else {
+                await owner.load(taskID)
+            }
+            while !Task.isCancelled, owner.current,
+                !owner.session.privateData.syncMeetings.contains(owner.meetingID)
+            {
+                do { try await Task.sleep(for: .seconds(3)) } catch { return }
+                if owner.session.privateData.syncMeetings.contains(owner.meetingID) { return }
+                await owner.load(taskID)
+            }
+        }
+        .onChange(of: owner.session.privateData.chatProjections[owner.meetingID]?.tasks[taskID]) {
+            _, value in
+            if let value, !owner.busy { try? owner.receive(value) }
+        }
+        .onChange(of: owner.current) { _, current in if !current { owner.clear() } }
     }
 }

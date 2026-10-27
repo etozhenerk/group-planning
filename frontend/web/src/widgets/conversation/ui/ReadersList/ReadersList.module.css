@@ -1,0 +1,41 @@
+.content {
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--ds-component-participant-roster-row-gap);
+}
+
+.list li,
+.loading > div {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+}
+
+.loading {
+  display: grid;
+  gap: var(--ds-component-participant-roster-row-gap);
+}
+
+.content[data-mobile='true'] .list {
+  gap: 0;
+}
+
+.content[data-mobile='true'] .list li {
+  min-height: var(--ds-component-mobile-roster-row-height);
+  gap: var(--ds-component-mobile-roster-row-gap);
+  border-bottom: var(--ds-space-s1) solid var(--ds-color-line);
+}
+
+.content button {
+  min-height: var(--ds-target-web);
+  color: var(--ds-color-accent);
+  background: transparent;
+}

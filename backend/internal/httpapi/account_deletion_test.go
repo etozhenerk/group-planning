@@ -21,7 +21,7 @@ func testAccounts(store *memory.Store, identities *memory.Identity, auth *identi
 		return identities.AccountUpdate(ctx, store, func(a identity.Store, m meetings.Store) error {
 			return fn(auth.WithStore(a), meetings.NewService(m, now))
 		})
-	})
+	}, auth.AccountDeleted)
 }
 
 func TestAccountDeletionOpenAPIResponses(t *testing.T) {

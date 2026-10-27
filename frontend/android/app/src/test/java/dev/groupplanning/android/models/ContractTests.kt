@@ -4,6 +4,10 @@ import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.data.api.models.ApiErrorEnvelope
 import dev.groupplanning.android.data.api.models.ApiInstant
 import dev.groupplanning.android.data.api.models.CalendarPage
+import dev.groupplanning.android.data.api.models.ChatCapabilities
+import dev.groupplanning.android.data.api.models.ChatMessageReaders
+import dev.groupplanning.android.data.api.models.ChatReadReceipts
+import dev.groupplanning.android.data.api.models.ChatReadState
 import dev.groupplanning.android.data.api.models.CreateMeeting
 import dev.groupplanning.android.data.api.models.DatePoll
 import dev.groupplanning.android.data.api.models.FeedEntry
@@ -35,6 +39,10 @@ class ContractTests {
         for (fixture in fixtures) {
             val body = fixture.body.toString()
             when (fixture.schema) {
+                "ChatReadState" -> apiJson.decodeFromString<ChatReadState>(body)
+                "ChatReadReceipts" -> apiJson.decodeFromString<ChatReadReceipts>(body)
+                "ChatMessageReaders" -> apiJson.decodeFromString<ChatMessageReaders>(body)
+                "ChatCapabilities" -> apiJson.decodeFromString<ChatCapabilities>(body)
                 "MeetingsPage" -> apiJson.decodeFromString<CalendarPage>(body)
                 "InvitationPreview" -> apiJson.decodeFromString<InvitationPreview>(body)
                 "RsvpResult" -> apiJson.decodeFromString<RsvpResult>(body)

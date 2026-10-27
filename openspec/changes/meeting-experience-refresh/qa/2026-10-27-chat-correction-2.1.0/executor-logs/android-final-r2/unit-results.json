@@ -1,0 +1,376 @@
+[
+  {
+    "name": "dev.groupplanning.android.calendar.CalendarLifecycleTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "pollingRefreshesAtBoundaryStopsInBackgroundAndReloadsOnReturn",
+      "savedSelectionRestoresMonthPeriodAndDisplayAfterOwnerRecreation"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.calendar.CalendarRepositoryTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "serverTransitionMovesMeetingOnlyAfterRefreshAndLogoutClearsCalendar",
+      "paginationConflictDropsOldPagesAndPreservesFilter",
+      "refreshRetainsLoadedPagesAndDeduplicates",
+      "staleMonthCannotReplaceNewerSelectionAndCountsSurviveLoading",
+      "errorsKeepDataAndCancellationClearsLoading",
+      "calendarLoadsMeetingWithDayAndNoTime"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.calendar.CalendarSelectionTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "localDateComesFromMeetingZoneAndMalformedZoneIsRejected",
+      "refreshUsesServerBoundaryWithoutChangingPeriodOrBusyLoop",
+      "monthGridClampsAndPreservesPerPeriodSelection",
+      "todayLeavesUndatedAndPreservesPeriod"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.covers.CoverTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "binaryTransportUsesSessionAndRejectsWrongMime",
+      "refusalAndCancellationKeepPreviousPhotoAndBusyEndsBeforeCommit",
+      "latePhotoCannotRestoreRevokedAccessAndImage401ClearsSession",
+      "photoSurvivesDraftSerializationAndPatchHasThreeDistinctMeanings",
+      "publicPhotoDoesNotAcquireBearer",
+      "imagesCannotSendCredentialsToOtherOriginOrEndpoint"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.create.CreationTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "closeAndReopenRestoresDraft",
+      "calendarDateReplacesOnlyDraftDateAndDoesNotRewritePendingRequest",
+      "lostResponseSurvivesRecreationWithSamePayloadAndKey",
+      "expiredSessionDoesNotRevealCreatedMeeting",
+      "storageFailurePreventsNetworkAndLeavesEditableFields",
+      "validationNeverSendsAndDefiniteServerFailureAllowsCorrection"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.create.DraftTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "gapAndOverlapCannotSilentlyMoveMeetingTime",
+      "requiredFieldsAndOptionalNullsMatchContract",
+      "brandMakesExactlyOneSmoothTurn",
+      "persistedDraftKeepsZoneRequestAndFrozenPayload"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.data.auth.YandexAuthTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "proofMatchesPKCEVector",
+      "sdkResultWaitsForInitialSessionRestoration",
+      "homeContextOmitsInvitationToken",
+      "cancelAndRepeatedTapDoNotExchangeOrLoseInvitation",
+      "issuedSessionCanRetryMeAfterNetworkFailure",
+      "sdkResultSurvivesRepositoryRecreationAndCannotReplay"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.ActionDraftTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "uncertainTaskCreationSurvivesCloseAndRevocationClearsItsPendingRequest",
+      "uncertainDateAndPlaceCreationSurviveCloseWithTheirOriginalRequest",
+      "backReopensAllActionDraftsAndRevocationClearsHiddenForms"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.DatePollTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "resolveDistinguishesUnspecifiedTimeFromExplicitlyClearedTime",
+      "conflictPreservesChoiceAndClosedPollCannotChangeSelection",
+      "uncertainVoteRetriesSameBodyAndKeyWithoutExposingResults"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.FeedLoadingTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "lateHistoryCannotReturnAfterRevocationAndDiskIsCleared",
+      "postAndLatestMetadataNeverSkipUnreadPagesAndHistoryKeepsCursor",
+      "backgroundStopsPollingAndForegroundReadsImmediatelyWithBackoff"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.MessageStorageTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "failedDurableWriteKeepsDraftAndDoesNotPost"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.MessageTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "restoredIntentRetainsTextAndKeyAndOnlyExplicitRetryPosts",
+      "rejectedMessageRequiresEditingInsteadOfBlindRetry",
+      "pollingAcknowledgesOnlyOwnMatchingMessage",
+      "deniedMeetingCannotReadOrWritePersistedDraftAndLogoutClearsEveryMeeting"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.PlacePollTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "lateReadCannotRestoreRevokedAccess",
+      "uncertainVoteKeepsAnswerAndRetriesExactly",
+      "conflictRefreshAndDeadlinePreventFurtherVote",
+      "loadFailureRetainsCardAndStopClearsIt",
+      "invalidCreationMakesNoWriteAndRequestsBindMeetingAccess"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.PreparationTaskTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "peopleRetryKeepsDraftAndWrongTaskReplyIsNotApplied",
+      "uncertainAcceptanceRetainsOfferedStateAndRetriesExactly",
+      "readFailureKeepsCardAndRevocationRejectsLateMutation",
+      "conflictLoadsCurrentTaskAndPreventsAnotherAcceptance",
+      "creationValidatesDraftAndEncodesGeneralRecipientExplicitly"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.ReactionTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "lostReplyRollsBackAndRetriesTheSameExplicitIntent",
+      "delayedRefreshCannotReplaceAConfirmedMutation"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.feed.SettingsTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "clearingTimePreservesDayAndDateOnlyDraftDoesNotAcquireMidnight",
+      "changingTextPreservesOriginalAmbiguousInstantAndExplicitNullClearsFields",
+      "unknownSaveRetriesSameKeyAndOnlyChangedFields",
+      "conflictPreservesFormUntilExplicitReloadAndMutation403KeepsConversation"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.invitation.InvitationLinksTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "rejectsForeignOriginsCallbacksMalformedAndNonCanonicalTokens",
+      "acceptsCanonicalShortLegacyAndCustomLinks",
+      "contextSurvivesNewOwnerAndExplicitCloseClearsIt"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.invitation.InvitationStateTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "foregroundRefreshKeepsUnsavedChoiceButUsesCurrentServerAnswer",
+      "unknownOutcomeRetriesSameKeyAndRevisionWithoutChangingConfirmedAnswer",
+      "failedWithdrawalKeepsConfirmedChatAndStopsOnSessionLoss",
+      "anonymousPreviewNeverReadsPrivateDataOrSavesResponse",
+      "conflictRefreshesServerAnswerWithoutOverwritingIt",
+      "confirmedWithdrawalPurgesPrivateDataAndCanBeAcceptedAgain"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.invitation.JoinCutoffTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "dateOnlyHasNoCutoffAndServerCanStillDeny",
+      "exactBoundaryAndReturningParticipantAreClosed"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.models.ContractTests",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "offsetAndNanosecondsRoundTrip",
+      "preparationTasksSeparateProposalFromAcceptance",
+      "absentDateAndLegacyDescriptionStayNull",
+      "patchDistinguishesUnchangedAndClear",
+      "allSharedFixturesDecode",
+      "unknownFeedAndLargeSequenceRemainSafeData",
+      "placePollKeepsCountsOwnVoteAndFinalState",
+      "dateOnlyCreationAndHiddenPollPreserveContract",
+      "malformedWirePrimitivesAreRejected",
+      "conflictMayHaveNoPreviousAnswer"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.network.ApiClientTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "paginationRejectsConflictingCursorsAndEncodesOpaqueQuery",
+      "requiresHttpsOriginWithoutPathOrCredentials",
+      "invitationRequestContainsNoBearerByDefault",
+      "unexpectedSuccessStatusAndContentTypeAreRejected",
+      "messageUsesStableKeyAndExplicitBearer"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.network.OkHttpTransportTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "coroutineCancellationCancelsRealCall",
+      "accessErrorsSurviveOversizedAndInterruptedBodies",
+      "redirectsCookiesAndAutomaticRetriesAreDisabled"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.profile.ProfileFieldsTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "privateFieldsAreOptionalAndNeverPartOfPublicUser",
+      "partialBirthdayDoesNotInventMissingParts"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.savedinvitations.SavedInvitationsRepositoryTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "failureKeepsCardsAndConfirmedRefreshRemovesThem",
+      "paginationDeduplicatesAndRefreshRetainsLoadedPages",
+      "unexpectedAnswerIsRejected",
+      "cancellationAllowsRetryAndLogoutRejectsLateData"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.session.AccountDeletionTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "lostResponseRestoresSameDeletionWithoutReadingSession",
+      "completionClearsCredentialAndConfirmsSuccess",
+      "cancellationKeepsReceiptAndRetryableState",
+      "unauthorizedDoesNotMeanDeleted"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.session.PrivateMediaTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "binaryContentUsesTheSessionOriginAnd403RevokesItsMeeting"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.session.SessionCipherTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "tamperingWrongOriginAndMalformedEnvelopeFailClosed",
+      "repeatedEncryptionHasFreshIvAndNoPlaintext"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.session.SessionRaceTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "cancelledRestoreDoesNotAuthenticateLater",
+      "oldRestoreCannotEraseNewSession",
+      "logoutCannotBeUndoneByLateListResponse",
+      "revokedMeetingCannotReturnThroughPendingList",
+      "forbiddenReadClearsOnlyItsMeetingAndCancelsLateDetail"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.session.SessionTests",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "restoreUsesServerProfileAndDoesNotRespondToInvitation",
+      "expiredMeCannotAuthenticate",
+      "storageFailureNeverAuthenticates",
+      "unauthorizedRequestClearsAllPrivateDataEvenWithMalformedBody",
+      "failedRemoteLogoutStillClearsLocalCredentialsAndCache",
+      "unauthorizedRestoreClearsStoredSecret",
+      "organizerOnlyForbiddenDoesNotRevokeChat",
+      "newProcessRestoresOnlyCredentialAndVerifiesMeAgain",
+      "absentOrExpiredCredentialDoesNotContactServer"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.state.PaginationTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "pageFailureRetriesSameCursorAndDeduplicates",
+      "refreshWinsOverLateNextPage"
+    ]
+  },
+  {
+    "name": "dev.groupplanning.android.state.RepositoryTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "emptyErrorAndRetryAreDistinct",
+      "cancellationLeavesNoPermanentLoadingState",
+      "viewModelSurvivesOwnerRecreationAndCancelsWhenStoreClears",
+      "newerRequestWinsWhenEarlierResponseArrivesLast"
+    ]
+  }
+]

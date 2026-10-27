@@ -8,6 +8,11 @@ import dev.groupplanning.android.data.api.models.Participants
 import java.util.UUID
 
 internal data class PrivateData(
+    val chatViewports: Map<UUID, ChatViewport> = emptyMap(),
+    val chatReadInfo: Map<UUID, dev.groupplanning.android.data.api.models.ChatReadInfo> =
+        emptyMap(),
+    val readVersions: Map<UUID, dev.groupplanning.android.data.api.models.ServerCounter> =
+        emptyMap(),
     val invitations: SavedInvitationsData = SavedInvitationsData(),
     val calendar: CalendarData = CalendarData(),
     val meetings: ResourceState<MeetingsPage> = ResourceState(),
@@ -20,9 +25,24 @@ internal data class PrivateData(
     val denied: Set<UUID> = emptySet(),
     val accessVersions: Map<UUID, Long> = emptyMap(),
 ) {
+    fun preserveNewerReadState(
+        meetings: List<dev.groupplanning.android.data.api.models.MeetingSummary>,
+        before: Map<UUID, dev.groupplanning.android.data.api.models.ServerCounter>,
+    ) = meetings.map { meeting ->
+        val info = chatReadInfo[meeting.id]
+        if (info != null && readVersions[meeting.id] != before[meeting.id]) {
+            meeting.copy(unreadCount = info.unread, firstUnread = info.firstUnread)
+        } else {
+            meeting
+        }
+    }
+
     fun accessVersion(id: UUID?): Long = accessVersions[id] ?: 0
 
     fun changeAccess(id: UUID, allowed: Boolean): PrivateData = copy(
+        chatViewports = chatViewports - id,
+        readVersions = readVersions - id,
+        chatReadInfo = chatReadInfo - id,
         calendar = calendar.copy(
             page = calendar.page?.let { page ->
                 page.copy(meetings = page.meetings.filter { it.id != id })

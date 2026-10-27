@@ -5,20 +5,17 @@ struct PlacePollBallot: View {
     let poll: PlacePoll
     @Environment(\.dynamicTypeSize) private var typeSize
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
             if typeSize.isAccessibilitySize {
-                VStack {
+                VStack(spacing: DesignTokens.spaceS8) {
                     answer("for")
                     answer("against")
                 }
             } else {
-                HStack {
+                HStack(spacing: DesignTokens.spaceS8) {
                     answer("for")
                     answer("against")
                 }
-            }
-            if let own = poll.myVote, ["for", "against"].contains(own) {
-                Text("Ваш голос: \(own == "for" ? "За" : "Против")").font(.caption)
             }
         }
     }
@@ -30,21 +27,41 @@ struct PlacePollBallot: View {
             Button {
                 Task { await owner.vote(value) }
             } label: {
-                Text(title).font(.body.weight(poll.myVote == value ? .bold : .regular))
-                    .opacity(owner.busy && owner.sendingAnswer == value ? 0 : 1)
-                    .frame(maxWidth: .infinity, minHeight: 44).padding(.horizontal, 12)
-                    .background(
-                        .primary.opacity(poll.myVote == value ? 0.18 : 0.06),
-                        in: RoundedRectangle(cornerRadius: 12)
-                    )
-                    .overlay { if owner.busy && owner.sendingAnswer == value { ProgressView() } }
-            }.buttonStyle(.plain).disabled(!owner.editable)
+                answerLabel(value)
+            }.buttonStyle(ChatPressStyle()).disabled(!owner.editable)
                 .accessibilityLabel(title).accessibilityAddTraits(
                     poll.myVote == value ? .isSelected : []
                 )
                 .accessibilityIdentifier("place-vote-\(value)")
         } else {
-            Text(title).frame(maxWidth: .infinity, minHeight: 44)
+            answerLabel(value).accessibilityElement(children: .ignore)
+                .accessibilityLabel(title)
+        }
+    }
+
+    private func answerLabel(_ value: String) -> some View {
+        let busy = owner.busy && owner.sendingAnswer == value
+        return HStack(spacing: DesignTokens.spaceS8) {
+            Text(value == "for" ? "За" : "Против")
+            Spacer(minLength: DesignTokens.spaceS0)
+            Text(String(value == "for" ? poll.votesFor : poll.votesAgainst))
+                .foregroundStyle(DesignTokens.colorMuted).monospacedDigit()
+        }
+        .designFont(DesignTokens.typographySizeSmall)
+        .opacity(busy ? 0 : 1)
+        .padding(.horizontal, DesignTokens.componentMobileChatInlineVoteInsetInline)
+        .padding(.vertical, DesignTokens.componentMobileChatInlineVoteInsetBlock)
+        .frame(maxWidth: .infinity, minHeight: DesignTokens.targetIos)
+        .background(
+            DesignTokens.colorRaised,
+            in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatInlineVoteRadius)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatInlineVoteRadius)
+                .strokeBorder(
+                    poll.myVote == value ? DesignTokens.colorAccent : DesignTokens.colorLine,
+                    lineWidth: DesignTokens.spaceS1)
+            if busy { ProgressView() }
         }
     }
 }

@@ -1,0 +1,16 @@
+import { useEffect, useRef } from 'react';
+import { Centrifuge, type PublicationContext } from 'centrifuge';
+type Hint = { schema_version: number; meeting_id: string; stream_epoch: string; latest_change_sequence: string };
+export const useRealtimeHints = (url: string, channel: string, catchUp: (hint?: Hint) => Promise<void>) => {
+  const generation = useRef(0);
+  useEffect(() => {
+    const current = ++generation.current;
+    const client = new Centrifuge(url);
+    const subscription = client.newSubscription(channel);
+    const sync = (hint?: Hint) => { if (generation.current === current) void catchUp(hint).catch(() => undefined); };
+    subscription.on('subscribed', () => sync());
+    subscription.on('publication', (event: PublicationContext) => sync(event.data as Hint));
+    subscription.subscribe(); client.connect();
+    return () => { ++generation.current; subscription.unsubscribe(); client.removeSubscription(subscription); client.disconnect(); };
+  }, [url, channel, catchUp]);
+};

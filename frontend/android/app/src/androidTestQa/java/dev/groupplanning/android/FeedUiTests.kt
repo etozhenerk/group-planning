@@ -104,7 +104,7 @@ class FeedUiTests {
             activity.recreate()
             fixture.waitTag("meeting-settings")
             compose.onNodeWithContentDescription("Название").assertTextContains("Моя встреча")
-            compose.onNodeWithTag("settings-save").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
             fixture.waitTag("settings-reload")
             compose.onNodeWithTag("settings-reload").performScrollTo()
             fixture.screenshot("feed-settings-conflict")
@@ -117,7 +117,7 @@ class FeedUiTests {
             compose.onNodeWithContentDescription(
                 "Название",
             ).performScrollTo().performTextReplacement("Вечер настолок")
-            compose.onNodeWithTag("settings-save").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
             fixture.waitText("Вечер настолок")
             fixture.screenshot("feed-settings-saved")
         }

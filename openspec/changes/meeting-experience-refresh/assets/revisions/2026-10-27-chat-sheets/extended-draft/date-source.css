@@ -1,0 +1,115 @@
+/* Производная утверждённого date-poll-v1/date-poll.css; только область формы. */
+.extended-date .sheet-content {
+  padding: 8px 24px 20px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.extended-date .sheet-content h2 {
+  font-size: 13px;
+  font-weight: 650;
+  color: #c9c5d0;
+  margin: 16px 0 10px;
+}
+.extended-date .sheet-content .hint {
+  font-size: 13px;
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+.extended-date .date-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  border-radius: 13px;
+  padding: 10px 13px;
+  background: #414249;
+  margin: 8px 0;
+}
+.extended-date .date-field > svg {
+  width: 21px;
+  color: #c5bdcf;
+}
+.extended-date .date-field input {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  min-width: 0;
+  width: 100%;
+  outline: none;
+  font-size: 15px;
+}
+.extended-date .date-field:focus-within {
+  outline: 2px solid #d6d1f5;
+  outline-offset: 2px;
+}
+.extended-date .remove-date {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  height: 28px;
+  width: 28px;
+  background: transparent;
+  color: #b9b9c2;
+}
+.extended-date .settings {
+  border-radius: 16px;
+  background: #ffffff04;
+  padding: 0 14px;
+}
+.extended-date .setting {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.extended-date .setting + .setting {
+  border-top: 1px solid #ffffff08;
+}
+.extended-date .toggle {
+  appearance: none;
+  margin: 0;
+  width: 42px;
+  height: 26px;
+  border-radius: 16px;
+  background: #5a5961;
+  flex-shrink: 0;
+  padding: 3px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.extended-date .toggle::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f5f4f1;
+  transition: transform 0.18s;
+}
+.extended-date .toggle:checked {
+  background: #d8d0e3;
+}
+.extended-date .toggle:checked::after {
+  transform: translateX(16px);
+  background: #3d3547;
+}
+.extended-date .deadline {
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  gap: 8px;
+}
+.extended-date .deadline .date-field {
+  margin: 0;
+}
+.extended-date .sheet-footer {
+  padding: 14px 24px 22px;
+  box-shadow: 0 -8px 22px #303137;
+}
+.extended-date .sheet-footer .button {
+  width: 100%;
+  min-height: 48px;
+}

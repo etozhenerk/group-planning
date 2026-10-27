@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -30,17 +30,42 @@ internal fun CompactButton(
     icon: Int? = null,
     click: () -> Unit,
 ) {
+    val compact = LocalMobileSheet.current
     Surface(
         click,
-        modifier.defaultMinSize(minHeight = 46.dp),
+        modifier.defaultMinSize(minHeight = DesignTokens.targetAndroid),
         enabled = enabled && !busy,
-        shape = RoundedCornerShape(13.dp),
+        shape = RoundedCornerShape(
+            if (compact) {
+                DesignTokens.componentMobileSheetButtonRadius
+            } else {
+                DesignTokens.componentButtonRadius
+            },
+        ),
         color = if (primary) Palette.action else Color.Transparent,
         contentColor = if (primary) Palette.actionText else Palette.text,
-        border = if (primary) null else BorderStroke(1.dp, Color(0x20ffffff)),
+        border = if (primary) {
+            null
+        } else {
+            BorderStroke(
+                DesignTokens.spaceS1,
+                DesignTokens.colorSubtleBorder,
+            )
+        },
     ) {
         Box(
-            Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
+            Modifier.padding(
+                horizontal = if (compact) {
+                    DesignTokens.componentMobileSheetButtonInsetInline
+                } else {
+                    DesignTokens.componentButtonPaddingInline
+                },
+                vertical = if (compact) {
+                    DesignTokens.componentMobileSheetButtonInsetBlock
+                } else {
+                    DesignTokens.componentButtonPaddingBlock
+                },
+            ),
             contentAlignment = Alignment.Center,
         ) {
             if (busy) {
@@ -51,7 +76,11 @@ internal fun CompactButton(
                     horizontalArrangement = Arrangement.spacedBy(9.dp),
                 ) {
                     icon?.let { AppIcon(it, Modifier.size(22.dp)) }
-                    Text(title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                    Text(
+                        title,
+                        fontSize = DesignTokens.typographySizeButton,
+                        fontWeight = FontWeight.SemiBold,
+                    )
                 }
             }
         }

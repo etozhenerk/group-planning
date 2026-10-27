@@ -12,4 +12,7 @@ internal data class FeedPage(
     @SerialName("my_rsvp") val myRsvp: RsvpAnswer?,
     @SerialName("my_rsvp_revision") val myRsvpRevision: ServerCounter,
     @SerialName("latest_sequence") val latestSequence: ServerCounter,
+    val range: ChatRange? = null,
+    @SerialName("has_older") val hasOlder: Boolean? = null,
+    @SerialName("has_newer") val hasNewer: Boolean? = null,
 )

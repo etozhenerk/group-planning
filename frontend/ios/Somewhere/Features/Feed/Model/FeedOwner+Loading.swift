@@ -2,8 +2,11 @@ import Foundation
 
 extension FeedOwner {
     func loadHistory() {
-        guard !loadingHistory else { return }
-        historyTask = Task { await history() }
+        guard !loadingHistory, historyTask == nil else { return }
+        historyTask = Task {
+            await history()
+            historyTask = nil
+        }
     }
     func reload() {
         guard !loading else { return }
@@ -11,6 +14,10 @@ extension FeedOwner {
     }
 
     func refresh() async {
+        if capabilities?.sync == true {
+            await synchronize()
+            return
+        }
         guard current, !loading else { return }
         let version = generation
         loading = true
@@ -37,6 +44,7 @@ extension FeedOwner {
                 }
                 guard current, generation == version else { return }
             } while more
+            trimWindow()
             await reactions.refresh()
             if infoPresented { await MeetingRepository(session: session).loadParticipants(id) }
             if !current { clear() }
@@ -61,10 +69,13 @@ extension FeedOwner {
             else { throw ClientFailure.invalidResponse }
             try merge(page.entries)
             hasHistory = page.hasMore
+            trimWindow(prepending: true)
         } catch {
-            failed(error, version: version)
+            if !current || (error as? ClientFailure)?.statusCode == 404 {
+                failed(error, version: version)
+            }
             if current, generation == version, !(error is CancellationError) {
-                historyProblem = "Не удалось загрузить предыдущие сообщения."
+                historyProblem = "Не удалось загрузить сообщения"
             }
         }
     }

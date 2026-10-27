@@ -1,5 +1,5 @@
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import type { UploadItem } from '@/features/upload-media/model/types';
-import { FileText } from 'lucide-react';
 import styles from '@/features/upload-media/ui/UploadItemRow/UploadItemRow.module.css';
 
 export type UploadItemRowProps = {
@@ -15,7 +15,7 @@ export const UploadItemRow = ({ item, remove, retry, caption }: UploadItemRowPro
       <img src={item.preview} alt="" className={styles.preview} />
     ) : (
       <div className={styles.file}>
-        <FileText size={24} aria-hidden="true" />
+        <ChatIcon name="file" size={24} aria-hidden="true" />
         <div>
           <strong>{item.file.name}</strong>
           <small>

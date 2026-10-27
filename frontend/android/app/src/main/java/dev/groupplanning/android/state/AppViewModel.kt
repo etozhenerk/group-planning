@@ -63,7 +63,12 @@ internal class AppViewModel(
         }
     }
     val calendar = runtime.sessions?.let {
-        CalendarViewModel(CalendarRepository(it), saved, childScope())
+        CalendarViewModel(
+            CalendarRepository(it),
+            saved,
+            childScope(),
+            invalidations = runtime.feeds?.let { feeds -> { feeds.chat.personalEvents() } },
+        )
     }
     val savedInvitations = runtime.sessions?.let {
         SavedInvitationsViewModel(SavedInvitationsRepository(it), childScope())

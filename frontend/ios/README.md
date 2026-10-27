@@ -1,7 +1,8 @@
 # somewhere для iOS
 
 Приложение на Swift + SwiftUI, минимум iOS 17.
-Клиент работает с общим Go API и использует SwiftUI и официальный Yandex LoginSDK через Swift Package Manager.
+Клиент работает с общим Go API и использует SwiftUI, Yandex LoginSDK и SwiftCentrifuge через Swift Package Manager.
+Устройство транспорта, очереди и защиты локальных данных — в [руководстве чата](docs/chat-runtime.md).
 Правила разработки — в [AGENTS.md](AGENTS.md), организация файлов —
 в [руководстве по коду](docs/code-style.md).
 

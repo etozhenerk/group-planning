@@ -1,0 +1,51 @@
+
+> group-planning@0.0.0 web:check
+> npm run check --workspace @somewhere/web
+
+
+> @somewhere/web@0.0.0 check
+> npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test
+
+
+> @somewhere/web@0.0.0 typecheck
+> tsc --noEmit
+
+
+> @somewhere/web@0.0.0 lint
+> eslint .
+
+
+/Users/misha/Documents/Codex/projects/group-planning/frontend/web/src/entities/meeting/ui/MeetingFacts/lib/summaryTimeLabel.ts
+  18:3  error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+
+/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts
+  16:3   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  34:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  39:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  43:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  47:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  51:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  55:9   error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  94:11  error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+
+/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers/meetingRoster.ts
+  14:3  error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+  61:5  error  Expected blank line before this statement  @stylistic/padding-line-between-statements
+
+✖ 11 problems (11 errors, 0 warnings)
+  11 errors and 0 warnings potentially fixable with the `--fix` option.
+
+npm error Lifecycle script `lint` failed with error:
+npm error code 1
+npm error path /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error workspace @somewhere/web@0.0.0
+npm error location /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error command failed
+npm error command sh -c eslint .
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error workspace @somewhere/web@0.0.0
+npm error location /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+npm error command failed
+npm error command sh -c npm run typecheck && npm run lint && npm run styles && npm run architecture && npm run format:check && npm test

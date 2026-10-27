@@ -1,5 +1,5 @@
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useSearchParams } from 'react-router';
-import { FileDown } from 'lucide-react';
 import type { Media } from '@/shared/api';
 import { MediaPhoto } from '@/entities/meeting';
 import { PhotoViewer } from '@/features/view-media/ui/PhotoViewer';
@@ -38,7 +38,7 @@ export const Attachment = ({ media, user }: AttachmentProps) => {
           disabled={download.isPending}
           onClick={() => download.mutate()}
         >
-          <FileDown size={22} />
+          <ChatIcon name="file" size={22} />
           <span>
             {media.file_name}
             <small>{(media.size_bytes / 1024 / 1024).toFixed(1)} МБ</small>

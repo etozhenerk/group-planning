@@ -1,0 +1,61 @@
+{
+  "scope": "test-only Telegram-chat review environment; not UI acceptance",
+  "checkedAt": "2026-10-27T15:16:23.289349+00:00",
+  "sourceFiles": [
+    {
+      "path": "backend/internal/httpapi/telegram_chat_review_checks_test.go",
+      "sha256": "bda4a4a817451a8baaad63291312105d7cc7e02fb81b3bd2ac37ebffaa4aebd7"
+    },
+    {
+      "path": "backend/internal/httpapi/telegram_chat_review_data_test.go",
+      "sha256": "7accb0be313c5351a611d907478a98f610b0875417eb26c0f3b09152017377c3"
+    },
+    {
+      "path": "backend/internal/httpapi/telegram_chat_review_faults_test.go",
+      "sha256": "bf7e2651cf67881626aa31dfcf51845ecd61c13e0d2d6d57f8a7ea45122824c7"
+    },
+    {
+      "path": "backend/internal/httpapi/telegram_chat_review_fixture_test.go",
+      "sha256": "1dc2b6595416098cc998997d8afe6307c5d4086861a3728d2e534d1a48e4495e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/telegram-chat-review-fixture.md",
+      "sha256": "2c0303bbd4234c569e4a60ed455160c44f78b8284cc95c18adf2fd668030b147"
+    }
+  ],
+  "checks": [
+    {
+      "command": "GOMAXPROCS=2 go test -p 1 ./internal/httpapi -run '^TestChatReview' -count=1",
+      "exitCode": 0,
+      "result": "PASS, 0.468s"
+    },
+    {
+      "command": "GOMAXPROCS=2 go test -race -p 1 ./internal/httpapi -run '^TestChatReview' -count=1 -v",
+      "exitCode": 0,
+      "result": "PASS, 4 tests, 1.971s"
+    },
+    {
+      "command": "GOMAXPROCS=2 go run -mod=readonly -modfile=tools/go.mod github.com/bombsimon/wsl/v5/cmd/wsl -default none -enable after-block,return,leading-whitespace,trailing-whitespace ./internal/httpapi",
+      "exitCode": 0,
+      "result": "no diagnostics"
+    },
+    {
+      "command": "gofumpt -extra -l <four telegram_chat_review files>; gofmt -l <same files>",
+      "exitCode": 0,
+      "result": "no output; gofumpt run via pinned tools/go.mod"
+    },
+    {
+      "command": "git diff --check -- backend/internal/httpapi <recipe>; git diff --no-index --check /dev/null <each new file>",
+      "exitCode": 0,
+      "result": "no whitespace errors"
+    }
+  ],
+  "limitations": [
+    "Opt-in long-running fixture process and client bootstrap are not launched by fixture author; root coordinates next runtime preparation.",
+    "Full backend suite, agent:check and QA tooling checks are delegated back to root for serialized execution.",
+    "No UI, picker, keyboard, gesture, real OAuth, persistence or release acceptance is claimed.",
+    "Fixed meetings clock; auth uses wall clock; no scheduled transition workers in this harness.",
+    "Lost response is HTTP 503 after a successful real commit, not a physical TCP disconnect.",
+    "Seed cover is private synthetic image, raw prototype cover is an illustrative placeholder."
+  ]
+}

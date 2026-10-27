@@ -5,7 +5,10 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
@@ -56,7 +59,7 @@ class ChatActionSheetUiTests {
                         SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
                 ).assertIsDisplayed()
                 compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
-                compose.onNodeWithTag(submit).performScrollTo().assertIsDisplayed()
+                compose.onNodeWithTag(submit).assertIsDisplayed()
                 fixture.screenshot("sheet-reduced-motion-$action")
                 compose.onNodeWithTag("close-action-sheet").performClick()
                 fixture.waitAbsent("chat-action-sheet")
@@ -83,12 +86,24 @@ class ChatActionSheetUiTests {
                         SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
                 ).assertIsDisplayed()
                 compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
-                compose.onNodeWithTag(submit).performScrollTo().assertIsDisplayed()
+                compose.onNodeWithTag(submit).assertIsDisplayed()
                 fixture.screenshot("sheet-large-$action")
                 fixture.device.pressBack()
                 fixture.waitAbsent("chat-action-sheet")
                 compose.onNodeWithTag("message-composer").assertIsDisplayed()
             }
+            openInformation()
+            verifyCompactPeople()
+            compose.onNodeWithTag("participants-expand").performScrollTo().performClick()
+            compose.onAllNodes(hasTestTag("participant-roster-row")).assertCountEquals(6)
+            compose.onNodeWithTag("open-settings").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+            fixture.screenshot("sheet-large-information-expanded")
+            compose.onNodeWithTag("participants-collapse").performScrollTo().performClick()
+            verifyCompactPeople()
+            compose.onNodeWithTag("information-share").performScrollTo().assertIsDisplayed()
+            fixture.screenshot("sheet-large-information-collapsed")
+            compose.onNodeWithTag("close-action-sheet").performClick()
         }
     }
 
@@ -153,11 +168,17 @@ class ChatActionSheetUiTests {
             fixture.screenshot("sheet-swipe-restored")
             compose.onNodeWithTag("close-action-sheet").performClick()
             fixture.waitAbsent("chat-action-sheet")
-            compose.onNodeWithContentDescription(
-                fixture.context.getString(R.string.meeting_information),
-            )
-                .performClick()
-            fixture.waitTag("invitation-people")
+            openInformation()
+            verifyCompactPeople()
+            compose.onNodeWithTag("participants-expand").performClick()
+            compose.onNodeWithTag("participants-collapse").assertIsFocused()
+            compose.onAllNodes(hasTestTag("participant-roster-row")).assertCountEquals(6)
+            compose.onNodeWithTag("information-share").assertExists()
+            compose.onNodeWithTag("open-settings").assertExists()
+            fixture.screenshot("sheet-information-participants-expanded")
+            compose.onNodeWithTag("participants-collapse").performScrollTo().performClick()
+            compose.onNodeWithTag("participants-expand").assertIsFocused()
+            verifyCompactPeople()
             compose.onNode(
                 hasText("Настолки у Саши") and
                     SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
@@ -191,7 +212,68 @@ class ChatActionSheetUiTests {
             compose.onNodeWithTag("close-action-sheet").performClick()
             fixture.waitAbsent("chat-action-sheet")
             fixture.waitTag("message-composer")
+            openInformation()
+            verifyCompactPeople()
+            compose.onNodeWithTag("close-action-sheet").performClick()
         }
+    }
+
+    @Test fun memberResponseStaysAvailableOutsideExpandedPeople() {
+        fixture.launch("design").use {
+            fixture.waitText("Ужин в пятницу")
+            compose.onNodeWithText("Ужин в пятницу").performScrollTo().performClick()
+            fixture.waitTag("meeting-add")
+            openInformation()
+            verifyCompactPeople()
+            compose.onNodeWithTag("open-settings").assertDoesNotExist()
+            compose.onNodeWithTag("information-share").assertDoesNotExist()
+            compose.onNodeWithTag("information-rsvp-Going").performScrollTo()
+                .assertIsDisplayed().assertIsSelected()
+            compose.onNodeWithTag("participants-expand").performScrollTo().performClick()
+            compose.onAllNodes(hasTestTag("participant-roster-row")).assertCountEquals(6)
+            compose.onNodeWithTag("information-rsvp-Maybe").performScrollTo().performClick()
+            compose.onNodeWithTag("information-rsvp-Maybe").assertIsSelected()
+            compose.onNodeWithText(fixture.context.getString(R.string.rsvp_leave_hint))
+                .performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("rsvp-save").assertExists()
+            compose.onNodeWithTag("participants-collapse").performScrollTo().performClick()
+            verifyCompactPeople()
+            compose.onNodeWithTag("information-rsvp-Maybe").performScrollTo().assertIsSelected()
+            compose.onNodeWithTag("rsvp-save").assertExists()
+            fixture.screenshot("sheet-information-member-response")
+            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.waitTag("message-composer")
+            openInformation()
+            verifyCompactPeople()
+            compose.onNodeWithTag("information-rsvp-Maybe").performScrollTo().assertIsSelected()
+            compose.onNodeWithTag("information-rsvp-Going").performClick()
+            compose.onNodeWithTag("rsvp-save").assertDoesNotExist()
+            compose.onNodeWithTag("close-action-sheet").performClick()
+        }
+    }
+
+    private fun openInformation() {
+        compose.onNodeWithContentDescription(
+            fixture.context.getString(R.string.meeting_information),
+        )
+            .performClick()
+        fixture.waitTag("invitation-people")
+    }
+
+    private fun verifyCompactPeople() {
+        compose.onNodeWithTag("participants-expand").assertExists()
+        compose.onAllNodes(hasTestTag("participant-name-chip"), useUnmergedTree = true)
+            .assertCountEquals(3)
+        compose.onNodeWithTag(
+            "participants-more",
+            useUnmergedTree = true,
+        ).assertTextContains("+3")
+        compose.onAllNodes(hasTestTag("participant-roster-row")).assertCountEquals(0)
+        compose.onAllNodes(
+            hasTestTag("meeting-cover") and hasAnyAncestor(hasTestTag("meeting-information")),
+            useUnmergedTree = true,
+        ).assertCountEquals(0)
+        compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
     }
 
     private fun openChat() {

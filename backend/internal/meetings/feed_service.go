@@ -3,10 +3,12 @@ package meetings
 import (
 	"context"
 	"encoding/json"
+	"errors"
 )
 
 // FeedQuery distinguishes an initial page from an explicit after/before cursor.
 type FeedQuery struct {
+	AroundEntryID string
 	Limit         int
 	After, Before *uint64
 }
@@ -17,7 +19,7 @@ func (s *Service) Feed(ctx context.Context, actor Actor, id string, query FeedQu
 		return FeedPage{}, err
 	}
 
-	if query.Limit < 1 || query.Limit > 100 || (query.After != nil && query.Before != nil) {
+	if query.Limit < 1 || query.Limit > 100 || (query.After != nil && query.Before != nil) || query.AroundEntryID != "" {
 		return FeedPage{}, ValidationError{map[string]string{"cursor": "invalid"}}
 	}
 
@@ -28,36 +30,15 @@ func (s *Service) Feed(ctx context.Context, actor Actor, id string, query FeedQu
 			return err
 		}
 
-		entries, err := reader.Feed(id)
+		window, err := reader.FeedWindow(id, query)
 		if err != nil {
 			return err
 		}
 
 		result.Details = details
-		if len(entries) > 0 {
-			result.LatestSequence = entries[len(entries)-1].Sequence
-		}
-
-		for _, entry := range entries {
-			if query.After != nil && entry.Sequence <= *query.After {
-				continue
-			}
-
-			if query.Before != nil && entry.Sequence >= *query.Before {
-				continue
-			}
-
-			result.Entries = append(result.Entries, entry)
-		}
-
-		if len(result.Entries) > query.Limit {
-			result.HasMore = true
-			if query.After != nil {
-				result.Entries = result.Entries[:query.Limit]
-			} else {
-				result.Entries = result.Entries[len(result.Entries)-query.Limit:]
-			}
-		}
+		result.Entries = window.Entries
+		result.LatestSequence = window.LatestSequence
+		result.HasMore = window.HasMore
 
 		return hydrateMediaEntries(reader, result.Entries)
 	})
@@ -98,32 +79,30 @@ func (s *Service) SendMessage(ctx context.Context, actor Actor, id, text, client
 			return err
 		}
 
-		entries, err := writer.Feed(id)
-		if err != nil {
+		entry, err := writer.MessageByRequest(id, actor.ID, clientRequestID)
+		if err != nil && !errors.Is(err, ErrNotFound) {
 			return err
 		}
 
-		for _, entry := range entries {
-			if entry.Kind == "message" && entry.ActorID == actor.ID && entry.ClientRequestID == clientRequestID {
-				var payload struct {
-					Text string `json:"text"`
-				}
-				if json.Unmarshal(entry.Payload, &payload) != nil {
-					return ErrInvalidRecord
-				}
-
-				if payload.Text != text {
-					return ErrIdempotencyConflict
-				}
-
-				if exists && receipt.ResourceID != entry.ID {
-					return ErrInvalidRecord
-				}
-
-				result = entry
-
-				return nil
+		if err == nil {
+			var payload struct {
+				Text string `json:"text"`
 			}
+			if entry.Kind != "message" || json.Unmarshal(entry.Payload, &payload) != nil {
+				return ErrInvalidRecord
+			}
+
+			if payload.Text != text {
+				return ErrIdempotencyConflict
+			}
+
+			if exists && receipt.ResourceID != entry.ID {
+				return ErrInvalidRecord
+			}
+
+			result = entry
+
+			return nil
 		}
 
 		if exists {

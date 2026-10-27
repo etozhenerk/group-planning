@@ -14,6 +14,7 @@ internal data class PendingMessage(
     val text: String,
     val createdAt: ApiInstant,
     val rejected: Boolean = false,
+    val status: DeliveryStatus = if (rejected) DeliveryStatus.Rejected else DeliveryStatus.Queued,
 )
 
 @Serializable
@@ -22,6 +23,15 @@ internal data class MessageRecord(
     val meeting: UUID,
     val draft: String = "",
     val pending: PendingMessage? = null,
+    val queue: List<PendingMessage> = emptyList(),
+)
+
+@Serializable
+internal enum class DeliveryStatus { Queued, Sending, Uncertain, Rejected }
+
+internal fun MessageRecord.normalized(): MessageRecord = copy(
+    pending = null,
+    queue = if (queue.isEmpty()) listOfNotNull(pending) else queue,
 )
 
 internal interface MessageStorage {

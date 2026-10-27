@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { guarded, setReaction, useAccess } from '@/entities/meeting';
 import type { Reaction } from '@/entities/meeting';
@@ -9,7 +8,6 @@ export const useReactionAction = (id: string, entry: string, session: Session) =
   const client = useQueryClient();
   const access = useAccess(session.user.id, id);
   const intent = useIntent();
-  const [picker, setPicker] = useState(false);
   const mutation = useMutation({
     mutationFn: (value: { emoji: string; active: boolean }) =>
       guarded(client, session.user.id, id, access.epoch, () =>
@@ -27,5 +25,5 @@ export const useReactionAction = (id: string, entry: string, session: Session) =
     retry: false,
   });
 
-  return { picker, setPicker, mutation, denied: access.denied };
+  return { mutation, denied: access.denied };
 };

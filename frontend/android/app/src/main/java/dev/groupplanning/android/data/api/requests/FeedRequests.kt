@@ -13,8 +13,9 @@ internal object FeedRequests {
         after: ServerCounter? = null,
         before: ServerCounter? = null,
         limit: Int = 50,
+        around: UUID? = null,
     ): ApiRequest {
-        require(after == null || before == null)
+        require(listOfNotNull(after, before, around).size <= 1)
         require(limit in 1..100)
         return ApiRequest(
             path = listOf("meetings", id.toString(), "feed"),
@@ -22,6 +23,7 @@ internal object FeedRequests {
                 put("limit", limit.toString())
                 after?.let { put("after_sequence", it.value) }
                 before?.let { put("before_sequence", it.value) }
+                around?.let { put("around_entry_id", it.toString()) }
             },
             meetingId = id,
             revokesAccessOnForbidden = true,

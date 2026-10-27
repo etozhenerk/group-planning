@@ -24,7 +24,7 @@ export const request = async <T>(
     ...init,
   });
 
-  const body: unknown = await response.json();
+  const body: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
     if (response.status === 401 && !optionalSession) {

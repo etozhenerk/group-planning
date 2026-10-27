@@ -49,7 +49,7 @@ func pageLimit(w http.ResponseWriter, values url.Values) (int, bool) {
 }
 
 func feedQuery(w http.ResponseWriter, r *http.Request) (meetings.FeedQuery, bool) {
-	values, ok := closedQuery(w, r, "limit", "after_sequence", "before_sequence")
+	values, ok := closedQuery(w, r, "limit", "after_sequence", "before_sequence", "around_entry_id")
 	if !ok {
 		return meetings.FeedQuery{}, false
 	}
@@ -59,7 +59,12 @@ func feedQuery(w http.ResponseWriter, r *http.Request) (meetings.FeedQuery, bool
 		return meetings.FeedQuery{}, false
 	}
 
-	result := meetings.FeedQuery{Limit: limit}
+	result := meetings.FeedQuery{Limit: limit, AroundEntryID: values.Get("around_entry_id")}
+	if values.Has("around_entry_id") && (result.AroundEntryID == "" || values.Has("after_sequence") || values.Has("before_sequence")) {
+		writeError(w, 400, "invalid_query", nil)
+		return meetings.FeedQuery{}, false
+	}
+
 	for name, destination := range map[string]**uint64{"after_sequence": &result.After, "before_sequence": &result.Before} {
 		if values.Has(name) {
 			value, err := meetings.ParseRevision(values.Get(name))

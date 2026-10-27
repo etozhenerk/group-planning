@@ -81,6 +81,15 @@ func (s *Service) List(ctx context.Context, actor Actor, limit int, cursor strin
 				continue
 			}
 
+			if s.ChatReadStateEnabled() {
+				state, err := reader.ChatReadState(meeting.ID, actor.ID)
+				if err != nil {
+					return err
+				}
+
+				details.ReadState = &state
+			}
+
 			result.Meetings = append(result.Meetings, details)
 			if len(result.Meetings) > limit {
 				break

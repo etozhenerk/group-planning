@@ -14,6 +14,8 @@ import (
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
+	ChatReadState    bool
+	ChatSyncKey      []byte
 	Support          SupportConfig
 	Storage          string
 	DatabaseURL      string
@@ -80,6 +82,22 @@ func LoadConfig(getenv func(string) string) (Config, error) {
 	config.Transitions, err = loadTransitionOptions(getenv)
 	if err != nil {
 		return Config{}, err
+	}
+
+	config.ChatSyncKey, err = loadChatSyncKey(getenv("SOMEWHERE_CHAT_SYNC_KEY"))
+	if err != nil {
+		return Config{}, err
+	}
+
+	if value := getenv("SOMEWHERE_CHAT_READ_STATE"); value != "" {
+		config.ChatReadState, err = strconv.ParseBool(value)
+		if err != nil {
+			return Config{}, fmt.Errorf("SOMEWHERE_CHAT_READ_STATE must be a boolean")
+		}
+	}
+
+	if config.ChatReadState && len(config.ChatSyncKey) < 32 {
+		return Config{}, fmt.Errorf("read state requires configured chat sync")
 	}
 
 	config.Auth = auth

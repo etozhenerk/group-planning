@@ -29,5 +29,5 @@ func NewAccounts(store meetings.Store, identities identity.Store, auth *identity
 		return atomic.AccountUpdate(ctx, store, func(authStore identity.Store, meetingStore meetings.Store) error {
 			return fn(auth.WithStore(authStore), meetings.NewService(meetingStore, now))
 		})
-	}), nil
+	}, auth.AccountDeleted), nil
 }

@@ -1,6 +1,10 @@
 package httpapi
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+)
 
 func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 	if !getOnly(w, r) {
@@ -22,7 +26,17 @@ func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := h.app.Feed(r.Context(), actor, id, query)
+	var result meetings.FeedPage
+	var around *meetings.FeedRange
+	var err error
+	if query.AroundEntryID != "" {
+		value, readErr := h.app.FeedAround(r.Context(), actor, id, query.AroundEntryID, query.Limit)
+		result = meetings.FeedPage{Entries: value.Entries, Details: value.Details, LatestSequence: value.LatestSequence, HasMore: value.HasOlder || value.HasNewer}
+		around, err = &value, readErr
+	} else {
+		result, err = h.app.Feed(r.Context(), actor, id, query)
+	}
+
 	if err != nil {
 		h.writeMeetingError(w, err)
 		return
@@ -61,6 +75,17 @@ func (h meetingHandlers) feed(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, entry := range result.Entries {
 		response.Entries = append(response.Entries, entryDTO(entry, users))
+	}
+
+	if around != nil {
+		writeJSON(w, 200, struct {
+			feedPageResponse
+			Range    chatRangeResponse `json:"range"`
+			HasOlder bool              `json:"has_older"`
+			HasNewer bool              `json:"has_newer"`
+		}{response, feedRangeDTO(around.Entries), around.HasOlder, around.HasNewer})
+
+		return
 	}
 
 	writeJSON(w, 200, response)

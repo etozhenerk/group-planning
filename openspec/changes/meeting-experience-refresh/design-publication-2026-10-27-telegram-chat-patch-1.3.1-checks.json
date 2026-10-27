@@ -1,0 +1,58 @@
+{
+  "kind": "design-generation-patch-checks",
+  "version": "1.3.1",
+  "recordedAt": "2026-10-27T11:30:10.666745+00:00",
+  "scope": "Только генератор/экспорт опубликованных breakpoint dimensions. Значения/дизайн не меняются; ручной клиентский код не редактировался.",
+  "exports": {
+    "ios": {
+      "breakpointChatCompactHeight": "CGFloat(500)",
+      "breakpointChatNarrowWidth": "CGFloat(350)"
+    },
+    "android": {
+      "breakpointChatCompactHeight": "500.dp",
+      "breakpointChatNarrowWidth": "350.dp"
+    }
+  },
+  "webOnly": [
+    "breakpoint.mobile",
+    "breakpoint.tablet"
+  ],
+  "checks": [
+    {
+      "command": "npm run design:generate",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:test",
+      "status": "pass",
+      "tests": 29
+    },
+    {
+      "command": "npm run agent:check",
+      "status": "pass"
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:check",
+      "status": "blocked-by-concurrent-app-edits",
+      "observation": "Новые literals в Android ic_backspace/ic_keyboard/ic_people/ic_search.xml (24dp/#FFFFFFFF), iOS MessageComposer.swift spacing:0. Сообщено владельцам; legacy-инвентарь не расширялся."
+    }
+  ],
+  "hashes": {
+    "scripts/design/formats.mjs": "c72137ad45aa97e3f85376efb4f5d6cc651f9e19b28534bb2ce6427dd0c11632",
+    "scripts/design/tokens.test.mjs": "e95dc670129b1d7709d30aaf8e7887d6f44a1c28a1e305f36aa8c54702865df0",
+    "design-system/version.json": "f6c105846b05140c2f7ea36ebe0729a54143eac9ad375f2fe11a880d4ba7782c",
+    "design-system/authority.json": "1735187d8494fec606ac41dfca5519eaa91fb2b581c044ba34b36c940744d020",
+    "design-system/tokens.json": "9e75d1f6dba5617d8ed646f19ae14be16c91e4c700fb226431669fc7546fe102",
+    "design-system/CHANGELOG.md": "16a0ad93cbb790e68b2c660a2e90fd33854217462c83053dbfa7f6b44384d154",
+    "design-system/README.md": "9951c71299421c4dd22c36e11b709b6f5a8f7db4de16f8140828908bef675b48",
+    "openspec/changes/meeting-experience-refresh/design-manifest.json": "04d3e8389016e6a88a158fe08b536cc6f51bf42f13bfe22a711210da0b84c727",
+    "frontend/ios/Somewhere/UI/DesignTokens.swift": "c5e2620c9f4ea9ee8aff9f7163fafa1da02776668d952fd526b57de8290fe900",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/theme/DesignTokens.kt": "d456e04b715fc9cc3c40b8abe89fb7d6010e8f00d54a7745241fa4281b74078e"
+  },
+  "previousReceipt": "design-publication-2026-10-27-telegram-chat-checks.json",
+  "acceptance": "Предыдущий context 1.3.0 исторический. Клиенты редактируются параллельно; этот receipt не UI-приёмка."
+}

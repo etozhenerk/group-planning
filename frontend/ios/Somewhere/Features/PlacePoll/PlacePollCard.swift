@@ -6,7 +6,6 @@ struct PlacePollCard: View {
     let entry: FeedEntry
     let own: Bool
     @State private var owner: PlacePollOwner
-    @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.scenePhase) private var phase
 
     init(pollID: UUID, meeting: Meeting, entry: FeedEntry, own: Bool, session: SessionStore) {
@@ -18,26 +17,31 @@ struct PlacePollCard: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            if !typeSize.isAccessibilitySize {
-                if own { Spacer(minLength: 24) } else { ParticipantAvatar(user: entry.actor) }
-            }
-            VStack(alignment: .leading, spacing: 14) {
-                Text(own ? "Вы" : entry.actor.displayName).font(.caption.bold())
-                Text(own ? "Предлагаете новое место" : "Предлагает новое место").font(.caption)
+        ChatInlineCard {
+            ChatPollEyebrow(entry: entry, icon: "ChatPin")
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
                 if owner.current, let poll = owner.poll {
-                    Text(poll.place).font(.headline)
+                    Text(poll.place).designFont(DesignTokens.typographySizeBody, weight: .semibold)
+                        .padding(.bottom, DesignTokens.componentMobileChatInlineTitleAfterGap)
                     if let explanation = poll.explanation, !explanation.isEmpty {
-                        Text(explanation).designFont(13)
+                        Text(explanation).designFont(DesignTokens.typographySizeSmall)
+                            .foregroundStyle(DesignTokens.colorMuted)
                             .fixedSize(horizontal: false, vertical: true)
+                            .padding(.bottom, DesignTokens.spaceS12)
                     }
-                    Text(PlacePollCopy.status(poll, timezone: meeting.timezone)).font(.caption)
                     PlacePollBallot(owner: owner, poll: poll)
+                    Text(PlacePollCopy.status(poll, timezone: meeting.timezone))
+                        .designFont(
+                            DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2
+                        )
+                        .foregroundStyle(DesignTokens.colorMuted)
+                        .padding(.top, DesignTokens.componentMobileChatInlineFootGap)
                 } else if owner.current && owner.problem == nil {
                     PlacePollLoading()
                 }
                 if owner.current, let problem = owner.problem {
                     Text(problem).font(.footnote).accessibilityIdentifier("place-poll-error")
+                        .padding(.top, DesignTokens.spaceS8)
                     if owner.pending != nil || owner.poll == nil {
                         Button("Повторить") {
                             Task {
@@ -47,28 +51,35 @@ struct PlacePollCard: View {
                                     await owner.load(pollID)
                                 }
                             }
-                        }.disabled(owner.busy).frame(minHeight: 44)
+                        }.buttonStyle(ChatPressStyle()).disabled(owner.busy)
+                            .frame(minHeight: DesignTokens.targetIos)
                     }
                 }
-            }.padding(16).foregroundStyle(own ? AppPalette.actionText : AppPalette.text)
-                .background(
-                    own ? AppPalette.ownMessage : AppPalette.message,
-                    in: UnevenRoundedRectangle(
-                        topLeadingRadius: own ? 20 : 6,
-                        bottomLeadingRadius: 20, bottomTrailingRadius: 20,
-                        topTrailingRadius: own ? 6 : 20))
-            if !typeSize.isAccessibilitySize {
-                if own { ParticipantAvatar(user: entry.actor) } else { Spacer(minLength: 24) }
-            }
+            }.padding(.top, DesignTokens.spaceS10)
         }.accessibilityElement(children: .contain).accessibilityIdentifier(
             "place-poll-\(pollID.uuidString.lowercased())"
         )
         .task(id: phase) {
             guard phase == .active else { return }
-            repeat {
+            if let value = owner.session.privateData.chatProjections[owner.meetingID]?.placePolls[
+                pollID]
+            {
+                try? owner.receive(value)
+            } else {
                 await owner.load(pollID)
+            }
+            while !Task.isCancelled, owner.current,
+                !owner.session.privateData.syncMeetings.contains(owner.meetingID)
+            {
                 do { try await Task.sleep(for: .seconds(3)) } catch { return }
-            } while !Task.isCancelled && owner.current
+                if owner.session.privateData.syncMeetings.contains(owner.meetingID) { return }
+                await owner.load(pollID)
+            }
+        }
+        .onChange(
+            of: owner.session.privateData.chatProjections[owner.meetingID]?.placePolls[pollID]
+        ) { _, value in
+            if let value, !owner.busy { try? owner.receive(value) }
         }
         .onChange(of: owner.current) { _, current in if !current { owner.clear() } }
     }

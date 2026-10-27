@@ -1,0 +1,71 @@
+{
+  "startedAt": "2026-10-27T13:48:53.168099+00:00",
+  "mode": "historical access only, not acceptance",
+  "steps": [
+    {
+      "at": "2026-10-27T13:48:53.185259+00:00",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "emu",
+        "avd",
+        "name"
+      ],
+      "exitCode": 0,
+      "output": "Somewhere_API_36\nOK\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T13:48:53.260613+00:00",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "dumpsys",
+        "activity",
+        "activities"
+      ],
+      "exitCode": 0,
+      "output": "    topResumedActivity=ActivityRecord{184271409 u0 dev.groupplanning.android.uitesthost/dev.groupplanning.android.MainActivity t9}",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T13:48:53.311646+00:00",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "wm",
+        "size"
+      ],
+      "exitCode": 0,
+      "output": "Physical size: 720x1600\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T13:48:53.370504+00:00",
+      "command": [
+        "/Users/misha/Library/Android/sdk/platform-tools/adb",
+        "-s",
+        "emulator-5554",
+        "shell",
+        "wm",
+        "density"
+      ],
+      "exitCode": 0,
+      "output": "Physical density: 320\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-27T13:48:56.976931+00:00",
+      "action": "uiautomator dump",
+      "exitCode": 0,
+      "output": "UI hierchary dumped to: /data/local/tmp/reviewer-window.xml\n",
+      "stderr": ""
+    }
+  ],
+  "finishedAt": "2026-10-27T13:48:57.025115+00:00"
+}

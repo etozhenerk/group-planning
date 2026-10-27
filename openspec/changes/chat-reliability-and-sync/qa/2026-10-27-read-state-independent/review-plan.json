@@ -1,0 +1,38 @@
+{
+  "candidate": "2144ef0607648a4a69c65845351e3ea25cb3bf66",
+  "reviewer": "/root/chat_sync_backend_review",
+  "scope": "backend tasks3.3–3.6 only, no full case gate",
+  "caseIDs": [
+    "TC-CHAT-READ-STATE-068DA926",
+    "TC-CHAT-READ-STATE-99A5AEEE",
+    "TC-CHAT-READ-STATE-284DD6EE",
+    "TC-CHAT-READ-STATE-8A47BDBD",
+    "TC-CHAT-READ-STATE-5869F951",
+    "TC-CHAT-READ-STATE-51E51F41",
+    "TC-CHAT-READ-STATE-EC05E2CA",
+    "TC-CHAT-READ-STATE-E32551D3"
+  ],
+  "sourceManifest": "source-manifest.json",
+  "fixture": "synthetic memory Store; real httptest TLS loopback; no user data/shared ports/cloud SQL writes",
+  "tools": [
+    "Go1.27.2 darwin/arm64",
+    "GOMAXPROCS=1",
+    "-p=1",
+    "race detector"
+  ],
+  "ownTests": [
+    "TestIndependentReadActivationLegacyReceipts",
+    "TestIndependentReadLateHintRollbackAndNoop",
+    "TestIndependentReadersPaginationRevokeAndScopedCursor",
+    "TestIndependentReadHTTPBoundaryAndLifecycle",
+    "TestIndependentReadDisableReenablePreservesBaseline",
+    "TestIndependentReadSparseUint64MessageBoundary"
+  ],
+  "excluded": [
+    "native client UI/SDK",
+    "visibility500ms/coalescing1s",
+    "own remote SQL run",
+    "production activation/deploy",
+    "full capacity/release acceptance"
+  ]
+}

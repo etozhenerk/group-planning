@@ -31,6 +31,10 @@ func TestDependencyPolicy(t *testing.T) {
 		{"composition to provider", "internal/server", modulePath + "/internal/identity/yandex", true},
 		{"unknown module", "internal/httpapi", modulePath + "/internal/future", false},
 		{"similar package prefix", "internal/httpapi", modulePath + "/internal/meetingsother", false},
+		{"realtime SDK adapter", "internal/realtime", "github.com/centrifugal/centrifuge", true},
+		{"domain cannot use broker", "internal/meetings", "github.com/centrifugal/centrifuge", false},
+		{"realtime cannot access storage", "internal/realtime", modulePath + "/internal/storage/postgres", false},
+		{"composition to realtime", "internal/server", modulePath + "/internal/realtime", true},
 		{"unreviewed SDK", "internal/meetings", "example.com/provider", false},
 	}
 	for _, test := range tests {

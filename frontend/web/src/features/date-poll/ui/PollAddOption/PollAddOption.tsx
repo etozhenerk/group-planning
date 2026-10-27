@@ -1,5 +1,5 @@
+import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
 import type { DatePoll } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { DateInput } from '@/shared/ui/DateInput';
@@ -27,7 +27,7 @@ export const PollAddOption = ({ poll, session, zone }: PollAddOptionProps) => {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <Plus size={18} aria-hidden="true" />
+        <ChatIcon name="plus" size={18} aria-hidden="true" />
         Предложить дату
       </button>
       {open && (

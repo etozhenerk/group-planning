@@ -1,0 +1,344 @@
+{
+  "executor": "backend-chat-final-independent",
+  "candidate": "c789772bce4e3af45e47ade9a68cd10b7d9dee0c",
+  "scope": "backend API only; separate ephemeral fixtures permitted by plan; no historical verdicts reused",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-READ-STATE-068DA926",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPS PUT150→140→150, следующий sync; list и author receipts. Дополнительно fault на втором hint и retry через60с.",
+      "expected": "Marker=max; no-op без нового change/outbox; согласованные projections.",
+      "actual": "150 во всех ответах, projection_version не меняется, sync пуст, list unread0, canonical receipt1; fault откатил marker/journal/outbox.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "read-http-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPS0/01/+1/-1/decimal/overflow/max и beyondtail151; outsider и отзыв RSVP; sparse uint64 gaps.",
+      "expected": "Невалидные позиции отклонены, read state не раскрыт, нет продвижения.",
+      "actual": "422 для недопустимых значений,403 после revoke/outsider,401 после удаления; MaxUint64 допустим только для реально существующей записи в отдельном sparse fixture.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "read-http-probes.jsonl",
+        "read-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-284DD6EE",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Два foreign message, одно own, hidden poll vote/close, reaction; snapshot и два MarkRead.",
+      "expected": "Только два чужих сообщения unread; затем1 и0 с правильным first_unread.",
+      "actual": "Unread2→1→0; first_unread первый→второй→пусто; poll/system/reaction/own не увеличили count.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-mixed-probes-r2.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-8A47BDBD",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "10k legacy activation и concurrent commit; receipt/readers доSync; unauthorized/invalid/continuation и revoke между фазами.",
+      "expected": "Baseline атомарен, actual0, нет ложных receipts; legacy epoch стабилен, посторонний не создаёт stream.",
+      "actual": "10k baseline10003 actual0 unread0 согласно observed commit; receipt0. Legacy first authorized read initializes once безjournal/hints; unauthorized/continuation не создают stream; оба access barriers403.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-mixed-probes-r2.jsonl",
+        "final-probes.jsonl",
+        "read-probes.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-5869F951",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Третий участник C join после100 старых сообщений; query before/after actual PUT.",
+      "expected": "Baseline не даёт receipt; отдельный marker даёт.",
+      "actual": "Count остался1 после join, вырос2 только после PUT; baseline/actual разделены.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "read-http-probes.jsonl",
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-51E51F41",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "B withdraw, новые foreign rows, rejoin, повтор прежнего lower marker; чтение list.",
+      "expected": "Старые baseline/actual сохранены; доступные новые сообщения unread.",
+      "actual": "Actual сохранён, unread98, first_unread у первой новой записи, list98; reactivation repeated не сбрасывает значения.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "read-http-probes.jsonl",
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-EC05E2CA",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "103readers, revoke одного/remove account другого; страницы50/50/1 и HTTP DELETEme при saved cursor.",
+      "expected": "Удалённые/вышедшие и автор исключены, aggregate текущий без полного feed.",
+      "actual": "103→101, removed IDs отсутствуют; HTTP saved cursor после deletion исключает C и count2→1; bounded receipt query проходит.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "read-http-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Empty author readers; nonauthor/outsider;100/101IDs; own+foreign; uppercase UUID и mixedcase duplicate.",
+      "expected": "Ограничения/права до выдачи; UUID canonical, duplicates без partial response.",
+      "actual": "Empty count0;403 для неавтора/outsider/mixedforeign,100 accepted/101422, uppercase canonicalcount1, mixedcase duplicate422.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "read-http-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "failed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Memory bounds/copies/rollback/cancel; SQL1k/10k/100k EXPLAIN initial/after/before/emptytail/entry/intent; sparse uint64.",
+      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
+      "actual": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets.",
+      "remaining": "SQL shape verifier failure не маскируется. PAGE дополнительно требует page p95 distribution (нынешнийfeed test только EXPLAIN; unread/receipts p95 отдельно20samples). LOOKUP нужен завершённый photo/file/legacy-captionless independent coverage после исправления verifier.",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "supporting-runtime.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-791FF479",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTP/WS cookie и native; foreign/duplicateOrigin, mixed/duplicateBearer, чужойchannel, forged identity; cookie HTTP PUT безCSRF.",
+      "expected": "Server-derived identity, origin/access checks, WS не отменяет CSRF.",
+      "actual": "ЗапрещённыеOrigin403, ambiguous credential401, connect spoof101, foreign subscription103; cookie/native connect успешны; read mutation безCSRF403.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "supporting-runtime.jsonl",
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Выполнены WS logout/account deletion и TTL2s expiry.",
+      "expected": "Закрытие, повторная аутентификация и отсутствие late-data после expiry/revoke.",
+      "actual": "Соединения закрылись3503; отдельный полный reconnect/lateHTTP после обоих вариантов не завершён.",
+      "remaining": "Повторное подключение после expiry/revoke и явный late callback protocol-probe. Прогон остановлен после concrete SQL verifier finding по поручению root; отсутствие доказательств не pass.",
+      "runtimeEvidence": [
+        "supporting-runtime.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-1DC708F2",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "WS access revoke before publication; denied recovery; HTTP read/send после RSVP revoke; legacy init access barriers.",
+      "expected": "Отзыв до payload не обходится hint/receipt.",
+      "actual": "Meeting unsubscribe2003 безpublication, recovery103; terminal personal доставлен; revoked read/send403.",
+      "remaining": "Нужен единый задержанный HTTP sync между hint и завершением ответа с воспроизводимым барьером. Выполненные независимые части сохранены; полныйcase не принят.",
+      "runtimeEvidence": [
+        "supporting-runtime.jsonl",
+        "final-probes.jsonl",
+        "read-http-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-6DD0CC09",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Hidden anonymous poll: vote owner, sync guest, close worker, sync старойкарточки; readstate и serializedjournal/hints.",
+      "expected": "Не раскрыть чужой выбор до закрытия; после закрытия только разрешённый итог.",
+      "actual": "В guest проекции нет MyOptionIDs/votes/voters; послеclose votes присутствуют. Journal/hints безтекста/имени/invitation, unread учитывает только сообщения.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-mixed-probes-r2.jsonl",
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A91C53BB",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Сверка security.md, runtime-topology report и deployment-verification без production операций.",
+      "expected": "Неподтверждённая защитаbackup не объявляется проверенной.",
+      "actual": "security.md явно отделяет подтверждённый age job от неподтверждённых disk/key lifecycle. Этот QA не выполнял restore текущего кандидата и не заявляет backup/E2EE pass.",
+      "remaining": "",
+      "runtimeEvidence": []
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-BDBF283F",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Проверены reference-only journal/hints и HTTPsync reset redaction; realtime transient storage error temporarytrue.",
+      "expected": "Все diagnostics fault paths безcontent/credentials; клиентское хранение отдельно.",
+      "actual": "Исполненные checks не нашли message text/cursor/private read fields вlogs, журнал не копирует text/name/token.",
+      "remaining": "Независимый полный capture timeout/reconnect/storage-sync fault diagnostics с synthetic credential markers ещё нужен. Native/web storage вне backend-плана и не подтверждено здесь.",
+      "runtimeEvidence": [
+        "final-mixed-probes-r2.jsonl",
+        "final-probes.jsonl",
+        "supporting-runtime.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A3B3BFE7",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Account removal: HTTP DELETEme, current replay, cleanup markers/recipients; terminalhint после meeting removal; SQLaccount/outbox.",
+      "expected": "Удаление приватных state, current projection; terminalhint после removal/restart.",
+      "actual": "Выполненные memory/SQL проверки проходят, удалённыеIDs/names не возвращены, terminal pending survives.",
+      "remaining": "Единый сценарий active subscriptions + удалениеM + фактический restart API/dispatcher наSQL не выполнен; fresh pool не выдаётся за process restart.",
+      "runtimeEvidence": [
+        "read-http-probes.jsonl",
+        "final-probes.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-5EFD24A6",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Pollclose worker без нового message; sync постаромуcursor; account removal и повтор oldrange.",
+      "expected": "Current oldcard projection и historyinvalidated безпрежнегоимени.",
+      "actual": "Стараякарточка закрыта/итог доступен; journal replay current RemovedAccountName и historyinvalidated. Client stale-merge исключён из backend verdict.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-mixed-probes-r2.jsonl",
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-BC07BEB1",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPS snapshot→105commits→catchup; WS recovery/auth отдельными probes.",
+      "expected": "Snapshot-subscribe gap;100offlinechanges recovery≤2s приRTT150ms даже послеSDKrecovery.",
+      "actual": "HTTP bounded catchup подтверждён; совмещённый protocol scenario и RTT150ms timing не измерены.",
+      "remaining": "Нужен protocol-client пробелsubscribe, 5min controlledoffline/100changes и зарегистрированный RTT150ms recovery benchmark.",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "supporting-runtime.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-AA76CADB",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Memory crashafterpublish-beforeACK, lease staleowner, drain/retry; SQLjournal/outbox atomicity/fresh pool; slowconsumer3008.",
+      "expected": "Сохранность commit/change/outbox при process restart до/послеpublish; lostNOTIFY; retentioncatchup.",
+      "actual": "Части прошли: stableevent duplicate, rollback безmessage/change/hints, SQLreopen state, recoverable queuebound.",
+      "remaining": "Не выполнен фактический отдельный процесс API/dispatcher наSQL с faultbarriers доpublish/послеpublish и lostNOTIFY; freshpool недостаточно для полногоcase.",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "supporting-runtime.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-F6CFB5E9",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPforgedcursor, trimjournal, прежнийcursor и freshsnapshot; service user-scope,expiry8d,retention; SQLretention.",
+      "expected": "400 malformed,410reset, права доcursor; история доступна freshsnapshot.",
+      "actual": "HTTP400 invalid_sync_cursor и410 sync_reset_required сrequest_id; fresh snapshot возвращает entries. Revoked service403 доparse; retention не удаляет историю.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-14D92D7D",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPpost ACK не используется клиентом; часы+31d, relogin, repeat sameintent и changedbody; actor-scoped service lookup.",
+      "expected": "ТотжеentryID/sequence, конфликт тела; чужойactor scope не смешан.",
+      "actual": "HTTP31d повтор201 тотжеID/sequence, changedbody409; service ownactor samekey отдельная запись, revokedrepeat403. Client ACK-validation внеbackend.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "status": "failed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "Text/media retries before/afterreceipt expiry, boundedFeed guard, current access/conflicts; SQLentry/intent lookup1k/10k/100k.",
+      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
+      "actual": "QA-PLAN-SHAPE-001: TestFeedBoundedQueryPlansIntegration/1000/{entry,intent} rejects Bitmap Heap Scan with child Bitmap Index Scan; actual rows1 loops1 removed0,0.022ms. Required SQL test failed. No evidence of unbounded product scan; verifier needs reviewed correction and fresh run, keeping row/time budgets.",
+      "remaining": "SQL shape verifier failure не маскируется. PAGE дополнительно требует page p95 distribution (нынешнийfeed test только EXPLAIN; unread/receipts p95 отдельно20samples). LOOKUP нужен завершённый photo/file/legacy-captionless independent coverage после исправления verifier.",
+      "runtimeEvidence": [
+        "final-probes.jsonl",
+        "supporting-runtime.jsonl",
+        "sql/sql-live.log"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "status": "passed",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "105changes; HTTPpage100, commitT+1, page5, discard/retry lastpage, nextcycle.",
+      "expected": "Fixedthrough, idempotentretry, следующийцикл получаетT+1.",
+      "actual": "100/5 заканчиваетсянаT, повторlastpage samecursor/count5, следующийцикл ровноT+1. Backend выдаёт воспроизводимыйcursor; atomicclientmerge не заявляется.",
+      "remaining": "",
+      "runtimeEvidence": [
+        "final-probes.jsonl"
+      ]
+    },
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "not_run",
+      "startedAt": "2026-10-27T21:35:00Z",
+      "finishedAt": "2026-10-27T21:48:31.200617+00:00",
+      "action": "HTTPcapabilities auth/disabledread/sync; legacyfeed/retry; flagreactivation preserves baseline.",
+      "expected": "СовместимостьDTO и disabled path; rollback nojournalwriter→newepoch resets.",
+      "actual": "ВыполненныеHTTP/service проверки проходят; точный rollback artifact не запускался.",
+      "remaining": "Schema-exact oldwriter compatibility и новыйepoch после периода безjournal требуют отдельного текущего runtime доказательства. Документационное пояснение не runtimepass.",
+      "runtimeEvidence": [
+        "final-probes.jsonl"
+      ]
+    }
+  ]
+}

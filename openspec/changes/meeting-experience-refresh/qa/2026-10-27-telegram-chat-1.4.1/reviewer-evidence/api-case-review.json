@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/telegram_independent_review",
+  "recordedAt": "2026-10-27T13:51:40.890201+00:00",
+  "planHash": "75166c5e4c7ce3e8e64bf9025747d3be2bd7bbba49db5a0491a24f926bffddb5",
+  "sourceHash": "0f2a46f8254eb8bb7199c48cfb4eb5493a0d584348220a4d34cef088d6d585bf",
+  "acceptanceStopped": true,
+  "reason": "Root requested checkpoint before correcting two date-dependent backend tests; this pass is not transferred to the next source/plan.",
+  "backendSuite": "failed: TestPreparationTaskOpenAPIResponses and TestSavedInvitationsOpenAPIResponses returned meeting_past409 instead of200",
+  "cases": [
+    {
+      "caseId": "TC-API-PROFILE-PRIVACY",
+      "status": "passed",
+      "actual": "Cookie/Bearer одного subject дали одинаковый полный собственный профиль; anonymous401. Во встрече/списке/составе/feed/reactions для B отсутствуют7 личных полей. Публичное приглашение C не раскрывает состав/медиа. Прежний потребитель прочитал обязательные message kind/payload_version/text;187 фактических тел всего verifier валидированы по текущему OpenAPI."
+    },
+    {
+      "caseId": "TC-API-RSVP-CUTOFF",
+      "status": "passed",
+      "actual": "HTTP независимые встречи -1/0/+1s:200/409/409; текущий повтор сохранил доступ, возвращение после отказа409, date-only допускает. Перенос начала разрешил старый запрос. Шесть HTTP гонок RSVP/PATCH отпущены общим барьером; сохранённые revision/count/time соответствуют выигравшей атомарной операции; denied session feed403 и фото403."
+    },
+    {
+      "caseId": "TC-API-RSVP-LEGACY",
+      "status": "passed",
+      "actual": "Прежний answer/expected_revision после ранее разрешающего preview получил409 join_closed. Preview содержит точное join_closes_at и reason. Feed/photo403. После PATCH нового начала тот же старый формат подтвердил участие."
+    },
+    {
+      "caseId": "TC-API-PARTICIPANT-SUMMARY",
+      "status": "passed",
+      "actual": "Созданы organizer+5going, maybe и not_going. Details/list/calendar сразу дали6 и public preview, после отказа участника превью дали5 без него. Отсутствующий avatar остался null;7 личных полей и закрытый состав не утекли."
+    },
+    {
+      "caseId": "TC-API-REACTION-IDEMPOTENCY",
+      "status": "blocked",
+      "actual": "Проверены actual HTTP потеря тела ответа послеcommit, исходный retry+8 конкурентных повторов,2emoji/2users/снятие, вложение, отклонение системного события404, revoke read/write403 и приватность. Не выполнен отдельный контроль неизменности голосов реального опроса; текущий проход остановлен перед коррекцией входов, полный кейс не принят."
+    },
+    {
+      "caseId": "TC-API-MEDIA-LIMITS",
+      "status": "passed",
+      "actual": "HTTP limits10/20MiB и10files; допустимые границы резервируются идемпотентно, превышения/тип/ноль422. Неверные bytes/размер422, публикация доupload409. Clock+24h и штатный PruneMedia удалили pending metadata/bytes, published GET200. Close удалил собственный private temp directory; новый memory fixture пуст. Это ограничение process-lifetime, не durability."
+    },
+    {
+      "caseId": "TC-API-MEDIA-PUBLICATION",
+      "status": "blocked",
+      "actual": "PDF с подписью: actual commit+потеря тела ответа, retry один entry, changed caption same/new key409, legacy kind/version/text и OpenAPI проходят; chat и явно опубликованные memory PNG отделены. Не завершён требуемый повтор нескольких файлов после частичного успеха: второй файл только дошёл до media_not_uploaded409. Проход остановлен до повторной отправки второго файла."
+    },
+    {
+      "caseId": "TC-API-MEDIA-ACCESS",
+      "status": "blocked",
+      "actual": "Проверены feed metadata/content для current200/outside403/anonymous401; album и его bytes аналогично. Actual upload остановлен на binary-store barrier, RSVP отзывает права, продолжение upload и publish403; старый URL403. Не подготовлен публичный invite с отдельной cover и закрытыми media для точного cover-vs-private сравнения, полный кейс не принят."
+    },
+    {
+      "caseId": "TC-API-ALBUM-PAGINATION",
+      "status": "passed",
+      "actual": "Через штатные ClaimTransition/CompleteTransition при controlled next-day meeting сталpast. Album0 затем1 затем4. Current guest публикует; страницы2+2 стабильны, уникальны, завершаются null cursor; чужой meeting cursor422. Summary4/preview3. Chat PNG не попала в album автоматически."
+    },
+    {
+      "caseId": "TC-API-SUPPORT-ACCEPTANCE",
+      "status": "blocked",
+      "actual": "Actual anonymous POST accepted/retry same receipt, trimmed9/10/3000/3001, changed409, actual PNG/invalid/oversize, rate429, receipt послеrate прежний, publicGET404, поля/логи приватны; mock retry проверен. Не была инъецирована потеря HTTP ответа именно support послеcommit (прочитанный ответ повторён); полного pass для этого шага нет до нового прохода."
+    },
+    {
+      "caseId": "TC-API-MEDIA-DURABILITY",
+      "status": "blocked",
+      "actual": "Нет предоставленного isolated persistent media/metadata storage, рестартируемого production-like процесса, backup/restore и ролей GRANT. Memory/temp process-lifetime проверен отдельно и не подтверждает сохранность. БД/Docker не поднимались по правилам проекта."
+    },
+    {
+      "caseId": "TC-API-SUPPORT-DURABILITY",
+      "status": "blocked",
+      "actual": "Нет предоставленной постоянной очереди/хранилища, утверждённых retention и изолированного канала с restart/backup/restore. Mock в памяти подтверждает retry только в пределах процесса; production durability не проверена."
+    },
+    {
+      "caseId": "TC-SUPPORT-2B1C9FBF",
+      "status": "passed",
+      "actual": "Синтетическое обращение реально принято HTTP201 один раз; mock transport вернул временный отказ после progress, доbackoff worker ничего не отправлял, clock+minute доставил тот же ID/текст/progress, повтор не отправил снова. Receipt/log не раскрывают текст/скриншот/секрет; реальный Telegram transport/адресат отсутствует."
+    },
+    {
+      "caseId": "TC-PROFILE-4F3DAAFE",
+      "status": "passed",
+      "actual": "Свежий TestProfileFieldsFixtureRepeatedHTTPLogin/web,ios,android: реальный HTTP OAuth/SDK с закрытым fake-provider, полный набор полей точно совпал, тот же subject/id и прежняя session действуют. Неверный verifier и replay отклонены; реальный внешний OAuth не проверялся."
+    },
+    {
+      "caseId": "TC-PROFILE-3E5EFE8D",
+      "status": "passed",
+      "actual": "В свежем HTTP fixture дляweb/ios/android после partial provider GET/profile сохранил ровно birthday0000-12-23 и sexnull, без придуманного года/пола; предыдущая session читает тот же обновлённый профиль."
+    },
+    {
+      "caseId": "TC-PROFILE-F319B092",
+      "status": "passed",
+      "actual": "В свежем HTTP fixture partial provider опустил контактные поля — известные email/phone/имя сохранились. Clear provider явно birthday:null при отсутствующем first_name — дата очищена, имя сохранено; phone:null и avatarEmpty очищены явно, отсутствующий email сохранён."
+    }
+  ],
+  "rawRun": "reviewer-evidence/api-run03/raw.jsonl",
+  "verifierSha256": "87c61f1f2ddfa4a998a79ea164bea3dc83a67db0c0da8320928be64286b3b62a",
+  "openapiActualBodies": 187
+}

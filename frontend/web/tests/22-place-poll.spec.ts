@@ -75,12 +75,16 @@ for (const width of [320, 390, 1440]) {
     const card = page.getByRole('region', { name: 'Опрос о месте' });
     await expect(card.getByRole('heading', { name: 'Кафе у парка' })).toBeVisible();
     await expect(card.getByText('Там тихо и есть большой стол')).toBeVisible();
-    await expect(card).toHaveCSS('background-color', 'rgb(224, 220, 232)');
+    await expect(card).toHaveCSS('background-color', 'rgb(48, 49, 56)');
     await card.getByRole('button', { name: 'За · 0', exact: true }).click();
-    await expect(card.getByText('Ваш голос: За', { exact: true })).toBeVisible();
+    await expect(
+      card.getByRole('button', { name: 'За · 1', exact: true }),
+    ).toHaveAttribute('aria-pressed', 'true');
     expect((await apiMeeting(page, meeting.id)).place).toBeNull();
     await card.getByRole('button', { name: 'Против · 0', exact: true }).click();
-    await expect(card.getByText('Ваш голос: Против', { exact: true })).toBeVisible();
+    await expect(
+      card.getByRole('button', { name: 'Против · 1', exact: true }),
+    ).toHaveAttribute('aria-pressed', 'true');
     await expect(
       card.getByRole('button', { name: 'За · 0', exact: true }),
     ).toHaveAttribute('aria-pressed', 'false');
@@ -131,7 +135,9 @@ for (const yes of [true, false]) {
 
     if (yes) {
       await card.getByRole('button', { name: 'За · 0' }).click();
-      await expect(card.getByText('Ваш голос: За')).toBeVisible();
+      await expect(
+        card.getByRole('button', { name: 'За · 1', exact: true }),
+      ).toHaveAttribute('aria-pressed', 'true');
     }
 
     expect((await apiMeeting(page, meeting.id)).place).toBeNull();
@@ -204,9 +210,11 @@ test('failed vote preserves state, retry keeps key, late reply cannot restore lo
     const card = friend.getByRole('region', { name: 'Опрос о месте' });
     await card.getByRole('button', { name: 'За · 0' }).click();
     await expect(card.getByRole('alert')).toContainText('Не удалось сохранить голос');
-    await expect(card.getByText(/Ваш голос:/)).toHaveCount(0);
+    await expect(card.getByRole('button', { pressed: true })).toHaveCount(0);
     await card.getByRole('button', { name: 'Повторить' }).click();
-    await expect(card.getByText('Ваш голос: За')).toBeVisible();
+    await expect(
+      card.getByRole('button', { name: 'За · 1', exact: true }),
+    ).toHaveAttribute('aria-pressed', 'true');
     expect(keys[0]).toBeTruthy();
     expect(keys[1]).toBe(keys[0]);
     await card.getByRole('button', { name: 'Против · 0' }).click();

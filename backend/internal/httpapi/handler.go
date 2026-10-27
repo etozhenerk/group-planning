@@ -41,6 +41,11 @@ func NewWithIdentity(app *meetings.Service, service *identity.Service, logger *s
 
 // NewWithSupport exposes feedback only when an acceptance store is configured.
 func NewWithSupport(app *meetings.Service, service *identity.Service, feedback *support.Service, logger *slog.Logger, deletion ...*accounts.Service) http.Handler {
+	return NewWithRealtime(app, service, feedback, logger, nil, deletion...)
+}
+
+// NewWithRealtime enables the optional authenticated WebSocket adapter.
+func NewWithRealtime(app *meetings.Service, service *identity.Service, feedback *support.Service, logger *slog.Logger, stream RealtimeHandler, deletion ...*accounts.Service) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -51,7 +56,11 @@ func NewWithSupport(app *meetings.Service, service *identity.Service, feedback *
 			Status string `json:"status"`
 		}{"ok"})
 	})
-	registerMeetings(mux, app, service)
+	registerMeetings(mux, app, service, stream != nil)
+	if stream != nil && service != nil {
+		mux.HandleFunc("/api/v1/realtime", realtimeRoute(service, stream))
+	}
+
 	registerAuth(mux, service, deletion...)
 	registerSupport(mux, feedback)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

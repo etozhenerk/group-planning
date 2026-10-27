@@ -15,15 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.MeetingDraft
 import dev.groupplanning.android.data.drafts.Repetition
 import dev.groupplanning.android.ui.components.ActionButton
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 internal fun MeetingFields(
@@ -35,15 +36,29 @@ internal fun MeetingFields(
     var datePicker by rememberSaveable { mutableStateOf(false) }
     var timePicker by rememberSaveable { mutableStateOf(false) }
     val focus = LocalFocusManager.current
-    Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-        FormField("Название", value.title, "Например, вечер настольных игр", editable) { title ->
+    Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMobileFormGroupGap)) {
+        FormField(
+            stringResource(R.string.meeting_title_field),
+            value.title,
+            stringResource(R.string.meeting_title_hint),
+            editable,
+        ) { title ->
             change { it.copy(title = title) }
         }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(
+                DesignTokens.componentMobileFormTwoFieldGap,
+            ),
+        ) {
             DateTimeField(
-                "Дата",
+                stringResource(R.string.meeting_day_field),
                 value.day?.let {
-                    LocalDate.parse(it).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                    LocalDate.parse(
+                        it,
+                    ).format(
+                        DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru")),
+                    )
                 } ?: stringResource(R.string.meeting_date_placeholder),
                 R.drawable.ic_calendar,
                 editable,
@@ -53,7 +68,7 @@ internal fun MeetingFields(
                 datePicker = true
             }
             DateTimeField(
-                "Время",
+                stringResource(R.string.meeting_time_field),
                 value.time ?: stringResource(R.string.meeting_time_placeholder),
                 R.drawable.ic_clock,
                 editable,
@@ -71,13 +86,18 @@ internal fun MeetingFields(
                 change { it.copy(repetition = Repetition.Later) }
             }
         }
-        FormField("Место", value.place, "Адрес, название или ориентир", editable) { place ->
+        FormField(
+            stringResource(R.string.meeting_place_field),
+            value.place,
+            stringResource(R.string.meeting_place_hint),
+            editable,
+        ) { place ->
             change { it.copy(place = place) }
         }
         FormField(
-            "Описание",
+            stringResource(R.string.meeting_description_field),
             value.description,
-            "Что стоит знать друзьям",
+            stringResource(R.string.meeting_description_hint),
             editable,
             minLines = 3,
         ) { text -> change { it.copy(description = text) } }

@@ -1,0 +1,413 @@
+- id: TC-EVENT-FEED-304D49BA
+  title: "Ограниченная загрузка и отображение истории: Первое непрочитанное далеко от хвоста"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Ограниченная загрузка и отображение истории
+    scenario: Первое непрочитанное далеко от хвоста
+    sha256: a482e5b9fc118786b2a0332a04ca6478b0755f16841a1d4c67683e50f6b7db62
+  platforms: &a1
+    - web
+    - ios
+    - android
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - M содержит 10k сообщений; первое непрочитанное около 5000, сохранённого anchor нет; доступ
+      подтверждён.
+  steps:
+    - action: Открыть M и записать запросы и начальную видимую строку.
+      expected: Окно загружается вокруг first_unread без последовательного вычитывания промежуточной истории;
+        разделитель стоит на начале сессии.
+    - action: Выйти и вернуться с сохранённым допустимым anchor; повторить с удалённым anchor и без unread.
+      expected: Приоритет anchor → first_unread → tail; непоказанные сообщения сами не читаются.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/42-chat-first-unread.spec.ts
+          selector: "ten thousand messages open around first unread without walking history and jump to real tail"
+          runner: web-read-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-A697B69A
+  title: "Ограниченная загрузка и отображение истории: Длительная прокрутка"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Ограниченная загрузка и отображение истории
+    scenario: Длительная прокрутка
+    sha256: 8d7bcb4793bbe89b4ba43b23b42537c1fcb2c86ff51d3d3dfdb25f68ca9dfec2
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - 10k записей с длинными текстами и динамическими карточками; устройство/RTT/профиль и исходный
+      memory/frame baseline записаны.
+  steps:
+    - action: Пройти историю в обе стороны, включая далёкий переход к tail при pending/focus.
+      expected: Обычное окно ≤500 серверных записей, web ≤200 смонтированных строк. Pending/focus защищены
+        отдельно и не раздувают непрерывное окно; память стабилизируется.
+    - action: Вернуться к вытесненной области и собрать кадры/trace под профилем validation-plan.
+      expected: Диапазон загружается снова; p95 frame цель ≤16,7 мс на 60 Hz, dropped frames записаны. Полный
+        commit→visible p95≤1с/p99≤2с подтверждён общей трассой, не вычитанием часов устройств.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/39-chat-window.spec.ts
+          selector: "bounded history preserves focus and visible anchor across prepend and late resize"
+          runner: web-window-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-025A8CA5
+  title: "Автоматическая дозагрузка с локальной ошибкой: Повтор после сбоя страницы"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Автоматическая дозагрузка с локальной ошибкой
+    scenario: Повтор после сбоя страницы
+    sha256: becc0287fea8858c541f29c19c581c89043d26c8ae5a53b94c90649794742cc8
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Уже показано окно M и draft; transport может отказать одной странице на выбранной границе.
+  steps:
+    - action: Приблизиться к границе примерно на два экрана, удержать первый запрос и продолжить scroll.
+      expected: Автодогрузка запущена один раз на направление, повторяющихся конкурентных запросов нет.
+    - action: Вернуть ошибку, нажать локальный Повторить, затем успешную страницу.
+      expected: Показанные данные/composer доступны; повтор сохраняет границу и anchor, глобальный экран ошибки
+        не появляется.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/40-chat-history-error.spec.ts
+          selector: "history failure remains local and retry preserves composer and visible anchor"
+          runner: web-window-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-9FADE3B3
+  title: "Стабильный якорь и идентичность строки: Старые строки и выросшая карточка"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Стабильный якорь и идентичность строки
+    scenario: Старые строки и выросшая карточка
+    sha256: 0d4e820585c251cdefaf7bca9751f62f28ff00ddb64a7b49fbcb1898a9720719
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Выбрана видимая строка и измерен (entry_id, offset); над ней есть асинхронно растущая карточка.
+  steps:
+    - action: Добавить старую страницу, изменить высоту карточки, показать/скрыть клавиатуру и повернуть
+        устройство.
+      expected: Та же строка сохраняется с отклонением ≤2 CSS px/pt/dp; нет прыжка к tail.
+    - action: Повторить с большим текстом и Reduce Motion.
+      expected: Положение и доступность сохраняются без обязательной анимации; scroll остаётся у ленты.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/39-chat-window.spec.ts
+          selector: "bounded history preserves focus and visible anchor across prepend and late resize"
+          runner: web-window-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-E81D170C
+  title: "Стабильный якорь и идентичность строки: Подтверждение исходящего"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Стабильный якорь и идентичность строки
+    scenario: Подтверждение исходящего
+    sha256: f356467d24d4bd2163b95c68d97ebfd06df5236460941d0c04e433ae9c203cbd
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - В единой timeline виден pending A со stable key; ACK задержан, B добавляет запись раньше него.
+  steps:
+    - action: Вернуть ACK с серверным ID/sequence; зафиксировать ключ/экран до и после.
+      expected: Та же строка обновлена без переноса между контейнерами и дублей; серверный порядок учитывает B.
+    - action: Повторить ACK и resize карточки рядом.
+      expected: Ключ и anchor устойчивы, повтор ничего не добавляет.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-D0C7E8FB
+  title: "Управляемое следование за новыми сообщениями: Новое сообщение при чтении прошлого"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Управляемое следование за новыми сообщениями
+    scenario: Новое сообщение при чтении прошлого
+    sha256: 7345dab34b52c74ef295a90651a43ed363e03d0ba57c19be7b11cb3f2b836a1b
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - A читает прошлое, distance от tail >64; anchor записан.
+  steps:
+    - action: Получить чужое сообщение и ACK собственной отправки из истории.
+      expected: Положение не меняется; есть действие перехода и корректный счётчик новых чужих сообщений.
+    - action: Нажать переход вниз, затем получить ещё одно сообщение у tail.
+      expected: Режим follow включается явно и удерживает tail; ручной уход вверх снова выключает его.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/39-chat-window.spec.ts
+          selector: "bounded history preserves focus and visible anchor across prepend and late resize"
+          runner: web-window-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-722B1526
+  title: "Начальная позиция и восстановление: Возврат после просмотра списка прочитавших"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Начальная позиция и восстановление
+    scenario: Возврат после просмотра списка прочитавших
+    sha256: 9ac51f55cfcdb950eb2d191e7121940b7df44f60da9e227aa6195f5f3660a569
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - У A есть собственное сообщение с readers, выбранный anchor; новый readers-контракт утверждён.
+  steps:
+    - action: Открыть список, вызвать локальную ошибку загрузки/Повторить, затем закрыть.
+      expected: Чат не прокручивается, фокус возвращён к исходному сообщению, draft сохранён.
+    - action: Получить чужую запись, пока список перекрывает ленту.
+      expected: Ни receipt-overlay, ни получение не продвигают read-through скрытой ленты.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-CCD3E2A3
+  title: "Загрузка и доступность мобильного чата: Узкий web с клавиатурой"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Загрузка и доступность мобильного чата
+    scenario: Узкий web с клавиатурой
+    sha256: 82fa4cd35968003cb40a9acf32b213d03ad5cfcc6658a80c396d0f1d0ff0ad85
+  platforms:
+    - web
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Mobile web 320–390 CSS px, длинная ссылка, крупный шрифт; WebKit и физический Safari записываются
+      раздельно.
+  steps:
+    - action: Открыть IME, ввести много строк, переключить emoji dock и открыть действие +.
+      expected: Ввод виден; body/горизонтальный scroll отсутствуют, прокручивается только timeline или
+        содержимое активной панели.
+    - action: Закрыть панели и клавиатуру; проверить long press сообщения/chip.
+      expected: Прежние draft/selection/anchor сохранены; + остаётся modal/sheet, постоянные reaction openers
+        не возвращаются.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-EVENT-FEED-84D3BA20
+  title: "Загрузка и доступность мобильного чата: Виртуализация и клавиатурный фокус"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Загрузка и доступность мобильного чата
+    scenario: Виртуализация и клавиатурный фокус
+    sha256: b5e4df2e52619b3f1639b44eb9bc97e04b4ddd0c71786f6811284bc7e1261e0c
+  platforms: *a1
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - Сфокусировано сообщение/действие у границы окна; screen reader и увеличенный текст доступны.
+  steps:
+    - action: Сместить окно и добавить новые записи без перевода фокуса.
+      expected: Сфокусированная строка не удаляется; новые записи не перехватывают фокус.
+    - action: Перейти к строке вне окна через доступное действие.
+      expected: Сначала загружен диапазон, затем переведён фокус; skeleton не объявляет каждую строку, Reduce
+        Motion соблюдён.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/39-chat-window.spec.ts
+          selector: "bounded history preserves focus and visible anchor across prepend and late resize"
+          runner: web-window-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-CHAT-PAGE-BOUNDS
+  title: "Ограниченная загрузка и отображение истории: Границы страницы и пустой хвост"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md
+    requirement: Ограниченная загрузка и отображение истории
+    scenario: Границы страницы и пустой хвост
+    sha256: 7a283a8e0b6066f72508b56c7cf3a9d598191a7e8a76cf1ea8b135ccbde966e8
+  platforms:
+    - backend
+  preconditions:
+    - "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M;
+      ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint
+      проверяются только после их реализации; до этого результат not_run/blocked."
+    - "Memory contract fixture и изолированный PostgreSQL: 1k/10k/100k записей, limit 1/50/100; seed
+      высоких sequence без создания 2^64 строк."
+  steps:
+    - action: Запросить initial, after=0/tail, before first/tail и around существующей записи; проверить
+        limit+1 и order.
+      expected: Ближайшие страницы без дыр/дублей, ASC результат, правильные направления has_more; пустой after
+        пуст, tail согласован с snapshot.
+    - action: Проверить значения выше 2^53, uint64 max/overflow, limit 0/101, несовместимые cursors, missing
+        around, cancel и чужой доступ.
+      expected: Точность decimal сохранена; некорректное отклонено, cancellation завершает чтение, права
+        проверены до приватных данных.
+    - action: Изменить возвращённую memory-копию, сделать rollback; выполнить SQL EXPLAIN и trace ограниченного
+        чтения.
+      expected: Store не изменён копией/rollback. Нет полного чтения/декодирования JSON ради страницы, есть
+        индекс/LIMIT; p95 страницы≤100мс в записанном окружении.
+  cleanup:
+    - Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые
+      аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не
+      перезапускать пользовательское демо.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []

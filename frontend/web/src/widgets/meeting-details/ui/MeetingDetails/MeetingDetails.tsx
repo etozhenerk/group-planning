@@ -1,11 +1,13 @@
 import styles from '@/widgets/meeting-details/ui/MeetingDetails/MeetingDetails.module.css';
-import { useEffect, useState } from 'react';
-import { useDisclosure } from '@/shared/lib/disclosure';
+import type { RefObject } from 'react';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { EditMeetingForm } from '@/features/edit-meeting';
+import { ShareForm } from '@/features/share-invitation';
 import { Dialog } from '@/shared/ui/Dialog';
+import { useMobileLayout } from '@/shared/lib/media';
 import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
+import { useMeetingDetailsPanel } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingDetailsPanel';
 
 export type MeetingDetailsProps = {
   meeting: Meeting;
@@ -14,6 +16,7 @@ export type MeetingDetailsProps = {
   wide: boolean;
   close: () => void;
   show: () => void;
+  returnFocus: RefObject<HTMLElement | null>;
 };
 
 export const MeetingDetails = ({
@@ -23,27 +26,11 @@ export const MeetingDetails = ({
   wide,
   close,
   show,
+  returnFocus,
 }: MeetingDetailsProps) => {
-  const editing = useDisclosure();
-  const [visited, setVisited] = useState(false);
-  const [generation, setGeneration] = useState(0);
-  useEffect(() => {
-    if (editing.open) {
-      setVisited(true);
-    }
-  }, [editing.open]);
-
-  const content = (
-    <DetailsContent
-      meeting={meeting}
-      session={session}
-      close={close}
-      edit={() => {
-        close();
-        editing.show();
-      }}
-    />
-  );
+  const surface = useMeetingDetailsPanel(meeting.id, session.user.id, meeting.title);
+  const mobile = useMobileLayout();
+  const panel = surface.panel ?? (open ? 'info' : null);
 
   return (
     <>
@@ -51,40 +38,65 @@ export const MeetingDetails = ({
         <aside
           className={styles['details-sidebar']}
           data-testid="details-sidebar"
-          aria-hidden={open || editing.open}
+          aria-hidden={panel !== null}
         >
-          <h2>Детали встречи</h2>
           <DetailsContent
             meeting={meeting}
             session={session}
             close={close}
-            edit={editing.show}
+            edit={surface.edit}
             compact
             showAll={show}
           />
         </aside>
       )}
-      <Dialog open={open} title={meeting.title} onClose={close} chatAction>
-        {open && content}
-      </Dialog>
       <Dialog
-        open={editing.open}
-        title="Настройки встречи"
-        onClose={() => editing.close()}
+        open={panel !== null}
+        title={surface.title}
+        onClose={surface.panel ? surface.close : close}
         chatAction
+        formLayout
+        returnFocus={returnFocus}
       >
-        {(visited || editing.open) && (
-          <EditMeetingForm
-            key={generation}
+        <div
+          className={styles.content}
+          data-mobile={mobile}
+          hidden={panel !== 'info'}
+          data-testid="meeting-info-scroll"
+          ref={surface.info}
+          tabIndex={-1}
+        >
+          <DetailsContent
             meeting={meeting}
             session={session}
-            onSaved={() => {
-              setVisited(false);
-              setGeneration((value) => value + 1);
-              editing.close();
-            }}
+            close={close}
+            edit={surface.edit}
+            share={surface.shareAction}
           />
-        )}
+        </div>
+        <div
+          className={styles.form}
+          hidden={panel !== 'settings'}
+          ref={surface.settings}
+          tabIndex={-1}
+        >
+          {(surface.visited || panel === 'settings') && (
+            <EditMeetingForm
+              key={surface.generation}
+              meeting={meeting}
+              session={session}
+              onSaved={surface.saved}
+            />
+          )}
+        </div>
+        <div
+          className={styles.content}
+          hidden={panel !== 'share'}
+          ref={surface.share}
+          tabIndex={-1}
+        >
+          {panel === 'share' && <ShareForm id={meeting.id} meeting={meeting} />}
+        </div>
       </Dialog>
     </>
   );

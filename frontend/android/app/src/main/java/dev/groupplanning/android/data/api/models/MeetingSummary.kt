@@ -25,4 +25,6 @@ internal data class MeetingSummary(
     @SerialName("participant_preview") val participantPreview: List<UserProfile> = emptyList(),
     @SerialName("memory_photo_count") val memoryPhotoCount: Int = 0,
     @SerialName("memory_preview") val memoryPreview: List<MeetingMedia> = emptyList(),
+    @SerialName("unread_count") val unreadCount: ServerCounter? = null,
+    @SerialName("first_unread") val firstUnread: UUID? = null,
 )

@@ -1,50 +1,36 @@
+import { newMessagesLabel } from '@/widgets/conversation/lib/feedKey';
 import { InvitePrompt } from '@/widgets/conversation/ui/InvitePrompt';
-import { SkeletonConversation } from '@/shared/ui/SkeletonConversation';
+import { FeedUnavailable } from '@/widgets/conversation/ui/FeedUnavailable';
 import styles from '@/widgets/conversation/ui/FeedTimeline/FeedTimeline.module.css';
 import type { Session } from '@/entities/session';
-import { useConversation, useReactions } from '@/entities/meeting';
-import { Status } from '@/shared/ui/Status';
-import { errorText } from '@/shared/api';
 import { ConversationComposer } from '@/widgets/conversation/ui/ConversationComposer';
-import { useViewport } from '@/widgets/conversation/ui/FeedTimeline/hooks/useViewport';
+import { useFeedTimeline } from '@/widgets/conversation/ui/FeedTimeline/hooks/useFeedTimeline';
 import { FeedRecords } from '@/widgets/conversation/ui/FeedRecords';
+import { FeedHistory } from '@/widgets/conversation/ui/FeedHistory';
+import type { ConversationSurface } from '@/widgets/conversation/model/useConversationSurface';
 
-export type FeedTimelineProps = { id: string; session: Session; organizer?: boolean };
+export type FeedTimelineProps = {
+  id: string;
+  session: Session;
+  organizer?: boolean;
+  surface: ConversationSurface;
+};
 
-export const FeedTimeline = ({ id, session, organizer = false }: FeedTimelineProps) => {
-  const query = useConversation(id, session.user.id);
-  const reactions = useReactions(
+export const FeedTimeline = ({
+  id,
+  session,
+  organizer = false,
+  surface,
+}: FeedTimelineProps) => {
+  const { query, reactions, viewport, entries, read } = useFeedTimeline(
     id,
-    session.user.id,
-    query.data?.entries
-      .filter((entry) => entry.kind === 'message')
-      .map((entry) => entry.id) ?? [],
+    session,
+    surface.boundary,
+    surface.panel !== null,
   );
 
-  const viewport = useViewport(query.data?.entries ?? [], query.loadOlder);
-
-  if (query.access.denied) {
-    return (
-      <Status
-        title="Переписка закрыта"
-        text="Откройте приглашение, чтобы проверить или изменить ответ."
-      />
-    );
-  }
-
-  if (query.isPending) {
-    return <SkeletonConversation />;
-  }
-
-  if (!query.data) {
-    return (
-      <Status
-        title="Не удалось загрузить разговор"
-        text={errorText(query.error)}
-        error
-        action={() => void query.refetch()}
-      />
-    );
+  if (query.access.denied || query.isPending || !query.data) {
+    return <FeedUnavailable query={query} />;
   }
 
   return (
@@ -52,35 +38,42 @@ export const FeedTimeline = ({ id, session, organizer = false }: FeedTimelinePro
       <div
         className={styles['feed-scroll']}
         ref={viewport.ref}
-        onScroll={viewport.scroll}
+        onScrollCapture={viewport.scroll}
+        data-mobile={surface.mobile}
+        data-history={viewport.unread}
+        data-server-count={query.data.entries.length}
+        data-has-older={query.data.hasOlder}
+        data-window-first={query.data.entries[0]?.sequence}
+        data-window-last={query.data.entries.at(-1)?.sequence}
       >
-        {query.data.hasOlder && (
-          <button
-            className={styles['history-button']}
-            type="button"
-            onClick={viewport.older}
-            disabled={query.loadingOlder}
-          >
-            {query.loadingOlder ? 'Загружаем…' : 'Предыдущие записи'}
-          </button>
-        )}
-        {query.historyError ? (
-          <p className={styles['error']} role="alert">
-            Не удалось загрузить историю. Попробуйте ещё раз.
-          </p>
-        ) : null}
+        <FeedHistory
+          hasOlder={query.data.hasOlder}
+          loading={query.loadingOlder}
+          error={!!query.historyError}
+          older={() => void viewport.older()}
+        />
         <FeedRecords
+          read={read}
           error={!!reactions.error}
           retry={() => void reactions.refetch()}
-          entries={query.data.entries}
+          entries={entries}
+          viewport={viewport}
           session={session}
           reactions={reactions.data ?? []}
+          surface={surface}
         />
         {organizer &&
           query.data.participantCount === 1 &&
           !query.data.entries.some((entry) => entry.kind === 'message') && (
             <InvitePrompt id={id} />
           )}
+        <FeedHistory
+          hasOlder={!!query.data.window?.hasNewer}
+          loading={query.loadingNewer}
+          error={!!query.newerError}
+          older={() => void query.loadNewer()}
+          newer
+        />
         {query.error && (
           <p className={styles['error']} role="status">
             Не удалось обновить разговор. Повторим запрос.
@@ -88,15 +81,17 @@ export const FeedTimeline = ({ id, session, organizer = false }: FeedTimelinePro
         )}
       </div>
       {viewport.unread && (
-        <button
-          className={styles['new-messages']}
-          type="button"
-          onClick={viewport.latest}
-        >
-          Новые сообщения ↓
-        </button>
+        <div className={styles['new-messages-position']}>
+          <button
+            className={styles['new-messages']}
+            type="button"
+            onClick={viewport.latest}
+          >
+            {newMessagesLabel(query.data.newMessages ?? 0)}
+          </button>
+        </div>
       )}
-      <ConversationComposer id={id} session={session} />
+      <ConversationComposer id={id} session={session} surface={surface} />
     </>
   );
 };

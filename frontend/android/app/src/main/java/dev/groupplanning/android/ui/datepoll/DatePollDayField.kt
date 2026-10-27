@@ -23,7 +23,7 @@ internal fun DatePollDayField(
     var picking by rememberSaveable { mutableStateOf(false) }
     DateTimeField(
         label,
-        LocalDate.parse(day).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+        pollDayLabel(day),
         R.drawable.ic_calendar,
         enabled,
     ) { picking = true }

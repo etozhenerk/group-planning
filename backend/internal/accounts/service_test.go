@@ -220,3 +220,45 @@ func TestAtomicAccountRemovalRollsBackBothStores(t *testing.T) {
 		})
 	}
 }
+
+func TestDeletionObserverRunsAfterOuterCommitOnly(t *testing.T) {
+	f := setup(t)
+	calls := 0
+	unwatch := f.auth.OnRevocation(func(session, user string) {
+		calls++
+		if session != "" || user != f.id {
+			t.Error("wrong revocation reference")
+		}
+
+		if _, err := f.auth.Authenticate(t.Context(), f.input.SessionToken, false); !errors.Is(err, identity.ErrUnauthenticated) {
+			t.Error("not committed before observer", err)
+		}
+	})
+	defer unwatch()
+	aborted := errors.New("abort outer transaction")
+	failed := accounts.New(func(ctx context.Context, fn func(accounts.Identity, accounts.Meetings) error) error {
+		return f.identities.AccountUpdate(ctx, f.store, func(a identity.Store, m meetings.Store) error {
+			if err := fn(f.auth.WithStore(a), meetings.NewService(m, func() time.Time { return f.now })); err != nil {
+				return err
+			}
+
+			return aborted
+		})
+	}, f.auth.AccountDeleted)
+	if err := failed.Delete(t.Context(), f.input); !errors.Is(err, aborted) {
+		t.Fatal(err)
+	}
+
+	if calls != 0 {
+		t.Fatal("rollback notified consumers")
+	}
+
+	service := accounts.New(f.atomic, f.auth.AccountDeleted)
+	if err := service.Delete(t.Context(), f.input); err != nil {
+		t.Fatal(err)
+	}
+
+	if calls != 1 {
+		t.Fatal("committed deletion did not notify", calls)
+	}
+}

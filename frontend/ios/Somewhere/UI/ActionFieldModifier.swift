@@ -2,11 +2,20 @@ import SwiftUI
 
 struct ActionFieldModifier: ViewModifier {
     func body(content: Content) -> some View {
-        content.designFont(13).padding(.horizontal, 14).padding(.vertical, 13)
-            .frame(maxWidth: .infinity, minHeight: 47.5, alignment: .leading)
-            .background(AppPalette.navigation, in: RoundedRectangle(cornerRadius: 12))
+        content.designFont(DesignTokens.typographySizeBody)
+            .padding(.horizontal, DesignTokens.componentMobileFieldInsetInline)
+            .padding(.vertical, DesignTokens.componentMobileFieldInsetBlock)
+            .frame(
+                maxWidth: .infinity, minHeight: DesignTokens.componentMobileFieldMinimumHeight,
+                alignment: .leading
+            )
+            .background(
+                DesignTokens.colorBackground,
+                in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileFieldRadius)
+            )
             .overlay {
-                RoundedRectangle(cornerRadius: 12).stroke(.white.opacity(0.078), lineWidth: 1)
+                RoundedRectangle(cornerRadius: DesignTokens.componentMobileFieldRadius)
+                    .strokeBorder(DesignTokens.colorBorderStrong, lineWidth: DesignTokens.spaceS1)
             }
     }
 }

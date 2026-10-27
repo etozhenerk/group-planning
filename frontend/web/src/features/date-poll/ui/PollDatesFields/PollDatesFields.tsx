@@ -1,4 +1,5 @@
-import { Plus, Trash2 } from 'lucide-react';
+import { ChatIcon } from '@/shared/ui/ChatIcon';
+import { useMobileLayout } from '@/shared/lib/media';
 import { DateInput } from '@/shared/ui/DateInput';
 import styles from '@/features/date-poll/ui/PollDatesFields/PollDatesFields.module.css';
 
@@ -21,8 +22,10 @@ export const PollDatesFields = ({
   remove,
   disabled,
 }: PollDatesFieldsProps) => {
+  const mobile = useMobileLayout();
+
   return (
-    <fieldset className={styles['dates']} disabled={disabled}>
+    <fieldset className={styles['dates']} data-mobile={mobile} disabled={disabled}>
       <legend>Даты</legend>
       {dates.map((date, index) => (
         <div
@@ -32,6 +35,8 @@ export const PollDatesFields = ({
           key={index}
         >
           <DateInput
+            mobileSheet
+            compact
             label={`Вариант ${index + 1}`}
             value={date}
             clearable={false}
@@ -49,7 +54,7 @@ export const PollDatesFields = ({
               onClick={() => remove(index)}
               disabled={disabled}
             >
-              <Trash2 size={18} aria-hidden="true" />
+              <ChatIcon name="trash" size={18} aria-hidden="true" />
             </button>
           )}
         </div>
@@ -60,7 +65,7 @@ export const PollDatesFields = ({
         onClick={add}
         disabled={disabled || dates.length >= 20}
       >
-        <Plus size={18} aria-hidden="true" />
+        <ChatIcon name="plus" size={18} aria-hidden="true" />
         Добавить вариант
       </button>
     </fieldset>

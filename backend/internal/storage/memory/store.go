@@ -36,14 +36,15 @@ func (s *Store) acquire(ctx context.Context) error {
 	}
 }
 
-// View reads a detached, consistent snapshot without holding the store gate
-// during the callback. Writers may commit while this reader observes its snapshot.
+// View reads an immutable committed snapshot without holding the store gate
+// during the callback. Update clones before writing, and Reader methods return
+// detached values; a read never needs to copy unrelated history or outbox data.
 func (s *Store) View(ctx context.Context, fn func(meetings.Reader) error) error {
 	if err := s.acquire(ctx); err != nil {
 		return err
 	}
 
-	tx := &transaction{data: s.data.clone()}
+	tx := &transaction{ctx: ctx, data: s.data}
 	<-s.gate
 	defer tx.close()
 	if err := fn(tx); err != nil {
@@ -61,7 +62,7 @@ func (s *Store) Update(ctx context.Context, fn func(meetings.Writer) error) erro
 	}
 
 	defer func() { <-s.gate }()
-	tx := &transaction{data: s.data.clone(), writable: true}
+	tx := &transaction{ctx: ctx, data: s.data.clone(), writable: true}
 	defer tx.close()
 	if err := fn(tx); err != nil {
 		return err
@@ -78,6 +79,7 @@ func (s *Store) Update(ctx context.Context, fn func(meetings.Writer) error) erro
 }
 
 type transaction struct {
+	ctx      context.Context
 	mu       sync.Mutex
 	data     *state
 	writable bool
@@ -101,5 +103,5 @@ func (tx *transaction) check(write bool) error {
 		return meetings.ErrReadOnly
 	}
 
-	return nil
+	return tx.ctx.Err()
 }

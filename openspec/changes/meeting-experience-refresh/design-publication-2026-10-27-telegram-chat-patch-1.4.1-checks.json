@@ -1,0 +1,123 @@
+{
+  "kind": "design-publication-and-test-spec-checks",
+  "version": "1.4.1",
+  "recordedAt": "2026-10-27T12:50:07.330068+00:00",
+  "scope": "Недостающая generic icon22 из принятого tokens.css; восстановление прежнего web input minimum16px из mobile-scroll.md. Native body15/emoji23 и UI/business behavior сохранены.",
+  "sourceReason": "Позднее одобрение композиции не отменяло прежнее требование web no-zoom; новое ожидание не извлечено из actual приложения.",
+  "roles": {
+    "component.mobileChat.iconSize": "22px → CGFloat22 / 22.dp",
+    "typography.size.mobileWebInput": "16px, web-only; native exports не меняют native body15"
+  },
+  "prototype": {
+    "previousAggregateSha256": "be9e0e9a8afa0da56ad2524438adcd0c1292a249e4338c4a330ac740d58be5f8",
+    "currentAggregateSha256": "46b6aeb81f9462b550ac264668b90e0d45fddcb2d5099d700487ace9af85dd7a",
+    "history": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0",
+    "changedFiles": [
+      "tokens.css",
+      "chat.css",
+      "panels.css"
+    ],
+    "unchangedInputs": 27,
+    "chatBundleSha256": "d513cb237b74333bcab06d20bcc33243b4f2e04d70ba3a6a076707ba30ac1c6b",
+    "checked": "30current source hashes, сохранённые CSS/index, font-size переменная во всех5селекторных группах полей, нет запрета user zoom в viewport meta.",
+    "browserRender": "not_run: разрешён только лёгкий публикационный проход; новые reference captures и реальный Safari/IME нужны отдельно."
+  },
+  "manifest": {
+    "path": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+    "phase": "checkpoint",
+    "screens": 94,
+    "statePlatformPairs": 1010,
+    "previousPairsPreserved": 982,
+    "newMobileInputPairs": 28,
+    "report": "openspec/changes/meeting-experience-refresh/design-review-2026-10-27-telegram-chat-1.4.1.json"
+  },
+  "testSpec": {
+    "newCase": "TC-CHAT-WEB-NO-ZOOM",
+    "platforms": [
+      "web"
+    ],
+    "level": "e2e",
+    "automation": "planned",
+    "health": "unknown",
+    "mapping": [
+      "4.5/web",
+      "4.9/web"
+    ],
+    "updatedExisting": [
+      "TC-CHAT-F00844F6",
+      "TC-CHAT-8FCD1231"
+    ],
+    "preserved": "Все прежние ID, платформы, уровни, automation/health и mapping; старые evidence не переписаны.",
+    "plan": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-telegram-chat-1.4.1/plan.json",
+    "run": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-telegram-chat-1.4.1/run.json",
+    "catalogHash": "dbad08e48569b88f68a3569cb5af7a81e25af6f8b54c79bf04c19e7649c5527f"
+  },
+  "checks": [
+    {
+      "command": "npm run design:generate",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run design:test",
+      "status": "pass",
+      "tests": 30
+    },
+    {
+      "command": "npm run agent:check",
+      "status": "pass"
+    },
+    {
+      "command": "raw CSS/source history check",
+      "status": "pass"
+    },
+    {
+      "command": "npm run qa:check",
+      "status": "pass",
+      "cases": 366,
+      "gaps": []
+    },
+    {
+      "command": "npm run qa:test",
+      "status": "pass",
+      "tests": 12
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "hashes": {
+    "design-system/tokens.json": "512241d8a87750fc17a91057b40e5fd566c7f763c7bcd1bc7b088d7cca0c3630",
+    "design-system/version.json": "5b20dabfd8af1388042a661f9de4808b86a333009028d96d39ca64cb5a9502e1",
+    "design-system/authority.json": "8db3e66cb916002662ac12144d22f3b89e407046f06a44b0d3ed095be26e0314",
+    "design-system/CHANGELOG.md": "5fd3f39bf5eb37c50f74426da76ba89b0503714f646f48eb601176860e90eb04",
+    "docs/design/components/chat-actions.md": "e102d5bdce298178b3dcea9ddad392cc2546296bb805ea4aa68ce44c02350e6d",
+    "docs/design/platforms.md": "27afa3d8a6717ceacdf247bd34dc47b88a3bb6916511b415c92a44323fa4769b",
+    "scripts/design/formats.mjs": "48c8618edeb28fd7fdb814d3c542649e1680346361686be7fdb78c1c69476561",
+    "openspec/changes/meeting-experience-refresh/design-manifest.json": "514520e097ed5fab9e064887091919a8bd71d7b8293b4214f665595b6f6f7ca5",
+    "openspec/changes/meeting-experience-refresh/ux.md": "739cb92d2f4588ee377c4a74768a58f36a458ac3d660ac549fbb1cd0592ff743",
+    "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md": "59ea0b367407bea5c7339a24fac374411cd913f043255d5df8b20d4aecd724c6",
+    "openspec/changes/meeting-experience-refresh/testing.md": "7c35844c74b4ef9ed8b181c0de800948292dba7f9caa0d24f33ca2a3f6451ba6",
+    "openspec/changes/meeting-experience-refresh/testing-manifest.json": "3a8d09e2e7ae7e0485a828187de5015728b7e2b61d6874ae9f8167dd0d9dd7a0",
+    "testing/cases/chat-composition.yaml": "36af5b6c73cbfe58daf4a60700bf3d9f5d9356a2c6db4a2271273ffb4b906412",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css": "3a37e0b1ea188db2d4ee52255fad08e0cbe9376e0bec62ba15c783962fd3f928",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css": "d6f3304462a5d043d019f475eb3fcaeb74274f83ca737737051458662e549601",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json": "505a155859f62b082ed9ba4ffa4bcf7037394a4727adf087e8f7ad0372ae8049"
+  },
+  "historicalReceiptsPreserved": [
+    "design-publication-2026-10-27-telegram-chat-checks.json",
+    "design-publication-2026-10-27-telegram-chat-patch-1.3.1-checks.json",
+    "design-publication-2026-10-27-telegram-chat-supplement-1.4.0-checks.json"
+  ],
+  "limitations": [
+    "Только source/generator/catalog проверки, не UI/E2E acceptance.",
+    "Реальный Safari focus zoom/IME нельзя считать пройденным по computed font-size или viewport simulation.",
+    "Текущие app inputs изменяются другими исполнителями; нет актуального live UI capture hash в этом receipt.",
+    "Новые passed/automated или закрытые checkbox не создавались."
+  ]
+}

@@ -70,7 +70,10 @@ try {
         check(/^\d+\.\d+\.\d+$/.test(version), `Pin the exact version: ${workspace}: ${name}`);
         check(lock.packages[workspace]?.[group]?.[name] === version,
           `Workspace dependency mismatch: ${workspace}: ${name}`);
-        check(json(`node_modules/${name}/package.json`).version === version,
+        const localManifest = `${workspace}/node_modules/${name}/package.json`;
+        const installedManifest = existsSync(join(root, localManifest))
+          ? localManifest : `node_modules/${name}/package.json`;
+        check(json(installedManifest).version === version,
           `Workspace installed version mismatch: ${workspace}: ${name}; run npm ci.`);
       }
     }

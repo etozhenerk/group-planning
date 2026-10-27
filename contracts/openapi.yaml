@@ -17,6 +17,132 @@ tags:
   - name: meetings
     description: Встречи и общая лента
 paths:
+  /api/v1/realtime:
+    get:
+      operationId: connectChatRealtime
+      summary: Поток ссылочных уведомлений чата через Centrifuge
+      description: >-
+        WebSocket upgrade, включённый при realtime=true. Web использует HttpOnly
+        cookie и точный Origin; native — Bearer HTTP header и subprotocol
+        centrifuge-protobuf. URL query и connect token/headers запрещены. Connect data
+        допускает только отсутствие, null или пустой объект без полей.
+        Личный канал personal:<user_id> задаёт сервер, клиент подписывается на одну
+        meeting:<meeting_id>. Hint содержит schema_version, meeting_id,
+        stream_epoch и decimal latest_change_sequence; личный канал добавляет
+        invalidation и access_revoked. После subscribe/reconnect обязателен HTTP sync.
+        Ошибки Centrifuge и ограничения описаны в backend/README.md.
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: Origin
+          in: header
+          description: Точный настроенный origin обязателен для web-cookie.
+          required: false
+          schema:
+            type: string
+      responses:
+        "101":
+          description: Соединение переключено на протокол Centrifuge.
+        "400":
+          description: Неверный query или WebSocket handshake; upgrade может вернуть текстовую transport error.
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+  /api/v1/chat-capabilities:
+    get:
+      operationId: getChatCapabilities
+      summary: Поддерживаемые возможности чата без ложного read/realtime UI
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters: []
+      responses:
+        "200":
+          description: Текущий авторизованный снимок
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatCapabilities"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "410":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/sync:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    get:
+      operationId: syncChat
+      summary: Начальный снимок либо ограниченная сверка до fixed through; 410 требует нового снимка
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - name: cursor
+          in: query
+          schema:
+            $ref: "#/components/schemas/ChatCursor"
+          description: Взаимоисключающе с around_entry_id. Последний next_cursor начинает новый цикл.
+        - name: around_entry_id
+          in: query
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "200":
+          description: Текущий авторизованный снимок
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatSync"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "410":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
   /healthz:
     get:
       operationId: health
@@ -945,8 +1071,7 @@ paths:
           description: Успешный ответ
           headers:
             X-Request-ID:
-              description: Сгенерированный сервером ID запроса. Входящий заголовок не
-                считается доверенным.
+              description: Сгенерированный сервером ID запроса. Входящий заголовок не считается доверенным.
               schema:
                 $ref: "#/components/schemas/UUID"
             Cache-Control:
@@ -998,6 +1123,11 @@ paths:
           schema:
             type: string
             pattern: ^(0|[1-9][0-9]*)$
+        - name: around_entry_id
+          in: query
+          description: Взаимоисключающе с before_sequence/after_sequence; добавляет range,has_older,has_newer.
+          schema:
+            $ref: "#/components/schemas/UUID"
   /api/v1/meetings/{id}/messages:
     parameters:
       - $ref: "#/components/parameters/MeetingID"
@@ -3029,6 +3159,162 @@ paths:
           $ref: "#/components/responses/APIError"
         "503":
           $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/read-marker:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    put:
+      operationId: updateChatReadMarker
+      summary: Монотонное фактическое прочтение; baseline не создаёт receipt
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - $ref: "#/components/parameters/CSRF"
+      responses:
+        "200":
+          description: Текущий разрешённый снимок прочитанности
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatReadState"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "410":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatReadMarkerInput"
+  /api/v1/meetings/{id}/read-receipts/query:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+    post:
+      operationId: queryChatReadReceipts
+      summary: Счётчики фактического прочтения собственных сообщений
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - $ref: "#/components/parameters/CSRF"
+      responses:
+        "200":
+          description: Текущий разрешённый снимок прочитанности
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatReadReceipts"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "410":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatReadReceiptsInput"
+  /api/v1/meetings/{id}/messages/{entry_id}/readers:
+    parameters:
+      - $ref: "#/components/parameters/MeetingID"
+      - name: entry_id
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/UUID"
+    get:
+      operationId: getChatMessageReaders
+      summary: Текущие участники, прочитавшие сообщение автора
+      tags:
+        - meetings
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - name: cursor
+          in: query
+          schema:
+            $ref: "#/components/schemas/ChatCursor"
+      responses:
+        "200":
+          description: Текущий разрешённый снимок прочитанности
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatMessageReaders"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "410":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
 components:
   securitySchemes:
     DeletionReceipt:
@@ -3761,6 +4047,12 @@ components:
           maxItems: 3
           items:
             $ref: "#/components/schemas/Media"
+        unread_count:
+          $ref: "#/components/schemas/Revision"
+        first_unread:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
       required:
         - id
         - title
@@ -3963,6 +4255,11 @@ components:
         latest_sequence:
           type: string
           pattern: ^(0|[1-9][0-9]*)$
+        range:
+          $ref: "#/components/schemas/ChatRange"
+        has_older: &a1
+          type: boolean
+        has_newer: *a1
       required:
         - entries
         - has_more
@@ -3972,6 +4269,366 @@ components:
         - my_rsvp_revision
         - latest_sequence
       additionalProperties: true
+      dependentRequired:
+        range:
+          - has_older
+          - has_newer
+        has_older:
+          - range
+          - has_newer
+        has_newer:
+          - range
+          - has_older
+    ChatCapabilities:
+      type: object
+      properties:
+        protocol_version:
+          type: integer
+          const: 1
+        sync: &a4
+          type: boolean
+        read_state:
+          type: boolean
+        realtime:
+          type: boolean
+      required:
+        - protocol_version
+        - sync
+        - read_state
+        - realtime
+      additionalProperties: false
+    ChatCursor:
+      type: string
+      minLength: 1
+      maxLength: 2048
+      description: Непрозрачный подписанный cursor; scope user/meeting/epoch и fixed through. Клиент сохраняет после
+        атомарного merge.
+    ChatRange:
+      type: object
+      properties:
+        first_sequence:
+          anyOf:
+            - &a1
+              $ref: "#/components/schemas/Revision"
+            - type: "null"
+        last_sequence:
+          anyOf:
+            - *a1
+            - type: "null"
+      required:
+        - first_sequence
+        - last_sequence
+      additionalProperties: false
+    ChatMeeting:
+      type: object
+      properties:
+        id: &a2
+          $ref: "#/components/schemas/UUID"
+        organizer_id: *a2
+        title: &a3
+          type: string
+        description:
+          anyOf:
+            - *a3
+            - type: "null"
+        starts_on:
+          anyOf:
+            - type: string
+              format: date
+            - type: "null"
+        starts_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        timezone: *a3
+        place:
+          anyOf:
+            - *a3
+            - type: "null"
+        cover_url:
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
+        period:
+          type: string
+          enum:
+            - upcoming
+            - past
+        revision: *a1
+        participant_count:
+          type: integer
+          minimum: 1
+        my_rsvp:
+          anyOf:
+            - $ref: "#/components/schemas/Answer"
+            - type: "null"
+        my_rsvp_revision: *a1
+      required:
+        - id
+        - organizer_id
+        - title
+        - description
+        - starts_on
+        - starts_at
+        - timezone
+        - place
+        - cover_url
+        - period
+        - revision
+        - participant_count
+        - my_rsvp
+        - my_rsvp_revision
+      additionalProperties: false
+    ChatProjection:
+      type: object
+      properties:
+        resource_kind:
+          type: string
+          enum:
+            - entry
+            - date_poll
+            - place_poll
+            - preparation_task
+        resource_id: *a2
+        projection_version: *a1
+        entry:
+          $ref: "#/components/schemas/FeedEntry"
+        date_poll:
+          $ref: "#/components/schemas/DatePoll"
+        place_poll:
+          $ref: "#/components/schemas/PlacePoll"
+        preparation_task:
+          $ref: "#/components/schemas/PreparationTask"
+        reactions:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/MessageReactions"
+      required:
+        - resource_kind
+        - resource_id
+        - projection_version
+      additionalProperties: false
+    ChatChange:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+            - entry_upsert
+            - entry_removed
+            - meeting_changed
+            - receipts_changed
+            - history_invalidated
+        entry_id: *a2
+        resource_kind:
+          type: string
+          enum:
+            - entry
+            - date_poll
+            - place_poll
+            - preparation_task
+            - meeting
+        resource_id: *a2
+        projection_version: *a1
+        projection:
+          $ref: "#/components/schemas/ChatProjection"
+      required:
+        - kind
+        - projection_version
+      additionalProperties: false
+    ChatSnapshot:
+      type: object
+      properties:
+        mode:
+          type: string
+          const: snapshot
+        stream_epoch: *a3
+        change_cursor:
+          $ref: "#/components/schemas/ChatCursor"
+        entries:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/FeedEntry"
+        projections:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ChatProjection"
+        meeting:
+          $ref: "#/components/schemas/ChatMeeting"
+        projection_version: *a1
+        latest_sequence: *a1
+        range:
+          $ref: "#/components/schemas/ChatRange"
+        has_older: *a4
+        has_newer: *a4
+        my_read_state:
+          anyOf:
+            - $ref: "#/components/schemas/Revision"
+            - type: "null"
+        first_unread:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+        unread_baseline_sequence:
+          $ref: "#/components/schemas/Revision"
+        unread_count:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - mode
+        - stream_epoch
+        - change_cursor
+        - entries
+        - projections
+        - meeting
+        - projection_version
+        - latest_sequence
+        - range
+        - has_older
+        - has_newer
+        - my_read_state
+        - first_unread
+      additionalProperties: false
+    ChatChanges:
+      type: object
+      properties:
+        mode:
+          type: string
+          const: changes
+        stream_epoch: *a3
+        next_cursor:
+          $ref: "#/components/schemas/ChatCursor"
+        through_cursor:
+          $ref: "#/components/schemas/ChatCursor"
+        has_more: *a4
+        changes:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ChatChange"
+        meeting:
+          $ref: "#/components/schemas/ChatMeeting"
+        projection_version: *a1
+        my_read_state:
+          anyOf:
+            - $ref: "#/components/schemas/Revision"
+            - type: "null"
+        first_unread:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+        unread_baseline_sequence:
+          $ref: "#/components/schemas/Revision"
+        unread_count:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - mode
+        - stream_epoch
+        - next_cursor
+        - through_cursor
+        - has_more
+        - changes
+        - meeting
+        - projection_version
+      additionalProperties: false
+    ChatSync:
+      oneOf:
+        - $ref: "#/components/schemas/ChatSnapshot"
+        - $ref: "#/components/schemas/ChatChanges"
+    ChatReadMarkerInput:
+      type: object
+      properties:
+        read_through_sequence:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - read_through_sequence
+      additionalProperties: false
+    ChatReadState:
+      type: object
+      properties:
+        read_through_sequence:
+          $ref: "#/components/schemas/Revision"
+        unread_baseline_sequence:
+          $ref: "#/components/schemas/Revision"
+        unread_count:
+          $ref: "#/components/schemas/Revision"
+        first_unread:
+          anyOf:
+            - $ref: "#/components/schemas/UUID"
+            - type: "null"
+        projection_version:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - read_through_sequence
+        - unread_baseline_sequence
+        - unread_count
+        - first_unread
+        - projection_version
+      additionalProperties: false
+    ChatReadReceiptsInput:
+      type: object
+      properties:
+        entry_ids:
+          type: array
+          minItems: 1
+          maxItems: 100
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/UUID"
+      required:
+        - entry_ids
+      additionalProperties: false
+    ChatReadReceipt:
+      type: object
+      properties:
+        entry_id:
+          $ref: "#/components/schemas/UUID"
+        reader_count:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - entry_id
+        - reader_count
+      additionalProperties: false
+    ChatReadReceipts:
+      type: object
+      properties:
+        receipts:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ChatReadReceipt"
+        projection_version:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - receipts
+        - projection_version
+      additionalProperties: false
+    ChatMessageReaders:
+      type: object
+      properties:
+        readers:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/User"
+        reader_count:
+          $ref: "#/components/schemas/Revision"
+        next_cursor:
+          anyOf:
+            - $ref: "#/components/schemas/ChatCursor"
+            - type: "null"
+        projection_version:
+          $ref: "#/components/schemas/Revision"
+      required:
+        - readers
+        - reader_count
+        - next_cursor
+        - projection_version
+      additionalProperties: false
     Error:
       type: object
       properties:

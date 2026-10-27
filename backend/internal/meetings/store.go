@@ -24,8 +24,13 @@ type Store interface {
 
 // Reader returns independent copies. It is valid only for its callback's lifetime.
 type Reader interface {
+	ChatReadMarker(string, string) (ReadMarker, error)
+	ChatReadState(string, string) (ReadState, error)
+	ChatReceiptCounts(string, string, []string) ([]ReadReceipt, error)
+	ChatReaderIDs(string, string, uint64, string, int) ([]string, error)
 	UserRemoved(string) (bool, error)
 	Reactions(string) ([]Reaction, error)
+	ReactionsForEntries(string, []string) ([]Reaction, error)
 	Media(string) (Media, error)
 	MeetingMedia(string) ([]Media, error)
 	AllMedia() ([]Media, error)
@@ -47,6 +52,17 @@ type Reader interface {
 	RSVP(meetingID, userID string) (RSVP, error)
 	RSVPs(meetingID string) ([]RSVP, error)
 	Feed(meetingID string) ([]FeedEntry, error)
+	FeedWindow(meetingID string, query FeedQuery) (FeedWindow, error)
+	FeedAround(meetingID, entryID string, limit int) (FeedRange, error)
+	ChatStream(meetingID string) (ChatStream, error)
+	ChatChanges(meetingID string, after, through uint64, limit int) (ChatChangesPage, error)
+	PendingChatHints(time.Time, int) ([]ChatHint, error)
+	ChatMaintenanceIDs(time.Time, uint64, int) ([]string, error)
+	ExpiredChatHints(time.Time, int) ([]ChatHint, error)
+	ReactionActive(Reaction) (bool, error)
+	FeedNeedsAnonymization(meetingID, userID, name string) (bool, error)
+	FeedEntry(meetingID, entryID string) (FeedEntry, error)
+	MessageByRequest(meetingID, actorID, requestID string) (FeedEntry, error)
 	Receipt(RequestKey) (Receipt, error)
 }
 
@@ -55,6 +71,17 @@ type Reader interface {
 // checks expected revisions within the callback. Other inserts reject duplicates.
 type Writer interface {
 	Reader
+	InitializeChatReadMarkers(time.Time) error
+	EnsureChatReadMarker(string, string, time.Time) (ReadMarker, error)
+	AdvanceChatReadMarker(string, string, uint64, time.Time) (ReadMarker, bool, error)
+	AppendChatChanges(meetingID, epoch string, changes []ChatChange) (ChatStream, error)
+	EnsureChatStream(meetingID, epoch string) (ChatStream, error)
+	EnqueueChatHint(ChatHint) error
+	TrimChatStream(string, time.Time, uint64) (ChatStream, error)
+	DeleteChatHints([]string) error
+	LeaseChatHints(time.Time, time.Time, string, int) ([]ChatHint, error)
+	FinishChatHint(string, string, time.Time, time.Time) (bool, error)
+	DeleteDispatchedChatHints(int) (int, error)
 	RemoveUser(string) error
 	SaveReaction(Reaction, bool) error
 	SaveMedia(Media) error

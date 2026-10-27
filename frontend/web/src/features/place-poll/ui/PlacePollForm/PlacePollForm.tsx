@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { PollDeadline } from '@/entities/meeting';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -8,10 +9,11 @@ import styles from '@/features/place-poll/ui/PlacePollForm/PlacePollForm.module.
 export type PlacePollFormProps = { meeting: Meeting; session: Session; done: () => void };
 
 export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) => {
+  const mobile = useMobileLayout();
   const form = usePlaceForm(meeting, session, done);
 
   return (
-    <form onSubmit={form.submit} className={styles.form}>
+    <form onSubmit={form.submit} className={styles.form} data-mobile={mobile}>
       <div className={styles.body}>
         <label className={styles.field}>
           Новое место
@@ -29,6 +31,7 @@ export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) =>
             onChange={(event) => form.setExplanation(event.target.value)}
             disabled={form.locked}
             rows={3}
+            maxLength={2000}
           />
         </label>
         <PollDeadline

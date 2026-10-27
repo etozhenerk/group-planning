@@ -29,7 +29,7 @@ export const useSheetDismiss = (
     if (
       !dialog ||
       dialog.dataset['motion'] !== 'open' ||
-      !window.matchMedia('(max-width: 739px)').matches ||
+      dialog.dataset['mobile'] !== 'true' ||
       event.button !== 0 ||
       (event.target instanceof Element && event.target.closest('button'))
     ) {

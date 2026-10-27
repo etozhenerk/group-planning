@@ -1,0 +1,91 @@
+
+Running 1 test using 1 worker
+
+(node:24475) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] [chromium] › .cache/qa/chat-receive-cursor/runtime/harness/cursor-race.spec.ts:22:5 › TC-CHAT-SYNC-2D68FE69: ACK 102 does not skip received cursor 100 and foreign 101
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49596: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49598: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49601: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49603: remote error: tls: unknown certificate
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49599: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49600: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49602: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49604: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49607: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49605: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49608: remote error: tls: unknown certificate
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49606: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49616: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49618: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49619: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49620: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49621: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49623: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49624: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49622: remote error: tls: unknown certificate
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49626: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49625: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49627: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49629: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49631: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49628: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/27 20:48:31 http: TLS handshake error from 127.0.0.1:49630: remote error: tls: unknown certificate
+
+  1) [chromium] › .cache/qa/chat-receive-cursor/runtime/harness/cursor-race.spec.ts:22:5 › TC-CHAT-SYNC-2D68FE69: ACK 102 does not skip received cursor 100 and foreign 101 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      150 |     await composer.fill("own-sequence-102");
+      151 |     await composer.press("Enter");
+    > 152 |     await expect.poll(() => ack102).toBe(true);
+          |                                     ^
+      153 |     await page.clock.runFor(250);
+      154 |     await expect(
+      155 |       page.getByTestId("feed-message").filter({ hasText: "own-sequence-102" }),
+        at /Users/misha/.codex/worktrees/chat-bounded-storage/group-planning/.cache/qa/chat-receive-cursor/runtime/harness/cursor-race.spec.ts:152:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache/qa/chat-receive-cursor/runtime/run01/results/cursor-race-TC-CHAT-SYNC-2-d797b--cursor-100-and-foreign-101-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache/qa/chat-receive-cursor/runtime/run01/results/cursor-race-TC-CHAT-SYNC-2-d797b--cursor-100-and-foreign-101-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache/qa/chat-receive-cursor/runtime/run01/results/cursor-race-TC-CHAT-SYNC-2-d797b--cursor-100-and-foreign-101-chromium/error-context.md
+
+
+  1 failed
+    [chromium] › .cache/qa/chat-receive-cursor/runtime/harness/cursor-race.spec.ts:22:5 › TC-CHAT-SYNC-2D68FE69: ACK 102 does not skip received cursor 100 and foreign 101 

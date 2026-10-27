@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/chat_sync_backend_review",
+  "candidate": "d32deaa07093e50c138089f77f989e7cacc8e43a",
+  "status": "pass",
+  "scope": "server-only targeted runtime: RT-01/RT-02, websocket authorization/revocation/subscription, dispatcher lease/ack/retry and selected regressions",
+  "fullCasesPassed": [],
+  "topLevelTestsPassed": 39,
+  "packagesPassed": 5,
+  "independentProbesPassed": 6,
+  "regressionProbesUnchanged": true,
+  "sourceChanges": 0,
+  "sourceTestOverlays": 2,
+  "firstRunHarnessFailure": "unsupported ping barrier; raw preserved; corrected only new probe; entire targeted race rerun passed",
+  "notCovered": [
+    "native SDK",
+    "client recovery",
+    "capacity",
+    "read-state",
+    "TLS/proxy deployment",
+    "independent SQL process restart",
+    "full 45-second periodic recheck"
+  ],
+  "testResults": [
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatDispatcherBoundedMultiBatchBacklogAndRetry",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatDispatcherCrashAfterPublishReplaysSameEvent",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatRetentionDrainsSeveralShortBatches",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalMessageCommitAndNoop",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalOutboxFailureRollsBackMessage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalReferencePrivacy",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalCardsNoopsAndWorker",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalMediaReactionAndLeaving",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalCoalescesEveryResourceOnAccountRemoval",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatAroundChecksAccessBeforeAnchor",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalTerminalHintAfterMeetingRemoval",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatRetentionResetAndOutboxReplacement",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncAccountReplayHasCurrentNames",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncFixedBarrierAndNextCycle",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncScopeExpiryAndHiddenProjection",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncInitializesLegacyStreamOnce",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestIndependentRetryDeadlineElapsedInsidePublishBatch",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestIndependentExpiredWorkerCannotAckNewLease",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestIndependentElapsedRetryPersistsAndDoesNotReplaySuccess",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestMediaRechecksRevocationAfterBinaryIO",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestReactionsConcurrencyRetryAndRevocation",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/missing",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/cookie_missing_origin",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/cookie_foreign_origin",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/mixed_credentials",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/duplicate_cookies",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/token_URL",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary/native_wrong_session",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeHTTPAuthenticationBoundary",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeSocketAuthorizationPrivacyRecoveryAndLogout",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeSessionExpiryClosesSocket",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeNativeProtobufSubprotocol",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeCapabilitiesAndOneMeetingLimit",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeStorageFailureIsRetryable",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeEmptySDKDataCarriesNoIdentity",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeRevokeBeforePublication",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/duplicate_origin",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/duplicate_bearer",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/foreign_native_origin",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/empty_query",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/spoof-0",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/spoof-1",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing/spoof-2",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestIndependentPersonalUnsubscribeCannotExpandMeetingLimit",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeSlowConsumerHasRecoverableBound",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeMandatoryPersonalAndMeetingSwitch/protobuf=false",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeMandatoryPersonalAndMeetingSwitch/protobuf=true",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/realtime",
+      "test": "TestRealtimeMandatoryPersonalAndMeetingSwitch",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatDispatchLeaseRollbackRecoveryAndCopies",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatJournalAtomicRangesAndOverflow",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatTerminalHintsAndRecipientRemoval",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatRetentionCountBoundAndBoundedDeletes",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/identity",
+      "test": "TestWebSessionBindingRevocationAndExpiry",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/accounts",
+      "test": "TestAccountTransactionRollsBackChatInvalidation",
+      "status": "pass"
+    }
+  ],
+  "agentCheck": "pass",
+  "productDiffCheck": "pass"
+}

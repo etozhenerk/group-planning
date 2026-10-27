@@ -123,3 +123,27 @@ button.icon,
     z-index: 1;
   }
 }
+
+.conversation-header[data-mobile='true'] {
+  padding: var(--ds-space-s10) var(--ds-component-mobile-chat-header-inset);
+  gap: var(--ds-component-chat-composer-gap);
+  min-height: var(--ds-component-mobile-chat-header-height);
+  background: var(--ds-color-background);
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.conversation-header[data-mobile='true'][data-compact='true'] {
+  min-height: var(--ds-component-mobile-chat-compact-header-height);
+  padding-block: var(--ds-component-chat-composer-compact-padding-block);
+}
+
+.conversation-header[data-mobile='true'][data-narrow='true'] {
+  padding-inline: var(--ds-space-s8);
+  gap: var(--ds-space-s3);
+}
+
+.conversation-header[data-mobile='true'] > button svg,
+.conversation-header[data-mobile='true'] > .button svg {
+  width: var(--ds-component-mobile-chat-icon-size);
+  height: var(--ds-component-mobile-chat-icon-size);
+}

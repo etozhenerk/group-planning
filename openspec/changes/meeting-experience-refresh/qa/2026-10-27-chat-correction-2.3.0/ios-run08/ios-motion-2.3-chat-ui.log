@@ -1,0 +1,1384 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (5 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 52deee29b56d038dc4ce2ca7a17821ac
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/52deee29b56d038dc4ce2ca7a17821ac.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+WriteAuxiliaryFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    write-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList
+
+WriteAuxiliaryFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftConstValuesFileList (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    write-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.LinkFileList (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    write-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.LinkFileList
+
+WriteAuxiliaryFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-OutputFileMap.json (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    write-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-OutputFileMap.json
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+SwiftDriver SomewhereUITestHost normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITestHost -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList -DDEBUG -DSOMEWHERE_UI_TEST_HOST -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ ComposerEmojiDock.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerEmojiDock.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerEmojiDock.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ComposerEmojiDock.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SomewhereUITestHost (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+
+SwiftCompile normal arm64 Compiling\ DesignTokens.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/DesignTokens.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/DesignTokens.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DesignTokens.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling ComposerEmojiDock.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ ChatMotion.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ChatMotion.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ChatMotion.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatMotion.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling DesignTokens.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ OnboardingBackButton.swift,\ OnboardingNextButton.swift,\ OnboardingPageView.swift,\ OnboardingProgress.swift,\ OnboardingSkipButton.swift,\ OnboardingView.swift,\ PlansExample.swift,\ PollExample.swift,\ PreviewBadge.swift,\ PreviewCard.swift,\ TaskExample.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingBackButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingNextButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingPageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingProgress.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingSkipButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PlansExample.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PollExample.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PreviewBadge.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PreviewCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/TaskExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingBackButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingBackButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingNextButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingNextButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingPageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingPageView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingProgress.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingProgress.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingSkipButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingSkipButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PlansExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PlansExample.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PollExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PollExample.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PreviewBadge.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreviewBadge.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/PreviewCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreviewCard.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/TaskExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile TaskExample.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling ChatMotion.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ AppRootView.swift,\ BrandWordmark.swift,\ LaunchLoadingView.swift,\ AccountDeletionScreen.swift,\ CreateMeetingScreen.swift,\ CreationFormView.swift,\ CreationSuccessView.swift,\ MeetingDateSheet.swift,\ MeetingPickerSheet.swift,\ MeetingTimeSheet.swift,\ CreateDatePollScreen.swift,\ DatePollCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/AppRootView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/BrandWordmark.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/LaunchLoadingView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Account/AccountDeletionScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreateMeetingScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreationFormView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreationSuccessView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingDateSheet.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingPickerSheet.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingTimeSheet.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/CreateDatePollScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/AppRootView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile AppRootView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/BrandWordmark.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile BrandWordmark.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/App/LaunchLoadingView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile LaunchLoadingView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Account/AccountDeletionScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile AccountDeletionScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreateMeetingScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreateMeetingScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreationFormView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreationFormView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/CreationSuccessView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreationSuccessView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingDateSheet.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingDateSheet.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingPickerSheet.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingPickerSheet.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Create/MeetingTimeSheet.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingTimeSheet.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/CreateDatePollScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreateDatePollScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DatePollCard.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling OnboardingBackButton.swift, OnboardingNextButton.swift, OnboardingPageView.swift, OnboardingProgress.swift, OnboardingSkipButton.swift, OnboardingView.swift, PlansExample.swift, PollExample.swift, PreviewBadge.swift, PreviewCard.swift, TaskExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ MeetingListView.swift,\ MeetingMemoryPreview.swift,\ MeetingResultsView.swift,\ MeetingToolbar.swift,\ UndatedMeetingsButton.swift,\ MeetingSettingsFields.swift,\ MeetingSettingsScreen.swift,\ SettingsPickerButton.swift,\ ConversationExample.swift,\ InvitationExample.swift,\ OnboardingArtwork.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingListView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingMemoryPreview.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingResultsView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingToolbar.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/UndatedMeetingsButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/MeetingSettingsFields.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/MeetingSettingsScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/SettingsPickerButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/ConversationExample.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/InvitationExample.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingArtwork.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingListView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingListView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingMemoryPreview.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingMemoryPreview.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingResultsView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingResultsView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingToolbar.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingToolbar.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/UndatedMeetingsButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile UndatedMeetingsButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/MeetingSettingsFields.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingSettingsFields.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/MeetingSettingsScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingSettingsScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/MeetingSettings/SettingsPickerButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SettingsPickerButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/ConversationExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ConversationExample.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/InvitationExample.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationExample.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Onboarding/OnboardingArtwork.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OnboardingArtwork.swift
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SomewhereUITestHost (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements SomewhereUITestHost normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITestHost -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList -DDEBUG -DSOMEWHERE_UI_TEST_HOST -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling AppRootView.swift, BrandWordmark.swift, LaunchLoadingView.swift, AccountDeletionScreen.swift, CreateMeetingScreen.swift, CreationFormView.swift, CreationSuccessView.swift, MeetingDateSheet.swift, MeetingPickerSheet.swift, MeetingTimeSheet.swift, CreateDatePollScreen.swift, DatePollCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ EmptyMeetingsView.swift,\ HomeView.swift,\ MeetingCalendarGrid.swift,\ MeetingCalendarView.swift,\ MeetingCardPeople.swift,\ MeetingCardsSkeleton.swift,\ MeetingCardView.swift,\ MeetingFactsView.swift,\ MeetingHeadingBackground.swift,\ MeetingHomeHeader.swift,\ MeetingListHeading.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/EmptyMeetingsView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/HomeView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCalendarGrid.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCalendarView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardPeople.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardsSkeleton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingFactsView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingHeadingBackground.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingHomeHeader.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingListHeading.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/EmptyMeetingsView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile EmptyMeetingsView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/HomeView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile HomeView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCalendarGrid.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingCalendarGrid.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCalendarView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingCalendarView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardPeople.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingCardPeople.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardsSkeleton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingCardsSkeleton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingCardView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingCardView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingFactsView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingFactsView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingHeadingBackground.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingHeadingBackground.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingHomeHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingHomeHeader.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/MeetingListHeading.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingListHeading.swift
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling MeetingListView.swift, MeetingMemoryPreview.swift, MeetingResultsView.swift, MeetingToolbar.swift, UndatedMeetingsButton.swift, MeetingSettingsFields.swift, MeetingSettingsScreen.swift, SettingsPickerButton.swift, ConversationExample.swift, InvitationExample.swift, OnboardingArtwork.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.abi.json (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftsourceinfo (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ MeetingFeedScreen.swift,\ MeetingInfoAvatar.swift,\ MeetingInfoButtonLabel.swift,\ MeetingInfoFacts.swift,\ MeetingInfoParticipantChip.swift,\ MeetingInfoPeople.swift,\ MeetingInfoPeopleSummary.swift,\ MeetingInfoPersonRow.swift,\ MeetingInfoScreen.swift,\ MeetingShareSheet.swift,\ OutgoingMessageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoAvatar.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoButtonLabel.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoFacts.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoParticipantChip.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPeople.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPeopleSummary.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPersonRow.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingShareSheet.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/OutgoingMessageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingFeedScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoAvatar.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoAvatar.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoButtonLabel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoButtonLabel.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoFacts.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoFacts.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoParticipantChip.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoParticipantChip.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPeople.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoPeople.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPeopleSummary.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoPeopleSummary.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoPersonRow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoPersonRow.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingInfoScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingInfoScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingShareSheet.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingShareSheet.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/OutgoingMessageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OutgoingMessageView.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling EmptyMeetingsView.swift, HomeView.swift, MeetingCalendarGrid.swift, MeetingCalendarView.swift, MeetingCardPeople.swift, MeetingCardsSkeleton.swift, MeetingCardView.swift, MeetingFactsView.swift, MeetingHeadingBackground.swift, MeetingHomeHeader.swift, MeetingListHeading.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ CoverEditor.swift,\ CoverImageView.swift,\ CoverSkeleton.swift,\ ActionButton.swift,\ ActionCheckboxStyle.swift,\ ActionDateField.swift,\ ActionDeadlineFields.swift,\ ActionFieldModifier.swift,\ ActionFormButton.swift,\ ActionFormSheet.swift,\ AppPalette.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverEditor.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverImageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverSkeleton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionCheckboxStyle.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionDateField.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionDeadlineFields.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFieldModifier.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFormButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFormSheet.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/AppPalette.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverEditor.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverEditor.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverImageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverImageView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/Covers/CoverSkeleton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CoverSkeleton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionCheckboxStyle.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionCheckboxStyle.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionDateField.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionDateField.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionDeadlineFields.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionDeadlineFields.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFieldModifier.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionFieldModifier.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFormButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionFormButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ActionFormSheet.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ActionFormSheet.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/AppPalette.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile AppPalette.swift
+
+SwiftCompile normal arm64 Compiling\ RSVPChoiceView.swift,\ RSVPFormView.swift,\ SecondaryInvitationShareButton.swift,\ MediaPickerPanel.swift,\ MediaPreviewItem.swift,\ MemoriesBanner.swift,\ MemoriesScreen.swift,\ MemoryFullscreen.swift,\ MessageAttachmentView.swift,\ PrivatePhotoView.swift,\ CalendarMeetingRow.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/RSVPChoiceView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/RSVPFormView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/SecondaryInvitationShareButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MediaPickerPanel.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MediaPreviewItem.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoriesBanner.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoriesScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoryFullscreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MessageAttachmentView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/PrivatePhotoView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/CalendarMeetingRow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/RSVPChoiceView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile RSVPChoiceView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/RSVPFormView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile RSVPFormView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/SecondaryInvitationShareButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SecondaryInvitationShareButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MediaPickerPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MediaPickerPanel.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MediaPreviewItem.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MediaPreviewItem.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoriesBanner.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MemoriesBanner.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoriesScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MemoriesScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MemoryFullscreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MemoryFullscreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/MessageAttachmentView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MessageAttachmentView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Media/PrivatePhotoView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PrivatePhotoView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Meetings/CalendarMeetingRow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CalendarMeetingRow.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling MeetingFeedScreen.swift, MeetingInfoAvatar.swift, MeetingInfoButtonLabel.swift, MeetingInfoFacts.swift, MeetingInfoParticipantChip.swift, MeetingInfoPeople.swift, MeetingInfoPeopleSummary.swift, MeetingInfoPersonRow.swift, MeetingInfoScreen.swift, MeetingShareSheet.swift, OutgoingMessageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ MessageComposer.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageComposer.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageComposer.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MessageComposer.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling CoverEditor.swift, CoverImageView.swift, CoverSkeleton.swift, ActionButton.swift, ActionCheckboxStyle.swift, ActionDateField.swift, ActionDeadlineFields.swift, ActionFieldModifier.swift, ActionFormButton.swift, ActionFormSheet.swift, AppPalette.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ CreatePlacePollScreen.swift,\ PlacePollBallot.swift,\ PlacePollCard.swift,\ CreatePreparationTaskScreen.swift,\ PreparationRecipientPicker.swift,\ PreparationTaskActions.swift,\ PreparationTaskCard.swift,\ PreparationTaskDetails.swift,\ ProfileField.swift,\ ProfileIdentityPanel.swift,\ ProfilePersonalPanel.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/CreatePlacePollScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/PlacePollBallot.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/PlacePollCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/CreatePreparationTaskScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationRecipientPicker.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskActions.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskDetails.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileField.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileIdentityPanel.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfilePersonalPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/CreatePlacePollScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreatePlacePollScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/PlacePollBallot.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PlacePollBallot.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PlacePoll/PlacePollCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PlacePollCard.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/CreatePreparationTaskScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile CreatePreparationTaskScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationRecipientPicker.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreparationRecipientPicker.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskActions.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreparationTaskActions.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreparationTaskCard.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskDetails.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile PreparationTaskDetails.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileField.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfileField.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileIdentityPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfileIdentityPanel.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfilePersonalPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfilePersonalPanel.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling MessageComposer.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ DatePollSettingsFields.swift,\ ChatPressStyle.swift,\ ComposerInputView.swift,\ ComposerMenu.swift,\ ComposerTextView.swift,\ EmojiPicker.swift,\ FeedAttachmentMessageView.swift,\ FeedMessageView.swift,\ FeedRecordView.swift,\ FeedTimeline.swift,\ MeetingFeedHeader.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/DatePollSettingsFields.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ChatPressStyle.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerInputView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerTextView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedAttachmentMessageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedRecordView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedTimeline.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/DatePoll/DatePollSettingsFields.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DatePollSettingsFields.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ChatPressStyle.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatPressStyle.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerInputView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ComposerInputView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ComposerMenu.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ComposerTextView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ComposerTextView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile EmojiPicker.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedAttachmentMessageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedAttachmentMessageView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedMessageView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedRecordView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedRecordView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedTimeline.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedTimeline.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingFeedHeader.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling RSVPChoiceView.swift, RSVPFormView.swift, SecondaryInvitationShareButton.swift, MediaPickerPanel.swift, MediaPreviewItem.swift, MemoriesBanner.swift, MemoriesScreen.swift, MemoryFullscreen.swift, MessageAttachmentView.swift, PrivatePhotoView.swift, CalendarMeetingRow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ MessageWithActions.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MessageWithActions.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling CreatePlacePollScreen.swift, PlacePollBallot.swift, PlacePollCard.swift, CreatePreparationTaskScreen.swift, PreparationRecipientPicker.swift, PreparationTaskActions.swift, PreparationTaskCard.swift, PreparationTaskDetails.swift, ProfileField.swift, ProfileIdentityPanel.swift, ProfilePersonalPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ ChatIcon.swift,\ ChatInlineAction.swift,\ ChatInlineCard.swift,\ ChatPollEyebrow.swift,\ DesignTokenFontModifier.swift,\ MeetingFieldModifier.swift,\ MeetingPanelHeader.swift,\ ParticipantAvatar.swift,\ ServicePageHeader.swift,\ StatusView.swift,\ UITestCaptureContext.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatIcon.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatInlineAction.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatInlineCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatPollEyebrow.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/DesignTokenFontModifier.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/MeetingFieldModifier.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/MeetingPanelHeader.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ParticipantAvatar.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ServicePageHeader.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/StatusView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITestSupport/UITestCaptureContext.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatIcon.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatIcon.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatInlineAction.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatInlineAction.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatInlineCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatInlineCard.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ChatPollEyebrow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatPollEyebrow.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/DesignTokenFontModifier.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile DesignTokenFontModifier.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/MeetingFieldModifier.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingFieldModifier.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/MeetingPanelHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingPanelHeader.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ParticipantAvatar.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ParticipantAvatar.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/ServicePageHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ServicePageHeader.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/UI/StatusView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile StatusView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITestSupport/UITestCaptureContext.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile UITestCaptureContext.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling MessageWithActions.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ ReactionChip.swift,\ ReactionChipLayout.swift,\ ReactionPeopleScreen.swift,\ ReactionPickerOverlay.swift,\ ReactionQuickPicker.swift,\ InvitationFactsView.swift,\ InvitationScreen.swift,\ InvitationShareButton.swift,\ MeetingPeopleView.swift,\ OrganizerInvitationView.swift,\ ParticipantRowView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionChip.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionChipLayout.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionPickerOverlay.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationFactsView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationShareButton.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/MeetingPeopleView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/OrganizerInvitationView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/ParticipantRowView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionChip.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionChip.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionChipLayout.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionChipLayout.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionPeopleScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionPickerOverlay.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionPickerOverlay.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ReactionQuickPicker.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationFactsView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationFactsView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/InvitationShareButton.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile InvitationShareButton.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/MeetingPeopleView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingPeopleView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/OrganizerInvitationView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile OrganizerInvitationView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Invitation/ParticipantRowView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ParticipantRowView.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling ChatIcon.swift, ChatInlineAction.swift, ChatInlineCard.swift, ChatPollEyebrow.swift, DesignTokenFontModifier.swift, MeetingFieldModifier.swift, MeetingPanelHeader.swift, ParticipantAvatar.swift, ServicePageHeader.swift, StatusView.swift, UITestCaptureContext.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ ProfilePersonalRow.swift,\ ProfileScreen.swift,\ SavedInvitationCard.swift,\ SavedInvitationsView.swift,\ AboutPanel.swift,\ HelpQuestion.swift,\ ServiceInformationScreen.swift,\ ServiceLinks.swift,\ SupportForm.swift,\ SupportScreen.swift,\ SupportTopics.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfilePersonalRow.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/SavedInvitations/SavedInvitationCard.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/SavedInvitations/SavedInvitationsView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/AboutPanel.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/HelpQuestion.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/ServiceInformationScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/ServiceLinks.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportForm.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportScreen.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportTopics.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfilePersonalRow.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfilePersonalRow.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Profile/ProfileScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ProfileScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/SavedInvitations/SavedInvitationCard.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SavedInvitationCard.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/SavedInvitations/SavedInvitationsView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SavedInvitationsView.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/AboutPanel.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile AboutPanel.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/HelpQuestion.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile HelpQuestion.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/ServiceInformationScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ServiceInformationScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/ServiceLinks.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ServiceLinks.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportForm.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SupportForm.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportScreen.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SupportScreen.swift
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Support/SupportTopics.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile SupportTopics.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling DatePollSettingsFields.swift, ChatPressStyle.swift, ComposerInputView.swift, ComposerMenu.swift, ComposerTextView.swift, EmojiPicker.swift, FeedAttachmentMessageView.swift, FeedMessageView.swift, FeedRecordView.swift, FeedTimeline.swift, MeetingFeedHeader.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ReactionChip.swift, ReactionChipLayout.swift, ReactionPeopleScreen.swift, ReactionPickerOverlay.swift, ReactionQuickPicker.swift, InvitationFactsView.swift, InvitationScreen.swift, InvitationShareButton.swift, MeetingPeopleView.swift, OrganizerInvitationView.swift, ParticipantRowView.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfilePersonalRow.swift, ProfileScreen.swift, SavedInvitationCard.swift, SavedInvitationsView.swift, AboutPanel.swift, HelpQuestion.swift, ServiceInformationScreen.swift, ServiceLinks.swift, SupportForm.swift, SupportScreen.swift, SupportTopics.swift (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+SwiftDriver\ Compilation SomewhereUITestHost normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITestHost -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList -DDEBUG -DSOMEWHERE_UI_TEST_HOST -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib normal (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -filelist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.LinkFileList -install_name @rpath/SomewhereUITestHost.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.swiftmodule -lc++ -framework Foundation -framework Security -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-ExecutorLinkFileList-normal-arm64.txt (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    construct-stub-executor-link-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'SomewhereUITestHost' from project 'Somewhere')
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost normal (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost.app-Simulated.xcent.der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SomewhereUITestHost --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.uitesthost --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost --dependency-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost_dependency_info.dat --stringsdata-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftFileList --metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost.DependencyMetadataFileList --static-metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/Objects-normal/arm64/SomewhereUITestHost.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-27 21:47:54.604 appintentsmetadataprocessor[69685:1272848] Starting appintentsmetadataprocessor export
+2026-10-27 21:47:54.607 appintentsmetadataprocessor[69685:1272848] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/__preview.dylib (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/__preview.dylib
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SomewhereUITestHost.app.xcent --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app
+
+Validate /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-validationUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app -shallow-bundle -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261027T184755-69278.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/TelegramChatUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261027T184755-69278.xcresult
+
+2026-10-27 21:47:56.545 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:47:57.910675+0300 SomewhereUITests-Runner[69727:1273355] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-27 21:48:01.575.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-27 21:48:01.576.
+Test Suite 'TelegramChatUITests' started at 2026-10-27 21:48:01.576.
+Test Case '-[SomewhereUITests.TelegramChatUITests testAnchoredReactionFullPickerAndPeopleFilter]' started.
+    t =     0.00s Start Test at 2026-10-27 21:48:01.578
+    t =     0.03s Set Up
+    t =     0.03s     Setting device orientation to Portrait
+    t =     0.03s         Wait for com.apple.springboard to idle
+    t =     0.05s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+2026-10-27 21:48:01.694 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 21:48:01.694 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 21:48:01.721 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.53s         Setting up automation session
+objc[69727]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x107e94398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x107fcc310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.91s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.31s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.34s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.35s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.44s Checking existence of `"home-tab-calendar" Button`
+    t =     5.47s Find the "home-tab-calendar" Button
+    t =     5.50s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.52s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.60s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.65s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.68s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.68s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.71s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.74s     Synthesize event
+    t =     6.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.45s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.49s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.49s         Checking existence of `"meeting-add" Button`
+    t =     7.53s Waiting 10.0s for "chat-message-ded00000-0000-4000-8000-000000000013" Any to exist
+    t =     8.57s     Checking `Expect predicate `existsNoRetry == 1` for object "chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =     8.57s         Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =     8.63s Checking existence of `Button (First Match)`
+    t =     8.67s Press "chat-message-ded00000-0000-4000-8000-000000000013" Any for 0.7 seconds
+    t =     8.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.68s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =     8.73s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =     8.77s     Synthesize event
+    t =     9.70s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.71s Waiting 5.0s for "reaction-expand" Button to exist
+    t =    10.74s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-expand" Button`
+    t =    10.75s         Checking existence of `"reaction-expand" Button`
+    t =    10.78s Tap "reaction-expand" Button
+    t =    10.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.78s     Find the "reaction-expand" Button
+    t =    10.81s     Check for interrupting elements affecting "reaction-expand" Button
+    t =    10.84s     Synthesize event
+    t =    11.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.14s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    12.17s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    12.17s         Checking existence of `"emoji-search" TextField`
+    t =    12.23s Tap "emoji-search" TextField
+    t =    12.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.23s     Find the "emoji-search" TextField
+    t =    12.27s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    12.31s     Synthesize event
+    t =    12.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.85s Type 'пицца' into "emoji-search" TextField
+    t =    12.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.85s     Find the "emoji-search" TextField
+    t =    12.91s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    12.96s     Synthesize event
+    t =    13.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.34s Tap "emoji-🍕" Button
+    t =    13.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.34s     Find the "emoji-🍕" Button
+    t =    13.39s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    13.42s     Synthesize event
+    t =    13.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.73s Waiting 10.0s for Button (First Match) to exist
+    t =    14.77s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    14.77s         Checking existence of `Button (First Match)`
+    t =    14.81s Press Button (First Match) for 0.7 seconds
+    t =    14.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.81s     Find the Button (First Match)
+    t =    14.85s     Check for interrupting elements affecting "reaction-chip-🍕" Button
+    t =    14.87s     Synthesize event
+    t =    15.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.06s Waiting 5.0s for "reaction-filter-🍕" Button to exist
+    t =    17.09s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-filter-🍕" Button`
+    t =    17.09s         Checking existence of `"reaction-filter-🍕" Button`
+    t =    17.14s Find the "reaction-filter-🍕" Button
+    t =    17.16s Tap "reaction-filter-all" Button
+    t =    17.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.16s     Find the "reaction-filter-all" Button
+    t =    17.19s     Check for interrupting elements affecting "reaction-filter-all" Button
+    t =    17.21s     Synthesize event
+    t =    17.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.52s Find the "reaction-filter-all" Button
+    t =    18.06s Added attachment named 'telegram-reaction-people'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-reaction-people.png
+    t =    18.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-reaction-people.json
+    t =    18.22s Tap "reaction-people-close" Button
+    t =    18.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.23s     Find the "reaction-people-close" Button
+    t =    18.25s     Check for interrupting elements affecting "reaction-people-close" Button
+    t =    18.28s     Synthesize event
+    t =    18.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.90s Checking existence of `"reaction-chip-🍕" Button`
+    t =    18.93s Find the "reaction-chip-🍕" Button
+    t =    19.99s Checking `Expect predicate `enabled == 1` for object "reaction-chip-🍕" Button`
+    t =    20.00s     Find the "reaction-chip-🍕" Button
+    t =    20.03s Tap "reaction-chip-🍕" Button
+    t =    20.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.03s     Find the "reaction-chip-🍕" Button
+    t =    20.07s     Check for interrupting elements affecting "reaction-chip-🍕" Button
+    t =    20.09s     Synthesize event
+    t =    20.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.43s Checking `Expect predicate `exists == 0` for object "reaction-chip-🍕" Button`
+    t =    21.43s     Checking existence of `"reaction-chip-🍕" Button`
+    t =    21.49s Tear Down
+    t =    21.49s     Setting device orientation to Portrait
+    t =    21.50s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.TelegramChatUITests testAnchoredReactionFullPickerAndPeopleFilter]' passed (21.759 seconds).
+Test Case '-[SomewhereUITests.TelegramChatUITests testEmojiDockRepeatedInsertionAndKeyboardReturn]' started.
+    t =     0.00s Start Test at 2026-10-27 21:48:23.339
+    t =     0.03s Set Up
+    t =     0.03s     Setting device orientation to Portrait
+    t =     0.03s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:69742
+2026-10-27 21:48:23.395 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:23.396 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:23.396 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:24.435 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 21:48:24.435 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 21:48:24.441 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.31s         Setting up automation session
+    t =     3.65s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.03s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.07s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.07s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.16s Checking existence of `"home-tab-calendar" Button`
+    t =     6.19s Find the "home-tab-calendar" Button
+    t =     6.22s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.24s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.32s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.37s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.40s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.40s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.43s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.46s     Synthesize event
+    t =     6.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.17s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.21s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.21s         Checking existence of `"meeting-add" Button`
+    t =     8.25s Tap "message-input" TextView
+    t =     8.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.26s     Find the "message-input" TextView
+    t =     8.28s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.30s     Synthesize event
+    t =     8.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.76s Type 'До ' into "message-input" TextView
+    t =     8.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.77s     Find the "message-input" TextView
+    t =     8.82s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.86s     Synthesize event
+    t =     9.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.13s Tap "composer-emoji-toggle" Button
+    t =     9.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.13s     Find the "composer-emoji-toggle" Button
+    t =     9.18s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =     9.22s     Synthesize event
+    t =     9.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.52s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    10.55s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    10.55s         Checking existence of `"emoji-search" TextField`
+    t =    10.62s Get number of matches for: Descendants matching type Keyboard
+    t =    10.65s Find the "message-send" Button
+    t =    10.71s Tap "emoji-search" TextField
+    t =    10.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.71s     Find the "emoji-search" TextField
+    t =    10.75s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    10.78s     Synthesize event
+    t =    11.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.09s Type 'пицца' into "emoji-search" TextField
+    t =    11.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.09s     Find the "emoji-search" TextField
+    t =    11.14s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    11.19s     Synthesize event
+    t =    11.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.48s Waiting 5.0s for "emoji-🍕" Button to exist
+    t =    12.52s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-🍕" Button`
+    t =    12.52s         Checking existence of `"emoji-🍕" Button`
+    t =    12.57s Tap "emoji-🍕" Button
+    t =    12.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.58s     Find the "emoji-🍕" Button
+    t =    12.62s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    12.66s     Synthesize event
+    t =    12.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.96s Tap "emoji-🍕" Button
+    t =    12.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.96s     Find the "emoji-🍕" Button
+    t =    13.01s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    13.05s     Synthesize event
+    t =    13.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.35s Find the "message-input" TextView
+    t =    13.39s Checking existence of `"emoji-search" TextField`
+    t =    13.43s Find the "message-send" Button
+    t =    13.48s Tap "emoji-delete" Button
+    t =    13.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.49s     Find the "emoji-delete" Button
+    t =    13.53s     Check for interrupting elements affecting "emoji-delete" Button
+    t =    13.57s     Synthesize event
+    t =    13.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.87s Find the "message-input" TextView
+    t =    14.43s Added attachment named 'telegram-emoji-dock-search'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-emoji-dock-search.png
+    t =    14.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-emoji-dock-search.json
+    t =    14.65s Tap "composer-emoji-toggle" Button
+    t =    14.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.66s     Find the "composer-emoji-toggle" Button
+    t =    14.70s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    14.74s     Synthesize event
+    t =    15.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.04s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    16.07s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    16.08s         Checking existence of `Keyboard (First Match)`
+    t =    16.09s Type ' после' into "message-input" TextView
+    t =    16.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.10s     Find the "message-input" TextView
+    t =    16.14s     Check for interrupting elements affecting "message-input" TextView
+    t =    16.17s     Synthesize event
+    t =    16.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.49s Find the "message-input" TextView
+    t =    16.53s Checking existence of `"emoji-search" TextField`
+    t =    16.57s Tap "composer-emoji-toggle" Button
+    t =    16.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.57s     Find the "composer-emoji-toggle" Button
+    t =    16.61s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    16.65s     Synthesize event
+    t =    16.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.95s Setting device orientation to Landscape Left
+    t =    16.95s     Device orientation changed to Landscape Left
+    t =    17.00s     Interface orientation changed to Landscape Right
+    t =    17.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.05s Checking `Expect predicate `BLOCKPREDICATE(0x10898e520)` for object Target Application 'dev.groupplanning.ios.uitesthost'`
+    t =    18.05s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.08s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.10s     Find the "message-send" Button
+    t =    18.14s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.15s     Find the "composer-emoji-toggle" Button
+    t =    18.18s Find the "message-send" Button
+    t =    18.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.24s Find the "composer-emoji-toggle" Button
+    t =    18.77s Added attachment named 'telegram-emoji-landscape'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-emoji-landscape.png
+    t =    18.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-emoji-landscape.json
+    t =    18.92s Setting device orientation to Portrait
+    t =    18.92s     Device orientation changed to Portrait
+    t =    18.96s     Interface orientation changed to Portrait
+    t =    18.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.00s Tear Down
+    t =    19.00s     Setting device orientation to Portrait
+    t =    19.00s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.TelegramChatUITests testEmojiDockRepeatedInsertionAndKeyboardReturn]' passed (19.569 seconds).
+Test Case '-[SomewhereUITests.TelegramChatUITests testOneSheetReturnsToExpandedInformationAndPreservesSettingsDraft]' started.
+    t =     0.00s Start Test at 2026-10-27 21:48:42.909
+    t =     0.02s Set Up
+    t =     0.02s     Setting device orientation to Portrait
+    t =     0.03s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:70370
+2026-10-27 21:48:42.957 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:42.957 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:42.957 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:48:43.995 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 21:48:43.995 xcodebuild[69722:1273251] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 21:48:44.003 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.62s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.06s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.10s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.10s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.19s Checking existence of `"home-tab-calendar" Button`
+    t =     6.21s Find the "home-tab-calendar" Button
+    t =     6.24s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.27s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.34s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.39s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.42s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.42s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.45s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.48s     Synthesize event
+    t =     6.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.19s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.22s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.22s         Checking existence of `"meeting-add" Button`
+    t =     8.26s Tap "message-input" TextView
+    t =     8.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.26s     Find the "message-input" TextView
+    t =     8.29s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.31s     Synthesize event
+    t =     8.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.77s Type 'Вернусь к разговору' into "message-input" TextView
+    t =     8.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.77s     Find the "message-input" TextView
+    t =     8.82s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.86s     Synthesize event
+    t =     9.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.39s Find the "meeting-heading" Button
+    t =     9.44s Checking existence of `"feed-title" StaticText`
+    t =     9.48s Tap "meeting-heading" Button
+    t =     9.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.48s     Find the "meeting-heading" Button
+    t =     9.52s     Check for interrupting elements affecting "meeting-heading" Button
+    t =     9.55s     Synthesize event
+    t =     9.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.91s Waiting 5.0s for "meeting-people-summary" Button to exist
+    t =    10.94s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-people-summary" Button`
+    t =    10.94s         Checking existence of `"meeting-people-summary" Button`
+    t =    11.00s Tap "meeting-people-summary" Button
+    t =    11.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.00s     Find the "meeting-people-summary" Button
+    t =    11.04s     Check for interrupting elements affecting "meeting-people-summary" Button
+    t =    11.07s     Synthesize event
+    t =    11.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.37s Waiting 5.0s for "Все ответы" StaticText to exist
+    t =    12.40s     Checking `Expect predicate `existsNoRetry == 1` for object "Все ответы" StaticText`
+    t =    12.41s         Checking existence of `"Все ответы" StaticText`
+    t =    12.46s Find the "meeting-info" ScrollView
+    t =    12.50s Find the "meeting-info-close" Button
+    t =    12.54s Checking existence of `"meeting-info-share" Button`
+    t =    12.57s Find the "meeting-info-share" Button
+    t =    12.62s Find the "meeting-info" ScrollView
+    t =    12.66s Find the "meeting-info-share" Button
+    t =    12.70s Find the "meeting-info-share" Button
+    t =    12.74s Tap "meeting-info-share" Button
+    t =    12.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.74s     Find the "meeting-info-share" Button
+    t =    12.78s     Check for interrupting elements affecting "meeting-info-share" Button
+    t =    12.82s     Synthesize event
+    t =    13.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.11s Waiting 5.0s for "meeting-share-close" Button to exist
+    t =    14.15s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-share-close" Button`
+    t =    14.15s         Checking existence of `"meeting-share-close" Button`
+    t =    14.20s Checking existence of `"meeting-info-close" Button`
+    t =    14.23s Tap "invitation-copy" Button
+    t =    14.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.23s     Find the "invitation-copy" Button
+    t =    14.26s     Check for interrupting elements affecting "invitation-copy" Button
+    t =    14.29s     Synthesize event
+    t =    14.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.59s Checking existence of `"Скопировано" Button`
+    t =    14.62s Tap "meeting-share-close" Button
+    t =    14.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.62s     Find the "meeting-share-close" Button
+    t =    14.65s     Check for interrupting elements affecting "meeting-share-close" Button
+    t =    14.68s     Synthesize event
+    t =    14.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.98s Waiting 5.0s for "meeting-people-collapse" Button to exist
+    t =    16.01s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-people-collapse" Button`
+    t =    16.01s         Checking existence of `"meeting-people-collapse" Button`
+    t =    16.06s Find the "meeting-info" ScrollView
+    t =    16.11s Find the "meeting-info-close" Button
+    t =    16.14s Checking existence of `"meeting-info-share" Button`
+    t =    16.18s Find the "meeting-info-share" Button
+    t =    16.23s Find the "meeting-info" ScrollView
+    t =    16.27s Find the "meeting-info-share" Button
+    t =    16.31s Find the "meeting-info-share" Button
+    t =    16.35s Find the "meeting-info-share" Button
+    t =    16.39s Tap "meeting-info-share" Button
+    t =    16.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.39s     Find the "meeting-info-share" Button
+    t =    16.43s     Check for interrupting elements affecting "meeting-info-share" Button
+    t =    16.46s     Synthesize event
+    t =    16.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.76s Waiting 5.0s for "meeting-share-close" Button to exist
+    t =    17.78s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-share-close" Button`
+    t =    17.78s         Checking existence of `"meeting-share-close" Button`
+    t =    17.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.84s Find the "meeting-share-close" Button
+    t =    17.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.91s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 533.5) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    17.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.91s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.93s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    17.96s     Synthesize event
+    t =    17.96s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.98s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.00s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.02s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.04s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.36s Waiting 5.0s for "meeting-info-close" Button to exist
+    t =    20.38s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-close" Button`
+    t =    20.38s         Checking existence of `"meeting-info-close" Button`
+    t =    20.44s Checking existence of `"meeting-share-close" Button`
+    t =    20.47s Find the "meeting-info-share" Button
+    t =    20.51s Find the "meeting-info" ScrollView
+    t =    20.55s Find the "meeting-info-close" Button
+    t =    20.58s Checking existence of `"edit-meeting" Button`
+    t =    20.62s Find the "edit-meeting" Button
+    t =    20.67s Find the "meeting-info" ScrollView
+    t =    20.70s Find the "edit-meeting" Button
+    t =    20.75s Find the "edit-meeting" Button
+    t =    20.78s Tap "edit-meeting" Button
+    t =    20.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.79s     Find the "edit-meeting" Button
+    t =    20.82s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    20.86s     Synthesize event
+    t =    21.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.16s Waiting 5.0s for "settings-title" Any to exist
+    t =    22.17s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-title" Any`
+    t =    22.17s         Checking existence of `"settings-title" Any`
+    t =    22.29s Tap "settings-title" Any
+    t =    22.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.29s     Find the "settings-title" Any
+    t =    22.40s     Check for interrupting elements affecting "settings-title" TextField
+    t =    22.45s     Synthesize event
+<unknown>:0: warning: -[SomewhereUITests.TelegramChatUITests testOneSheetReturnsToExpandedInformationAndPreservesSettingsDraft] : Invalid frame dimension (negative or non-finite).
+    t =    22.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.81s Type ' — черновик' into "settings-title" TextField
+    t =    22.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.18s     Find the "settings-title" TextField
+    t =    23.38s     Check for interrupting elements affecting "settings-title" TextField
+    t =    23.44s     Synthesize event
+    t =    23.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.84s Tap "settings-close" Button
+    t =    23.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.84s     Find the "settings-close" Button
+    t =    23.90s     Check for interrupting elements affecting "settings-close" Button
+    t =    23.94s     Synthesize event
+    t =    24.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.53s Waiting 5.0s for "meeting-people-collapse" Button to exist
+    t =    25.54s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-people-collapse" Button`
+    t =    25.54s         Checking existence of `"meeting-people-collapse" Button`
+    t =    25.60s Find the "meeting-info" ScrollView
+    t =    25.64s Find the "meeting-info-close" Button
+    t =    25.68s Checking existence of `"edit-meeting" Button`
+    t =    25.71s Find the "edit-meeting" Button
+    t =    25.76s Find the "meeting-info" ScrollView
+    t =    25.80s Find the "edit-meeting" Button
+    t =    25.84s Find the "edit-meeting" Button
+    t =    25.88s Tap "edit-meeting" Button
+    t =    25.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.89s     Find the "edit-meeting" Button
+    t =    25.92s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    25.96s     Synthesize event
+    t =    26.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.26s Waiting 5.0s for "settings-title" TextField to exist
+    t =    27.28s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-title" TextField`
+    t =    27.29s         Checking existence of `"settings-title" TextField`
+    t =    27.41s Find the "settings-title" TextField
+    t =    28.04s Added attachment named 'telegram-settings-draft'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-settings-draft.png
+    t =    28.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EF03A5B0-4637-427A-ADCE-4D54819949C7/tmp/somewhere-design-verification/telegram-settings-draft.json
+    t =    28.22s Tap "settings-close" Button
+    t =    28.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.23s     Find the "settings-close" Button
+    t =    28.26s     Check for interrupting elements affecting "settings-close" Button
+    t =    28.30s     Synthesize event
+    t =    28.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.59s Tap "meeting-info-close" Button
+    t =    28.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.60s     Find the "meeting-info-close" Button
+    t =    28.64s     Check for interrupting elements affecting "meeting-info-close" Button
+    t =    28.68s     Synthesize event
+    t =    28.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.32s Find the "message-input" TextView
+    t =    29.34s Find the "meeting-heading" Button
+    t =    29.38s Tap "meeting-heading" Button
+    t =    29.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.38s     Find the "meeting-heading" Button
+    t =    29.40s     Check for interrupting elements affecting "meeting-heading" Button
+    t =    29.43s     Synthesize event
+    t =    29.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.09s Waiting 5.0s for "meeting-info-close" Button to exist
+    t =    31.13s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-close" Button`
+    t =    31.13s         Checking existence of `"meeting-info-close" Button`
+    t =    31.18s Tap "meeting-info-close" Button
+    t =    31.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.18s     Find the "meeting-info-close" Button
+    t =    31.22s     Check for interrupting elements affecting "meeting-info-close" Button
+    t =    31.26s     Synthesize event
+    t =    31.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.89s Checking existence of `"home-tab-person.crop.circle" Button`
+    t =    31.91s Tear Down
+    t =    31.91s     Setting device orientation to Portrait
+    t =    31.92s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.TelegramChatUITests testOneSheetReturnsToExpandedInformationAndPreservesSettingsDraft]' passed (32.206 seconds).
+Test Suite 'TelegramChatUITests' passed at 2026-10-27 21:49:15.115.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 73.535 (73.540) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-10-27 21:49:15.116.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 73.535 (73.540) seconds
+Test Suite 'Selected tests' passed at 2026-10-27 21:49:15.118.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 73.535 (73.543) seconds
+2026-10-27 21:49:15.154 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.154 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.154 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.164 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.165 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.165 xcodebuild[69722:1273251] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 21:49:15.424 xcodebuild[69722:1273251] [MT] IDETestOperationsObserverDebug: 78.922 elapsed -- Testing started completed.
+2026-10-27 21:49:15.424 xcodebuild[69722:1273251] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 21:49:15.424 xcodebuild[69722:1273251] [MT] IDETestOperationsObserverDebug: 78.922 sec, +78.922 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261027T184755-69278.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

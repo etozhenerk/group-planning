@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "f0956a7e9b8f9a3bedf3747feba292c30e95771b676b2d01a0be386feaa9854a",
+  "reviewer": "/root/chat_motion_review_23",
+  "reviewedAt": "2026-10-27T19:19:30.811287+00:00",
+  "mode": "live",
+  "environment": "DS2.3 frozen f0956a…; web r11 index1460bd… via Codex IAB390/320/390x430/768/1440; iOS27 iPhone18Pro402x874 run08 d7ef9c… via independent externalXCTest; Android16 emulator5554 720x1600 density320 APK8ef5e6… via authorizedADB. Fixtures synthetic memory8445/61441/52531; ru_RU/Europe/Moscow on iOS, Android system locale/timezone not separately queried.",
+  "summary": "Focused partial independent review. One confirmed iOS Escape defect; no overall pass. Old context preserved. Main changed after evidence for executor fix; this report is historical evidence for run08 and must not be rebased.",
+  "checks": [
+    {
+      "screen": "chat-emoji-native",
+      "platform": "ios",
+      "state": "escape-back-opener",
+      "status": "needs-fixes",
+      "observations": "IOS-DS23-ESCAPE-001. На точном run08 hardware Escape не закрывает emoji dock. Внешний независимый XCTest повторил результат после явного design launch и ожидания 3 секунд; emoji-search и keyboard toggle остаются. Контракт chat-actions.md и TC-CHAT-EMOJI-DISMISS-FOCUS требуют закрытие с фокусом на opener без IME.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/ios-escape03-attachments/DE11FD10-903B-40B2-A5E4-2C3BA4912B33.png",
+          "sha256": "905e02d4b21a179abc1e7de35023ef2379141cae9ddb3b9c545a7c86714cd42f",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/ios-escape-run03.log",
+          "sha256": "c8dbf25c5a5d4f5c8ccabb6b8a791b66c764ee0413c0c7eb49aea3a64f4efd7d",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/IndependentEscapeReview-run03.swift",
+          "sha256": "a55f5b6efcbd55d39880aa5bb1f81ebc895e4c3d8e5c9038d7cb9e040ca3cdfd",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-native",
+      "platform": "ios",
+      "state": "search-ime",
+      "status": "blocked",
+      "observations": "Русский поиск, вставка и возврат text focus выполнены. Но software keyboard находится за пределами app frame: AX {{0,918},{402,226}} при app 402x874; screenshot не показывает IME. keyboard.exists не является доказательством настоящей клавиатуры. Требуется штатное включение software keyboard и новый проход.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/ios-normal01-attachments/75143673-3F2F-4286-A77B-922C4DB439C4.png",
+          "sha256": "a47fd8bc3d6c5c66bab509633e474c2638652675938b4af6e2a3ed033df7e452",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/ios-run01.log",
+          "sha256": "db72da9a67e05c5f9cc0cb91ef0864783a006cc6dd52c4e5ae298ca7cf160377",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-native",
+      "platform": "ios",
+      "state": "reduced-motion",
+      "status": "blocked",
+      "observations": "Контекст run01 подтверждает reducedMotion=false. Reduced и весь повтор на новой сборке не выполнены; после подтверждения Escape исходники переданы исполнителю для исправления.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/ios-run01.log",
+          "sha256": "db72da9a67e05c5f9cc0cb91ef0864783a006cc6dd52c4e5ae298ca7cf160377",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-web-390",
+      "platform": "web",
+      "state": "panel-enter-exit",
+      "status": "blocked",
+      "observations": "Независимые read-only DOM samples после реальных CUA clicks: enter height 0→284px и opacity 0→1 примерно за190ms sampling window; exit исчезает после последнего height0 кадра, inert/aria-hidden=true с первого sample. Полный контракт включая историю выше конца и одинаковый с raw fixture не пройден. Это позитивное частичное evidence, без полного pass состояния.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web390-emoji.png",
+          "sha256": "ca8ec0867c0246dd81350a985e1c909a3b90e3d339ac74fbc89a9687f27f3a86",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web-emoji-real-samples.json",
+          "sha256": "e667c2cad091ab05f073ff8c25348ac10052837c0cba7b8c9c364a825a5e1628",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web-interactions.json",
+          "sha256": "cff1a8c7124e37623e9ef98f57b35b9cd9a50925b0e4571455e7b66b3af64511",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-web-1440",
+      "platform": "web",
+      "state": "add-menu-enter-exit",
+      "status": "blocked",
+      "observations": "Реальное меню имеет intermediate opacity/translateY от0/8 к1/0; exit сохраняет DOM, сразу inert/aria-hidden. Rapid reopen остаётся открытым. Reduced режим инструментом не переключался, полный набор preconditions/case не закрыт.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web-menu-real-samples.json",
+          "sha256": "64a14b7d539962de3a69c1c741e773d89231005903ec1512bfab74cf0c64757b",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web-menu-exit-samples.json",
+          "sha256": "0bdaafbb0685d7ccb342e53c982257d68142f6604eb2b1d657aa79d7c1938733",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/web-interactions.json",
+          "sha256": "cff1a8c7124e37623e9ef98f57b35b9cd9a50925b0e4571455e7b66b3af64511",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-native",
+      "platform": "android",
+      "state": "panel-enter-exit",
+      "status": "blocked",
+      "observations": "На установленном exact APK 8ef5e6… real screenrecord показывает промежуточные высоту/opacity emoji; reduced при animator_duration_scale=0 переключает без наблюдаемого развернутого перехода. Back возвращает focused=true на emoji opener без IME и сохраняет черновик. Replace-selection, scroll anchor выше конца и точность длительности150/180ms не полностью проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-emoji-open.png",
+          "sha256": "a2370c0eda040e612621a3581e11eb22b23e616f919a436cb8745e02f4d3ff1b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-emoji-normal-strip.png",
+          "sha256": "b6ad658d5b2f9c1db76342525f53578f8d0ff9171d3d210c37fa5c03ff704694",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-normal-motion02-interactions.json",
+          "sha256": "c6f318651f124833466050c3587143847b213433c51225ef4c5dbb5e8050b154",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-after-back.xml",
+          "sha256": "29f2d41fad1c01c154391e3331d90afdca18468726bb437d207b65ec19b51047",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-native",
+      "platform": "android",
+      "state": "add-menu-rapid-reopen",
+      "status": "blocked",
+      "observations": "Normal/reduced открытие, Back и повторное открытие выполнены через ADB; на видео меню сохраняется после rapid reopen. 30ms задавалось между remote-командами, фактический input dispatch интервал не измерен, поэтому строгий разворот внутри150ms не считается доказанным. Settings восстановлены: animator raw null, window/transition1.0, font1.0.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-menu-normal-final.png",
+          "sha256": "e1d8cd16d79ee5bb89dd18b2e2172a1d04722998ddee250d697bc6948a7398aa",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-normal-motion02-interactions.json",
+          "sha256": "c6f318651f124833466050c3587143847b213433c51225ef4c5dbb5e8050b154",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/evidence/android-reduced-motion-interactions.json",
+          "sha256": "8ad7bc0598c7cab36bbd2f7875c16f669510695003be099a01b9f69c8d43f74b",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-chat-motion-independent-2.3.0/android-environment.txt",
+          "sha256": "26c2d54293e8d39a4fde7cd2324afe560a14a8ccad5ba883e3459a6c572a8155",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

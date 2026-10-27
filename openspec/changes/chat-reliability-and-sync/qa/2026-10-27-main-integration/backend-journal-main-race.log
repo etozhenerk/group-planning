@@ -1,0 +1,56 @@
+?   	github.com/etozhenerk/group-planning/backend/cmd/check-dependencies	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/migrate	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/server	[no test files]
+?   	github.com/etozhenerk/group-planning/backend/cmd/storage-demo	[no test files]
+ok  	github.com/etozhenerk/group-planning/backend/internal/accounts	1.350s
+ok  	github.com/etozhenerk/group-planning/backend/internal/architecture	1.363s
+--- FAIL: TestAccountDeletionOpenAPIResponses (0.00s)
+panic: httptest: failed to listen on a port: listen tcp6 [::1]:0: bind: operation not permitted [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x105bd51d0, 0xc000039200})
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/testing/testing.go:2125 +0x2b8
+testing.tRunner.func1()
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/testing/testing.go:2128 +0x438
+panic({0x105bd51d0?, 0xc000039200?})
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/runtime/panic.go:859 +0x120
+net/http/httptest.newLocalListener()
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/net/http/httptest/server.go:226 +0x13c
+net/http/httptest.NewUnstartedServer(...)
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/net/http/httptest/server.go:284
+github.com/etozhenerk/group-planning/backend/internal/httpapi.newMeetingHTTPTest(0xc0000b8488)
+	/Users/misha/Documents/Codex/projects/group-planning/backend/internal/httpapi/meeting_test.go:63 +0x6cc
+github.com/etozhenerk/group-planning/backend/internal/httpapi.TestAccountDeletionOpenAPIResponses(0xc0000b8488)
+	/Users/misha/Documents/Codex/projects/group-planning/backend/internal/httpapi/account_deletion_test.go:28 +0x40
+testing.tRunner(0xc0000b8488, 0x105c67118)
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/testing/testing.go:2195 +0x168
+created by testing.(*T).Run in goroutine 1
+	/Users/misha/.local/share/somewhere/go-1.27.2/src/testing/testing.go:2260 +0x7c0
+FAIL	github.com/etozhenerk/group-planning/backend/internal/httpapi	0.428s
+ok  	github.com/etozhenerk/group-planning/backend/internal/identity	1.352s
+ok  	github.com/etozhenerk/group-planning/backend/internal/identity/yandex	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/imagecontent	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/meetings	1.799s
+--- FAIL: TestConfiguredIdentityRoutesStartAndStop (0.00s)
+    auth_config_test.go:82: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestReadinessTracksDependencyWithoutLeakingErrors (0.00s)
+    readiness_test.go:20: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestServeStartsStopsAndResetsMemory (0.00s)
+    server_test.go:65: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestCanceledServerClosesListener (0.00s)
+    server_test.go:121: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestShutdownDrainsActiveRequest (0.00s)
+    server_test.go:166: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestServerProcessesOverdueJobsWithoutRequests (0.00s)
+    transitions_test.go:33: listen tcp 127.0.0.1:0: bind: operation not permitted
+--- FAIL: TestWebWorksWithoutOAuth (0.00s)
+    web_test.go:32: listen tcp 127.0.0.1:0: bind: operation not permitted
+FAIL
+FAIL	github.com/etozhenerk/group-planning/backend/internal/server	0.416s
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/files	1.339s
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/memory	1.345s
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/postgres	1.403s
+ok  	github.com/etozhenerk/group-planning/backend/internal/support	1.346s
+ok  	github.com/etozhenerk/group-planning/backend/internal/support/telegram	(cached)
+ok  	github.com/etozhenerk/group-planning/backend/internal/webui	1.404s
+FAIL

@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/shared/ui/SelectInput/SelectInput.module.css';
 import { useId } from 'react';
 import { Select } from '@gravity-ui/uikit';
@@ -9,6 +10,7 @@ export type SelectInputProps = {
   options: { value: string; content: string }[];
   placeholder: string;
   disabled?: boolean;
+  mobileSheet?: boolean;
 };
 
 export const SelectInput = ({
@@ -18,11 +20,13 @@ export const SelectInput = ({
   options,
   placeholder,
   disabled = false,
+  mobileSheet = false,
 }: SelectInputProps) => {
   const id = useId();
+  const mobile = useMobileLayout();
 
   return (
-    <div className={styles['control-field']}>
+    <div className={styles['control-field']} data-sheet={mobileSheet && mobile}>
       <label htmlFor={id}>{label}</label>
       <Select
         id={id}

@@ -1,70 +1,29 @@
 .card {
-  width: max-content;
-  max-width: 100%;
-  padding: 12px 16px;
-  border-radius: 18px 18px 18px 5px;
-  background: var(--surface);
-  color: var(--text);
+  width: 100%;
+  min-width: 0;
+  padding: var(--ds-component-mobile-chat-inline-inset);
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: var(--ds-component-mobile-chat-inline-radius);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
   overflow-wrap: anywhere;
 }
 
-.card.outgoing {
-  color-scheme: light;
-  --text: var(--text-own);
-  --muted: #625b69;
-  --accent: #625174;
-  --navigation: #f1eef5;
-  --background: var(--message-own);
-  --surface: #d2ccd9;
-  --line: #bbb4c4;
-  --action: #41384e;
-  --action-text: #ffffff;
-  --error: #a32629;
-  --focus: #64516e;
-  --g-color-text-primary: var(--text);
-  --g-color-text-secondary: var(--muted);
-  --g-color-text-hint: var(--muted);
-  --g-color-base-background: var(--navigation);
-  --poll-option-background: #27252d08;
-  --poll-selected-background: #62517414;
-  --poll-vote-fill: #62517420;
-  background: var(--message-own);
-  border-radius: 18px 18px 5px 18px;
+.caption {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-component-mobile-chat-inline-eyebrow-gap);
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-emoji-group-label);
 }
 
-.card h3 {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  letter-spacing: normal;
+.caption svg {
+  width: var(--ds-component-mobile-chat-inline-eyebrow-icon);
+  height: var(--ds-component-mobile-chat-inline-eyebrow-icon);
+  flex-shrink: 0;
+  color: var(--ds-color-accent);
 }
 
-.note {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 0;
-}
-
-@media (max-width: 739px) {
-  .card {
-    padding: 10px 13px;
-  }
-}
-
-.details summary {
-  cursor: pointer;
-  list-style: none;
-}
-
-.details summary::-webkit-details-marker {
-  display: none;
-}
-
-.details[open] summary {
-  margin-bottom: 12px;
-}
-
-.details summary:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 5px;
+.caption time {
+  margin-inline-start: auto;
 }

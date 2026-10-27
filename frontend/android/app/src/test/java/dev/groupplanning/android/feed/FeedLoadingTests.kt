@@ -32,7 +32,11 @@ class FeedLoadingTests {
         runCurrent()
         h.transport.handle("${h.path}/messages") {
             val pending = checkNotNull(model.sender.state.value.pending)
-            WireResponse(201, "application/json", apiJson.encodeToString(h.entry(14, pending.key)))
+            WireResponse(
+                201,
+                "application/json",
+                apiJson.encodeToString(h.entry(14, pending.key, pending.text)),
+            )
         }
         model.sender.send()
         runCurrent()
@@ -95,7 +99,7 @@ class FeedLoadingTests {
         runCurrent()
         assertTrue(model.state.value.loadError)
         val count = h.transport.requests.size
-        advanceTimeBy(5_999)
+        advanceTimeBy(2_999)
         runCurrent()
         assertEquals(count, h.transport.requests.size)
         advanceTimeBy(1)
@@ -106,6 +110,7 @@ class FeedLoadingTests {
         val paused = h.transport.requests.size
         advanceTimeBy(60_000)
         assertEquals(paused, h.transport.requests.size)
+        h.foreground()
         h.page(2)
         active = backgroundScope.launch { model.runActive() }
         runCurrent()

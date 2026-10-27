@@ -1,0 +1,552 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.chat-regression.config.ts",
+      "--workers",
+      "1",
+      "--grep",
+      "two tabs share|reaction toggle|failed reaction|touch hold",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/playwright.chat-regression.config.ts",
+    "rootDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "02-reliability.spec.ts",
+          "04-resilience.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "37-chat-persistence.spec.ts",
+          "34-telegram-chat.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "0"
+      },
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "28-meeting-refresh.spec.ts",
+      "file": "28-meeting-refresh.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reaction toggle is confirmed by the API and persists on reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:36.641Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a07d0f94eb848a0d03a3-269f46f6003a866b8332",
+          "file": "28-meeting-refresh.spec.ts",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "reaction toggle is confirmed by the API and persists on reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1847,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:48.708Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a07d0f94eb848a0d03a3-9e86e9ff2e58cd9367ec",
+          "file": "28-meeting-refresh.spec.ts",
+          "line": 134,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "32-refresh-resilience.spec.ts",
+      "file": "32-refresh-resilience.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "failed reaction restores confirmed state and retries the same intent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1170,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:38.387Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284fbaf24d836e93f58e-25b645c4766a027aac30",
+          "file": "32-refresh-resilience.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "failed reaction restores confirmed state and retries the same intent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1527,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:50.790Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284fbaf24d836e93f58e-b3cf51b409f957294497",
+          "file": "32-refresh-resilience.spec.ts",
+          "line": 34,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "34-telegram-chat.spec.ts",
+      "file": "34-telegram-chat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "touch hold opens reactions and chip people without a second toggle; moving cancels a hold",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4241,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:39.567Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1c79bc8b28b427b38274-d8fc07727e3851dd131e",
+          "file": "34-telegram-chat.spec.ts",
+          "line": 346,
+          "column": 1
+        },
+        {
+          "title": "touch hold opens reactions and chip people without a second toggle; moving cancels a hold",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5980,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\u001b[22m\n\u001b[2m    - locator resolved to <div data-pressing=\"false\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    13 × unexpected value \"false\"\u001b[22m\n\u001b[2m       - locator resolved to <div tabindex=\"0\" role=\"group\" data-pressing=\"false\" aria-expanded=\"false\" aria-haspopup=\"dialog\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-keyshortcuts=\"Enter Space Shift+F10\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    - unexpected value \"false\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\u001b[22m\n\u001b[2m    - locator resolved to <div data-pressing=\"false\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    13 × unexpected value \"false\"\u001b[22m\n\u001b[2m       - locator resolved to <div tabindex=\"0\" role=\"group\" data-pressing=\"false\" aria-expanded=\"false\" aria-haspopup=\"dialog\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-keyshortcuts=\"Enter Space Shift+F10\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    - unexpected value \"false\"\u001b[22m\n\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:363:25",
+                    "location": {
+                      "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/34-telegram-chat.spec.ts",
+                      "column": 25,
+                      "line": 363
+                    },
+                    "snippet": "  361 |     clientX: 100,\n  362 |     clientY: 100,\n> 363 |   });\n      |      ^\n  364 |   await expect(message).toHaveAttribute('data-pressing', 'true');\n  365 |   await message.dispatchEvent('pointermove', {\n  366 |     pointerType: 'touch',"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/34-telegram-chat.spec.ts",
+                        "column": 25,
+                        "line": 363
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'Принесу чай' }).getByTestId('message-actions')\u001b[22m\n\u001b[2m    - locator resolved to <div data-pressing=\"false\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    13 × unexpected value \"false\"\u001b[22m\n\u001b[2m       - locator resolved to <div tabindex=\"0\" role=\"group\" data-pressing=\"false\" aria-expanded=\"false\" aria-haspopup=\"dialog\" class=\"_target_1kxql_70\" data-testid=\"message-actions\" data-chat-surface-trigger=\"true\" aria-keyshortcuts=\"Enter Space Shift+F10\" aria-label=\"Реакции на сообщение: Принесу чай\">…</div>\u001b[22m\n\u001b[2m    - unexpected value \"false\"\u001b[22m\n\n\n  361 |     clientX: 100,\n  362 |     clientY: 100,\n> 363 |   });\n      |      ^\n  364 |   await expect(message).toHaveAttribute('data-pressing', 'true');\n  365 |   await message.dispatchEvent('pointermove', {\n  366 |     pointerType: 'touch',\n    at /Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/34-telegram-chat.spec.ts:363:25"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:52.327Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/test-results/34-telegram-chat-touch-hol-328bf-oggle-moving-cancels-a-hold-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/.codex/worktrees/chat-web-sync/group-planning/frontend/web/tests/34-telegram-chat.spec.ts",
+                    "column": 25,
+                    "line": 363
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1c79bc8b28b427b38274-faec1faa620c354190a6",
+          "file": "34-telegram-chat.spec.ts",
+          "line": 346,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "37-chat-persistence.spec.ts",
+      "file": "37-chat-persistence.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two tabs share one durable intent owner while its POST is in flight",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4591,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:43.816Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e4a47c27d1bcb242a55-ab4696664ef40c98b9bc",
+          "file": "37-chat-persistence.spec.ts",
+          "line": 206,
+          "column": 1
+        },
+        {
+          "title": "two tabs share one durable intent owner while its POST is in flight",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T20:31:58.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e4a47c27d1bcb242a55-1b74158d14b021675f02",
+          "file": "37-chat-persistence.spec.ts",
+          "line": 206,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T20:31:35.849Z",
+    "duration": 28325.938000000002,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

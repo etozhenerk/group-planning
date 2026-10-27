@@ -101,7 +101,7 @@ test('two sessions of one profile share access and reject a stale join and messa
       1,
     );
     await first.request.post('/api/v1/auth/logout', {
-      headers: { Origin: 'https://127.0.0.1:8444', 'X-CSRF-Token': await csrf(first) },
+      headers: { Origin: new URL(first.url()).origin, 'X-CSRF-Token': await csrf(first) },
     });
     expect((await first.request.get('/api/v1/me')).status()).toBe(401);
     expect((await second.request.get('/api/v1/me')).status()).toBe(200);

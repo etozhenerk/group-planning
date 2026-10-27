@@ -151,3 +151,15 @@ export type { Reaction } from '@/entities/meeting/model/reactions';
 export { LazyMediaPhoto } from '@/entities/meeting/ui/LazyMediaPhoto';
 
 export { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';
+
+export type { FeedPosition } from '@/entities/meeting/model/feedWindow';
+
+export { useChatRead } from '@/entities/meeting/model/useChatRead';
+
+export { useReadReceipts } from '@/entities/meeting/model/useReadReceipts';
+
+export { useReaders } from '@/entities/meeting/model/useReaders';
+
+export type { ChatReadState } from '@/entities/meeting/model/readProjection';
+
+export { useMeetingListUpdates } from '@/entities/meeting/model/useMeetingListUpdates';

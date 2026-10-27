@@ -22,10 +22,13 @@ internal fun HomeMeetings(model: AppViewModel, snapshot: ClientSnapshot) {
         val selection by calendar.selection.collectAsStateWithLifecycle()
         val invitations by model.homeInvitations.collectAsStateWithLifecycle()
         val savedInvitations = checkNotNull(model.savedInvitations)
+        val route by model.route.collectAsStateWithLifecycle()
         val lifecycle = LocalLifecycleOwner.current.lifecycle
-        LaunchedEffect(calendar, lifecycle, invitations) {
+        LaunchedEffect(calendar, lifecycle, invitations, route) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (invitations) savedInvitations.observe() else calendar.observe()
+                if (route == dev.groupplanning.android.state.AppRoute.Home) {
+                    if (invitations) savedInvitations.observe() else calendar.observe()
+                }
             }
         }
         MeetingsHeader()

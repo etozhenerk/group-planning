@@ -30,7 +30,7 @@ func (s *Identity) AccountUpdate(ctx context.Context, store meetings.Store, fn f
 	data := s.data.clone()
 	auth := &identityTransaction{data: &data}
 	defer func() { auth.data = nil }()
-	tx := &transaction{data: meetingStore.data.clone(), writable: true}
+	tx := &transaction{ctx: ctx, data: meetingStore.data.clone(), writable: true}
 	defer tx.close()
 	if err := fn(accountIdentityStore{auth}, accountMeetingStore{tx}); err != nil {
 		return err

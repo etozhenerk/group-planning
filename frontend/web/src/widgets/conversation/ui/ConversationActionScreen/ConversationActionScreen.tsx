@@ -20,7 +20,7 @@ export const ConversationActionScreen = ({
   session,
   done,
 }: ConversationActionScreenProps) => (
-  <Dialog open={open} title={actionTitle(kind)} onClose={done} desktopPage chatAction>
+  <Dialog open={open} title={actionTitle(kind)} onClose={done} chatAction formLayout>
     <ConversationActionForms
       kind={kind}
       open={open}

@@ -1,0 +1,130 @@
+warning: 'centrifuge-swift': Conflicting identity for swift-protobuf: dependency 'github.com/apple/swift-protobuf' and dependency '/private/tmp/somewhere-sdk-spike-20261027/local/swift-protobuf' both point to the same package identity 'swift-protobuf'. The dependencies are introduced through the following chains: (A) /private/tmp/somewhere-sdk-spike-20261027/swift->/private/tmp/somewhere-sdk-spike-20261027/local/centrifuge-swift->github.com/apple/swift-protobuf (B) /private/tmp/somewhere-sdk-spike-20261027/swift->/private/tmp/somewhere-sdk-spike-20261027/local/swift-protobuf. If there are multiple chains that lead to the same dependency, only the first chain is shown here. To see all chains use debug output option. To resolve the conflict, coordinate with the maintainer of the package that introduces the conflicting dependency. This will be escalated to an error in future versions of SwiftPM.
+warning: 'centrifuge-swift': Conflicting identity for swift-protobuf: dependency 'github.com/apple/swift-protobuf' and dependency '/private/tmp/somewhere-sdk-spike-20261027/local/swift-protobuf' both point to the same package identity 'swift-protobuf'. The dependencies are introduced through the following chains: (A) /private/tmp/somewhere-sdk-spike-20261027/swift->/private/tmp/somewhere-sdk-spike-20261027/local/centrifuge-swift->github.com/apple/swift-protobuf (B) /private/tmp/somewhere-sdk-spike-20261027/swift->/private/tmp/somewhere-sdk-spike-20261027/local/swift-protobuf. If there are multiple chains that lead to the same dependency, only the first chain is shown here. To see all chains use debug output option. To resolve the conflict, coordinate with the maintainer of the package that introduces the conflicting dependency. This will be escalated to an error in future versions of SwiftPM.
+Building for debugging...
+[Pre-planning 1 / 125]
+[Planning deferred tasks]
+[36 / 57]
+[37 / 58] SwiftProtobuf
+[42 / 98]
+[46 / 98]
+[49 / 98]
+[52 / 98]
+[54 / 98]
+[55 / 98]
+[57 / 98]
+[59 / 98]
+[63 / 98]
+[64 / 98]
+[67 / 98] SwiftProtobuf
+[69 / 98] SwiftProtobuf
+[75 / 98] SwiftProtobuf
+[76 / 98] SwiftProtobuf-product
+[77 / 98] SwiftProtobuf-product
+[78 / 98] SwiftProtobuf
+[80 / 98] SwiftProtobuf
+[81 / 98] SwiftProtobuf
+[82 / 98] SwiftProtobuf
+[83 / 98] SwiftProtobuf
+[84 / 99]
+[87 / 141]
+[93 / 141]
+[98 / 141]
+[102 / 141]
+[106 / 141]
+[108 / 141]
+[110 / 141]
+[114 / 141]
+[115 / 141]
+[118 / 141] SwiftCentrifuge
+[121 / 141] SwiftCentrifuge
+[127 / 141] SwiftCentrifuge
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/SSLSecurity.swift:172:13: warning: 'SecTrustEvaluate' was deprecated in iOS 13.0: renamed to 'SecTrustEvaluateWithError(_:_:)' [#DeprecatedDeclaration]
+170 |             SecTrustSetAnchorCertificates(trust,collect as NSArray)
+171 |             var result: SecTrustResultType = .unspecified
+172 |             SecTrustEvaluate(trust,&result)
+    |             |- warning: 'SecTrustEvaluate' was deprecated in iOS 13.0: renamed to 'SecTrustEvaluateWithError(_:_:)' [#DeprecatedDeclaration]
+    |             `- note: use 'SecTrustEvaluateWithError(_:_:)' instead
+173 |             if result == .unspecified || result == .proceed {
+174 |                 if !validateEntireChain {
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/SSLSecurity.swift:220:9: warning: 'SecTrustEvaluate' was deprecated in iOS 13.0: renamed to 'SecTrustEvaluateWithError(_:_:)' [#DeprecatedDeclaration]
+218 |         guard let trust = possibleTrust else { return nil }
+219 |         var result: SecTrustResultType = .unspecified
+220 |         SecTrustEvaluate(trust, &result)
+    |         |- warning: 'SecTrustEvaluate' was deprecated in iOS 13.0: renamed to 'SecTrustEvaluateWithError(_:_:)' [#DeprecatedDeclaration]
+    |         `- note: use 'SecTrustEvaluateWithError(_:_:)' instead
+221 |         return SecTrustCopyPublicKey(trust)
+222 |     }
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/SSLSecurity.swift:221:16: warning: 'SecTrustCopyPublicKey' was deprecated in iOS 14.0: renamed to 'SecTrustCopyKey(_:)' [#DeprecatedDeclaration]
+219 |         var result: SecTrustResultType = .unspecified
+220 |         SecTrustEvaluate(trust, &result)
+221 |         return SecTrustCopyPublicKey(trust)
+    |                |- warning: 'SecTrustCopyPublicKey' was deprecated in iOS 14.0: renamed to 'SecTrustCopyKey(_:)' [#DeprecatedDeclaration]
+    |                `- note: use 'SecTrustCopyKey(_:)' instead
+222 |     }
+223 |     
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/SSLSecurity.swift:234:24: warning: 'SecTrustGetCertificateAtIndex' was deprecated in iOS 15.0: renamed to 'SecTrustCopyCertificateChain(_:)' [#DeprecatedDeclaration]
+232 |         let certificates = (0..<SecTrustGetCertificateCount(trust)).reduce([Data]()) { (certificates: [Data], index: Int) -> [Data] in
+233 |             var certificates = certificates
+234 |             let cert = SecTrustGetCertificateAtIndex(trust, index)
+    |                        |- warning: 'SecTrustGetCertificateAtIndex' was deprecated in iOS 15.0: renamed to 'SecTrustCopyCertificateChain(_:)' [#DeprecatedDeclaration]
+    |                        `- note: use 'SecTrustCopyCertificateChain(_:)' instead
+235 |             certificates.append(SecCertificateCopyData(cert!) as Data)
+236 |             return certificates
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/SSLSecurity.swift:253:24: warning: 'SecTrustGetCertificateAtIndex' was deprecated in iOS 15.0: renamed to 'SecTrustCopyCertificateChain(_:)' [#DeprecatedDeclaration]
+251 |         let keys = (0..<SecTrustGetCertificateCount(trust)).reduce([SecKey]()) { (keys: [SecKey], index: Int) -> [SecKey] in
+252 |             var keys = keys
+253 |             let cert = SecTrustGetCertificateAtIndex(trust, index)
+    |                        |- warning: 'SecTrustGetCertificateAtIndex' was deprecated in iOS 15.0: renamed to 'SecTrustCopyCertificateChain(_:)' [#DeprecatedDeclaration]
+    |                        `- note: use 'SecTrustCopyCertificateChain(_:)' instead
+254 |             if let key = extractPublicKey(cert!, policy: policy) {
+255 |                 keys.append(key)
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[128 / 141] SwiftCentrifuge-product
+[129 / 141] SwiftCentrifuge-product
+[130 / 141] SwiftCentrifuge
+[133 / 141] SwiftCentrifuge
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/WebSocket/WebSocket.swift:226:33: warning: 'SSLSetEnabledCiphers' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 224 |                 if let sslContextIn = CFReadStreamCopyProperty(inputStream, CFStreamPropertyKey(rawValue: kCFStreamPropertySSLContext)) as! SSLContext?,
+ 225 |                     let sslContextOut = CFWriteStreamCopyProperty(outputStream, CFStreamPropertyKey(rawValue: kCFStreamPropertySSLContext)) as! SSLContext? {
+ 226 |                     let resIn = SSLSetEnabledCiphers(sslContextIn, cipherSuites, cipherSuites.count)
+     |                                 `- warning: 'SSLSetEnabledCiphers' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 227 |                     let resOut = SSLSetEnabledCiphers(sslContextOut, cipherSuites, cipherSuites.count)
+ 228 |                     if resIn != errSecSuccess {
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/WebSocket/WebSocket.swift:227:34: warning: 'SSLSetEnabledCiphers' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 225 |                     let sslContextOut = CFWriteStreamCopyProperty(outputStream, CFStreamPropertyKey(rawValue: kCFStreamPropertySSLContext)) as! SSLContext? {
+ 226 |                     let resIn = SSLSetEnabledCiphers(sslContextIn, cipherSuites, cipherSuites.count)
+ 227 |                     let resOut = SSLSetEnabledCiphers(sslContextOut, cipherSuites, cipherSuites.count)
+     |                                  `- warning: 'SSLSetEnabledCiphers' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 228 |                     if resIn != errSecSuccess {
+ 229 |                         completion(WSError(type: .invalidSSLError, message: "Error setting ingoing cypher suites", code: Int(resIn)))
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/WebSocket/WebSocket.swift:324:13: warning: 'SSLGetPeerDomainNameLength' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 322 |             let sslContextOut = CFWriteStreamCopyProperty(outputStream, CFStreamPropertyKey(rawValue: kCFStreamPropertySSLContext)) as! SSLContext? {
+ 323 |             var peerNameLen: Int = 0
+ 324 |             SSLGetPeerDomainNameLength(sslContextOut, &peerNameLen)
+     |             `- warning: 'SSLGetPeerDomainNameLength' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 325 |             var peerName = Data(count: peerNameLen)
+ 326 |             let _ = peerName.withUnsafeMutableBytes { (peerNamePtr: UnsafeMutableRawBufferPointer) -> Void in
+
+/private/tmp/somewhere-sdk-spike-20261027/sources/centrifuge-swift-0.11.0/Sources/SwiftCentrifuge/WebSocket/WebSocket.swift:327:17: warning: 'SSLGetPeerDomainName' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 325 |             var peerName = Data(count: peerNameLen)
+ 326 |             let _ = peerName.withUnsafeMutableBytes { (peerNamePtr: UnsafeMutableRawBufferPointer) -> Void in
+ 327 |                 SSLGetPeerDomainName(sslContextOut, peerNamePtr.bindMemory(to: Int8.self).baseAddress!, &peerNameLen)
+     |                 `- warning: 'SSLGetPeerDomainName' was deprecated in iOS 13.0: No longer supported. Use Network.framework. [#DeprecatedDeclaration]
+ 328 |             }
+ 329 |             if let peerDomain = String(bytes: peerName, encoding: .utf8), peer[134 / 141] SwiftCentrifuge
+Domain.count > 0 {
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[134 / 141] Spike-product
+[135 / 142]
+[141 / 146] Spike-product
+[142 / 146] Spike-product
+[144 / 146] Spike-product
+Build complete! (13,54 с)

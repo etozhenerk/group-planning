@@ -58,12 +58,16 @@ final class InvitationUITests: XCTestCase {
             let info = app.buttons["meeting-info-open"]
             XCTAssertTrue(info.waitForExistence(timeout: 10))
             info.tap()
+            XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
+            XCTAssertTrue(app.buttons["rsvp-going"].isSelected)
+            XCTAssertFalse(app.buttons["rsvp-save"].exists)
+            app.buttons["meeting-info-close"].tap()
+        } else {
+            let saved = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label CONTAINS %@", confirmation),
+                object: app.staticTexts["confirmed-rsvp"].firstMatch)
+            XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 10), .completed)
         }
-        let saved = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS %@", confirmation),
-            object: app.staticTexts["confirmed-rsvp"].firstMatch)
-        XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 10), .completed)
-        if value == "going" { app.buttons["meeting-info-close"].tap() }
     }
 
     func testAnonymousColdAndWarmInvitationWithoutPrivateContent() throws {
@@ -104,8 +108,8 @@ final class InvitationUITests: XCTestCase {
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
-        XCTAssertEqual(
-            app.descendants(matching: .any)["participant-count"].firstMatch.label, "Участники · 2")
+        XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
+        XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Кто придёт, 2 участника")
         app.buttons["meeting-info-close"].tap()
         capture("invitation-accepted", app)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)

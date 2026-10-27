@@ -12,7 +12,7 @@ struct FeedOwnerTests {
         await context.owner.refresh()
         #expect(context.owner.hasHistory)
         context.owner.draft = "Позднее сообщение"
-        let key = try #require(context.owner.enqueue())
+        let key = try #require(await context.owner.enqueue())
         let posted = try context.entry("53", key: key, text: "Позднее сообщение")
         await context.harness.transport.enqueue(
             context.path + "/messages", data: try APICoding.encode(posted), status: 201)
@@ -51,7 +51,7 @@ struct FeedOwnerTests {
         let context = try await FeedTestContext()
         context.owner.loaded = true
         context.owner.draft = "  Принесу игры\nи чай  "
-        let key = try #require(context.owner.enqueue())
+        let key = try #require(await context.owner.enqueue())
         await context.harness.transport.enqueue(context.path + "/messages", status: 503)
         await context.owner.transmit(key)
         #expect(context.owner.pending.first?.status == .uncertain)
@@ -68,7 +68,7 @@ struct FeedOwnerTests {
         await context.owner.refresh()
         #expect(context.owner.pending.isEmpty && context.owner.entries == [entry])
         context.owner.draft = "Другой текст"
-        let next = try #require(context.owner.enqueue())
+        let next = try #require(await context.owner.enqueue())
         await context.harness.transport.enqueue(context.path + "/messages", status: 503)
         await context.owner.transmit(next)
         try await context.enqueue([try context.entry("2", key: next, text: "Другой текст")])
@@ -79,7 +79,7 @@ struct FeedOwnerTests {
         let context = try await FeedTestContext()
         context.owner.loaded = true
         context.owner.draft = "Отправка"
-        let key = try #require(context.owner.enqueue())
+        let key = try #require(await context.owner.enqueue())
         let gate = TestGate()
         let entry = try context.entry("1", key: key, text: "Отправка")
         await context.harness.transport.enqueue(
@@ -104,7 +104,7 @@ struct FeedOwnerTests {
         let context = try await FeedTestContext()
         context.owner.loaded = true
         context.owner.draft = "Секрет"
-        let key = try #require(context.owner.enqueue())
+        let key = try #require(await context.owner.enqueue())
         let gate = TestGate()
         await context.harness.transport.enqueue(
             context.path + "/messages",

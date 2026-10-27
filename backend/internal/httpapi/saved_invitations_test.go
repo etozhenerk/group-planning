@@ -8,10 +8,12 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestSavedInvitationsOpenAPIResponses(t *testing.T) {
 	h := newMeetingHTTPTest(t)
+	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
 	ownerClient, guestClient, otherClient := h.client(true), h.client(true), h.client(true)
 	owner := h.login(ownerClient, "owner", map[string]string{"kind": "home"})
 	guest := h.login(guestClient, "guest", map[string]string{"kind": "home"})

@@ -10,8 +10,8 @@ struct FeedTestContext {
     let owner: FeedOwner
     var path: String { "/api/v1/meetings/" + id.uuidString.lowercased() }
     var user: UserProfile { get throws { try #require(harness.session.profile) } }
-    init() async throws {
-        harness = try SessionHarness()
+    init(storage: any ChatPersistence = MemoryChatStorage()) async throws {
+        harness = try SessionHarness(chatStorage: storage)
         try await harness.login()
         let invitation = InvitationOwner(
             target: .meeting(id), api: harness.session.api, session: harness.session)

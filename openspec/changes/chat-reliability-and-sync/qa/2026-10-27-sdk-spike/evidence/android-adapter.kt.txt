@@ -1,0 +1,30 @@
+package spike
+
+import io.github.centrifugal.centrifuge.Client
+import io.github.centrifugal.centrifuge.EventListener
+import io.github.centrifugal.centrifuge.Options
+import io.github.centrifugal.centrifuge.PublicationEvent
+import io.github.centrifugal.centrifuge.SubscribedEvent
+import io.github.centrifugal.centrifuge.Subscription
+import io.github.centrifugal.centrifuge.SubscriptionEventListener
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import okhttp3.OkHttpClient
+
+class HintAdapter(private val endpoint: String, private val session: String, private val http: OkHttpClient) {
+    fun hints(channel: String): Flow<ByteArray?> = callbackFlow {
+        val options = Options().apply {
+            headers = mapOf("Authorization" to "Bearer $session")
+            okHttpClient = http
+        }
+        val client = Client(endpoint, options, object : EventListener() {})
+        val subscription = client.newSubscription(channel, object : SubscriptionEventListener() {
+            override fun onSubscribed(sub: Subscription, event: SubscribedEvent) { trySend(null) }
+            override fun onPublication(sub: Subscription, event: PublicationEvent) { trySend(event.data.copyOf()) }
+        })
+        subscription.subscribe()
+        client.connect()
+        awaitClose { client.close(0) }
+    }
+}

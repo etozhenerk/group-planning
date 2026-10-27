@@ -5,6 +5,9 @@ struct ActionDateField: View {
     @Binding var selection: Date
     var includeTime = false
     var zone: TimeZone = .gmt
+    var hideLabel = false
+    var timeOnly = false
+    var omitWeekday = false
     @State private var presented = false
     @State private var draft = Date()
 
@@ -12,38 +15,52 @@ struct ActionDateField: View {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
         formatter.timeZone = zone
-        formatter.dateFormat = includeTime ? "d MMMM yyyy, HH:mm" : "d MMMM yyyy"
+        formatter.dateFormat =
+            timeOnly
+            ? "HH:mm" : includeTime ? "d MMMM yyyy, HH:mm" : omitWeekday ? "d MMMM" : "EE, d MMMM"
         return formatter.string(from: selection)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title).designFont(13).frame(minHeight: 19.5)
+        VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
+            if !hideLabel {
+                Text(title).designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                    DesignTokens.colorMuted)
+            }
             Button {
                 SystemKeyboard.dismiss()
                 draft = selection
                 presented = true
             } label: {
-                HStack(spacing: 8) {
+                HStack(spacing: DesignTokens.spaceS8) {
+                    Image(systemName: timeOnly ? "clock" : "calendar")
+                        .font(.system(size: DesignTokens.componentMobileFieldIconSize))
+                        .foregroundStyle(DesignTokens.colorMuted)
                     Text(label).fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: 0)
-                    ExperienceIcon(kind: .calendar, size: 16)
+                    Spacer(minLength: DesignTokens.spaceS0)
+                    Image(systemName: "chevron.down").font(.caption).foregroundStyle(
+                        DesignTokens.colorMuted)
                 }.actionField().contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityLabel(title).accessibilityValue(label)
         }.sheet(isPresented: $presented) {
-            MeetingPickerSheet(
-                title: title, height: includeTime ? 650 : 560,
-                confirm: {
-                    selection = draft
+            ActionFormSheet(title: title, closeIdentifier: "picker-close") {
+                if !timeOnly {
+                    DatePicker(title, selection: $draft, displayedComponents: .date)
+                        .datePickerStyle(.graphical).labelsHidden()
                 }
-            ) {
-                DatePicker(title, selection: $draft, displayedComponents: .date)
-                    .datePickerStyle(.graphical).labelsHidden()
-                if includeTime {
+                if includeTime || timeOnly {
                     DatePicker("Время", selection: $draft, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.wheel).labelsHidden()
                 }
-            }.environment(\.timeZone, zone).environment(\.locale, Locale(identifier: "ru_RU"))
+            } footer: {
+                ActionFormButton(title: "Готово") {
+                    selection = draft
+                    presented = false
+                }
+                .accessibilityIdentifier("picker-done")
+            }
+            .environment(\.chatSheetClose, ChatSheetCloseAction(perform: { presented = false }))
+            .environment(\.timeZone, zone).environment(\.locale, Locale(identifier: "ru_RU"))
         }
     }
 }

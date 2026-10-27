@@ -89,6 +89,13 @@ internal class InvitationViewModel(
     }
 
     fun refreshIfIdle() {
+        // The synchronized conversation owns refresh and its bounded fallback.
+        // Public invitations and legacy servers retain their existing refresh policy.
+        if (state.value.details?.canAccess == true &&
+            currentFeed?.state?.value?.synchronized == true
+        ) {
+            return
+        }
         if (operation?.isActive != true && state.value.pending == null) {
             startReload(preserveChoice = true)
         }

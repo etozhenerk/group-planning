@@ -60,7 +60,10 @@ test('failed reaction restores confirmed state and retries the same intent', asy
       await route.continue();
     }
   });
-  await page.getByRole('button', { name: 'Добавить реакцию', exact: true }).click();
+  await expect(
+    page.getByTestId('feed-message').filter({ hasText: 'Проверка реакции' }),
+  ).toHaveAttribute('data-delivery', 'accepted');
+  await page.getByTestId('message-actions').press('Enter');
   await page.getByRole('button', { name: '❤️', exact: true }).click();
   await expect(
     page.getByRole('button', { name: 'Не удалось сохранить. Повторить' }),

@@ -113,8 +113,8 @@ internal class PreparationTaskViewModel(
         }
     }
 
-    private fun receive(task: PreparationTask) {
-        if (stopped) return
+    fun receive(task: PreparationTask) {
+        if (stopped || state.value.task?.revision?.let { it > task.revision } == true) return
         mutable.value =
             state.value.copy(
                 task = task,

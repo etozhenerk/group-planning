@@ -26,7 +26,12 @@ for (const width of [390, 1440]) {
 
     await expect(dialog).toHaveAttribute('data-motion', 'closing');
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole('heading', { name: 'Кто придёт · 1' })).toBeVisible();
+    await expect(
+      dialog.getByRole('heading', {
+        name: width < 740 ? /^Компания\s*1$/ : 'Кто придёт',
+        exact: true,
+      }),
+    ).toBeVisible();
     expect((await dialog.boundingBox())?.height).toBeCloseTo(height ?? 0, -1);
     await expect(page.locator('body')).toHaveCSS('position', 'fixed');
     await expect(dialog).not.toBeVisible();

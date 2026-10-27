@@ -14,6 +14,14 @@
   font-weight: var(--ds-typography-weight-regular);
 }
 
+.inset {
+  margin-top: var(--ds-component-participant-chip-group-top-inset);
+}
+
+.inset[data-mobile='true'] {
+  margin-top: var(--ds-component-participant-chip-group-top-inset-mobile);
+}
+
 .person,
 .more {
   height: var(--ds-component-participant-chip-height);
@@ -68,4 +76,39 @@
   background: var(--ds-color-participant-chip-more);
   color: var(--ds-color-text);
   font-size: var(--ds-typography-size-participant-chip-more);
+}
+
+.people[data-mobile='true'] {
+  min-height: var(--ds-component-mobile-people-chip-opener-height);
+  margin-top: 0;
+}
+
+.people[data-mobile='true'] .person,
+.people[data-mobile='true'] .more {
+  height: auto;
+  min-height: 0;
+  gap: var(--ds-component-mobile-people-chip-gap);
+  border-width: var(--ds-component-mobile-people-chip-border-width);
+  padding: var(--ds-component-mobile-people-chip-inset-block)
+    var(--ds-component-mobile-people-chip-inset-end)
+    var(--ds-component-mobile-people-chip-inset-block)
+    var(--ds-component-mobile-people-chip-inset-start);
+  font-size: var(--ds-typography-size-label);
+}
+
+.people[data-mobile='true'] .person > span {
+  width: var(--ds-component-mobile-people-chip-avatar-size);
+  height: var(--ds-component-mobile-people-chip-avatar-size);
+  font-size: var(--ds-typography-size-mobile-people-initial);
+}
+
+.people[data-mobile='true'] .person + .person,
+.people[data-mobile='true'] .more {
+  margin-left: calc(-1 * var(--ds-component-mobile-people-chip-overlap));
+}
+
+.people[data-mobile='true'] .more {
+  min-width: var(--ds-component-mobile-people-chip-more-width);
+  padding: var(--ds-component-mobile-people-chip-more-inset-block)
+    var(--ds-component-mobile-people-chip-more-inset-inline);
 }

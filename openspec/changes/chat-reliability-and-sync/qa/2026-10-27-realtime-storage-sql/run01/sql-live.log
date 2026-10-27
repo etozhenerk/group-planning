@@ -1,0 +1,41 @@
+{"database": "somewhere_integration", "createdForThisRun": true, "marker": "codex-chat-realtime-77d0538d44c74589bc91bcab5874e59b"}
+=== RUN   TestChatDispatchPendingIndexIntegration
+    chat_dispatch_plan_test.go:54: outbox=5000 active_leases=100 bounded_ready_rows=100
+--- PASS: TestChatDispatchPendingIndexIntegration (0.77s)
+=== RUN   TestChatDispatchLeaseRollbackRecoveryIntegration
+--- PASS: TestChatDispatchLeaseRollbackRecoveryIntegration (0.05s)
+=== RUN   TestChatJournalAtomicRangeIntegration
+--- PASS: TestChatJournalAtomicRangeIntegration (0.05s)
+=== RUN   TestChatAccountOutboxIntegration
+--- PASS: TestChatAccountOutboxIntegration (0.05s)
+=== RUN   TestChatMigrationPreservesLegacyMeetingIntegration
+--- PASS: TestChatMigrationPreservesLegacyMeetingIntegration (0.75s)
+=== RUN   TestChatJournalBoundedQueryPlanIntegration
+    chat_plan_test.go:74: history=100000 after=0 execution_ms=0.496 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=50000 execution_ms=0.499 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=100000 execution_ms=0.021 scans=1 budget_rows=101
+--- PASS: TestChatJournalBoundedQueryPlanIntegration (3.39s)
+=== RUN   TestChatRetentionAndSyncIntegration
+--- PASS: TestChatRetentionAndSyncIntegration (0.07s)
+=== RUN   TestChatLegacyStreamInitializationIntegration
+--- PASS: TestChatLegacyStreamInitializationIntegration (0.03s)
+=== RUN   TestFeedWindowIntegration
+=== RUN   TestFeedWindowIntegration/initial
+=== RUN   TestFeedWindowIntegration/after-zero
+=== RUN   TestFeedWindowIntegration/after-gap
+=== RUN   TestFeedWindowIntegration/after-high
+=== RUN   TestFeedWindowIntegration/after-max
+=== RUN   TestFeedWindowIntegration/before-max
+=== RUN   TestFeedWindowIntegration/before-gap
+=== RUN   TestFeedWindowIntegration/before-zero
+--- PASS: TestFeedWindowIntegration (0.03s)
+    --- PASS: TestFeedWindowIntegration/initial (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-zero (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-high (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-zero (0.00s)
+PASS
+{"database": "somewhere_integration", "removedOwnTemporaryDatabase": true}

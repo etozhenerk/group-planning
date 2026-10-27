@@ -1,3 +1,4 @@
+import { useChatSyncEnabled } from '@/entities/meeting/model/useChatSyncEnabled';
 import { z } from 'zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { request, writeOptions } from '@/shared/api';
@@ -7,6 +8,7 @@ import { entryReactionsSchema } from '@/entities/meeting/model/reactions';
 export const useReactions = (id: string, user: string, entries: string[]) => {
   const client = useQueryClient();
   const access = useAccess(user, id);
+  const sync = useChatSyncEnabled(user, access.epoch);
   const query = useQuery({
     queryKey: [...privateKey(user, id, access.epoch, 'reactions'), entries.join(',')],
     enabled: !!entries.length && !access.denied,
@@ -30,9 +32,10 @@ export const useReactions = (id: string, user: string, entries: string[]) => {
 
         return values;
       }),
-    refetchInterval: 3000,
+    refetchInterval: sync ? false : 3000,
     refetchIntervalInBackground: false,
-    refetchOnWindowFocus: true,
+    staleTime: sync ? Infinity : 0,
+    refetchOnWindowFocus: !sync,
     retry: false,
     gcTime: 0,
   });

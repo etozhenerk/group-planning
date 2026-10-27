@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/api_r2_independent",
+  "planHash": "b6858d722d87becaa58b273effe6aa3bfa4b899e25f8b5ce9ff1efc280fc2c58",
+  "sourceHash": "d22e90bda6696076f61e6fa9ac7b1cb539a69a204f02f779774f862e60ec6f38",
+  "backendSourceHash": "795189a0aa41e4ae332d3aaec4adcec0b4f9331b3323d07af9fa76537697b807",
+  "startedAt": "2026-10-27T14:37:15.170867+00:00",
+  "finishedAt": "2026-10-27T14:37:20.380723+00:00",
+  "scope": "16 backend/API manual case pairs; fresh isolated HTTP/Store run, with independent executable interactions",
+  "actualJSONResponsesExamined": 272,
+  "actualJSONResponsesValidated": 268,
+  "expectedUndocumented404": 4,
+  "topLevelTests": 13,
+  "cases": [
+    {
+      "id": "TC-API-PROFILE-PRIVACY/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Приватность контактов",
+        "scenario": "Просмотр участника",
+        "sha256": "cc16a90e6b4646d09b2dafab877193b680c053cc5a634dced038e4407e3e143d"
+      },
+      "tests": [
+        "TestIndependentPrivacy",
+        "TestIndependentProfileSynchronization/full_and_repeated_login"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Запросить /api/v1/me/profile от A с Cookie и Bearer; повторить анонимно.",
+          "expected": "A получает собственные данные по контракту, анонимный запрос отвергнут. Необязательные отсутствующие поля не дополняются демонстрационными значениями.",
+          "actual": "Собственный профиль прочитан по Cookie и после native PKCE/handoff exchange по Bearer: тела совпали; анонимно 401. Отдельный новый p9 возвращает null для всех отсутствующих необязательных полей."
+        },
+        {
+          "action": "От B запросить встречу, список встреч, участников, ленту и реакции; от C — публичное приглашение.",
+          "expected": "Публичные пользователи содержат только ID, имя и аватар. login/first_name/last_name/birthday/sex/email/phone отсутствуют во всех чужих ответах. Публичное приглашение не раскрывает закрытый состав и медиа.",
+          "actual": "Второй текущий участник прочитал meeting/list/participants/feed/reactions. Рекурсивная проверка запретила login/first_name/last_name/birthday/sex/email/phone; чужое приглашение не содержит состав/медиа, приватная лента постороннему 403."
+        },
+        {
+          "action": "Проверить фактические ответы по OpenAPI и чтение прежним контрактным потребителем, игнорирующим новые необязательные поля.",
+          "expected": "Новые profile/summary/media поля совместимы; старые обязательные поля и версии существующих сообщений сохранены. Это не утверждение о запуске старого мобильного бинарника.",
+          "actual": "Фактические JSON-ответы прошли OpenAPI. Минимальный прежний потребитель прочитал ID/kind=message/payload_version=1/payload.text, игнорируя новые свойства; прежний мобильный бинарник не запускался."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentPrivacy.json",
+        "TestIndependentProfileSynchronization_full_and_repeated_login.json"
+      ]
+    },
+    {
+      "id": "TC-API-RSVP-CUTOFF/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md",
+        "requirement": "Отсечка присоединения за час",
+        "scenario": "Ровно за час",
+        "sha256": "0f14625a3e518ca18328a8e68a1cdc685f879184dc936f997bfc2e33fbb4f285"
+      },
+      "tests": [
+        "TestIndependentLegacyAndCutoff",
+        "TestIndependentUTCExactCutoff",
+        "TestIndependentConcurrentCutoffReschedule"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "На независимых встречах отправить новое «Приду» за 1 секунду до starts_at − 1h, ровно на границе и на секунду после неё.",
+          "expected": "До границы участие подтверждается, на/после границы отклоняется; расчёт по абсолютному времени одинаков для разных timezone.",
+          "actual": "На независимых TLS HTTP fixtures в UTC и Europe/Moscow запрос за секунду до starts_at−1h получил 200, ровно и после — 409; отвергнутый профиль не читает feed (403)."
+        },
+        {
+          "action": "После границы повторить подтверждённый запрос текущего участника и попытаться вернуться ранее отказавшемуся.",
+          "expected": "Повтор не отнимает действующий доступ; возвращение считается новым вступлением и отклоняется.",
+          "actual": "Исходный подтверждённый ключ после границы снова дал CanAccessFeed=true; после not_going новая going-попытка вернула 409."
+        },
+        {
+          "action": "Отправить RSVP на встречу с датой без точного времени; перенести точное начало другой встречи и повторить попытку относительно нового начала.",
+          "expected": "Дата без времени не вводит часовой запрет; перенос пересчитывает границу, сохраняя прочие ограничения участия.",
+          "actual": "Встреча starts_on без времени допускает going вечером той же даты. PATCH точного начала пересчитал границу: прежний формат going принят после допустимого переноса."
+        },
+        {
+          "action": "Запустить конкурирующие RSVP/изменение времени с синхронизированными fixture-барьерами, затем прочитать сохранённый состав и закрытую ленту.",
+          "expected": "Нет подтверждённого вступления, нарушающего атомарную проверку; отвергнутому пользователю не раскрываются чат и закрытые фотографии.",
+          "actual": "Шесть пар RSVP/PATCH синхронно отпущены на HTTP-барьере. Сохранённые count/starts_at/revision и доступ feed проверены для обеих допустимых сериализаций; отвергнутому профилю также недоступен существующий photo URL в сценарии границы."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentConcurrentCutoffReschedule_interleave_0.json",
+        "TestIndependentConcurrentCutoffReschedule_interleave_1.json",
+        "TestIndependentConcurrentCutoffReschedule_interleave_2.json",
+        "TestIndependentConcurrentCutoffReschedule_interleave_3.json",
+        "TestIndependentConcurrentCutoffReschedule_interleave_4.json",
+        "TestIndependentConcurrentCutoffReschedule_interleave_5.json",
+        "TestIndependentLegacyAndCutoff_legacy_retry_move_date_only.json",
+        "TestIndependentLegacyAndCutoff_offset_-1.json",
+        "TestIndependentLegacyAndCutoff_offset_0.json",
+        "TestIndependentLegacyAndCutoff_offset_1.json",
+        "TestIndependentUTCExactCutoff_-1s.json",
+        "TestIndependentUTCExactCutoff_0s.json",
+        "TestIndependentUTCExactCutoff_1s.json"
+      ]
+    },
+    {
+      "id": "TC-API-RSVP-LEGACY/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md",
+        "requirement": "Актуальность состояния приглашения",
+        "scenario": "Старый мобильный клиент",
+        "sha256": "bee3f0ba3c2b9a32aa003d489998633e0a0735233648c6e8cf0a4e605e743293"
+      },
+      "tests": [
+        "TestIndependentLegacyAndCutoff/legacy_retry_move_date_only"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Отправить прежний формат запроса после отсечки, используя ранее загруженное разрешение.",
+          "expected": "Сервер заново проверяет состояние и возвращает совместимую ошибку запрета, а не принимает устаревшее разрешение.",
+          "actual": "До границы GET invitation дал can_join=true. После смены управляемых часов прежний PUT {answer,expected_revision} получил 409, без новых UI-полей."
+        },
+        {
+          "action": "Прочитать приглашение и попробовать получить закрытую ленту/фотографии отвергнутой сессией.",
+          "expected": "Приглашение объясняет закрытие с причиной/временем по контракту; закрытые данные недоступны.",
+          "actual": "Повторный preview вернул can_join=false, join_disabled_reason=join_closed и точное join_closes_at; feed и photo/content отвергнутому профилю вернули 403."
+        },
+        {
+          "action": "Повторить прежний запрос после допустимого переноса начала.",
+          "expected": "Решение принимается по новой границе и текущим правам, без зависимости от наличия нового экрана клиента.",
+          "actual": "После PATCH starts_at тот же прежний формат запроса принят (200/CanAccessFeed=true), решение основано на текущем начале."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentLegacyAndCutoff_legacy_retry_move_date_only.json"
+      ]
+    },
+    {
+      "id": "TC-API-PARTICIPANT-SUMMARY/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md",
+        "requirement": "Содержательная карточка встречи",
+        "scenario": "Встреча с шестью участниками",
+        "sha256": "601f58619cceb25e939ab9505e306fd65c57177666b360f77ddb4608da5e47f0"
+      },
+      "tests": [
+        "TestIndependentParticipantSummary"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Получить список/календарь и представление встречи.",
+          "expected": "Ответ сразу содержит согласованное краткое публичное представление и точное количество текущих участников; для каждой карточки не требуется отдельный запрос состава.",
+          "actual": "Созданы шесть текущих (включая организатора), maybe и not_going. GET meeting/list/calendar-filter сразу содержит participant_count=6 и публичное participant_preview."
+        },
+        {
+          "action": "Снять «Приду» у участника из превью и снова запросить список/встречу.",
+          "expected": "Превью и количество отражают текущий состав, отказавшийся не остаётся в числе текущих.",
+          "actual": "Участник выбран именно из preview; его not_going принят. Повторные meeting/list/calendar-filter содержат count=5 и исключают этот ID из preview."
+        },
+        {
+          "action": "Проверить поля участника без аватара и публичное приглашение.",
+          "expected": "Аватар честно отсутствует; контакты не появились в превью. Публичный ответ не раскрывает закрытый состав.",
+          "actual": "Профиль p2 действительно имеет avatar_url=null; приватные поля отсутствуют. Public invitation не раскрывает participants/participant_preview/media/memory_preview."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentParticipantSummary.json"
+      ]
+    },
+    {
+      "id": "TC-API-REACTION-IDEMPOTENCY/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+        "requirement": "Выбор и снятие своей реакции",
+        "scenario": "Повтор запроса",
+        "sha256": "e5923df1614169ea3c699e5b02e886ded95f9ecb3376fec47af2bda66ef03732"
+      },
+      "tests": [
+        "TestIndependentReactions"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Установить реакцию, потерять ответ после сохранения и повторить исходный запрос; затем параллельно повторить установку того же эмодзи тем же пользователем.",
+          "expected": "Пара пользователь/эмодзи учитывается один раз, подтверждённый счётчик не растёт от повторов.",
+          "actual": "После успешного HTTP commit тело первого ответа отброшено; исходный запрос повторён, затем восемь параллельных одинаковых PUT. Второй профиль прочитал heart count=1."
+        },
+        {
+          "action": "Добавить другой эмодзи тем же пользователем и тот же эмодзи вторым; снять первую собственную реакцию.",
+          "expected": "Разные эмодзи и пользователи учитываются отдельно; снятие уменьшает соответствующий счётчик на один.",
+          "actual": "Тот же участник добавил fire, организатор heart: counts 2/1. Удаление собственного heart дало 1/1, чужая реакция сохранена."
+        },
+        {
+          "action": "Проверить обычное сообщение с вложением и попытку использовать реакцию как голос/изменение системного события.",
+          "expected": "Вложение допускает реакцию; реакция не подменяет голоса и системные события.",
+          "actual": "Реакция на message с фото принята; попытка реакции на системное событие получила 404, событие не превращено в голос/сообщение."
+        },
+        {
+          "action": "Отозвать доступ и запросить/изменить реакции; проверить представление имён другим текущим участником.",
+          "expected": "Отозванная сессия не читает/не меняет реакции; контакты не возвращаются.",
+          "actual": "После not_going GET/PUT reactions вернули 403; представление реакций другому участнику не содержит контактов."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentReactions.json"
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-LIMITS/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Надёжность загрузки",
+        "scenario": "Формат или размер недопустим",
+        "sha256": "5c9ff49cbd7bec87dfa9dee0980bd4b7e4b14363933c1745f3b97c5f9e94f517"
+      },
+      "tests": [
+        "TestIndependentMediaLimitsAndCleanup"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Получить media/limits и подготовить загрузки на допустимой границе и за ограничением размера/формата; повторить резервирование с тем же ключом.",
+          "expected": "Допустимый резерв один; несовместимый тип/размер отклонён согласно контракту, повтор не создаёт второй объект.",
+          "actual": "GET limits: фото 10 MiB, файл 20 MiB, выбор 10. Резерв на допустимой границе принят и тот же ключ возвращает идентичное тело; граница+1, GIF и нулевой размер отвергнуты 422."
+        },
+        {
+          "action": "Передать bytes, не соответствующие заявленному типу/размеру, и попробовать опубликовать объект без подтверждённой загрузки.",
+          "expected": "Сервер проверяет фактическое содержимое и не публикует неподтверждённый объект.",
+          "actual": "Publish без bytes вернул 409; фиктивный PNG и несовпадающий фактический размер вернули 422. Корректные bytes затем приняты."
+        },
+        {
+          "action": "Управляемыми часами сделать незавершённый резерв и неподтверждённые bytes просроченными, выполнить штатную очистку; сохранить другой завершённый файл.",
+          "expected": "Просроченные временные объекты удалены, подтверждённый файл доступен. Сроки и порядок берутся из утверждённого backend/docs/media.md, а не из ожидания реальных суток.",
+          "actual": "У собственных orphan bytes выставлена контролируемая давность >1h; PruneMedia удалил их. Через 24h удалены все незавершённые резервы и pending bytes; единственный опубликованный файл и его HTTP чтение сохранены."
+        },
+        {
+          "action": "Остановить только fixture временного файлового режима и проверить его каталог; запустить новый memory fixture.",
+          "expected": "Каталог штатно очищен; прежние memory-данные не обещаются после рестарта. Эта проверка не доказывает постоянное хранение PostgreSQL.",
+          "actual": "Close временного файлового адаптера удалил исключительно его каталог. Новый независимый memory fixture имеет пустой список встреч. Сохранность после рестарта PostgreSQL этим не заявляется."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentMediaLimitsAndCleanup.json",
+        "TestIndependentMediaLimitsAndCleanup_fresh.json"
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-PUBLICATION/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Выбор и отправка вложений",
+        "scenario": "Потерян ответ публикации документа с подписью",
+        "sha256": "8fff6cfb9a4fca26357caa9324dfae2c0efa767f6835a3b87ff1b06b23a2e98b"
+      },
+      "tests": [
+        "TestIndependentMediaPublicationAndAlbum",
+        "TestIndependentPublicationReplayAndAccessMatrix"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Опубликовать документ с подписью, потерять ответ и повторить те же ключ/данные; прочитать ленту вторым участником.",
+          "expected": "Создано одно сообщение с тем же вложением и подписью; повтор возвращает прежний результат.",
+          "actual": "PDF опубликован с trim-подписью; ответ отброшен после commit. Исходный ключ/тело возвращают прежний результат; feed второму участнику содержит ровно одно сообщение с подписью."
+        },
+        {
+          "action": "Повторить с изменённой подписью при прежнем ключе, затем попытаться изменить подпись уже опубликованного документа новым ключом.",
+          "expected": "Изменение отклонено, опубликованные подпись и сообщение не переписаны.",
+          "actual": "Изменённая подпись со старым и с новым ключом получила 409. Перечитанный опубликованный payload сохранил исходную подпись."
+        },
+        {
+          "action": "Опубликовать фото сообщения и фото альбома; повторить успешные операции после частичного сбоя соседнего файла.",
+          "expected": "Ни сообщение, ни альбом не получают дубликатов; фото из чата не попадает в альбом автоматически. Фото не получает пользовательскую подпись.",
+          "actual": "Отдельные фото чата и альбома опубликованы, соседняя неверная загрузка получила 422/409. Повторы успешных публикаций сохраняют ID/entry, в альбоме ровно одно явно выбранное фото. Caption для фото получил 422."
+        },
+        {
+          "action": "Прочитать сообщение потребителем прежней схемы и текущим клиентом.",
+          "expected": "Сохраняются совместимые kind/version/текст и необязательное вложение; текущий ответ соответствует OpenAPI.",
+          "actual": "Прежний потребитель прочитал kind=message/version=1/text; PDF имеет текст подписи, фото — Фото. Все записанные актуальные JSON-ответы провалидированы OpenAPI."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentMediaPublicationAndAlbum.json",
+        "TestIndependentPublicationReplayAndAccessMatrix.json"
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-ACCESS/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Закрытые медиа встречи",
+        "scenario": "Отказ от участия во время загрузки",
+        "sha256": "a80e6031b917a5e718cfceda456f6f69e14fd89616658d979ba740b7caa0fd73"
+      },
+      "tests": [
+        "TestIndependentPublicationReplayAndAccessMatrix",
+        "TestIndependentMediaRevocationBarrier"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Проверить оригинал, превью, metadata и альбом текущим участником, посторонним и анонимно; открыть публичное приглашение/обложку.",
+          "expected": "Данные доступны только текущему участнику. Публичные маршруты и пересланные URL не раскрывают bytes или metadata приватных файлов.",
+          "actual": "Текущие owner/guest прочитали file/photo originals, thumbnail URL, metadata в meeting/feed/album. Постороннему 403, анонимно 401. Публичная обложка и приглашение доступны, приватных ID в preview нет; перенос private URL под invitation route вернул 404. Thumbnail в текущем контракте использует защищённый original route."
+        },
+        {
+          "action": "Начать загрузку, отозвать участие на контролируемом барьере и завершить запись/публикацию.",
+          "expected": "Права повторно проверены; публикация отклонена, ложного успешного сообщения/элемента альбома нет.",
+          "actual": "Фактическая HTTP-загрузка остановлена на барьере MediaContent.Put. Через HTTP отозвано участие; после продолжения upload и publish вернули 403, metadata осталась pending."
+        },
+        {
+          "action": "Отозванной сессией повторить чтение ранее известного URL и публикацию с сохранённым ключом.",
+          "expected": "Прежний URL/ключ не обходит отзыв доступа. Лента и альбом текущего участника не содержат отвергнутую публикацию.",
+          "actual": "Отозванному профилю прежние read URL и сохранённые publish keys вернули 403. Текущий owner перечитал feed и past album: отвергнутого media ID нет."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentMediaRevocationBarrier.json",
+        "TestIndependentPublicationReplayAndAccessMatrix.json"
+      ]
+    },
+    {
+      "id": "TC-API-ALBUM-PAGINATION/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md",
+        "requirement": "Общий альбом участников",
+        "scenario": "Фото добавляет обычный участник",
+        "sha256": "8d81832cd0f4a3579c886e378385d1066ff6f7b8813a71349f57abf61499b95d"
+      },
+      "tests": [
+        "TestIndependentMediaPublicationAndAlbum",
+        "TestIndependentPublicationReplayAndAccessMatrix"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Перевести встречу в past существующим календарным правилом и прочитать альбом/представление встречи.",
+          "expected": "Фото не требуется для перехода в past; чат остаётся доступен, пустой альбом имеет честные count/preview.",
+          "actual": "Три независимые встречи переведены в past через ClaimTransition/CompleteTransition по управляемым календарным часам. Для пустой count=0/preview=[], chat доступен; наличие фото для перехода не требуется."
+        },
+        {
+          "action": "Обычным участником явно добавить фотографии в альбом и прочитать все страницы до конца.",
+          "expected": "Подтверждённые фото доступны всем текущим участникам; порядок устойчив, ни пропусков, ни повторов между страницами нет.",
+          "actual": "Обычный участник добавил четыре фото. Две страницы limit=2 дают четыре разных ID, конец без next_cursor; повтор страницы сохраняет порядок. Текущие owner/guest читают подтверждённые originals."
+        },
+        {
+          "action": "Проверить одно фото, полный альбом и курсор от другой встречи; прочитать summary списка.",
+          "expected": "Количество/превью соответствуют альбому; курсор не раскрывает чужую встречу. Фото чата не добавлено без явного действия.",
+          "actual": "Отдельная встреча с одним фото имеет count=1/preview=1; полный альбом count=4/preview=3 и summary списка согласованы. Cursor другой встречи получил 422. Фото чата не появилось в альбоме автоматически."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentMediaPublicationAndAlbum.json",
+        "TestIndependentPublicationReplayAndAccessMatrix.json"
+      ]
+    },
+    {
+      "id": "TC-API-SUPPORT-ACCEPTANCE/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md",
+        "requirement": "Надёжное принятие обращения",
+        "scenario": "Потерян ответ",
+        "sha256": "91e5532406980165efd44421a4605dc46722f563106b465812e8fb4c82c72b71"
+      },
+      "tests": [
+        "TestIndependentSupportAcceptanceAndRetry",
+        "TestIndependentTelegramMockTransport"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Отправить обращение анонимно без почты/скриншота/диагностики, потерять ответ после принятия и повторить исходный ключ/тело.",
+          "expected": "Возвращается один подтверждённый номер, запись одна, отсутствие контакта допустимо.",
+          "actual": "Анонимное обращение без email/screenshot/diagnostics принято; тело первого ответа отброшено после 201. Исходный ключ/trim-тело снова возвращают один receipt; мок worker не обнаружил второй записи."
+        },
+        {
+          "action": "С тем же ключом изменить описание; отдельно проверить длины 9/10/3000/3001 после trim, фактический формат/размер скриншота и rate limit.",
+          "expected": "Изменённый повтор конфликтует; сервер проверяет границы и фактическое изображение, ограничивает частоту, не принимает лишние поля.",
+          "actual": "Изменённый текст с прежним ключом — 409. Длины 9/3001 — 422, 10/3000 после trim — 201; ложный PNG и >5MiB — 422, настоящий PNG — 201, session_token как лишнее поле — 400. Шестое новое обращение — 429; повтор принятого ключа остаётся 201."
+        },
+        {
+          "action": "Сверить ответ, клиентский payload, журналы и попытку публичного чтения по номеру.",
+          "expected": "Текст чата, cookie, токены и приватные URL не подмешаны; диагностика opt-in. Контакты/скриншот/секреты не утекли в логи и публичный endpoint.",
+          "actual": "В сформированном payload нет чата/cookie/token/URL; у первой принятой записи diagnostics/email/screenshot отсутствуют. Ответ содержит только receipt; GET по номеру — 404. Журналы и receipt проверены на текст, contact, screenshot, upstream error и синтетические секреты доставки."
+        },
+        {
+          "action": "Запустить мок очереди после временного сбоя доставки.",
+          "expected": "Принятая запись не теряется; повтор доставки не требует нового обращения пользователя.",
+          "actual": "После временного mock failure запись и progress сохранены, ранний worker не работает, через минуту исходная запись доставляется. Повторного заполнения клиентом и нового receipt нет."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentSupportAcceptanceAndRetry.json",
+        "TestIndependentTelegramMockTransport.json"
+      ]
+    },
+    {
+      "id": "TC-API-MEDIA-DURABILITY/api/manual",
+      "status": "blocked",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Надёжность загрузки",
+        "scenario": "Один файл не загрузился",
+        "sha256": "7426bc46618cc7ef70d46d7dc33c80516fca57c89e3e8a6632dc2595788e02eb"
+      },
+      "tests": [],
+      "preconditions": "Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись.",
+      "steps": [
+        {
+          "action": "На тестовой базе применить поддерживаемую миграцию отдельной DDL-ролью и запустить runtime под ограниченной ролью.",
+          "expected": "Runtime использует заявленный постоянный media adapter, не fallback memory; штатные операции разрешены без DDL-привилегий приложения.",
+          "actual": "Не выполнялось: Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись."
+        },
+        {
+          "action": "Сохранить два файла и получить ошибку третьего; перезапустить API/worker, затем повторить только неуспешную операцию.",
+          "expected": "Подтверждённые bytes, metadata, реакции и привязки не потеряны; повтор не дублирует сохранённые объекты.",
+          "actual": "Не выполнялось: Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись."
+        },
+        {
+          "action": "Восстановить backup в отдельном тестовом назначении, проверить originals/previews, права чтения, утверждённые квоты и очистку просроченных незавершённых объектов.",
+          "expected": "Восстановленные данные согласованы; квоты/очистка не удаляют живые вложения, приватные объекты не становятся публичными.",
+          "actual": "Не выполнялось: Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись."
+        },
+        {
+          "action": "Пройти утверждённую процедуру отката на тестовом назначении.",
+          "expected": "Получена совместимая работоспособная версия без потери подтверждённых объектов; замена бинарника на несовместимую со схемой версию не считается откатом.",
+          "actual": "Не выполнялось: Нет согласованного изолированного постоянного окружения для этапа 7.2, подтверждённых migration/GRANT/backup, квот и проверенного отката. Задание запрещает БД/Docker/deploy; memory/file fixture не удовлетворяет предусловию. Миграция, рестарт постоянного адаптера, восстановление backup и откат не выполнялись."
+        }
+      ],
+      "cleanup": "Тестовые постоянные данные не создавались.",
+      "evidenceFiles": []
+    },
+    {
+      "id": "TC-API-SUPPORT-DURABILITY/api/manual",
+      "status": "blocked",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md",
+        "requirement": "Доставка в выделенный канал поддержки",
+        "scenario": "Telegram временно недоступен",
+        "sha256": "6cba433b28bf2c87b4740cfd4d34f6d0efc7401390eaa101b9918b9084768eb2"
+      },
+      "tests": [],
+      "preconditions": "Нет постоянного support adapter/очереди, утверждённых сроков хранения/очистки и отдельного разрешённого тестового канала этапа 8.9. backend/docs/support.md прямо фиксирует memory queue и HTTP 503 в PostgreSQL-режиме. Реальная отправка запрещена заданием; рестарт постоянной очереди и retention не проверены.",
+      "steps": [
+        {
+          "action": "Принять обращение, заблокировать тестовую доставку временным отказом и перезапустить API/worker.",
+          "expected": "Принятая запись и состояние очереди сохранены; пользователь не должен заново отправлять обращение.",
+          "actual": "Не выполнялось: Нет постоянного support adapter/очереди, утверждённых сроков хранения/очистки и отдельного разрешённого тестового канала этапа 8.9. backend/docs/support.md прямо фиксирует memory queue и HTTP 503 в PostgreSQL-режиме. Реальная отправка запрещена заданием; рестарт постоянной очереди и retention не проверены."
+        },
+        {
+          "action": "Восстановить тестовую доставку, дождаться контролируемого повтора и сверить номер обращения.",
+          "expected": "Доставлено исходное обращение в разрешённый тестовый канал; нет новой клиентской записи или бесконтрольной частоты повторов.",
+          "actual": "Не выполнялось: Нет постоянного support adapter/очереди, утверждённых сроков хранения/очистки и отдельного разрешённого тестового канала этапа 8.9. backend/docs/support.md прямо фиксирует memory queue и HTTP 503 в PostgreSQL-режиме. Реальная отправка запрещена заданием; рестарт постоянной очереди и retention не проверены."
+        },
+        {
+          "action": "Управляемым временем выполнить очистку по согласованным срокам и проверить отдельный доступ к данным/скриншоту.",
+          "expected": "Просроченные персональные данные очищены по принятой политике; непросроченные сохранены, содержимое/контакты/секреты не появляются в логах.",
+          "actual": "Не выполнялось: Нет постоянного support adapter/очереди, утверждённых сроков хранения/очистки и отдельного разрешённого тестового канала этапа 8.9. backend/docs/support.md прямо фиксирует memory queue и HTTP 503 в PostgreSQL-режиме. Реальная отправка запрещена заданием; рестарт постоянной очереди и retention не проверены."
+        }
+      ],
+      "cleanup": "Тестовые постоянные данные не создавались.",
+      "evidenceFiles": []
+    },
+    {
+      "id": "TC-SUPPORT-2B1C9FBF/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/support-feedback/spec.md",
+        "requirement": "Доставка в выделенный канал поддержки",
+        "scenario": "Telegram временно недоступен",
+        "sha256": "6cba433b28bf2c87b4740cfd4d34f6d0efc7401390eaa101b9918b9084768eb2"
+      },
+      "tests": [
+        "TestIndependentTelegramMockTransport",
+        "TestIndependentSupportAcceptanceAndRetry"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Принять синтетическое обращение через API и выполнить доставку при временном отказе мок-транспорта.",
+          "expected": "Запись принята один раз, статус не теряется, пользователь уже получил подтверждённый номер.",
+          "actual": "Реальный Telegram adapter работает через закрытый RoundTripper. Синтетическое обращение принято по HTTP один раз; первый delivery возвращает временную ошибку, подтверждённый receipt уже выдан."
+        },
+        {
+          "action": "До и после разрешённого времени повтора вызвать worker, затем восстановить мок-транспорт.",
+          "expected": "Очередь ограничивает частоту и доставляет исходное обращение после восстановления; пользователь не заполняет форму заново.",
+          "actual": "Worker до срока не вызывает транспорт. Через управляемую минуту транспорт восстановлен; отправлено то же содержание с тем же Reference, после доставки очередь пуста. Дополнительно проверено сохранение подтверждённого progress при частичном отказе."
+        },
+        {
+          "action": "Проверить клиентский ответ, журналы и конфигурацию назначения.",
+          "expected": "Секрет/ID назначения не переданы клиенту; логи не содержат полный текст, скриншот, почту или секрет. Проверка постоянной очереди после рестарта — отдельный TC-API-SUPPORT-DURABILITY.",
+          "actual": "Конфигурация назначения только синтетическая, в процессе нет реального сетевого transport. Receipt/логи не содержат destination, token, email или description; отдельная проверка screenshot-данных выполнена в support acceptance."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentSupportAcceptanceAndRetry.json",
+        "TestIndependentTelegramMockTransport.json"
+      ]
+    },
+    {
+      "id": "TC-PROFILE-4F3DAAFE/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Все права и полные данные",
+        "sha256": "0a877b0c47ed148b6d4653c54c6c116569dd8ff96235cd0588dcd8237cd13f50"
+      },
+      "tests": [
+        "TestIndependentProfileSynchronization/full_and_repeated_login"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Пройти тестовый OAuth/SDK обмен с полными выбранными полями provider; запросить собственный профиль по HTTP.",
+          "expected": "API возвращает ровно проверенные сервером значения, не доверяет полям клиента; отсутствующее не подменяет демонстрационным. Отображение всех клиентов принимается отдельно в TC-PROFILE-YANDEX-FIELDS.",
+          "actual": "Тестовый OAuth callback использовал настоящий Yandex JSON decoder с закрытым transport. Собственный HTTP профиль точно совпал с полным provider document; client first_name во входном запросе отвергнут 400, новый минимальный профиль не получил демонстрационных полей."
+        },
+        {
+          "action": "Повторить вход того же subject и проверить прежнюю сессию.",
+          "expected": "Идентификатор профиля тот же, известные данные обновлены; прежняя действующая сессия не отозвана только из-за нового входа.",
+          "actual": "Второй вход того же subject с новым именем сохранил ID; новый и прежний Cookie client читают обновлённое имя/first_name. Прежняя действующая сессия не отозвана."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentProfileSynchronization_full_and_repeated_login.json"
+      ]
+    },
+    {
+      "id": "TC-PROFILE-3E5EFE8D/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Неполная дата и неизвестный пол",
+        "sha256": "f35b77710a0124d7bc09ad0d68b50d698ab6c6c5e968c78b8aa13fecf359d5c3"
+      },
+      "tests": [
+        "TestIndependentProfileSynchronization/partial_birthday_unknown_sex"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Тестовым provider вернуть birthday=0000-12-23 и sex=null, выполнить обмен и GET собственного профиля.",
+          "expected": "API сохраняет неполноту даты и отсутствие пола без придуманного года, возраста или вывода пола по имени/аватару. Клиентские подписи проверяются TC-PROFILE-YANDEX-FIELDS.",
+          "actual": "Тестовый provider document содержит birthday=0000-12-23 и sex=null. После обмена HTTP profile сохранил строку 0000-12-23, sex/first_name=null, поля age нет. Год/пол/возраст не выведены из имени или аватара."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentProfileSynchronization_partial_birthday_unknown_sex.json"
+      ]
+    },
+    {
+      "id": "TC-PROFILE-F319B092/api/manual",
+      "status": "passed",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Явное очищение и частичные права",
+        "sha256": "da37fbbe2f238a0bd9a2fcceebc85b6f15967a6e025fe79cc4eb975ad2370fca"
+      },
+      "tests": [
+        "TestIndependentProfileSynchronization/explicit_clear_missing_permissions"
+      ],
+      "preconditions": "Выполнены в изолированном TLS HTTP fixture; управляемые часы, синтетические профили, реальные handlers/services/store. Каждый fixture закрыт t.Cleanup, собственный временный файловый каталог удалён.",
+      "steps": [
+        {
+          "action": "Создать профиль с именем и датой, повторно войти с birthday=null при отсутствующем first_name.",
+          "expected": "Дата явно очищена, известное имя сохранено; отсутствующие необязательные поля не блокируют вход.",
+          "actual": "После полного входа повторный provider document содержит birthday:null, first_name пропущено. HTTP profile имеет тот же ID, birthday=null и сохранённое first_name."
+        },
+        {
+          "action": "Повторить вход с полями контактов, отсутствующими из-за прав нового токена.",
+          "expected": "Известные контакты не затёрты; новые непредоставленные права не объявлены полученными.",
+          "actual": "Следующий вход с отсутствующими контактами сохраняет прежние email/phone и уже очищенную дату. Документ provider не объявляет новые scopes, API также не добавляет утверждений о полученных правах; старая сессия действует."
+        }
+      ],
+      "cleanup": "Все собственные httptest servers закрыты. Memory fixture отброшен; файловый адаптер и его каталог закрыты/удалены. Live fixtures, UI и чужие данные не затронуты.",
+      "evidenceFiles": [
+        "TestIndependentProfileSynchronization_explicit_clear_missing_permissions.json"
+      ]
+    }
+  ]
+}

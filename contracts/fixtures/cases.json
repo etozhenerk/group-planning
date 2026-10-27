@@ -751,5 +751,94 @@
         "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC"
       }
     }
+  },
+  {
+    "name": "chat-capabilities-http-only",
+    "schema": "ChatCapabilities",
+    "path": "/api/v1/chat-capabilities",
+    "method": "get",
+    "status": 200,
+    "body": {
+      "protocol_version": 1,
+      "sync": true,
+      "read_state": false,
+      "realtime": false
+    }
+  },
+  {
+    "name": "chat-sync-reset",
+    "schema": "Error",
+    "path": "/api/v1/meetings/{id}/sync",
+    "method": "get",
+    "status": 410,
+    "body": {
+      "error": {
+        "code": "sync_reset_required",
+        "field_errors": {},
+        "request_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75"
+      }
+    }
+  },
+  {
+    "name": "chat-read-old-position-under-baseline",
+    "schema": "ChatReadState",
+    "path": "/api/v1/meetings/{id}/read-marker",
+    "method": "put",
+    "status": 200,
+    "body": {
+      "read_through_sequence": "42",
+      "unread_baseline_sequence": "9007199254740993",
+      "unread_count": "0",
+      "first_unread": null,
+      "projection_version": "12"
+    }
+  },
+  {
+    "name": "chat-read-receipts",
+    "schema": "ChatReadReceipts",
+    "path": "/api/v1/meetings/{id}/read-receipts/query",
+    "method": "post",
+    "status": 200,
+    "body": {
+      "receipts": [
+        {
+          "entry_id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "reader_count": "2"
+        }
+      ],
+      "projection_version": "13"
+    }
+  },
+  {
+    "name": "chat-message-readers",
+    "schema": "ChatMessageReaders",
+    "path": "/api/v1/meetings/{id}/messages/{entry_id}/readers",
+    "method": "get",
+    "status": 200,
+    "body": {
+      "readers": [
+        {
+          "id": "5cf76452-b7fa-4a5b-b785-1582b58b1d75",
+          "display_name": "Лена",
+          "avatar_url": null
+        }
+      ],
+      "reader_count": "1",
+      "next_cursor": null,
+      "projection_version": "13"
+    }
+  },
+  {
+    "name": "chat-capabilities-enabled",
+    "schema": "ChatCapabilities",
+    "path": "/api/v1/chat-capabilities",
+    "method": "get",
+    "status": 200,
+    "body": {
+      "protocol_version": 1,
+      "sync": true,
+      "read_state": true,
+      "realtime": true
+    }
   }
 ]

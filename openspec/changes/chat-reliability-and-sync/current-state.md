@@ -49,3 +49,36 @@
 Сначала курсоры, адресные SQL-запросы и единая модель состояния; затем push
 и восстановление; затем read state и окно ленты. Простой перевод имеющихся
 запросов на WebSocket не исправит пропуск 101, потерю outbox и скачок строки.
+
+## Повторное чтение кода 27.10.2026
+
+Это статическая сверка текущего рабочего дерева, без запуска тестов, browser
+сценария, SQL baseline или production. Исходное исследование выше сохранено.
+
+- Web `useConversation` по-прежнему получает after из `entries.at(-1)`,
+  а `useSendMessage` добавляет POST ACK в тот же cache. Последовательность
+  100 → ACK 102 → after 102 объясняет риск пропуска 101, но не является
+  зафиксированным runtime-воспроизведением. Задача 1.1 должна подтвердить его.
+- Серверный `feed_service.go` вызывает полный Reader.Feed и режет страницу
+  в Go; `postgres/feed.go` читает все JSON-документы. Initial/before выбирают
+  хвост подходящих записей, after — первые; новый порт обязан сохранить
+  семантику и decimal uint64, включая пустые и предельные диапазоны.
+- Text SendMessage ищет intent полным Feed даже при receipt replay.
+  `media_publish.go` ищет опубликованный entry_id полным Feed при lost ACK.
+  Оба пути входят в адресный lookup первого этапа, с прежними проверками
+  доступа/содержимого и медиа-вложениями.
+- Memory уже имеет `messageIDs[meeting, actor, client_request_id]` как bool;
+  адресный индекс можно расширить без отказа от clone/rollback. SQL уже имеет
+  UNIQUE(meeting_id, sequence), partial feed_request и repeatable-read View.
+  Эти факты не доказывают будущий EXPLAIN или сохранность нового порта.
+- Полный Feed используется также account removal и reactions. Его не удаляют
+  автоматически вместе с добавлением bounded API. Глобальный write-lock
+  сохраняется; новые сервисы, локальная БД и Docker для первого среза не нужны.
+
+Начальная проверка: [testing.md](testing.md), задачи 1.1/1.5/2.1/2.2/4.1.
+
+Основной агент отдельно выполнил 27.10.2026 существующие серверные тесты:
+`GOMAXPROCS=2 go test ./internal/meetings -run 'TestFeedPagesConcurrentCommitsAndMessages|TestMessageRaceWithLeaving' -count=1`.
+Результат — PASS, `0.349s`; просмотрен его log
+`.cache/qa/chat-feed-baseline-20261027.log`. Это проверка прежних invariants,
+не SQL/performance baseline, не web ACK race и не приёмка новых Reader/sync.

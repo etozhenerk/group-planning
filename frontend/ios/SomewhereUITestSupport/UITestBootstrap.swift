@@ -23,23 +23,42 @@ enum UITestBootstrap {
                 config.origin.port != nil
             else { throw ClientFailure.invalidOrigin }
             let origin = try APIOrigin(config.origin)
+            let namespace = ProcessInfo.processInfo.environment[
+                "SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"
+            ]
+            .flatMap(UUID.init(uuidString:))
+            let chat = namespace.map { namespace in
+                ChatRepository(
+                    storage: EncryptedChatStorage(
+                        directory: URL.applicationSupportDirectory.appendingPathComponent(
+                            "UITestChatOutbox"
+                        )
+                        .appendingPathComponent(namespace.uuidString),
+                        keys: KeychainChatKeys(origin: origin)))
+            }
             let transport = FixtureTransport(
                 origin: config.origin, certificate: config.certificate, scenario: scenario)
-            let credentials = CredentialStore(
-                storage: KeychainCredentialStorage(
-                    origin: origin, service: "dev.groupplanning.ui." + scenario))
+            let credentialStorage = KeychainCredentialStorage(
+                origin: origin, service: "dev.groupplanning.ui." + scenario)
+            if scenario == "profile-fields" { try credentialStorage.remove() }
+            let credentials = CredentialStore(storage: credentialStorage)
             let api = APIClient(origin: origin, transport: transport)
             let links = PendingInvitationStore(
                 file: URL.applicationSupportDirectory
                     .appendingPathComponent("UITestLinks/" + scenario))
-            if scenario == "invite-anonymous" || scenario == "onboarding" {
+            if scenario == "invite-anonymous" || scenario == "onboarding"
+                || scenario == "profile-fields"
+            {
                 let session = SessionStore(
-                    api: api, credentials: credentials, privateData: PrivateData())
+                    api: api, credentials: credentials, privateData: PrivateData(), chat: chat,
+                    realtimeFactory: {
+                        FixtureRealtime.make(origin: config.origin, certificate: config.certificate)
+                    })
                 let signIn = YandexSignIn(
                     api: api, session: session,
                     storage: KeychainAuthAttemptStorage(
                         origin: origin, service: "dev.groupplanning.ui.auth." + scenario),
-                    provider: UITestLoginProvider())
+                    provider: UITestLoginProvider(profileFields: scenario == "profile-fields"))
                 return AppRuntime(
                     session: session, drafts: drafts, api: api, links: links, signIn: signIn)
             }
@@ -52,7 +71,10 @@ enum UITestBootstrap {
             }
             let session = SessionStore(
                 api: api, credentials: credentials,
-                privateData: PrivateData())
+                privateData: PrivateData(), chat: chat,
+                realtimeFactory: {
+                    FixtureRealtime.make(origin: config.origin, certificate: config.certificate)
+                })
             return try AppRuntime(
                 session: session, drafts: drafts,
                 credential: StoredSession(

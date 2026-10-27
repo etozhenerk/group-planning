@@ -1,3 +1,4 @@
+import { useMeetingListUpdates } from '@/entities/meeting';
 import { Link } from 'react-router';
 import { Plus } from 'lucide-react';
 import { Navigation } from '@/widgets/navigation';
@@ -16,6 +17,7 @@ export type MeetingsViewProps = { session: Session };
 
 export const MeetingsView = ({ session }: MeetingsViewProps) => {
   const view = useMeetingsView(session.user.id);
+  useMeetingListUpdates(session.user.id);
   const { sentinelRef, controlsRef, pinned } = useStickyControls();
 
   return (

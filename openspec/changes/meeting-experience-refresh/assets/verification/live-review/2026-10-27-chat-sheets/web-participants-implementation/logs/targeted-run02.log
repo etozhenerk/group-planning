@@ -1,0 +1,199 @@
+[WebServer] (node:31951) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:31952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 34 tests using 1 worker
+
+(node:31976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/34] [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 320px
+[2/34] [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 390px
+[3/34] [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 768px
+[4/34] [chromium] › tests/03-layout.spec.ts:5:3 › layout and keyboard at 1440px
+[5/34] [chromium] › tests/03-layout.spec.ts:113:1 › dialog respects reduced motion and restores focus
+[6/34] [chromium] › tests/16-dialog-motion.spec.ts:5:3 › dialog keeps content and scroll lock until exit ends at 390px
+[7/34] [chromium] › tests/16-dialog-motion.spec.ts:5:3 › dialog keeps content and scroll lock until exit ends at 1440px
+[8/34] [chromium] › tests/16-dialog-motion.spec.ts:52:1 › touch swipe follows the finger, returns after a short drag and dismisses after a long drag
+[9/34] [chromium] › tests/16-dialog-motion.spec.ts:107:3 › swipe starts at the top edge, handle and side padding at 320px
+[10/34] [chromium] › tests/16-dialog-motion.spec.ts:107:3 › swipe starts at the top edge, handle and side padding at 390px
+[11/34] [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 320
+[12/34] [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 402
+[13/34] [chromium] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 430
+[14/34] [chromium] › tests/27-mobile-scroll.spec.ts:133:1 › chat and sheet follow the visible viewport without creating a second page scroll
+[15/34] [chromium] › tests/27-mobile-scroll.spec.ts:180:1 › closing a mobile sheet restores the background position and permits normal page scrolling
+[16/34] [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions
+  1) [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Информация о встрече', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Информация о встрече', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Информация о встрече', exact: true })
+        14 × locator resolved to <button type="button" aria-label="Информация о встрече" class="_icon_11cfe_20 _ghost_11cfe_15">…</button>
+           - unexpected value "inactive"
+
+
+      111 |         await info.getByRole('button', { name: 'Закрыть', exact: true }).click();
+      112 |         await expect(info).not.toBeVisible();
+    > 113 |         await expect(open).toBeFocused();
+          |                            ^
+      114 |         await expect(composer).toHaveValue('Черновик под составом');
+      115 |       }
+      116 |     }
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:113:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/error-context.md
+
+    attachment #10: trace (application/zip) ────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:32077) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[17/34] [chromium] › tests/33-chat-action-sheets.spec.ts:123:3 › date poll freezes a committed request after a lost response and retries after reopening
+[18/34] [chromium] › tests/33-chat-action-sheets.spec.ts:123:3 › place poll freezes a committed request after a lost response and retries after reopening
+[19/34] [chromium] › tests/33-chat-action-sheets.spec.ts:212:1 › mobile task sheet preserves an uncertain request across close and resize
+[20/34] [chromium] › tests/33-chat-action-sheets.spec.ts:272:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft
+[21/34] [chromium] › tests/33-chat-action-sheets.spec.ts:372:3 › chat action keeps its heading and close button visible in a real 320x430 viewport
+[22/34] [chromium] › tests/33-chat-action-sheets.spec.ts:372:3 › chat action keeps its heading and close button visible in a real 390x430 viewport
+(node:32107) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[23/34] [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 320
+[24/34] [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 402
+[25/34] [mobile-webkit] › tests/27-mobile-scroll.spec.ts:38:3 › long meeting facts and forms stay within mobile width 430
+[26/34] [mobile-webkit] › tests/27-mobile-scroll.spec.ts:133:1 › chat and sheet follow the visible viewport without creating a second page scroll
+[27/34] [mobile-webkit] › tests/27-mobile-scroll.spec.ts:180:1 › closing a mobile sheet restores the background position and permits normal page scrolling
+[28/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions
+  2) [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Информация о встрече', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Информация о встрече', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Информация о встрече', exact: true })
+        13 × locator resolved to <button type="button" aria-label="Информация о встрече" class="_icon_11cfe_20 _ghost_11cfe_15">…</button>
+           - unexpected value "inactive"
+
+
+      111 |         await info.getByRole('button', { name: 'Закрыть', exact: true }).click();
+      112 |         await expect(info).not.toBeVisible();
+    > 113 |         await expect(open).toBeFocused();
+          |                            ^
+      114 |         await expect(composer).toHaveValue('Черновик под составом');
+      115 |       }
+      116 |     }
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:113:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/error-context.md
+
+    attachment #10: trace (application/zip) ────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-web-resume-targeted-run02/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:32206) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[29/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:123:3 › date poll freezes a committed request after a lost response and retries after reopening
+[30/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:123:3 › place poll freezes a committed request after a lost response and retries after reopening
+[31/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:212:1 › mobile task sheet preserves an uncertain request across close and resize
+[32/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:272:1 › meeting information shares in one sheet, excludes service links and keeps an edit draft
+[33/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:372:3 › chat action keeps its heading and close button visible in a real 320x430 viewport
+[34/34] [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:372:3 › chat action keeps its heading and close button visible in a real 390x430 viewport
+  2 failed
+    [chromium] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+    [mobile-webkit] › tests/33-chat-action-sheets.spec.ts:6:1 › TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions 
+  32 passed (2.3m)

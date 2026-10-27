@@ -1,7 +1,9 @@
-// Generated from design-system/tokens.json · 1.1.0. Do not edit.
+// Generated from design-system/tokens.json · 2.5.1. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
+    static let breakpointChatCompactHeight = CGFloat(500)
+    static let breakpointChatNarrowWidth = CGFloat(350)
     static let colorAccent = Color(
         .sRGB,
         red: 0.8392156862745098,
@@ -44,6 +46,13 @@ enum DesignTokens {
         blue: 0.6980392156862745,
         opacity: 1
     )
+    static let colorFieldBorder = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.0784313725490196
+    )
     static let colorFocus = Color(
         .sRGB,
         red: 0.8392156862745098,
@@ -71,6 +80,20 @@ enum DesignTokens {
         green: 1,
         blue: 1,
         opacity: 0.07058823529411765
+    )
+    static let colorMeetingMark = Color(
+        .sRGB,
+        red: 0.1803921568627451,
+        green: 0.2235294117647059,
+        blue: 0.2196078431372549,
+        opacity: 1
+    )
+    static let colorMeetingMarkForeground = Color(
+        .sRGB,
+        red: 0.8627450980392157,
+        green: 0.9254901960784314,
+        blue: 0.8980392156862745,
+        opacity: 1
     )
     static let colorMessage = Color(
         .sRGB,
@@ -168,6 +191,41 @@ enum DesignTokens {
         red: 0.2235294117647059,
         green: 0.22745098039215686,
         blue: 0.25882352941176473,
+        opacity: 1
+    )
+    static let colorRosterBlue = Color(
+        .sRGB,
+        red: 0.7137254901960784,
+        green: 0.7568627450980392,
+        blue: 0.8196078431372549,
+        opacity: 1
+    )
+    static let colorRosterLilac = Color(
+        .sRGB,
+        red: 0.7647058823529411,
+        green: 0.7098039215686275,
+        blue: 0.8196078431372549,
+        opacity: 1
+    )
+    static let colorRosterMint = Color(
+        .sRGB,
+        red: 0.6980392156862745,
+        green: 0.7686274509803922,
+        blue: 0.7372549019607844,
+        opacity: 1
+    )
+    static let colorRosterSand = Color(
+        .sRGB,
+        red: 0.7607843137254902,
+        green: 0.6862745098039216,
+        blue: 0.6235294117647059,
+        opacity: 1
+    )
+    static let colorRosterText = Color(
+        .sRGB,
+        red: 0.18823529411764706,
+        green: 0.1607843137254902,
+        blue: 0.16470588235294117,
         opacity: 1
     )
     static let colorSelectedSegment = Color(
@@ -302,8 +360,137 @@ enum DesignTokens {
     static let componentCardHoverLift = CGFloat(3)
     static let componentCardMinimumHeight = CGFloat(146)
     static let componentCardMinimumHeightMobile = CGFloat(145)
+    static let componentChatActionDialogMaximumWidth = CGFloat(560)
+    static let componentChatActionDialogRadius = CGFloat(24)
+    static let componentChatActionDialogViewportInset = CGFloat(24)
+    static let componentChatAddMenuInset = CGFloat(6)
+    static let componentChatAddMenuOffset = CGFloat(6)
+    static let componentChatAddMenuRadius = CGFloat(16)
+    static let componentChatAddMenuRowHeight = CGFloat(46)
+    static let componentChatAddMenuWidth = CGFloat(244)
+    static let componentChatComposerCompactPaddingBlock = CGFloat(5)
+    static let componentChatComposerEmojiIcon = CGFloat(23)
+    static let componentChatComposerGap = CGFloat(6)
+    static let componentChatComposerInputInsetBottom = CGFloat(10)
+    static let componentChatComposerInputInsetStart = CGFloat(14)
+    static let componentChatComposerInputInsetTop = CGFloat(11)
+    static let componentChatComposerInputLineHeight = CGFloat(22)
+    static let componentChatComposerInputMaxHeight = CGFloat(108)
+    static let componentChatComposerInputMinHeight = CGFloat(44)
+    static let componentChatComposerPaddingBottom = CGFloat(10)
+    static let componentChatComposerPaddingInline = CGFloat(10)
+    static let componentChatComposerPaddingTop = CGFloat(8)
+    static let componentChatComposerRadius = CGFloat(22)
+    static let componentEmojiDockCategoryIndicator = CGFloat(2)
+    static let componentEmojiDockChoiceInset = CGFloat(3)
+    static let componentEmojiDockChoiceRadius = CGFloat(10)
+    static let componentEmojiDockCompactHeight = CGFloat(174)
+    static let componentEmojiDockCompactMinimumHeight = CGFloat(148)
+    static let componentEmojiDockMaximumViewportRatio = 0.45
+    static let componentEmojiDockMinimumHeight = CGFloat(160)
+    static let componentEmojiDockPreferredHeight = CGFloat(284)
+    static let componentEmojiDockResultInsetBottom = CGFloat(10)
+    static let componentEmojiDockResultInsetInline = CGFloat(8)
+    static let componentEmojiDockResultInsetTop = CGFloat(5)
+    static let componentEmojiDockSearchHeight = CGFloat(36)
+    static let componentEmojiDockSearchIcon = CGFloat(17)
+    static let componentEmojiDockSearchInset = CGFloat(11)
+    static let componentEmojiDockSearchRadius = CGFloat(9)
+    static let componentEmojiDockToolbarInsetInline = CGFloat(8)
+    static let componentEmojiDockToolbarInsetTop = CGFloat(5)
     static let componentIconFocusOffset = CGFloat(5)
     static let componentIconStrokeWidth = 1.7
+    static let componentMeetingSettingsCoverGap = CGFloat(12)
+    static let componentMeetingSettingsCoverRadius = CGFloat(10)
+    static let componentMeetingSettingsCoverSize = CGFloat(52)
+    static let componentMobileChatBubbleCornerRadius = CGFloat(6)
+    static let componentMobileChatBubbleFocusOffset = CGFloat(3)
+    static let componentMobileChatBubbleInsetBlock = CGFloat(11)
+    static let componentMobileChatBubbleInsetInline = CGFloat(14)
+    static let componentMobileChatBubbleRadius = CGFloat(18)
+    static let componentMobileChatCompactHeaderHeight = CGFloat(56)
+    static let componentMobileChatHeaderHeight = CGFloat(66)
+    static let componentMobileChatHeaderInset = CGFloat(12)
+    static let componentMobileChatIconSize = CGFloat(22)
+    static let componentMobileChatInlineActionInsetBlock = CGFloat(9)
+    static let componentMobileChatInlineActionInsetInline = CGFloat(15)
+    static let componentMobileChatInlineActionRadius = CGFloat(10)
+    static let componentMobileChatInlineBadgeInsetBlock = CGFloat(1)
+    static let componentMobileChatInlineBadgeInsetInline = CGFloat(5)
+    static let componentMobileChatInlineBadgeRadius = CGFloat(5)
+    static let componentMobileChatInlineEyebrowGap = CGFloat(7)
+    static let componentMobileChatInlineEyebrowIcon = CGFloat(15)
+    static let componentMobileChatInlineFootGap = CGFloat(9)
+    static let componentMobileChatInlineIndent = CGFloat(36)
+    static let componentMobileChatInlineInset = CGFloat(14)
+    static let componentMobileChatInlineMaximumWidth = CGFloat(440)
+    static let componentMobileChatInlineRadius = CGFloat(17)
+    static let componentMobileChatInlineTaskChevron = CGFloat(18)
+    static let componentMobileChatInlineTitleAfterGap = CGFloat(5)
+    static let componentMobileChatInlineVoteInsetBlock = CGFloat(9)
+    static let componentMobileChatInlineVoteInsetInline = CGFloat(12)
+    static let componentMobileChatInlineVoteRadius = CGFloat(10)
+    static let componentMobileChatMarkHeight = CGFloat(40)
+    static let componentMobileChatMarkRadius = CGFloat(13)
+    static let componentMobileChatMarkWidth = CGFloat(40)
+    static let componentMobileChatMessageAvatar = CGFloat(28)
+    static let componentMobileChatMessageGap = CGFloat(8)
+    static let componentMobileChatNarrowMarkHeight = CGFloat(34)
+    static let componentMobileChatNarrowMarkRadius = CGFloat(10)
+    static let componentMobileChatNarrowMarkWidth = CGFloat(30)
+    static let componentMobileFieldGap = CGFloat(7)
+    static let componentMobileFieldIconSize = CGFloat(18)
+    static let componentMobileFieldInsetBlock = CGFloat(10)
+    static let componentMobileFieldInsetInline = CGFloat(12)
+    static let componentMobileFieldMinimumHeight = CGFloat(46)
+    static let componentMobileFieldRadius = CGFloat(10)
+    static let componentMobileFieldTextAreaMinimumHeight = CGFloat(72)
+    static let componentMobileFormDateDeleteGap = CGFloat(6)
+    static let componentMobileFormDateOptionGap = CGFloat(8)
+    static let componentMobileFormGroupGap = CGFloat(18)
+    static let componentMobileFormSectionGap = CGFloat(14)
+    static let componentMobileFormSwitchHeight = CGFloat(24)
+    static let componentMobileFormSwitchRowHeight = CGFloat(48)
+    static let componentMobileFormSwitchThumbInset = CGFloat(3)
+    static let componentMobileFormSwitchThumbSize = CGFloat(18)
+    static let componentMobileFormSwitchWidth = CGFloat(38)
+    static let componentMobileFormTwoFieldGap = CGFloat(10)
+    static let componentMobilePeopleChipAvatarSize = CGFloat(21)
+    static let componentMobilePeopleChipBorderWidth = CGFloat(2)
+    static let componentMobilePeopleChipGap = CGFloat(4)
+    static let componentMobilePeopleChipInsetBlock = CGFloat(3)
+    static let componentMobilePeopleChipInsetEnd = CGFloat(10)
+    static let componentMobilePeopleChipInsetStart = CGFloat(3)
+    static let componentMobilePeopleChipMoreInsetBlock = CGFloat(4)
+    static let componentMobilePeopleChipMoreInsetInline = CGFloat(7)
+    static let componentMobilePeopleChipMoreWidth = CGFloat(32)
+    static let componentMobilePeopleChipOpenerHeight = CGFloat(48)
+    static let componentMobilePeopleChipOverlap = CGFloat(4)
+    static let componentMobileRosterActionHeight = CGFloat(52)
+    static let componentMobileRosterActionIcon = CGFloat(20)
+    static let componentMobileRosterAvatarSize = CGFloat(32)
+    static let componentMobileRosterRowGap = CGFloat(11)
+    static let componentMobileRosterRowHeight = CGFloat(55)
+    static let componentMobileSheetBackdropBlur = CGFloat(0)
+    static let componentMobileSheetButtonHeight = CGFloat(46)
+    static let componentMobileSheetButtonInsetBlock = CGFloat(11)
+    static let componentMobileSheetButtonInsetInline = CGFloat(16)
+    static let componentMobileSheetButtonRadius = CGFloat(12)
+    static let componentMobileSheetCompactTopReserve = CGFloat(20)
+    static let componentMobileSheetContentInsetBottom = CGFloat(24)
+    static let componentMobileSheetContentInsetInline = CGFloat(20)
+    static let componentMobileSheetContentInsetTop = CGFloat(12)
+    static let componentMobileSheetFooterInsetBlock = CGFloat(12)
+    static let componentMobileSheetFooterInsetBottom = CGFloat(16)
+    static let componentMobileSheetGrabInsetInline = CGFloat(16)
+    static let componentMobileSheetGrabInsetTop = CGFloat(8)
+    static let componentMobileSheetHandleGap = CGFloat(6)
+    static let componentMobileSheetHandleHeight = CGFloat(4)
+    static let componentMobileSheetHandleWidth = CGFloat(32)
+    static let componentMobileSheetHeaderHeight = CGFloat(48)
+    static let componentMobileSheetMinimumHeight = CGFloat(150)
+    static let componentMobileSheetRadius = CGFloat(24)
+    static let componentMobileSheetTopReserve = CGFloat(50)
     static let componentNavigationDetailsSidebarWidth = CGFloat(280)
     static let componentNavigationHeight = CGFloat(62)
     static let componentNavigationIcon = CGFloat(19)
@@ -321,12 +508,55 @@ enum DesignTokens {
     static let componentParticipantChipPaddingEnd = CGFloat(16)
     static let componentParticipantChipPaddingStart = CGFloat(3)
     static let componentParticipantChipRadius = CGFloat(30)
+    static let componentParticipantRosterAvatarSize = CGFloat(30)
+    static let componentParticipantRosterRowGap = CGFloat(14)
+    static let componentParticipantRosterStackGap = CGFloat(18)
+    static let componentReactionChipBorderWidth = CGFloat(1)
+    static let componentReactionChipGap = CGFloat(5)
+    static let componentReactionChipOpenerIcon = CGFloat(18)
+    static let componentReactionChipPaddingBlock = CGFloat(4)
+    static let componentReactionChipPaddingInline = CGFloat(8)
+    static let componentReactionPeopleFilterInsetBlock = CGFloat(8)
+    static let componentReactionPeopleFilterInsetInline = CGFloat(13)
+    static let componentReactionPeopleFilterRadius = CGFloat(12)
+    static let componentReactionPickerAnchorGap = CGFloat(8)
+    static let componentReactionPickerContextGap = CGFloat(24)
+    static let componentReactionPickerContextInsetBottom = CGFloat(8)
+    static let componentReactionPickerContextInsetInline = CGFloat(12)
+    static let componentReactionPickerContextInsetTop = CGFloat(10)
+    static let componentReactionPickerEdgeInset = CGFloat(8)
+    static let componentReactionPickerEnterOffset = CGFloat(8)
+    static let componentReactionPickerEnterScale = 0.92
+    static let componentReactionPickerFullInsetInline = CGFloat(2)
+    static let componentReactionPickerFullRadius = CGFloat(20)
+    static let componentReactionPickerLongPressMovementTolerance = CGFloat(12)
+    static let componentReactionPickerMaximumWidth = CGFloat(316)
+    static let componentReactionPickerMessageContextReserve = CGFloat(80)
+    static let componentReactionPickerMinimumFullHeight = CGFloat(160)
+    static let componentReactionPickerPreferredFullHeight = CGFloat(352)
+    static let componentReactionPickerPressedScale = 0.97
+    static let componentReactionPickerQuickInset = CGFloat(4)
+    static let componentReactionPickerQuickRadius = CGFloat(18)
+    static let componentReactionPickerSelectedOutlineWidth = CGFloat(2)
+    static let componentReactionPickerTopInset = CGFloat(4)
     static let componentSheetBackdropBlur = CGFloat(5)
+    static let componentTaskDetailsActionsGap = CGFloat(10)
+    static let componentTaskDetailsActionsInsetTop = CGFloat(22)
+    static let componentTaskDetailsFactInsetBlock = CGFloat(8)
+    static let componentTaskDetailsFactsGap = CGFloat(18)
+    static let componentTaskDetailsFactsInsetTop = CGFloat(7)
     static let motionDurationCard = 0.22
     static let motionDurationCover = 0.28
+    static let motionDurationEmojiPanelEnter = 0.18
+    static let motionDurationEmojiPanelExit = 0.15
     static let motionDurationFast = 0.15
+    static let motionDurationMobileSheet = 0.18
     static let motionDurationNavigation = 0.26
     static let motionDurationPhoto = 0.29
+    static let motionDurationReactionEnter = 0.18
+    static let motionDurationReactionExit = 0.15
+    static let motionDurationReactionFeedback = 0.15
+    static let motionDurationReactionLongPress = 0.45
     static let motionEasingStandard = [0.2, 0.7, 0.3, 1]
     static let radiusBadge = CGFloat(8)
     static let radiusCard = CGFloat(22)
@@ -357,24 +587,41 @@ enum DesignTokens {
     static let typographyLineHeightBody = 1.5
     static let typographyLineHeightCardTitle = 1.25
     static let typographyLineHeightLabel = 1.4
+    static let typographyLineHeightMeetingDescription = 1.6
+    static let typographyLineHeightMobileFieldDescription = 1.45
+    static let typographyLineHeightMobileSheetTitle = 1.25
     static let typographySizeBody = CGFloat(15)
     static let typographySizeButton = CGFloat(14)
     static let typographySizeCaption = CGFloat(12)
     static let typographySizeCardTitle = CGFloat(21)
     static let typographySizeCardTitleMobile = CGFloat(19)
+    static let typographySizeChatMessage = CGFloat(14)
     static let typographySizeDesktopHeading = CGFloat(34)
+    static let typographySizeEmojiCategory = CGFloat(23)
+    static let typographySizeEmojiChoice = CGFloat(27)
+    static let typographySizeEmojiGroupLabel = CGFloat(10)
+    static let typographySizeEmojiQuick = CGFloat(28)
     static let typographySizeHeading = CGFloat(27)
     static let typographySizeLabel = CGFloat(11)
     static let typographySizeMobileActionHeading = CGFloat(28)
+    static let typographySizeMobileChatNarrowTitle = CGFloat(14)
+    static let typographySizeMobileChatTitle = CGFloat(16)
+    static let typographySizeMobilePeopleInitial = CGFloat(10)
+    static let typographySizeMobileSheetTitle = CGFloat(19)
+    static let typographySizeMobileWebInput = CGFloat(16)
     static let typographySizeParticipantChip = CGFloat(11)
     static let typographySizeParticipantChipAvatar = CGFloat(9)
     static let typographySizeParticipantChipMore = CGFloat(10)
+    static let typographySizeParticipantRosterAvatar = CGFloat(12)
     static let typographySizeSectionHeading = CGFloat(16)
     static let typographySizeSmall = CGFloat(13)
     static let typographyWeightBold = 700
     static let typographyWeightBrand = 850
     static let typographyWeightMedium = 500
+    static let typographyWeightMobileChatTitle = 650
+    static let typographyWeightMobileSheetTitle = 650
     static let typographyWeightParticipantChipAvatar = 650
+    static let typographyWeightParticipantRosterAvatar = 650
     static let typographyWeightRegular = 400
     static let typographyWeightSemibold = 600
 }

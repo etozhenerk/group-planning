@@ -1,0 +1,176 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness/playwright.config.ts"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness/playwright.config.ts",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness",
+        "testIgnore": [],
+        "testMatch": [
+          "cursor-race.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/harness",
+        "testIgnore": [],
+        "testMatch": "cursor-race.spec.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8444",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "off",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-27-cursor-independent/runtime/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/2026-10-27-telegram-chat-1.4.1-r3/httpapi.test -test.run=^TestBrowserFixture$ -test.v -test.timeout=0",
+      "cwd": "/Users/misha/Documents/Codex/projects/group-planning",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8444",
+        "SOMEWHERE_BROWSER_DIST": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/chat-correction-2.1.0/web-r9-demo",
+        "SOMEWHERE_BROWSER_DESIGN": "0"
+      },
+      "url": "https://127.0.0.1:8444/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 15000
+    }
+  },
+  "suites": [
+    {
+      "title": "cursor-race.spec.ts",
+      "file": "cursor-race.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TC-CHAT-SYNC-2D68FE69: ACK 102 does not skip received cursor 100 and foreign 101",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3804,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T18:24:56.567Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "354ba6d7a14d18109b30-0f46b1ec9c64f8250ced",
+          "file": "cursor-race.spec.ts",
+          "line": 22,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T18:24:56.076Z",
+    "duration": 4604.624000000001,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

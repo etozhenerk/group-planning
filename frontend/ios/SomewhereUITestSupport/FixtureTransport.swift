@@ -1,9 +1,11 @@
 import Foundation
 import Security
+import os
 
 // Compiled only into SomewhereUITestHost; production keeps system TLS validation.
 final class FixtureTransport: HTTPTransport {
     private let session: URLSession
+    private let requests = OSAllocatedUnfairLock(initialState: [String: Int]())
     private let scenario: String
     init(origin: URL, certificate: Data, scenario: String) {
         self.scenario = scenario
@@ -21,7 +23,16 @@ final class FixtureTransport: HTTPTransport {
     }
     deinit { session.invalidateAndCancel() }
     func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
-        if request.url?.path == "/api/v1/auth/yandex/start" {
+        if let file = ProcessInfo.processInfo.environment["SOMEWHERE_UI_HTTP_TRACE"] {
+            requests.withLock { counts in
+                counts[request.url?.path ?? "unknown", default: 0] += 1
+                do {
+                    try JSONEncoder().encode(counts).write(
+                        to: URL(fileURLWithPath: file), options: .atomic)
+                } catch { print("SOMEWHERE_HTTP_TRACE_WRITE_FAILED") }
+            }
+        }
+        if scenario != "profile-fields", request.url?.path == "/api/v1/auth/yandex/start" {
             try await Task.sleep(for: .milliseconds(300))
             throw URLError(.notConnectedToInternet)
         }

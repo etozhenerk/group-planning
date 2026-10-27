@@ -84,8 +84,8 @@ final class ExperienceUITests: XCTestCase {
         let input = app.textViews["message-input"]
         input.tap()
         input.typeText("Жду встречи ")
-        app.buttons["Добавить эмодзи"].tap()
-        let search = app.textFields["Поиск эмодзи"]
+        app.buttons["composer-emoji-toggle"].tap()
+        let search = app.textFields["emoji-search"]
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.tap()
         search.typeText("алое сердце")

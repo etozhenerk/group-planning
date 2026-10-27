@@ -1,0 +1,1941 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "tests/03-mobile.spec.ts",
+      "tests/15-poll-modal.spec.ts",
+      "tests/16-dialog-motion.spec.ts",
+      "tests/27-mobile-scroll.spec.ts",
+      "tests/29-media-refresh.spec.ts",
+      "tests/33-chat-action-sheets.spec.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=/tmp/somewhere-web-resume-targeted-run01"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/playwright.config.ts",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/somewhere-web-resume-targeted-run01",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [
+          "30-design-review.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/tmp/somewhere-web-resume-targeted-run01",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [
+          "30-design-review.spec.ts"
+        ],
+        "testMatch": [
+          "27-mobile-scroll.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "29-media-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "33-chat-action-sheets.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/somewhere-web-resume-targeted-run01",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": "30-design-review.spec.ts",
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8444",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/somewhere-web-resume-targeted-run01",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": "30-design-review.spec.ts",
+        "testMatch": [
+          "27-mobile-scroll.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "29-media-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "33-chat-action-sheets.spec.ts"
+        ],
+        "timeout": 30000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8444",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8444"
+      },
+      "url": "https://127.0.0.1:8444/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "15-poll-modal.spec.ts",
+      "file": "15-poll-modal.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "date action adapts to sheet, preserves draft, handles calendar and validation at 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:27.444Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "114dae7f312f3c8de685-6c176713e9a9269bca0d",
+          "file": "15-poll-modal.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "date action adapts to sheet, preserves draft, handles calendar and validation at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2528,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:30.535Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "114dae7f312f3c8de685-434eda266c0a4c64a834",
+          "file": "15-poll-modal.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "date action adapts to sheet, preserves draft, handles calendar and validation at 1440px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1641,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:33.068Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "114dae7f312f3c8de685-0e3c63b41bf6c7616f6a",
+          "file": "15-poll-modal.spec.ts",
+          "line": 5,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "16-dialog-motion.spec.ts",
+      "file": "16-dialog-motion.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dialog keeps content and scroll lock until exit ends at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:34.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8de8a8dbdc92d58890-6d52cd863ae2efe2f27e",
+          "file": "16-dialog-motion.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "dialog keeps content and scroll lock until exit ends at 1440px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1700,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:36.986Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8de8a8dbdc92d58890-539a63267415fbbc3bd3",
+          "file": "16-dialog-motion.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "touch swipe follows the finger, returns after a short drag and dismisses after a long drag",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2416,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:38.690Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8de8a8dbdc92d58890-8955b2f0ea1345dca008",
+          "file": "16-dialog-motion.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "swipe starts at the top edge, handle and side padding at 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4383,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:41.111Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8de8a8dbdc92d58890-c2e0ccda310f283c7d80",
+          "file": "16-dialog-motion.spec.ts",
+          "line": 107,
+          "column": 3
+        },
+        {
+          "title": "swipe starts at the top edge, handle and side padding at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4388,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:45.499Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8de8a8dbdc92d58890-219191a1b43c3f431553",
+          "file": "16-dialog-motion.spec.ts",
+          "line": 107,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "27-mobile-scroll.spec.ts",
+      "file": "27-mobile-scroll.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "long meeting facts and forms stay within mobile width 320",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:49.899Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-b1a1784ce3898734c81a",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "long meeting facts and forms stay within mobile width 402",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:52.071Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-b9868f01063530ff5d26",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "long meeting facts and forms stay within mobile width 430",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2190,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:54.209Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-f32a6d2db2ef16412e3d",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "chat and sheet follow the visible viewport without creating a second page scroll",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1744,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:56.404Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-4bec43518f83313e4f77",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "closing a mobile sheet restores the background position and permits normal page scrolling",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1734,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:58.153Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-56492fd18ac017ea46bd",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 180,
+          "column": 1
+        },
+        {
+          "title": "long meeting facts and forms stay within mobile width 320",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:45.949Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-9fd530384147824994bf",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "long meeting facts and forms stay within mobile width 402",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2419,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:49.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-ab679d36c89d42c83db7",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "long meeting facts and forms stay within mobile width 430",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2378,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:51.764Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-9389f2d368f2783c3ced",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "chat and sheet follow the visible viewport without creating a second page scroll",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1716,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:54.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-c1efd193f8480f90f1ae",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "closing a mobile sheet restores the background position and permits normal page scrolling",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:55.870Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d16ea1a65f0f6fc6d764-d41c5edbd3a1010f620f",
+          "file": "27-mobile-scroll.spec.ts",
+          "line": 180,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "29-media-refresh.spec.ts",
+      "file": "29-media-refresh.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "an immediate file choice closes to chat with one click at 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1010,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:15:59.897Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-9d95810c27e4e85fc377",
+          "file": "29-media-refresh.spec.ts",
+          "line": 12,
+          "column": 3
+        },
+        {
+          "title": "an immediate file choice closes to chat with one click at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1072,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:00.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-27bbf0d84c8160165a3c",
+          "file": "29-media-refresh.spec.ts",
+          "line": 12,
+          "column": 3
+        },
+        {
+          "title": "partial upload retries only the failed file and preserves the message draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 856,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:01.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-cb38f43f063c01f2b250",
+          "file": "29-media-refresh.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "past meeting album stays separate from chat and supports grid, keyboard and browser Back",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:02.847Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-6c255c365a1eb9519c8e",
+          "file": "29-media-refresh.spec.ts",
+          "line": 129,
+          "column": 1
+        },
+        {
+          "title": "closing the upload preserves files and captions until leaving the meeting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 840,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:04.935Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-812aa2ce059b30c4ae41",
+          "file": "29-media-refresh.spec.ts",
+          "line": 248,
+          "column": 1
+        },
+        {
+          "title": "an immediate file choice closes to chat with one click at 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:57.565Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-875d54d633dbac9ea153",
+          "file": "29-media-refresh.spec.ts",
+          "line": 12,
+          "column": 3
+        },
+        {
+          "title": "an immediate file choice closes to chat with one click at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:59.025Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-cc63f404ce23b373d02b",
+          "file": "29-media-refresh.spec.ts",
+          "line": 12,
+          "column": 3
+        },
+        {
+          "title": "partial upload retries only the failed file and preserves the message draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1642,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:17:00.532Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-c3d3b9271e3f39d6f37f",
+          "file": "29-media-refresh.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "past meeting album stays separate from chat and supports grid, keyboard and browser Back",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3156,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:17:02.180Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-80176060a5dcc4cbe0f4",
+          "file": "29-media-refresh.spec.ts",
+          "line": 129,
+          "column": 1
+        },
+        {
+          "title": "closing the upload preserves files and captions until leaving the meeting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1552,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:17:05.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bcbc1695f2cbfb16caa-0a2f60a3cfb11fdb3bb5",
+          "file": "29-media-refresh.spec.ts",
+          "line": 248,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "33-chat-action-sheets.spec.ts",
+      "file": "33-chat-action-sheets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15335,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:102:31",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                      "column": 31,
+                      "line": 102
+                    },
+                    "snippet": "  100 |           });\n  101 |\n> 102 |           await expect(share).toHaveAttribute('data-motion', 'open');\n      |                               ^\n  103 |           await expect(info).not.toBeVisible();\n  104 |           await expect(viewer.locator('dialog:modal')).toHaveCount(1);\n  105 |           await share.getByRole('button', { name: 'Закрыть', exact: true }).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                        "column": 31,
+                        "line": 102
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n\n\n  100 |           });\n  101 |\n> 102 |           await expect(share).toHaveAttribute('data-motion', 'open');\n      |                               ^\n  103 |           await expect(info).not.toBeVisible();\n  104 |           await expect(viewer.locator('dialog:modal')).toHaveCount(1);\n  105 |           await share.getByRole('button', { name: 'Закрыть', exact: true }).click();\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:102:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:05.785Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-2.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-3.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-5.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-6.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-8.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/test-failed-7.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                    "column": 31,
+                    "line": 102
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-7b1683920a05cf463a44",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "date poll freezes a committed request after a lost response and retries after reopening",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:21.919Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-81d94cad42cbbe983948",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 121,
+          "column": 3
+        },
+        {
+          "title": "place poll freezes a committed request after a lost response and retries after reopening",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1813,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:24.155Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-95b229091a70b5118877",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 121,
+          "column": 3
+        },
+        {
+          "title": "mobile task sheet preserves an uncertain request across close and resize",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:25.972Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-d0de498e6e0e46b6086c",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 210,
+          "column": 1
+        },
+        {
+          "title": "meeting information shares in one sheet, excludes service links and keeps an edit draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4965,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:27.467Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-ab75ab27ac947902a7a7",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 270,
+          "column": 1
+        },
+        {
+          "title": "chat action keeps its heading and close button visible in a real 320x430 viewport",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6491,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9971910119056702\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9971910119056702\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9971910119056702\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9971910119056702\"\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                      "column": 26,
+                      "line": 391
+                    },
+                    "snippet": "  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                        "column": 26,
+                        "line": 391
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9971910119056702\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9971910119056702\"\u001b[22m\n\n\n  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:32.437Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-59f57--in-a-real-320x430-viewport-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-59f57--in-a-real-320x430-viewport-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-59f57--in-a-real-320x430-viewport-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                    "column": 26,
+                    "line": 391
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-90a946e6b5488181006d",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 370,
+          "column": 3
+        },
+        {
+          "title": "chat action keeps its heading and close button visible in a real 390x430 viewport",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6131,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9943820238113403\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9943820238113403\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9943820238113403\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9943820238113403\"\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                      "column": 26,
+                      "line": 391
+                    },
+                    "snippet": "  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                        "column": 26,
+                        "line": 391
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9943820238113403\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9943820238113403\"\u001b[22m\n\n\n  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:16:39.289Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                    "column": 26,
+                    "line": 391
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-827dc3ef23e05320b598",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 370,
+          "column": 3
+        },
+        {
+          "title": "TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independent actions",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 49111,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:102:31",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                      "column": 31,
+                      "line": 102
+                    },
+                    "snippet": "  100 |           });\n  101 |\n> 102 |           await expect(share).toHaveAttribute('data-motion', 'open');\n      |                               ^\n  103 |           await expect(info).not.toBeVisible();\n  104 |           await expect(viewer.locator('dialog:modal')).toHaveCount(1);\n  105 |           await share.getByRole('button', { name: 'Закрыть', exact: true }).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                        "column": 31,
+                        "line": 102
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Пригласить друзей', exact: true })\nExpected: \u001b[32m\"open\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('dialog', { name: 'Пригласить друзей', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Пригласить друзей', exact: true })\u001b[22m\n\n\n  100 |           });\n  101 |\n> 102 |           await expect(share).toHaveAttribute('data-motion', 'open');\n      |                               ^\n  103 |           await expect(info).not.toBeVisible();\n  104 |           await expect(viewer.locator('dialog:modal')).toHaveCount(1);\n  105 |           await share.getByRole('button', { name: 'Закрыть', exact: true }).click();\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:102:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:17:06.907Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-2.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-3.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-6.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-8.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-7.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/test-failed-5.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-TC-C-57fa6--retain-independent-actions-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                    "column": 31,
+                    "line": 102
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-abce92f5d15e42b97771",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "date poll freezes a committed request after a lost response and retries after reopening",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2905,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:17:57.004Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-6f24e8185240f8432e2d",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 121,
+          "column": 3
+        },
+        {
+          "title": "place poll freezes a committed request after a lost response and retries after reopening",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2365,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:18:00.161Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-ca90a946aa1f5c726ca7",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 121,
+          "column": 3
+        },
+        {
+          "title": "mobile task sheet preserves an uncertain request across close and resize",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2032,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:18:02.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-3ad26b531fd552583be6",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 210,
+          "column": 1
+        },
+        {
+          "title": "meeting information shares in one sheet, excludes service links and keeps an edit draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:18:04.567Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-253619fe9770fcd978d1",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 270,
+          "column": 1
+        },
+        {
+          "title": "chat action keeps its heading and close button visible in a real 320x430 viewport",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1848,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:18:10.180Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-4339f59b5b681f549cb5",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 370,
+          "column": 3
+        },
+        {
+          "title": "chat action keeps its heading and close button visible in a real 390x430 viewport",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6504,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9947331547737122\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9947331547737122\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9947331547737122\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9947331547737122\"\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                      "column": 26,
+                      "line": 391
+                    },
+                    "snippet": "  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                        "column": 26,
+                        "line": 391
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0.9947331547737122\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Предложить дату', exact: true }).getByRole('button', { name: 'Создать опрос', exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"submit\" aria-busy=\"false\" aria-label=\"Создать опрос\">Создать опрос</button>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0.9947331547737122\"\u001b[22m\n\n\n  389 |     await submit.scrollIntoViewIfNeeded();\n  390 |     expect(await content.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);\n> 391 |     await expect(submit).toBeInViewport({ ratio: 1 });\n      |                          ^\n  392 |     await expect(close).toBeInViewport({ ratio: 1 });\n  393 |     await expect(heading).toBeInViewport({ ratio: 1 });\n  394 |     expect((await heading.boundingBox())?.y).toBe(headingTop);\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts:391:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T09:18:12.032Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-mobile-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/somewhere-web-resume-targeted-run01/33-chat-action-sheets-chat-0097e--in-a-real-390x430-viewport-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/33-chat-action-sheets.spec.ts",
+                    "column": 26,
+                    "line": 391
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6ccdac79b985d014e78-407096b3e828ea6848e5",
+          "file": "33-chat-action-sheets.spec.ts",
+          "line": 370,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T09:15:25.059Z",
+    "duration": 173625.13,
+    "expected": 37,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

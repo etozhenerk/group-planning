@@ -1,6 +1,7 @@
-# Контракт синхронизации: предложение v1
+# Контракт синхронизации: реализация v1
 
-Это проект расширения текущего `/api/v1`, не уже доступные endpoints.
+Это контракт разрешённого 27.10.2026 расширения `/api/v1`, не утверждение
+о доступности новых endpoints. Порядок внедрения и проверки — [testing.md](testing.md).
 Существующие GET feed и POST messages сохраняют контракт. Поля sequence,
 revision и счётчиков версий — decimal strings, не JavaScript Number.
 Курсоры opaque, versioned, связаны с пользователем/встречей и проверяются
@@ -121,8 +122,15 @@ expiry соединения привязан к сроку сессии, пов�
 Для memory.Store те же транзакционные порты и mock dispatcher, данные
 сбрасываются при перезапуске как сейчас. Локальную БД не поднимаем.
 
-SQL Reader добавляет bounded `FeedPage`/`FeedAround` и адресный lookup
-идемпотентности по существующему уникальному `(meeting, actor, client_request_id)`.
+SQL Reader добавляет bounded `FeedPage`/`FeedAround`, lookup text intent
+по существующему уникальному `(meeting, actor, client_request_id)` и lookup
+по сохранённому `entry_id` для media publish retry. Оба повтора сохраняют
+проверку текущего доступа, автора, встречи и прежнего содержимого после expiry
+receipt; media hydration возвращает только разрешённое подтверждённое вложение.
+Memory реализует те же границы с независимыми копиями и rollback. Полный
+`Feed()` остаётся у не перенесённых потребителей и не вызывается ради страницы
+или адресного повтора. `initial/before` выбирают ближайшие записи DESC и возвращают
+ASC; `after` выбирает ASC. Tail и page принадлежат одному read-only снимку.
 Индексы `(meeting_id, sequence)`, `(meeting_id, change_sequence)` и подходящие
 индексы markers подтверждаются EXPLAIN. `LIMIT + 1` определяет продолжение.
 Нельзя заменить полный SELECT скрытой полной десериализацией в другом слое.
@@ -142,6 +150,48 @@ SQL Reader добавляет bounded `FeedPage`/`FeedAround` и адресны�
 публикуются из отдельного outbox без FK cascade на удалённую встречу.
 
 ## Read state и исходящие
+
+### Wire-формат read state v1
+
+Флаг `SOMEWHERE_CHAT_READ_STATE=false` по умолчанию. `read_state=true` требует
+настроенной sync-подписи и завершённой атомарной активации до приёма HTTP.
+Аддитивная миграция создаёт таблицы/индексы; baseline заполняется при активации
+флага, а не заранее во время DDL. Для текущего организатора и участников «Приду»
+сохраняется baseline=tail, actual=0, только если строки ещё нет. Создание встречи
+и первое вступление задают baseline в той же транзакции; повторное включение
+флага и повторное вступление не сбрасывают прежнюю позицию.
+
+При включённом флаге snapshot и changes передают персональные поля:
+
+```json
+{
+  "my_read_state": "150",
+  "unread_baseline_sequence": "100",
+  "unread_count": "3",
+  "first_unread": "6ba2aca3-a232-4ad5-9934-9118c64c0edd"
+}
+```
+
+`my_read_state` — фактический decimal marker, `first_unread` — UUID записи,
+не sequence; при отсутствии непрочитанных — `null`. При выключенном флаге
+новые необязательные поля могут отсутствовать, прежние null остаются допустимы.
+Считаются только чужие сообщения после max(baseline, actual); системные события,
+карточки и реакции не увеличивают число непрочитанных.
+
+`PUT read-marker` принимает `{ "read_through_sequence": "150" }` и возвращает
+`read_through_sequence`, `unread_baseline_sequence`, `unread_count`, `first_unread`,
+`projection_version`. Все числовые значения — decimal strings. No-op marker
+не меняет updated_at и не создаёт journal/outbox запись.
+
+`POST read-receipts/query` принимает `{ "entry_ids": ["<uuid>"] }`, максимум100,
+и возвращает `{ "receipts": [{ "entry_id": "<uuid>", "reader_count": "2" }],
+"projection_version": "151" }`. Это собственные подтверждённые сообщения автора.
+`GET messages/{entry_id}/readers` возвращает `readers` с `id`, `display_name`,
+`avatar_url`, а также decimal `reader_count`, opaque/null `next_cursor` и decimal
+`projection_version`. Только текущие организатор/«Приду» с достаточным actual
+попадают в список; автор и удалённые аккаунты исключены. Персональные markers
+других людей, контакты и время чтения не выдаются.
+
 
 Read-through объединяется max; запись отправляется не чаще раза в секунду
 и best-effort при уходе. Локально желаемая позиция изолирована аккаунтом,

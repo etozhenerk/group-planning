@@ -62,13 +62,10 @@ final class MediaExperienceUITests: XCTestCase {
         XCTAssertTrue(mine.waitForExistence(timeout: 10))
         revealReaction(mine, app: app)
         capture("refresh-reaction")
-        message.press(forDuration: 1)
-        let people = app.buttons["Кто поставил ❤️"]
-        XCTAssertTrue(people.waitForExistence(timeout: 5))
-        people.tap()
+        mine.press(forDuration: 0.7)
         XCTAssertTrue(app.staticTexts["Саша"].waitForExistence(timeout: 5))
         capture("refresh-reaction-people")
-        app.buttons["Готово"].tap()
+        app.buttons["reaction-people-close"].tap()
         revealReaction(mine, app: app)
         mine.tap()
         let removed = XCTNSPredicateExpectation(

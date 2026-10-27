@@ -20,3 +20,45 @@ button.primary {
   display: grid;
   gap: 20px;
 }
+
+.body {
+  display: grid;
+  gap: var(--ds-space-s20);
+}
+
+.stack[data-mobile='true'] {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+}
+
+.stack[data-mobile='true'] .body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  gap: var(--ds-component-mobile-form-group-gap);
+  padding: var(--ds-component-mobile-sheet-content-inset-top)
+    var(--ds-component-mobile-sheet-content-inset-inline)
+    var(--ds-component-mobile-sheet-content-inset-bottom);
+}
+
+.stack[data-mobile='true'] .footer {
+  flex-shrink: 0;
+  padding: var(--ds-component-mobile-sheet-footer-inset-block)
+    var(--ds-component-mobile-sheet-content-inset-inline)
+    max(var(--ds-component-mobile-sheet-footer-inset-bottom), env(safe-area-inset-bottom));
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  background: var(--ds-color-surface);
+}
+
+.stack[data-mobile='true'] .primary {
+  width: 100%;
+  min-height: var(--ds-component-mobile-sheet-button-height);
+  border-radius: var(--ds-component-mobile-sheet-button-radius);
+  font-size: var(--ds-typography-size-button);
+}
+
+.footer button {
+  width: 100%;
+}

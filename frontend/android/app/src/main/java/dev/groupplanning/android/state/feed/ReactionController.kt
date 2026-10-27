@@ -31,6 +31,7 @@ internal class ReactionController(
     private var mutationVersion = 0L
     private var refreshVersion = 0L
     private var appliedRefresh = 0L
+    private var deferred: List<MessageReaction>? = null
 
     fun open(access: MeetingAccess) {
         lease = access
@@ -39,6 +40,7 @@ internal class ReactionController(
         lease = null
         mutationVersion++
         visible = emptyList()
+        deferred = null
         mutable.value = ReactionState()
     }
     fun visible(ids: List<UUID>) {
@@ -75,6 +77,23 @@ internal class ReactionController(
         ) { /* Keep last confirmed reactions while polling is unavailable. */ }
     }
 
+    fun receive(entry: UUID, reactions: List<MessageReaction>) {
+        if (state.value.pending?.entry == entry) {
+            deferred = reactions
+            return
+        }
+        mutationVersion++
+        mutable.value = state.value.copy(entries = state.value.entries + (entry to reactions))
+    }
+
+    fun retain(ids: Set<UUID>) {
+        mutable.value = state.value.copy(
+            entries = state.value.entries.filterKeys {
+                it in ids || it == state.value.pending?.entry
+            },
+        )
+    }
+
     fun pick(entry: UUID?) {
         mutable.value = state.value.copy(picker = entry)
     }
@@ -92,6 +111,7 @@ internal class ReactionController(
         val access = lease ?: return
         if (state.value.pending != null) return
         mutationVersion++
+        deferred = null
         val confirmed = state.value.entries[intent.entry].orEmpty()
         val old = confirmed.find { it.emoji == intent.emoji }
         val changed = confirmed.filterNot { it.emoji == intent.emoji }.toMutableList()
@@ -134,6 +154,10 @@ internal class ReactionController(
                             state.value.entries + (intent.entry to response.reactions),
                             pending = null,
                         )
+                    if (deferred != null) {
+                        deferred = null
+                        refresh()
+                    }
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled
@@ -144,10 +168,12 @@ internal class ReactionController(
                     mutationVersion++
                     mutable.value =
                         state.value.copy(
-                            entries = state.value.entries + (intent.entry to confirmed),
+                            entries =
+                            state.value.entries + (intent.entry to (deferred ?: confirmed)),
                             pending = null,
                             failed = intent,
                         )
+                    deferred = null
                 }
             }
         }

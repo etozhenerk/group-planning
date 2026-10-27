@@ -21,6 +21,7 @@ import (
 
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/realtime"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
@@ -56,7 +57,7 @@ type meetingHTTPTest struct {
 	logs      safeAuthLogs
 }
 
-func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
+func newMeetingHTTPTest(t *testing.T, options ...meetings.Option) *meetingHTTPTest {
 	t.Helper()
 	h := &meetingHTTPTest{t: t, store: memory.New()}
 	h.clock.Store(time.Now().Unix())
@@ -79,8 +80,30 @@ func newMeetingHTTPTest(t *testing.T) *meetingHTTPTest {
 		t.Fatal(err)
 	}
 
-	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) }, meetings.WithMediaContent(memory.NewMediaContent()))
-	h.server.Config.Handler = NewWithSupport(h.app, service, fixtureSupport(), slog.New(slog.NewJSONHandler(&h.logs, nil)), testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
+	options = append(options, meetings.WithMediaContent(memory.NewMediaContent()))
+	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) }, options...)
+	var stream RealtimeHandler
+	if h.app.ChatReadStateEnabled() {
+		if err := h.app.InitializeChatReadState(t.Context()); err != nil {
+			t.Fatal(err)
+		}
+
+		adapter, err := realtime.New(h.app, service)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		stream = adapter.ServeAuthenticatedHTTP
+		t.Cleanup(func() {
+			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+			defer cancel()
+			if err := adapter.Close(ctx); err != nil {
+				t.Error(err)
+			}
+		})
+	}
+
+	h.server.Config.Handler = NewWithRealtime(h.app, service, fixtureSupport(), slog.New(slog.NewJSONHandler(&h.logs, nil)), stream, testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)
@@ -222,7 +245,7 @@ func testKey(n string) string {
 }
 
 func TestMeetingOpenAPIResponses(t *testing.T) {
-	h := newMeetingHTTPTest(t)
+	h := newMeetingHTTPTest(t, meetings.WithChatSyncKey([]byte(strings.Repeat("s", 32))))
 	h.clock.Store(time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC).Unix())
 	ownerClient := h.client(true)
 	guestClient := h.client(true)
@@ -281,6 +304,7 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 	}
 
 	h.request(guestClient, "GET", base+"/feed", nil, nil, 403)
+	h.request(guestClient, "GET", base+"/sync", nil, nil, 403)
 	h.request(guestClient, "GET", base, nil, nil, 403)
 	h.request(guestClient, "GET", base+"/participants", nil, nil, 403)
 	// Own link never registers its organizer as a guest.
@@ -357,6 +381,7 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 	}
 
 	h.request(guestClient, "GET", base+"/feed", nil, nil, 403)
+	h.request(guestClient, "GET", base+"/sync", nil, nil, 403)
 	h.request(guestClient, "POST", base+"/messages", message, headersFor(h, guest, testKey("7")), 403)
 	h.request(guestClient, "GET", base+"/participants", nil, nil, 403)
 	h.request(guestClient, "PUT", base+"/rsvp", map[string]string{"answer": "going", "expected_revision": "1"}, headersFor(h, guest, testKey("10")), 409)
@@ -407,10 +432,13 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 	native := decodeMeetingTest[exchangeResponse](t, data)
 	bearer := map[string]string{"Authorization": "Bearer " + native.SessionToken}
 	h.request(h.anonymous, "GET", base+"/feed", nil, bearer, 200)
+	h.request(h.anonymous, "GET", base+"/sync", nil, bearer, 200)
+	h.request(h.anonymous, "GET", "/api/v1/chat-capabilities", nil, bearer, 200)
 	bearer["Idempotency-Key"] = testKey("14")
 	h.request(h.anonymous, "POST", base+"/messages", map[string]string{"text": "С телефона", "client_request_id": testKey("14")}, bearer, 201)
 	h.clock.Add(int64((2 * time.Hour) / time.Second))
 	h.request(guestClient, "GET", base+"/feed", nil, nil, 401)
+	h.request(h.anonymous, "GET", base+"/sync", nil, bearer, 401)
 	data, _ = h.request(guestClient, "GET", invite, nil, nil, 200)
 	if decodeMeetingTest[previewResponse](t, data).MyRSVP != nil {
 		t.Fatal("expired session leaked own state")
@@ -423,6 +451,8 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 		}
 	}
 
+	h.captures = append(h.captures, chatSyncHTTPChecks(t)...)
+	h.captures = append(h.captures, chatReadHTTPChecks(t)...)
 	if output := os.Getenv("SOMEWHERE_CONTRACT_CAPTURE"); output != "" {
 		data, err := json.Marshal(h.captures)
 		if err != nil {

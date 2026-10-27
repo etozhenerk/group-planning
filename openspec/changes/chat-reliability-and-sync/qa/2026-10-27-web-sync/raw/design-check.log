@@ -1,0 +1,276 @@
+
+> group-planning@0.0.0 design:check
+> node scripts/design/cli.mjs check
+
+New UI literals; use a published token (design-system-publish):
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/CompactButton.kt:35: modifier.defaultMinSize(minHeight = 46.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/CompactButton.kt:37: shape = RoundedCornerShape(13.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/CompactButton.kt:40: border = if (primary) null else BorderStroke(1.dp, Color(0x20ffffff)),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/CompactButton.kt:43: Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/CompactButton.kt:54: Text(title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:29: width: Dp = 336.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:42: 12.dp.roundToPx(),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:43: (windowSize.height - 88.dp.roundToPx() - popupContentSize.height)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:44: .coerceAtLeast(12.dp.roundToPx()),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:55: Modifier.widthIn(max = width).heightIn(max = 440.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:56: shape = RoundedCornerShape(19.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:57: color = Color(0xff36373f),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:58: border = BorderStroke(1.dp, Color(0x14ffffff)),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:59: shadowElevation = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/FloatingPanel.kt:61: Column(Modifier.padding(8.dp), content = content)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/UserAvatar.kt:52: color = Color(0xff30292a),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/covers/CoverEditor.kt:70: Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/covers/CoverImage.kt:41: Modifier.size(64.dp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/covers/CoverImage.kt:48: modifier.then(size).clip(RoundedCornerShape(16.dp)),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:41: start = if (own) 28.dp else 0.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:42: end = if (own) 0.dp else 28.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:44: horizontalArrangement = Arrangement.spacedBy(10.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:54: topStart = if (own) 20.dp else 6.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:55: topEnd = if (own) 6.dp else 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:56: bottomStart = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:57: bottomEnd = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:59: ).padding(16.dp).testTag("date-poll-${state.poll?.id}"),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/datepoll/DatePollCard.kt:60: verticalArrangement = Arrangement.spacedBy(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:68: Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:73: Modifier.weight(1f).background(Color(0xff1d1e22), RoundedCornerShape(12.dp))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:74: .padding(11.dp).testTag("emoji-search"),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:75: textStyle = TextStyle(color = Palette.text, fontSize = 13.sp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:84: fontSize = 13.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:94: Modifier.size(44.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:97: ) { Text("×", color = Palette.muted, fontSize = 24.sp) }
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:102: fontSize = 12.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:111: }, Modifier.size(42.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:112: Text(emoji, fontSize = 25.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:124: fontSize = 12.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:128: if (filtered.isEmpty()) Text(stringResource(R.string.emoji_none), fontSize = 13.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:129: LazyVerticalGrid(GridCells.Fixed(7), Modifier.height(168.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:136: Modifier.size(42.dp).semantics { contentDescription = item.name },
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:138: Text(item.emoji, fontSize = 25.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:142: HorizontalDivider(color = Color(0x12ffffff))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:147: Modifier.size(38.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:154: Modifier.size(38.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/EmojiSheet.kt:157: ) { Text(item.emoji, fontSize = 13.sp) }
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:20: Modifier.size(25.dp).background(
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:22: Color(0xffb2c4bc),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:23: Color(0xffc2af9f),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:24: Color(0xffc2af9f),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:25: Color(0xffc3b5d1),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedAvatar.kt:34: fontSize = 10.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:45: 7.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:63: fontSize = 11.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:64: lineHeight = 16.5.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:73: fontSize = 11.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:74: lineHeight = 16.5.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:91: topStart = 18.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:92: topEnd = 18.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:93: bottomEnd = if (own) 5.dp else 18.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:94: bottomStart = if (own) 20.dp else 5.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:96: ).padding(horizontal = 13.dp, vertical = 10.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:103: fontSize = 14.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedMessage.kt:104: lineHeight = 22.4.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedScreen.kt:232: Modifier.padding(horizontal = 12.dp).padding(top = 8.dp, bottom = 12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedScreen.kt:233: verticalArrangement = Arrangement.spacedBy(6.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:45: modifier = Modifier.size(44.dp).testTag("meeting-add")
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:49: FloatingPanel({ expand(false) }, width = 268.dp) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:76: horizontal = 10.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:77: vertical = 6.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:79: color = Color(0x12ffffff),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:83: Modifier.width(250.dp).height(48.dp).clickable {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:86: }.testTag(tags[index]).padding(horizontal = 12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:87: horizontalArrangement = Arrangement.spacedBy(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MeetingActions.kt:91: Text(stringResource(title), fontSize = 14.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:73: RoundedCornerShape(22.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:74: ).padding(7.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:76: horizontalArrangement = Arrangement.spacedBy(3.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:87: Modifier.weight(1f).padding(start = 2.dp, top = 12.dp, bottom = 12.dp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:90: textStyle = TextStyle(color = Palette.text, fontSize = 15.sp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:98: fontSize = 15.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:112: }, Modifier.size(44.dp).testTag("emoji-open")) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageComposer.kt:118: Modifier.size(44.dp).background(
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:46: FlowRow(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:49: shape = RoundedCornerShape(20.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:50: color = if (reaction.mine) Color(0x24d6cce9) else Color(0x09ffffff),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:52: 1.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:53: if (reaction.mine) Color(0x4ad6cce9) else Color.Transparent,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:58: fontSize = 12.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:59: lineHeight = 18.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:64: ).padding(horizontal = 9.dp, vertical = 5.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:76: Modifier.size(32.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:79: ) { AppIcon(R.drawable.ic_emoji, Modifier.size(19.dp)) }
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:98: Modifier.size(44.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:99: ) { Text(emoji, fontSize = 24.sp) }
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/MessageReactions.kt:104: }, Modifier.size(44.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:67: Modifier.heightIn(min = 88.dp).padding(horizontal = 14.dp, vertical = 14.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:69: horizontalArrangement = Arrangement.spacedBy(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:73: Modifier.size(39.dp).semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:77: Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:81: fontSize = 18.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:82: lineHeight = 20.7.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:97: fontSize = 12.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:98: lineHeight = 18.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:105: }, Modifier.size(39.dp).semantics { contentDescription = infoLabel }) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationConversation.kt:109: HorizontalDivider(color = Color(0x12ffffff))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationParticipants.kt:27: verticalArrangement = Arrangement.spacedBy(18.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationParticipants.kt:31: fontSize = 22.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationParticipants.kt:36: horizontalArrangement = Arrangement.spacedBy(14.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationParticipants.kt:40: Modifier.size(44.dp).background(Palette.surface, CircleShape),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/invitation/InvitationParticipants.kt:56: fontSize = 14.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:33: Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:34: Text(label, fontSize = 13.sp, lineHeight = 19.5.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:39: color = Color(0xff1d1e22),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:40: shape = RoundedCornerShape(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:41: border = BorderStroke(1.dp, Color(0x14ffffff)),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:44: Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:51: fontSize = 13.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/DateTimeField.kt:56: AppIcon(icon, Modifier.size(17.dp))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/MeetingFields.kt:38: Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetingform/MeetingFields.kt:42: Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetings/MeetingCard.kt:205: Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:32: Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:37: Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:94: modifier.heightIn(min = 44.dp).testTag("place-vote-$answer").semantics {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:100: contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:119: Modifier.size(20.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:121: strokeWidth = 2.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollBallot.kt:128: Text(text, modifier.heightIn(min = 44.dp))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:44: start = if (own && !large) 28.dp else 0.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:45: end = if (own || large) 0.dp else 28.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:47: horizontalArrangement = Arrangement.spacedBy(10.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:57: topStart = if (own) 20.dp else 6.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:58: topEnd = if (own) 6.dp else 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:59: bottomStart = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:60: bottomEnd = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:62: ).padding(16.dp).testTag("place-poll-${state.poll?.id}"),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/placepoll/PlacePollCard.kt:63: verticalArrangement = Arrangement.spacedBy(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:45: Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:46: Text(stringResource(R.string.preparation_recipient), fontSize = 13.sp, lineHeight = 19.5.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:62: color = Color(0xff1d1e22),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:63: shape = RoundedCornerShape(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:64: border = BorderStroke(1.dp, Color(0x14ffffff)),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:70: Modifier.padding(horizontal = 14.dp, vertical = 13.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:73: Text(label, Modifier.weight(1f), fontSize = 13.sp, lineHeight = 20.sp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationRecipientField.kt:74: AppIcon(R.drawable.ic_back, Modifier.size(16.dp).rotate(-90f))
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskActions.kt:31: Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskActions.kt:60: Modifier.size(20.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskActions.kt:62: strokeWidth = 2.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:41: Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:46: fontSize = 11.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:47: lineHeight = 16.5.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:50: horizontalArrangement = Arrangement.spacedBy(7.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:57: shape = RoundedCornerShape(18.dp, 18.dp, 18.dp, 5.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:60: Column(Modifier.padding(horizontal = 13.dp, vertical = 10.dp)) {
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:66: fontSize = 14.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:67: lineHeight = 22.4.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:79: fontSize = 12.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskCard.kt:80: lineHeight = 19.2.sp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:46: 28.dp
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:48: 0.dp
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:53: 0.dp
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:55: 28.dp
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:58: horizontalArrangement = Arrangement.spacedBy(10.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:70: topStart = if (own) 20.dp else 6.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:71: topEnd = if (own) 6.dp else 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:72: bottomStart = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:73: bottomEnd = 20.dp,
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:75: ).padding(16.dp).testTag("preparation-task-${state.task?.id}"),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/preparation/PreparationTaskDetails.kt:76: verticalArrangement = Arrangement.spacedBy(12.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsSheet.kt:61: Modifier.imePadding().verticalScroll(rememberScrollState()).padding(24.dp)
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsSheet.kt:63: verticalArrangement = Arrangement.spacedBy(24.dp),
+frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsSheet.kt:67: fontSize = 26.sp,
+frontend/android/app/src/main/res/drawable/ic_emoji.xml:1: <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="23dp" android:height="23dp" android:viewportWidth="24" android:viewportHeight="24"><path android:strokeColor="#000000" android:strokeWidth="1.8" android:strokeLineCap="round" android:fillColor="#00000000" android:pathData="M12,2 A10,10 0,1 0,12 22 A10,10 0,1 0,12 2 M7,14 Q12,20 17,14 M8,8 L8,9 M16,8 L16,9"/></vector>
+frontend/android/app/src/main/res/drawable/ic_file.xml:1: <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24"><path android:pathData="M14,3H6A2,2 0,0 0,4 5V19A2,2 0,0 0,6 21H18A2,2 0,0 0,20 19V9ZM14,3V9H20M8,14H16M8,18H13" android:strokeColor="#FFB9B9C2" android:strokeWidth="1.7" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="@android:color/transparent" /></vector>
+frontend/android/app/src/main/res/drawable/ic_more.xml:1: <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24"><path android:pathData="M5,12L5.1,12M12,12L12.1,12M19,12L19.1,12" android:strokeColor="#FFB9B9C2" android:strokeWidth="1.7" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="@android:color/transparent" /></vector>
+frontend/android/app/src/main/res/drawable/ic_send.xml:2: android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+frontend/android/app/src/main/res/drawable/ic_send.xml:5: android:strokeColor="#FFFFFFFF" android:fillColor="@android:color/transparent" />
+frontend/ios/Somewhere/Features/DatePoll/CreateDatePollScreen.swift:15: HStack(alignment: .bottom, spacing: 10) {
+frontend/ios/Somewhere/Features/DatePoll/CreateDatePollScreen.swift:25: ExperienceIcon(kind: .close, size: 18)
+frontend/ios/Somewhere/Features/DatePoll/CreateDatePollScreen.swift:26: .frame(width: 44, height: 48).contentShape(Rectangle())
+frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift:20: HStack(alignment: .top, spacing: 10) {
+frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift:22: VStack(alignment: .leading, spacing: 14) {
+frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift:52: }.padding(16).foregroundStyle(own ? AppPalette.actionText : AppPalette.text)
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:7: VStack(spacing: 0) {
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:16: Rectangle().fill(AppPalette.border).frame(height: 1).padding(.horizontal, 10).padding(
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:24: }.padding(8).frame(width: 268)
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:25: .background(Color(designHex: 0x36373f), in: RoundedRectangle(cornerRadius: 19))
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:29: .shadow(color: .black.opacity(0.33), radius: 30, y: 20)
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:38: HStack(spacing: 12) {
+frontend/ios/Somewhere/Features/Feed/ComposerMenu.swift:40: Text(title).font(.system(size: 14))
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:21: VStack(alignment: .leading, spacing: 0) {
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:22: HStack(spacing: 6) {
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:23: TextField("Поиск эмодзи", text: $query).font(.system(size: 13)).padding(10)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:32: ExperienceIcon(kind: .close, size: 18).frame(width: 32, height: 40)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:38: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:40: Text("Недавние").font(.system(size: 12)).foregroundStyle(AppPalette.muted)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:43: columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 7),
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:44: spacing: 2
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:49: Text(query.isEmpty ? category : "Результаты поиска").font(.system(size: 12))
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:52: columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 7),
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:53: spacing: 2
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:60: Text("Ничего не найдено").font(.system(size: 13)).foregroundStyle(
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:64: }.frame(height: 232)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:65: Rectangle().fill(AppPalette.border).frame(height: 1).padding(.top, 12)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:67: HStack(spacing: 6) {
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:74: Text(symbols[index % symbols.count]).font(.system(size: 18)).frame(
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:75: width: 32, height: 32
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:87: }.padding(16).background(Color(designHex: 0x36373f), in: RoundedRectangle(cornerRadius: 19))
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:91: .shadow(color: .black.opacity(0.33), radius: 30, y: 20)
+frontend/ios/Somewhere/Features/Feed/EmojiPicker.swift:98: Text(emoji).font(.system(size: 25)).frame(maxWidth: .infinity, minHeight: 40)
+frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift:20: HStack(alignment: .bottom, spacing: 7) {
+frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift:25: user: user, size: 25, color: Color(designHex: own ? 0xd8c6ad : 0xc2b1d5))
+frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift:27: VStack(alignment: own ? .trailing : .leading, spacing: 5) {
+frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift:28: HStack(alignment: .firstTextBaseline, spacing: 9) {
+frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift:52: user: user, size: 25, color: Color(designHex: own ? 0xd8c6ad : 0xc2b1d5))
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:8: HStack(spacing: 7) {
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:14: .frame(width: 44, height: 44).contentShape(Rectangle())
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:16: VStack(alignment: .leading, spacing: 3) {
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:28: .font(.system(size: 12)).foregroundStyle(AppPalette.muted).lineLimit(1)
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:34: .frame(width: 44, height: 44).contentShape(Rectangle())
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:41: .frame(width: 44, height: 44).contentShape(Rectangle())
+frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift:46: .overlay(alignment: .bottom) { Rectangle().fill(AppPalette.border).frame(height: 1) }
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:9: VStack(alignment: .leading, spacing: 6) {
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:14: HStack(alignment: .bottom, spacing: 3) {
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:19: width: 44, height: 44)
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:36: ExperienceIcon(kind: .smile).frame(width: 44, height: 44).contentShape(
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:41: .foregroundStyle(AppPalette.actionText).frame(width: 44, height: 44)
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:43: .background(AppPalette.action, in: Circle()).frame(width: 44, height: 44)
+frontend/ios/Somewhere/Features/Feed/MessageComposer.swift:49: }.padding(7).background(
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:11: VStack(alignment: own ? .trailing : .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:39: HStack(spacing: 6) {
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:44: HStack(spacing: 6) {
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:85: ExperienceIcon(kind: .smile, size: 18).frame(width: 36, height: 30)
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:86: .background(.white.opacity(0.035), in: Capsule())
+frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift:95: Text("\(reaction.emoji) \(reaction.count)").font(.system(size: 12)).padding(
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:7: VStack(spacing: 0) {
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:9: Text("\(reaction.emoji)  \(reaction.count)").font(.system(size: 20, weight: .bold))
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:14: ExperienceIcon(kind: .close).frame(width: 44, height: 44).contentShape(
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:19: VStack(spacing: 0) {
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:21: HStack(spacing: 14) {
+frontend/ios/Somewhere/Features/Feed/ReactionPeopleScreen.swift:23: Text(user.displayName).font(.system(size: 14))
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:9: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:10: HStack(spacing: 1) {
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:15: Text(emoji).font(.system(size: 24)).frame(width: 34, height: 38)
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:21: ExperienceIcon(kind: .plus).frame(width: 34, height: 38)
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:25: }.padding(7).background(Color(designHex: 0x393a42), in: Capsule())
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:26: .shadow(color: .black.opacity(0.2), radius: 10, y: 8)
+frontend/ios/Somewhere/Features/Feed/ReactionQuickPicker.swift:29: .system(size: 12)
+frontend/ios/Somewhere/Features/Invitation/RSVPFormView.swift:65: .padding(22).background(AppPalette.surface, in: RoundedRectangle(cornerRadius: 24))
+frontend/ios/Somewhere/Features/MeetingSettings/MeetingSettingsScreen.swift:14: VStack(alignment: .leading, spacing: 24) {
+frontend/ios/Somewhere/Features/PlacePoll/CreatePlacePollScreen.swift:13: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/PlacePoll/CreatePlacePollScreen.swift:18: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/PlacePoll/PlacePollBallot.swift:8: VStack(alignment: .leading, spacing: 10) {
+frontend/ios/Somewhere/Features/PlacePoll/PlacePollCard.swift:21: HStack(alignment: .top, spacing: 10) {
+frontend/ios/Somewhere/Features/PlacePoll/PlacePollCard.swift:25: VStack(alignment: .leading, spacing: 14) {
+frontend/ios/Somewhere/Features/PlacePoll/PlacePollCard.swift:53: }.padding(16).foregroundStyle(own ? AppPalette.actionText : AppPalette.text)
+frontend/ios/Somewhere/Features/PreparationTask/CreatePreparationTaskScreen.swift:11: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskActions.swift:8: VStack(spacing: 8) {
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:21: VStack(spacing: 20) {
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:22: Text("Новая задача · " + entry.actor.displayName).font(.system(size: 11))
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:24: HStack(alignment: .bottom, spacing: 7) {
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:26: user: owner.task?.assignee ?? entry.actor, size: 25,
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:27: color: Color(designHex: 0xa8c7b6))
+frontend/ios/Somewhere/Features/PreparationTask/PreparationTaskCard.swift:31: VStack(alignment: .leading, spacing: 4) {
+frontend/ios/Somewhere/UI/ActionDateField.swift:20: VStack(alignment: .leading, spacing: 8) {
+frontend/ios/Somewhere/UI/ActionDateField.swift:27: HStack(spacing: 8) {
+frontend/ios/Somewhere/UI/ActionDateField.swift:30: ExperienceIcon(kind: .calendar, size: 16)
+frontend/ios/Somewhere/UI/Covers/CoverEditor.swift:20: VStack(alignment: .leading, spacing: 12) {
+frontend/ios/Somewhere/UI/ExperienceIcon.swift:87: p.addEllipse(in: CGRect(x: 3, y: 3, width: 18, height: 18))

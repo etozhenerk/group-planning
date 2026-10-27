@@ -33,14 +33,18 @@ struct SessionHarness {
     let storage: MemoryCredentialStorage
     let session: SessionStore
 
-    init(expired: Bool = false, storageFailure: ClientFailure? = nil) throws {
+    init(
+        expired: Bool = false, storageFailure: ClientFailure? = nil,
+        chatStorage: any ChatPersistence = MemoryChatStorage()
+    ) throws {
         let credential = try StoredSession(
             token: "test-session", expiresAt: Date().addingTimeInterval(expired ? -60 : 3600))
         storage = MemoryCredentialStorage(credential, failure: storageFailure)
         let url = try #require(URL(string: "https://api.example.test"))
         let api = try APIClient(origin: APIOrigin(url), transport: transport)
         session = SessionStore(
-            api: api, credentials: CredentialStore(storage: storage), privateData: PrivateData())
+            api: api, credentials: CredentialStore(storage: storage), privateData: PrivateData(),
+            chat: ChatRepository(storage: chatStorage))
     }
 
     func login(name: String = "Лена") async throws {

@@ -55,6 +55,9 @@ internal class ClientRuntime(
             candidate: StoredSession? = null,
             namespace: String = "",
             coverSelection: CoverSelectionSource? = null,
+            realtime: dev.groupplanning.android.data.realtime.ChatRealtime? = origin?.let {
+                dev.groupplanning.android.data.realtime.CentrifugeRealtime(it)
+            },
         ): ClientRuntime {
             val identity = (origin?.url?.toString() ?: "unconfigured") + namespace
             val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
@@ -74,6 +77,7 @@ internal class ClientRuntime(
                 SessionRepository(
                     api,
                     AndroidCredentials.create(context, origin),
+                    retainPrivate = outbox::retainOwner,
                     clearPrivate = { owner ->
                         outbox.clear(owner)
                         mediaStorage.clear(owner)
@@ -137,7 +141,7 @@ internal class ClientRuntime(
                     null
                 },
                 feeds = sessions?.let {
-                    FeedRepository(it, outbox, media)
+                    FeedRepository(it, outbox, media, realtime)
                 },
             )
         }

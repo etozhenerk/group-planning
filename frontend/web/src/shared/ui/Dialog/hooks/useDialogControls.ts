@@ -42,7 +42,13 @@ export const useDialogControls = (
   const backdrop = useBackdropDismiss(dismiss);
 
   return {
-    swipe,
+    region: {
+      onPointerDown: swipe.start,
+      onPointerMove: swipe.move,
+      onPointerUp: swipe.end,
+      onPointerCancel: swipe.cancel,
+      onLostPointerCapture: swipe.cancel,
+    },
     heading,
     backdrop,
     dismiss,

@@ -27,7 +27,7 @@ func TestAndroidFixture(t *testing.T) {
 	}
 
 	scope := os.Getenv("SOMEWHERE_ANDROID_FIXTURE_SCOPE")
-	if scope != "" && scope != "all" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" && scope != "tasks" && scope != "covers" && scope != "account" {
+	if scope != "" && scope != "all" && scope != "chat" && scope != "persistence" && scope != "calendar" && scope != "auth" && scope != "polls" && scope != "saved" && scope != "places" && scope != "tasks" && scope != "covers" && scope != "account" && scope != "profile" {
 		t.Fatal("unknown Android fixture scope")
 	}
 
@@ -48,8 +48,8 @@ func TestAndroidFixture(t *testing.T) {
 	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
 		PublicOrigin: origin, SessionTTL: time.Hour,
-		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback"},
-	}, identities, iosFixtureProvider{}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
+		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback", "android": "group-planning-android://auth/callback"},
+	}, identities, iosFixtureProvider{origin: origin}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,9 +69,9 @@ func TestAndroidFixture(t *testing.T) {
 		"ffffffff-ffff-4fff-8fff-ffffffffffff", "12121212-1212-4212-8212-121212121212")
 	feed := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	persistence := &iosFeedFaults{scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
-	app := meetings.NewService(store, time.Now, meetings.WithMediaContent(memory.NewMediaContent()))
+	app, stream := chatFixture(t, store, service, "ANDROID")
 	seedNativeMemoryFixture(t, store, service, app, owner)
-	api := NewWithSupport(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), testAccounts(store, identities, service, time.Now))
+	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
 	savedFaults := &nativeSavedInvitationFaults{}
 	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
@@ -117,6 +117,10 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["invite-rsvp-reentry"] = iosCredential(t, service, "invite-guest-rsvp")
 	config.Cases["invite-error"] = iosCredential(t, service, "invite-guest-error")
 
+	if err := app.InitializeChatReadState(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+
 	data, err := json.Marshal(config)
 	if err != nil {
 		t.Fatal(err)
@@ -146,7 +150,7 @@ func TestAndroidFixture(t *testing.T) {
 		pollFaults.verify(t)
 	}
 
-	if scope == "account" || scope == "covers" || scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" {
+	if scope == "chat" || scope == "account" || scope == "covers" || scope == "tasks" || scope == "places" || scope == "saved" || scope == "calendar" || scope == "auth" || scope == "polls" || scope == "profile" {
 		return
 	}
 

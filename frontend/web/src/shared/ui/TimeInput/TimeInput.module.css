@@ -38,3 +38,25 @@
   font-weight: var(--field-label-weight, 650);
   font-size: var(--field-label-size, inherit);
 }
+
+.control-field[data-sheet='true'] {
+  gap: var(--ds-component-mobile-field-gap);
+  min-height: 0;
+}
+
+.control-field[data-sheet='true'] > label {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-caption);
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.control-field[data-sheet='true'] :global(.g-text-input) {
+  --g-text-input-background-color: var(--ds-color-background);
+  --g-text-input-border-radius: var(--ds-component-mobile-field-radius);
+  --g-text-input-border-color: var(--ds-color-border-strong);
+  --g-text-input-height: var(--ds-component-mobile-field-minimum-height);
+}
+
+.control-field[data-sheet='true'] :global(.g-text-input__control) {
+  font-size: var(--ds-typography-size-mobile-web-input);
+}

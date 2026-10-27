@@ -15,3 +15,34 @@
     display: none;
   }
 }
+
+.content {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.content[data-mobile='true'] {
+  padding: var(--ds-component-mobile-sheet-content-inset-top)
+    var(--ds-component-mobile-sheet-content-inset-inline)
+    max(
+      var(--ds-component-mobile-sheet-content-inset-bottom),
+      env(safe-area-inset-bottom)
+    );
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.content[hidden],
+.form[hidden] {
+  display: none;
+}
+
+.content:focus,
+.form:focus {
+  outline: none;
+}

@@ -5,7 +5,7 @@ if [ -z "${JAVA_HOME:-}" ] || [ ! -x "$JAVA_HOME/bin/java" ]; then
     printf 'Set JAVA_HOME to a JDK 17 installation.\n' >&2
     exit 1
 fi
-somewhere_version=$("$JAVA_HOME/bin/java" -version 2>&1 | head -n 1)
+somewhere_version=$("$JAVA_HOME/bin/java" -version 2>&1 | sed -n '/version "/{p;q;}')
 case "$somewhere_version" in
     *'version "17.'*) ;;
     *) printf 'Expected JDK 17; got %s\n' "$somewhere_version" >&2; exit 1 ;;

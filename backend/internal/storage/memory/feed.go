@@ -2,6 +2,7 @@ package memory
 
 import (
 	"encoding/json"
+	"math"
 
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
@@ -36,15 +37,27 @@ func (tx *transaction) AppendEntry(entry meetings.FeedEntry) (meetings.FeedEntry
 	}
 
 	key := messageKey{entry.MeetingID, entry.ActorID, entry.ClientRequestID}
-	if tx.data.entryIDs[entry.ID] || (entry.ClientRequestID != "" && tx.data.messageIDs[key]) {
+	_, entryExists := tx.data.entryIDs[entry.ID]
+	_, messageExists := tx.data.messageIDs[key]
+	if entryExists || (entry.ClientRequestID != "" && messageExists) {
 		return meetings.FeedEntry{}, meetings.ErrAlreadyExists
 	}
 
-	entry.Sequence = uint64(len(tx.data.feed[entry.MeetingID])) + 1
+	entries := tx.data.feed[entry.MeetingID]
+	entry.Sequence = 1
+	if len(entries) > 0 {
+		last := entries[len(entries)-1].Sequence
+		if last == math.MaxUint64 {
+			return meetings.FeedEntry{}, meetings.ErrInvalidRecord
+		}
+
+		entry.Sequence = last + 1
+	}
+
 	tx.data.feed[entry.MeetingID] = append(tx.data.feed[entry.MeetingID], cloneEntry(entry))
-	tx.data.entryIDs[entry.ID] = true
+	tx.data.entryIDs[entry.ID] = entryLocation{entry.MeetingID, len(entries)}
 	if entry.ClientRequestID != "" {
-		tx.data.messageIDs[key] = true
+		tx.data.messageIDs[key] = len(entries)
 	}
 
 	return cloneEntry(entry), nil

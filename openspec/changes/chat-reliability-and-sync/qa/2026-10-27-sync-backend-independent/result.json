@@ -1,0 +1,202 @@
+{
+  "candidate": "6aac61e80a52fdaa2eb117d16b1c42d06ec1857d",
+  "reviewer": "/root/chat_sync_backend_review",
+  "scope": "independent targeted backend subchecks; not full feature acceptance",
+  "environment": {
+    "go": "go1.27.2 darwin/arm64",
+    "os": "macOS 27.0.1 26A434",
+    "parallelism": "GOMAXPROCS=1 go -p=1",
+    "api": "ephemeral loopback HTTPS fixture",
+    "data": "synthetic memory test profiles; isolated store per test",
+    "timezone": "Europe/Moscow",
+    "sourceFilesChanged": []
+  },
+  "runs": [
+    {
+      "id": "run01",
+      "status": "partial_environment_block",
+      "detail": "meetings/memory passed; HTTPS listener denied by sandbox bind EPERM"
+    },
+    {
+      "id": "run02",
+      "status": "passed",
+      "detail": "same HTTPS probe with allowed loopback"
+    },
+    {
+      "id": "run03-race",
+      "status": "passed",
+      "detail": "targeted candidate tests plus independent probes, -race; deletion replay included"
+    }
+  ],
+  "topLevelTests": [
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalMessageCommitAndNoop",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalOutboxFailureRollsBackMessage",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalReferencePrivacy",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalCardsNoopsAndWorker",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalMediaReactionAndLeaving",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalCoalescesEveryResourceOnAccountRemoval",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatAroundChecksAccessBeforeAnchor",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatJournalTerminalHintAfterMeetingRemoval",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatRetentionResetAndOutboxReplacement",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncAccountReplayHasCurrentNames",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncFixedBarrierAndNextCycle",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncScopeExpiryAndHiddenProjection",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestChatSyncInitializesLegacyStreamOnce",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestFeedAndTextRetryNeverReadFullHistory",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestMediaRetryNeverReadsFullHistory",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestIndependentLateOutboxFailureAndRetriedCommit",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/meetings",
+      "test": "TestIndependentRevokedRetryAndAroundStayPrivate",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatJournalAtomicRangesAndOverflow",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatTerminalHintsAndRecipientRemoval",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestChatRetentionCountBoundAndBoundedDeletes",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestFeedAroundBoundsAndCopies",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestFeedWindowBoundsLookupsAndCopies",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestFeedWindowSnapshotRollbackAndCancellation",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/storage/memory",
+      "test": "TestIndependentAroundSparseUint64Windows",
+      "status": "pass",
+      "elapsed": 1.36
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/accounts",
+      "test": "TestAccountTransactionRollsBackChatInvalidation",
+      "status": "pass",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "test": "TestChatSyncHTTP",
+      "status": "pass",
+      "elapsed": 0.03
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "test": "TestIndependentHTTPDeletionReplayAndTerminalRetention",
+      "status": "pass",
+      "elapsed": 0.02
+    },
+    {
+      "package": "github.com/etozhenerk/group-planning/backend/internal/httpapi",
+      "test": "TestIndependentHTTPSyncBarrierAccessAndReset",
+      "status": "pass",
+      "elapsed": 0.13
+    }
+  ],
+  "fullCasesPassed": []
+}

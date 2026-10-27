@@ -1,3 +1,4 @@
+import { observePrivateStore } from '@/shared/lib/private-store';
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,6 +11,16 @@ export const useSessionLifecycle = () => {
   const session = useSession();
   const location = useLocation();
   const visited = useRef(false);
+  useEffect(
+    () =>
+      observePrivateStore((event) => {
+        if (event.kind === 'purged' && !event.meeting) {
+          resetSession(client, false);
+          resetAccess();
+        }
+      }),
+    [client],
+  );
   useEffect(
     () =>
       onUnauthorized(() => {

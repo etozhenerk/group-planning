@@ -28,6 +28,7 @@ internal class SessionRepository(
     io: CoroutineDispatcher = Dispatchers.IO,
     private val clock: Clock = Clock.systemUTC(),
     clearPrivate: suspend (UUID?) -> Unit = {},
+    private val retainPrivate: suspend (UUID) -> Unit = {},
 ) {
     private val gate = SessionGate(storage, io, clearPrivate)
     private val deletion = AccountDeletionRepository(gate, api)
@@ -82,6 +83,7 @@ internal class SessionRepository(
                 if (verified.expiresAt.instant <= clock.instant()) {
                     invalidate(owner)
                 } else {
+                    retainPrivate(verified.user.id)
                     val fresh = StoredSession(saved.token, verified.expiresAt)
                     storage { save(fresh) }
                     currentCoroutineContext().ensureActive()
@@ -186,6 +188,60 @@ internal class SessionRepository(
         }
     }
 
+    fun realtime(
+        access: MeetingAccess,
+        transport: dev.groupplanning.android.data.realtime.ChatRealtime,
+    ): kotlinx.coroutines.flow.Flow<dev.groupplanning.android.data.realtime.ChatSignal> =
+        kotlinx.coroutines.flow.flow {
+            perform(
+                ApiRequest(listOf("realtime"), meetingId = access.id),
+                access.request.generation,
+                access.request,
+            ) { saved ->
+                transport.events(saved.token, access.profile.id, access.id).collect { event ->
+                    withAccess(access) { }
+                    emit(event)
+                }
+            }
+        }
+
+    fun personalRealtime(
+        transport: dev.groupplanning.android.data.realtime.ChatRealtime,
+        version: Long,
+    ): kotlinx.coroutines.flow.Flow<dev.groupplanning.android.data.realtime.ChatSignal> =
+        kotlinx.coroutines.flow.flow {
+            val user = (state.value.session as? SessionState.Authenticated)?.profile
+                ?: throw ClientFailure(FailureKind.Http, 401)
+            perform(ApiRequest(listOf("realtime")), version, null) { saved ->
+                transport.personal(saved.token, user.id).collect { event ->
+                    gate.locked { requireGeneration(version) }
+                    if (event == dev.groupplanning.android.data.realtime.ChatSignal.VerifySession) {
+                        val current =
+                            authenticated(SessionRequests.Me, CurrentSession.serializer(), version)
+                        if (current.user.id != user.id ||
+                            current.expiresAt.instant <= clock.instant()
+                        ) {
+                            gate.locked { invalidate(currentCoroutineContext().job) }
+                            throw ClientFailure(FailureKind.Http, 401)
+                        }
+                    }
+                    emit(event)
+                }
+            }
+        }
+
+    suspend fun verify(access: MeetingAccess) {
+        val current = authenticated(
+            SessionRequests.Me,
+            CurrentSession.serializer(),
+            expectedLease = access.request,
+        )
+        if (current.user.id != access.profile.id || current.expiresAt.instant <= clock.instant()) {
+            gate.locked { invalidate(currentCoroutineContext().job) }
+            throw ClientFailure(FailureKind.Http, 401)
+        }
+    }
+
     suspend fun deleteAccount(cleanup: suspend (UUID) -> Unit = {}) = deletion.delete(cleanup)
 
     suspend fun leaveDeletion() = gate.locked { invalidate(null) }
@@ -233,6 +289,13 @@ internal class SessionRepository(
         if (snapshot.value.session !is SessionState.Authenticated) return@locked null
         snapshot.value = snapshot.value.copy(data = update(snapshot.value.data))
         generation
+    }
+
+    suspend fun updateAccessData(access: MeetingAccess, update: (PrivateData) -> PrivateData) {
+        gate.locked {
+            requireLease(access.request)
+            snapshot.value = snapshot.value.copy(data = update(snapshot.value.data))
+        }
     }
 
     suspend fun updateData(version: Long, update: (PrivateData) -> PrivateData) {

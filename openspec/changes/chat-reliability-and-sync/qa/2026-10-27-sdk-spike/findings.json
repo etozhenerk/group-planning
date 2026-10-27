@@ -1,0 +1,51 @@
+[
+  {
+    "id": "SDK-01",
+    "priority": "P1",
+    "scope": "integration requirement, not current app defect",
+    "finding": "401 upgrade is retried by JS SDK as transport failure",
+    "repro": "Run auth-probe.mjs against loopback fixture with no session:8 attempts/1100ms, connecting until stopped.",
+    "mitigation": "Authoritative HTTP session401/403 -> generation invalidation and client.disconnect; guarded probe observed1 attempt then disconnected.",
+    "evidence": [
+      "evidence/auth-probe.json",
+      "evidence/guarded-auth-probe.json"
+    ]
+  },
+  {
+    "id": "SDK-02",
+    "priority": "P1",
+    "scope": "Swift6 adapter boundary; corrected in temporary runner",
+    "finding": "Swift5 SDK invokes MainActor-inherited completion on SDK queue",
+    "repro": "Initial swift runner line42 publish completion emitted runtime actor warning.",
+    "mitigation": "Explicit @Sendable completion plus thread-safe immutable extraction/actor ownership; final runtime stderr empty and adapter strict typecheck passed.",
+    "evidence": [
+      "evidence/swift-initial-runtime.stderr",
+      "evidence/swift-initial-spike.swift.txt",
+      "evidence/swift-runtime.stderr",
+      "evidence/swift-adapter-strict.log"
+    ]
+  },
+  {
+    "id": "SDK-03",
+    "priority": "P2",
+    "scope": "dependency licensing requirement",
+    "finding": "Java runtime includes streamsupport-minifuture1.7.4 GPLv2+Classpath Exception and CC0; Swift includes Apache2 runtime/vendor sources.",
+    "mitigation": "Preserve full third-party license inventory/notices at app integration; do not label entire dependency graph MIT.",
+    "evidence": [
+      "maven-licenses.json",
+      "swift-source-lock.json"
+    ]
+  },
+  {
+    "id": "SDK-04",
+    "priority": "P2",
+    "scope": "validation limitation",
+    "finding": "Remote SwiftPM resolve incomplete; exact archive override works but has identity warning; iOS binary SDK load-command stamp17.0 despite installed SDKSettings27.1.",
+    "mitigation": "Verify normal exact remote resolution and native app build during integration; no iOS27 runtime acceptance inferred.",
+    "evidence": [
+      "evidence/swift-remote-resolution.log",
+      "evidence/swift-build.log",
+      "evidence/swift-ios-sdk.json"
+    ]
+  }
+]

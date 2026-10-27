@@ -1,0 +1,152 @@
+[
+  {
+    "at": "2026-10-27T14:35:32.217714Z",
+    "method": "post",
+    "path": "/api/v1/meetings",
+    "status": 201,
+    "sha256": "491c8f33a7efc01dd4c48c67c77b2fdcaaa946c525d64173739d576bafaf0a9a"
+  },
+  {
+    "at": "2026-10-27T14:35:32.224146Z",
+    "method": "put",
+    "path": "/api/v1/invitations/{token}/rsvp",
+    "status": 200,
+    "body": {
+      "meeting_id": "d85a46f1-3b83-4dd3-bf04-4a37324f182d",
+      "rsvp": "going",
+      "rsvp_revision": "1",
+      "can_access_feed": true,
+      "meeting_revision": "2"
+    },
+    "sha256": "1caa670d781647388d01cb7a595e7fbce43d24aa680a1eed3cda118cbab7e2f0"
+  },
+  {
+    "at": "2026-10-27T14:35:32.22431Z",
+    "method": "patch",
+    "path": "/api/v1/meetings/{id}",
+    "status": 409,
+    "body": {
+      "error": {
+        "current_meeting": {
+          "memory_photo_count": 0,
+          "memory_preview": [],
+          "organizer_id": "5528955d-4acd-4ed2-ade9-c133dc99c03f",
+          "period": "upcoming",
+          "participant_preview": [],
+          "id": "d85a46f1-3b83-4dd3-bf04-4a37324f182d",
+          "title": "Независимая проверка",
+          "starts_on": "2026-10-27",
+          "starts_at": "2026-10-27T12:00:00Z",
+          "timezone": "UTC",
+          "place": null,
+          "cover_url": null,
+          "participant_count": 2,
+          "revision": "2",
+          "my_rsvp": null,
+          "my_rsvp_revision": "0",
+          "description": null,
+          "created_at": "2026-10-27T10:00:00Z"
+        },
+        "code": "meeting_revision_conflict",
+        "field_errors": {},
+        "request_id": "b0af5c8c-ff75-4717-9146-6c175c89cc12"
+      }
+    },
+    "sha256": "f6619c20010106d74bd5a15bee33b5877726afa5460443eea493e9af460bd4e1"
+  },
+  {
+    "at": "2026-10-27T14:35:32.224944Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}",
+    "status": 200,
+    "body": {
+      "memory_photo_count": 0,
+      "memory_preview": [],
+      "organizer_id": "5528955d-4acd-4ed2-ade9-c133dc99c03f",
+      "period": "upcoming",
+      "participant_preview": [
+        {
+          "id": "5528955d-4acd-4ed2-ade9-c133dc99c03f",
+          "display_name": "Участник p0",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        },
+        {
+          "id": "ab21b759-e0ac-4e53-95b1-7985fa9ece95",
+          "display_name": "Участник p1",
+          "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+        }
+      ],
+      "id": "d85a46f1-3b83-4dd3-bf04-4a37324f182d",
+      "title": "Независимая проверка",
+      "starts_on": "2026-10-27",
+      "starts_at": "2026-10-27T12:00:00Z",
+      "timezone": "UTC",
+      "place": null,
+      "cover_url": null,
+      "participant_count": 2,
+      "revision": "2",
+      "my_rsvp": null,
+      "my_rsvp_revision": "0",
+      "description": null,
+      "created_at": "2026-10-27T10:00:00Z"
+    },
+    "sha256": "68301e94242909aec8191f29526275f73fbda81da34fe764629c47120ef32be7"
+  },
+  {
+    "at": "2026-10-27T14:35:32.225654Z",
+    "method": "get",
+    "path": "/api/v1/meetings/{id}/feed",
+    "status": 200,
+    "body": {
+      "entries": [
+        {
+          "id": "2c7a1694-ba80-4398-aa89-2ecfc0381956",
+          "meeting_id": "d85a46f1-3b83-4dd3-bf04-4a37324f182d",
+          "sequence": "1",
+          "kind": "meeting_created",
+          "payload_version": 1,
+          "actor": {
+            "id": "5528955d-4acd-4ed2-ade9-c133dc99c03f",
+            "display_name": "Участник p0",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "title": "Независимая проверка",
+            "description": "",
+            "starts_on": "2026-10-27",
+            "starts_at": "2026-10-27T12:00:00Z",
+            "timezone": "UTC",
+            "place": ""
+          },
+          "client_request_id": null
+        },
+        {
+          "id": "32712d30-a78f-4896-83cb-51586ac595e9",
+          "meeting_id": "d85a46f1-3b83-4dd3-bf04-4a37324f182d",
+          "sequence": "2",
+          "kind": "participant_joined",
+          "payload_version": 1,
+          "actor": {
+            "id": "ab21b759-e0ac-4e53-95b1-7985fa9ece95",
+            "display_name": "Участник p1",
+            "avatar_url": "https://avatars.yandex.net/get-yapic/1/a/islands-200"
+          },
+          "occurred_at": "2026-10-27T10:00:00Z",
+          "payload": {
+            "previous_answer": null,
+            "answer": "going"
+          },
+          "client_request_id": null
+        }
+      ],
+      "has_more": false,
+      "meeting_revision": "2",
+      "participant_count": 2,
+      "my_rsvp": "going",
+      "my_rsvp_revision": "1",
+      "latest_sequence": "2"
+    },
+    "sha256": "821e2044acd05b4ae3e801a8e15fbe58da6d08eceb7f2f8ac2e528957f2c28d3"
+  }
+]

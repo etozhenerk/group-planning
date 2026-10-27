@@ -1,9 +1,11 @@
 package httpapi
 
 import (
+	"bufio"
 	"crypto/rand"
 	"encoding/hex"
 	"log/slog"
+	"net"
 	"net/http"
 	"path"
 	"time"
@@ -76,4 +78,14 @@ func requestID() string {
 	encoded := hex.EncodeToString(data[:])
 
 	return encoded[:8] + "-" + encoded[8:12] + "-" + encoded[12:16] + "-" + encoded[16:20] + "-" + encoded[20:]
+}
+
+// Hijack preserves WebSocket upgrades through the safe HTTP logging middleware.
+func (w *responseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	c, b, err := http.NewResponseController(w.ResponseWriter).Hijack()
+	if err == nil {
+		w.status = http.StatusSwitchingProtocols
+	}
+
+	return c, b, err
 }

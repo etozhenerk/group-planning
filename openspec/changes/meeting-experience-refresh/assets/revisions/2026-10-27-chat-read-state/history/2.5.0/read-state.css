@@ -1,0 +1,27 @@
+/* Values reuse published space, caption, pill, target and motion roles. */
+.unread-divider { display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;margin:16px 0; }
+.unread-divider::before,.unread-divider::after { content:"";height:1px;background:var(--border);flex:1; }
+.read-receipt { background:transparent;color:var(--muted);font-size:12px;min-height:44px;padding:4px 0;text-align:left; }
+.read-receipt:hover,.read-receipt:focus-visible { color:var(--text); }
+.read-receipt:active { opacity:.7; }
+.reader-empty { color:var(--muted);padding:12px 0;margin:0; }
+.reader-error { display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px 0; }
+.reader-error p { margin:0; }
+.reader-skeleton { height:12px;width:55%;border-radius:8px;background:var(--raised);animation:read-pulse 1600ms ease-in-out infinite alternate; }
+.reader-skeleton-avatar { background:var(--raised); }
+.reader-state .sheet { animation:none; }
+.reader-state[data-phase="open"] .sheet { animation:sheet-in 180ms cubic-bezier(.2,.7,.3,1); }
+.reader-state[data-phase="closing"] .sheet { opacity:0;transform:translateY(24px);transition:opacity 150ms,transform 150ms cubic-bezier(.2,.7,.3,1);pointer-events:none; }
+.reader-state[data-phase="closing"] .sheet-backdrop { opacity:0;transition:opacity 150ms; }
+.history-state { display:flex;flex-direction:column;gap:8px;padding:12px 0; }
+.new-message-link { position:absolute;bottom:80px;right:16px;min-height:44px;border-radius:999px;background:var(--raised);color:var(--text);padding:8px 16px;font-size:12px; }
+.list-preview { padding:16px; }
+.meeting-unread { display:flex;align-items:center;gap:12px;background:var(--surface);padding:16px;border-radius:16px;width:100%;text-align:left; }
+.meeting-unread .meeting-summary { flex:1;min-width:0;display:flex;flex-direction:column;gap:4px; }
+.meeting-unread small { color:var(--muted); }
+.unread-badge { min-width:24px;min-height:24px;display:grid;place-items:center;border-radius:999px;padding:0 8px;background:var(--accent);color:var(--own-text);font-size:12px;font-weight:600; }
+@keyframes read-pulse { from {opacity:.45} to {opacity:.85} }
+@media (min-width:740px) { .reader-state[data-phase="closing"] .sheet { transform:translateY(8px); } }
+@media (prefers-reduced-motion:reduce) { .reader-state .sheet,.reader-state .sheet-backdrop,.reader-skeleton { animation:none!important;transition:none!important; } }
+
+.own .read-receipt { display:block;margin-left:auto;text-align:right; }

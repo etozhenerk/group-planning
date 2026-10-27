@@ -2,6 +2,7 @@
 
 Приложение на Kotlin + Jetpack Compose, минимум Android 8 / API 26.
 Клиент работает с общим Go API и следует общей основе дизайна.
+Владельцы sync/очереди, хранение и лицензии описаны в [chat-sync](docs/chat-sync.md).
 Правила разработки — в [AGENTS.md](AGENTS.md), организация файлов —
 в [руководстве по коду](docs/code-style.md).
 
@@ -17,6 +18,7 @@
 | Activity Compose | 1.11.0 |
 | Lifecycle ViewModel | 2.9.4 |
 | OkHttp | 4.12.0 |
+| Centrifuge Java SDK | 0.8.0 |
 | kotlinx.serialization | 1.9.0, compiler plugin 2.2.20 |
 | kotlinx.coroutines | 1.10.2 |
 | compileSdk / targetSdk / minSdk | 36 / 36 / 26 |

@@ -12,6 +12,7 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/realtime"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/files"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 	"github.com/etozhenerk/group-planning/backend/internal/webui"
@@ -40,7 +41,12 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return nil
 	}
 
+	appOptions = append(appOptions, meetings.WithChatSyncKey(config.ChatSyncKey), meetings.WithChatReadState(config.ChatReadState))
 	app := meetings.NewService(store, time.Now, appOptions...)
+	if err := app.InitializeChatReadState(ctx); err != nil {
+		return err
+	}
+
 	service, err := newIdentity(config.Auth, identities, app.InvitationExists)
 	if err != nil {
 		return err
@@ -56,7 +62,28 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return err
 	}
 
-	var handler http.Handler = httpapi.NewWithSupport(app, service, feedback, logger, deletion)
+	var stream httpapi.RealtimeHandler
+	if app.ChatSyncEnabled() && service != nil {
+		adapter, err := realtime.New(app, service)
+		if err != nil {
+			return err
+		}
+
+		defer func() {
+			shutdown, cancel := context.WithTimeout(context.Background(), config.ShutdownTimeout)
+			defer cancel()
+			if err := adapter.Close(shutdown); err != nil {
+				logger.Error("chat shutdown failed", "error_code", "shutdown_timeout")
+			}
+		}()
+		stream = adapter.ServeAuthenticatedHTTP
+		dispatchCtx, stopDispatch := context.WithCancel(ctx)
+		dispatchDone := make(chan struct{})
+		go func() { defer close(dispatchDone); dispatchChat(dispatchCtx, app, adapter, logger) }()
+		defer func() { stopDispatch(); <-dispatchDone }()
+	}
+
+	var handler http.Handler = httpapi.NewWithRealtime(app, service, feedback, logger, stream, deletion)
 	if config.WebDirectory != "" {
 		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {
@@ -129,6 +156,11 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 	placeDone := make(chan struct{})
 	go func() { defer close(placeDone); placeWorker.Run(placeCtx) }()
 	defer func() { stopPlaceWorker(); <-placeDone }()
+
+	chatCtx, stopChat := context.WithCancel(ctx)
+	chatDone := make(chan struct{})
+	go func() { defer close(chatDone); maintainChat(chatCtx, app, logger) }()
+	defer func() { stopChat(); <-chatDone }()
 
 	mediaCtx, stopMediaCleanup := context.WithCancel(ctx)
 	supportCtx, stopSupport := context.WithCancel(ctx)

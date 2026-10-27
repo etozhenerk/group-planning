@@ -1,0 +1,655 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (5 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 0d1f7083f59c336cdbffc7848af46e8a
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/0d1f7083f59c336cdbffc7848af46e8a.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261027T163942-65913.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/PreparationTaskUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261027T163942-65913.xcresult
+
+2026-10-27 19:39:43.662 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:39:45.024694+0300 SomewhereUITests-Runner[66280:854831] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-27 19:39:48.036.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-27 19:39:48.037.
+Test Suite 'PreparationTaskUITests' started at 2026-10-27 19:39:48.037.
+Test Case '-[SomewhereUITests.PreparationTaskUITests testAcceptanceRetryAndCompletion]' started.
+    t =     0.00s Start Test at 2026-10-27 19:39:48.040
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-10-27 19:39:48.125 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 19:39:48.125 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 19:39:48.153 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.50s         Setting up automation session
+objc[66280]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106690398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1067c0310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.86s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.28s Waiting 15.0s for "meeting-card-d3c70000-0000-4000-8000-000000000200" Button to exist
+    t =     5.36s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-d3c70000-0000-4000-8000-000000000200" Button`
+    t =     5.36s         Checking existence of `"meeting-card-d3c70000-0000-4000-8000-000000000200" Button`
+    t =     5.43s Find the "meeting-card-d3c70000-0000-4000-8000-000000000200" Button
+    t =     5.45s Find the "home-tab-calendar" Button
+    t =     5.48s Tap "meeting-card-d3c70000-0000-4000-8000-000000000200" Button
+    t =     5.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.48s     Find the "meeting-card-d3c70000-0000-4000-8000-000000000200" Button
+    t =     5.50s     Check for interrupting elements affecting "meeting-card-d3c70000-0000-4000-8000-000000000200" Button
+    t =     5.52s     Synthesize event
+    t =     5.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.25s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.32s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.32s         Checking existence of `"meeting-add" Button`
+    t =     7.37s Waiting 10.0s for Button (First Match) to exist
+    t =     8.44s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =     8.44s         Checking existence of `Button (First Match)`
+    t =     9.55s Checking `Expect predicate `label CONTAINS "Заказать пиццу"` for object Button (First Match)`
+    t =     9.55s     Find the Button (First Match)
+    t =     9.58s Find the "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =     9.61s Find the "feed-back" Button
+    t =     9.64s Find the "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =     9.67s Find the "meeting-add" Button
+    t =     9.69s Tap "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =     9.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.69s     Find the "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =     9.72s     Check for interrupting elements affecting "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =     9.74s     Synthesize event
+    t =    10.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.48s Tap "preparation-details-close" Button
+    t =    10.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.49s     Find the "preparation-details-close" Button
+    t =    10.53s     Check for interrupting elements affecting "preparation-details-close" Button
+    t =    10.55s     Synthesize event
+    t =    10.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.18s Waiting 10.0s for "preparation-accept" Button to exist
+    t =    12.26s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-accept" Button`
+    t =    12.26s         Checking existence of `"preparation-accept" Button`
+    t =    12.28s Find the "preparation-accept" Button
+    t =    12.30s Find the "preparation-accept" Button
+    t =    12.32s Find the Button (First Match)
+    t =    12.35s Tap "preparation-accept" Button
+    t =    12.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.35s     Find the "preparation-accept" Button
+    t =    12.37s     Check for interrupting elements affecting "preparation-accept" Button
+    t =    12.39s     Synthesize event
+    t =    12.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.69s Waiting 10.0s for "Не удалось сохранить действие." StaticText to exist
+    t =    13.77s     Checking `Expect predicate `existsNoRetry == 1` for object "Не удалось сохранить действие." StaticText`
+    t =    13.77s         Checking existence of `"Не удалось сохранить действие." StaticText`
+    t =    13.80s Checking existence of `"preparation-complete" Button`
+    t =    14.34s Added attachment named 'ios-task-accept-error'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-accept-error.png
+    t =    14.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-accept-error.json
+    t =    14.47s Tap "Повторить" Button
+    t =    14.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.47s     Find the "Повторить" Button
+    t =    14.49s     Check for interrupting elements affecting "Повторить" Button
+    t =    14.52s     Synthesize event
+    t =    14.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.82s Waiting 10.0s for "preparation-complete" Button to exist
+    t =    15.83s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-complete" Button`
+    t =    15.83s         Checking existence of `"preparation-complete" Button`
+    t =    15.85s Checking existence of `"Задача у вас" StaticText`
+    t =    16.39s Added attachment named 'ios-task-accepted'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-accepted.png
+    t =    16.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-accepted.json
+    t =    16.50s Tap "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =    16.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.50s     Find the "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =    16.53s     Check for interrupting elements affecting "preparation-task-c9c7f8a0-8b46-4c56-be30-8665bcb3ce35" Button
+    t =    16.55s     Synthesize event
+    t =    16.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.20s Waiting 5.0s for "preparation-details-close" Button to exist
+    t =    18.28s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-details-close" Button`
+    t =    18.28s         Checking existence of `"preparation-details-close" Button`
+    t =    18.31s Tap "preparation-complete" Button
+    t =    18.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.31s     Find the "preparation-complete" Button
+    t =    18.34s Requesting snapshot of accessibility hierarchy for app with pid 66292
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/PreparationTaskUITests.swift:108: error: -[SomewhereUITests.PreparationTaskUITests testAcceptanceRetryAndCompletion] : Failed to tap "preparation-complete" Button: Find single matching element. Multiple matching elements found for <XCUIElementQuery: 0x10610f5c0>.
+Sparse tree of matches:
+→Application, pid: 66292, label: 'somewhere QA'
+  ↳Window (Main)
+    ↳Other
+    ⋅ ↳Other
+    ⋅   ↳Other
+    ⋅     ↳Other
+    ⋅       ↳Other
+    ⋅         ↳Other
+    ⋅           ↳Other
+    ⋅             ↳Other
+    ⋅               ↳Other
+    ⋅                 ↳ScrollView, identifier: 'feed-timeline'
+    ⋅                   ↳Other
+    ⋅                     ↳Other
+    ⋅                       ↳Button, identifier: 'preparation-complete', label: 'Отметить выполнение'
+    ↳Other
+      ↳Other
+        ↳Other
+          ↳Other
+            ↳Other
+              ↳Other
+                ↳Other
+                  ↳Other
+                    ↳Other
+                      ↳Other
+                        ↳ScrollView, identifier: 'preparation-details'
+                          ↳Other
+                            ↳Button, identifier: 'preparation-complete', label: 'Отметить выполнение'
+    t =    18.46s Tear Down
+Test Case '-[SomewhereUITests.PreparationTaskUITests testAcceptanceRetryAndCompletion]' failed (18.676 seconds).
+Test Case '-[SomewhereUITests.PreparationTaskUITests testCancellationAtLargeTextAndBack]' started.
+    t =     0.00s Start Test at 2026-10-27 19:40:06.718
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:66292
+2026-10-27 19:40:06.757 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:06.757 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:06.758 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:07.807 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 19:40:07.807 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 19:40:07.812 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.30s         Setting up automation session
+    t =     3.59s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.97s Waiting 15.0s for "meeting-card-d3c70000-0000-4000-8000-000000000400" Button to exist
+    t =     6.04s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-d3c70000-0000-4000-8000-000000000400" Button`
+    t =     6.04s         Checking existence of `"meeting-card-d3c70000-0000-4000-8000-000000000400" Button`
+    t =     6.11s Find the "meeting-card-d3c70000-0000-4000-8000-000000000400" Button
+    t =     6.14s Find the "home-tab-calendar" Button
+    t =     6.16s Swipe up ScrollView (First Match)
+    t =     6.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.16s     Find the ScrollView (First Match)
+    t =     6.18s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =     6.20s     Synthesize event
+    t =     6.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.14s Find the "meeting-card-d3c70000-0000-4000-8000-000000000400" Button
+    t =     7.16s Find the "home-tab-calendar" Button
+    t =     7.19s Tap "meeting-card-d3c70000-0000-4000-8000-000000000400" Button
+    t =     7.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.19s     Find the "meeting-card-d3c70000-0000-4000-8000-000000000400" Button
+    t =     7.21s     Check for interrupting elements affecting "meeting-card-d3c70000-0000-4000-8000-000000000400" Button
+    t =     7.23s     Synthesize event
+    t =     7.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.95s Waiting 10.0s for "meeting-add" Button to exist
+    t =     9.02s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     9.02s         Checking existence of `"meeting-add" Button`
+    t =     9.06s Waiting 10.0s for Button (First Match) to exist
+    t =    10.13s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    10.13s         Checking existence of `Button (First Match)`
+    t =    11.24s Checking `Expect predicate `label CONTAINS "Заказать пиццу"` for object Button (First Match)`
+    t =    11.24s     Find the Button (First Match)
+    t =    11.27s Find the "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    11.30s Find the "feed-back" Button
+    t =    11.33s Find the "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    11.35s Find the "feed-back" Button
+    t =    11.38s Swipe down "feed-timeline" ScrollView
+    t =    11.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.38s     Find the "feed-timeline" ScrollView
+    t =    11.40s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    11.42s     Synthesize event
+    t =    11.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.97s Find the "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    14.00s Find the "feed-back" Button
+    t =    14.03s Find the "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    14.06s Find the "meeting-add" Button
+    t =    14.08s Tap "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    14.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.09s     Find the "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    14.12s     Check for interrupting elements affecting "preparation-task-aa6e6c87-57d7-4107-932c-2bc64c7b80a6" Button
+    t =    14.14s     Synthesize event
+    t =    14.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.88s Waiting 10.0s for "preparation-cancel" Button to exist
+    t =    15.96s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-cancel" Button`
+    t =    15.96s         Checking existence of `"preparation-cancel" Button`
+    t =    16.00s Tap "preparation-cancel" Button
+    t =    16.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.01s     Find the "preparation-cancel" Button
+    t =    16.04s     Check for interrupting elements affecting "preparation-cancel" Button
+    t =    16.07s     Synthesize event
+    t =    16.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.37s Waiting 10.0s for "Отменено · Саша" StaticText to exist
+    t =    17.43s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    17.43s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    17.46s         Capturing element debug description
+    t =    18.42s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    18.42s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    18.45s         Capturing element debug description
+    t =    19.41s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    19.41s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    19.44s         Capturing element debug description
+    t =    20.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    20.39s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    20.43s         Capturing element debug description
+    t =    21.38s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    21.38s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    21.41s         Capturing element debug description
+    t =    22.46s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    22.46s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    22.50s         Capturing element debug description
+    t =    23.47s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    23.47s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    23.51s         Capturing element debug description
+    t =    24.45s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    24.45s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    24.48s         Capturing element debug description
+    t =    25.45s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    25.45s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    25.48s         Capturing element debug description
+    t =    26.38s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменено · Саша" StaticText`
+    t =    26.38s         Checking existence of `"Отменено · Саша" StaticText`
+    t =    26.41s         Capturing element debug description
+    t =    26.41s     Checking existence of `"Отменено · Саша" StaticText`
+    t =    26.44s Collecting debug information to assist test failure triage
+    t =    26.44s     Requesting snapshot of accessibility hierarchy for app with pid 66322
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/PreparationTaskUITests.swift:134: error: -[SomewhereUITests.PreparationTaskUITests testCancellationAtLargeTextAndBack] : XCTAssertTrue failed
+    t =    26.49s Tear Down
+Test Case '-[SomewhereUITests.PreparationTaskUITests testCancellationAtLargeTextAndBack]' failed (26.707 seconds).
+Test Case '-[SomewhereUITests.PreparationTaskUITests testProposalPreservesDraftAndRequiresRecipientsConsent]' started.
+    t =     0.00s Start Test at 2026-10-27 19:40:33.425
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:66322
+2026-10-27 19:40:33.464 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:33.464 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:33.465 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:40:34.538 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 19:40:34.538 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 19:40:34.548 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.32s         Setting up automation session
+    t =     3.62s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.99s Waiting 15.0s for "meeting-card-d3c70000-0000-4000-8000-000000000100" Button to exist
+    t =     6.07s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-d3c70000-0000-4000-8000-000000000100" Button`
+    t =     6.07s         Checking existence of `"meeting-card-d3c70000-0000-4000-8000-000000000100" Button`
+    t =     6.15s Find the "meeting-card-d3c70000-0000-4000-8000-000000000100" Button
+    t =     6.17s Find the "home-tab-calendar" Button
+    t =     6.19s Tap "meeting-card-d3c70000-0000-4000-8000-000000000100" Button
+    t =     6.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.20s     Find the "meeting-card-d3c70000-0000-4000-8000-000000000100" Button
+    t =     6.22s     Check for interrupting elements affecting "meeting-card-d3c70000-0000-4000-8000-000000000100" Button
+    t =     6.24s     Synthesize event
+    t =     6.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.96s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.03s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.03s         Checking existence of `"meeting-add" Button`
+    t =     8.07s Tap "meeting-add" Button
+    t =     8.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.08s     Find the "meeting-add" Button
+    t =     8.09s     Check for interrupting elements affecting "meeting-add" Button
+    t =     8.11s     Synthesize event
+    t =     8.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.41s Tap "new-preparation-task" Button
+    t =     8.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.42s     Find the "new-preparation-task" Button
+    t =     8.45s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =     8.47s     Synthesize event
+    t =     8.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.24s Waiting 5.0s for "preparation-title" Any to exist
+    t =    10.29s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-title" Any`
+    t =    10.29s         Checking existence of `"preparation-title" Any`
+    t =    10.39s Tap "preparation-title" Any
+    t =    10.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.39s     Find the "preparation-title" Any
+    t =    10.48s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    10.52s     Synthesize event
+<unknown>:0: warning: -[SomewhereUITests.PreparationTaskUITests testProposalPreservesDraftAndRequiresRecipientsConsent] : Invalid frame dimension (negative or non-finite).
+    t =    10.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.08s Type 'Заказать пиццу' into "preparation-title" TextField
+    t =    11.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.44s     Find the "preparation-title" TextField
+    t =    11.65s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    11.71s     Synthesize event
+    t =    12.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.23s Waiting 10.0s for "preparation-people-retry" Button to exist
+    t =    13.30s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-people-retry" Button`
+    t =    13.30s         Checking existence of `"preparation-people-retry" Button`
+    t =    13.35s Tap "preparation-people-retry" Button
+    t =    13.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.60s     Find the "preparation-people-retry" Button
+    t =    13.66s     Check for interrupting elements affecting "preparation-people-retry" Button
+    t =    13.70s     Synthesize event
+    t =    14.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.00s Waiting 10.0s for "preparation-recipient" Button to exist
+    t =    15.05s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-recipient" Button`
+    t =    15.05s         Checking existence of `"preparation-recipient" Button`
+    t =    15.11s Tap "preparation-recipient" Button
+    t =    15.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.11s     Find the "preparation-recipient" Button
+    t =    15.15s     Check for interrupting elements affecting "preparation-recipient" Button
+    t =    15.20s     Synthesize event
+    t =    15.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.68s Tap "Лена" Button
+    t =    16.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.68s     Find the "Лена" Button
+    t =    16.75s     Check for interrupting elements affecting "Лена" Button
+    t =    16.79s     Synthesize event
+    t =    17.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.51s Tap "preparation-create" Button
+    t =    18.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.51s     Find the "preparation-create" Button
+    t =    18.56s     Check for interrupting elements affecting "preparation-create" Button
+    t =    18.60s     Synthesize event
+    t =    18.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.15s Waiting 10.0s for "preparation-error" StaticText to exist
+    t =    20.19s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-error" StaticText`
+    t =    20.19s         Checking existence of `"preparation-error" StaticText`
+    t =    20.23s Find the "preparation-title" TextField
+    t =    20.32s Tap "action-form-close" Button
+    t =    20.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.32s     Find the "action-form-close" Button
+    t =    20.35s     Check for interrupting elements affecting "action-form-close" Button
+    t =    20.38s     Synthesize event
+    t =    20.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.00s Waiting 5.0s for "meeting-add" Button to exist
+    t =    22.07s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    22.07s         Checking existence of `"meeting-add" Button`
+    t =    22.09s Tap "meeting-add" Button
+    t =    22.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.10s     Find the "meeting-add" Button
+    t =    22.12s     Check for interrupting elements affecting "meeting-add" Button
+    t =    22.14s     Synthesize event
+    t =    22.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.44s Tap "new-preparation-task" Button
+    t =    22.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.45s     Find the "new-preparation-task" Button
+    t =    22.47s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =    22.50s     Synthesize event
+    t =    22.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.18s Waiting 5.0s for "preparation-title" TextField to exist
+    t =    24.26s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-title" TextField`
+    t =    24.26s         Checking existence of `"preparation-title" TextField`
+    t =    24.35s Find the "preparation-title" TextField
+    t =    24.44s Find the "preparation-recipient" Button
+    t =    24.46s Find the "preparation-create" Button
+    t =    25.01s Added attachment named 'ios-task-create-error'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-create-error.png
+    t =    25.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-create-error.json
+    t =    25.17s Pressing Home button
+    t =    25.64s Open dev.groupplanning.ios.uitesthost
+    t =    25.65s     Activate dev.groupplanning.ios.uitesthost
+    t =    26.16s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.29s Waiting 10.0s for "preparation-error" StaticText to exist
+    t =    27.35s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-error" StaticText`
+    t =    27.35s         Checking existence of `"preparation-error" StaticText`
+    t =    27.39s Tap "preparation-create" Button
+    t =    27.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.39s     Find the "preparation-create" Button
+    t =    27.42s     Check for interrupting elements affecting "preparation-create" Button
+    t =    27.45s     Synthesize event
+    t =    27.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.09s Waiting 15.0s for "Кому предложено: Лена" StaticText to exist
+    t =    29.15s     Checking `Expect predicate `existsNoRetry == 1` for object "Кому предложено: Лена" StaticText`
+    t =    29.15s         Checking existence of `"Кому предложено: Лена" StaticText`
+    t =    29.18s Checking existence of `"preparation-accept" Button`
+    t =    29.71s Added attachment named 'ios-task-offered'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-offered.png
+    t =    29.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.76s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.78s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/E1415F2D-CAB5-4C58-9898-317768049073/tmp/somewhere-design-verification/ios-task-offered.json
+    t =    29.83s Tear Down
+Test Case '-[SomewhereUITests.PreparationTaskUITests testProposalPreservesDraftAndRequiresRecipientsConsent]' passed (30.111 seconds).
+Test Case '-[SomewhereUITests.PreparationTaskUITests testRefusalAndConcurrentAcceptanceRefresh]' started.
+    t =     0.00s Start Test at 2026-10-27 19:41:03.536
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.02s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.02s         Terminate dev.groupplanning.ios.uitesthost:66375
+2026-10-27 19:41:03.574 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:03.575 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:03.576 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:04.654 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 19:41:04.654 xcodebuild[66276:854738] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 19:41:04.660 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.33s         Setting up automation session
+    t =     3.95s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.37s Waiting 15.0s for "meeting-card-d3c70000-0000-4000-8000-000000000300" Button to exist
+    t =     6.44s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-d3c70000-0000-4000-8000-000000000300" Button`
+    t =     6.44s         Checking existence of `"meeting-card-d3c70000-0000-4000-8000-000000000300" Button`
+    t =     6.51s Find the "meeting-card-d3c70000-0000-4000-8000-000000000300" Button
+    t =     6.53s Find the "home-tab-calendar" Button
+    t =     6.56s Tap "meeting-card-d3c70000-0000-4000-8000-000000000300" Button
+    t =     6.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.56s     Find the "meeting-card-d3c70000-0000-4000-8000-000000000300" Button
+    t =     6.58s     Check for interrupting elements affecting "meeting-card-d3c70000-0000-4000-8000-000000000300" Button
+    t =     6.60s     Synthesize event
+    t =     6.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.33s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.39s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.39s         Checking existence of `"meeting-add" Button`
+    t =     8.44s Waiting 10.0s for Button (First Match) to exist
+    t =     9.49s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =     9.49s         Checking existence of `Button (First Match)`
+    t =    10.66s Checking `Expect predicate `label CONTAINS "Заказать пиццу"` for object Button (First Match)`
+    t =    10.66s     Find the Button (First Match)
+    t =    10.70s Find the "preparation-task-e828f404-aca2-4fe8-8592-4825b3ccacc6" Button
+    t =    10.73s Find the "feed-back" Button
+    t =    10.76s Find the "preparation-task-e828f404-aca2-4fe8-8592-4825b3ccacc6" Button
+    t =    10.98s Find the "meeting-add" Button
+    t =    11.04s Tap "preparation-task-e828f404-aca2-4fe8-8592-4825b3ccacc6" Button
+    t =    11.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.04s     Find the "preparation-task-e828f404-aca2-4fe8-8592-4825b3ccacc6" Button
+    t =    11.08s     Check for interrupting elements affecting "preparation-task-e828f404-aca2-4fe8-8592-4825b3ccacc6" Button
+    t =    11.11s     Synthesize event
+    t =    11.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.87s Waiting 10.0s for "preparation-decline" Button to exist
+    t =    12.94s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-decline" Button`
+    t =    12.95s         Checking existence of `"preparation-decline" Button`
+    t =    12.99s Tap "preparation-decline" Button
+    t =    12.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.99s     Find the "preparation-decline" Button
+    t =    13.02s     Check for interrupting elements affecting "preparation-decline" Button
+    t =    13.05s     Synthesize event
+    t =    13.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.35s Waiting 10.0s for "Отказ · Лена" StaticText to exist
+    t =    14.38s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    14.38s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    14.40s         Capturing element debug description
+    t =    15.43s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    15.43s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    15.46s         Capturing element debug description
+    t =    16.41s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    16.41s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    16.46s         Capturing element debug description
+    t =    17.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    17.39s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    17.43s         Capturing element debug description
+    t =    18.37s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    18.38s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    18.41s         Capturing element debug description
+    t =    19.36s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    19.36s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    19.39s         Capturing element debug description
+    t =    20.44s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    20.44s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    20.47s         Capturing element debug description
+    t =    21.42s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    21.42s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    21.45s         Capturing element debug description
+    t =    22.40s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    22.40s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    22.43s         Capturing element debug description
+    t =    23.35s     Checking `Expect predicate `existsNoRetry == 1` for object "Отказ · Лена" StaticText`
+    t =    23.35s         Checking existence of `"Отказ · Лена" StaticText`
+    t =    23.38s         Capturing element debug description
+    t =    23.39s     Checking existence of `"Отказ · Лена" StaticText`
+    t =    23.41s Collecting debug information to assist test failure triage
+    t =    23.41s     Requesting snapshot of accessibility hierarchy for app with pid 66978
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/PreparationTaskUITests.swift:118: error: -[SomewhereUITests.PreparationTaskUITests testRefusalAndConcurrentAcceptanceRefresh] : XCTAssertTrue failed
+    t =    23.45s Tear Down
+Test Case '-[SomewhereUITests.PreparationTaskUITests testRefusalAndConcurrentAcceptanceRefresh]' failed (23.691 seconds).
+Test Suite 'PreparationTaskUITests' failed at 2026-10-27 19:41:27.227.
+	 Executed 4 tests, with 3 failures (0 unexpected) in 99.185 (99.190) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-10-27 19:41:27.228.
+	 Executed 4 tests, with 3 failures (0 unexpected) in 99.185 (99.191) seconds
+Test Suite 'Selected tests' failed at 2026-10-27 19:41:27.229.
+	 Executed 4 tests, with 3 failures (0 unexpected) in 99.185 (99.192) seconds
+2026-10-27 19:41:27.261 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.261 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.262 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.274 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.275 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.275 xcodebuild[66276:854738] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 19:41:27.535 xcodebuild[66276:854738] [MT] IDETestOperationsObserverDebug: 103.911 elapsed -- Testing started completed.
+2026-10-27 19:41:27.535 xcodebuild[66276:854738] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 19:41:27.535 xcodebuild[66276:854738] [MT] IDETestOperationsObserverDebug: 103.911 sec, +103.911 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261027T163942-65913.xcresult
+
+Failing tests:
+	PreparationTaskUITests.testAcceptanceRetryAndCompletion()
+	PreparationTaskUITests.testCancellationAtLargeTextAndBack()
+	PreparationTaskUITests.testRefusalAndConcurrentAcceptanceRefresh()
+
+** TEST EXECUTE FAILED **
+
+Testing started
+=== RUN   TestIOSFixture
+SOMEWHERE_IOS_READY=https://127.0.0.1:52297
+    native_preparation_fixture_test.go:94: task scenario 300: wrong count/state
+    native_preparation_fixture_test.go:94: task scenario 400: wrong count/state
+    native_preparation_fixture_test.go:94: task scenario 500: wrong count/state
+    native_preparation_fixture_test.go:94: task scenario 200: wrong count/state
+    ios_fixture_test.go:173: task participant reads: 4; injected failure on read 2
+--- FAIL: TestIOSFixture (109.51s)
+FAIL

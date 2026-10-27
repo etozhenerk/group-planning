@@ -1,0 +1,955 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/ComposerEscape-run09.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/ComposerKeyboardUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/ComposerEscape-run09.xcresult
+
+2026-10-27 22:20:46.015 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:20:47.285655+0300 SomewhereUITests-Runner[1738:1371159] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-27 22:20:50.066.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-27 22:20:50.066.
+Test Suite 'ComposerKeyboardUITests' started at 2026-10-27 22:20:50.067.
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesComposerPanelsAndPreservesDraft]' started.
+    t =     0.00s Start Test at 2026-10-27 22:20:50.069
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-10-27 22:20:50.154 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 22:20:50.155 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 22:20:50.185 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.50s         Setting up automation session
+objc[1738]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1058f4398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105a2c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.89s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.29s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.33s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.33s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.43s         Capturing element debug description
+    t =     6.36s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.36s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.41s         Capturing element debug description
+    t =     7.34s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     7.34s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     7.38s         Capturing element debug description
+    t =     8.32s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.32s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.36s         Capturing element debug description
+    t =     9.29s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     9.30s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     9.33s         Capturing element debug description
+    t =    10.37s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.37s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.40s         Capturing element debug description
+    t =    11.34s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    11.34s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    11.38s         Capturing element debug description
+    t =    12.32s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.32s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.35s         Capturing element debug description
+    t =    13.39s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    13.39s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    13.41s         Capturing element debug description
+    t =    14.35s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.35s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.38s         Capturing element debug description
+    t =    15.31s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.31s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.34s         Capturing element debug description
+    t =    16.38s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.38s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.42s         Capturing element debug description
+    t =    17.35s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.35s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.39s         Capturing element debug description
+    t =    18.32s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.32s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.35s         Capturing element debug description
+    t =    19.29s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.29s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.32s         Capturing element debug description
+    t =    19.32s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.34s Collecting debug information to assist test failure triage
+    t =    19.34s     Requesting snapshot of accessibility hierarchy for app with pid 1746
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:25: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesComposerPanelsAndPreservesDraft] : XCTAssertTrue failed
+    t =    19.45s Checking existence of `"home-tab-calendar" Button`
+    t =    19.47s Find the "home-tab-calendar" Button
+    t =    19.50s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.52s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.54s Swipe up "meetings-list" ScrollView
+    t =    19.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.54s     Find the "meetings-list" ScrollView
+    t =    19.57s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    19.59s     Synthesize event
+    t =    20.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.52s Checking existence of `"home-tab-calendar" Button`
+    t =    20.55s Find the "home-tab-calendar" Button
+    t =    20.58s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.60s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.62s Swipe up "meetings-list" ScrollView
+    t =    20.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.63s     Find the "meetings-list" ScrollView
+    t =    20.65s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    20.68s     Synthesize event
+    t =    21.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.62s Checking existence of `"home-tab-calendar" Button`
+    t =    21.65s Find the "home-tab-calendar" Button
+    t =    21.68s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.71s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.73s Swipe up "meetings-list" ScrollView
+    t =    21.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.73s     Find the "meetings-list" ScrollView
+    t =    21.75s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    21.78s     Synthesize event
+    t =    22.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.72s Checking existence of `"home-tab-calendar" Button`
+    t =    22.75s Find the "home-tab-calendar" Button
+    t =    22.78s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.80s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.82s Swipe up "meetings-list" ScrollView
+    t =    22.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.82s     Find the "meetings-list" ScrollView
+    t =    22.85s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    22.87s     Synthesize event
+    t =    23.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.79s Checking existence of `"home-tab-calendar" Button`
+    t =    23.81s Find the "home-tab-calendar" Button
+    t =    23.84s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.86s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.89s Swipe up "meetings-list" ScrollView
+    t =    23.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.89s     Find the "meetings-list" ScrollView
+    t =    23.91s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    23.94s     Synthesize event
+    t =    24.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.86s Checking existence of `"home-tab-calendar" Button`
+    t =    24.89s Find the "home-tab-calendar" Button
+    t =    24.91s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.93s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.96s Swipe up "meetings-list" ScrollView
+    t =    24.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.96s     Find the "meetings-list" ScrollView
+    t =    24.98s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    25.01s     Synthesize event
+    t =    25.46s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.96s Checking existence of `"home-tab-calendar" Button`
+    t =    25.98s Find the "home-tab-calendar" Button
+    t =    26.02s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.04s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.06s Swipe up "meetings-list" ScrollView
+    t =    26.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.06s     Find the "meetings-list" ScrollView
+    t =    26.09s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    26.11s     Synthesize event
+    t =    26.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.06s Checking existence of `"home-tab-calendar" Button`
+    t =    27.08s Find the "home-tab-calendar" Button
+    t =    27.11s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.13s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.15s Swipe up "meetings-list" ScrollView
+    t =    27.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.16s     Find the "meetings-list" ScrollView
+    t =    27.18s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    27.20s     Synthesize event
+    t =    27.66s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.14s Checking existence of `"home-tab-calendar" Button`
+    t =    28.17s Find the "home-tab-calendar" Button
+    t =    28.20s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.22s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.24s Swipe up "meetings-list" ScrollView
+    t =    28.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.24s     Find the "meetings-list" ScrollView
+    t =    28.27s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    28.29s     Synthesize event
+    t =    28.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.25s Checking existence of `"home-tab-calendar" Button`
+    t =    29.28s Find the "home-tab-calendar" Button
+    t =    29.30s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    29.32s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    29.34s Swipe up "meetings-list" ScrollView
+    t =    29.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.35s     Find the "meetings-list" ScrollView
+    t =    29.37s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    29.39s     Synthesize event
+    t =    29.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.32s Checking existence of `"home-tab-calendar" Button`
+    t =    30.35s Find the "home-tab-calendar" Button
+    t =    30.37s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    30.39s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    30.41s Swipe up "meetings-list" ScrollView
+    t =    30.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.42s     Find the "meetings-list" ScrollView
+    t =    30.44s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    30.47s     Synthesize event
+    t =    30.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.40s Checking existence of `"home-tab-calendar" Button`
+    t =    31.43s Find the "home-tab-calendar" Button
+    t =    31.45s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.47s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.49s Swipe up "meetings-list" ScrollView
+    t =    31.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.50s     Find the "meetings-list" ScrollView
+    t =    31.52s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    31.54s     Synthesize event
+    t =    31.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.49s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    33.53s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    34.56s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    34.60s Requesting snapshot of accessibility hierarchy for app with pid 1746
+    t =    34.73s Requesting snapshot of accessibility hierarchy for app with pid 1746
+SOMEWHERE_REVEAL_FAILURE_TREE=Attributes: Application, 0x11115d180, pid: 1746, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x11115d180, pid: 1746, label: 'somewhere QA'
+    Window (Main), 0x11115c8c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11115d400, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11115d540, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x11115d680, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x11115c780, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x11115ca00, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11115cb40, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x11115cc80, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x11115cdc0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x11115cf00, {{0.0, 0.0}, {402.0, 874.0}}
+                        StaticText, 0x11115d040, {{20.0, 79.0}, {149.0, 34.0}}, identifier: 'brand-wordmark', label: 'somewhere'
+                          Image, 0x11115df40, {{20.0, 79.0}, {34.0, 34.0}}, label: 'RefreshBrand'
+                          StaticText, 0x11115e080, {{59.0, 81.7}, {110.0, 25.3}}, label: 'somewhere'
+                        ScrollView, 0x11115e1c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'meetings-list'
+                          Other, 0x11115e300, {{0.0, -0.0}, {402.0, 874.0}}
+                            Other, 0x11115e440, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x11115e580, {{0.0, -0.0}, {402.0, 874.0}}
+                          Other, 0x11115e6c0, {{0.0, 105.7}, {402.0, 734.3}}
+                            StaticText, 0x11115e800, {{20.0, 138.8}, {166.3, 33.7}}, label: 'Мои встречи'
+                            Button, 0x11115e940, {{271.7, 133.7}, {110.3, 44.0}}, label: 'Создать встречу'
+                              Other, 0x11115ea80, {{288.5, 148.8}, {13.7, 13.7}}
+                              StaticText, 0x11115ebc0, {{314.7, 147.8}, {54.3, 15.7}}, label: 'Создать'
+                            Button, 0x11115ed00, {{20.0, 216.7}, {107.3, 32.0}}, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected
+                              StaticText, 0x11115ee40, {{20.0, 216.7}, {93.0, 17.0}}, label: 'Предстоящие'
+                              StaticText, 0x11115ef80, {{120.0, 218.0}, {7.3, 14.3}}, label: '2'
+                            Button, 0x11115f0c0, {{150.3, 216.7}, {97.0, 17.0}}, identifier: 'period-past', label: 'Прошедшие, 0'
+                              StaticText, 0x11115f200, {{150.3, 216.7}, {82.3, 17.0}}, label: 'Прошедшие'
+                              StaticText, 0x11115f340, {{239.7, 218.0}, {7.7, 14.3}}, label: '0'
+                            Button, 0x11115f480, {{24.0, 266.7}, {101.0, 37.0}}, label: 'Список', Selected
+                              Other, 0x11115f5c0, {{39.0, 279.3}, {17.2, 12.0}}
+                              StaticText, 0x11115f700, {{65.0, 277.3}, {47.0, 15.7}}, label: 'Список'
+                            Button, 0x11115f840, {{129.0, 266.7}, {122.0, 37.0}}, label: 'Календарь'
+                              Other, 0x11115f980, {{144.0, 276.7}, {17.2, 17.2}}
+                              StaticText, 0x11115fac0, {{170.0, 277.3}, {68.0, 15.7}}, label: 'Календарь'
+                            StaticText, 0x11115fc00, {{20.0, 329.7}, {64.0, 14.3}}, label: 'ОКТЯБРЬ'
+                            Button, 0x11115fd40, {{19.5, 363.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x11115fe80, {{47.0, 368.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x1056ab5c0, {{250.8, 364.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x108d63980, {{37.0, 402.0}, {160.3, 23.0}}, label: 'Вечер без планов'
+                              Other, 0x108d63ac0, {{203.8, 406.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x108d63c00, {{39.8, 435.5}, {9.8, 12.3}}
+                              StaticText, 0x108d63d40, {{58.0, 433.0}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x108d63e80, {{35.5, 488.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x108d62800, {{265.0, 504.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x108d63840, {{267.0, 506.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x108d62a80, {{291.0, 506.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x108d62bc0, {{315.0, 506.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x108d62d00, {{347.0, 514.0}, {12.0, 12.0}}, label: '+1'
+                            Button, 0x108d62e40, {{19.5, 555.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x108d62f80, {{47.0, 560.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x108d630c0, {{250.8, 556.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x108d63200, {{37.0, 594.0}, {164.0, 45.7}}, label: 'Вечер без планов · QA'
+                              Other, 0x108d63340, {{207.4, 598.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x108d63480, {{39.8, 650.2}, {9.8, 12.3}}
+                              StaticText, 0x108d635c0, {{58.0, 647.7}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x108d63700, {{35.5, 680.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x11130c000, {{265.0, 696.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x11130c140, {{267.0, 698.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x11130c280, {{291.0, 698.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x11130c3c0, {{315.0, 698.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x11130c500, {{347.0, 706.0}, {12.0, 12.0}}, label: '+1'
+                          Other, 0x11130c640, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x11130c780, {{396.0, 121.7}, {3.0, 687.3}}
+                          Other, 0x11130c8c0, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x11130ca00, {{396.0, 121.7}, {3.0, 687.3}}
+                        Button, 0x11130cb40, {{22.5, 772.5}, {119.7, 49.0}}, identifier: 'home-tab-calendar', label: 'Встречи', Selected
+                          StaticText, 0x11130cc80, {{23.0, 773.0}, {118.7, 48.0}}, label: 'Встречи'
+                          Other, 0x11130cdc0, {{74.5, 782.2}, {15.7, 15.7}}
+                        Button, 0x11130cf00, {{141.7, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-envelope', label: 'Приглашения'
+                          StaticText, 0x11130d040, {{141.7, 773.0}, {118.7, 48.0}}, label: 'Приглашения'
+                          Other, 0x11130d180, {{193.2, 783.8}, {15.6, 12.4}}
+                        Button, 0x11130d2c0, {{260.3, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-person.crop.circle', label: 'Профиль'
+                          StaticText, 0x11130d400, {{260.3, 773.0}, {118.7, 48.0}}, label: 'Профиль'
+                          Other, 0x11130d540, {{312.7, 783.0}, {14.0, 14.8}}
+                Toolbar, 0x11130d680, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x11130d7c0, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x11115d180, pid: 1746, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x11130d900, pid: 1746, label: 'somewhere QA'
+  }
+
+    t =    34.76s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    35.78s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    36.82s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:53: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesComposerPanelsAndPreservesDraft] : XCTAssertTrue failed
+    t =    36.84s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    36.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    36.85s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    37.88s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    38.92s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    38.95s Requesting snapshot of accessibility hierarchy for app with pid 1746
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:32: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesComposerPanelsAndPreservesDraft] : Failed to tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button: No matches found for Elements matching predicate '"meeting-card-deb00000-0000-4000-8000-000000000002" IN identifiers' from input {(
+    Button, identifier: 'home-tab-calendar', label: 'Встречи', Selected,
+    Button, identifier: 'home-tab-envelope', label: 'Приглашения',
+    Button, identifier: 'home-tab-person.crop.circle', label: 'Профиль',
+    Button, label: 'Создать встречу',
+    Button, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected,
+    Button, identifier: 'period-past', label: 'Прошедшие, 0',
+    Button, label: 'Список', Selected,
+    Button, label: 'Календарь',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+)}
+    t =    38.99s Tear Down
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesComposerPanelsAndPreservesDraft]' failed (39.270 seconds).
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesEmojiWhileSearchIsFocused]' started.
+    t =     0.00s Start Test at 2026-10-27 22:21:29.340
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:1746
+2026-10-27 22:21:29.380 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:21:29.380 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:21:29.381 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:21:30.419 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 22:21:30.419 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 22:21:30.426 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.54s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.84s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.87s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.87s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.94s         Capturing element debug description
+    t =     6.90s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.90s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.94s         Capturing element debug description
+    t =     7.87s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     7.87s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     7.90s         Capturing element debug description
+    t =     8.93s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.93s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.95s         Capturing element debug description
+    t =     9.88s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     9.89s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     9.92s         Capturing element debug description
+    t =    10.93s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.94s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.96s         Capturing element debug description
+    t =    11.88s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    11.88s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    11.92s         Capturing element debug description
+    t =    12.84s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.84s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.86s         Capturing element debug description
+    t =    13.89s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    13.89s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    13.93s         Capturing element debug description
+    t =    14.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.85s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.88s         Capturing element debug description
+    t =    15.91s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.91s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.93s         Capturing element debug description
+    t =    16.86s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.86s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.89s         Capturing element debug description
+    t =    17.91s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.91s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.93s         Capturing element debug description
+    t =    18.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.85s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.89s         Capturing element debug description
+    t =    19.84s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.84s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.88s         Capturing element debug description
+    t =    19.89s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.91s Collecting debug information to assist test failure triage
+    t =    19.91s     Requesting snapshot of accessibility hierarchy for app with pid 2680
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:25: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesEmojiWhileSearchIsFocused] : XCTAssertTrue failed
+    t =    19.95s Checking existence of `"home-tab-calendar" Button`
+    t =    19.98s Find the "home-tab-calendar" Button
+    t =    20.00s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.02s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.04s Swipe up "meetings-list" ScrollView
+    t =    20.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.05s     Find the "meetings-list" ScrollView
+    t =    20.07s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    20.10s     Synthesize event
+    t =    20.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.05s Checking existence of `"home-tab-calendar" Button`
+    t =    21.07s Find the "home-tab-calendar" Button
+    t =    21.10s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.13s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.15s Swipe up "meetings-list" ScrollView
+    t =    21.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.15s     Find the "meetings-list" ScrollView
+    t =    21.18s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    21.21s     Synthesize event
+    t =    21.66s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.15s Checking existence of `"home-tab-calendar" Button`
+    t =    22.19s Find the "home-tab-calendar" Button
+    t =    22.21s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.23s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.26s Swipe up "meetings-list" ScrollView
+    t =    22.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.26s     Find the "meetings-list" ScrollView
+    t =    22.28s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    22.31s     Synthesize event
+    t =    22.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.25s Checking existence of `"home-tab-calendar" Button`
+    t =    23.28s Find the "home-tab-calendar" Button
+    t =    23.30s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.33s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.35s Swipe up "meetings-list" ScrollView
+    t =    23.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.35s     Find the "meetings-list" ScrollView
+    t =    23.38s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    23.40s     Synthesize event
+    t =    23.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.34s Checking existence of `"home-tab-calendar" Button`
+    t =    24.36s Find the "home-tab-calendar" Button
+    t =    24.39s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.41s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.43s Swipe up "meetings-list" ScrollView
+    t =    24.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.44s     Find the "meetings-list" ScrollView
+    t =    24.47s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    24.50s     Synthesize event
+    t =    24.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.43s Checking existence of `"home-tab-calendar" Button`
+    t =    25.46s Find the "home-tab-calendar" Button
+    t =    25.48s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    25.50s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    25.53s Swipe up "meetings-list" ScrollView
+    t =    25.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.53s     Find the "meetings-list" ScrollView
+    t =    25.55s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    25.58s     Synthesize event
+    t =    26.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.52s Checking existence of `"home-tab-calendar" Button`
+    t =    26.55s Find the "home-tab-calendar" Button
+    t =    26.58s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.60s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.62s Swipe up "meetings-list" ScrollView
+    t =    26.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.63s     Find the "meetings-list" ScrollView
+    t =    26.65s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    26.67s     Synthesize event
+    t =    27.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.62s Checking existence of `"home-tab-calendar" Button`
+    t =    27.65s Find the "home-tab-calendar" Button
+    t =    27.68s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.70s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.73s Swipe up "meetings-list" ScrollView
+    t =    27.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.73s     Find the "meetings-list" ScrollView
+    t =    27.75s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    27.78s     Synthesize event
+    t =    28.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.72s Checking existence of `"home-tab-calendar" Button`
+    t =    28.75s Find the "home-tab-calendar" Button
+    t =    28.78s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.80s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.82s Swipe up "meetings-list" ScrollView
+    t =    28.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.83s     Find the "meetings-list" ScrollView
+    t =    28.85s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    28.88s     Synthesize event
+    t =    29.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.82s Checking existence of `"home-tab-calendar" Button`
+    t =    29.85s Find the "home-tab-calendar" Button
+    t =    29.88s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    29.91s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    29.93s Swipe up "meetings-list" ScrollView
+    t =    29.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.93s     Find the "meetings-list" ScrollView
+    t =    29.96s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    29.98s     Synthesize event
+    t =    30.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.92s Checking existence of `"home-tab-calendar" Button`
+    t =    30.94s Find the "home-tab-calendar" Button
+    t =    30.97s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.00s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.02s Swipe up "meetings-list" ScrollView
+    t =    31.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.02s     Find the "meetings-list" ScrollView
+    t =    31.05s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    31.07s     Synthesize event
+    t =    31.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.02s Checking existence of `"home-tab-calendar" Button`
+    t =    32.04s Find the "home-tab-calendar" Button
+    t =    32.07s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    32.09s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    32.11s Swipe up "meetings-list" ScrollView
+    t =    32.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.12s     Find the "meetings-list" ScrollView
+    t =    32.14s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    32.16s     Synthesize event
+    t =    32.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.10s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    34.14s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    35.17s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    35.20s Requesting snapshot of accessibility hierarchy for app with pid 2680
+    t =    35.34s Requesting snapshot of accessibility hierarchy for app with pid 2680
+SOMEWHERE_REVEAL_FAILURE_TREE=Attributes: Application, 0x111595400, pid: 2680, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x111595400, pid: 2680, label: 'somewhere QA'
+    Window (Main), 0x111594b40, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x111595680, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1115957c0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x111595900, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x111594a00, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x111594c80, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x111594dc0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x111594f00, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x111595040, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x111595180, {{0.0, 0.0}, {402.0, 874.0}}
+                        StaticText, 0x1115952c0, {{20.0, 79.0}, {149.0, 34.0}}, identifier: 'brand-wordmark', label: 'somewhere'
+                          Image, 0x111595f40, {{20.0, 79.0}, {34.0, 34.0}}, label: 'RefreshBrand'
+                          StaticText, 0x111596080, {{59.0, 81.7}, {110.0, 25.3}}, label: 'somewhere'
+                        ScrollView, 0x1115961c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'meetings-list'
+                          Other, 0x111596300, {{0.0, -0.0}, {402.0, 874.0}}
+                            Other, 0x111596440, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x111596580, {{0.0, -0.0}, {402.0, 874.0}}
+                          Other, 0x1115966c0, {{0.0, 105.7}, {402.0, 734.3}}
+                            StaticText, 0x111596800, {{20.0, 138.8}, {166.3, 33.7}}, label: 'Мои встречи'
+                            Button, 0x111596940, {{271.7, 133.7}, {110.3, 44.0}}, label: 'Создать встречу'
+                              Other, 0x111596a80, {{288.5, 148.8}, {13.7, 13.7}}
+                              StaticText, 0x111596bc0, {{314.7, 147.8}, {54.3, 15.7}}, label: 'Создать'
+                            Button, 0x111596d00, {{20.0, 216.7}, {107.3, 32.0}}, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected
+                              StaticText, 0x111596e40, {{20.0, 216.7}, {93.0, 17.0}}, label: 'Предстоящие'
+                              StaticText, 0x111596f80, {{120.0, 218.0}, {7.3, 14.3}}, label: '2'
+                            Button, 0x1115970c0, {{150.3, 216.7}, {97.0, 17.0}}, identifier: 'period-past', label: 'Прошедшие, 0'
+                              StaticText, 0x111597200, {{150.3, 216.7}, {82.3, 17.0}}, label: 'Прошедшие'
+                              StaticText, 0x111597340, {{239.7, 218.0}, {7.7, 14.3}}, label: '0'
+                            Button, 0x111597480, {{24.0, 266.7}, {101.0, 37.0}}, label: 'Список', Selected
+                              Other, 0x1115975c0, {{39.0, 279.3}, {17.2, 12.0}}
+                              StaticText, 0x111597700, {{65.0, 277.3}, {47.0, 15.7}}, label: 'Список'
+                            Button, 0x111597840, {{129.0, 266.7}, {122.0, 37.0}}, label: 'Календарь'
+                              Other, 0x111597980, {{144.0, 276.7}, {17.2, 17.2}}
+                              StaticText, 0x111597ac0, {{170.0, 277.3}, {68.0, 15.7}}, label: 'Календарь'
+                            StaticText, 0x111597c00, {{20.0, 329.7}, {64.0, 14.3}}, label: 'ОКТЯБРЬ'
+                            Button, 0x111597d40, {{19.5, 363.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x111597e80, {{47.0, 368.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x108d62080, {{250.8, 364.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x11158fc00, {{37.0, 402.0}, {160.3, 23.0}}, label: 'Вечер без планов'
+                              Other, 0x11158fd40, {{203.8, 406.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x11158fe80, {{39.8, 435.5}, {9.8, 12.3}}
+                              StaticText, 0x11158ed00, {{58.0, 433.0}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x11158fac0, {{35.5, 488.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x11158ebc0, {{265.0, 504.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x11158ee40, {{267.0, 506.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x11158ef80, {{291.0, 506.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x11158f0c0, {{315.0, 506.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x11158f200, {{347.0, 514.0}, {12.0, 12.0}}, label: '+1'
+                            Button, 0x11158f340, {{19.5, 555.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x11158f480, {{47.0, 560.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x11158f5c0, {{250.8, 556.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x11158f700, {{37.0, 594.0}, {164.0, 45.7}}, label: 'Вечер без планов · QA'
+                              Other, 0x11158f840, {{207.4, 598.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x11158f980, {{39.8, 650.2}, {9.8, 12.3}}
+                              StaticText, 0x1115a0000, {{58.0, 647.7}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x1115a0140, {{35.5, 680.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x1115a0280, {{265.0, 696.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x1115a03c0, {{267.0, 698.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x1115a0500, {{291.0, 698.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x1115a0640, {{315.0, 698.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x1115a0780, {{347.0, 706.0}, {12.0, 12.0}}, label: '+1'
+                          Other, 0x1115a08c0, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x1115a0a00, {{396.0, 121.7}, {3.0, 687.3}}
+                          Other, 0x1115a0b40, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x1115a0c80, {{396.0, 121.7}, {3.0, 687.3}}
+                        Button, 0x1115a0dc0, {{22.5, 772.5}, {119.7, 49.0}}, identifier: 'home-tab-calendar', label: 'Встречи', Selected
+                          StaticText, 0x1115a0f00, {{23.0, 773.0}, {118.7, 48.0}}, label: 'Встречи'
+                          Other, 0x1115a1040, {{74.5, 782.2}, {15.7, 15.7}}
+                        Button, 0x1115a1180, {{141.7, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-envelope', label: 'Приглашения'
+                          StaticText, 0x1115a12c0, {{141.7, 773.0}, {118.7, 48.0}}, label: 'Приглашения'
+                          Other, 0x1115a1400, {{193.2, 783.8}, {15.6, 12.4}}
+                        Button, 0x1115a1540, {{260.3, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-person.crop.circle', label: 'Профиль'
+                          StaticText, 0x1115a1680, {{260.3, 773.0}, {118.7, 48.0}}, label: 'Профиль'
+                          Other, 0x1115a17c0, {{312.7, 783.0}, {14.0, 14.8}}
+                Toolbar, 0x1115a1900, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x1115a1a40, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x111595400, pid: 2680, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x1115a1b80, pid: 2680, label: 'somewhere QA'
+  }
+
+    t =    35.37s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    36.39s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    37.43s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:53: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesEmojiWhileSearchIsFocused] : XCTAssertTrue failed
+    t =    37.47s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    37.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    37.47s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    38.51s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    39.54s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    39.57s Requesting snapshot of accessibility hierarchy for app with pid 2680
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:32: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesEmojiWhileSearchIsFocused] : Failed to tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button: No matches found for Elements matching predicate '"meeting-card-deb00000-0000-4000-8000-000000000002" IN identifiers' from input {(
+    Button, identifier: 'home-tab-calendar', label: 'Встречи', Selected,
+    Button, identifier: 'home-tab-envelope', label: 'Приглашения',
+    Button, identifier: 'home-tab-person.crop.circle', label: 'Профиль',
+    Button, label: 'Создать встречу',
+    Button, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected,
+    Button, identifier: 'period-past', label: 'Прошедшие, 0',
+    Button, label: 'Список', Selected,
+    Button, label: 'Календарь',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+)}
+    t =    39.62s Tear Down
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesEmojiWhileSearchIsFocused]' failed (39.857 seconds).
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesQuickReactionPicker]' started.
+    t =     0.00s Start Test at 2026-10-27 22:22:09.198
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:2680
+2026-10-27 22:22:09.238 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:09.238 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:09.238 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:10.272 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-27 22:22:10.272 xcodebuild[1484:1370997] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-27 22:22:10.277 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.28s         Setting up automation session
+    t =     3.63s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.98s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.08s         Capturing element debug description
+    t =     6.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     7.02s         Capturing element debug description
+    t =     8.04s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.04s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.07s         Capturing element debug description
+    t =     8.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     8.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     9.02s         Capturing element debug description
+    t =    10.05s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.05s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.07s         Capturing element debug description
+    t =    10.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    10.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    11.02s         Capturing element debug description
+    t =    12.03s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.03s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.07s         Capturing element debug description
+    t =    12.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    12.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    13.02s         Capturing element debug description
+    t =    14.04s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.04s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    14.06s         Capturing element debug description
+    t =    15.07s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.07s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    15.11s         Capturing element debug description
+    t =    16.02s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.03s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    16.06s         Capturing element debug description
+    t =    17.08s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.08s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    17.11s         Capturing element debug description
+    t =    18.03s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.03s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.06s         Capturing element debug description
+    t =    18.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    18.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.02s         Capturing element debug description
+    t =    19.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    19.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.02s         Capturing element debug description
+    t =    20.02s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.05s Collecting debug information to assist test failure triage
+    t =    20.05s     Requesting snapshot of accessibility hierarchy for app with pid 2984
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:25: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesQuickReactionPicker] : XCTAssertTrue failed
+    t =    20.09s Checking existence of `"home-tab-calendar" Button`
+    t =    20.11s Find the "home-tab-calendar" Button
+    t =    20.13s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.15s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    20.18s Swipe up "meetings-list" ScrollView
+    t =    20.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.18s     Find the "meetings-list" ScrollView
+    t =    20.20s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    20.23s     Synthesize event
+    t =    20.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.16s Checking existence of `"home-tab-calendar" Button`
+    t =    21.19s Find the "home-tab-calendar" Button
+    t =    21.22s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.25s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    21.27s Swipe up "meetings-list" ScrollView
+    t =    21.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.27s     Find the "meetings-list" ScrollView
+    t =    21.30s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    21.32s     Synthesize event
+    t =    21.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.25s Checking existence of `"home-tab-calendar" Button`
+    t =    22.28s Find the "home-tab-calendar" Button
+    t =    22.31s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.33s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    22.35s Swipe up "meetings-list" ScrollView
+    t =    22.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.35s     Find the "meetings-list" ScrollView
+    t =    22.38s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    22.40s     Synthesize event
+    t =    22.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.33s Checking existence of `"home-tab-calendar" Button`
+    t =    23.36s Find the "home-tab-calendar" Button
+    t =    23.39s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.41s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    23.43s Swipe up "meetings-list" ScrollView
+    t =    23.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.44s     Find the "meetings-list" ScrollView
+    t =    23.46s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    23.49s     Synthesize event
+    t =    23.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.42s Checking existence of `"home-tab-calendar" Button`
+    t =    24.45s Find the "home-tab-calendar" Button
+    t =    24.47s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.50s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    24.52s Swipe up "meetings-list" ScrollView
+    t =    24.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.52s     Find the "meetings-list" ScrollView
+    t =    24.55s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    24.57s     Synthesize event
+    t =    25.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.51s Checking existence of `"home-tab-calendar" Button`
+    t =    25.54s Find the "home-tab-calendar" Button
+    t =    25.57s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    25.59s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    25.61s Swipe up "meetings-list" ScrollView
+    t =    25.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.62s     Find the "meetings-list" ScrollView
+    t =    25.64s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    25.67s     Synthesize event
+    t =    26.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.60s Checking existence of `"home-tab-calendar" Button`
+    t =    26.63s Find the "home-tab-calendar" Button
+    t =    26.66s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.68s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    26.71s Swipe up "meetings-list" ScrollView
+    t =    26.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.71s     Find the "meetings-list" ScrollView
+    t =    26.73s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    26.76s     Synthesize event
+    t =    27.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.68s Checking existence of `"home-tab-calendar" Button`
+    t =    27.72s Find the "home-tab-calendar" Button
+    t =    27.78s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.81s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    27.83s Swipe up "meetings-list" ScrollView
+    t =    27.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.84s     Find the "meetings-list" ScrollView
+    t =    27.86s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    27.88s     Synthesize event
+    t =    28.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.83s Checking existence of `"home-tab-calendar" Button`
+    t =    28.86s Find the "home-tab-calendar" Button
+    t =    28.89s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.91s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    28.94s Swipe up "meetings-list" ScrollView
+    t =    28.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.94s     Find the "meetings-list" ScrollView
+    t =    28.96s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    28.99s     Synthesize event
+    t =    29.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.91s Checking existence of `"home-tab-calendar" Button`
+    t =    29.94s Find the "home-tab-calendar" Button
+    t =    29.97s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    29.99s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    30.01s Swipe up "meetings-list" ScrollView
+    t =    30.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.02s     Find the "meetings-list" ScrollView
+    t =    30.04s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    30.07s     Synthesize event
+    t =    30.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.01s Checking existence of `"home-tab-calendar" Button`
+    t =    31.05s Find the "home-tab-calendar" Button
+    t =    31.08s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.10s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    31.12s Swipe up "meetings-list" ScrollView
+    t =    31.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.12s     Find the "meetings-list" ScrollView
+    t =    31.15s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    31.17s     Synthesize event
+    t =    31.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.12s Checking existence of `"home-tab-calendar" Button`
+    t =    32.15s Find the "home-tab-calendar" Button
+    t =    32.18s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    32.20s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =    32.22s Swipe up "meetings-list" ScrollView
+    t =    32.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.23s     Find the "meetings-list" ScrollView
+    t =    32.25s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =    32.28s     Synthesize event
+    t =    32.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.21s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    34.25s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    35.29s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    35.33s Requesting snapshot of accessibility hierarchy for app with pid 2984
+    t =    35.48s Requesting snapshot of accessibility hierarchy for app with pid 2984
+SOMEWHERE_REVEAL_FAILURE_TREE=Attributes: Application, 0x1115ed7c0, pid: 2984, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x1115ed7c0, pid: 2984, label: 'somewhere QA'
+    Window (Main), 0x1115ecf00, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1115eda40, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1115edb80, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x1115edcc0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x1115ecdc0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1115ed040, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1115ed180, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x1115ed2c0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1115ed400, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x1115ed540, {{0.0, 0.0}, {402.0, 874.0}}
+                        StaticText, 0x1115ed680, {{20.0, 79.0}, {149.0, 34.0}}, identifier: 'brand-wordmark', label: 'somewhere'
+                          Image, 0x1115edf40, {{20.0, 79.0}, {34.0, 34.0}}, label: 'RefreshBrand'
+                          StaticText, 0x1115ee080, {{59.0, 81.7}, {110.0, 25.3}}, label: 'somewhere'
+                        ScrollView, 0x1115ee1c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'meetings-list'
+                          Other, 0x1115ee300, {{0.0, -0.0}, {402.0, 874.0}}
+                            Other, 0x1115ee440, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x1115ee580, {{0.0, -0.0}, {402.0, 874.0}}
+                          Other, 0x1115ee6c0, {{0.0, 105.7}, {402.0, 734.3}}
+                            StaticText, 0x1115ee800, {{20.0, 138.8}, {166.3, 33.7}}, label: 'Мои встречи'
+                            Button, 0x1115ee940, {{271.7, 133.7}, {110.3, 44.0}}, label: 'Создать встречу'
+                              Other, 0x1115eea80, {{288.5, 148.8}, {13.7, 13.7}}
+                              StaticText, 0x1115eebc0, {{314.7, 147.8}, {54.3, 15.7}}, label: 'Создать'
+                            Button, 0x1115eed00, {{20.0, 216.7}, {107.3, 32.0}}, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected
+                              StaticText, 0x1115eee40, {{20.0, 216.7}, {93.0, 17.0}}, label: 'Предстоящие'
+                              StaticText, 0x1115eef80, {{120.0, 218.0}, {7.3, 14.3}}, label: '2'
+                            Button, 0x1115ef0c0, {{150.3, 216.7}, {97.0, 17.0}}, identifier: 'period-past', label: 'Прошедшие, 0'
+                              StaticText, 0x1115ef200, {{150.3, 216.7}, {82.3, 17.0}}, label: 'Прошедшие'
+                              StaticText, 0x1115ef340, {{239.7, 218.0}, {7.7, 14.3}}, label: '0'
+                            Button, 0x1115ef480, {{24.0, 266.7}, {101.0, 37.0}}, label: 'Список', Selected
+                              Other, 0x1115ef5c0, {{39.0, 279.3}, {17.2, 12.0}}
+                              StaticText, 0x1115ef700, {{65.0, 277.3}, {47.0, 15.7}}, label: 'Список'
+                            Button, 0x1115ef840, {{129.0, 266.7}, {122.0, 37.0}}, label: 'Календарь'
+                              Other, 0x1115ef980, {{144.0, 276.7}, {17.2, 17.2}}
+                              StaticText, 0x1115efac0, {{170.0, 277.3}, {68.0, 15.7}}, label: 'Календарь'
+                            StaticText, 0x1115efc00, {{20.0, 329.7}, {64.0, 14.3}}, label: 'ОКТЯБРЬ'
+                            Button, 0x1115efd40, {{19.5, 363.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x1115efe80, {{47.0, 368.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x1056ab480, {{250.8, 364.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x1115d70c0, {{37.0, 402.0}, {160.3, 23.0}}, label: 'Вечер без планов'
+                              Other, 0x1115d7e80, {{203.8, 406.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x1115d6f80, {{39.8, 435.5}, {9.8, 12.3}}
+                              StaticText, 0x1115d7200, {{58.0, 433.0}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x1115d7340, {{35.5, 488.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x1115d7480, {{265.0, 504.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x1115d75c0, {{267.0, 506.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x1115d7700, {{291.0, 506.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x1115d7840, {{315.0, 506.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x1115d7980, {{347.0, 514.0}, {12.0, 12.0}}, label: '+1'
+                            Button, 0x1115d7ac0, {{19.5, 555.5}, {365.7, 172.5}}, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+                              StaticText, 0x1115d7c00, {{47.0, 560.0}, {114.0, 12.0}}, label: 'Сб, 31 октября · 19:00'
+                              Image, 0x1115d7d40, {{250.8, 556.3}, {134.4, 104.7}}, identifier: 'meeting-cover', label: 'Обложка встречи'
+                              StaticText, 0x1115f0000, {{37.0, 594.0}, {164.0, 45.7}}, label: 'Вечер без планов · QA'
+                              Other, 0x1115f0140, {{207.4, 598.1}, {13.1, 13.1}}, label: 'Вы организатор'
+                              Other, 0x1115f0280, {{39.8, 650.2}, {9.8, 12.3}}
+                              StaticText, 0x1115f03c0, {{58.0, 647.7}, {77.3, 14.3}}, label: 'У Саши дома'
+                              StaticText, 0x1115f0500, {{35.5, 680.2}, {18.7, 23.3}}, label: '✦'
+                              Other, 0x1115f0640, {{265.0, 696.0}, {104.0, 32.0}}, label: 'Участников: 4'
+                                StaticText, 0x1115f0780, {{267.0, 698.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x1115f08c0, {{291.0, 698.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x1115f0a00, {{315.0, 698.0}, {28.0, 28.0}}, label: 'Т'
+                                StaticText, 0x1115f0b40, {{347.0, 706.0}, {12.0, 12.0}}, label: '+1'
+                          Other, 0x1115f0c80, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x1115f0dc0, {{396.0, 121.7}, {3.0, 687.3}}
+                          Other, 0x1115f0f00, {{369.0, 113.0}, {30.0, 699.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 100 %
+                            Other, 0x1115f1040, {{396.0, 121.7}, {3.0, 687.3}}
+                        Button, 0x1115f1180, {{22.5, 772.5}, {119.7, 49.0}}, identifier: 'home-tab-calendar', label: 'Встречи', Selected
+                          StaticText, 0x1115f12c0, {{23.0, 773.0}, {118.7, 48.0}}, label: 'Встречи'
+                          Other, 0x1115f1400, {{74.5, 782.2}, {15.7, 15.7}}
+                        Button, 0x1115f1540, {{141.7, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-envelope', label: 'Приглашения'
+                          StaticText, 0x1115f1680, {{141.7, 773.0}, {118.7, 48.0}}, label: 'Приглашения'
+                          Other, 0x1115f17c0, {{193.2, 783.8}, {15.6, 12.4}}
+                        Button, 0x1115f1900, {{260.3, 773.0}, {118.7, 48.0}}, identifier: 'home-tab-person.crop.circle', label: 'Профиль'
+                          StaticText, 0x1115f1a40, {{260.3, 773.0}, {118.7, 48.0}}, label: 'Профиль'
+                          Other, 0x1115f1b80, {{312.7, 783.0}, {14.0, 14.8}}
+                Toolbar, 0x1115f1cc0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x1115f1e00, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x1115ed7c0, pid: 2984, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x1115f1f40, pid: 2984, label: 'somewhere QA'
+  }
+
+    t =    35.51s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    36.54s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    37.58s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:53: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesQuickReactionPicker] : XCTAssertTrue failed
+    t =    37.62s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    37.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    37.63s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =    38.66s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 1)
+    t =    39.70s         Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button (retry 2)
+    t =    39.74s Requesting snapshot of accessibility hierarchy for app with pid 2984
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:32: error: -[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesQuickReactionPicker] : Failed to tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button: No matches found for Elements matching predicate '"meeting-card-deb00000-0000-4000-8000-000000000002" IN identifiers' from input {(
+    Button, identifier: 'home-tab-calendar', label: 'Встречи', Selected,
+    Button, identifier: 'home-tab-envelope', label: 'Приглашения',
+    Button, identifier: 'home-tab-person.crop.circle', label: 'Профиль',
+    Button, label: 'Создать встречу',
+    Button, identifier: 'period-upcoming', label: 'Предстоящие, 2', Selected,
+    Button, identifier: 'period-past', label: 'Прошедшие, 0',
+    Button, label: 'Список', Selected,
+    Button, label: 'Календарь',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000001', label: 'Вечер без планов, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4',
+    Button, identifier: 'meeting-card-cea00000-0000-4000-8000-000000000002', label: 'Вечер без планов · QA, Вы организатор, У Саши дома, Сб, 31 октября · 19:00, Обложка встречи, Участников: 4'
+)}
+    t =    39.78s Tear Down
+Test Case '-[SomewhereUITests.ComposerKeyboardUITests testEscapeClosesQuickReactionPicker]' failed (40.051 seconds).
+Test Suite 'ComposerKeyboardUITests' failed at 2026-10-27 22:22:49.250.
+	 Executed 3 tests, with 9 failures (0 unexpected) in 119.178 (119.183) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-10-27 22:22:49.251.
+	 Executed 3 tests, with 9 failures (0 unexpected) in 119.178 (119.184) seconds
+Test Suite 'Selected tests' failed at 2026-10-27 22:22:49.252.
+	 Executed 3 tests, with 9 failures (0 unexpected) in 119.178 (119.186) seconds
+2026-10-27 22:22:49.296 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.296 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.297 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.308 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.308 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.309 xcodebuild[1484:1370997] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-27 22:22:49.566 xcodebuild[1484:1370997] [MT] IDETestOperationsObserverDebug: 123.590 elapsed -- Testing started completed.
+2026-10-27 22:22:49.566 xcodebuild[1484:1370997] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 22:22:49.566 xcodebuild[1484:1370997] [MT] IDETestOperationsObserverDebug: 123.590 sec, +123.590 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/ComposerEscape-run09.xcresult
+
+Failing tests:
+	ComposerKeyboardUITests.testEscapeClosesComposerPanelsAndPreservesDraft()
+	ComposerKeyboardUITests.testEscapeClosesComposerPanelsAndPreservesDraft()
+	ComposerKeyboardUITests.testEscapeClosesComposerPanelsAndPreservesDraft()
+	ComposerKeyboardUITests.testEscapeClosesEmojiWhileSearchIsFocused()
+	ComposerKeyboardUITests.testEscapeClosesEmojiWhileSearchIsFocused()
+	ComposerKeyboardUITests.testEscapeClosesEmojiWhileSearchIsFocused()
+	ComposerKeyboardUITests.testEscapeClosesQuickReactionPicker()
+	ComposerKeyboardUITests.testEscapeClosesQuickReactionPicker()
+	ComposerKeyboardUITests.testEscapeClosesQuickReactionPicker()
+
+** TEST EXECUTE FAILED **
+
+Testing started

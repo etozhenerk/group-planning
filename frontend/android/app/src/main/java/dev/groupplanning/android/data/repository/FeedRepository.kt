@@ -24,6 +24,8 @@ import dev.groupplanning.android.data.outbox.PendingMessage
 import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionRepository
 import java.util.UUID
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 
@@ -31,8 +33,12 @@ internal class FeedRepository(
     private val session: SessionRepository,
     private val outbox: MessageOutbox,
     val media: MediaRepository? = null,
+    realtime: dev.groupplanning.android.data.realtime.ChatRealtime? = null,
 ) {
+    private val sendLock = Mutex()
     val snapshot = session.state
+    val chat = ChatRepository(session, realtime)
+    val reading = ChatReadRepository(session)
 
     suspend fun reactions(access: MeetingAccess, ids: List<UUID>): List<EntryReactions> =
         session.authenticated(
@@ -107,6 +113,11 @@ internal class FeedRepository(
 
     suspend fun open(id: UUID): MeetingAccess = session.meetingAccess(id)
 
+    suspend fun saveViewport(access: MeetingAccess, viewport: ChatViewport) =
+        session.updateAccessData(access) { data ->
+            data.copy(chatViewports = data.chatViewports + (access.id to viewport))
+        }
+
     suspend fun record(access: MeetingAccess): MessageRecord = session.withAccess(access) {
         outbox.read(access.profile.id, access.id)
     }
@@ -122,9 +133,10 @@ internal class FeedRepository(
         access: MeetingAccess,
         after: ServerCounter? = null,
         before: ServerCounter? = null,
+        around: UUID? = null,
     ): FeedPage {
         val page = session.authenticated(
-            FeedRequests.page(access.id, after, before),
+            FeedRequests.page(access.id, after, before, around = around),
             FeedPage.serializer(),
             expectedLease = access.request,
         )
@@ -144,21 +156,23 @@ internal class FeedRepository(
         return page
     }
 
-    suspend fun send(access: MeetingAccess, pending: PendingMessage): FeedEntry {
-        val entry = session.authenticated(
-            FeedRequests.message(access.id, pending.text, pending.key),
-            FeedEntry.serializer(),
-            expectedLease = access.request,
-        )
-        if (entry.meetingId != access.id ||
-            entry.actor.id != access.profile.id ||
-            entry.clientRequestId != pending.key ||
-            entry.messageText == null
-        ) {
-            throw ClientFailure(FailureKind.InvalidResponse)
+    suspend fun send(access: MeetingAccess, pending: PendingMessage): FeedEntry =
+        sendLock.withLock {
+            val entry = session.authenticated(
+                FeedRequests.message(access.id, pending.text, pending.key),
+                FeedEntry.serializer(),
+                expectedLease = access.request,
+            )
+            if (entry.meetingId != access.id ||
+                entry.actor.id != access.profile.id ||
+                entry.clientRequestId != pending.key ||
+                entry.messageText != pending.text ||
+                entry.attachments.isNotEmpty()
+            ) {
+                throw ClientFailure(FailureKind.InvalidResponse)
+            }
+            entry
         }
-        return entry
-    }
 
     suspend fun details(access: MeetingAccess): Meeting = session.authenticated(
         MeetingRequests.details(access.id),

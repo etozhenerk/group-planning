@@ -47,7 +47,7 @@ class MessageTests {
         assertEquals(1, h.transport.requests.count { it.method == "POST" })
         h.transport.enqueue(
             "${h.path}/messages",
-            apiJson.encodeToString(h.entry(5, pending.key)),
+            apiJson.encodeToString(h.entry(5, pending.key, pending.text)),
             201,
         )
         recreated.retry()
@@ -76,7 +76,7 @@ class MessageTests {
             ),
         )
         assertEquals(pending, sender.state.value.pending)
-        sender.acknowledge(listOf(h.entry(2, pending.key)))
+        sender.acknowledge(listOf(h.entry(2, pending.key, pending.text)))
         assertNull(sender.state.value.pending)
         assertTrue(h.disk.load().isEmpty())
     }
@@ -123,13 +123,14 @@ class MessageTests {
         runCurrent()
         sender.recoverRejected()
         runCurrent()
-        val recovered = "Текст\n" + "я".repeat(4000)
-        assertEquals(recovered, sender.state.value.draft)
-        assertNull(sender.state.value.pending)
-        assertTrue(!sender.state.value.canSend)
-        sender.edit(recovered.dropLast(1))
+        assertEquals("я".repeat(4000), sender.state.value.draft)
+        assertEquals(1, sender.state.value.queue.size)
+        sender.edit("")
         runCurrent()
-        assertEquals(recovered.dropLast(1), sender.state.value.draft)
+        sender.recoverRejected()
+        runCurrent()
+        assertEquals("Текст", sender.state.value.draft)
+        assertNull(sender.state.value.pending)
         sender.edit("Исправленный текст")
         runCurrent()
         assertTrue(sender.state.value.canSend)

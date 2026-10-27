@@ -10,16 +10,20 @@ somewhere_filter=
 somewhere_auth_filter=
 somewhere_scope=
 case "${1:-all}" in
+    chat-sync) somewhere_filter=-only-testing:SomewhereUITests/ChatSyncUITests; somewhere_scope=chat ;;
+    telegram-chat) somewhere_filter=-only-testing:SomewhereUITests/TelegramChatUITests; somewhere_scope=accessibility ;;
     covers-large) somewhere_filter=-only-testing:SomewhereUITests/CoverUITests/testLargeTextAndSystemPickerCancellation; somewhere_scope=accessibility ;;
     sheet-gestures) somewhere_filter=-only-testing:SomewhereUITests/ChatSheetGestureUITests; somewhere_scope=accessibility ;;
     sheet-media) somewhere_filter=-only-testing:SomewhereUITests/ChatMediaSheetUITests; somewhere_scope=accessibility ;;
     sheet-navigation) somewhere_filter=-only-testing:SomewhereUITests/ChatShareListUITests; somewhere_scope=accessibility ;;
+    meeting-info) somewhere_filter=-only-testing:SomewhereUITests/MeetingInfoUITests; somewhere_scope=accessibility ;;
     sheet-motion) somewhere_filter=-only-testing:SomewhereUITests/ChatSheetMotionUITests; somewhere_scope=accessibility ;;
     design) somewhere_filter=-only-testing:SomewhereUITests/DesignExperienceUITests; somewhere_scope=accessibility ;;
     media) somewhere_filter=-only-testing:SomewhereUITests/MediaExperienceUITests; somewhere_scope=accessibility ;;
     memories) somewhere_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
     experience) somewhere_filter=-only-testing:SomewhereUITests/ExperienceUITests; somewhere_scope=accessibility ;;
     account) somewhere_filter=-only-testing:SomewhereUITests/AccountDeletionUITests; somewhere_scope=account ;;
+    profile) somewhere_filter=-only-testing:SomewhereUITests/ProfileFieldsUITests; somewhere_scope=profile ;;
     all) somewhere_filter=-skip-testing:SomewhereUITests/ChatSheetMotionUITests ;;
     auth) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAndLoginFailure; somewhere_auth_filter=-only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent; somewhere_scope=auth ;;
     onboarding-large) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAtLargeText; somewhere_scope=accessibility ;;
@@ -34,7 +38,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|design|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -49,6 +53,7 @@ cleanup() {
             somewhere_status=1
         fi
     fi
+    if [ "$somewhere_scope" = "chat" ]; then rm -f .build/chat-fixture-control.json; fi
     somewhere_release_simulator
     rm -rf "$somewhere_temporary"
     exit "$somewhere_status"
@@ -67,7 +72,11 @@ case "${1:-all}" in
         ;;
 esac
 
-(cd ../../backend && "$somewhere_go" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
+if [ -n "${SOMEWHERE_IOS_FIXTURE_BINARY:-}" ]; then
+    cp "$SOMEWHERE_IOS_FIXTURE_BINARY" "$somewhere_temporary/httpapi.test"
+else
+    (cd ../../backend && "$somewhere_go" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
+fi
 SOMEWHERE_IOS_FIXTURE_SCOPE="$somewhere_scope" SOMEWHERE_IOS_FIXTURE=1 SOMEWHERE_IOS_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestIOSFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
@@ -82,6 +91,11 @@ while [ ! -f "$somewhere_temporary/config.json" ]; do
     sleep 0.1
 done
 
+if [ "$somewhere_scope" = "chat" ]; then
+    mkdir -p .build
+    cp "$somewhere_temporary/config.json" .build/chat-fixture-control.json
+    chmod 600 .build/chat-fixture-control.json
+fi
 
 xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug \
     -sdk "$SOMEWHERE_IOS_SIMULATOR_SDK" \

@@ -87,12 +87,14 @@ test('create with settings and apply live majority in two chats', async ({
 
   for (const toggle of await form.getByRole('checkbox').all()) {
     const bounds = await toggle.boundingBox();
-    expect(bounds?.width).toBeCloseTo(16, 1);
-    expect(bounds?.height).toBeCloseTo(16, 1);
-    expect((await toggle.locator('..').boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    expect(bounds?.width).toBeCloseTo(38, 1);
+    expect(bounds?.height).toBeCloseTo(24, 1);
+    expect((await toggle.locator('..').boundingBox())?.height).toBeGreaterThanOrEqual(48);
   }
 
-  const dateField = form.locator('.g-text-input').first();
+  const dateField = form.getByRole('button', { name: 'Вариант 1', exact: true });
+  await expect(dateField).toBeVisible();
+  await expect(dateField.locator('svg')).toHaveCount(1);
   const dateBounds = await dateField.boundingBox();
 
   for (const icon of await dateField.locator('svg').all()) {

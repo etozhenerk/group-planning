@@ -1,19 +1,20 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/widgets/meeting-details/ui/ParticipantRow/ParticipantRow.module.css';
 import type { Participant } from '@/entities/meeting';
 import { answerLabels } from '@/entities/meeting';
-import { Avatar } from '@/shared/ui/Avatar';
 
-export type ParticipantRowProps = { participant: Participant; userId: string };
+export type ParticipantRowProps = { participant: Participant; index: number };
 
-export const ParticipantRow = ({ participant, userId }: ParticipantRowProps) => {
+export const ParticipantRow = ({ participant, index }: ParticipantRowProps) => {
+  const mobile = useMobileLayout();
+
   return (
-    <li className={styles['participant']}>
-      <Avatar name={participant.user.displayName} own={participant.user.id === userId} />
-      <span>
-        <strong>
-          {participant.user.displayName}
-          {participant.user.id === userId ? ' · вы' : ''}
-        </strong>
+    <li className={styles['participant']} data-mobile={mobile}>
+      <span className={styles.avatar} data-tone={index % 6} aria-hidden="true">
+        {participant.user.displayName.trim().slice(0, 1).toUpperCase()}
+      </span>
+      <span className={styles.details}>
+        <span>{participant.user.displayName}</span>
         <small>
           {participant.role === 'organizer'
             ? 'Организатор'

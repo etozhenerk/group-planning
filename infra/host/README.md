@@ -150,6 +150,53 @@ PG exporter — 64 МБ. Конфигурации панелей/алертов 
 Затем выпустить Caddy HTTPS, проверить обновление сертификата и только после
 приёмки постоянного хранилища установить Go/web релиз. Порт 5432 не открывать.
 
+### Восстановление backend после неудачного выпуска
+
+`deploy-release.py` сначала проверяет checksum и обязательный `qa:release-ready`
+receipt точного артефакта. Для backend он читает версии/checksum `schema_migrations`,
+останавливает `somewhere.service` (API и встроенные workers), запускает мигратор
+из кандидата и вновь читает схему. Ошибка первого чтения отменяет выпуск до остановки.
+Ошибка остановки не допускает миграцию. Сами миграции остаются атомарными.
+
+При ошибке миграции или readiness автоматический возврат старого backend и
+старого systemd unit разрешён лишь при известном, полностью совпавшем наборе
+версий/checksum до и после. Ненулевой exit мигратора сам по себе не доказывает,
+что commit не произошёл. При изменённой или неизвестной схеме установщик
+останавливает сервис, сохраняет `current` на новом принятом кандидате и завершает
+работу ошибкой `Automatic rollback refused`. Отсутствие старого артефакта также
+требует восстановления кандидата. Не переключать symlink обратно на бинарник,
+не поддерживающий новые версии миграций; не удалять строки `schema_migrations`.
+
+Оператор проверяет `systemctl status somewhere.service`, состояние PostgreSQL
+и `journalctl -u somewhere.service` локально. Не копировать env-файл, credentials
+или приватные записи в отчёт. При необходимости исправить конфигурацию отдельно;
+установщик не меняет feature flags. Затем восстановить **тот же принятый кандидат**:
+
+```sh
+sudo systemctl stop somewhere.service
+sudo -u somewhere_migrator env \
+  SOMEWHERE_DATABASE_URL='host=/var/run/postgresql dbname=somewhere user=somewhere_migrator sslmode=disable' \
+  /opt/somewhere/backend/current/somewhere-migrate
+sudo -u somewhere_migrator psql -X -d somewhere -v ON_ERROR_STOP=1 -c \
+  'REVOKE INSERT, UPDATE, DELETE ON schema_migrations FROM somewhere; GRANT SELECT ON schema_migrations TO somewhere;'
+sudo install -m 0644 /opt/somewhere/backend/current/somewhere.service /etc/systemd/system/somewhere.service
+sudo systemctl daemon-reload
+sudo systemctl enable somewhere.service
+sudo systemctl start somewhere.service
+curl --fail http://127.0.0.1:8080/readyz
+```
+
+Выполнять последовательно и остановиться при первой ошибке. Мигратор проверяет
+все прежние checksum; повторный запуск не делает down-миграций. Если readiness
+снова не проходит, остановить сервис и продолжить диагностику совместимого
+кандидата. Новый исправленный артефакт требует новой версии и собственного receipt;
+не обходить запрет перезаписи уже установленного immutable release. После успеха
+проверить внешний HTTPS и сохранить результат восстановления. Web-релиз отдельно
+сохраняет прежний атомарный rollback своего каталога и не обращается к схеме БД.
+
+Mock-проверки порядка остановки, миграции и rollback без VM/БД:
+`python3 -m unittest discover -s infra/host -p 'test_*.py'`.
+
 ### HTTPS до запуска приложения
 
 Для первого включения TLS используются [Caddyfile.bootstrap-https](Caddyfile.bootstrap-https)

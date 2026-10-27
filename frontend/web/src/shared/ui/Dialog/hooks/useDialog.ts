@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { animateDialog } from '@/shared/ui/Dialog/lib/dialogMotion';
 import { openAfterModalExit } from '@/shared/ui/Dialog/lib/openAfterModalExit';
 import { lockBackgroundScroll } from '@/shared/lib/lockBackgroundScroll';
 import { useVisualViewport } from '@/shared/lib/viewport';
 
-export const useDialog = (open: boolean, children: ReactNode, modal = true) => {
+export const useDialog = (
+  open: boolean,
+  children: ReactNode,
+  modal = true,
+  returnFocus?: RefObject<HTMLElement | null>,
+) => {
   const ref = useRef<HTMLDialogElement>(null);
   useVisualViewport(ref);
   const wasModal = useRef(modal);
@@ -53,13 +58,14 @@ export const useDialog = (open: boolean, children: ReactNode, modal = true) => {
 
           release.current = () => {
             unlock();
+            const target = returnFocus?.current ?? previous;
 
             if (
-              previous instanceof HTMLElement &&
-              previous.isConnected &&
+              target instanceof HTMLElement &&
+              target.isConnected &&
               !document.querySelector('dialog[open]')
             ) {
-              previous.focus({ preventScroll: true });
+              target.focus({ preventScroll: true });
             }
           };
         }
@@ -89,7 +95,7 @@ export const useDialog = (open: boolean, children: ReactNode, modal = true) => {
         setRetained(null);
       });
     }
-  }, [open, finish, modal]);
+  }, [open, finish, modal, returnFocus]);
 
   useEffect(() => finish, [finish]);
 

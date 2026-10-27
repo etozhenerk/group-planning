@@ -1,0 +1,60 @@
+import Foundation
+import SwiftCentrifuge
+
+final class Recorder: CentrifugeClientDelegate, CentrifugeSubscriptionDelegate, @unchecked Sendable {
+    private let lock = NSLock()
+    private var subscribed: [(Bool, Bool)] = []
+    private var hints: [String] = []
+    private var connected = 0
+    private var disconnected = 0
+    private var denied: UInt32 = 0
+    func snapshot() -> ([(Bool, Bool)], [String], Int, Int, UInt32) { lock.lock(); defer { lock.unlock() }; return (subscribed, hints, connected, disconnected, denied) }
+    func onConnected(_ client: CentrifugeClient, _ event: CentrifugeConnectedEvent) { lock.lock(); connected += 1; lock.unlock() }
+    func onDisconnected(_ client: CentrifugeClient, _ event: CentrifugeDisconnectedEvent) { lock.lock(); disconnected += 1; lock.unlock() }
+    func onSubscribed(_ sub: CentrifugeSubscription, _ event: CentrifugeSubscribedEvent) { lock.lock(); subscribed.append((event.wasRecovering, event.recovered)); lock.unlock() }
+    func onUnsubscribed(_ sub: CentrifugeSubscription, _ event: CentrifugeUnsubscribedEvent) { lock.lock(); denied = event.code; lock.unlock() }
+    func onPublication(_ sub: CentrifugeSubscription, _ event: CentrifugePublicationEvent) {
+        let data = try! JSONSerialization.jsonObject(with: event.data) as! [String: Any]
+        precondition(Set(data.keys) == Set(["schema_version", "meeting_id", "stream_epoch", "latest_change_sequence"]))
+        let sequence = data["latest_change_sequence"] as! String
+        lock.lock(); hints.append(sequence); lock.unlock()
+    }
+}
+@main struct Spike {
+    static func wait(_ description: String, _ check: @escaping @Sendable () -> Bool) async throws {
+        for _ in 0..<500 { if check() { return }; try await Task.sleep(for: .milliseconds(20)) }
+        fatalError("timeout: \(description)")
+    }
+    static func main() async throws {
+        let base = try String(contentsOfFile: "../endpoint.txt", encoding: .utf8)
+        func control(_ operation: String) async throws -> Data {
+            let (data, response) = try await URLSession.shared.data(from: URL(string: base + "/control/" + operation + "?who=swift")!)
+            precondition((response as! HTTPURLResponse).statusCode < 300); return data
+        }
+        let record = Recorder()
+        let client = CentrifugeClient(endpoint: base.replacingOccurrences(of: "http", with: "ws") + "/api/v1/realtime", config: CentrifugeClientConfig(headers: ["Authorization": "Bearer spike-native-swift"], minReconnectDelay: 0.8, maxReconnectDelay: 0.8, useNativeWebSocket: true), delegate: record)
+        let sub = try client.newSubscription(channel: "meeting:swift", delegate: record)
+        sub.subscribe(); client.connect()
+        try await wait("handshake") { record.snapshot().0.count == 1 }; _ = try await control("sync")
+        let denied = Recorder(); let outsider = CentrifugeClient(endpoint: base.replacingOccurrences(of: "http", with: "ws") + "/api/v1/realtime", config: CentrifugeClientConfig(headers: ["Authorization": "Bearer spike-native-swift"], useNativeWebSocket: true), delegate: denied)
+        let foreign = try outsider.newSubscription(channel: "meeting:other", delegate: denied)
+        foreign.subscribe(); outsider.connect(); try await wait("foreign rejected") { denied.snapshot().4 == 103 }; outsider.disconnect()
+        let rejected: Bool = await withCheckedContinuation { continuation in client.publish(channel: "meeting:swift", data: Data("{}".utf8)) { result in switch result { case .success: continuation.resume(returning: false); case .failure: continuation.resume(returning: true) } } }
+        precondition(rejected)
+        _ = try await control("publish"); try await wait("first hint") { record.snapshot().1.count == 1 }
+        precondition(record.snapshot().1[0] == "9007199254740993")
+        _ = try await control("disconnect"); try await wait("connecting") { client.state == .connecting }; _ = try await control("publish")
+        try await wait("recovery") { record.snapshot().0.count == 2 && record.snapshot().1.count == 2 }; precondition(record.snapshot().0[1].1); _ = try await control("sync")
+        _ = try await control("disconnect"); try await wait("connecting again") { client.state == .connecting }; _ = try await control("publish"); _ = try await control("drop"); _ = try await control("publish")
+        try await wait("recovery lost") { record.snapshot().0.count == 3 }; precondition(!record.snapshot().0[2].1); _ = try await control("sync")
+        try await Task.sleep(for: .seconds(3))
+        let stats = try JSONSerialization.jsonObject(with: await control("stats")) as! [String: Int]
+        precondition((stats["refresh_swift"] ?? 0) > 0)
+        _ = try await control("revoke"); try await wait("revoke") { record.snapshot().3 > 0 }; let n = record.snapshot().2
+        try await Task.sleep(for: .seconds(1.2)); precondition(record.snapshot().2 == n)
+        client.disconnect()
+        let s = record.snapshot()
+        let output: [String: Any] = ["result": "passed", "client": "centrifuge-swift@0.11.0", "host": "macOS 27; Swift 6 language mode; URLSessionWebSocketTask", "auth": "Bearer header", "subscriptions": s.0.map { ["wasRecovering": $0.0, "recovered": $0.1] }, "hints": s.1, "foreignChannelCode": denied.snapshot().4, "publishRejected": rejected, "httpCatchups": 3, "refreshCount": stats["refresh_swift"] ?? 0, "connections": s.2]
+        print(String(data: try JSONSerialization.data(withJSONObject: output, options: [.prettyPrinted, .sortedKeys]), encoding: .utf8)!)
+    }
+}

@@ -1,0 +1,91 @@
+{
+  "run": "run05",
+  "purpose": "Engineering regression after independent r2 findings; not acceptance",
+  "startedAt": "2026-10-27T15:04:01.618601+00:00",
+  "sourceAggregateSha256": "712a153e5ffb9cdb075428a8a7f0280de9406c3008a7125305953c9aab1c667f",
+  "designVersion": "1.4.1",
+  "command": "sh scripts/check.sh",
+  "workingDirectory": "frontend/android",
+  "environment": {
+    "JAVA_HOME": "/Users/misha/Library/Java/JavaVirtualMachines/jdk-17.0.21+9/Contents/Home",
+    "ANDROID_HOME": "/Users/misha/Library/Android/sdk",
+    "GRADLE_OPTS": "-Dorg.gradle.vfs.watch=false"
+  },
+  "uiTests": "Waiting for explicit GO and refreshed fixture; not started",
+  "changes": [
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/TelegramChatUiTests.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/meetings/MeetingCard.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsFields.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsSchedule.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/settings/MeetingSettingsSheet.kt",
+    "frontend/android/app/src/main/res/values/experience_strings.xml"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "infrastructure-interrupted",
+      "reason": "Execution worker blocked in macOS native FileWatcher.startWatching0; stopped own Gradle daemon PID31217 after thread dump",
+      "log": "check-attempt01.log",
+      "diagnosticPath": ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/gradle-threads.txt",
+      "exitCode": 1
+    },
+    {
+      "attempt": 2,
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "check.log",
+      "GRADLE_OPTS": "-Dorg.gradle.vfs.watch=false"
+    }
+  ],
+  "completedAt": "2026-10-27T15:11:17.746693+00:00",
+  "exitCode": 0,
+  "sourceUnchangedAfterCheck": true,
+  "gradleBuildResults": [
+    "BUILD SUCCESSFUL in 2m 48s",
+    "BUILD SUCCESSFUL in 39s"
+  ],
+  "checks": {
+    "toolchain": "PASS",
+    "clean": "PASS",
+    "formatCheck": "PASS",
+    "assembleDebug": "PASS",
+    "assembleRelease": "PASS",
+    "lintDebug": "PASS",
+    "lintRelease": "PASS",
+    "testDebugUnitTest": "PASS",
+    "assembleDebugAndroidTest": "PASS",
+    "assembleQa": "PASS",
+    "assembleQaAndroidTest": "PASS"
+  },
+  "unit": {
+    "tests": 126,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 31
+  },
+  "lint": {
+    "debug": {
+      "errors": 0,
+      "warnings": 0,
+      "hints": 21
+    },
+    "release": {
+      "errors": 0,
+      "warnings": 0,
+      "hints": 21
+    }
+  },
+  "artifacts": {
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/artifacts/androidTest/debug/app-debug-androidTest.apk": "681ce389476a6ab2af22a69d0ca024139335356e40a0abfd7d207d65428f7630",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/artifacts/androidTest/qa/app-qa-androidTest.apk": "f913273d00ae38e109698f5f13c228f530b67b62fc98633575948bb21ef91695",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/artifacts/debug/app-debug.apk": "aca69fd3cb37441ef1da5a9e4cd0499494b98c35b4f77027c472519b9f5a510f",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/artifacts/qa/app-qa.apk": "68abec3448475b80608b7deb17c9282b556bb6ba2e8de300115628bccb4e9f71",
+    ".cache/qa/2026-10-27-telegram-chat/android-implementation/run05/artifacts/release/app-release-unsigned.apk": "47e3d8ce7f32a040d17b01b845f02933f34e0460f3316028cf4a1d2b34779c57"
+  },
+  "toolingChecks": {
+    "design:check": "PASS after reviewer repaired report mode",
+    "agent:check": "PASS",
+    "git diff --check": "PASS"
+  }
+}
