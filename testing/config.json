@@ -209,11 +209,16 @@
     "release-version-policy"
   ],
   "nonProductChanges": [
+    "independent-exploratory-testing",
     "functional-test-acceptance",
     "cross-platform-design-system",
     "component-releases"
   ],
   "excludedSources": [
+    {
+      "path": "openspec/changes/independent-exploratory-testing/specs/exploratory-testing/spec.md",
+      "reason": "Навык и процесс независимого исследования по запросу. Проверяются metadata и синтетические задания; продуктовый UI/API не меняется, запуск приложения не входит в создание навыка."
+    },
     {
       "path": "openspec/changes/component-releases/specs/component-release-artifacts/spec.md",
       "reason": "Спецификация инструментов, выпуска или эксплуатации. Проверяется инфраструктурными тестами и release/build checks; не является сценарием пользовательской функции. При добавлении пользовательского поведения включить в sources."

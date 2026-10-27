@@ -116,7 +116,7 @@ try {
       `Skill version mismatch: ${name}; run npm run agent:update.`);
   }
 
-  const projectSkills = ['product-copy-editor', 'design-system-publish', 'design-review', 'test-spec', 'feature-test', 'release-test'];
+  const projectSkills = ['product-copy-editor', 'design-system-publish', 'design-review', 'test-spec', 'feature-test', 'release-test', 'exploratory-test'];
   for (const name of projectSkills) {
     const path = `.agents/skills/${name}/SKILL.md`;
     if (!existsSync(join(root, path))) {
@@ -131,6 +131,14 @@ try {
       `Invalid project skill name or description: ${name}`);
   }
 
+  const exploratoryPolicyPath = '.agents/skills/exploratory-test/agents/openai.yaml';
+  check(existsSync(join(root, exploratoryPolicyPath)), 'Missing explicit-only exploratory-test policy.');
+  if (existsSync(join(root, exploratoryPolicyPath))) {
+    const metadata = parse(read(exploratoryPolicyPath));
+    check(metadata?.policy?.allow_implicit_invocation === false,
+      'exploratory-test must disable implicit invocation with boolean false.');
+  }
+
   const config = parse(read('openspec/config.yaml'));
   check(config.schema === 'spec-driven' && typeof config.context === 'string', 'Invalid OpenSpec project configuration.');
 
@@ -140,7 +148,7 @@ try {
     ...markdownFiles(join(root, 'testing')),
     ...markdownFiles(join(root, 'frontend/ios/docs')),
     ...markdownFiles(join(root, 'frontend/android/docs')),
-    ...projectSkills.map((name) => join(root, `.agents/skills/${name}/SKILL.md`)),
+    ...projectSkills.flatMap((name) => markdownFiles(join(root, `.agents/skills/${name}`))),
     ...['backend', 'frontend/web', 'frontend/ios', 'frontend/android'].map((area) => join(root, area, 'AGENTS.md')),
   ];
   for (const file of documentation.filter(existsSync)) {
