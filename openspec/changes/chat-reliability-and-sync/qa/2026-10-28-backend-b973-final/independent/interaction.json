@@ -1,7 +1,7 @@
 {
   "candidate": "b973b3f7b69392fe808a4b98975b51af7e76f1c7",
   "executor": "backend-chat-final-independent",
-  "phase": "SQL awaiting explicit upload authorization; no final release verdict",
+  "phase": "completed: 23 passed, 1 failed (QA-SQL-CLEANUP-100K-001)",
   "checks": [
     {
       "caseId": "TC-CHAT-READ-STATE-068DA926",
@@ -117,14 +117,22 @@
     },
     {
       "caseId": "TC-CHAT-PAGE-BOUNDS",
-      "status": "blocked",
-      "action": "Memory bounds/copies/rollback/cancel; SQL1k/10k/100k EXPLAIN initial/after/before/emptytail/entry/intent; sparse uint64.",
-      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
-      "actual": "SQL matrix bounded EXPLAIN1k/10k/100k и 20samples p95 для limit1/50/100 подготовлены, cloud upload ещё не был разрешён.",
-      "remaining": "SQL matrix bounded EXPLAIN1k/10k/100k и 20samples p95 для limit1/50/100 подготовлены, cloud upload ещё не был разрешён.",
-      "freshRuntimeSelectors": [],
+      "status": "failed",
+      "action": "Повторены memory bounds/copies/rollback/cancel и sparse uint64; на отдельной пустой SQL DB выполнены EXPLAIN для 1k/10k/100k, а также 54 комбинации initial/after-zero/empty-after-tail/before-first/before-tail/around × limit 1/50/100 × размеры истории, по 20 измерений SQL+JSON decode. Затем штатный Store.Update(DeleteMeeting) очищал каждую свою встречу.",
+      "expected": "Страницы ограничены и отсортированы, права/cancel/точность сохранены, индекс и LIMIT исключают полное чтение; p95 ≤100 ms. Завершение и очистка собственных данных без ошибки.",
+      "actual": "Все 14 основных SQL tests прошли, включая bounded plans и sparse uint64/rollback. Все 54 p95 прошли: 0.341–2.744 ms при бюджете 100 ms. Дополнительный TestIndependentRepeatFeedSQLLatencyIntegration/100000 завершился ошибкой в t.Cleanup: repeat_feed_latency_test.go:15, Store.Update(context.Background(), DeleteMeeting(id)) → persistent storage unavailable. Первое SQL выполнение exit1. Внешний guarded cleanup после этого удалил собственную DB и tempdir успешно. Это ошибка удаления/очистки, а не провал latency или EXPLAIN.",
+      "remaining": "QA-SQL-CLEANUP-100K-001: определить причину ошибки DeleteMeeting для 100k, безопасно сохранить исходную SQL cause без DSN/данных, исправить в роли исполнителя и повторить затронутую проверку без ослабления лимитов.",
+      "freshRuntimeSelectors": [
+        "TestFeedWindowBoundsLookupsAndCopies",
+        "TestFeedAroundBoundsAndCopies",
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestFeedWindowIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestIndependentRepeatFeedSQLLatencyIntegration"
+      ],
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+      "finishedAt": "2026-10-27T22:34:56.402847+00:00"
     },
     {
       "caseId": "TC-CHAT-SECURITY-791FF479",
@@ -208,14 +216,18 @@
     },
     {
       "caseId": "TC-CHAT-SECURITY-A3B3BFE7",
-      "status": "blocked",
-      "action": "Account removal: HTTP DELETEme, current replay, cleanup markers/recipients; terminalhint после meeting removal; SQLaccount/outbox.",
-      "expected": "Удаление приватных state, current projection; terminalhint после removal/restart.",
-      "actual": "Current local account deletion/replay passed; actual SQL separate-process deletion сactiveWS→durableterminal prepared, upload pending.",
-      "remaining": "Current local account deletion/replay passed; actual SQL separate-process deletion сactiveWS→durableterminal prepared, upload pending.",
-      "freshRuntimeSelectors": [],
+      "status": "passed",
+      "action": "На SQL создан marker и pending outbox; штатный HTTP DELETE /api/v1/me удалил owner при активном WS. Повторён sync старого cursor, проверены текущая анонимная проекция и отсутствие marker/адресных hints. Затем удалён последний участник с активным WS, остановлен собственный API/broker, observer подключён из нового executable process и выполнен drain.",
+      "expected": "Удалённые аккаунты теряют доступ; private state и история встречи удалены, прежнее имя не возвращается, durable terminal hint переживает удаление встречи и restart без приватного текста.",
+      "actual": "Подписки owner/guest закрылись кодом3503; history_invalidated получен, прежний профиль не вернулся; marker и адресные hints owner отсутствуют. После удаления встречи stream/feed отсутствуют. Новый process PID54122 доставил observer terminal access_revoked без текста/token, acknowledged=3. Process test и внешняя очистка собственной DB/tempdir passed.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatAccountOutboxIntegration",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00"
     },
     {
       "caseId": "TC-CHAT-SYNC-5EFD24A6",
@@ -246,14 +258,20 @@
     },
     {
       "caseId": "TC-CHAT-SYNC-AA76CADB",
-      "status": "blocked",
-      "action": "Memory crashafterpublish-beforeACK, lease staleowner, drain/retry; SQLjournal/outbox atomicity/fresh pool; slowconsumer3008.",
-      "expected": "Сохранность commit/change/outbox при process restart до/послеpublish; lostNOTIFY; retentioncatchup.",
-      "actual": "Current local rollback/dispatch/slowconsumer passed; distinct SQL childprocess commit-crash73/APIrestart/publish-crash74/recover prepared, upload pending.",
-      "remaining": "Current local rollback/dispatch/slowconsumer passed; distinct SQL childprocess commit-crash73/APIrestart/publish-crash74/recover prepared, upload pending.",
-      "freshRuntimeSelectors": [],
+      "status": "passed",
+      "action": "На отдельной SQL DB executable process сохранил message/change/outbox и аварийно вышел до publish; новый API прочитал delta по исходному cursor. Следующий process вышел после publish до ACK, новый process drain без NOTIFY повторил event. Дополнительно проверен rollback предметной транзакции; локальные slow consumer/retention и HTTP catch-up уже выполнены на этом кандидате.",
+      "expected": "Commit переживает process restart; pending outbox доставляется без нового сообщения/NOTIFY, повтор безопасен, rollback не оставляет record/change/outbox; slow consumer отключается восстановимо и HTTP сохраняет доступные изменения.",
+      "actual": "PID54100 exit73 после commit; API PID54106 вернул HTTP200 и delta1. PID54111 exit74 после publish event03c39b46-0774-4138-ba5d-d601e9a7d16a; PID54116 повторил тот же event, drain acknowledged/deleted=4. SQL rollback assertions passed; основной SQL atomic range/lease/retry matrix passed. Свежие локальные slow consumer3008 и exhausted recovery/100 changes при RTT150 ms passed.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatJournalAtomicRangeIntegration",
+        "TestChatDispatchLeaseRollbackRecoveryIntegration",
+        "TestChatDispatchElapsedRetryIntegration",
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00"
     },
     {
       "caseId": "TC-CHAT-SYNC-F6CFB5E9",
@@ -286,14 +304,20 @@
     },
     {
       "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
-      "status": "blocked",
-      "action": "Text/media retries before/afterreceipt expiry, boundedFeed guard, current access/conflicts; SQLentry/intent lookup1k/10k/100k.",
-      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
-      "actual": "Independent10k photo/file/text before/after31d и legacy-captionless hash прошли; current SQL index lookup ещё pending.",
-      "remaining": "Independent10k photo/file/text before/after31d и legacy-captionless hash прошли; current SQL index lookup ещё pending.",
-      "freshRuntimeSelectors": [],
+      "status": "passed",
+      "action": "В свежем локальном runtime с историей 10k повторены text/photo/file до и после 31 дней при запрете полного Feed; изменены text/caption, actor/meeting и права, проверена attachment copy. В SQL проверены entry_id и intent tuple lookup на 1k/10k/100k; отдельно memory/SQL rollback.",
+      "expected": "Повтор сохраняет один ID/sequence и attachments, legacy captionless hash; конфликт/отзыв прав не обходится; копии независимы, rollback атомарен, 100k lookup индексирован и ограничен.",
+      "actual": "Photo/file/text и legacy captionless retry сохранили ID/sequence; изменённое намерение отклонено, чужой scope не раскрыт, revoke запрещает retry; copy не меняет store. TestFeedBoundedQueryPlansIntegration прошёл свежие entry/intent lookup 1k/10k/100k с bounded plan; TestFeedWindowSnapshotRollbackIntegration passed. Независимый общий p95 test упал позже только на DeleteMeeting cleanup и записан отдельным failed PAGE case.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+        "TestFeedAndTextRetryNeverReadFullHistory",
+        "TestMediaRetryNeverReadsFullHistory",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration"
+      ],
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+      "finishedAt": "2026-10-27T22:34:56.402847+00:00"
     },
     {
       "caseId": "TC-CHAT-SYNC-THROUGH",
@@ -310,14 +334,17 @@
     },
     {
       "caseId": "TC-CHAT-CAPABILITIES",
-      "status": "blocked",
-      "action": "HTTPcapabilities auth/disabledread/sync; legacyfeed/retry; flagreactivation preserves baseline.",
-      "expected": "СовместимостьDTO и disabled path; rollback nojournalwriter→newepoch resets.",
-      "actual": "Current disabled capability/legacyHTTP local passed; simulated no-journal writer+explicit newepoch SQL probe prepared, upload pending.",
-      "remaining": "Current disabled capability/legacyHTTP local passed; simulated no-journal writer+explicit newepoch SQL probe prepared, upload pending.",
-      "freshRuntimeSelectors": [],
+      "status": "passed",
+      "action": "На SQL test-only writer добавил запись без journal; только у собственной встречи явно заменён epoch. Прежний cursor проверен через service/HTTP, получен новый snapshot. Сервер с отключёнными capabilities обслужил старые feed/send/retry DTO; затем sync снова включён.",
+      "expected": "Rollback interval не теряет историю: старый cursor требует reset, новый snapshot включает запись. Schema-compatible выключенный sync/read оставляет прежние HTTP права/ID/idempotency.",
+      "actual": "Старый cursor после epoch replacement получил HTTP410; snapshot сохранил interval message и прежнюю историю с новым epoch. Disabled capabilities: sync=false/read_state=false; feed200, send/retry201 с тем же ID/sequence. После включения journal содержит новую запись. Это имитация writer без journal и schema-compatible fallback; запуск старого production binary/rollback схемы не выполнялся. Выбор legacy пути и скрытие read UI относятся к приёмке клиентов.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00"
     }
   ]
 }

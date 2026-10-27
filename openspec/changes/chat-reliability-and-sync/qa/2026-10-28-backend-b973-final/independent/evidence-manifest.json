@@ -1,15 +1,53 @@
 {
-  "createdAt": "2026-10-27T22:19:03.559189+00:00",
+  "createdAt": "2026-10-27T22:42:40.441344+00:00",
   "candidate": "b973b3f7b69392fe808a4b98975b51af7e76f1c7",
-  "phase": "pending explicit SQL upload confirmation",
+  "phase": "completed: 23 passed / 1 failed, no blocked; cleanup confirmed",
+  "planSHA256": "d8e99b5f0ae49ab8eeb0fc0d57dd914a861f555ff42978bc9cd66fdce340d9f6",
+  "runSHA256": "5877b7a21cec19cc9d380c6cef6a3e359889f4ac6b77b22da2c44159925d6e2f",
   "files": [
+    {
+      "path": "agent-check-after-sql.log",
+      "sha256": "c56c79616725a73f8fdd101044fdc0fbb1c92f2c56461489c1d1f3d477ccac01"
+    },
     {
       "path": "agent-check.log",
       "sha256": "c56c79616725a73f8fdd101044fdc0fbb1c92f2c56461489c1d1f3d477ccac01"
     },
     {
+      "path": "before-sql-20261027T223322Z/evidence-manifest.json",
+      "sha256": "b1c28c814b1af37d5fed2817a0970f1c9841b34907845afffb9cb9d23b541d8e"
+    },
+    {
+      "path": "before-sql-20261027T223322Z/interaction.json",
+      "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+    },
+    {
+      "path": "before-sql-20261027T223322Z/report.md",
+      "sha256": "fd679a348d8bc985e0e95171a4ad5ff504957803a479642b5077be19d6076e9b"
+    },
+    {
+      "path": "before-sql-20261027T223322Z/run.json",
+      "sha256": "735391a9a04e28a6ad09af6157346eef1bdc41d97d4f95fb359a52d52dc69def"
+    },
+    {
+      "path": "before-sql-20261027T223322Z/sql-authorization-pending.json",
+      "sha256": "b4ab62adc1e585d7ae695163c60fc2cd4607b99be1323c2a50fc13b5f149d441"
+    },
+    {
       "path": "candidate-b973.json",
       "sha256": "ae51f13d5fcd4b7b07a69ccd7d8a291e55d9d19072c20588d7c196997e32c57c"
+    },
+    {
+      "path": "completion.json",
+      "sha256": "29d21e3d6962c31adc952faa724e2c3c674b17cc2eff326986381b0e70c85a96"
+    },
+    {
+      "path": "defect-cleanup-100k.json",
+      "sha256": "9c3c00776d688c2b2d66da8bbb9c34f7936d8dba1f204932c10e8991e43dd5dd"
+    },
+    {
+      "path": "diff-check-after-sql.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "diff-check.log",
@@ -17,7 +55,11 @@
     },
     {
       "path": "interaction.json",
-      "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+      "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
+    },
+    {
+      "path": "probe-parity-before-sql.json",
+      "sha256": "e045f747be821d1813e866378056c8541c978b03066f1f1bb81d06575e2b032d"
     },
     {
       "path": "probes/dispatcher_lease_test.go",
@@ -72,12 +114,16 @@
       "sha256": "c771eba1c673175eaa42cb18a7a9732d3f360061e3999fd27c96ef92e7b28e04"
     },
     {
+      "path": "qa-ready-after-sql.log",
+      "sha256": "debbe265d2e0ee7cd6509b219a39d6d34caf9b92461c816528458fdbec6772e8"
+    },
+    {
       "path": "qa-ready-pending-sql.log",
       "sha256": "ca05502a1b8175e6ea2a84fce2960411be67192f9d49ae7b6b8e3a5f9dfe41be"
     },
     {
       "path": "report.md",
-      "sha256": "fd679a348d8bc985e0e95171a4ad5ff504957803a479642b5077be19d6076e9b"
+      "sha256": "7b9345210ef4ccf1cadbb149c8cae69f14592f9d839e5b8ced00abf1786b6485"
     },
     {
       "path": "runtime.jsonl",
@@ -94,6 +140,54 @@
     {
       "path": "sql-authorization-pending.json",
       "sha256": "b4ab62adc1e585d7ae695163c60fc2cd4607b99be1323c2a50fc13b5f149d441"
+    },
+    {
+      "path": "sql-authorization-result.json",
+      "sha256": "2d6587589d3b8219ac5236de08cbab35127b6246dbddb5cdcf17cd08e2aebee6"
+    },
+    {
+      "path": "sql-process-run01/hashes.json",
+      "sha256": "d01a7a99cfa941374cf6524684979b9c752660e0b686ee2ee68db744a49bc8cb"
+    },
+    {
+      "path": "sql-process-run01/receipt.json",
+      "sha256": "e453dd381f151969077d1e408b3d959c40ff16ec2396e19cd064e2c7fec94659"
+    },
+    {
+      "path": "sql-process-run01/remote-check.py",
+      "sha256": "7e9b2491c807ef21d236cbb04033c30cfd4570434ee827af53a7b7dc7081288e"
+    },
+    {
+      "path": "sql-process-run01/run.py",
+      "sha256": "5dfd2be7aef7013d6482d6e9207fce13e6f5937ac1aef4107d7f41f162471a82"
+    },
+    {
+      "path": "sql-process-run01/sql-live.log",
+      "sha256": "ec189079a1c907cc1ee74aadd6de51927c02dfd190cea40967d65a11b0fd52a5"
+    },
+    {
+      "path": "sql-run01/hashes.json",
+      "sha256": "71ee51b8f029d7e5ccda9f2ac0266c0922afcb2501b9ffe37271249adf075b2b"
+    },
+    {
+      "path": "sql-run01/receipt.json",
+      "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
+    },
+    {
+      "path": "sql-run01/remote-check.py",
+      "sha256": "248edec3f225b5c70a4615b9882b1dbd34fc88e2530b6d096590efd38d5044f1"
+    },
+    {
+      "path": "sql-run01/run.py",
+      "sha256": "45c729362cf6c56e748b64b445b322f30876d4262b169fd412e269177e1e6ef5"
+    },
+    {
+      "path": "sql-run01/sql-live.log",
+      "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+    },
+    {
+      "path": "sql-timing-summary.json",
+      "sha256": "52b96f65cdc23bac9cfe4665a1864d15cd5a1a0e65f88fdb3d299015ba644808"
     }
   ]
 }

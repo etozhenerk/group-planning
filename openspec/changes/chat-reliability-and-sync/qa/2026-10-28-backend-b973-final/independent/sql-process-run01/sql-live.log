@@ -1,0 +1,27 @@
+{"database": "somewhere_integration", "createdForThisRun": true, "marker": "codex-chat-repeat-2f12970da4594e678f8d032e93373e02"}
+=== RUN   TestIndependentRepeatSQLProcessRestartDeletionAndEpoch
+    repeat_sql_process_test.go:73: child phase=commit-crash exit=73 output==== RUN   TestIndependentRepeatSQLChild
+        COMMITTED id=8b3ed5f9-8a11-4b62-81cd-e5eeb4302174 sequence=5 pid=54100
+    repeat_sql_process_test.go:74: child phase=api-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        API_RESTART status=200 changes=1 pid=54106
+        --- PASS: TestIndependentRepeatSQLChild (0.02s)
+        PASS
+    repeat_sql_process_test.go:75: child phase=publish-crash exit=74 output==== RUN   TestIndependentRepeatSQLChild
+        PUBLISHED event=03c39b46-0774-4138-ba5d-d601e9a7d16a target=user pid=54111
+    repeat_sql_process_test.go:76: child phase=recover exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        RECOVERED event=03c39b46-0774-4138-ba5d-d601e9a7d16a target=user pid=54116
+        RECOVERED event=30f589f1-69b8-47c6-bcb8-b628aedbbe52 target=user pid=54116
+        RECOVERED event=8531d4b9-eb0d-497f-bbab-909d45d3263f target=meeting pid=54116
+        RECOVERED event=86b24b92-b38c-44d4-86b6-2fc7bedb0648 target=user pid=54116
+        DRAIN acknowledged=4 deleted=4 pid=54116
+        --- PASS: TestIndependentRepeatSQLChild (0.03s)
+        PASS
+    repeat_sql_process_test.go:84: simulated no-journal writer + explicit epoch replacement: oldHTTP cursor410; fresh snapshot preserves interval message and preceding history; schema-compatible disabled capability still serves legacy feed. Production oldbinary rollback was not attempted
+    repeat_sql_process_test.go:99: child phase=terminal-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        TERMINAL_RESTART delivered=true acknowledged=3 pid=54122
+        --- PASS: TestIndependentRepeatSQLChild (0.03s)
+        PASS
+    repeat_sql_process_test.go:100: distinct process PIDs: committed crash73 before publish; API restart HTTP200 delta1; publish crash74 before ACK; periodic no-NOTIFY drain replayed same event; SQL rollback atomic; account DELETE with activeWS revoked sockets/cleared marker+recipient; deletedmeeting removedhistory/stream, newprocess delivered durable terminal hint
+--- PASS: TestIndependentRepeatSQLProcessRestartDeletionAndEpoch (1.44s)
+PASS
+{"database": "somewhere_integration", "removedOwnTemporaryDatabase": true}

@@ -1,0 +1,79 @@
+{
+  "startedAt": "2026-10-27T22:28:11.041Z",
+  "finishedAt": "2026-10-27T22:44:16.513Z",
+  "mode": "distributed",
+  "backendCommit": "b973b3f7b69392fe808a4b98975b51af7e76f1c7",
+  "storage": "memory.Store",
+  "clients": 100,
+  "steadySeconds": 900,
+  "steadyRate": 5,
+  "burstSeconds": 60,
+  "burstRate": 20,
+  "artificialHTTPRoundTripMs": 150,
+  "artificialPublicationDelayMs": 75,
+  "measurement": "Same-process monotonic POST start to canonical entry received from HTTP catch-up after SDK hint; upper bound includes pre-commit time. No UI/render/SQL claim.",
+  "idleRequests": 0,
+  "requests": {
+    "snapshots": 100,
+    "catchups": 51090,
+    "posts": 5700
+  },
+  "backendBefore": {
+    "clients": 100,
+    "dispatch_errors": 0,
+    "gc": 15796,
+    "goroutines": 291,
+    "heap_alloc": 22790496,
+    "heap_inuse": 25313280,
+    "sys": 73898264
+  },
+  "backendAfter": {
+    "clients": 100,
+    "dispatch_errors": 0,
+    "gc": 23476,
+    "goroutines": 292,
+    "heap_alloc": 48300680,
+    "heap_inuse": 50143232,
+    "sys": 94869784
+  },
+  "errors": [],
+  "missingDeliveries": 0,
+  "acknowledgements": {
+    "count": 5700,
+    "p50_ms": 154.6154169999063,
+    "p95_ms": 162.57508400001097,
+    "p99_ms": 167.68975000001956,
+    "max_ms": 190.58224999997765
+  },
+  "allDeliveries": {
+    "count": 57000,
+    "p50_ms": 190.8080830000108,
+    "p95_ms": 386.6606250000041,
+    "p99_ms": 398.21716699993704,
+    "max_ms": 444.95250000001397
+  },
+  "lastSubscriberPerMessage": {
+    "count": 5700,
+    "p50_ms": 190.98166699998546,
+    "p95_ms": 386.8746669999964,
+    "p99_ms": 398.7483750000829,
+    "max_ms": 444.95308300002944
+  },
+  "stages": {
+    "steady": {
+      "count": 4500,
+      "p50_ms": 189.99420799996005,
+      "p95_ms": 388.8746669999964,
+      "p99_ms": 399.7177920000395,
+      "max_ms": 409.84162500000093
+    },
+    "burst": {
+      "count": 1200,
+      "p50_ms": 240.2357909999555,
+      "p95_ms": 330.5050419999752,
+      "p99_ms": 343.8338750000112,
+      "max_ms": 444.95308300002944
+    }
+  },
+  "complete": true
+}

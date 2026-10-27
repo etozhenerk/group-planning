@@ -1,0 +1,24 @@
+{
+  "id": "QA-SQL-CLEANUP-100K-001",
+  "status": "open",
+  "caseId": "TC-CHAT-PAGE-BOUNDS",
+  "candidate": "b973b3f7b69392fe808a4b98975b51af7e76f1c7",
+  "observed": "После PASS всех 54 p95 комбинаций cleanup 100000 вернул persistent storage unavailable из Store.Update(context.Background(), DeleteMeeting(id)); repeat_feed_latency_test.go:15. SQL run exit1.",
+  "expected": "Штатный DeleteMeeting завершает очистку своей встречи без ошибки при неизменных штатных SQL лимитах.",
+  "source": "backend/internal/storage/postgres/account_removal.go:39",
+  "reproduction": "Сохранённый TestIndependentRepeatFeedSQLLatencyIntegration на отдельной пустой somewhere_integration: 1k/10k/100k history, ANALYZE, страницы, затем t.Cleanup DeleteMeeting.",
+  "cause": "Не установлена; SQL error cause и конкретный statement не сохранены. Timeout/cascade — гипотезы, не подтверждённый диагноз.",
+  "notFailed": "Все page assertions, 54 p95 ≤100 ms, bounded EXPLAIN и lookup tests passed.",
+  "cleanup": "Внешняя nonce-guarded очистка удалила собственную DB и tempdir, no FORCE.",
+  "nextSteps": [
+    "В изолированной DB безопасно зафиксировать точную SQL cause и statement удаления 100k без DSN, credentials и пользовательского содержимого.",
+    "Исполнителю устранить установленную причину; не ослаблять p95/query/test бюджеты ради pass.",
+    "Повторить затронутую приёмку frozen кандидата и qa:ready, сохранив текущий raw failure."
+  ],
+  "evidence": [
+    "sql-run01/sql-live.log",
+    "sql-run01/receipt.json",
+    "sql-timing-summary.json",
+    "probes/repeat_feed_latency_test.go"
+  ]
+}

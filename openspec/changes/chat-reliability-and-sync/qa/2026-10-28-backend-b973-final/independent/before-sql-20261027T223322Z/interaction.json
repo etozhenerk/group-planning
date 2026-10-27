@@ -1,0 +1,323 @@
+{
+  "candidate": "b973b3f7b69392fe808a4b98975b51af7e76f1c7",
+  "executor": "backend-chat-final-independent",
+  "phase": "SQL awaiting explicit upload authorization; no final release verdict",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-READ-STATE-068DA926",
+      "status": "passed",
+      "action": "HTTPS PUT150→140→150, следующий sync; list и author receipts. Дополнительно fault на втором hint и retry через60с.",
+      "expected": "Marker=max; no-op без нового change/outbox; согласованные projections.",
+      "actual": "150 во всех ответах, projection_version не меняется, sync пуст, list unread0, canonical receipt1; fault откатил marker/journal/outbox.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadLateHintRollbackAndNoop"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "status": "passed",
+      "action": "HTTPS0/01/+1/-1/decimal/overflow/max и beyondtail151; outsider и отзыв RSVP; sparse uint64 gaps.",
+      "expected": "Невалидные позиции отклонены, read state не раскрыт, нет продвижения.",
+      "actual": "422 для недопустимых значений,403 после revoke/outsider,401 после удаления; MaxUint64 допустим только для реально существующей записи в отдельном sparse fixture.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-284DD6EE",
+      "status": "passed",
+      "action": "Два foreign message, одно own, hidden poll vote/close, reaction; snapshot и два MarkRead.",
+      "expected": "Только два чужих сообщения unread; затем1 и0 с правильным first_unread.",
+      "actual": "Unread2→1→0; first_unread первый→второй→пусто; poll/system/reaction/own не увеличили count.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-8A47BDBD",
+      "status": "passed",
+      "action": "10k legacy activation и concurrent commit; receipt/readers доSync; unauthorized/invalid/continuation и revoke между фазами.",
+      "expected": "Baseline атомарен, actual0, нет ложных receipts; legacy epoch стабилен, посторонний не создаёт stream.",
+      "actual": "10k baseline10003 actual0 unread0 согласно observed commit; receipt0. Legacy first authorized read initializes once безjournal/hints; unauthorized/continuation не создают stream; оба access barriers403.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinal10kActivationCommitRace",
+        "TestIndependentReadActivationLegacyReceipts",
+        "TestIndependentLegacyReadInitAuthorizationAndNoEffects",
+        "TestIndependentLegacyReadInitRechecksAccessAcrossTransactions"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-5869F951",
+      "status": "passed",
+      "action": "Третий участник C join после100 старых сообщений; query before/after actual PUT.",
+      "expected": "Baseline не даёт receipt; отдельный marker даёт.",
+      "actual": "Count остался1 после join, вырос2 только после PUT; baseline/actual разделены.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-51E51F41",
+      "status": "passed",
+      "action": "B withdraw, новые foreign rows, rejoin, повтор прежнего lower marker; чтение list.",
+      "expected": "Старые baseline/actual сохранены; доступные новые сообщения unread.",
+      "actual": "Actual сохранён, unread98, first_unread у первой новой записи, list98; reactivation repeated не сбрасывает значения.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle",
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-EC05E2CA",
+      "status": "passed",
+      "action": "103readers, revoke одного/remove account другого; страницы50/50/1 и HTTP DELETEme при saved cursor.",
+      "expected": "Удалённые/вышедшие и автор исключены, aggregate текущий без полного feed.",
+      "actual": "103→101, removed IDs отсутствуют; HTTP saved cursor после deletion исключает C и count2→1; bounded receipt query проходит.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadersPaginationRevokeAndScopedCursor",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "status": "passed",
+      "action": "Empty author readers; nonauthor/outsider;100/101IDs; own+foreign; uppercase UUID и mixedcase duplicate.",
+      "expected": "Ограничения/права до выдачи; UUID canonical, duplicates без partial response.",
+      "actual": "Empty count0;403 для неавтора/outsider/mixedforeign,100 accepted/101422, uppercase canonicalcount1, mixedcase duplicate422.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "blocked",
+      "action": "Memory bounds/copies/rollback/cancel; SQL1k/10k/100k EXPLAIN initial/after/before/emptytail/entry/intent; sparse uint64.",
+      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
+      "actual": "SQL matrix bounded EXPLAIN1k/10k/100k и 20samples p95 для limit1/50/100 подготовлены, cloud upload ещё не был разрешён.",
+      "remaining": "SQL matrix bounded EXPLAIN1k/10k/100k и 20samples p95 для limit1/50/100 подготовлены, cloud upload ещё не был разрешён.",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-791FF479",
+      "status": "passed",
+      "action": "HTTP/WS cookie и native; foreign/duplicateOrigin, mixed/duplicateBearer, чужойchannel, forged identity; cookie HTTP PUT безCSRF.",
+      "expected": "Server-derived identity, origin/access checks, WS не отменяет CSRF.",
+      "actual": "ЗапрещённыеOrigin403, ambiguous credential401, connect spoof101, foreign subscription103; cookie/native connect успешны; read mutation безCSRF403.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing",
+        "TestRealtimeHTTPAuthenticationBoundary",
+        "TestRealtimeSocketAuthorizationPrivacyRecoveryAndLogout",
+        "TestChatReadHTTP"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "passed",
+      "action": "Активный WS, Logout и отдельно TTL2s; late committedhint; последующие HTTPsync/capabilities и WSreconnect.",
+      "expected": "Закрытие, повторная аутентификация и отсутствие late-data после expiry/revoke.",
+      "actual": "Оба варианта закрылиWS3503; последующие protectedHTTP иreconnect401; latehint не восстановилдоступ, safe diagnostics безcredentials.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSessionExpiryRevokeAndLateRequests"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-1DC708F2",
+      "status": "passed",
+      "action": "Полученhint; HTTPsync блокирован доread-snapshot; commit RSVPwithdraw; releaseбарьера; read/feed/send и recover.",
+      "expected": "Отзыв до payload не обходится hint/receipt.",
+      "actual": "ЗадержанныйHTTP403 послеcommitwithdraw, WSunsubscribe2003; read/feed/send403; recovery103безpayload.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-6DD0CC09",
+      "status": "passed",
+      "action": "Hidden anonymous poll: vote owner, sync guest, close worker, sync старойкарточки; readstate и serializedjournal/hints.",
+      "expected": "Не раскрыть чужой выбор до закрытия; после закрытия только разрешённый итог.",
+      "actual": "В guest проекции нет MyOptionIDs/votes/voters; послеclose votes присутствуют. Journal/hints безтекста/имени/invitation, unread учитывает только сообщения.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A91C53BB",
+      "status": "passed",
+      "action": "Сверка security.md, runtime-topology report и deployment-verification без production операций.",
+      "expected": "Неподтверждённая защитаbackup не объявляется проверенной.",
+      "actual": "security.md явно отделяет подтверждённый age job от неподтверждённых disk/key lifecycle. Этот QA не выполнял restore текущего кандидата и не заявляет backup/E2EE pass.",
+      "remaining": "",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-BDBF283F",
+      "status": "passed",
+      "action": "Capture timeout/reconnect/410reset/storage-read500/panic500/storage-write500, explicit rejectedtokenquery и JSONjournal/outbox.",
+      "expected": "Все diagnostics fault paths безcontent/credentials; клиентское хранение отдельно.",
+      "actual": "Syntheticbody/error/credential/cursor markers отсутствуют вlogs/errorenvelopes/journal/outbox; request_id/status/duration retained; rejectedURLtoken400непопалвlogs. Native/web storage не относитсякbackendverdict.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatFaultDiagnosticsCapture",
+        "TestIndependentRepeatRejectedCredentialsNeverInURL"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A3B3BFE7",
+      "status": "blocked",
+      "action": "Account removal: HTTP DELETEme, current replay, cleanup markers/recipients; terminalhint после meeting removal; SQLaccount/outbox.",
+      "expected": "Удаление приватных state, current projection; terminalhint после removal/restart.",
+      "actual": "Current local account deletion/replay passed; actual SQL separate-process deletion сactiveWS→durableterminal prepared, upload pending.",
+      "remaining": "Current local account deletion/replay passed; actual SQL separate-process deletion сactiveWS→durableterminal prepared, upload pending.",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-5EFD24A6",
+      "status": "passed",
+      "action": "Pollclose worker без нового message; sync постаромуcursor; account removal и повтор oldrange.",
+      "expected": "Current oldcard projection и historyinvalidated безпрежнегоимени.",
+      "actual": "Стараякарточка закрыта/итог доступен; journal replay current RemovedAccountName и historyinvalidated. Client stale-merge исключён из backend verdict.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll",
+        "TestChatSyncAccountReplayHasCurrentNames"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-BC07BEB1",
+      "status": "passed",
+      "action": "Snapshot→commit→subscribe безhint; controlledoffline300s + explicit brokerRemoveHistory;100commits; reconnect/catchup150msRTT. Отдельно preservedhistory recoveredtrue→HTTPcatchup.",
+      "expected": "Snapshot-subscribe gap;100offlinechanges recovery≤2s приRTT150ms даже послеSDKrecovery.",
+      "actual": "Gap entryполученровноодинраз;100IDs бездублей/дыр приRTT150ms ≤2s; successful brokerrecovery всёравно сопровождёнHTTPcatchup. 300s — управляемое appвремя, brokerretention истощён явным fixturehook, не заявлены5минwall-time.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-AA76CADB",
+      "status": "blocked",
+      "action": "Memory crashafterpublish-beforeACK, lease staleowner, drain/retry; SQLjournal/outbox atomicity/fresh pool; slowconsumer3008.",
+      "expected": "Сохранность commit/change/outbox при process restart до/послеpublish; lostNOTIFY; retentioncatchup.",
+      "actual": "Current local rollback/dispatch/slowconsumer passed; distinct SQL childprocess commit-crash73/APIrestart/publish-crash74/recover prepared, upload pending.",
+      "remaining": "Current local rollback/dispatch/slowconsumer passed; distinct SQL childprocess commit-crash73/APIrestart/publish-crash74/recover prepared, upload pending.",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-F6CFB5E9",
+      "status": "passed",
+      "action": "HTTPforgedcursor, trimjournal, прежнийcursor и freshsnapshot; service user-scope,expiry8d,retention; SQLretention.",
+      "expected": "400 malformed,410reset, права доcursor; история доступна freshsnapshot.",
+      "actual": "HTTP400 invalid_sync_cursor и410 sync_reset_required сrequest_id; fresh snapshot возвращает entries. Revoked service403 доparse; retention не удаляет историю.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestChatSyncHTTP",
+        "TestChatRetentionResetAndOutboxReplacement",
+        "TestChatSyncScopeExpiryAndHiddenProjection"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-14D92D7D",
+      "status": "passed",
+      "action": "HTTPpost ACK не используется клиентом; часы+31d, relogin, repeat sameintent и changedbody; actor-scoped service lookup.",
+      "expected": "ТотжеentryID/sequence, конфликт тела; чужойactor scope не смешан.",
+      "actual": "HTTP31d повтор201 тотжеID/sequence, changedbody409; service ownactor samekey отдельная запись, revokedrepeat403. Client ACK-validation внеbackend.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+        "TestFeedAndTextRetryNeverReadFullHistory"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "status": "blocked",
+      "action": "Text/media retries before/afterreceipt expiry, boundedFeed guard, current access/conflicts; SQLentry/intent lookup1k/10k/100k.",
+      "expected": "Все обязательные boundedSQL проверки проходят; доступ и idempotency сохранены.",
+      "actual": "Independent10k photo/file/text before/after31d и legacy-captionless hash прошли; current SQL index lookup ещё pending.",
+      "remaining": "Independent10k photo/file/text before/after31d и legacy-captionless hash прошли; current SQL index lookup ещё pending.",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "status": "passed",
+      "action": "105changes; HTTPpage100, commitT+1, page5, discard/retry lastpage, nextcycle.",
+      "expected": "Fixedthrough, idempotentretry, следующийцикл получаетT+1.",
+      "actual": "100/5 заканчиваетсянаT, повторlastpage samecursor/count5, следующийцикл ровноT+1. Backend выдаёт воспроизводимыйcursor; atomicclientmerge не заявляется.",
+      "remaining": "",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK"
+      ],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "blocked",
+      "action": "HTTPcapabilities auth/disabledread/sync; legacyfeed/retry; flagreactivation preserves baseline.",
+      "expected": "СовместимостьDTO и disabled path; rollback nojournalwriter→newepoch resets.",
+      "actual": "Current disabled capability/legacyHTTP local passed; simulated no-journal writer+explicit newepoch SQL probe prepared, upload pending.",
+      "remaining": "Current disabled capability/legacyHTTP local passed; simulated no-journal writer+explicit newepoch SQL probe prepared, upload pending.",
+      "freshRuntimeSelectors": [],
+      "startedAt": "2026-10-28T01:13:41.436779+03:00",
+      "finishedAt": "2026-10-27T22:15:54.847544+00:00"
+    }
+  ]
+}

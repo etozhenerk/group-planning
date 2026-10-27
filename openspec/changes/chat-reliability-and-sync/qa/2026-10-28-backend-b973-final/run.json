@@ -17,7 +17,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -41,7 +41,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -65,7 +65,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -89,7 +89,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -113,7 +113,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -137,7 +137,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -161,7 +161,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -185,7 +185,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -196,25 +196,35 @@
     },
     {
       "id": "TC-CHAT-PAGE-BOUNDS/chat-api-r5-b973/manual",
-      "status": "blocked",
+      "status": "failed",
       "executor": {
         "kind": "agent",
         "id": "backend-chat-final-independent"
       },
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00",
-      "actual": "SQL matrix bounded EXPLAIN1k/10k/100k и 20samples p95 для limit1/50/100 подготовлены, cloud upload ещё не был разрешён.",
-      "defect": "SQL authorization pending after auto-review rejected compiled testbinary upload; no cloud execution occurred.",
+      "finishedAt": "2026-10-27T22:34:56.402847+00:00",
+      "actual": "Все 14 основных SQL tests прошли, включая bounded plans и sparse uint64/rollback. Все 54 p95 прошли: 0.341–2.744 ms при бюджете 100 ms. Дополнительный TestIndependentRepeatFeedSQLLatencyIntegration/100000 завершился ошибкой в t.Cleanup: repeat_feed_latency_test.go:15, Store.Update(context.Background(), DeleteMeeting(id)) → persistent storage unavailable. Первое SQL выполнение exit1. Внешний guarded cleanup после этого удалил собственную DB и tempdir успешно. Это ошибка удаления/очистки, а не провал latency или EXPLAIN.",
+      "defect": "QA-SQL-CLEANUP-100K-001: определить причину ошибки DeleteMeeting для 100k, безопасно сохранить исходную SQL cause без DSN/данных, исправить в роли исполнителя и повторить затронутую проверку без ослабления лимитов.",
       "evidence": [
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
           "kind": "log",
           "sha256": "c404be1b02e5e753c74c9e0967d7e795c24cc0a232d01b0cce8a917ecfb49374"
+        },
+        {
+          "path": "independent/sql-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+        },
+        {
+          "path": "independent/sql-run01/receipt.json",
+          "kind": "log",
+          "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
         }
       ]
     },
@@ -233,7 +243,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -257,7 +267,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -281,7 +291,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -305,7 +315,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -329,7 +339,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -353,7 +363,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -364,25 +374,45 @@
     },
     {
       "id": "TC-CHAT-SECURITY-A3B3BFE7/chat-api-r5-b973/manual",
-      "status": "blocked",
+      "status": "passed",
       "executor": {
         "kind": "agent",
         "id": "backend-chat-final-independent"
       },
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00",
-      "actual": "Current local account deletion/replay passed; actual SQL separate-process deletion сactiveWS→durableterminal prepared, upload pending.",
-      "defect": "SQL authorization pending after auto-review rejected compiled testbinary upload; no cloud execution occurred.",
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00",
+      "actual": "Подписки owner/guest закрылись кодом3503; history_invalidated получен, прежний профиль не вернулся; marker и адресные hints owner отсутствуют. После удаления встречи stream/feed отсутствуют. Новый process PID54122 доставил observer terminal access_revoked без текста/token, acknowledged=3. Process test и внешняя очистка собственной DB/tempdir passed.",
+      "defect": "",
       "evidence": [
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
           "kind": "log",
           "sha256": "c404be1b02e5e753c74c9e0967d7e795c24cc0a232d01b0cce8a917ecfb49374"
+        },
+        {
+          "path": "independent/sql-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+        },
+        {
+          "path": "independent/sql-run01/receipt.json",
+          "kind": "log",
+          "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
+        },
+        {
+          "path": "independent/sql-process-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "ec189079a1c907cc1ee74aadd6de51927c02dfd190cea40967d65a11b0fd52a5"
+        },
+        {
+          "path": "independent/sql-process-run01/receipt.json",
+          "kind": "log",
+          "sha256": "e453dd381f151969077d1e408b3d959c40ff16ec2396e19cd064e2c7fec94659"
         }
       ]
     },
@@ -401,7 +431,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -425,7 +455,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -436,25 +466,45 @@
     },
     {
       "id": "TC-CHAT-SYNC-AA76CADB/chat-api-r5-b973/manual",
-      "status": "blocked",
+      "status": "passed",
       "executor": {
         "kind": "agent",
         "id": "backend-chat-final-independent"
       },
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00",
-      "actual": "Current local rollback/dispatch/slowconsumer passed; distinct SQL childprocess commit-crash73/APIrestart/publish-crash74/recover prepared, upload pending.",
-      "defect": "SQL authorization pending after auto-review rejected compiled testbinary upload; no cloud execution occurred.",
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00",
+      "actual": "PID54100 exit73 после commit; API PID54106 вернул HTTP200 и delta1. PID54111 exit74 после publish event03c39b46-0774-4138-ba5d-d601e9a7d16a; PID54116 повторил тот же event, drain acknowledged/deleted=4. SQL rollback assertions passed; основной SQL atomic range/lease/retry matrix passed. Свежие локальные slow consumer3008 и exhausted recovery/100 changes при RTT150 ms passed.",
+      "defect": "",
       "evidence": [
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
           "kind": "log",
           "sha256": "c404be1b02e5e753c74c9e0967d7e795c24cc0a232d01b0cce8a917ecfb49374"
+        },
+        {
+          "path": "independent/sql-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+        },
+        {
+          "path": "independent/sql-run01/receipt.json",
+          "kind": "log",
+          "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
+        },
+        {
+          "path": "independent/sql-process-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "ec189079a1c907cc1ee74aadd6de51927c02dfd190cea40967d65a11b0fd52a5"
+        },
+        {
+          "path": "independent/sql-process-run01/receipt.json",
+          "kind": "log",
+          "sha256": "e453dd381f151969077d1e408b3d959c40ff16ec2396e19cd064e2c7fec94659"
         }
       ]
     },
@@ -473,7 +523,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -497,7 +547,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -508,25 +558,35 @@
     },
     {
       "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/chat-api-r5-b973/manual",
-      "status": "blocked",
+      "status": "passed",
       "executor": {
         "kind": "agent",
         "id": "backend-chat-final-independent"
       },
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00",
-      "actual": "Independent10k photo/file/text before/after31d и legacy-captionless hash прошли; current SQL index lookup ещё pending.",
-      "defect": "SQL authorization pending after auto-review rejected compiled testbinary upload; no cloud execution occurred.",
+      "finishedAt": "2026-10-27T22:34:56.402847+00:00",
+      "actual": "Photo/file/text и legacy captionless retry сохранили ID/sequence; изменённое намерение отклонено, чужой scope не раскрыт, revoke запрещает retry; copy не меняет store. TestFeedBoundedQueryPlansIntegration прошёл свежие entry/intent lookup 1k/10k/100k с bounded plan; TestFeedWindowSnapshotRollbackIntegration passed. Независимый общий p95 test упал позже только на DeleteMeeting cleanup и записан отдельным failed PAGE case.",
+      "defect": "",
       "evidence": [
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
           "kind": "log",
           "sha256": "c404be1b02e5e753c74c9e0967d7e795c24cc0a232d01b0cce8a917ecfb49374"
+        },
+        {
+          "path": "independent/sql-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+        },
+        {
+          "path": "independent/sql-run01/receipt.json",
+          "kind": "log",
+          "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
         }
       ]
     },
@@ -545,7 +605,7 @@
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
@@ -556,25 +616,45 @@
     },
     {
       "id": "TC-CHAT-CAPABILITIES/chat-api-r5-b973/manual",
-      "status": "blocked",
+      "status": "passed",
       "executor": {
         "kind": "agent",
         "id": "backend-chat-final-independent"
       },
       "startedAt": "2026-10-28T01:13:41.436779+03:00",
-      "finishedAt": "2026-10-27T22:15:54.847544+00:00",
-      "actual": "Current disabled capability/legacyHTTP local passed; simulated no-journal writer+explicit newepoch SQL probe prepared, upload pending.",
-      "defect": "SQL authorization pending after auto-review rejected compiled testbinary upload; no cloud execution occurred.",
+      "finishedAt": "2026-10-27T22:38:56.066012+00:00",
+      "actual": "Старый cursor после epoch replacement получил HTTP410; snapshot сохранил interval message и прежнюю историю с новым epoch. Disabled capabilities: sync=false/read_state=false; feed200, send/retry201 с тем же ID/sequence. После включения journal содержит новую запись. Это имитация writer без journal и schema-compatible fallback; запуск старого production binary/rollback схемы не выполнялся. Выбор legacy пути и скрытие read UI относятся к приёмке клиентов.",
+      "defect": "",
       "evidence": [
         {
           "path": "independent/interaction.json",
           "kind": "interaction",
-          "sha256": "32072b4718a40fa1f00b45c5b4fea5341f5f1c4e2a3abd7a6b39bf5f65860016"
+          "sha256": "1690de2a26688360e19cd21a8be324e36cf3618a2d048502553a855205e136c2"
         },
         {
           "path": "independent/runtime.jsonl",
           "kind": "log",
           "sha256": "c404be1b02e5e753c74c9e0967d7e795c24cc0a232d01b0cce8a917ecfb49374"
+        },
+        {
+          "path": "independent/sql-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "f0515024c48df03e3373e7b97fd5261f9b1b26f5b7792a7b202071c6b5df19b7"
+        },
+        {
+          "path": "independent/sql-run01/receipt.json",
+          "kind": "log",
+          "sha256": "c8d796fc5437827c2ab752aaaf023dac7e57826c46805b309664934c173c333c"
+        },
+        {
+          "path": "independent/sql-process-run01/sql-live.log",
+          "kind": "log",
+          "sha256": "ec189079a1c907cc1ee74aadd6de51927c02dfd190cea40967d65a11b0fd52a5"
+        },
+        {
+          "path": "independent/sql-process-run01/receipt.json",
+          "kind": "log",
+          "sha256": "e453dd381f151969077d1e408b3d959c40ff16ec2396e19cd064e2c7fec94659"
         }
       ]
     }

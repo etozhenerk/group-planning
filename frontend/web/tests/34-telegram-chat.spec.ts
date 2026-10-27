@@ -220,6 +220,7 @@ test('reaction people replace the picker and browser Back returns to the same me
   await page.getByLabel('Сообщение', { exact: true }).fill('Беру настолки');
   await page.getByRole('button', { name: 'Отправить сообщение' }).click();
   const row = page.getByTestId('feed-message').filter({ hasText: 'Беру настолки' });
+  await expect(row).toHaveAttribute('data-delivery', 'accepted');
   await row.getByTestId('message-actions').press('Enter');
   const picker = page.getByRole('dialog', { name: 'Реакция', exact: true });
   await picker.getByRole('button', { name: '❤️', exact: true }).click();
