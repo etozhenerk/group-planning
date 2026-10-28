@@ -114,7 +114,10 @@ func (f *iosFeedFaults) verify(t *testing.T) {
 	t.Helper()
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	if f.posts < 2 || len(f.keys) != 1 || f.keys[""] || len(f.ids) != 1 || f.ids[""] {
+	// The first committed message may be confirmed through realtime sync even
+	// when its HTTP response is lost. The UI test separately holds a pre-commit
+	// outage until explicit retry; one canonical ID and intent remain mandatory.
+	if f.posts < 1 || len(f.keys) != 1 || f.keys[""] || len(f.ids) != 1 || f.ids[""] {
 		t.Errorf("message retry: posts=%d keys=%d IDs=%d", f.posts, len(f.keys), len(f.ids))
 	}
 

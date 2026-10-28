@@ -30,7 +30,10 @@ var chatDispatchSchema string
 //go:embed migrations/007_chat_read_state.sql
 var chatReadStateSchema string
 
-var migrations = []string{initialSchema, accountDeletionSchema, meetingExperienceSchema, chatJournalSchema, chatRetentionSchema, chatDispatchSchema, chatReadStateSchema}
+//go:embed migrations/008_support_feedback.sql
+var supportFeedbackSchema string
+
+var migrations = []string{initialSchema, accountDeletionSchema, meetingExperienceSchema, chatJournalSchema, chatRetentionSchema, chatDispatchSchema, chatReadStateSchema, supportFeedbackSchema}
 
 func migrationChecksum(version int) string {
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(migrations[version-1])))

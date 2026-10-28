@@ -58,7 +58,7 @@ ngrok и поля регистрации — в [docs/auth.md](docs/auth.md#ло
 | `GET /meetings/{id}/feed`, `POST /meetings/{id}/messages` | Организатор или текущий going. |
 | `GET /chat-capabilities`, `GET /meetings/{id}/sync` | Текущая сессия; sync дополнительно требует доступа к встрече. |
 | `GET /me/profile` | Личный профиль; контакты доступны только владельцу. |
-| `POST /support/feedback` | Публичное идемпотентное обращение; локальная очередь, [доставка и ограничения](docs/support.md). |
+| `POST /support/feedback` | Публичное идемпотентное обращение; memory/PostgreSQL очередь, [доставка и ограничения](docs/support.md). |
 | `GET /meetings/{id}/reactions`, `PUT /meetings/{id}/messages/{entry_id}/reactions` | Подтверждённые реакции текущих участников. |
 | `GET /meetings/{id}/media/limits`, `POST /meetings/{id}/media/uploads`, `PUT /meetings/{id}/media/{media_id}/content`, `POST /meetings/{id}/media/{media_id}/publish` | Выбор, проверка и публикация приватного вложения. |
 | `GET /meetings/{id}/media/{media_id}/content`, `GET /meetings/{id}/memories` | Приватные файлы и альбом прошедшей встречи. |

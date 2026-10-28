@@ -15,6 +15,7 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/realtime"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/files"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
+	"github.com/etozhenerk/group-planning/backend/internal/support"
 	"github.com/etozhenerk/group-planning/backend/internal/webui"
 )
 
@@ -32,6 +33,11 @@ func Serve(ctx context.Context, listener net.Listener, store meetings.Store, con
 
 // ServeWithStorage binds both persistent stores and a dependency readiness check.
 func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, ready func(context.Context) error, config Config, logger *slog.Logger, appOptions ...meetings.Option) error {
+	return ServeWithSupportStorage(ctx, listener, store, identities, nil, ready, config, logger, appOptions...)
+}
+
+// ServeWithSupportStorage additionally binds the persistent feedback queue.
+func ServeWithSupportStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, feedbackStore support.Store, ready func(context.Context) error, config Config, logger *slog.Logger, appOptions ...meetings.Option) error {
 	defer listener.Close()
 	if config.ShutdownTimeout < time.Second || config.ShutdownTimeout > 30*time.Second {
 		return fmt.Errorf("invalid shutdown timeout")
@@ -57,7 +63,7 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		return err
 	}
 
-	feedback, err := newSupport(config)
+	feedback, err := newSupport(config, feedbackStore)
 	if err != nil {
 		return err
 	}
@@ -83,7 +89,13 @@ func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings
 		defer func() { stopDispatch(); <-dispatchDone }()
 	}
 
-	var handler http.Handler = httpapi.NewWithRealtime(app, service, feedback, logger, stream, deletion)
+	publicFeedback := feedback
+	if config.Storage == "postgres" && config.Support.BotToken == "" {
+		// Keep retention running even while an operator disables external delivery.
+		publicFeedback = nil
+	}
+
+	var handler http.Handler = httpapi.NewWithRealtime(app, service, publicFeedback, logger, stream, deletion)
 	if config.WebDirectory != "" {
 		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {

@@ -16,7 +16,7 @@ var dependencies = map[string][]string{
 	"internal/realtime":         {"internal/meetings", "internal/identity"},
 	"internal/accounts":         {"internal/identity"},
 	"internal/identity/yandex":  {"internal/identity"},
-	"internal/storage/postgres": {"internal/meetings", "internal/identity"},
+	"internal/storage/postgres": {"internal/meetings", "internal/identity", "internal/support"},
 	"cmd/migrate":               {"internal/storage/postgres"},
 	"internal/storage/memory":   {"internal/meetings", "internal/identity", "internal/support"},
 	"internal/httpapi":          {"internal/meetings", "internal/identity", "internal/accounts", "internal/support"},

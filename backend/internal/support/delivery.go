@@ -9,13 +9,23 @@ import (
 
 // DeliverNext leases one due record. Retry state never depends on the client.
 func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
-	if s.delivery == nil {
-		return false, nil
-	}
-
 	var selected Feedback
 	found := false
+	exhausted := false
 	err := s.store.Update(ctx, func(records Records) error {
+		now := s.now()
+		if err := records.PruneFeedback(now.Add(-Retention)); err != nil {
+			return err
+		}
+
+		if err := records.PruneRates(now); err != nil {
+			return err
+		}
+
+		if s.delivery == nil {
+			return nil
+		}
+
 		all, err := records.All()
 		if err != nil {
 			return err
@@ -28,10 +38,19 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 
 			return strings.Compare(a.ID, b.ID)
 		})
-		now := s.now()
 		for _, item := range all {
 			if item.Delivered || item.DeliveryFailed || now.Before(item.NextAttemptAt) || now.Before(item.LeaseUntil) {
 				continue
+			}
+
+			if item.Attempts >= MaxDeliveryAttempts {
+				item.DeliveryFailed = true
+				item.LeaseID = ""
+				item.LeaseUntil = time.Time{}
+				item.NextAttemptAt = time.Time{}
+				exhausted = true
+
+				return records.Put(item)
 			}
 
 			item.LeaseID = newID()
@@ -45,8 +64,16 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 
 		return nil
 	})
-	if err != nil || !found {
+	if err != nil {
 		return false, err
+	}
+
+	if exhausted {
+		return true, ErrDeliveryExhausted
+	}
+
+	if !found {
+		return false, nil
 	}
 
 	sendCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
@@ -98,6 +125,10 @@ func (s *Service) DeliverNext(ctx context.Context) (bool, error) {
 // No public HTTP endpoint exposes this operation or the submission key.
 func (s *Service) RetryDelivery(ctx context.Context, key string) error {
 	return s.store.Update(ctx, func(r Records) error {
+		if err := r.PruneFeedback(s.now().Add(-Retention)); err != nil {
+			return err
+		}
+
 		item, exists, err := r.ByKey(key)
 		if err != nil {
 			return err

@@ -67,5 +67,5 @@ func runPersistent(ctx context.Context, config server.Config, logger *slog.Logge
 
 	logger.Info("server_started", "storage", "postgres", "data_survives_restart", true, "authentication_enabled", config.Auth.Enabled)
 
-	return server.ServeWithStorage(ctx, listener, db.Meetings(), db.Identity(), db.Check, config, logger, meetings.WithMediaContent(db.MediaContent()))
+	return server.ServeWithSupportStorage(ctx, listener, db.Meetings(), db.Identity(), db.Support(), db.Check, config, logger, meetings.WithMediaContent(db.MediaContent()))
 }

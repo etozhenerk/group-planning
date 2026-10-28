@@ -28,6 +28,8 @@ func TestDependencyPolicy(t *testing.T) {
 		{"domain URL validation", "internal/identity", "net/url", true},
 		{"adapter to owner", "internal/identity/yandex", modulePath + "/internal/identity", true},
 		{"composition to transport", "internal/server", modulePath + "/internal/httpapi", true},
+		{"support SQL adapter to owner", "internal/storage/postgres", modulePath + "/internal/support", true},
+		{"support domain cannot access SQL", "internal/support", modulePath + "/internal/storage/postgres", false},
 		{"composition to provider", "internal/server", modulePath + "/internal/identity/yandex", true},
 		{"unknown module", "internal/httpapi", modulePath + "/internal/future", false},
 		{"similar package prefix", "internal/httpapi", modulePath + "/internal/meetingsother", false},

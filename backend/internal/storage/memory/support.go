@@ -122,6 +122,20 @@ func (tx *supportTransaction) PruneRates(now time.Time) error {
 	return nil
 }
 
+func (tx *supportTransaction) PruneFeedback(before time.Time) error {
+	if !tx.active {
+		return support.ErrUnavailable
+	}
+
+	for key, value := range tx.records {
+		if !value.CreatedAt.After(before) {
+			delete(tx.records, key)
+		}
+	}
+
+	return nil
+}
+
 func cloneFeedback(v support.Feedback) support.Feedback {
 	if v.Screenshot != nil {
 		copy := *v.Screenshot

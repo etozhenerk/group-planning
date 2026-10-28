@@ -23,6 +23,7 @@ const (
 	MaxScreenshotBytes  = 5 << 20
 	MaxStoredBytes      = 50 << 20
 	MaxDeliveryAttempts = 12
+	Retention           = 30 * 24 * time.Hour
 )
 
 // Viewport is present only when the user enabled diagnostics.
@@ -102,6 +103,7 @@ type (
 		Rate(string) (RateWindow, bool, error)
 		PutRate(RateWindow) error
 		PruneRates(time.Time) error
+		PruneFeedback(time.Time) error
 	}
 )
 

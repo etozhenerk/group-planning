@@ -3,6 +3,8 @@ package server
 import (
 	"strings"
 	"testing"
+
+	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
 func TestSupportConfigurationAndPersistentGate(t *testing.T) {
@@ -25,15 +27,19 @@ func TestSupportConfigurationAndPersistentGate(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if service, err := newSupport(Config{Storage: "postgres"}); service != nil || err != nil {
+	if service, err := newSupport(Config{Storage: "postgres"}, nil); service != nil || err != nil {
 		t.Fatal("ephemeral public production acceptance enabled")
 	}
 
-	if _, err := newSupport(Config{Storage: "postgres", Support: config}); err == nil {
+	if _, err := newSupport(Config{Storage: "postgres", Support: config}, nil); err == nil {
 		t.Fatal("configured delivery ignored missing persistent queue")
 	}
 
-	if service, err := newSupport(Config{Storage: "memory"}); service == nil || err != nil {
+	if service, err := newSupport(Config{Storage: "memory"}, nil); service == nil || err != nil {
 		t.Fatal("local acceptance unavailable")
+	}
+
+	if service, err := newSupport(Config{Storage: "postgres", Support: config}, memory.NewSupport()); service == nil || err != nil {
+		t.Fatal("configured queue unavailable", err)
 	}
 }

@@ -47,6 +47,11 @@ func (s *Service) Submit(ctx context.Context, input Input, key, source string) (
 	rateKey := hex.EncodeToString(rateDigest[:])
 	var result Receipt
 	err = s.store.Update(ctx, func(records Records) error {
+		now := s.now().UTC()
+		if err := records.PruneFeedback(now.Add(-Retention)); err != nil {
+			return err
+		}
+
 		previous, exists, err := records.ByKey(key)
 		if err != nil {
 			return err
@@ -62,7 +67,6 @@ func (s *Service) Submit(ctx context.Context, input Input, key, source string) (
 			return nil
 		}
 
-		now := s.now().UTC()
 		if err := records.PruneRates(now); err != nil {
 			return err
 		}

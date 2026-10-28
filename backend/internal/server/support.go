@@ -28,15 +28,18 @@ func loadSupportConfig(getenv func(string) string) (SupportConfig, error) {
 	return config, nil
 }
 
-func newSupport(config Config) (*support.Service, error) {
-	// Persistent acceptance and retention are the explicitly deferred cloud step.
-	// Never acknowledge a public production submission into an ephemeral queue.
+func newSupport(config Config, store support.Store) (*support.Service, error) {
+	// Production acceptance needs both durable storage and a configured destination.
 	if config.Storage == "postgres" {
-		if config.Support.BotToken != "" {
-			return nil, fmt.Errorf("persistent support storage is not configured")
+		if store == nil && config.Support.BotToken == "" {
+			return nil, nil
 		}
 
-		return nil, nil
+		if store == nil {
+			return nil, fmt.Errorf("persistent support storage is not configured")
+		}
+	} else if store == nil {
+		store = memory.NewSupport()
 	}
 
 	var delivery support.Delivery
@@ -49,7 +52,7 @@ func newSupport(config Config) (*support.Service, error) {
 		delivery = adapter
 	}
 
-	return support.New(memory.NewSupport(), delivery, time.Now), nil
+	return support.New(store, delivery, time.Now), nil
 }
 
 func deliverSupport(ctx context.Context, service *support.Service, logger *slog.Logger) {
