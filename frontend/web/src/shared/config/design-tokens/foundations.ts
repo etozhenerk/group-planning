@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.3. Do not edit.
+// Generated from design-system/tokens.json · 4.0.0. Do not edit.
 export const foundationTokens = {
   breakpointChatCompactHeight: '500px',
   breakpointChatNarrowWidth: '350px',

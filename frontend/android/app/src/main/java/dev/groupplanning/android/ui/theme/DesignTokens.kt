@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.3. Do not edit.
+// Generated from design-system/tokens.json · 4.0.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -107,6 +107,7 @@ internal object DesignTokens {
     val componentChatComposerPaddingInline = 10.dp
     val componentChatComposerPaddingTop = 8.dp
     val componentChatComposerRadius = 22.dp
+    val componentEmojiDockCategoryIconSize = 23.dp
     val componentEmojiDockCategoryIndicator = 2.dp
     val componentEmojiDockChoiceInset = 3.dp
     val componentEmojiDockChoiceRadius = 10.dp
@@ -137,6 +138,8 @@ internal object DesignTokens {
     val componentMeetingSettingsCoverGap = 12.dp
     val componentMeetingSettingsCoverRadius = 10.dp
     val componentMeetingSettingsCoverSize = 52.dp
+    val componentMessageDeliveryIndicatorSize = 12.dp
+    val componentMessageDeliveryPendingDelay = 2000
     val componentMobileChatBubbleCornerRadius = 6.dp
     val componentMobileChatBubbleFocusOffset = 3.dp
     val componentMobileChatBubbleInsetBlock = 11.dp

@@ -1,4 +1,4 @@
-# Токены somewhere · 3.0.3
+# Токены somewhere · 4.0.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -109,6 +109,7 @@
 | component.chatComposer.paddingInline | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .composer padding |
 | component.chatComposer.paddingTop | dimension | 8px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .composer padding |
 | component.chatComposer.radius | dimension | 22px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .text-entry |
+| component.emojiDock.categoryIconSize | dimension | 23px | Единый SVG viewBox категорий эмодзи iOS; прежний видимый размер23, центр target44. |
 | component.emojiDock.categoryIndicator | dimension | 2px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-categories .active::after |
 | component.emojiDock.choiceInset | dimension | 3px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-choice |
 | component.emojiDock.choiceRadius | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-choice |
@@ -139,6 +140,8 @@
 | component.meetingSettings.coverGap | dimension | 12px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-row |
 | component.meetingSettings.coverRadius | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
 | component.meetingSettings.coverSize | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
+| component.messageDelivery.indicatorSize | dimension | 12px | Постоянный слот спиннера отправки в строке metadata без изменения высоты сообщения. |
+| component.messageDelivery.pendingDelay | duration | 2000ms | Прямое решение пользователя: индикатор только после двух секунд отправки. |
 | component.mobileChat.bubbleCornerRadius | dimension | 6px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |
 | component.mobileChat.bubbleFocusOffset | dimension | 3px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |
 | component.mobileChat.bubbleInsetBlock | dimension | 11px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |

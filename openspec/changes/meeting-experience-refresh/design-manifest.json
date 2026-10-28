@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "meeting-experience-refresh",
-  "designVersion": "3.0.3",
+  "designVersion": "4.0.0",
   "phase": "checkpoint",
   "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются. 28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки.",
   "implementer": "implementation-team:/root",
-  "report": "openspec/changes/meeting-experience-refresh/design-review-3.0.3.json",
+  "report": "openspec/changes/meeting-experience-refresh/design-review-4.0.0.json",
   "screens": [
     {
       "id": "list-native",
@@ -9698,6 +9698,580 @@
       "tasks": {
         "android": [
           "14.1"
+        ]
+      }
+    },
+    {
+      "id": "sheet-controls-web",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "info",
+        "settings",
+        "date-poll",
+        "place-poll",
+        "task",
+        "upload",
+        "people",
+        "dismiss-no-refresh",
+        "mutation-refresh",
+        "accessibility-dismiss"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "web": [
+          "16.1"
+        ]
+      }
+    },
+    {
+      "id": "readers-stable-web",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "one",
+        "many",
+        "error",
+        "small-height",
+        "large-text"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "web": [
+          "16.1"
+        ]
+      }
+    },
+    {
+      "id": "message-pending-web",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "before-2000ms",
+        "after-2000ms",
+        "fast-ack",
+        "queued-to-sending",
+        "ack-no-remount",
+        "failed-retry"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "web": [
+          "16.1"
+        ]
+      }
+    },
+    {
+      "id": "sheet-controls-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "info",
+        "settings",
+        "date-poll",
+        "place-poll",
+        "task",
+        "upload",
+        "people",
+        "dismiss-no-refresh",
+        "mutation-refresh",
+        "accessibility-dismiss"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "ios": [
+          "16.2"
+        ]
+      }
+    },
+    {
+      "id": "readers-stable-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "one",
+        "many",
+        "error",
+        "small-height",
+        "large-text"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "ios": [
+          "16.2"
+        ]
+      }
+    },
+    {
+      "id": "message-pending-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "before-2000ms",
+        "after-2000ms",
+        "fast-ack",
+        "queued-to-sending",
+        "ack-no-remount",
+        "failed-retry"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "ios": [
+          "16.2"
+        ]
+      }
+    },
+    {
+      "id": "sheet-controls-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "info",
+        "settings",
+        "date-poll",
+        "place-poll",
+        "task",
+        "upload",
+        "people",
+        "dismiss-no-refresh",
+        "mutation-refresh",
+        "accessibility-dismiss"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "android": [
+          "16.3"
+        ]
+      }
+    },
+    {
+      "id": "readers-stable-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "one",
+        "many",
+        "error",
+        "small-height",
+        "large-text"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "android": [
+          "16.3"
+        ]
+      }
+    },
+    {
+      "id": "message-pending-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "before-2000ms",
+        "after-2000ms",
+        "fast-ack",
+        "queued-to-sending",
+        "ack-no-remount",
+        "failed-retry"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "android": [
+          "16.3"
+        ]
+      }
+    },
+    {
+      "id": "emoji-categories-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "default",
+        "selected",
+        "all-categories",
+        "large-text",
+        "voiceover"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md"
+      ],
+      "tasks": {
+        "ios": [
+          "16.2"
         ]
       }
     }

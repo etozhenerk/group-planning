@@ -45,18 +45,24 @@ const webRoutingBreakpoints = new Set(['breakpoint.mobile', 'breakpoint.tablet']
 const nativeToken = (token, platform) =>
   !webRoutingBreakpoints.has(token.path.join('.')) &&
   (token.$type !== 'fontFamily' || token.path.at(-1) === platform);
+const chatComponent = (token) => token.path[0] === 'component' &&
+  ['chatComposer', 'chatActionDialog', 'mobileChat', 'messageDelivery'].includes(token.path[1]);
 
 export const renderTokens = (tokens, version) => {
   const header = `Generated from design-system/tokens.json · ${version}. Do not edit.`;
   const files = {
     'frontend/web/src/app/styles/design-tokens.css': `/* ${header} */\n\n:root {\n${tokens.map((t) => `  --ds-${kebab(t.path)}: ${cssValue(t)};`).join('\n')}\n}\n`,
-    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens } as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\nimport { chatComponentTokens } from '@/shared/config/design-tokens/chat-components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens, ...chatComponentTokens } as const;\n`,
     'frontend/web/src/shared/config/design-tokens/foundations.ts': `// ${header}\nexport const foundationTokens = {\n${tokens
       .filter((t) => t.path[0] !== 'component')
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/components.ts': `// ${header}\nexport const componentTokens = {\n${tokens
-      .filter((t) => t.path[0] === 'component')
+      .filter((t) => t.path[0] === 'component' && !chatComponent(t))
+      .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
+      .join('\n')}\n} as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/chat-components.ts': `// ${header}\nexport const chatComponentTokens = {\n${tokens
+      .filter(chatComponent)
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/ios/Somewhere/UI/DesignTokens.swift': `// ${header}\nimport SwiftUI\n\nenum DesignTokens {\n${tokens

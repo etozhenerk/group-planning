@@ -135,7 +135,12 @@ test('web token modules preserve the flat public API without oversized source fi
     output[`${prefix}components.ts`],
     /componentEmojiDockPreferredHeight: "284px"/,
   );
-  for (const file of ['tokens.ts', 'foundations.ts', 'components.ts']) {
+  assert.match(output[`${prefix}tokens.ts`], /\.\.\.chatComponentTokens/);
+  const declarations = ['foundations.ts', 'components.ts', 'chat-components.ts']
+    .flatMap((file) => [...output[`${prefix}${file}`].matchAll(/^  (\w+):/gm)].map((m) => m[1]));
+  assert.equal(new Set(declarations).size, declarations.length, 'public token keys are not duplicated');
+  assert.equal(declarations.length, (await resolveTokens(baseTokens)).length, 'all public token keys survive partitioning');
+  for (const file of ['tokens.ts', 'foundations.ts', 'components.ts', 'chat-components.ts']) {
     assert.ok(
       output[`${prefix}${file}`].split('\n').length <= 230,
       `${file} remains a focused data module`,

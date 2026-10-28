@@ -541,3 +541,14 @@ TC-INV-B9E5EC51, TC-SHARE-COVER, TC-SHARE-HOME: серверный HTML без J
 элемента и контейнера с tabindex, а не только вложенной кнопки. Сохраняются
 клавиатурный фокус и управление стопкой. Прежние успешные проверки кнопок
 не подтверждают исправность этого пропущенного состояния.
+
+
+## Коррекция 4.0.0
+
+TC-SHEET-CONTROLS-NO-CLOSE, TC-SHEET-NO-REFRESH, TC-READERS-STABLE-VIEWPORT и
+TC-CHAT-PENDING-INDICATOR проверяются на web/iOS/Android;
+TC-IOS-EMOJI-CATEGORY-ALIGN только iOS. Проверять жест/доступное закрытие,
+число запросов при dismiss и успешной мутации, loading→0/1/много/error без
+изменения bounds, 1999/2000ms и быстрый ACK, высоту/ключ/scroll anchor строки,
+центры категорий/selected/VoiceOver. Busy guards и retry сохраняются.
+Недоступные живые действия остаются blocked.

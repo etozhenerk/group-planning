@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.3. Do not edit.
+// Generated from design-system/tokens.json · 4.0.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -409,6 +409,7 @@ enum DesignTokens {
     static let componentChatComposerPaddingInline = CGFloat(10)
     static let componentChatComposerPaddingTop = CGFloat(8)
     static let componentChatComposerRadius = CGFloat(22)
+    static let componentEmojiDockCategoryIconSize = CGFloat(23)
     static let componentEmojiDockCategoryIndicator = CGFloat(2)
     static let componentEmojiDockChoiceInset = CGFloat(3)
     static let componentEmojiDockChoiceRadius = CGFloat(10)
@@ -439,6 +440,8 @@ enum DesignTokens {
     static let componentMeetingSettingsCoverGap = CGFloat(12)
     static let componentMeetingSettingsCoverRadius = CGFloat(10)
     static let componentMeetingSettingsCoverSize = CGFloat(52)
+    static let componentMessageDeliveryIndicatorSize = CGFloat(12)
+    static let componentMessageDeliveryPendingDelay = 2
     static let componentMobileChatBubbleCornerRadius = CGFloat(6)
     static let componentMobileChatBubbleFocusOffset = CGFloat(3)
     static let componentMobileChatBubbleInsetBlock = CGFloat(11)

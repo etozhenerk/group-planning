@@ -1,7 +1,7 @@
 {
-  "revision": "native-vibe-support-2026-10-28-3.0.3",
+  "revision": "sheet-stability-2026-10-28-4.0.0",
   "sourceCommit": "c3e3451d",
-  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48.",
+  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "4.0.0: sheet-controls raw и SVG заменяют close-X/pending текст; live render blocked, pass не переносится.",
     "3.0.1 iOS: последнее явное уточнение пользователя и два native raw-макета; старые шапка/полноширинные preview/цикл iOS отменены.",
     "28.10.2026: нижние вкладки перетекают общим индикатором за motion.navigation, Reduce Motion мгновенно; область показа не расширяется. Общий photo batch carousel и preload относятся ко всем клиентам.",
     "3.0.0 native: picker-first; selected-only sheet; system share; swipe не tap; карусель/overlayX/batchstate/auto-close; cache; emptyInvite; edge-back; профиль/cover/loading по последним прямым решениям.",
@@ -55,7 +56,7 @@
   "sources": [
     {
       "path": "openspec/changes/meeting-experience-refresh/ux.md",
-      "sha256": "8172c8d9fef3484f46f8457528455f9cd8712fb45c097bc66e0cb1bba8dbdb6c"
+      "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
@@ -323,7 +324,7 @@
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
-      "sha256": "19994bff1d28aae54877600703bf21cd32574ef5c2647c6681301c8a25a989db"
+      "sha256": "6912dbf9742390116710bd468998e2da9958f25da4b362a2fe2cd76f3f7042fe"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
@@ -419,7 +420,7 @@
     },
     {
       "path": "docs/design/components/chat-actions.md",
-      "sha256": "d6aa6cc73bfcdfecf30e70f7c96541f022fc1329a44c2d56f6323e5f525ebca6"
+      "sha256": "c16aa94dc19aa32295977c96c6e433fa9611883b3f19ccb2fd8f7875056984ae"
     },
     {
       "path": "docs/design/components/memories.md",
@@ -476,6 +477,46 @@
     {
       "path": "docs/design/content.md",
       "sha256": "a6e5c979a6c4121907e178712a284b8b93eae56a19d591cc24c1ef8a4c33d37f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html",
+      "sha256": "1fa880184926cc2c32a4ecdd2736a88209b7fbca148366fe7014797538e99c32"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/controls.js",
+      "sha256": "0b8632778fa0b53ef950efe28a1503049ff48ba664b0f2449975611466086ea2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/controls.css",
+      "sha256": "8d530a76c3b48649c1a8be7459ee25f981ce1dbfd77e2f099e59a7f240f0e854"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/bulb.svg",
+      "sha256": "39274a10209383e19b4ef86aa562ece1fd2fbc9c9985f94d4d05dfcceea99091"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/plane.svg",
+      "sha256": "7fe63c41267bab2432630c497fd9b1205bdefcf4986e32d0d682b6d75922b27e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/smile.svg",
+      "sha256": "1976a680db304baa716b6aae2bc8ee2d7cb66cc75de7db23751dcd48304bb079"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/leaf.svg",
+      "sha256": "e7a34c15ed796beb1d9a3ee85c04a73861b0a3f0883f6488d9794b9abf3d909d"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/clock.svg",
+      "sha256": "4a88107e089297cacd3ca626e63509869c5aaec7a036d5cfbd33602383eda04d"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/food.svg",
+      "sha256": "60b8799ca96ac3c894918b17c0d9515ecb9e03faddedfed3396b5a3c988831ce"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/heart.svg",
+      "sha256": "76c1dd1d502dc6774cee5af7f4eac80ed1d1a41fa42018ddfa34d4590b024525"
     }
   ],
   "history": [
@@ -1017,6 +1058,11 @@
       "revision": "chat-desktop-keyboard-2026-10-28-2.5.2",
       "approval": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
       "sourceCommit": "ba987791"
+    },
+    {
+      "revision": "native-vibe-support-2026-10-28-3.0.3",
+      "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48.",
+      "sourceCommit": "c3e3451d"
     }
   ],
   "approvedWorkingTree": {
@@ -1154,5 +1200,19 @@
     ],
     "prototypeChange": "Отклонённый черновик с кнопкой не публикуется. Ранее принятая desktop-композиция сохраняется.",
     "acceptance": "Нужен новый независимый keyboard-проход; прежние hashes/evidence сохранены."
+  },
+  "sheetControlsPublication": {
+    "version": "4.0.0",
+    "date": "2026-10-28",
+    "approval": "Прямые сообщения пользователя",
+    "browserStatus": "Live render blocked: Mac locked. Acceptance not claimed.",
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "dc0ba24fb67027cdeb45f7e7cdbff55b19df42b2e7e352b3eff7dca8be24581b",
+        "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
+      }
+    ],
+    "note": "Прежние формулировки UX о крестике нижней панели приведены к прямому решению пользователя 4.0.0; значения и композиция новой ревизии не изменены."
   }
 }

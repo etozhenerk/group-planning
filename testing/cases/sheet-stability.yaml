@@ -1,0 +1,245 @@
+- id: TC-SHEET-CONTROLS-NO-CLOSE
+  title: Закрытие нижней панели без крестика
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Нижние панели без лишних управляющих элементов
+    scenario: Закрытие нижней панели без крестика
+    sha256: 5e3a477d907934b420a869d5c2c8e5a455009b01c6714ca1f6977d8c8e9221cb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное приложение и synthetic данные; фиксируются точная сборка,
+      viewport, время и published4.0.0.
+    - >-
+      ### Requirement: Нижние панели без лишних управляющих элементов
+
+
+      Bottom sheets web, iOS и Android SHALL NOT показывать крестик закрытия.
+      Они SHALL
+
+      сохранять доступное закрытие жестом/системным действием и guards/контекст.
+
+      Крестики удаления фото, desktop modal и fullscreen viewer не входят в
+      правило.
+
+      Dismiss и свайп вниз SHALL NOT запускать refresh; успешная мутация и
+      realtime
+
+      обновляют данные независимо от dismiss.
+  steps:
+    - action: пользователь открывает панель сведений, настроек, опроса, задачи, медиа
+        или списка людей
+      expected: крестик закрытия отсутствует; жест и доступное dismiss-действие
+        закрывают верхний контекст, сохраняя draft и focus
+  cleanup:
+    - Удалить только созданные fixture данные; восстановить временные настройки
+      тестового устройства.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-SHEET-NO-REFRESH
+  title: Свайп не обновляет содержимое панели
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Нижние панели без лишних управляющих элементов
+    scenario: Свайп не обновляет содержимое панели
+    sha256: 2de6ab5aa9120fbb3502fc34335147f3ea8197f4663fa82f5a8d6c015be25f03
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное приложение и synthetic данные; фиксируются точная сборка,
+      viewport, время и published4.0.0.
+    - >-
+      ### Requirement: Нижние панели без лишних управляющих элементов
+
+
+      Bottom sheets web, iOS и Android SHALL NOT показывать крестик закрытия.
+      Они SHALL
+
+      сохранять доступное закрытие жестом/системным действием и guards/контекст.
+
+      Крестики удаления фото, desktop modal и fullscreen viewer не входят в
+      правило.
+
+      Dismiss и свайп вниз SHALL NOT запускать refresh; успешная мутация и
+      realtime
+
+      обновляют данные независимо от dismiss.
+  steps:
+    - action: пользователь свайпает вниз или закрывает панель без подтверждённой
+        мутации
+      expected: загрузка не запускается и состояние родителя не сбрасывается; успешное
+        сохранение обновляет данные один раз
+  cleanup:
+    - Удалить только созданные fixture данные; восстановить временные настройки
+      тестового устройства.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-READERS-STABLE-VIEWPORT
+  title: Ответ списка не двигает панель
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Стабильное открытие списка прочитавших
+    scenario: Ответ списка не двигает панель
+    sha256: fcf4ad7b8c2fb1205a5fefc151b7ec6bd7524c23840847d11b2915b4e467e480
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное приложение и synthetic данные; фиксируются точная сборка,
+      viewport, время и published4.0.0.
+    - >-
+      ### Requirement: Стабильное открытие списка прочитавших
+
+
+      Панель SHALL с первого кадра резервировать viewport трёх строк с двумя
+      штатными
+
+      промежутками. Loading, empty, error и list SHALL NOT менять detent или
+      положение
+
+      содержимого; длинный список прокручивается внутри.
+  steps:
+    - action: пользователь открывает список и получает пустой, короткий, длинный ответ
+        или ошибку
+      expected: header и viewport остаются на прежнем месте без скачка; длинный список
+        доступен прокруткой
+  cleanup:
+    - Удалить только созданные fixture данные; восстановить временные настройки
+      тестового устройства.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-CHAT-PENDING-INDICATOR
+  title: Быстрая и медленная отправка
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Отложенный индикатор отправки без изменения геометрии
+    scenario: Быстрая и медленная отправка
+    sha256: 280f9ea44c0ec145bc8dee628a874d16698a1816ef5e5d3ae97d934a92632ee7
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное приложение и synthetic данные; фиксируются точная сборка,
+      viewport, время и published4.0.0.
+    - >-
+      ### Requirement: Отложенный индикатор отправки без изменения геометрии
+
+
+      Queued/sending SHALL NOT показывать текст отправки. Постоянный слот
+      metadata SHALL
+
+      быть пуст первые2000ms от enqueue, затем показывать небольшой спиннер.
+      Переход
+
+      queued→sending SHALL NOT сбрасывать таймер; ACK SHALL сохранять
+      UI-идентичность
+
+      и высоту строки. Ошибки и действия повтора сохраняются.
+  steps:
+    - action: пользователь отправляет сообщение с быстрым ACK, затем с ACK дольше двух
+        секунд
+      expected: у первого индикатор не мелькает; у второго спиннер появляется
+        после2000ms без изменения высоты и scroll anchor; ACK не перемонтирует
+        строку
+  cleanup:
+    - Удалить только созданные fixture данные; восстановить временные настройки
+      тестового устройства.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-IOS-EMOJI-CATEGORY-ALIGN
+  title: Переключение категорий iOS
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Ровные категории эмодзи iOS
+    scenario: Переключение категорий iOS
+    sha256: 8c94ffb80d35e707526aea797f0fb12c60649843b7ffac39a89b3c2bfa26b3b5
+  platforms:
+    - ios
+  preconditions:
+    - Изолированное приложение и synthetic данные; фиксируются точная сборка,
+      viewport, время и published4.0.0.
+    - >-
+      ### Requirement: Ровные категории эмодзи iOS
+
+
+      Иконки категорий iOS SHALL иметь одинаковый SVG viewBox, frame23 и центр
+      цели44×44.
+
+      Selected SHALL NOT менять размер или центр; доступны имя и selected trait.
+  steps:
+    - action: пользователь последовательно выбирает каждую категорию эмодзи
+      expected: размер и центр одинаковы, underline не сдвигает иконки, VoiceOver
+        сообщает имя и выбор
+  cleanup:
+    - Удалить только созданные fixture данные; восстановить временные настройки
+      тестового устройства.
+  automation:
+    ios:
+      status: planned
+      health: unknown
+      tests: []
