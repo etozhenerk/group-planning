@@ -44,6 +44,8 @@ const setupPhotoStack = (): void => {
     picture.alt = `Фото ${current + 1} со встречи`;
     previous.src = photos[(current + 2) % 3] ?? "";
     next.src = photos[(current + 1) % 3] ?? "";
+    previous.classList.toggle("portrait", (current + 2) % 3 === 2);
+    next.classList.toggle("portrait", (current + 1) % 3 === 2);
     front.href = `photo-${current + 1}.html`;
     front.setAttribute(
       "aria-label",
@@ -59,7 +61,7 @@ const setupPhotoStack = (): void => {
     }
   };
 
-  const turn = async (direction: number): Promise<void> => {
+  const turn = async (direction: number, fromSwipe = false): Promise<void> => {
     if (moving) {
       return;
     }
@@ -82,10 +84,13 @@ const setupPhotoStack = (): void => {
       ],
       { duration, easing: "cubic-bezier(.3,.7,.3,1)", fill: "forwards" },
     );
-    const incoming = (direction > 0 ? next : previous).animate(
+    const forwardOnly = fromSwipe && stage.dataset.advanceOnly === "true";
+    const incomingPhoto = forwardOnly || direction > 0 ? next : previous;
+    const restarting = forwardOnly && current === photos.length - 1;
+    const incoming = incomingPhoto.animate(
       [
         {
-          transform: getComputedStyle(direction > 0 ? next : previous)
+          transform: getComputedStyle(incomingPhoto)
             .transform,
           opacity: 0.8,
         },
@@ -94,10 +99,18 @@ const setupPhotoStack = (): void => {
       { duration, easing: "cubic-bezier(.2,.7,.2,1)" },
     );
     await outgoing.finished.catch(() => undefined);
-    current = (current + direction + photos.length) % photos.length;
+    current = (current + (forwardOnly ? 1 : direction) + photos.length) % photos.length;
     paint();
     outgoing.cancel();
     incoming.cancel();
+    if (restarting && !reducedMotion()) {
+      const reset = [previous, next, front].map((card) => card.animate(
+        [{ opacity: 0, transform: "translate(-50%, -50%) rotate(0deg)" },
+          { opacity: 1, transform: getComputedStyle(card).transform }],
+        { duration: 290, easing: "cubic-bezier(.2,.7,.2,1)" },
+      ));
+      await Promise.all(reset.map((animation) => animation.finished.catch(() => undefined)));
+    }
     moving = false;
   };
 
@@ -155,7 +168,7 @@ const setupPhotoStack = (): void => {
     const speed = Math.abs(delta) / Math.max(1, performance.now() - startTime);
 
     if (Math.abs(delta) > 60 || (Math.abs(delta) > 20 && speed > 0.45)) {
-      void turn(delta < 0 ? 1 : -1);
+      void turn(delta < 0 ? 1 : -1, true);
     } else {
       settle();
     }

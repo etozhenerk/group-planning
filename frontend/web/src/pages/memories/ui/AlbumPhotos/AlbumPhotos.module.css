@@ -24,13 +24,13 @@
   transform: translate(calc(-50% + var(--drag)), -50%)
     rotate(calc(var(--depth) * 8deg - 9deg));
   opacity: 0.85;
+  transition: transform var(--ds-motion-duration-photo) var(--ds-motion-easing-standard);
 }
 
 .card[data-front='true'] {
   z-index: 2;
   opacity: 1;
   transform: translate(calc(-50% + var(--drag)), -50%) rotate(calc(-1.5deg + var(--tilt)));
-  transition: transform 260ms ease;
   cursor: grab;
 }
 
@@ -82,12 +82,26 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card[data-front='true'] {
+  .card {
     transition: none;
+    animation: none;
   }
 }
 
 .stack[data-dragging='true'] .card[data-front='true'] {
   transition: none;
   cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stack[data-resetting='true'] .card {
+    animation: assemble var(--ds-motion-duration-photo) var(--ds-motion-easing-standard);
+  }
+}
+
+@keyframes assemble {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
 }

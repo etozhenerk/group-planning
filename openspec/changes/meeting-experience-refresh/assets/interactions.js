@@ -123,6 +123,8 @@ var setupPhotoStack = () => {
     picture.alt = `\u0424\u043E\u0442\u043E ${current + 1} \u0441\u043E \u0432\u0441\u0442\u0440\u0435\u0447\u0438`;
     previous.src = photos[(current + 2) % 3] ?? "";
     next.src = photos[(current + 1) % 3] ?? "";
+    previous.classList.toggle("portrait", (current + 2) % 3 === 2);
+    next.classList.toggle("portrait", (current + 1) % 3 === 2);
     front.href = `photo-${current + 1}.html`;
     front.setAttribute(
       "aria-label",
@@ -136,7 +138,7 @@ var setupPhotoStack = () => {
       counter.setAttribute("aria-live", "polite");
     }
   };
-  const turn = async (direction) => {
+  const turn = async (direction, fromSwipe = false) => {
     if (moving) {
       return;
     }
@@ -157,10 +159,13 @@ var setupPhotoStack = () => {
       ],
       { duration, easing: "cubic-bezier(.3,.7,.3,1)", fill: "forwards" }
     );
-    const incoming = (direction > 0 ? next : previous).animate(
+    const forwardOnly = fromSwipe && stage.dataset.advanceOnly === "true";
+    const incomingPhoto = forwardOnly || direction > 0 ? next : previous;
+    const restarting = forwardOnly && current === photos.length - 1;
+    const incoming = incomingPhoto.animate(
       [
         {
-          transform: getComputedStyle(direction > 0 ? next : previous).transform,
+          transform: getComputedStyle(incomingPhoto).transform,
           opacity: 0.8
         },
         { transform: "translate(-50%, -50%) rotate(-1.5deg)", opacity: 1 }
@@ -168,10 +173,20 @@ var setupPhotoStack = () => {
       { duration, easing: "cubic-bezier(.2,.7,.2,1)" }
     );
     await outgoing.finished.catch(() => void 0);
-    current = (current + direction + photos.length) % photos.length;
+    current = (current + (forwardOnly ? 1 : direction) + photos.length) % photos.length;
     paint();
     outgoing.cancel();
     incoming.cancel();
+    if (restarting && !reducedMotion()) {
+      const reset = [previous, next, front].map((card) => card.animate(
+        [
+          { opacity: 0, transform: "translate(-50%, -50%) rotate(0deg)" },
+          { opacity: 1, transform: getComputedStyle(card).transform }
+        ],
+        { duration: 290, easing: "cubic-bezier(.2,.7,.2,1)" }
+      ));
+      await Promise.all(reset.map((animation) => animation.finished.catch(() => void 0)));
+    }
     moving = false;
   };
   const settle = () => {
@@ -219,7 +234,7 @@ var setupPhotoStack = () => {
     pointer = null;
     const speed = Math.abs(delta) / Math.max(1, performance.now() - startTime);
     if (Math.abs(delta) > 60 || Math.abs(delta) > 20 && speed > 0.45) {
-      void turn(delta < 0 ? 1 : -1);
+      void turn(delta < 0 ? 1 : -1, true);
     } else {
       settle();
     }

@@ -14,6 +14,7 @@ struct SupportForm: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Ваше сообщение").designFont(13)
                 TextEditor(text: $owner.description).designFont(13).padding(8).frame(height: 145)
+                    .scrollDismissesKeyboard(.immediately)
                     .scrollContentBackground(.hidden).background(
                         Color(designHex: 0x25262c), in: RoundedRectangle(cornerRadius: 12)
                     )

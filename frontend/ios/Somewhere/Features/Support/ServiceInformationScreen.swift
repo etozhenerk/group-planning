@@ -12,12 +12,7 @@ struct ServiceInformationScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("← Назад").designFont(13).foregroundStyle(AppPalette.accent)
-                        .frame(minHeight: 44)
-                }.accessibilityLabel("Назад")
+                PageBackButton { dismiss() }
                 Text(heading).designFont(28, weight: .bold).tracking(-0.9).padding(
                     .top, 10)
                 Text(

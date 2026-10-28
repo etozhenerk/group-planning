@@ -17,6 +17,7 @@ import (
 // InvitationReader exposes only the public invitation snapshot, never storage.
 type InvitationReader interface {
 	PublicPreview(context.Context, string) (meetings.PublicInvitation, error)
+	ReadInvitationCover(context.Context, string, string) (meetings.Cover, error)
 }
 
 type handler struct {
@@ -64,6 +65,13 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if strings.HasPrefix(r.URL.Path, "/i/") || strings.HasPrefix(r.URL.Path, "/invitations/") {
 		h.invitation(w, r)
+		return
+	}
+
+	if r.URL.Path == "/" {
+		values := h.defaultMetadata()
+		h.page(w, r, http.StatusOK, &values)
+
 		return
 	}
 

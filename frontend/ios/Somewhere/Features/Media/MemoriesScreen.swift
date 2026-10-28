@@ -13,14 +13,7 @@ struct MemoriesScreen: View {
         GeometryReader { viewport in
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        ExperienceIcon(kind: .back, size: DesignTokens.componentMobileChatIconSize)
-                            .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
-                            .contentShape(Rectangle())
-                            .foregroundStyle(AppPalette.accent)
-                    }.accessibilityLabel("Назад").accessibilityIdentifier("memories-back")
+                    PageBackButton { dismiss() }.accessibilityIdentifier("memories-back")
                     if owner.current, let meeting = owner.meeting {
                         Text(
                             ExperienceDate.label(

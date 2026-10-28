@@ -1,0 +1,157 @@
+- id: TC-VIBE-EXPORT-ALL
+  title: Весь альбом независимо от просмотренных страниц
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/vibe-album-download/specs/meeting-memories/spec.md
+    requirement: Сохранение полного альбома
+    scenario: Весь альбом независимо от просмотренных страниц
+    sha256: c1440fe17cac8ec459f2ae44d2ebd9fdd8789f91726c2876c6cfd066d120f01f
+  platforms:
+    - backend
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точный candidate, два участника и посторонний; свой
+      набор фото с EXIF, совпадающими именами и более одной страницей.
+  steps:
+    - action: участник просмотрел только первую страницу альбома и запускает
+        сохранение всех фото
+      expected: результат включает каждое фото снимка альбома ровно один раз, с
+        уникальными безопасными именами и правильной ориентацией; новые фото,
+        добавленные после запуска, остаются для следующего сохранения
+  cleanup:
+    - Отменить собственные экспорты; удалить только созданные тестом
+      файлы/записи галереи, восстановить сеть.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-VIBE-EXPORT-ZIP
+  title: Скачивание архива браузером
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/vibe-album-download/specs/meeting-memories/spec.md
+    requirement: ZIP на web без загрузки всего архива в память страницы
+    scenario: Скачивание архива браузером
+    sha256: ea681e6c2eef7fbc9006ba92345792d337a88cd333534d6985fdb32d6bb9b3d8
+  platforms:
+    - backend
+    - web
+  preconditions:
+    - Изолированный QA API, точный candidate, два участника и посторонний; свой
+      набор фото с EXIF, совпадающими именами и более одной страницей.
+  steps:
+    - action: участник нажимает «Скачать все фото» и подготовка завершается
+      expected: браузер получает один корректный ZIP со всеми фото; приложение
+        сохраняет положение альбома и сообщает только о начале скачивания;
+        отменённая или неуспешная подготовка не создаёт неполный архив и
+        позволяет повторить действие
+  cleanup:
+    - Отменить собственные экспорты; удалить только созданные тестом
+      файлы/записи галереи, восстановить сеть.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-VIBE-EXPORT-GALLERY
+  title: Сохранение всех фотографий в галерею
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/vibe-album-download/specs/meeting-memories/spec.md
+    requirement: Сохранение в галерею телефона
+    scenario: Сохранение всех фотографий в галерею
+    sha256: 6783d78244d82703bb114c0784c6c88806de4087cb06a65025aeb4218d731fda
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точный candidate, два участника и посторонний; свой
+      набор фото с EXIF, совпадающими именами и более одной страницей.
+  steps:
+    - action: участник запускает «Сохранить все фото» и при необходимости разрешает
+        запись в галерею
+      expected: все фото появляются в галерее с правильной ориентацией, а приложение
+        показывает подтверждение только после системного результата; отказ в
+        разрешении, отмена или ошибка подготовки сохраняют открытый вайб и не
+        теряют его положение
+  cleanup:
+    - Отменить собственные экспорты; удалить только созданные тестом
+      файлы/записи галереи, восстановить сеть.
+  automation:
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-VIBE-EXPORT-ACCESS
+  title: Отзыв доступа и чужой экспорт
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/vibe-album-download/specs/meeting-memories/spec.md
+    requirement: Доступ и срок жизни экспорта
+    scenario: Отзыв доступа и чужой экспорт
+    sha256: bda747f42131fab1f4d9216b6dd83c345f3f0e5d99298cc582d7898772bb4e9d
+  platforms:
+    - backend
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точный candidate, два участника и посторонний; свой
+      набор фото с EXIF, совпадающими именами и более одной страницей.
+  steps:
+    - action: доступ отозван во время подготовки либо готовый адрес открывает другой
+        пользователь
+      expected: приватные файлы не выдаются, ошибка не раскрывает содержимое альбома,
+        временные данные удаляются; истёкший или отменённый экспорт нельзя
+        использовать повторно; новая попытка проверяет доступ заново
+  cleanup:
+    - Отменить собственные экспорты; удалить только созданные тестом
+      файлы/записи галереи, восстановить сеть.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []

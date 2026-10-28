@@ -27,6 +27,10 @@ final class PrivateMediaCache {
     // Four prefetched photos: up to 10 MiB original + 16 MiB decoded display each.
     private let maximumBytes = 128 * 1024 * 1024
 
+    func displaySize(_ id: UUID) -> CGSize? {
+        entries[Key(media: id, variant: .display)]?.image?.size
+    }
+
     func value(_ id: UUID) -> Item? {
         guard let original = entries[Key(media: id, variant: .original)], let data = original.data
         else {

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
+import { designTokens } from '@/shared/config/design-tokens';
 
 export const useAlbum = (count: number) => {
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(0);
   const [grid, setGrid] = useState(false);
   const [moving, setMoving] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(
     () => () => {
@@ -20,13 +22,17 @@ export const useAlbum = (count: number) => {
   const select = (value: number) =>
     setIndex(count ? ((value % count) + count) % count : 0);
 
-  const advance = (step: number, width: number) => {
+  const advance = (step: number, width: number, fromSwipe = false) => {
     if (count < 2 || timer.current) {
       return;
     }
 
+    const next = index + (fromSwipe ? 1 : step);
+    const reset = fromSwipe && next === count;
+    const duration = Number.parseFloat(designTokens.motionDurationPhoto);
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      select(index + step);
+      select(next);
       setOffset(0);
 
       return;
@@ -35,11 +41,21 @@ export const useAlbum = (count: number) => {
     setMoving(true);
     setOffset(-step * width);
     timer.current = setTimeout(() => {
-      select(index + step);
+      select(next);
       setOffset(0);
-      setMoving(false);
-      timer.current = null;
-    }, 260);
+      setResetting(reset);
+
+      if (reset) {
+        timer.current = setTimeout(() => {
+          setResetting(false);
+          setMoving(false);
+          timer.current = null;
+        }, duration);
+      } else {
+        setMoving(false);
+        timer.current = null;
+      }
+    }, duration);
   };
 
   const start = (event: PointerEvent<HTMLDivElement>) => {
@@ -98,7 +114,7 @@ export const useAlbum = (count: number) => {
 
     if (Math.abs(dx) > 60) {
       pointer.current = null;
-      advance(dx < 0 ? 1 : -1, event.currentTarget.clientWidth);
+      advance(dx < 0 ? 1 : -1, event.currentTarget.clientWidth, true);
     }
 
     cancel();
@@ -130,12 +146,13 @@ export const useAlbum = (count: number) => {
     offset,
     grid,
     moving,
+    resetting,
     setGrid,
     start,
     move,
     end,
     cancel,
     keyboard,
-    canOpen: () => !moved.current,
+    canOpen: () => !moved.current && !moving,
   };
 };

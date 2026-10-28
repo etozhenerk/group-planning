@@ -964,7 +964,7 @@
     path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
     requirement: Серверное превью приглашения
     scenario: Ссылка отправлена другу
-    sha256: 2e3e395a1ad92c4b32044d1a1a4cf32048295c66ce73f8affb5f1775d3f96fb3
+    sha256: 1879420a14b9372db49b62692b83c65d531a1cbbff3a82e9e3d5abaecd8449b1
   platforms:
     - web
     - ios
@@ -973,16 +973,15 @@
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
     - |-
-      Публичный HTML приглашения SHALL содержать title/description, canonical
-      и Open Graph: title, description, type, URL, image и параметры изображения.
-      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
-      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
-      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
-      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+      Публичный HTML SHALL отдавать title/description, canonical и Open Graph
+      (title, description, type, URL, image, MIME и размеры) без JavaScript и входа.
+      Приглашение SHALL показывать название, полное описание либо дату/место и
+      актуальную версионную обложку; без обложки — фирменную PNG 1200×630.
+      Главная страница SHALL показывать только общие метаданные сервиса.
   steps:
     - action: внешний клиент запрашивает публичное приглашение без JavaScript
-      expected: HTML содержит заголовок встречи, описание и абсолютный URL PNG метаданные не содержат
-        переписки, профилей или ответов участников
+      expected: HTML содержит заголовок встречи, описание и абсолютный URL текущей обложки либо фирменной
+        PNG; без переписки, профилей и ответов участников.
   cleanup:
     - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
       настройки.
@@ -1008,7 +1007,7 @@
     path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
     requirement: Серверное превью приглашения
     scenario: Недействительное приглашение
-    sha256: 730add0a1e6c0c8608f6949f4d0287b85848d61f0459ab8fe13f696a0d04e5b3
+    sha256: a105621850d98e261600a2595dfccf3bedccb318688b4f8a66689fc64575bd96
   platforms:
     - web
     - ios
@@ -1017,12 +1016,11 @@
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
     - |-
-      Публичный HTML приглашения SHALL содержать title/description, canonical
-      и Open Graph: title, description, type, URL, image и параметры изображения.
-      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
-      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
-      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
-      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+      Публичный HTML SHALL отдавать title/description, canonical и Open Graph
+      (title, description, type, URL, image, MIME и размеры) без JavaScript и входа.
+      Приглашение SHALL показывать название, полное описание либо дату/место и
+      актуальную версионную обложку; без обложки — фирменную PNG 1200×630.
+      Главная страница SHALL показывать только общие метаданные сервиса.
   steps:
     - action: токен неизвестен или имеет неверный формат
       expected: сервер возвращает 404 без метаданных существующих встреч
@@ -1051,7 +1049,7 @@
     path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
     requirement: Серверное превью приглашения
     scenario: Текст содержит HTML
-    sha256: 2c543d496a229671be4ba4639cb2754305c8b4f0fd693d95b4948a47dcad7824
+    sha256: e226ef430fbd40bb7caae61e63f3b928926dd1efd7177bfd185647730d236d5b
   platforms:
     - web
     - ios
@@ -1060,12 +1058,11 @@
     - Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка,
       API и время.
     - |-
-      Публичный HTML приглашения SHALL содержать title/description, canonical
-      и Open Graph: title, description, type, URL, image и параметры изображения.
-      Метаданные SHALL быть доступны без JavaScript и входа. По решению пользователя
-      полное описание встречи SHALL быть публичным по ссылке и доступным в API/вебе.
-      При отсутствии описания SHALL использоваться дата/место. До загрузки обложек
-      картинка SHALL быть фирменной PNG Somewhere размером 1200×630.
+      Публичный HTML SHALL отдавать title/description, canonical и Open Graph
+      (title, description, type, URL, image, MIME и размеры) без JavaScript и входа.
+      Приглашение SHALL показывать название, полное описание либо дату/место и
+      актуальную версионную обложку; без обложки — фирменную PNG 1200×630.
+      Главная страница SHALL показывать только общие метаданные сервиса.
   steps:
     - action: название или описание содержит теги, кавычки или script
       expected: это остаётся текстом, метаданные не создают исполняемые элементы
@@ -1384,3 +1381,77 @@
       status: manual
       health: unknown
       tests: []
+- id: TC-SHARE-COVER
+  title: Обложка заменена или удалена
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Серверное превью приглашения
+    scenario: Обложка заменена или удалена
+    sha256: aa6fb32abcd1ab447c730e1dc68c2be4d9d8a2979efc1739fedcd787eec8c902
+  platforms:
+    - web
+  preconditions:
+    - Изолированный fixture; свежая серверная сборка и production web bundle. Без настоящих
+      пользователей.
+    - |-
+      Публичный HTML SHALL отдавать title/description, canonical и Open Graph
+      (title, description, type, URL, image, MIME и размеры) без JavaScript и входа.
+      Приглашение SHALL показывать название, полное описание либо дату/место и
+      актуальную версионную обложку; без обложки — фирменную PNG 1200×630.
+      Главная страница SHALL показывать только общие метаданные сервиса.
+  steps:
+    - action: Создать приглашение с обложкой, запросить HTML без сессии/JavaScript; GET и HEAD og:image.
+      expected: Текущая публичная обложка, HTTP200, действительные MIME/размеры, абсолютный версионный URL.
+    - action: Заменить обложку, затем удалить и повторить запросы.
+      expected: Новая версия/пиксели после замены; фирменная PNG1200×630 после удаления. Нет приватных
+        данных.
+  cleanup:
+    - Сбросить только собственный изолированный fixture.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/07-share-preview.spec.ts
+          selector: public invitation preview follows cover add, replacement and removal
+          runner: web-e2e
+          level: e2e
+- id: TC-SHARE-HOME
+  title: Ссылка на главную страницу
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/gathering-activity-feed/specs/invitation-rsvp/spec.md
+    requirement: Серверное превью приглашения
+    scenario: Ссылка на главную страницу
+    sha256: 08fc0bbfe841071ba4c3ae4028625972b4a5b2a84dd1a0539f0d879a3437be97
+  platforms:
+    - web
+  preconditions:
+    - Изолированный fixture; свежая серверная сборка и production web bundle. Без настоящих
+      пользователей.
+    - |-
+      Публичный HTML SHALL отдавать title/description, canonical и Open Graph
+      (title, description, type, URL, image, MIME и размеры) без JavaScript и входа.
+      Приглашение SHALL показывать название, полное описание либо дату/место и
+      актуальную версионную обложку; без обложки — фирменную PNG 1200×630.
+      Главная страница SHALL показывать только общие метаданные сервиса.
+  steps:
+    - action: Запросить / без JavaScript и входа, проверить HTML и картинку.
+      expected: Общие title/description/canonical/OG, единственный title/description, PNG1200×630, trusted
+        origin, без данных встреч.
+  cleanup:
+    - Сбросить только собственный изолированный fixture.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/07-share-preview.spec.ts
+          selector: home exposes one complete preview to a crawler without JavaScript
+          runner: web-e2e
+          level: e2e

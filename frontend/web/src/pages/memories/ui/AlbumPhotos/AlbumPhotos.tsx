@@ -35,6 +35,8 @@ export const AlbumPhotos = ({ photos, user, album, open }: AlbumPhotosProps) => 
   return (
     <div
       className={styles.stack}
+      data-resetting={album.resetting}
+      data-moving={album.moving}
       data-dragging={album.offset !== 0 && !album.moving}
       role="group"
       aria-label="Фото встречи. Листайте клавишами влево и вправо"

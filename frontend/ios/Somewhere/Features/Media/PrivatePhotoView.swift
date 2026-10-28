@@ -4,15 +4,20 @@ struct PrivatePhotoView: View {
     let media: MeetingMedia
     var fitting = false
     var onAspect: ((CGFloat) -> Void)?
+    var onFailure: (() -> Void)?
+    var retryID: UUID?
     @State private var owner: MediaContentOwner
     @State private var reloadID = UUID()
     init(
         media: MeetingMedia, session: SessionStore, fitting: Bool = false,
-        onAspect: ((CGFloat) -> Void)? = nil
+        onAspect: ((CGFloat) -> Void)? = nil,
+        onFailure: (() -> Void)? = nil, retryID: UUID? = nil
     ) {
         self.media = media
         self.fitting = fitting
         self.onAspect = onAspect
+        self.onFailure = onFailure
+        self.retryID = retryID
         _owner = State(initialValue: MediaContentOwner(media: media, session: session))
     }
     var body: some View {
@@ -31,12 +36,14 @@ struct PrivatePhotoView: View {
                 }
             }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
         }.accessibilityLabel("Фото: " + media.fileName)
-            .task(id: reloadID) {
+            .task(id: [reloadID, retryID ?? reloadID]) {
                 await owner.load()
                 if owner.current, let image = owner.image,
                     image.size.height > 0
                 {
                     onAspect?(image.size.width / image.size.height)
+                } else if owner.current, owner.failed {
+                    onFailure?()
                 }
             }
             .onChange(of: owner.current) { _, current in if !current { owner.clear() } }

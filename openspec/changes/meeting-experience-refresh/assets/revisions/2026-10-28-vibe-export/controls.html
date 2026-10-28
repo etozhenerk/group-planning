@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../../"><link rel="stylesheet" href="styles.css"><title>Вайб · сохранение альбома</title>
+<style>main{max-width:900px;margin:auto;padding:20px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}button{min-height:44px}.status{margin-top:12px}</style></head>
+<body><main><a href="album.html">← Назад</a><h1>Суббота без спешки</h1><div class="actions"><button class="button primary">Добавить фото</button><button id="save" class="button subtle">↓ Скачать все фото</button><button id="cancel" class="button subtle" hidden>Отменить</button></div><p class="status" role="status"></p></main>
+<script>const save=document.querySelector('#save'),cancel=document.querySelector('#cancel'),status=document.querySelector('.status');save.onclick=()=>{save.disabled=true;save.textContent='Подготавливаем фото…';cancel.hidden=false;status.textContent=''};cancel.onclick=()=>{save.disabled=false;save.textContent='↓ Скачать все фото';cancel.hidden=true;status.textContent=''};</script></body></html>

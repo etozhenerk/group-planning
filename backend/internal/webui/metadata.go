@@ -15,23 +15,27 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 )
 
-type metadata struct{ Title, Description, URL, Image string }
+type metadata struct {
+	Title, PageTitle, Description, URL, Image, ImageType, ImageAlt string
+	ImageWidth, ImageHeight                                        int
+}
 
 var metadataHead = template.Must(template.New("metadata").Parse(`
-<title>{{.Title}} — Somewhere</title>
+<title>{{.PageTitle}}</title>
 <meta name="description" content="{{.Description}}">
 <link rel="canonical" href="{{.URL}}">
 <meta property="og:title" content="{{.Title}}">
 <meta property="og:description" content="{{.Description}}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{.URL}}">
-<meta property="og:site_name" content="Somewhere">
+<meta property="og:site_name" content="somewhere">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:image" content="{{.Image}}">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Somewhere — встречи с друзьями">
+<meta property="og:image:secure_url" content="{{.Image}}">
+<meta property="og:image:type" content="{{.ImageType}}">
+<meta property="og:image:width" content="{{.ImageWidth}}">
+<meta property="og:image:height" content="{{.ImageHeight}}">
+<meta property="og:image:alt" content="{{.ImageAlt}}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{.Title}}">
 <meta name="twitter:description" content="{{.Description}}">
@@ -73,8 +77,37 @@ func (h *handler) invitation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	values := metadata{Title: preview.Title, Description: description(preview), URL: h.origin + "/i/" + token, Image: h.origin + "/share-card.png"}
+	values := h.defaultMetadata()
+	values.Title = preview.Title
+	values.PageTitle = preview.Title + " — somewhere"
+	values.Description = description(preview)
+	values.URL = h.origin + "/i/" + token
+	if preview.CoverVersion != "" {
+		cover, err := h.invitations.ReadInvitationCover(r.Context(), token, preview.CoverVersion)
+		if err == nil {
+			values.Image = h.origin + "/api/v1/invitations/" + token + "/cover?v=" + preview.CoverVersion
+			values.ImageType = cover.MediaType
+			values.ImageWidth = cover.Width
+			values.ImageHeight = cover.Height
+			values.ImageAlt = preview.Title
+		}
+	}
+
 	h.page(w, r, http.StatusOK, &values)
+}
+
+func (h *handler) defaultMetadata() metadata {
+	return metadata{
+		Title:       "somewhere — встречи с друзьями",
+		PageTitle:   "somewhere — встречи с друзьями",
+		Description: "Пригласите друзей на встречу. Ответы, детали и общий разговор — в somewhere.",
+		URL:         h.origin + "/",
+		Image:       h.origin + "/share-card.png",
+		ImageType:   "image/png",
+		ImageAlt:    "somewhere — встречи с друзьями",
+		ImageWidth:  1200,
+		ImageHeight: 630,
+	}
 }
 
 func description(preview meetings.PublicInvitation) string {

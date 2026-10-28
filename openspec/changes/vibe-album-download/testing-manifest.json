@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "change": "vibe-album-download",
+  "phase": "checkpoint",
+  "plan": "openspec/changes/vibe-album-download/qa/plan.json",
+  "run": "openspec/changes/vibe-album-download/qa/run.json",
+  "tasks": [
+    {
+      "id": "2.1",
+      "platforms": [
+        "backend"
+      ],
+      "cases": [
+        "TC-VIBE-EXPORT-ALL",
+        "TC-VIBE-EXPORT-ZIP",
+        "TC-VIBE-EXPORT-ACCESS"
+      ]
+    },
+    {
+      "id": "3.1",
+      "platforms": [
+        "web"
+      ],
+      "cases": [
+        "TC-VIBE-EXPORT-ALL",
+        "TC-VIBE-EXPORT-ZIP",
+        "TC-VIBE-EXPORT-ACCESS"
+      ]
+    },
+    {
+      "id": "3.2",
+      "platforms": [
+        "ios"
+      ],
+      "cases": [
+        "TC-VIBE-EXPORT-ALL",
+        "TC-VIBE-EXPORT-GALLERY",
+        "TC-VIBE-EXPORT-ACCESS"
+      ]
+    },
+    {
+      "id": "3.3",
+      "platforms": [
+        "android"
+      ],
+      "cases": [
+        "TC-VIBE-EXPORT-ALL",
+        "TC-VIBE-EXPORT-GALLERY",
+        "TC-VIBE-EXPORT-ACCESS"
+      ]
+    },
+    {
+      "id": "4.1",
+      "platforms": [
+        "backend",
+        "web",
+        "ios",
+        "android"
+      ],
+      "cases": [
+        "TC-VIBE-EXPORT-ALL",
+        "TC-VIBE-EXPORT-ZIP",
+        "TC-VIBE-EXPORT-GALLERY",
+        "TC-VIBE-EXPORT-ACCESS"
+      ]
+    }
+  ],
+  "exemptTasks": [
+    {
+      "id": "1.1",
+      "reason": "Подготовка UX, публикация контрактов и тестового каталога; это не продуктовая приёмка."
+    },
+    {
+      "id": "4.2",
+      "reason": "Релиз требует отдельного полного release-test и точного artifact receipt; feature manifest не закрывает выпуск."
+    }
+  ]
+}

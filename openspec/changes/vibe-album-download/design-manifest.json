@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "id": "vibe-album-download",
+  "designVersion": "3.0.2",
+  "phase": "checkpoint",
+  "approval": "User requested full album saving and confirmed web ZIP and native gallery; existing secondary action pattern.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/vibe-album-download/design-review-3.0.2.json",
+  "screens": [
+    {
+      "id": "vibe-save-web",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "available",
+        "empty-hidden",
+        "preparing",
+        "cancelled",
+        "failed-retry",
+        "access-revoked",
+        "complete",
+        "desktop",
+        "mobile",
+        "browser-download"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-vibe-export/controls.html",
+        "openspec/changes/vibe-album-download/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md"
+      ],
+      "tasks": {
+        "web": [
+          "3.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-save-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "available",
+        "empty-hidden",
+        "preparing",
+        "cancelled",
+        "failed-retry",
+        "access-revoked",
+        "complete",
+        "native-permission",
+        "native-saving"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-vibe-export/controls.html",
+        "openspec/changes/vibe-album-download/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md"
+      ],
+      "tasks": {
+        "ios": [
+          "3.2"
+        ]
+      }
+    },
+    {
+      "id": "vibe-save-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "available",
+        "empty-hidden",
+        "preparing",
+        "cancelled",
+        "failed-retry",
+        "access-revoked",
+        "complete",
+        "native-permission",
+        "native-saving"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-vibe-export/controls.html",
+        "openspec/changes/vibe-album-download/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md"
+      ],
+      "tasks": {
+        "android": [
+          "3.3"
+        ]
+      }
+    }
+  ]
+}

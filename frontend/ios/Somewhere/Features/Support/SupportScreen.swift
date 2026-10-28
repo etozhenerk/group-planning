@@ -15,13 +15,7 @@ struct SupportScreen: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("← Назад").designFont(13).foregroundStyle(
-                            AppPalette.accent
-                        ).frame(minHeight: 44)
-                    }.accessibilityLabel("Назад")
+                    PageBackButton { dismiss() }
                     if let reference = owner.reference {
                         VStack(spacing: 18) {
                             Text("✓").designFont(32).foregroundStyle(
@@ -60,7 +54,7 @@ struct SupportScreen: View {
                     }
                 }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28).disabled(
                     owner.sending)
-            }.scrollDismissesKeyboard(.interactively)
+            }.scrollDismissesKeyboard(.immediately)
                 .accessibilityIdentifier("support-scroll").background(AppPalette.background)
                 .toolbar(
                     .hidden, for: .navigationBar

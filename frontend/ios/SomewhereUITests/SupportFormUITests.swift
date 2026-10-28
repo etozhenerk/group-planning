@@ -35,10 +35,23 @@ final class SupportFormUITests: XCTestCase {
         message.typeText(" при закрытии клавиатуры формы обратной связи")
         XCTAssertTrue(app.keyboards.firstMatch.exists)
         let keyboard = app.keyboards.firstMatch
+        let visibleKeyboard = NSPredicate { _, _ in
+            keyboard.exists && keyboard.frame.minY > app.frame.minY
+                && keyboard.frame.maxY <= app.frame.maxY
+        }
+        XCTAssertEqual(
+            XCTWaiter.wait(
+                for: [XCTNSPredicateExpectation(predicate: visibleKeyboard, object: nil)],
+                timeout: 5), .completed)
+        let toolbarTop = app.buttons["support-keyboard-done"].frame.minY
+        print(
+            "SUPPORT_KEYBOARD_BOUNDS app=\(app.frame) keyboard=\(keyboard.frame) toolbarTop=\(toolbarTop)"
+        )
         let origin = app.coordinate(withNormalizedOffset: .zero)
         let start = origin.withOffset(
-            CGVector(dx: app.frame.maxX - 16, dy: keyboard.frame.minY - 60))
-        let end = origin.withOffset(CGVector(dx: app.frame.maxX - 16, dy: app.frame.maxY - 30))
+            CGVector(dx: app.frame.midX, dy: min(toolbarTop - 40, keyboard.frame.minY - 140)))
+        let end = origin.withOffset(
+            CGVector(dx: app.frame.midX, dy: keyboard.frame.minY + 50))
         start.press(forDuration: 0.1, thenDragTo: end)
         XCTAssertTrue(keyboard.waitForNonExistence(timeout: 5))
         ChatSheetTestSupport.reveal(send, in: scroll, app: app)
