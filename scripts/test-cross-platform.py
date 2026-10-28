@@ -92,7 +92,8 @@ def main():
                 shutil.copyfile(config, Path(container) / "tmp/ui-fixture.json")
                 browser_log = stack.enter_context((results / "web.log").open("wb"))
                 browser = subprocess.Popen(["npx", "--no-install", "playwright", "test", "--config",
-                                            "playwright.cross.config.ts"], cwd=ROOT / "frontend/web",
+                                            "playwright.cross.config.ts", "--output",
+                                            str(results / "web-artifacts")], cwd=ROOT / "frontend/web",
                                            env=env, stdout=browser_log, stderr=subprocess.STDOUT)
                 ready(progress, browser)
                 invitation = json.loads(progress.read_text())["invitation"]

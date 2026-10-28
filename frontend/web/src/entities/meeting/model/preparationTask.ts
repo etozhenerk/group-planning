@@ -1,6 +1,6 @@
 import type { WirePreparationTask } from '@/shared/api';
 
-export type TaskPerson = { id: string; displayName: string };
+export type TaskPerson = { id: string; displayName: string; avatarUrl: string | null };
 
 export type PreparationTask = {
   id: string;
@@ -12,6 +12,7 @@ export type PreparationTask = {
   updatedBy: TaskPerson;
   state: WirePreparationTask['state'];
   revision: string;
+  createdAt: string;
   canAccept: boolean;
   canDecline: boolean;
   canCancel: boolean;

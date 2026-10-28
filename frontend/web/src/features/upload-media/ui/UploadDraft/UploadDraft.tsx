@@ -21,14 +21,24 @@ export const UploadDraft = ({
   done,
 }: UploadDraftProps) => {
   const selection = useUploadSelection(session.user.id, id);
+  const clear = selection.clear;
   const [visited, setVisited] = useState(false);
   const [generation, setGeneration] = useState(0);
+  const [completed, setCompleted] = useState(false);
+  useEffect(() => {
+    if (!active && completed) {
+      clear();
+      setGeneration((value) => value + 1);
+      setVisited(false);
+      setCompleted(false);
+    }
+  }, [active, completed, clear]);
   useEffect(() => {
     if (active) {
       setVisited(true);
     }
   }, [active]);
-  useEffect(() => selection.clear, [selection.clear]);
+  useEffect(() => clear, [clear]);
   const initial = selection.selection;
 
   return (visited || active) && !selection.denied ? (
@@ -42,9 +52,7 @@ export const UploadDraft = ({
         initial?.photo === photo && initial.purpose === purpose ? initial.files : []
       }
       done={() => {
-        selection.clear();
-        setGeneration((value) => value + 1);
-        setVisited(false);
+        setCompleted(true);
         done();
       }}
     />

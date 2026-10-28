@@ -35,7 +35,7 @@ export const Dialog = ({
   returnFocus,
 }: DialogProps) => {
   const { inline, tablet, mobile, compact } = useDialogLayout(desktopPage);
-  const dialog = useDialog(open, children, !inline, returnFocus);
+  const dialog = useDialog(open, title, children, formLayout, !inline, returnFocus);
   const { region, heading, backdrop, dismiss, cancel } = useDialogControls(
     dialog.ref,
     onClose,
@@ -62,7 +62,7 @@ export const Dialog = ({
       <div className={styles['drag-region']} {...region} data-testid="dialog-drag-region">
         <div className={styles['dialog-heading']}>
           <h2 id={heading} aria-level={inline ? 1 : 2}>
-            {title}
+            {dialog.title}
           </h2>
           <button
             type="button"
@@ -79,7 +79,10 @@ export const Dialog = ({
         <DefaultPropsProvider defaultProps={popupDefaults}>
           {desktopPage || chatAction ? (
             <div
-              className={[styles.panel, formLayout ? styles['form-panel'] : ''].join(' ')}
+              className={[
+                styles.panel,
+                dialog.formLayout ? styles['form-panel'] : '',
+              ].join(' ')}
               data-testid="dialog-content"
             >
               {dialog.content}

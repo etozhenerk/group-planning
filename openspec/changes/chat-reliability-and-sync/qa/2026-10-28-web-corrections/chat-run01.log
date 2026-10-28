@@ -1,0 +1,35 @@
+[WebServer] (node:10555) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:10888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (947ms)
+  ✓   2 [chromium] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (884ms)
+  ✓   3 [chromium] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (543ms)
+  ✓   4 [chromium] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (797ms)
+  ✓   5 [chromium] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (828ms)
+  ✓   6 [chromium] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight (4.6s)
+  ✓   7 [chromium] › tests/38-chat-sync.spec.ts:14:1 › real SDK snapshot-subscribe catch-up closes the gap and healthy idle has no HTTP polling (14.6s)
+  ✓   8 [chromium] › tests/38-chat-sync.spec.ts:70:1 › pending and canonical ACK retain the same mounted timeline row (688ms)
+  ✓   9 [chromium] › tests/38-chat-sync.spec.ts:103:1 › pinned JS 5.8.0 accepts cookie auth with both undefined and empty connect data (430ms)
+  ✓  10 [chromium] › tests/38-chat-sync.spec.ts:162:1 › reconnect performs HTTP catch-up and terminal auth stops SDK retry loops (4.4s)
+  ✓  11 [chromium] › tests/38-chat-sync.spec.ts:208:1 › sustained websocket failure enables bounded HTTP fallback (13.5s)
+(node:12491) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile-webkit] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (1.4s)
+  ✓  13 [mobile-webkit] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (1.3s)
+  ✓  14 [mobile-webkit] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (899ms)
+  ✓  15 [mobile-webkit] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (1.4s)
+  ✓  16 [mobile-webkit] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (1.2s)
+  ✓  17 [mobile-webkit] › tests/37-chat-persistence.spec.ts:206:1 › two tabs share one durable intent owner while its POST is in flight (5.1s)
+  ✓  18 [mobile-webkit] › tests/38-chat-sync.spec.ts:14:1 › real SDK snapshot-subscribe catch-up closes the gap and healthy idle has no HTTP polling (14.9s)
+  ✓  19 [mobile-webkit] › tests/38-chat-sync.spec.ts:70:1 › pending and canonical ACK retain the same mounted timeline row (992ms)
+  ✓  20 [mobile-webkit] › tests/38-chat-sync.spec.ts:103:1 › pinned JS 5.8.0 accepts cookie auth with both undefined and empty connect data (752ms)
+  ✓  21 [mobile-webkit] › tests/38-chat-sync.spec.ts:162:1 › reconnect performs HTTP catch-up and terminal auth stops SDK retry loops (4.5s)
+  ✓  22 [mobile-webkit] › tests/38-chat-sync.spec.ts:208:1 › sustained websocket failure enables bounded HTTP fallback (14.3s)
+
+  22 passed (1.5m)

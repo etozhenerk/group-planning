@@ -4,6 +4,7 @@ import type { PreparationTask } from '@/entities/meeting/model/preparationTask';
 const person = (value: WirePreparationTask['author']) => ({
   id: value.id,
   displayName: value.display_name,
+  avatarUrl: value.avatar_url ?? null,
 });
 
 export const mapPreparationTask = (wire: WirePreparationTask): PreparationTask => ({
@@ -16,6 +17,7 @@ export const mapPreparationTask = (wire: WirePreparationTask): PreparationTask =
   updatedBy: person(wire.updated_by),
   state: wire.state,
   revision: wire.revision,
+  createdAt: wire.created_at,
   canAccept: wire.can_accept,
   canDecline: wire.can_decline,
   canCancel: wire.can_cancel,

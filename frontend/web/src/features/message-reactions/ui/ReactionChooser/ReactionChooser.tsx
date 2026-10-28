@@ -1,5 +1,5 @@
 import { ChatIcon } from '@/shared/ui/ChatIcon';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { EmojiDock } from '@/shared/ui/EmojiDock';
 import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/features/message-reactions/ui/ReactionChooser/ReactionChooser.module.css';
@@ -10,6 +10,7 @@ export type ReactionChooserProps = {
   close: () => void;
   selected: string[];
   context: string;
+  resize: () => void;
   readers?: (() => void) | undefined;
 };
 
@@ -19,10 +20,12 @@ export const ReactionChooser = ({
   close,
   selected,
   context,
+  resize,
   readers,
 }: ReactionChooserProps) => {
   const [all, setAll] = useState(false);
   const mobile = useMobileLayout();
+  useLayoutEffect(resize, [all, resize]);
 
   return all ? (
     <div className={styles.full}>

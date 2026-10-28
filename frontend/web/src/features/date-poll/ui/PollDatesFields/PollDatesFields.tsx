@@ -26,7 +26,7 @@ export const PollDatesFields = ({
 
   return (
     <fieldset className={styles['dates']} data-mobile={mobile} disabled={disabled}>
-      <legend>Даты</legend>
+      <legend>Варианты даты</legend>
       {dates.map((date, index) => (
         <div
           className={[styles['row'], dates.length > 2 ? styles['removable'] : '']
@@ -37,6 +37,7 @@ export const PollDatesFields = ({
           <DateInput
             mobileSheet
             compact
+            weekday
             label={`Вариант ${index + 1}`}
             value={date}
             clearable={false}
@@ -66,7 +67,7 @@ export const PollDatesFields = ({
         disabled={disabled || dates.length >= 20}
       >
         <ChatIcon name="plus" size={18} aria-hidden="true" />
-        Добавить вариант
+        Добавить дату
       </button>
     </fieldset>
   );

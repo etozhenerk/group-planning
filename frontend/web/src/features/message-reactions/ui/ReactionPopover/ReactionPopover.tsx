@@ -55,6 +55,7 @@ export const ReactionPopover = ({
               close={() => change(false)}
               selected={selected}
               context={context}
+              resize={popover.resize}
             />
           </div>
         </div>

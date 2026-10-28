@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollCreateForm } from '@/features/date-poll';
@@ -7,6 +6,7 @@ import { ShareForm } from '@/features/share-invitation';
 import { UploadDraft } from '@/features/upload-media';
 import { TaskForm } from '@/features/preparation-task';
 import type { ConversationActionKind } from '@/widgets/conversation/model/actionKind';
+import { useActionCompletion } from '@/widgets/conversation/ui/ConversationActionForms/hooks/useActionCompletion';
 import styles from '@/widgets/conversation/ui/ConversationActionForms/ConversationActionForms.module.css';
 
 export type ConversationActionFormsProps = {
@@ -24,14 +24,7 @@ export const ConversationActionForms = ({
   session,
   done,
 }: ConversationActionFormsProps) => {
-  const [generation, setGeneration] = useState({ date: 0, place: 0, task: 0 });
-  const complete = (form: 'date' | 'place' | 'task') => {
-    setGeneration((value) => ({ ...value, [form]: value[form] + 1 }));
-
-    if (open && kind === form) {
-      done();
-    }
-  };
+  const { generation, complete } = useActionCompletion(kind, open, done);
 
   return (
     <>

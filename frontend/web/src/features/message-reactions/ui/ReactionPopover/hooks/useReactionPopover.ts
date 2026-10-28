@@ -10,7 +10,7 @@ import {
   size,
   useTransitionStyles,
 } from '@floating-ui/react';
-import { useLayoutEffect } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 import type { RefObject } from 'react';
 import { designTokens } from '@/shared/config/design-tokens';
 import { useMediaQuery } from '@/shared/lib/media';
@@ -54,6 +54,13 @@ export const useReactionPopover = (
   });
 
   const refs = floating.refs;
+  const update = floating.update;
+  const resize = useCallback(() => {
+    // Measure the new content before flip reuses the previous panel's height limit.
+    refs.floating.current?.style.removeProperty('--reaction-available-height');
+    update();
+  }, [refs, update]);
+
   useLayoutEffect(() => {
     refs.setReference(anchor.current);
   }, [anchor, refs, open]);
@@ -96,5 +103,5 @@ export const useReactionPopover = (
     common: { transitionTimingFunction: designTokens.motionEasingStandard },
   });
 
-  return { ...floating, ...interactions, transition, inside };
+  return { ...floating, ...interactions, transition, inside, resize };
 };

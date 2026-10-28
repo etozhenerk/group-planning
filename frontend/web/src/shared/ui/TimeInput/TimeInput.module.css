@@ -59,4 +59,16 @@
 
 .control-field[data-sheet='true'] :global(.g-text-input__control) {
   font-size: var(--ds-typography-size-mobile-web-input);
+  padding-inline: 0 var(--ds-component-mobile-field-inset-inline);
+}
+
+.control-field[data-sheet='true']
+  :global(.g-text-input__additional-content_placement_start) {
+  flex: 0 0
+    calc(
+      var(--ds-component-mobile-field-inset-inline) +
+        var(--ds-component-mobile-field-icon-size) + var(--ds-space-s8)
+    );
+  padding-inline-start: var(--ds-component-mobile-field-inset-inline);
+  justify-content: flex-start;
 }

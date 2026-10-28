@@ -262,7 +262,7 @@ test('approved HTML and implemented screens at four widths', async ({
     ] as const) {
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       await page.getByRole('menuitem', { name: label, exact: true }).click();
-      const action = actionSurface(page, label);
+      const action = actionSurface(page, kind === 'date' ? 'Новая дата встречи' : label);
       await expect(action).toBeVisible();
 
       if (kind === 'task') {

@@ -35,7 +35,7 @@ export const PollDeadline = ({
       data-narrow={narrow}
       disabled={disabled}
     >
-      <legend>Опрос завершится</legend>
+      <legend>Окончание опроса</legend>
       <div className={styles['fields']}>
         <DateInput
           mobileSheet
@@ -55,7 +55,9 @@ export const PollDeadline = ({
           disabled={disabled}
         />
       </div>
-      <small>{timezoneLabel(zone)}</small>
+      <small>
+        {zone === 'Europe/Moscow' ? 'По московскому времени' : timezoneLabel(zone)}
+      </small>
       {ambiguous && (
         <SelectInput
           mobileSheet

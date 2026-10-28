@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-28T08:15:51.709113+00:00",
+  "defect": "QA-WEB-REACTION-FULL-CLIPPED-003",
+  "files": [
+    {
+      "path": "frontend/web/src/features/message-reactions/ui/ReactionPopover/hooks/useReactionPopover.ts",
+      "sha256": "69031dd6f2f258518583d03fd3ca97099e264db5ecd6e1adabcfeb01d5fa4e33"
+    },
+    {
+      "path": "frontend/web/src/features/message-reactions/ui/ReactionPopover/ReactionPopover.tsx",
+      "sha256": "0bcb76722e669a403fefccf616073bd2430ddec43a32369a3ec8ddeef52a2203"
+    },
+    {
+      "path": "frontend/web/src/features/message-reactions/ui/ReactionChooser/ReactionChooser.tsx",
+      "sha256": "070a66cca97f5ff43dcd559e7a21d803c2ac5c5b243c60e382d5ca14f7f80d99"
+    },
+    {
+      "path": "frontend/web/tests/45-reaction-placement.spec.ts",
+      "sha256": "830ec8f1bdbc3c72583f8102f58eb121cc96b2920d6f9449e0a8fac3a5fba3b7"
+    },
+    {
+      "path": "frontend/web/playwright.config.ts",
+      "sha256": "b3712fa9cd4717b400cc99e8a5f79a5f8662c9c2af653d9a915161689a510225"
+    }
+  ],
+  "checks": {
+    "regressionBefore": "failed: measured169px instead of preferred352px",
+    "regressionAfter": "4 passed: Chromium/WebKit ×390x844/1440x1000",
+    "compactLandscape": "2 passed: Chromium/WebKit ×320x760/390x430/844x390",
+    "lint": "targeted ESLint passed",
+    "format": "targeted Prettier passed",
+    "typecheck": "passed",
+    "architecture": "passed using node --import tsx; npm tsx wrapper initially denied temporary IPC by sandbox"
+  },
+  "independentReview": "Pending final candidate reviewer; implementation checks do not close design/feature acceptance",
+  "logs": [
+    {
+      "path": "typecheck-final.log",
+      "sha256": "b8a71c867876090393cfdb30abbb65ecd9fb124460d00a497467af47c44365e1"
+    },
+    {
+      "path": "build-after.log",
+      "sha256": "36ebac8c9c5d7535fd4ebe6d9f35fbb7a6c8a973be30ada8b28ba7b84a8cdff7"
+    },
+    {
+      "path": "after-final.log",
+      "sha256": "9e933312c3ccfe785599921ec2d64944179d77ba4a15d6e9cc82553132e77cb4"
+    },
+    {
+      "path": "compact-final.log",
+      "sha256": "3b208637dcfe70fdbc81b795313a5581844c12283c8dc455937159172c07f9be"
+    },
+    {
+      "path": "architecture-final.log",
+      "sha256": "e85c26781682d7d589a5cb4c37500cdc64db402af3f508391a5c73feb50b1d8b"
+    },
+    {
+      "path": "before.log",
+      "sha256": "5648e1485e4daf5537cedcf27b3f8dfc87317d013d2ed1c6f5e61ba2408d28df"
+    },
+    {
+      "path": "after.log",
+      "sha256": "5319f83d394a43965c72fa8cf80f0370edc0c7598030efa85fdcd57301928136"
+    }
+  ]
+}

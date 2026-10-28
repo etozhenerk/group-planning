@@ -3,7 +3,7 @@ import styles from '@/shared/ui/Avatar/Avatar.module.css';
 
 export type AvatarProps = {
   name: string;
-  size?: 'small' | 'normal' | 'large' | 'chat' | 'mobile-chat';
+  size?: 'tiny' | 'small' | 'normal' | 'large' | 'chat' | 'mobile-chat';
   own?: boolean;
   tone?: 'sand' | 'lilac' | 'mint' | 'blue';
   src?: string | null;
@@ -25,6 +25,7 @@ export const Avatar = ({
         size === 'small' ? styles['small'] : size === 'large' ? styles.large : '',
         size === 'chat' || size === 'mobile-chat' ? styles.chat : '',
         size === 'mobile-chat' ? styles.mobileChat : '',
+        size === 'tiny' ? styles.tiny : '',
         own ? styles['own'] : '',
       ]
         .filter(Boolean)

@@ -17,6 +17,7 @@ export type DateInputProps = {
   hideLabel?: boolean;
   error?: string;
   compact?: boolean;
+  weekday?: boolean;
 };
 
 export const DateInput = ({
@@ -31,6 +32,7 @@ export const DateInput = ({
   hideLabel = false,
   error = '',
   compact = false,
+  weekday = false,
 }: DateInputProps) => {
   const field = useDateInput(value, timezone, onChange, disabled);
   const mobile = useMobileLayout();
@@ -49,6 +51,7 @@ export const DateInput = ({
           id={field.id}
           label={label}
           value={field.value}
+          weekday={weekday}
           today={field.today ?? null}
           disabled={disabled}
           invalid={invalid || !!error}

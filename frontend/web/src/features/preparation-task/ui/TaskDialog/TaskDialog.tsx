@@ -7,11 +7,12 @@ import type { useTaskPanel } from '@/features/preparation-task/ui/TaskCard/hooks
 
 export type TaskDialogProps = {
   task: PreparationTask;
+  user: string;
   controls: ReturnType<typeof useTaskControls>;
   surface: ReturnType<typeof useTaskPanel>;
 };
 
-export const TaskDialog = ({ task, controls, surface }: TaskDialogProps) => (
+export const TaskDialog = ({ task, user, controls, surface }: TaskDialogProps) => (
   <Dialog
     open={surface.panel !== null}
     title={
@@ -26,7 +27,12 @@ export const TaskDialog = ({ task, controls, surface }: TaskDialogProps) => (
     chatAction
   >
     <div hidden={surface.panel !== 'details'} ref={surface.details} tabIndex={-1}>
-      <TaskDetails task={task} controls={controls} confirm={surface.confirm} />
+      <TaskDetails
+        task={task}
+        user={user}
+        controls={controls}
+        confirm={surface.confirm}
+      />
     </div>
     <div hidden={surface.panel === 'details'} ref={surface.confirmation} tabIndex={-1}>
       {(surface.panel === 'cancel' || surface.panel === 'decline') && (

@@ -74,14 +74,14 @@ test('create with settings and apply live majority in two chats', async ({
   await page.goto(`/meetings/${id}`);
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
-  const form = actionSurface(page, 'Предложить дату');
-  await expect(
-    form.getByRole('checkbox', { name: /Можно выбрать несколько дат/ }),
-  ).toBeChecked();
+  const form = actionSurface(page, 'Новая дата встречи');
+  await expect(form.getByRole('checkbox', { name: /Несколько ответов/ })).toBeChecked();
   await expect(
     form.getByRole('checkbox', { name: 'Можно изменить голос' }),
   ).toBeChecked();
-  await expect(form.getByRole('checkbox', { name: 'Можно добавить дату' })).toBeChecked();
+  await expect(
+    form.getByRole('checkbox', { name: 'Можно добавлять варианты' }),
+  ).toBeChecked();
 
   await expect(form).toHaveAttribute('data-motion', 'open');
 
@@ -94,7 +94,7 @@ test('create with settings and apply live majority in two chats', async ({
 
   const dateField = form.getByRole('button', { name: 'Вариант 1', exact: true });
   await expect(dateField).toBeVisible();
-  await expect(dateField.locator('svg')).toHaveCount(1);
+  await expect(dateField.locator('svg')).toHaveCount(2);
   const dateBounds = await dateField.boundingBox();
 
   for (const icon of await dateField.locator('svg').all()) {

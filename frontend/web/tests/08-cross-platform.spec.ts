@@ -143,9 +143,14 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
       })
       .toBe(403);
     await page.getByRole('button', { name: 'Информация о встрече' }).click();
+    const information = page.getByRole('dialog', { name: 'Встреча трёх платформ' });
+    await information
+      .getByRole('button', { name: 'Все участники встречи. Придут: 2', exact: true })
+      .click();
     await expect(
-      page
-        .getByRole('dialog', { name: 'Встреча трёх платформ' })
+      information
+        .getByRole('listitem')
+        .filter({ hasText: 'Лена' })
         .getByText('Не смогу', { exact: true }),
     ).toBeVisible();
     await page.keyboard.press('Escape');

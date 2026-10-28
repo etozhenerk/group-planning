@@ -293,7 +293,7 @@ test('desktop chat actions stay modal over the conversation and restore the draf
   await input.fill('Сохранённый черновик');
 
   for (const [label, title] of [
-    ['Предложить дату', 'Предложить дату'],
+    ['Предложить дату', 'Новая дата встречи'],
     ['Предложить место', 'Предложить место'],
     ['Предложить задачу', 'Предложить задачу'],
   ] as const) {

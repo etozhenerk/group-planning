@@ -1,0 +1,231 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/private/tmp/somewhere-web-resume-20261028/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.chat-full.config.ts",
+      "--workers",
+      "1",
+      "--project",
+      "chromium",
+      "--grep",
+      "draft hydration during first focus",
+      "--trace",
+      "on",
+      "--output",
+      "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-idb",
+      "--reporter=json"
+    ],
+    "configFile": "/private/tmp/somewhere-web-resume-20261028/frontend/web/playwright.chat-full.config.ts",
+    "rootDir": "/private/tmp/somewhere-web-resume-20261028/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-idb",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/somewhere-web-resume-20261028/frontend/web/tests",
+        "testIgnore": [
+          "30-design-review.spec.ts",
+          "38-chat-sync.spec.ts",
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts",
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-idb",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/private/tmp/somewhere-web-resume-20261028/frontend/web/tests",
+        "testIgnore": [
+          "30-design-review.spec.ts",
+          "38-chat-sync.spec.ts",
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts",
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts"
+        ],
+        "testMatch": [
+          "27-mobile-scroll.spec.ts",
+          "28-meeting-refresh.spec.ts",
+          "29-media-refresh.spec.ts",
+          "32-refresh-resilience.spec.ts",
+          "33-chat-action-sheets.spec.ts",
+          "34-telegram-chat.spec.ts",
+          "35-emoji-motion.spec.ts",
+          "36-action-menu-motion.spec.ts",
+          "37-chat-persistence.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-idb",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/private/tmp/somewhere-web-resume-20261028/frontend/web/tests",
+        "snapshotDir": "/private/tmp/somewhere-web-resume-20261028/frontend/web/tests",
+        "testIgnore": [
+          "30-design-review.spec.ts",
+          "38-chat-sync.spec.ts",
+          "39-chat-window.spec.ts",
+          "40-chat-history-error.spec.ts",
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts"
+        ],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "on",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "0",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "44-draft-hydration-probe.spec.ts",
+      "file": "44-draft-hydration-probe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "draft hydration during first focus does not duplicate replacement text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 943,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T07:52:53.226Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-idb/44-draft-hydration-probe-d-deb21--duplicate-replacement-text-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f7d016c3334afd5dacb-33938e6d9198c18b41a6",
+          "file": "44-draft-hydration-probe.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-28T07:52:52.339Z",
+    "duration": 2003.281,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

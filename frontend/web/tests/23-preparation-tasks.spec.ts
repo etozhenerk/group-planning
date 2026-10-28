@@ -72,7 +72,15 @@ for (const width of [320, 390, 1440]) {
       path: `test-results/task-form-error-${width}.png`,
       animations: 'disabled',
     });
+    const createdResponse = page.waitForResponse(
+      (response) =>
+        response.url().endsWith(`/meetings/${meeting.id}/preparation-tasks`) &&
+        response.request().method() === 'POST' &&
+        response.status() === 201,
+    );
+
     await form.getByRole('button', { name: 'Повторить отправку' }).click();
+    const createdTask = preparationTaskSchema.parse(await (await createdResponse).json());
     await expect(form).not.toBeVisible();
     expect(keys[0]).toBeTruthy();
     expect(keys[1]).toBe(keys[0]);
@@ -87,18 +95,32 @@ for (const width of [320, 390, 1440]) {
     ).toBeVisible();
 
     await expect(card.getByText('Предложено вам')).toBeVisible();
-    await expect(card.getByRole('button', { name: 'Отметить выполнение' })).toHaveCount(
+    await card
+      .getByRole('button', { name: 'Подробности задачи «Заказать пиццу»' })
+      .click();
+    const proposed = page.getByRole('dialog', { name: 'Заказать пиццу', exact: true });
+    await expect(proposed.getByText('Предложено вам', { exact: true })).toBeVisible();
+    await expect(proposed.getByText('Саша (вы)', { exact: true })).toBeVisible();
+    await expect(proposed.getByText('Создано', { exact: true })).toBeVisible();
+    await expect(proposed.locator('time')).toHaveAttribute(
+      'datetime',
+      createdTask.created_at,
+    );
+    await expect(proposed.locator('time')).toContainText('Сегодня,');
+    await expect(proposed.getByTestId('avatar')).toBeVisible();
+    await proposed.getByRole('button', { name: 'Закрыть', exact: true }).click();
+    await expect(card.getByRole('button', { name: 'Отметить выполненной' })).toHaveCount(
       0,
     );
-    await card.getByRole('button', { name: 'Принять задачу' }).click();
+    await card.getByRole('button', { name: 'Взять на себя' }).click();
     await expect(card.getByText('Исполняет Саша')).toBeVisible();
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.screenshot({
       path: `test-results/task-accepted-${width}.png`,
       animations: 'disabled',
     });
-    await card.getByRole('button', { name: 'Отметить выполнение' }).click();
-    await expect(card.getByText('Выполнено · Саша', { exact: true })).toBeVisible();
+    await card.getByRole('button', { name: 'Отметить выполненной' }).click();
+    await expect(card.getByText('Выполнено', { exact: true })).toBeVisible();
     await expect(card.getByRole('button')).toHaveCount(1);
 
     {
@@ -106,10 +128,10 @@ for (const width of [320, 390, 1440]) {
         .getByRole('button', { name: 'Подробности задачи «Заказать пиццу»', exact: true })
         .click();
       const details = page.getByRole('dialog', { name: 'Заказать пиццу', exact: true });
-      await expect(details.getByText('Выполнена', { exact: true })).toBeVisible();
+      await expect(details.getByText('Выполнено', { exact: true })).toBeVisible();
       await expect(
         details.getByRole('button', {
-          name: /Принять задачу|Отметить выполнение|Отказаться|Отменить задачу/,
+          name: /Взять на себя|Отметить выполненной|Отказаться|Отменить задачу/,
         }),
       ).toHaveCount(0);
       await details.getByRole('button', { name: 'Закрыть', exact: true }).click();
@@ -146,8 +168,8 @@ test('addressed task waits for its recipient and preserves uncertain acceptance'
 
     await page.goto(`/meetings/${created.meeting.id}`);
     const authorCard = page.getByRole('region', { name: 'Задача подготовки' });
-    await expect(authorCard.getByText('Кому предложено: Лена')).toBeVisible();
-    await expect(authorCard.getByRole('button', { name: 'Принять задачу' })).toHaveCount(
+    await expect(authorCard.getByText('Предложено: Лена')).toBeVisible();
+    await expect(authorCard.getByRole('button', { name: 'Взять на себя' })).toHaveCount(
       0,
     );
     const keys: (string | undefined)[] = [];
@@ -162,14 +184,16 @@ test('addressed task waits for its recipient and preserves uncertain acceptance'
     });
     await friend.goto(`/meetings/${created.meeting.id}`);
     const card = friend.getByRole('region', { name: 'Задача подготовки' });
-    await card.getByRole('button', { name: 'Принять задачу' }).click();
+    await card.getByRole('button', { name: 'Взять на себя' }).click();
     await expect(card.getByRole('alert')).toContainText('Не удалось сохранить действие');
     await expect(card.getByText('Предложено вам')).toBeVisible();
     await card
       .getByRole('button', { name: 'Подробности задачи «Заказать пиццу»' })
       .click();
     const details = friend.getByRole('dialog', { name: 'Заказать пиццу', exact: true });
-    await expect(details.getByRole('button', { name: 'Отказаться' })).toBeDisabled();
+    await expect(
+      details.getByRole('button', { name: 'Отказаться от задачи' }),
+    ).toBeDisabled();
     await details.getByRole('button', { name: 'Закрыть', exact: true }).click();
     await card.getByRole('button', { name: 'Повторить действие' }).click();
     await expect(card.getByText('Исполняет Лена')).toBeVisible();
@@ -178,7 +202,9 @@ test('addressed task waits for its recipient and preserves uncertain acceptance'
     await card
       .getByRole('button', { name: 'Подробности задачи «Заказать пиццу»' })
       .click();
-    await details.getByRole('button', { name: 'Отказаться', exact: true }).click();
+    await details
+      .getByRole('button', { name: 'Отказаться от задачи', exact: true })
+      .click();
     const confirmation = friend.getByRole('dialog', {
       name: 'Отказаться от задачи?',
       exact: true,
@@ -190,10 +216,12 @@ test('addressed task waits for its recipient and preserves uncertain acceptance'
       .getByRole('button', { name: 'Оставить как есть', exact: true })
       .click();
     await expect(card.getByText('Исполняет Лена')).toBeVisible();
-    await details.getByRole('button', { name: 'Отказаться', exact: true }).click();
+    await details
+      .getByRole('button', { name: 'Отказаться от задачи', exact: true })
+      .click();
     await confirmation.getByRole('button', { name: 'Отказаться', exact: true }).click();
     await expect(confirmation).not.toBeVisible();
-    await expect(card.getByText('Отказ · Лена', { exact: true })).toBeVisible();
+    await expect(card.getByText('Отказ от задачи', { exact: true })).toBeVisible();
     await expect(card.getByRole('button')).toHaveCount(1);
     await friend.screenshot({
       path: 'test-results/task-declined.png',
@@ -232,7 +260,7 @@ test('a conflicting general acceptance refreshes the assignee without taking the
     await card.getByRole('button', { name: 'Взять на себя' }).click();
     await expect(card.getByRole('alert')).toContainText('Задача изменилась');
     await expect(card.getByText('Исполняет Саша')).toBeVisible();
-    await expect(card.getByRole('button', { name: 'Отметить выполнение' })).toHaveCount(
+    await expect(card.getByRole('button', { name: 'Отметить выполненной' })).toHaveCount(
       0,
     );
     const cancelled = await page.request.post(
@@ -241,7 +269,7 @@ test('a conflicting general acceptance refreshes the assignee without taking the
     );
 
     expect(cancelled.status()).toBe(200);
-    await expect(card.getByText('Отменено · Саша', { exact: true })).toBeVisible({
+    await expect(card.getByText('Отменено', { exact: true })).toBeVisible({
       timeout: 10000,
     });
     await expect(card.getByRole('button')).toHaveCount(1);
@@ -269,7 +297,7 @@ test('participant loading failure keeps the draft and task read failures retain 
   await expect(form.getByLabel('Что сделать')).toHaveValue('Купить напитки');
   await form.getByRole('button', { name: 'Предложить задачу' }).click();
   const card = page.getByRole('region', { name: 'Задача подготовки' });
-  await expect(card.getByText('Пока никто не взял задачу')).toBeVisible();
+  await expect(card.getByText('Кто возьмёт?')).toBeVisible();
   await page.route(`**/meetings/${meeting.id}/preparation-tasks/*`, (route) =>
     route.abort('failed'),
   );
@@ -293,12 +321,12 @@ test('participant loading failure keeps the draft and task read failures retain 
   });
 
   await expect(confirmation).toContainText('Задача останется в истории');
-  await expect(card.getByText('Пока никто не взял задачу')).toBeVisible();
+  await expect(card.getByText('Кто возьмёт?')).toBeVisible();
   await confirmation
     .getByRole('button', { name: 'Отменить задачу', exact: true })
     .click();
   await expect(confirmation).not.toBeVisible();
-  await expect(card.getByText('Отменено · Саша', { exact: true })).toBeVisible();
+  await expect(card.getByText('Отменено', { exact: true })).toBeVisible();
 });
 
 test('pending acceptance shows only a spinner and its late response cannot restore access', async ({

@@ -1,0 +1,74 @@
+[WebServer] (node:14994) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:14995) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 1 test using 1 worker
+
+(node:15000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] [chromium] › tests/44-draft-hydration-probe.spec.ts:4:1 › draft hydration during first focus does not duplicate replacement text
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58398: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58400: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58402: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58403: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58401: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58406: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58404: remote error: tls: unknown certificate
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58410: remote error: tls: unknown certificate
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58407: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58405: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58408: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58412: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58409: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58411: remote error: tls: unknown certificate
+
+[WebServer] 2026/10/28 10:51:06 http: TLS handshake error from 127.0.0.1:58413: remote error: tls: unknown certificate
+
+  1) [chromium] › tests/44-draft-hydration-probe.spec.ts:4:1 › draft hydration during first focus does not duplicate replacement text 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      37 |   });
+      38 |   await page.reload();
+    > 39 |   await page.waitForFunction(() => document.documentElement.dataset.draftDecryptPending === 'true');
+         |              ^
+      40 |   await expect(input).toHaveValue('');
+      41 |   await input.fill('Черновик под составом');
+      42 |   await expect(input).toHaveValue('Черновик под составом');
+        at /private/tmp/somewhere-web-resume-20261028/frontend/web/tests/44-draft-hydration-probe.spec.ts:39:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-probe/44-draft-hydration-probe-d-deb21--duplicate-replacement-text-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-probe/44-draft-hydration-probe-d-deb21--duplicate-replacement-text-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-probe/44-draft-hydration-probe-d-deb21--duplicate-replacement-text-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/draft-hydration-probe/44-draft-hydration-probe-d-deb21--duplicate-replacement-text-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [chromium] › tests/44-draft-hydration-probe.spec.ts:4:1 › draft hydration during first focus does not duplicate replacement text 

@@ -18,7 +18,7 @@ for (const width of [320, 390, 1440]) {
     await page.getByLabel('Сообщение', { exact: true }).fill('Черновик разговора');
     await open.click();
     await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
-    const screen = actionSurface(page, 'Предложить дату');
+    const screen = actionSurface(page, 'Новая дата встречи');
     await expect(screen).toBeVisible();
     await expect(page).toHaveURL(/action=date$/);
     await expect(page.getByRole('dialog')).toHaveCount(1);
@@ -33,7 +33,7 @@ for (const width of [320, 390, 1440]) {
     const expectSelectedDate = async () => {
       if (width < 740) {
         await expect(first).toHaveAttribute('data-date', '27.10.2026');
-        await expect(first).toHaveText('27 октября');
+        await expect(first).toHaveText('вт, 27 октября');
       } else {
         await expect(first).toHaveValue(/27.*10.*2026/);
       }
@@ -47,7 +47,7 @@ for (const width of [320, 390, 1440]) {
     expect((bounds?.x ?? 0) + (bounds?.width ?? 0)).toBeLessThanOrEqual(width);
     await popup.getByRole('button', { name: /27 октября 2026/ }).click();
     await expectSelectedDate();
-    await screen.getByRole('button', { name: 'Добавить вариант' }).click();
+    await screen.getByRole('button', { name: 'Добавить дату' }).click();
     await screen.getByRole('button', { name: 'Создать опрос', exact: true }).click();
     const third = screen.getByRole(dateRole, { name: 'Вариант 3', exact: true });
     await expect(third).toBeFocused();

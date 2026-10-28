@@ -203,7 +203,18 @@ test('closing a mobile sheet restores the background position and permits normal
 
   await page.goto('/meetings');
   await page.getByRole('button', { name: /Предстоящие/ }).click();
-  await expect(page.getByRole('link', { name: new RegExp(`${title} 4`) })).toBeVisible();
+  const meeting = page.getByRole('link', { name: new RegExp(`${title} 4`) });
+  await expect(page.getByRole('article').first()).toBeVisible();
+
+  while ((await meeting.count()) === 0) {
+    const more = page.getByRole('button', { name: 'Показать ещё', exact: true });
+    const count = await page.getByRole('article').count();
+    await expect(more).toBeVisible();
+    await more.click();
+    await expect.poll(() => page.getByRole('article').count()).toBeGreaterThan(count);
+  }
+
+  await expect(meeting).toBeVisible();
   await page.evaluate(() => scrollTo(0, 200));
   await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await page.evaluate(() => scrollTo(0, 200));

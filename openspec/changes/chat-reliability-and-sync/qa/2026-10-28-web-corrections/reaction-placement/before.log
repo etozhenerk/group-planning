@@ -1,0 +1,45 @@
+[WebServer] (node:48983) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:49695) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 (5.9s)
+
+
+  1) [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 352
+    Received: 169
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      38 |     const picker = page.getByRole('dialog', { name: 'Реакция', exact: true });
+      39 |     await picker.getByRole('button', { name: 'Все эмодзи' }).click();
+    > 40 |     await expect.poll(async () => (await picker.boundingBox())?.height).toBe(352);
+         |                                                                         ^
+      41 |     const bubble = await target.boundingBox();
+      42 |     const panel = await picker.boundingBox();
+      43 |     const composer = await page.getByLabel('Сообщение', { exact: true }).boundingBox();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/45-reaction-placement.spec.ts:40:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 

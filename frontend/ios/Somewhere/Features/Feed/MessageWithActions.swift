@@ -7,7 +7,7 @@ struct MessageWithActions: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AccessibilityFocusState private var messageFocused: Bool
     @AccessibilityFocusState private var focusedReaction: String?
-    @GestureState private var pressed = false
+    @State private var pressed = false
     private var reactions: [MessageReaction] { owner.reactions.values[entry.id] ?? [] }
     private var feedback: Animation? {
         ChatMotion.animation(
@@ -22,15 +22,7 @@ struct MessageWithActions: View {
                 )
                 .animation(feedback, value: pressed)
                 .animation(feedback, value: owner.panel == .reaction(entry.id))
-                .gesture(
-                    LongPressGesture(
-                        minimumDuration: DesignTokens.motionDurationReactionLongPress,
-                        maximumDistance: DesignTokens
-                            .componentReactionPickerLongPressMovementTolerance
-                    )
-                    .updating($pressed) { value, state, _ in state = value }
-                    .onEnded { _ in openReactions() }
-                )
+                .modifier(MessageLongPress(pressed: $pressed, perform: openReactions))
                 .accessibilityAction(named: "Добавить реакцию", openReactions)
                 .accessibilityActions {
                     if own, owner.reads.enabled {

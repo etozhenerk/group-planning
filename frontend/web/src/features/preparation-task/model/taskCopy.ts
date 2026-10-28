@@ -7,16 +7,16 @@ export const taskStatus = (task: PreparationTask, user: string) => {
       return task.recipient
         ? task.recipient.id === user
           ? 'Предложено вам'
-          : `Кому предложено: ${task.recipient.displayName}`
-        : 'Пока никто не взял задачу';
+          : `Предложено: ${task.recipient.displayName}`
+        : 'Кто возьмёт?';
     case 'accepted':
       return `Исполняет ${task.assignee?.displayName ?? 'участник'}`;
     case 'completed':
-      return `Выполнено · ${task.updatedBy.displayName}`;
+      return 'Выполнено';
     case 'declined':
-      return `Отказ · ${task.updatedBy.displayName}`;
+      return 'Отказ от задачи';
     case 'cancelled':
-      return `Отменено · ${task.updatedBy.displayName}`;
+      return 'Отменено';
   }
 };
 
@@ -28,16 +28,16 @@ export const taskActions = (
   if (task.canAccept) {
     result.push({
       action: 'accept',
-      label: task.recipient ? 'Принять задачу' : 'Взять на себя',
+      label: 'Взять на себя',
     });
   }
 
   if (task.canComplete) {
-    result.push({ action: 'complete', label: 'Отметить выполнение' });
+    result.push({ action: 'complete', label: 'Отметить выполненной' });
   }
 
   if (task.canDecline) {
-    result.push({ action: 'decline', label: 'Отказаться' });
+    result.push({ action: 'decline', label: 'Отказаться от задачи' });
   }
 
   if (task.canCancel) {
@@ -65,18 +65,3 @@ export const taskError = (error: unknown, creating = false) => {
 
 export const uncertainTaskError = (error: unknown) =>
   !!error && !(error instanceof ApiError && error.status >= 400 && error.status < 500);
-
-export const taskStateLabel = (task: PreparationTask) => {
-  switch (task.state) {
-    case 'offered':
-      return 'Предложена';
-    case 'accepted':
-      return 'Принята';
-    case 'completed':
-      return 'Выполнена';
-    case 'declined':
-      return 'Отклонена';
-    case 'cancelled':
-      return 'Отменена';
-  }
-};

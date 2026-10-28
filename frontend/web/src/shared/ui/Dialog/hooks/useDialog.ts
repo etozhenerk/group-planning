@@ -7,7 +7,9 @@ import { useVisualViewport } from '@/shared/lib/viewport';
 
 export const useDialog = (
   open: boolean,
+  title: string,
   children: ReactNode,
+  formLayout: boolean,
   modal = true,
   returnFocus?: RefObject<HTMLElement | null>,
 ) => {
@@ -15,7 +17,12 @@ export const useDialog = (
   useVisualViewport(ref);
   const wasModal = useRef(modal);
   const release = useRef<(() => void) | undefined>(undefined);
-  const [retained, setRetained] = useState<ReactNode>(null);
+  const [retained, setRetained] = useState<{
+    title: string;
+    children: ReactNode;
+    formLayout: boolean;
+  } | null>(null);
+
   const finish = useCallback(() => {
     const dialog = ref.current;
     dialog?.close();
@@ -27,9 +34,9 @@ export const useDialog = (
 
   useLayoutEffect(() => {
     if (open) {
-      setRetained(children);
+      setRetained({ title, children, formLayout });
     }
-  }, [open, children]);
+  }, [open, title, children, formLayout]);
 
   useLayoutEffect(() => {
     const dialog = ref.current;
@@ -99,5 +106,10 @@ export const useDialog = (
 
   useEffect(() => finish, [finish]);
 
-  return { ref, content: open ? children : (retained ?? children) };
+  return {
+    ref,
+    title: open ? title : (retained?.title ?? title),
+    content: open ? children : (retained?.children ?? children),
+    formLayout: open ? formLayout : (retained?.formLayout ?? formLayout),
+  };
 };

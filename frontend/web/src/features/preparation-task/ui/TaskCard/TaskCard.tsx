@@ -56,7 +56,12 @@ export const TaskCard = ({ meeting, id, session, occurredAt }: TaskCardProps) =>
         )}
       </section>
       {query.data && (
-        <TaskDialog task={query.data} controls={controls} surface={surface} />
+        <TaskDialog
+          task={query.data}
+          user={session.user.id}
+          controls={controls}
+          surface={surface}
+        />
       )}
     </>
   );

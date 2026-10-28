@@ -23,7 +23,7 @@ export const PollSettingsFields = ({
       aria-label="Настройки"
     >
       <label>
-        <span>Можно выбрать несколько дат</span>
+        <span>Несколько ответов</span>
         <input
           type="checkbox"
           checked={value.multipleAnswers}
@@ -39,7 +39,7 @@ export const PollSettingsFields = ({
         />
       </label>
       <label>
-        <span>Можно добавить дату</span>
+        <span>Можно добавлять варианты</span>
         <input
           type="checkbox"
           checked={value.allowNewOptions}
@@ -47,7 +47,7 @@ export const PollSettingsFields = ({
         />
       </label>
       <label>
-        <span>Анонимное голосование</span>
+        <span>Анонимный опрос</span>
         <input
           type="checkbox"
           checked={value.anonymous}
@@ -55,7 +55,7 @@ export const PollSettingsFields = ({
         />
       </label>
       <label>
-        <span>Скрывать результаты до завершения</span>
+        <span>Скрыть итоги до завершения</span>
         <input
           type="checkbox"
           checked={value.hideResults}

@@ -1,0 +1,164 @@
+[WebServer] (node:54858) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:55104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 (6.0s)
+(node:55128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 (6.1s)
+(node:55152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 (6.5s)
+(node:55182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 (6.5s)
+
+
+  1) [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator: getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true })
+    Expected: in viewport
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeInViewport" getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true })
+
+
+      52 |     await search.fill('пицца');
+      53 |     const pizza = picker.getByRole('button', { name: 'Вставить: пицца', exact: true });
+    > 54 |     await expect(pizza).toBeInViewport({ ratio: 1 });
+         |                         ^
+      55 |     await pizza.click();
+      56 |     await expect(picker).toHaveCount(0);
+      57 |     await expect(target).toBeFocused();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/45-reaction-placement.spec.ts:54:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator: getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true })
+    Expected: in viewport
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeInViewport" getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Реакция', exact: true }).getByRole('button', { name: 'Вставить: пицца', exact: true })
+
+
+      52 |     await search.fill('пицца');
+      53 |     const pizza = picker.getByRole('button', { name: 'Вставить: пицца', exact: true });
+    > 54 |     await expect(pizza).toBeInViewport({ ratio: 1 });
+         |                         ^
+      55 |     await pizza.click();
+      56 |     await expect(picker).toHaveCount(0);
+      57 |     await expect(target).toBeFocused();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/45-reaction-placement.spec.ts:54:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 352
+    Received: 351.9999694824219
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      40 |     const picker = page.getByRole('dialog', { name: 'Реакция', exact: true });
+      41 |     await picker.getByRole('button', { name: 'Все эмодзи' }).click();
+    > 42 |     await expect.poll(async () => (await picker.boundingBox())?.height).toBe(352);
+         |                                                                         ^
+      43 |     const bubble = await target.boundingBox();
+      44 |     const panel = await picker.boundingBox();
+      45 |     const composer = await page.getByLabel('Сообщение', { exact: true }).boundingBox();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/45-reaction-placement.spec.ts:42:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../.cache/reaction-placement/results/45-reaction-placement-expa-fe5b2-w-a-near-top-message-at-390-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 352
+    Received: 351.9999694824219
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      40 |     const picker = page.getByRole('dialog', { name: 'Реакция', exact: true });
+      41 |     await picker.getByRole('button', { name: 'Все эмодзи' }).click();
+    > 42 |     await expect.poll(async () => (await picker.boundingBox())?.height).toBe(352);
+         |                                                                         ^
+      43 |     const bubble = await target.boundingBox();
+      44 |     const panel = await picker.boundingBox();
+      45 |     const composer = await page.getByLabel('Сообщение', { exact: true }).boundingBox();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/45-reaction-placement.spec.ts:42:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../.cache/reaction-placement/results/45-reaction-placement-expa-31fb6--a-near-top-message-at-1440-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 
+    [chromium] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 
+    [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 390 
+    [webkit] › tests/45-reaction-placement.spec.ts:9:3 › expanded reactions use the space below a near-top message at 1440 

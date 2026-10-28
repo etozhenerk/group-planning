@@ -45,13 +45,12 @@ export const TimeInput = ({
         placeholder="19:00"
         disabled={disabled}
         {...(invalid ? { validationState: 'invalid' as const } : {})}
-        endContent={
+        startContent={
           mobileSheet ? (
             <ChatIcon name="clock" size={designTokens.componentMobileFieldIconSize} />
-          ) : (
-            <Clock size={18} aria-hidden="true" />
-          )
+          ) : undefined
         }
+        endContent={mobileSheet ? undefined : <Clock size={18} aria-hidden="true" />}
         controlProps={{
           inputMode: 'numeric',
           maxLength: 5,

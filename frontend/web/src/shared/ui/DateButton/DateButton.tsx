@@ -1,9 +1,8 @@
 import { dateButtonLabel } from '@/shared/ui/DateButton/lib/dateButtonLabel';
-import { useRef } from 'react';
 import { Calendar } from 'lucide-react';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { DateCalendar } from '@/shared/ui/DateCalendar';
-import { usePopupLabel } from '@/shared/ui/DateButton/hooks/usePopupLabel';
+import { useDateButtonControl } from '@/shared/ui/DateButton/hooks/useDateButtonControl';
 import { Popup } from '@gravity-ui/uikit';
 import type { DateTime } from '@gravity-ui/date-utils';
 import styles from '@/shared/ui/DateButton/DateButton.module.css';
@@ -13,6 +12,7 @@ export type DateButtonProps = {
   mobileSheet?: boolean;
   label: string;
   value: DateTime | null;
+  weekday: boolean;
   today: DateTime | null;
   disabled: boolean;
   invalid: boolean;
@@ -27,6 +27,7 @@ export const DateButton = ({
   mobileSheet = false,
   label,
   value,
+  weekday,
   today,
   disabled,
   invalid,
@@ -35,13 +36,12 @@ export const DateButton = ({
   setOpen,
   change,
 }: DateButtonProps) => {
-  const button = useRef<HTMLButtonElement>(null);
-  const popupLabel = usePopupLabel('Выбрать дату');
+  const control = useDateButtonControl(setOpen);
 
   return (
     <>
       <button
-        ref={button}
+        ref={control.button}
         id={id}
         className={styles.button}
         data-sheet={mobileSheet}
@@ -53,17 +53,15 @@ export const DateButton = ({
         aria-invalid={invalid}
         disabled={disabled}
         onClick={() => setOpen(!open)}
-        onKeyDown={(event) => {
-          if (event.altKey && event.key === 'ArrowDown') {
-            event.preventDefault();
-            setOpen(true);
-          }
-        }}
+        onKeyDown={control.keyDown}
         data-date={value?.format('DD.MM.YYYY') ?? ''}
       >
-        <span id={`${id}-value`}>{dateButtonLabel(value, mobileSheet)}</span>
+        {mobileSheet && <ChatIcon name="calendar" />}
+        <span className={styles.value} id={`${id}-value`}>
+          {dateButtonLabel(value, mobileSheet, weekday)}
+        </span>
         {mobileSheet ? (
-          <ChatIcon name="calendar" />
+          <ChatIcon name="down" />
         ) : (
           <Calendar size={16} aria-hidden="true" />
         )}
@@ -71,16 +69,14 @@ export const DateButton = ({
       {open && (
         <Popup
           open={open}
-          anchorRef={button}
+          anchorRef={control.button}
           onOpenChange={setOpen}
           placement={['bottom-start', 'top-start']}
           modal
           disableTransition
-          returnFocus={button}
-          onEscapeKeyDown={() =>
-            requestAnimationFrame(() => button.current?.focus({ preventScroll: true }))
-          }
-          floatingRef={popupLabel}
+          returnFocus={control.button}
+          onEscapeKeyDown={control.restoreFocus}
+          floatingRef={control.popupLabel}
           role="dialog"
           className={styles.popup ?? ''}
         >

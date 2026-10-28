@@ -70,7 +70,7 @@ for (const width of [390, 1440]) {
     await expect(menu).toHaveAttribute('data-motion', 'open');
     await menu.getByRole('menuitem', { name: 'Предложить дату' }).click();
     await expect(
-      page.getByRole('dialog', { name: 'Предложить дату', exact: true }),
+      page.getByRole('dialog', { name: 'Новая дата встречи', exact: true }),
     ).toBeVisible();
     await expect(menu).toHaveAttribute('data-motion', 'closing');
     await expect(menu).toHaveAttribute('inert', '');
@@ -109,5 +109,59 @@ for (const width of [390, 1440]) {
     await expect(menu).toHaveCount(0);
     await expect(opener).toBeFocused();
     await page.screenshot({ path: test.info().outputPath('menu-reduced-closed.png') });
+  });
+}
+
+for (const width of [390, 1440]) {
+  test(`action exit retains its own title through the last frame at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await login(page, 'Саша');
+    const { meeting } = await apiCreate(page, 'Заголовок закрываемой панели');
+    await page.goto(`/meetings/${meeting.id}`);
+
+    for (const [action, title] of [
+      ['date', 'Новая дата встречи'],
+      ['place', 'Предложить место'],
+      ['task', 'Предложить задачу'],
+      ['photo', 'Отправить фото'],
+      ['file', 'Отправить файл'],
+    ] as const) {
+      await page.goto(`/meetings/${meeting.id}?action=${action}`);
+      const dialog = page.getByRole('dialog', { name: title, exact: true });
+      await expect(dialog).toHaveAttribute('data-motion', 'open');
+      await dialog.evaluate((element) => {
+        element.setAttribute('data-exit-probe', 'true');
+        const titles: string[] = [];
+        const observer = new MutationObserver(() => {
+          if (element.getAttribute('data-motion') === 'closing') {
+            titles.push(element.querySelector('h2')?.textContent ?? '');
+            element.setAttribute('data-exit-titles', titles.join('\n'));
+          }
+
+          if (!element.hasAttribute('open')) {
+            observer.disconnect();
+          }
+        });
+
+        observer.observe(element, {
+          subtree: true,
+          childList: true,
+          characterData: true,
+          attributes: true,
+          attributeFilter: ['open', 'data-motion'],
+        });
+      });
+      await dialog.getByRole('button', { name: 'Закрыть', exact: true }).click();
+      const closed = page.locator('[data-exit-probe="true"]');
+      await expect(closed).not.toBeVisible();
+      const observed = ((await closed.getAttribute('data-exit-titles')) ?? '')
+        .split('\n')
+        .filter(Boolean);
+
+      expect(observed.length).toBeGreaterThan(0);
+      expect(observed.every((value) => value === title)).toBe(true);
+    }
   });
 }

@@ -4,7 +4,7 @@ export type ConversationActionKind =
 export const actionTitle = (kind: ConversationActionKind) =>
   ({
     menu: 'Добавить к встрече',
-    date: 'Предложить дату',
+    date: 'Новая дата встречи',
     place: 'Предложить место',
     task: 'Предложить задачу',
     photo: 'Отправить фото',

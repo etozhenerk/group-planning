@@ -1,0 +1,17 @@
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Web создал встречу, отправил файл с подписью и фото, добавил снимок в общий альбом. iOS проверяет вложения и ставит реакцию.
+iOS готов; Android проверяет вложения, реакцию, общий альбом и отвечает.
+Web получил сообщения и реакции обеих платформ; iOS меняет ответ и теряет доступ к чату.
+Traceback (most recent call last):
+  File "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-28-web-resume/cross-runner.py", line 158, in <module>
+    main()
+  File "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-28-web-resume/cross-runner.py", line 139, in main
+    command(ios_args + ["-resultBundlePath", str(results / "ios-withdraw.xcresult"), "-only-testing:SomewhereUITests/CrossPlatformUITests/testReceiveAndroidAndWithdraw"],
+  File "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-10-28-web-resume/cross-runner.py", line 32, in command
+    subprocess.run(args, cwd=cwd, env=env, stdout=output, stderr=subprocess.STDOUT,
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['xcodebuild', '-jobs', '2', '-xctestrun', '/var/folders/mj/30709_f96b1_dvpsfcrqq8fm0000gn/T/somewhere-cross-f6udxhw1/cross.xctestrun', '-destination', 'platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109', '-parallel-testing-enabled', 'NO', 'test-without-building', '-resultBundlePath', '/Users/misha/Documents/Codex/projects/group-planning/.cache/qa/web-resume-private/cross-run03/ios-withdraw.xcresult', '-only-testing:SomewhereUITests/CrossPlatformUITests/testReceiveAndroidAndWithdraw']' returned non-zero exit status 65.

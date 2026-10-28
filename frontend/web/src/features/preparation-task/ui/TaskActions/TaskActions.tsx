@@ -1,4 +1,3 @@
-import { useMobileLayout } from '@/shared/lib/media';
 import type { PreparationAction } from '@/entities/meeting';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import type { useTaskControls } from '@/features/preparation-task/model/useTaskControls';
@@ -11,7 +10,6 @@ export type TaskActionsProps = {
 };
 
 export const TaskActions = ({ controls, inline = false, confirm }: TaskActionsProps) => {
-  const mobile = useMobileLayout();
   const visible = controls.actions.filter(
     ({ action }) => !inline || action === 'accept' || action === 'complete',
   );
@@ -25,7 +23,7 @@ export const TaskActions = ({ controls, inline = false, confirm }: TaskActionsPr
   };
 
   return (
-    <div className={styles.container} data-inline={inline} data-mobile={mobile}>
+    <div className={styles.container} data-inline={inline}>
       <div className={styles.actions}>
         {visible.map(({ action, label }) => (
           <button
