@@ -100,13 +100,11 @@ func TestCrossPlatformFixture(t *testing.T) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Cache-Control", "no-store")
 		w.Header().Set("Referrer-Policy", "no-referrer")
-		values := struct{ Sasha, Lena, Cancel string }{
-			Sasha: callback("sasha"),
-			Lena:  callback("lena"),
-			Cancel: "/api/v1/auth/yandex/callback?" + url.Values{
+		values := crossPlatformProviderValues(callback,
+			"/api/v1/auth/yandex/callback?"+url.Values{
 				"state": {state}, "error": {"access_denied"},
 			}.Encode(),
-		}
+		)
 		if err := providerPage.Execute(w, values); err != nil {
 			return
 		}

@@ -1,0 +1,885 @@
+{
+  "schemaVersion": 1,
+  "planHash": "6b899cb98534c1f13c462a4f491df7b64188c7b38782f2b7f0e21c9fbd745109",
+  "checks": [
+    {
+      "id": "TC-CHAT-READ-STATE-068DA926/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Свежий HTTPS PUT 150→140→150 сохранил 150 и projection_version. Последующий sync пуст, list unread=0, canonical receipt=1. Ошибка второго hint откатывает marker/journal/outbox; повтор через 60 секунд не создаёт изменений.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-99A5AEEE/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Невалидные read positions и beyond-tail отклонены (422), outsider/revoked actor не получает состояние (403). Sparse fixture сохранил MaxUint64, lower retry >2^53 не откатил actual; gaps/system/zero отклонены.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-284DD6EE/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Unread 2→1→0; first_unread перемещается между двумя чужими сообщениями и исчезает после чтения. Own/system/poll/reaction не увеличили count.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-8A47BDBD/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Обе свежие 10k activation race попытки дали tail/baseline=10003, actual=0, unread=0, receipt=0. Авторизованное первое чтение legacy создаёт стабильный epoch один раз без journal/hints; forbidden/invalid/continuation stream не создали, revoke до и после init закрывает доступ.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-5869F951/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Join третьего участника после старой истории не увеличил receipt count; только отдельный actual PUT добавил его к прочитавшим. Baseline и actual разделены.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-51E51F41/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "После withdraw/new foreign rows/rejoin actual сохранён, unread=98 и first_unread у новой доступной записи; list согласован. Две повторные активации не сбрасывают baseline/actual.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-EC05E2CA/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "103 readers → текущие 101 после revoke/delete, страницы 50/50/1. Автор/вышедший/удалённый исключены. HTTP saved cursor после удаления не возвращает удалённого пользователя; current count обновлён.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-E32551D3/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "До actual marker список пуст; неавтор/outsider/mixed foreign запрещены. 100 ID приняты, 101 и mixed-case duplicate дают 422; uppercase UUID нормализован с count=1.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:54:06.290651+00:00",
+      "actual": "Memory/sparse uint64/copy/rollback/cancel и SQL bounded plans прошли. Все 54 свежих feed p95 измерения на 1k/10k/100k при limit 1/50/100: 0.321–2.803 ms ≤100 ms. Штатный cleanup каждой истории успешен. Дополнительно 100001 sparse/MaxUint64 deletion rollback+commit сохранил другую встречу, max batch=1000, max statement=10.479 ms; прежняя ошибка удаления не воспроизвелась.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        },
+        {
+          "path": "sql/sql-live.log",
+          "kind": "log",
+          "sha256": "f53a1c745dea7a14cc3d0b105607bb4e0c6ae624b8f19543bf7618d3e443d680"
+        },
+        {
+          "path": "sql/receipt.json",
+          "kind": "raw",
+          "sha256": "81a76b137575562da371d3ae4e5e4a47634ba50ded588f5cb5c34c1fc50aae7d"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-791FF479/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Свежие cookie/native WS auth успешны; foreign/duplicate Origin и неоднозначные credentials отклонены; spoofed connect identity и чужой channel запрещены. Cookie HTTP mutation без CSRF отклонена. Токены не передаются в URL.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-0E0CB54C/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Revoke и TTL=2s закрыли активный WS 3503; late committed hint не восстановил доступ. После закрытия protected HTTP и reconnect возвращают 401; диагностика не содержит credentials.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-1DC708F2/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "После hint HTTP заблокирован перед snapshot, затем committed RSVP revoke. Отпущенный HTTP получил 403, WS unsubscribe 2003; read/feed/send 403 и recovery 103 без private payload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-6DD0CC09/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "До закрытия скрытого опроса guest projection не содержит чужие MyOptionIDs/votes/voters. После close старой карточки разрешённый итог доступен. Journal/hints не содержат текста/имени/invitation; read state считает только сообщения.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-A91C53BB/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T08:00:23.656081+00:00",
+      "finishedAt": "2026-10-28T08:00:23.656081+00:00",
+      "actual": "Свежая сверка документации сохраняет разграничение: существующий age backup job описан с историческим evidence, disk encryption/key lifecycle и restore этого кандидата не подтверждены. Этот backend-run не делал restore и не заявляет E2EE/backup protection pass.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "security-audit.json",
+          "kind": "raw",
+          "sha256": "c2b1e42256957efd2a0118f565d645ade4d17ebac72ca879d0df73139a3c9701"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-BDBF283F/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "В свежих timeout/reconnect/reset/read500/panic500/write500 paths synthetic body/error/credential/cursor markers отсутствуют в logs/error envelopes/journal/outbox; безопасные request_id/status/duration сохранены. Отклонённый query token (400) не попал в logs. Клиентское хранилище вне backend scope.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-A3B3BFE7/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:54:06.290651+00:00",
+      "actual": "На собственной SQL DB HTTP DELETE /me с активным WS закрыл owner/guest 3503, удалил marker и адресные hints, replay вернул current anonymized author и history_invalidated. Полное удаление встречи убрало stream/feed; новый process PID60774 доставил terminal access_revoked, acknowledged=3, без текста/token.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        },
+        {
+          "path": "sql/sql-live.log",
+          "kind": "log",
+          "sha256": "f53a1c745dea7a14cc3d0b105607bb4e0c6ae624b8f19543bf7618d3e443d680"
+        },
+        {
+          "path": "sql/receipt.json",
+          "kind": "raw",
+          "sha256": "81a76b137575562da371d3ae4e5e4a47634ba50ded588f5cb5c34c1fc50aae7d"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-5EFD24A6/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Close worker обновил старую poll-card без нового сообщения. Replay после account removal использует текущее RemovedAccountName и history_invalidated. Проверены серверные projections; client merge отдельно.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-BC07BEB1/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Snapshot→commit→subscribe gap восстановил запись ровно один раз. Controlled offline=300s + fixture history expiration: 100 ID без дублей/дыр, RTT150ms recovery=633.87775ms ≤2s. При recovered=true клиент протокола всё равно сделал HTTP catch-up. Это управляемое время и Go protocol client, не 5 минут wall-time/рендер нативного приложения.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-AA76CADB/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:54:06.290651+00:00",
+      "actual": "Новый SQL process PID60753 exited73 после commit; API PID60758 вернул 200/delta1. PID60763 exited74 после publish event09a3452e-e3eb-45e0-bb93-c4fa405b89b4; PID60768 без NOTIFY повторил тот же event и acknowledged/deleted=4. Rollback атомарен; lease/retry/retention и slow-consumer recoverable paths прошли.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        },
+        {
+          "path": "sql/sql-live.log",
+          "kind": "log",
+          "sha256": "f53a1c745dea7a14cc3d0b105607bb4e0c6ae624b8f19543bf7618d3e443d680"
+        },
+        {
+          "path": "sql/receipt.json",
+          "kind": "raw",
+          "sha256": "81a76b137575562da371d3ae4e5e4a47634ba50ded588f5cb5c34c1fc50aae7d"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-F6CFB5E9/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Malformed cursor даёт 400 invalid_sync_cursor; trimmed/expired/epoch-old cursor даёт 410 sync_reset_required с request_id, fresh snapshot сохраняет историю. Revoked actor запрещён до parse; SQL retention не удаляет feed.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-14D92D7D/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "Свежий HTTPS repeat после потерянного ACK и 31d receipt expiry вернул тот же entry ID/sequence (201), changed body — 409. Actor scope независим, revoke запрещает retry. Client ACK validation вне этого прохода.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:54:06.290651+00:00",
+      "actual": "10k Store с запретом полного Feed: text/photo/file и legacy captionless retries до/после31d сохранили ID/sequence/attachment. Изменённое намерение и revoke отклонены, attachment copy независима. SQL entry/intent lookup и rollback на 1k/10k/100k прошли; прежний cleanup failure теперь отсутствует.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        },
+        {
+          "path": "sql/sql-live.log",
+          "kind": "log",
+          "sha256": "f53a1c745dea7a14cc3d0b105607bb4e0c6ae624b8f19543bf7618d3e443d680"
+        },
+        {
+          "path": "sql/receipt.json",
+          "kind": "raw",
+          "sha256": "81a76b137575562da371d3ae4e5e4a47634ba50ded588f5cb5c34c1fc50aae7d"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-THROUGH/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:53:02.490122+00:00",
+      "actual": "105 changes прочитаны как страницы 100/5 с fixed T. Concurrent T+1 не попал в этот цикл; retry последней страницы даёт тот же cursor/count, следующий цикл получает ровно T+1. Atomic client merge не оценивался.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-CAPABILITIES/chat-api-cleanup-r1/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/backend_independent_resume"
+      },
+      "startedAt": "2026-10-28T07:47:09.358619+00:00",
+      "finishedAt": "2026-10-28T07:54:06.290651+00:00",
+      "actual": "Собственный test-only writer без journal + явная epoch rotation: старый HTTP cursor 410, новый snapshot сохранил interval message и историю. Disabled capabilities вернули sync=false/read_state=false, legacy feed200/send+retry201 с прежним ID/sequence. Это schema-compatible fallback, не запуск старого production binary или downgrade схемы.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "interaction.json",
+          "kind": "interaction",
+          "sha256": "cb3d8f41ccf3cbb2ca789c2f2b2d93ecfb342ea119a11936a807526927dd9c39"
+        },
+        {
+          "path": "source-integrity.json",
+          "kind": "raw",
+          "sha256": "7feaea442603cbb35279fa1918d70f0c2cdaf823a7d49a155f279140096a2256"
+        },
+        {
+          "path": "runtime.jsonl",
+          "kind": "log",
+          "sha256": "619809e9ee2fbcca0a1f219fb6daea1df1fcd35dc7b716db41d4a174ea551c3f"
+        },
+        {
+          "path": "supplement.jsonl",
+          "kind": "log",
+          "sha256": "ed9ef7059358ce4824b95aac6788b9f60b72cfd46c7e2925d0f4c90c5bef7791"
+        },
+        {
+          "path": "sql/sql-live.log",
+          "kind": "log",
+          "sha256": "f53a1c745dea7a14cc3d0b105607bb4e0c6ae624b8f19543bf7618d3e443d680"
+        },
+        {
+          "path": "sql/receipt.json",
+          "kind": "raw",
+          "sha256": "81a76b137575562da371d3ae4e5e4a47634ba50ded588f5cb5c34c1fc50aae7d"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-10-28T07:46:29.194Z",
+      "finishedAt": "2026-10-28T07:47:08.066Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793173589195.txt",
+          "kind": "log",
+          "sha256": "d48d9082a3e29cbf272ad04b0d21c693ab44bd4819eb757750a43f73d961e7d3"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,934 @@
+{"database": "somewhere_integration", "createdForThisRun": true, "marker": "codex-chat-repeat-d972385683384236bfb5951feffa0230"}
+=== RUN   TestMeetingDeletionLargeHistoryIntegration
+    account_removal_feed_test.go:159: history=100001 sparse/max_uint64 rollback+commit batches=202 max_rows=1000 max_statement_ms=12.476
+--- PASS: TestMeetingDeletionLargeHistoryIntegration (13.08s)
+=== RUN   TestChatDispatchPendingIndexIntegration
+    chat_dispatch_plan_test.go:54: outbox=5000 active_leases=100 bounded_ready_rows=100
+--- PASS: TestChatDispatchPendingIndexIntegration (0.22s)
+=== RUN   TestChatDispatchLeaseRollbackRecoveryIntegration
+--- PASS: TestChatDispatchLeaseRollbackRecoveryIntegration (0.06s)
+=== RUN   TestChatDispatchElapsedRetryIntegration
+--- PASS: TestChatDispatchElapsedRetryIntegration (0.05s)
+=== RUN   TestChatJournalAtomicRangeIntegration
+--- PASS: TestChatJournalAtomicRangeIntegration (0.07s)
+=== RUN   TestChatAccountOutboxIntegration
+--- PASS: TestChatAccountOutboxIntegration (0.06s)
+=== RUN   TestChatMigrationPreservesLegacyMeetingIntegration
+--- PASS: TestChatMigrationPreservesLegacyMeetingIntegration (1.22s)
+=== RUN   TestChatJournalBoundedQueryPlanIntegration
+    chat_plan_test.go:74: history=100000 after=0 execution_ms=0.486 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=50000 execution_ms=0.481 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=100000 execution_ms=0.050 scans=1 budget_rows=101
+--- PASS: TestChatJournalBoundedQueryPlanIntegration (4.28s)
+=== RUN   TestChatReadState100kPlanIntegration
+    chat_read_plan_test.go:41: activation history=100000 current_members=3 elapsed_ms=5.740
+    chat_read_plan_test.go:130: history=100000 query=unread-count execution_ms=50.178 feed_row_budget=100000 plan=[
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 985.29,
+              "Total Cost": 985.30,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Startup Time": 50.157,
+              "Actual Total Time": 50.158,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Shared Hit Blocks": 7795,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Index Only Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Scan Direction": "Forward",
+                  "Index Name": "feed_unread_messages",
+                  "Relation Name": "feed_entries",
+                  "Alias": "feed_entries",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 984.04,
+                  "Plan Rows": 500,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.033,
+                  "Actual Total Time": 43.773,
+                  "Actual Rows": 100000,
+                  "Actual Loops": 1,
+                  "Index Cond": "((meeting_id = 'chat-bf712ead340e2addf7a808ff'::text) AND (sequence > '0'::numeric))",
+                  "Rows Removed by Index Recheck": 0,
+                  "Filter": "(actor_id <> 'chat-bf712ead340e2addf7a808ff-guest'::text)",
+                  "Rows Removed by Filter": 0,
+                  "Heap Fetches": 100000,
+                  "Shared Hit Blocks": 7795,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.128,
+            "Triggers": [
+            ],
+            "Execution Time": 50.178
+          }
+        ]
+    chat_read_plan_test.go:130: history=100000 query=first-unread execution_ms=0.038 feed_row_budget=1 plan=[
+          {
+            "Plan": {
+              "Node Type": "Limit",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0.42,
+              "Total Cost": 2.38,
+              "Plan Rows": 1,
+              "Plan Width": 41,
+              "Actual Startup Time": 0.023,
+              "Actual Total Time": 0.024,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Index Only Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Scan Direction": "Forward",
+                  "Index Name": "feed_unread_messages",
+                  "Relation Name": "feed_entries",
+                  "Alias": "feed_entries",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 984.04,
+                  "Plan Rows": 500,
+                  "Plan Width": 41,
+                  "Actual Startup Time": 0.023,
+                  "Actual Total Time": 0.023,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "((meeting_id = 'chat-bf712ead340e2addf7a808ff'::text) AND (sequence > '0'::numeric))",
+                  "Rows Removed by Index Recheck": 0,
+                  "Filter": "(actor_id <> 'chat-bf712ead340e2addf7a808ff-guest'::text)",
+                  "Rows Removed by Filter": 0,
+                  "Heap Fetches": 1,
+                  "Shared Hit Blocks": 4,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.137,
+            "Triggers": [
+            ],
+            "Execution Time": 0.038
+          }
+        ]
+    chat_read_plan_test.go:130: history=100000 query=receipts-100 execution_ms=0.996 feed_row_budget=100 plan=[
+          {
+            "Plan": {
+              "Node Type": "Nested Loop",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Join Type": "Inner",
+              "Startup Cost": 0.42,
+              "Total Cost": 3407.50,
+              "Plan Rows": 100,
+              "Plan Width": 40,
+              "Actual Startup Time": 0.069,
+              "Actual Total Time": 0.921,
+              "Actual Rows": 100,
+              "Actual Loops": 1,
+              "Inner Unique": false,
+              "Shared Hit Blocks": 500,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Function Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Function Name": "unnest",
+                  "Alias": "requested",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 1.00,
+                  "Plan Rows": 100,
+                  "Plan Width": 40,
+                  "Actual Startup Time": 0.021,
+                  "Actual Total Time": 0.031,
+                  "Actual Rows": 100,
+                  "Actual Loops": 1,
+                  "Shared Hit Blocks": 0,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                },
+                {
+                  "Node Type": "Subquery Scan",
+                  "Parent Relationship": "Inner",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Alias": "f",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 8.46,
+                  "Plan Rows": 1,
+                  "Plan Width": 41,
+                  "Actual Startup Time": 0.005,
+                  "Actual Total Time": 0.005,
+                  "Actual Rows": 1,
+                  "Actual Loops": 100,
+                  "Filter": "((f.meeting_id = 'chat-bf712ead340e2addf7a808ff'::text) AND (f.actor_id = 'chat-bf712ead340e2addf7a808ff-owner'::text) AND (f.kind = 'message'::text))",
+                  "Rows Removed by Filter": 0,
+                  "Shared Hit Blocks": 400,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0,
+                  "Plans": [
+                    {
+                      "Node Type": "Limit",
+                      "Parent Relationship": "Subquery",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Startup Cost": 0.42,
+                      "Total Cost": 8.44,
+                      "Plan Rows": 1,
+                      "Plan Width": 139,
+                      "Actual Startup Time": 0.004,
+                      "Actual Total Time": 0.005,
+                      "Actual Rows": 1,
+                      "Actual Loops": 100,
+                      "Shared Hit Blocks": 400,
+                      "Shared Read Blocks": 0,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 0,
+                      "Temp Written Blocks": 0,
+                      "Plans": [
+                        {
+                          "Node Type": "Index Scan",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Scan Direction": "Forward",
+                          "Index Name": "feed_entries_pkey",
+                          "Relation Name": "feed_entries",
+                          "Alias": "feed_entries",
+                          "Startup Cost": 0.42,
+                          "Total Cost": 8.44,
+                          "Plan Rows": 1,
+                          "Plan Width": 139,
+                          "Actual Startup Time": 0.004,
+                          "Actual Total Time": 0.004,
+                          "Actual Rows": 1,
+                          "Actual Loops": 100,
+                          "Index Cond": "(id = requested.id)",
+                          "Rows Removed by Index Recheck": 0,
+                          "Shared Hit Blocks": 400,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Node Type": "Aggregate",
+                  "Strategy": "Plain",
+                  "Partial Mode": "Simple",
+                  "Parent Relationship": "SubPlan",
+                  "Subplan Name": "SubPlan 3",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 25.59,
+                  "Total Cost": 25.60,
+                  "Plan Rows": 1,
+                  "Plan Width": 8,
+                  "Actual Startup Time": 0.002,
+                  "Actual Total Time": 0.002,
+                  "Actual Rows": 1,
+                  "Actual Loops": 100,
+                  "Shared Hit Blocks": 100,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0,
+                  "Plans": [
+                    {
+                      "Node Type": "Nested Loop",
+                      "Parent Relationship": "Outer",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Join Type": "Anti",
+                      "Startup Cost": 0.30,
+                      "Total Cost": 25.59,
+                      "Plan Rows": 1,
+                      "Plan Width": 0,
+                      "Actual Startup Time": 0.001,
+                      "Actual Total Time": 0.001,
+                      "Actual Rows": 0,
+                      "Actual Loops": 100,
+                      "Inner Unique": false,
+                      "Shared Hit Blocks": 100,
+                      "Shared Read Blocks": 0,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 0,
+                      "Temp Written Blocks": 0,
+                      "Plans": [
+                        {
+                          "Node Type": "Nested Loop",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Join Type": "Inner",
+                          "Startup Cost": 0.15,
+                          "Total Cost": 17.41,
+                          "Plan Rows": 1,
+                          "Plan Width": 35,
+                          "Actual Startup Time": 0.001,
+                          "Actual Total Time": 0.001,
+                          "Actual Rows": 0,
+                          "Actual Loops": 100,
+                          "Inner Unique": true,
+                          "Join Filter": "((m.organizer_id = r.user_id) OR (SubPlan 1))",
+                          "Rows Removed by Join Filter": 0,
+                          "Shared Hit Blocks": 100,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0,
+                          "Plans": [
+                            {
+                              "Node Type": "Seq Scan",
+                              "Parent Relationship": "Outer",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Relation Name": "meeting_read_markers",
+                              "Alias": "r",
+                              "Startup Cost": 0.00,
+                              "Total Cost": 1.05,
+                              "Plan Rows": 1,
+                              "Plan Width": 65,
+                              "Actual Startup Time": 0.001,
+                              "Actual Total Time": 0.001,
+                              "Actual Rows": 0,
+                              "Actual Loops": 100,
+                              "Filter": "((user_id <> 'chat-bf712ead340e2addf7a808ff-owner'::text) AND (read_through_sequence >= f.sequence) AND (meeting_id = 'chat-bf712ead340e2addf7a808ff'::text))",
+                              "Rows Removed by Filter": 3,
+                              "Shared Hit Blocks": 100,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            },
+                            {
+                              "Node Type": "Index Scan",
+                              "Parent Relationship": "Inner",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Scan Direction": "Forward",
+                              "Index Name": "meetings_pkey",
+                              "Relation Name": "meetings",
+                              "Alias": "m",
+                              "Startup Cost": 0.15,
+                              "Total Cost": 8.17,
+                              "Plan Rows": 1,
+                              "Plan Width": 64,
+                              "Actual Startup Time": 0.000,
+                              "Actual Total Time": 0.000,
+                              "Actual Rows": 0,
+                              "Actual Loops": 0,
+                              "Index Cond": "(id = 'chat-bf712ead340e2addf7a808ff'::text)",
+                              "Rows Removed by Index Recheck": 0,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            },
+                            {
+                              "Node Type": "Index Scan",
+                              "Parent Relationship": "SubPlan",
+                              "Subplan Name": "SubPlan 1",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Scan Direction": "Forward",
+                              "Index Name": "rsvps_user",
+                              "Relation Name": "rsvps",
+                              "Alias": "v",
+                              "Startup Cost": 0.15,
+                              "Total Cost": 8.18,
+                              "Plan Rows": 1,
+                              "Plan Width": 0,
+                              "Actual Startup Time": 0.000,
+                              "Actual Total Time": 0.000,
+                              "Actual Rows": 0,
+                              "Actual Loops": 0,
+                              "Index Cond": "((user_id = r.user_id) AND (meeting_id = r.meeting_id))",
+                              "Rows Removed by Index Recheck": 0,
+                              "Filter": "((document ->> 'Answer'::text) = 'going'::text)",
+                              "Rows Removed by Filter": 0,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            }
+                          ]
+                        },
+                        {
+                          "Node Type": "Index Only Scan",
+                          "Parent Relationship": "Inner",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Scan Direction": "Forward",
+                          "Index Name": "removed_meeting_users_pkey",
+                          "Relation Name": "removed_meeting_users",
+                          "Alias": "removed",
+                          "Startup Cost": 0.15,
+                          "Total Cost": 8.17,
+                          "Plan Rows": 1,
+                          "Plan Width": 32,
+                          "Actual Startup Time": 0.000,
+                          "Actual Total Time": 0.000,
+                          "Actual Rows": 0,
+                          "Actual Loops": 0,
+                          "Index Cond": "(user_id = r.user_id)",
+                          "Rows Removed by Index Recheck": 0,
+                          "Heap Fetches": 0,
+                          "Shared Hit Blocks": 0,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.649,
+            "Triggers": [
+            ],
+            "Execution Time": 0.996
+          }
+        ]
+    chat_read_plan_test.go:154: history=100000 query=unread samples=20 p95_ms=50.465 budget_ms=100
+    chat_read_plan_test.go:154: history=100000 query=receipts samples=20 p95_ms=1.609 budget_ms=100
+--- PASS: TestChatReadState100kPlanIntegration (24.53s)
+=== RUN   TestChatReadStateAtomicIntegration
+--- PASS: TestChatReadStateAtomicIntegration (0.06s)
+=== RUN   TestChatRetentionAndSyncIntegration
+--- PASS: TestChatRetentionAndSyncIntegration (0.08s)
+=== RUN   TestChatLegacyStreamInitializationIntegration
+--- PASS: TestChatLegacyStreamInitializationIntegration (0.03s)
+=== RUN   TestFeedBoundedQueryPlansIntegration
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/initial
+    feed_plan_test.go:121: history=1000 query=initial planning_ms=0.236 execution_ms=0.050 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/after
+    feed_plan_test.go:121: history=1000 query=after planning_ms=0.096 execution_ms=0.053 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/before
+    feed_plan_test.go:121: history=1000 query=before planning_ms=0.080 execution_ms=0.048 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/empty-tail
+    feed_plan_test.go:121: history=1000 query=empty-tail planning_ms=0.052 execution_ms=0.017 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/tail
+    feed_plan_test.go:121: history=1000 query=tail planning_ms=0.090 execution_ms=0.040 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/entry
+    feed_plan_test.go:121: history=1000 query=entry planning_ms=0.056 execution_ms=0.023 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/intent
+    feed_plan_test.go:121: history=1000 query=intent planning_ms=0.096 execution_ms=0.022 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/initial
+    feed_plan_test.go:121: history=10000 query=initial planning_ms=0.218 execution_ms=0.051 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/after
+    feed_plan_test.go:121: history=10000 query=after planning_ms=0.079 execution_ms=0.054 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/before
+    feed_plan_test.go:121: history=10000 query=before planning_ms=0.053 execution_ms=0.043 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/empty-tail
+    feed_plan_test.go:121: history=10000 query=empty-tail planning_ms=0.074 execution_ms=0.017 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/tail
+    feed_plan_test.go:121: history=10000 query=tail planning_ms=0.085 execution_ms=0.051 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/entry
+    feed_plan_test.go:121: history=10000 query=entry planning_ms=0.070 execution_ms=0.026 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/intent
+    feed_plan_test.go:121: history=10000 query=intent planning_ms=0.061 execution_ms=0.019 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/initial
+    feed_plan_test.go:121: history=100000 query=initial planning_ms=0.252 execution_ms=0.088 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/after
+    feed_plan_test.go:121: history=100000 query=after planning_ms=0.101 execution_ms=0.056 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/before
+    feed_plan_test.go:121: history=100000 query=before planning_ms=0.063 execution_ms=0.045 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/empty-tail
+    feed_plan_test.go:121: history=100000 query=empty-tail planning_ms=0.074 execution_ms=0.025 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/tail
+    feed_plan_test.go:121: history=100000 query=tail planning_ms=0.067 execution_ms=0.055 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/entry
+    feed_plan_test.go:121: history=100000 query=entry planning_ms=0.080 execution_ms=0.023 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/intent
+    feed_plan_test.go:121: history=100000 query=intent planning_ms=0.087 execution_ms=0.022 feed_scans=1 budget_rows=1
+--- PASS: TestFeedBoundedQueryPlansIntegration (41.99s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/1000 (0.12s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/10000 (1.52s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/100000 (40.35s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/intent (0.00s)
+=== RUN   TestFeedWindowIntegration
+=== RUN   TestFeedWindowIntegration/initial
+=== RUN   TestFeedWindowIntegration/after-zero
+=== RUN   TestFeedWindowIntegration/after-gap
+=== RUN   TestFeedWindowIntegration/after-high
+=== RUN   TestFeedWindowIntegration/after-max
+=== RUN   TestFeedWindowIntegration/before-max
+=== RUN   TestFeedWindowIntegration/before-gap
+=== RUN   TestFeedWindowIntegration/before-zero
+--- PASS: TestFeedWindowIntegration (1.15s)
+    --- PASS: TestFeedWindowIntegration/initial (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-zero (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-high (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-zero (0.00s)
+=== RUN   TestFeedWindowSnapshotRollbackIntegration
+--- PASS: TestFeedWindowSnapshotRollbackIntegration (0.05s)
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/1000
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=1 samples=20 p95_ms=0.791 max_ms=1.586 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=1 samples=20 p95_ms=0.476 max_ms=0.653 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=1 samples=20 p95_ms=0.322 max_ms=0.422 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=1 samples=20 p95_ms=0.472 max_ms=0.651 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=1 samples=20 p95_ms=0.462 max_ms=0.489 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=1 samples=20 p95_ms=0.803 max_ms=0.974 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=50 samples=20 p95_ms=0.623 max_ms=0.762 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=50 samples=20 p95_ms=0.902 max_ms=1.178 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=50 samples=20 p95_ms=0.356 max_ms=0.411 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=50 samples=20 p95_ms=0.452 max_ms=0.467 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=50 samples=20 p95_ms=0.635 max_ms=0.639 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=50 samples=20 p95_ms=1.373 max_ms=1.556 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=100 samples=20 p95_ms=0.863 max_ms=1.725 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=100 samples=20 p95_ms=1.053 max_ms=1.503 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=100 samples=20 p95_ms=0.409 max_ms=0.481 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=100 samples=20 p95_ms=0.381 max_ms=0.447 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=100 samples=20 p95_ms=1.020 max_ms=1.551 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=100 samples=20 p95_ms=2.344 max_ms=3.332 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.868 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=1.299 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.478 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.238 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.214 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.264 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.395 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.394 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.522 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=16.428 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=1.123 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/10000
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=431.982 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=194.545 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=288.966 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=148.818 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=196.466 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=328.166 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=123.303 command="ANALYZE" SQLSTATE="" error_type=<nil> sql="ANALYZE feed_entries"
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration/10000
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=1 samples=20 p95_ms=0.495 max_ms=1.338 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=1 samples=20 p95_ms=0.484 max_ms=0.491 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=1 samples=20 p95_ms=0.394 max_ms=0.408 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=1 samples=20 p95_ms=0.432 max_ms=0.485 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=1 samples=20 p95_ms=0.397 max_ms=0.463 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=1 samples=20 p95_ms=0.742 max_ms=1.019 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=50 samples=20 p95_ms=0.959 max_ms=1.121 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=50 samples=20 p95_ms=0.610 max_ms=0.621 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=50 samples=20 p95_ms=0.386 max_ms=0.391 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=50 samples=20 p95_ms=0.433 max_ms=0.443 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=50 samples=20 p95_ms=0.897 max_ms=1.224 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=50 samples=20 p95_ms=1.426 max_ms=1.880 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=100 samples=20 p95_ms=1.110 max_ms=1.172 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=100 samples=20 p95_ms=0.936 max_ms=1.661 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=100 samples=20 p95_ms=0.391 max_ms=0.422 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=100 samples=20 p95_ms=0.425 max_ms=0.461 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=100 samples=20 p95_ms=1.265 max_ms=1.422 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=100 samples=20 p95_ms=1.922 max_ms=2.731 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.517 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.519 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.178 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.109 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.100 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.140 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.141 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.115 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.135 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.556 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.526 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.616 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.626 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.893 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.346 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.490 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.456 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.332 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.521 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.389 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/100000
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=147.986 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=169.774 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=317.651 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=171.680 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=200.086 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=151.655 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=183.709 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=189.468 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=305.662 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=299.280 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=204.268 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=149.135 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=105.812 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=102.898 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=180.114 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=290.485 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=145.323 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=161.812 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=288.762 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=283.352 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=154.426 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=175.639 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=170.825 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=299.037 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=113.342 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=139.174 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=168.224 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=321.169 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=257.716 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=174.927 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=114.895 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=1940.666 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=151.516 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=236.728 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=138.718 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=138.002 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=138.913 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=173.894 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=101.736 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=302.466 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=229.747 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=260.031 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=205.262 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=139.140 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=139.424 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=217.863 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=228.324 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=136.355 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=118.756 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=174.810 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=174.226 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=141.445 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=140.060 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=143.922 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=118.785 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=140.137 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=130.863 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=149.949 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=112.417 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=139.294 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=146.464 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=173.616 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=220.902 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=201.157 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=283.909 command="ANALYZE" SQLSTATE="" error_type=<nil> sql="ANALYZE feed_entries"
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration/100000
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=1 samples=20 p95_ms=0.535 max_ms=1.114 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=1 samples=20 p95_ms=0.419 max_ms=0.469 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=1 samples=20 p95_ms=0.347 max_ms=0.361 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=1 samples=20 p95_ms=0.365 max_ms=0.379 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=1 samples=20 p95_ms=0.407 max_ms=0.433 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=1 samples=20 p95_ms=0.753 max_ms=0.845 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=50 samples=20 p95_ms=0.877 max_ms=1.082 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=50 samples=20 p95_ms=0.620 max_ms=0.674 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=50 samples=20 p95_ms=0.396 max_ms=0.491 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=50 samples=20 p95_ms=0.390 max_ms=0.492 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=50 samples=20 p95_ms=0.843 max_ms=1.071 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=50 samples=20 p95_ms=1.355 max_ms=1.950 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=100 samples=20 p95_ms=1.105 max_ms=1.409 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=100 samples=20 p95_ms=1.155 max_ms=1.305 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=100 samples=20 p95_ms=0.351 max_ms=0.371 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=100 samples=20 p95_ms=0.379 max_ms=0.394 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=100 samples=20 p95_ms=0.983 max_ms=1.940 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=100 samples=20 p95_ms=2.274 max_ms=2.379 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.141 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.532 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.128 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.134 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.104 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.186 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.114 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.104 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.093 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.446 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.316 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.590 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.553 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.394 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.770 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=11.336 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=11.440 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=7.250 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.447 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.993 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.808 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.316 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.683 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.257 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.571 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.531 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.470 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.554 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.688 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.615 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.688 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.693 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.420 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.637 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.739 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.492 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=817.613 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=10.494 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.797 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.641 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.711 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.553 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.586 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.812 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=7.298 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.854 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.884 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.735 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.990 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.847 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=1192.157 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.807 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.673 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.955 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.940 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=11.096 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.818 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.305 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.387 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.462 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.423 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.319 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.388 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.335 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.738 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.380 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.357 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.087 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.567 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.173 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.334 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.338 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.183 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.121 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.843 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.357 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.171 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.153 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.658 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.136 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.564 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.266 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=8.144 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.700 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.538 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.204 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.263 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.117 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.377 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.820 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.390 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.357 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.715 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=662.284 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=8.400 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.260 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.756 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.430 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.527 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.294 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.421 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.659 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.228 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.200 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.513 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.348 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.585 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.236 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.328 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries\n\t\t WHERE meeting_id=$1 AND sequence>$2::text::numeric AND sequence<=$3::text::numeric"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.350 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=362.082 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+--- PASS: TestIndependentRepeatFeedSQLLatencyIntegration (24.60s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/1000 (0.42s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/10000 (2.45s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/100000 (21.72s)
+PASS
+{"database": "somewhere_integration", "removedOwnTemporaryDatabase": true}

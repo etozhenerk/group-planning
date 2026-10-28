@@ -49,10 +49,8 @@ func (tx *transaction) DeleteMeeting(id string) error {
 		"DELETE FROM place_polls WHERE meeting_id=$1",
 		"DELETE FROM date_polls WHERE meeting_id=$1",
 		"DELETE FROM transition_jobs WHERE meeting_id=$1",
-		"DELETE FROM feed_entries WHERE meeting_id=$1",
 		"DELETE FROM rsvps WHERE meeting_id=$1",
 		"DELETE FROM invitations WHERE meeting_id=$1",
-		"DELETE FROM meetings WHERE id=$1",
 	}
 	for _, query := range queries {
 		if _, err := tx.exec(query, id); err != nil {
@@ -60,5 +58,11 @@ func (tx *transaction) DeleteMeeting(id string) error {
 		}
 	}
 
-	return nil
+	if err := tx.deleteMeetingFeed(id); err != nil {
+		return err
+	}
+
+	_, err := tx.exec("DELETE FROM meetings WHERE id=$1", id)
+
+	return err
 }

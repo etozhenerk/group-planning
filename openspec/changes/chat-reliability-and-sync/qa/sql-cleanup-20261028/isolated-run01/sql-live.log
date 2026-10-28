@@ -1,0 +1,122 @@
+{"database": "somewhere_integration", "createdForThisRun": true, "marker": "codex-chat-repeat-5d65a8c5592643d9bfe7011582c35d27"}
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/1000
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=1 samples=20 p95_ms=0.539 max_ms=1.798 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=1 samples=20 p95_ms=0.584 max_ms=0.665 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=1 samples=20 p95_ms=0.515 max_ms=0.519 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=1 samples=20 p95_ms=0.391 max_ms=0.584 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=1 samples=20 p95_ms=0.342 max_ms=0.348 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=1 samples=20 p95_ms=0.837 max_ms=0.959 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=50 samples=20 p95_ms=0.893 max_ms=1.513 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=50 samples=20 p95_ms=0.693 max_ms=0.733 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=50 samples=20 p95_ms=0.373 max_ms=0.381 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=50 samples=20 p95_ms=0.317 max_ms=0.346 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=50 samples=20 p95_ms=1.004 max_ms=1.605 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=50 samples=20 p95_ms=1.567 max_ms=1.570 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=100 samples=20 p95_ms=1.081 max_ms=1.177 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=100 samples=20 p95_ms=0.684 max_ms=0.857 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=100 samples=20 p95_ms=0.613 max_ms=0.655 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=100 samples=20 p95_ms=0.406 max_ms=0.408 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=100 samples=20 p95_ms=0.779 max_ms=0.824 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=100 samples=20 p95_ms=1.849 max_ms=2.066 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.864 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=1.407 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.357 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.224 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.216 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.158 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.479 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=6.778 command="DELETE 1000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.516 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.429 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.990 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/10000
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=1 samples=20 p95_ms=0.694 max_ms=1.478 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=1 samples=20 p95_ms=0.633 max_ms=0.661 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=1 samples=20 p95_ms=0.421 max_ms=0.467 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=1 samples=20 p95_ms=0.529 max_ms=0.550 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=1 samples=20 p95_ms=0.627 max_ms=0.650 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=1 samples=20 p95_ms=0.986 max_ms=1.094 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=50 samples=20 p95_ms=0.559 max_ms=0.613 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=50 samples=20 p95_ms=0.832 max_ms=1.138 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=50 samples=20 p95_ms=0.307 max_ms=0.437 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=50 samples=20 p95_ms=0.331 max_ms=0.402 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=50 samples=20 p95_ms=0.783 max_ms=1.057 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=50 samples=20 p95_ms=1.326 max_ms=1.524 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=100 samples=20 p95_ms=0.977 max_ms=0.991 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=100 samples=20 p95_ms=1.118 max_ms=1.554 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=100 samples=20 p95_ms=0.503 max_ms=0.577 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=100 samples=20 p95_ms=0.489 max_ms=0.521 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=100 samples=20 p95_ms=1.231 max_ms=1.545 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=100 samples=20 p95_ms=2.005 max_ms=2.167 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.152 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.423 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.156 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.146 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.124 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.084 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.100 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=64.647 command="DELETE 10000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.275 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.170 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.372 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/100000
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=1220.269 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=147.684 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=144.985 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=185.252 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=120.862 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=125.303 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=192.553 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=107.643 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=141.863 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=191.305 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=350.197 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=568.854 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=153.971 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=127.665 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=197.593 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=130.599 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=107.231 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+    cleanup_trace_test.go:18: TRACE duration_ms=257.591 command="ANALYZE" SQLSTATE="" error_type=<nil> sql="ANALYZE feed_entries"
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration/100000
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=1 samples=20 p95_ms=0.343 max_ms=1.162 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=1 samples=20 p95_ms=0.515 max_ms=0.523 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=1 samples=20 p95_ms=0.419 max_ms=0.514 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=1 samples=20 p95_ms=0.491 max_ms=0.575 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=1 samples=20 p95_ms=0.492 max_ms=0.500 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=1 samples=20 p95_ms=0.993 max_ms=0.996 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=50 samples=20 p95_ms=0.741 max_ms=0.957 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=50 samples=20 p95_ms=0.897 max_ms=0.933 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=50 samples=20 p95_ms=0.606 max_ms=0.617 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=50 samples=20 p95_ms=0.515 max_ms=0.515 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=50 samples=20 p95_ms=1.020 max_ms=1.068 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=50 samples=20 p95_ms=1.481 max_ms=1.759 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=100 samples=20 p95_ms=0.911 max_ms=1.672 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=100 samples=20 p95_ms=1.013 max_ms=1.047 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=100 samples=20 p95_ms=0.460 max_ms=0.495 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=100 samples=20 p95_ms=0.492 max_ms=0.513 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=100 samples=20 p95_ms=1.123 max_ms=1.404 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=100 samples=20 p95_ms=1.971 max_ms=2.035 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== NAME  TestIndependentRepeatFeedSQLLatencyIntegration
+    cleanup_trace_test.go:18: TRACE duration_ms=0.147 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM realtime_outbox WHERE target='meeting' AND meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.533 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM request_receipts WHERE document->>'ResourceID' IN (\n\t\t SELECT $1 UNION SELECT id FROM date_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM place_polls WHERE meeting_id=$1\n\t\t UNION SELECT id FROM preparation_tasks WHERE meeting_id=$1\n\t\t UNION SELECT id FROM feed_entries WHERE meeting_id=$1) OR right(operation,37)=':'||$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.106 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM meeting_covers WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.115 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM preparation_tasks WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.114 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM place_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.102 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM date_polls WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.120 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM transition_jobs WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=3609.192 command="DELETE 100000" SQLSTATE="" error_type=<nil> sql="DELETE FROM feed_entries WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.281 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM rsvps WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.150 command="DELETE 0" SQLSTATE="" error_type=<nil> sql="DELETE FROM invitations WHERE meeting_id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=0.498 command="DELETE 1" SQLSTATE="" error_type=<nil> sql="DELETE FROM meetings WHERE id=$1"
+    cleanup_trace_test.go:18: TRACE duration_ms=720.508 command="COMMIT" SQLSTATE="" error_type=<nil> sql="commit"
+--- PASS: TestIndependentRepeatFeedSQLLatencyIntegration (17.27s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/1000 (0.27s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/10000 (0.72s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/100000 (15.36s)
+PASS
+{"database": "somewhere_integration", "removedOwnTemporaryDatabase": true}
