@@ -2,11 +2,13 @@ package dev.groupplanning.android
 
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -17,7 +19,9 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipe
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ActivityScenario
 import org.junit.Before
@@ -48,6 +52,16 @@ class ExperienceUiTests {
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
             fixture.waitText("2 / 3")
             compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
+            fixture.waitText("3 / 3")
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            fixture.screenshot("refresh-memory-last")
+            compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
+            fixture.waitText("1 / 3")
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            fixture.screenshot("refresh-memory-restarted")
+            compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
+            fixture.waitText("2 / 3")
             activity.recreate()
             fixture.waitText("2 / 3")
             compose.onNodeWithContentDescription("Все фото").performClick()
@@ -59,6 +73,14 @@ class ExperienceUiTests {
     }
 
     private fun verifyAccessibleGallery(activity: ActivityScenario<MainActivity>) {
+        if (androidx.test.platform.app.InstrumentationRegistry.getArguments()
+                .getString("allowSystemSettings") != "true"
+        ) {
+            println(
+                "SKIPPED_SYSTEM_SETTINGS: large font and global animation scale require permission",
+            )
+            return
+        }
         val scale = fixture.shell("settings get system font_scale").trim()
         val animation = fixture.shell("settings get global animator_duration_scale").trim()
         try {
@@ -122,6 +144,30 @@ class ExperienceUiTests {
         }
     }
 
+    @Test fun singlePhotoDragsStayInStackAndTapOpensViewer() {
+        fixture.launch("memories-single").use {
+            fixture.waitTag("meetings-list")
+            compose.onNodeWithText("Прошедшие").performClick()
+            fixture.waitText("Суббота у озера")
+            compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
+            fixture.waitText("Открыть вайб")
+            compose.onNodeWithText("Открыть вайб").performClick()
+            fixture.waitText("1 / 1")
+            val stack = compose.onNodeWithTag("photo-stack")
+            stack.performTouchInput { swipeLeft() }
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            stack.performTouchInput { swipeRight() }
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            stack.performTouchInput { swipe(center, center + Offset(30f, 0f)) }
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            stack.performTouchInput { swipeUp() }
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
+            stack.performScrollTo().performTouchInput { click(center) }
+            fixture.waitTag("memory-fullscreen")
+            fixture.screenshot("refresh-memory-single-tap")
+        }
+    }
+
     private fun revealGalleryControl(control: SemanticsNodeInteraction) {
         repeat(8) {
             try {
@@ -147,7 +193,10 @@ class ExperienceUiTests {
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
             fixture.waitTag("support-description")
             compose.onNodeWithTag("support-description")
+                .performClick()
                 .performTextInput("Проверка формы обращения из Android QA")
+            fixture.device.pressBack()
+            fixture.waitTag("support-description")
             activity.recreate()
             fixture.waitTag("support-description")
             compose.onNodeWithTag("support-description")
@@ -157,8 +206,9 @@ class ExperienceUiTests {
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
             fixture.waitText("Спасибо, что рассказали")
             fixture.screenshot("refresh-support-success")
-            compose.onNodeWithText("Мои встречи").performClick()
+            compose.onNodeWithTag("support-success-back").performClick()
             fixture.waitAbsent("service-page")
+            compose.onNodeWithTag("home-profile").assertIsSelected()
             compose.onNodeWithTag("home-invitations").performClick()
             compose.onNodeWithTag("home-invitations").assertIsSelected()
             compose.onNodeWithText(fixture.context.getString(R.string.invitations_description))

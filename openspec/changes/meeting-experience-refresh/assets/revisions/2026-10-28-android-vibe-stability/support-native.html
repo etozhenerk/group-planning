@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <base href="../../" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../../../../frontend/web/src/app/styles/design-tokens.css" />
+    <title>Обращение · клавиатура Android · somewhere</title>
+    <style>
+      body { margin: 0; max-width: 390px; background: var(--ds-color-background); }
+      main { padding: var(--ds-space-s20); padding-bottom: calc(var(--ds-target-android) + var(--ds-space-s20)); }
+      .back { display: inline-flex; align-items: center; min-height: var(--ds-target-android); gap: 6px; font-size: var(--ds-typography-size-small); }
+      .back svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; }
+      h1 { margin-top: 10px; font-size: 28px; line-height: 32.2px; letter-spacing: -.9px; }
+      .intro { margin: 12px 0 21px; color: var(--muted); font-size: 13px; line-height: 21.45px; }
+      .support-form { padding: 20px 17px; }
+      .field { display: flex; flex-direction: column; gap: 8px; }
+      textarea { min-height: 145px; font-family: inherit; resize: none; }
+      .field-error { margin-top: var(--ds-space-s6); color: var(--ds-color-error); font-size: var(--ds-typography-size-caption); }
+      [aria-invalid="true"] { border-color: var(--ds-color-error); }
+      .ime-actions { position: fixed; bottom: 0; left: 0; width: 100%; max-width: 390px; height: var(--ds-target-android); padding: 0 var(--ds-space-s20); display: flex; justify-content: flex-end; align-items: center; background: var(--ds-color-background); }
+      .ime-actions button { min-height: var(--ds-target-android); border: 0; background: none; color: var(--ds-color-accent); font: inherit; font-size: var(--ds-typography-size-small); }
+      .ime-actions[hidden], .field-error[hidden] { display: none; }
+      .submit { margin-top: 21px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="profile.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>Назад</a>
+      <h1>Что-то пошло не так?</h1>
+      <p class="intro">Расскажите, что случилось. Это поможет разобраться.</p>
+      <form class="support-form panel" novalidate>
+        <fieldset class="report-kinds"><legend>Тема обращения</legend><label><input type="radio" name="kind" checked /><span>Проблема</span></label><label><input type="radio" name="kind" /><span>Идея</span></label><label><input type="radio" name="kind" /><span>Вопрос</span></label></fieldset>
+        <label class="field">Ваше сообщение<textarea aria-describedby="description-error" placeholder="Что вы делали и что пошло не так"></textarea></label>
+        <p class="field-error" id="description-error" role="alert" hidden>Добавьте описание — хотя бы 10 символов.</p>
+        <label class="field">Раздел<select><option>Профиль</option><option>Вайбы</option><option>Чат встречи</option></select></label>
+        <label class="field">Почта для ответа <span class="optional">Необязательно</span><input type="email" placeholder="you@example.com" /></label>
+        <button class="button primary submit" type="submit">Отправить</button>
+      </form>
+    </main>
+    <div class="ime-actions" hidden><button type="button">Готово</button></div>
+    <script>
+      const form = document.querySelector('form');
+      const message = document.querySelector('textarea');
+      const actions = document.querySelector('.ime-actions');
+      const error = document.querySelector('.field-error');
+      const validate = () => {
+        const length = Array.from(message.value.trim()).length;
+        const invalid = length < 10 || length > 3000;
+        error.hidden = !invalid;
+        error.textContent = length > 3000 ? 'Сократите сообщение до 3000 символов.' : 'Добавьте описание — хотя бы 10 символов.';
+        message.setAttribute('aria-invalid', String(invalid));
+        return !invalid;
+      };
+      form.addEventListener('focusin', () => { actions.hidden = false; });
+      actions.querySelector('button').addEventListener('click', () => {
+        document.activeElement?.blur();
+        actions.hidden = true;
+      });
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (!validate()) message.focus();
+      });
+      if (new URLSearchParams(location.search).get('state') === 'invalid') {
+        message.value = 'Не входит';
+        validate();
+        actions.hidden = false;
+      }
+    </script>
+  </body>
+</html>

@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +25,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.SupportViewModel
+import dev.groupplanning.android.ui.components.PageBack
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
@@ -54,21 +54,29 @@ internal fun ServiceDialog(
             navigate(previous)
         }
     }
-    Dialog(back, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+    Dialog(
+        back,
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            decorFitsSystemWindows = false,
+        ),
+    ) {
         Surface(Modifier.fillMaxSize().testTag("service-page"), color = Palette.background) {
             Box(Modifier.fillMaxSize().safeDrawingPadding()) {
                 Column {
                     MeetingsHeader()
-                    TextButton(back, Modifier.padding(start = 8.dp, top = 28.dp)) {
-                        Text(
-                            stringResource(R.string.experience_back),
-                            fontSize = DesignTokens.typographySizeSmall,
-                        )
+                    Box(
+                        Modifier.padding(
+                            start = DesignTokens.spaceS20,
+                            top = DesignTokens.spaceS24,
+                        ),
+                    ) {
+                        PageBack(close = back)
                     }
                     if (page == "support" &&
                         support != null
                     ) {
-                        SupportForm(support, { go("privacy") }, close)
+                        SupportForm(support, { go("privacy") }, back)
                     } else {
                         Column(
                             Modifier.verticalScroll(rememberScrollState()).padding(

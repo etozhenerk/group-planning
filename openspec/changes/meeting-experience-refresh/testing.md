@@ -525,3 +525,8 @@ auto-dismiss, preload/очистку доступа и разницу click/drag
 ## Превью ссылок, 28.10.2026
 
 TC-INV-B9E5EC51, TC-SHARE-COVER, TC-SHARE-HOME: серверный HTML без JavaScript/сессии, безопасный trusted origin, GET/HEAD изображения, замена и удаление обложки. Go проверяет приватность/escaping/fallback; web E2E — настоящий HTML и пиксели. Проход с Telegram отдельно: запрос с его User-Agent не доказывает, что Telegram получил и показал превью. Текущий production invitation возвращает HTTP200 и прежние OG; пользовательская проблемная ссылка пока ожидается. Миграций и изменения API нет, прежние мобильные клиенты совместимы.
+
+
+## Android: адресная проверка формы обращения 28.10.2026
+
+Для `TC-SUPPORT-IOS-KEYBOARD` сохранён исторический ID, Android включён отдельной платформой. `SupportKeyboardUiTests#donePreservesNewlinesAndShortMessageExplainsItsLimit` запускается через `ANDROID_SERIAL=emulator-5554 sh frontend/android/scripts/test-ui.sh support`: отсутствие принудительного фокуса, реальный перенос строки, «Готово», сохранение текста, локальная ошибка девяти символов и исправленная отправка в изолированный API с возвратом в профиль. Unit `SupportDescriptionIssueTests` проверяет trim и Unicode-границы 9/10/3000/3001. Покрытие остаётся partial/unknown до регулярных прогонов; независимая ручная проверка включает системный Back, положение строки относительно настоящей IME и safe area сервисной страницы. Авторский успех не переносится на новый кандидат после исправления insets.

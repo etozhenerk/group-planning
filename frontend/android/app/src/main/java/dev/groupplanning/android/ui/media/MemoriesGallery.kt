@@ -43,7 +43,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.media.MediaViewModel
 import dev.groupplanning.android.ui.components.AppIcon
-import dev.groupplanning.android.ui.meetings.MeetingsHeader
+import dev.groupplanning.android.ui.components.PageBack
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -92,18 +93,13 @@ internal fun MemoriesGallery(
                         Modifier.fillMaxSize().verticalScroll(scrollState).padding(bottom = 24.dp),
                         verticalArrangement = Arrangement.spacedBy(0.dp),
                     ) {
-                        MeetingsHeader()
-                        TextButton(
-                            back,
-                            Modifier.padding(start = 8.dp, top = 28.dp),
+                        Row(
+                            Modifier.padding(
+                                horizontal = DesignTokens.spaceS20,
+                                vertical = DesignTokens.spaceS12,
+                            ),
                         ) {
-                            AppIcon(R.drawable.ic_back)
-                            Text(
-                                stringResource(R.string.memories_back),
-                                fontSize = 13.sp,
-                                lineHeight = 19.5.sp,
-                                fontWeight = FontWeight.Normal,
-                            )
+                            PageBack(close = back)
                         }
                         run {
                             Column(Modifier.padding(horizontal = 20.dp).padding(top = 16.dp)) {
@@ -202,7 +198,7 @@ internal fun MemoriesGallery(
                                 grid = { grid = true },
                             )
                         }
-                        if (state.loading) CircularProgressIndicator()
+                        if (state.loading && state.photos.isEmpty()) CircularProgressIndicator()
                         if (state.loadError) {
                             TextButton({
                                 model.loadMemories()

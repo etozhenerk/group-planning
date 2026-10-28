@@ -39,7 +39,7 @@ internal object RuntimeFactory {
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
                     "cover-create", "cover-edit", "cover-large", "cover-system",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",
-                    "feed-owner", "feed-persistence", "memories", "design",
+                    "feed-owner", "feed-persistence", "memories", "memories-single", "design",
                     "calendar", "calendar-large", "calendar-empty",
                     "task-owner", "task-recipient", "task-decline", "task-cancel", "task-conflict",
                     "place-owner", "place-close", "place-rejected", "place-cancelled",
@@ -87,13 +87,19 @@ internal object RuntimeFactory {
                 )
                 try {
                     QaResponseGate.after(chain.request())
-                    response
+                    if (scenario ==
+                        "memories-single"
+                    ) {
+                        QaMemoryAlbum.singlePhoto(response)
+                    } else {
+                        response
+                    }
                 } catch (failure: IOException) {
                     response.close()
                     throw failure
                 }
             }.build()
-        val credential = config.cases[scenario]
+        val credential = config.cases[if (scenario == "memories-single") "memories" else scenario]
         if (scenario == "invite-anonymous" || scenario == "profile-fields") {
             dev.groupplanning.android.data.session.AndroidCredentials.create(
                 context,

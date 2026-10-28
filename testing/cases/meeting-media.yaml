@@ -668,13 +668,18 @@
   risk: high
   source:
     path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
-    requirement: Компактный предпросмотр фото iOS
+    requirement: Компактный предпросмотр нативных фото
     scenario: Край следующего фото и удаление на углу
-    sha256: fb47a4f65ff20ecaafb75d354c2feefb7d36eb028bb2d1169ca637e0a663c756
+    sha256: 97bc4d970337a831fbb5e45bf48888fc263950b89ea43f4d0931b3c42d212710
   platforms:
     - ios
+    - android
   preconditions:
-    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной клавиатурой.
+    - Изолированный QA API, точный кандидат выбранной платформы iOS/Android; тестовое устройство с
+      экранной клавиатурой.
+    - Нижняя панель iOS/Android SHALL показывать горизонтальные превью 176×132 с видимым краем
+      следующей фотографии, круглый крестик 24 на верхнем правом углу с выступом 6 и областью
+      нажатия 44 на iOS/48 на Android. Общий статус пакета и сохранение неуспешных фото сохраняются.
   steps:
     - action: Участник выбирает три фото и открывает панель перед отправкой
       expected: Виден край следующего фото, горизонтальный свайп открывает следующее превью, крестик на
@@ -684,5 +689,9 @@
   automation:
     ios:
       status: manual
+      health: unknown
+      tests: []
+    android:
+      status: planned
       health: unknown
       tests: []

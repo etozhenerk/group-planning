@@ -158,7 +158,7 @@ internal class SupportViewModel(
         val value = state.value
         if (value.busy || value.selecting) return
         val description = value.description.trim()
-        if (description.codePointCount(0, description.length) !in 10..3000 ||
+        if (SupportDescriptionIssue.inspect(description) != null ||
             (
                 value.email.isNotBlank() &&
                     !android.util.Patterns.EMAIL_ADDRESS.matcher(value.email.trim()).matches()

@@ -59,6 +59,7 @@ internal class MediaViewModel(
     private val decoded = DecodedImages()
     private var preloading: Job? = null
     private val openLock = Mutex()
+    private val bitmapLock = Mutex()
 
     init {
         viewModelScope.launch {
@@ -385,13 +386,13 @@ internal class MediaViewModel(
 
     fun cached(item: MeetingMedia): Bitmap? = decoded.get(item.id.toString())
 
-    suspend fun bitmap(item: MeetingMedia): Bitmap {
+    suspend fun bitmap(item: MeetingMedia): Bitmap = bitmapLock.withLock {
         val lease = access ?: throw ClientFailure(FailureKind.AccessRevoked)
         repository.sessions.withAccess(lease) { }
-        cached(item)?.let { return it }
+        cached(item)?.let { return@withLock it }
         val image = decodeImage(content(item))
         repository.sessions.withAccess(lease) { decoded.put(item.id.toString(), image) }
-        return image
+        image
     }
 
     fun prefetch(photos: List<MeetingMedia>, index: Int) {

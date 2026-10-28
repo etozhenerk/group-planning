@@ -7,6 +7,7 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.groupplanning.android.data.covers.CoverProcessor
 import dev.groupplanning.android.data.covers.LegacyCoverDecoder
+import dev.groupplanning.android.state.media.decodeImage
 import java.io.File
 import java.io.RandomAccessFile
 import java.util.Base64
@@ -27,6 +28,13 @@ class CoverProcessingTests {
             ExifInterface(file).apply {
                 setAttribute(ExifInterface.TAG_ORIENTATION, "6")
                 saveAttributes()
+            }
+            val preview = decodeImage(file.readBytes())
+            try {
+                assertEquals(1152, preview.width)
+                assertEquals(2048, preview.height)
+            } finally {
+                preview.recycle()
             }
             val prepared = CoverProcessor().prepare(file)
             val bytes = Base64.getDecoder().decode(prepared.data)

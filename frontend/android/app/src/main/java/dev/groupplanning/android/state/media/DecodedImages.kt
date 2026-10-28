@@ -1,8 +1,9 @@
 package dev.groupplanning.android.state.media
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.LruCache
+import dev.groupplanning.android.data.covers.CoverDecoder
+import dev.groupplanning.android.data.covers.CoverIssue
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,13 +25,10 @@ internal class DecodedImages(maximumBytes: Int = 64 * 1024 * 1024) {
 }
 
 internal suspend fun decodeImage(bytes: ByteArray): Bitmap = withContext(Dispatchers.IO) {
-    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-    BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
-    val options = BitmapFactory.Options().apply {
-        inSampleSize = generateSequence(1) { it * 2 }.first { sample ->
-            bounds.outWidth / sample <= 2048 && bounds.outHeight / sample <= 2048
-        }
+    try {
+        // Reuse the bounded, EXIF-aware image decoder used for uploaded covers.
+        CoverDecoder.bytes(bytes, 2048)
+    } catch (invalid: CoverIssue) {
+        throw IOException("Invalid image", invalid)
     }
-    BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options)
-        ?: throw IOException("Invalid image")
 }

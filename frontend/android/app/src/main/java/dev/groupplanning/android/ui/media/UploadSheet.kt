@@ -1,8 +1,8 @@
 package dev.groupplanning.android.ui.media
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -60,18 +60,23 @@ internal fun UploadSheet(
             )
         }
         if (photo) {
-            BoxWithConstraints(Modifier.fillMaxWidth()) {
-                val photoWidth = (maxWidth - DesignTokens.spaceS12) / 2
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12)) {
-                    items(selected, key = { it.value.key }) { row ->
-                        UploadPhotoPreview(
-                            row,
-                            { model.local(row.value) },
-                            { model.remove(row.value) },
-                            enabled = !state.sending && !state.selecting,
-                            modifier = Modifier.width(photoWidth),
-                        )
-                    }
+            LazyRow(
+                modifier = Modifier.fillMaxWidth().testTag("upload-photo-carousel"),
+                contentPadding = PaddingValues(
+                    top = DesignTokens.spaceS24,
+                    end = DesignTokens.spaceS24,
+                    bottom = DesignTokens.spaceS12,
+                ),
+                horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12),
+            ) {
+                items(selected, key = { it.value.key }) { row ->
+                    UploadPhotoPreview(
+                        row,
+                        { model.local(row.value) },
+                        { model.remove(row.value) },
+                        enabled = !state.sending && !state.selecting,
+                        modifier = Modifier.width(DesignTokens.componentPhotoPreviewWidth),
+                    )
                 }
             }
         } else {

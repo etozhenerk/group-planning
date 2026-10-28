@@ -582,19 +582,25 @@
       health: unknown
       tests: []
 - id: TC-SUPPORT-IOS-KEYBOARD
-  title: Исправление невалидного обращения iOS
+  title: Исправление невалидного обращения native
   lifecycle: active
   level: e2e
   risk: high
   source:
     path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
-    requirement: Отправка обратной связи iOS без блокировки клавиатуры
-    scenario: Исправление невалидного обращения iOS
-    sha256: 752dac92ca9a8906cc79d911e6eea4301bde6ac8715e868352e13d952406226d
+    requirement: Отправка нативной обратной связи без блокировки клавиатуры
+    scenario: Исправление невалидного нативного обращения
+    sha256: c226df0f83f1142f55add3d5d171877f6cf0210ea58f21a79e52823b9c673f7c
   platforms:
     - ios
+    - android
   preconditions:
-    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной клавиатурой.
+    - Изолированный QA API, точный кандидат выбранной платформы iOS/Android; тестовое устройство с
+      экранной клавиатурой.
+    - iOS/Android SHALL позволять убрать клавиатуру кнопкой «Готово», на iOS также прокруткой, на
+      Android также системной кнопкой Back, без принудительного возврата фокуса. «Назад» SHALL
+      возвращать на вызывающий экран. Отправка SHALL объяснять ошибки полей; серверная валидация,
+      сохранение черновика и защита повторов сохраняются.
   steps:
     - action: Участник открывает форму из профиля, вводит короткий текст, скрывает клавиатуру кнопкой
         «Готово» и нажимает «Отправить», исправляет текст и повторяет
@@ -607,3 +613,19 @@
       status: manual
       health: unknown
       tests: []
+    android:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SupportKeyboardUiTests.kt
+          selector: donePreservesNewlinesAndShortMessageExplainsItsLimit
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/test/java/dev/groupplanning/android/support/SupportDescriptionIssueTests.kt
+          selector: whitespaceDoesNotMakeAShortDescriptionValid
+          runner: android-unit
+          level: unit
+        - path: frontend/android/app/src/test/java/dev/groupplanning/android/support/SupportDescriptionIssueTests.kt
+          selector: emojiUseTheSameUnicodeLimitAsTheApi
+          runner: android-unit
+          level: unit

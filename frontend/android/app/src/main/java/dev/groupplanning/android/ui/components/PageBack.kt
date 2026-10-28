@@ -20,7 +20,7 @@ import dev.groupplanning.android.ui.theme.Palette
 internal fun PageBack(enabled: Boolean = true, close: () -> Unit) {
     Surface(close, enabled = enabled, color = Color.Transparent) {
         Row(
-            Modifier.heightIn(min = 44.dp),
+            Modifier.heightIn(min = DesignTokens.targetAndroid),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(7.dp),
         ) {

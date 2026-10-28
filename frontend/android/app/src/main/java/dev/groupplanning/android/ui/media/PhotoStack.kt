@@ -1,32 +1,25 @@
 package dev.groupplanning.android.ui.media
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -34,7 +27,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -43,16 +36,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.R
-import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.MeetingMedia
 import dev.groupplanning.android.state.media.MediaViewModel
-import dev.groupplanning.android.ui.motion.LocalMotionEnabled
-import dev.groupplanning.android.ui.theme.DesignTokens
-import java.io.IOException
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun PhotoStack(
@@ -65,188 +51,124 @@ internal fun PhotoStack(
     full: Boolean = false,
 ) {
     if (photos.isEmpty()) return
-    val offset = remember { Animatable(0f) }
-    var dragged by remember { mutableStateOf(false) }
+    val currentIndex = index.coerceIn(photos.indices)
+    val current = photos[currentIndex]
     val scope = rememberCoroutineScope()
-    val motion = LocalMotionEnabled.current
-    val current = photos[index.coerceIn(photos.indices)]
-    LaunchedEffect(current.id) { model.prefetch(photos, index) }
+    val controller = remember(model, full) { PhotoStackController(model, scope) }
+    var dragged by remember { mutableStateOf(false) }
+    val motion = dev.groupplanning.android.ui.motion.LocalMotionEnabled.current
+    val count = stringResource(R.string.memories_count, currentIndex + 1, photos.size)
     val nextLabel = stringResource(R.string.photo_next)
     val previousLabel = stringResource(R.string.photo_previous)
-    val count = stringResource(R.string.memories_count, index + 1, photos.size)
-    val change: (Int) -> Unit = { delta ->
-        if (photos.size >
-            1
-        ) {
-            scope.launch {
-                val target = (index + delta + photos.size) % photos.size
-                try {
-                    model.bitmap(photos[target])
-                    select(target)
-                } catch (cancelled: CancellationException) {
-                    throw cancelled
-                } catch (
-                    _: ClientFailure,
-                ) {
-                    select(target)
-                } catch (_: IOException) {
-                    select(target)
-                }
-            }
-        }
+    LaunchedEffect(photos.map { it.id }, currentIndex) {
+        model.prefetch(photos, currentIndex)
+        controller.loadVisible(photos, currentIndex)
     }
-    Box(
-        modifier.testTag("photo-stack").onKeyEvent {
-            if (it.type != KeyEventType.KeyUp) {
-                false
-            } else {
-                when (it.key) {
-                    Key.DirectionRight -> {
-                        change(1)
-                        true
+    BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
+        val availableWidth = maxWidth
+        val availableHeight = maxHeight
+        val width = with(LocalDensity.current) { maxWidth.toPx() }
+        val advance: (Int, Boolean) -> Unit = { direction, swipe ->
+            controller.move(photos, currentIndex, direction, width, full, motion, swipe, select)
+        }
+        androidx.compose.foundation.layout.Box(
+            Modifier.matchParentSize().testTag("photo-stack").onKeyEvent {
+                if (it.type != KeyEventType.KeyUp) {
+                    false
+                } else {
+                    when (it.key) {
+                        Key.DirectionRight -> {
+                            advance(1, false)
+                            true
+                        }
+                        Key.DirectionLeft -> {
+                            advance(-1, false)
+                            true
+                        }
+                        else -> false
                     }
-                    Key.DirectionLeft -> {
-                        change(-1)
-                        true
-                    }
-                    else -> false
                 }
-            }
-        }.focusable().semantics {
-            contentDescription = count
-            liveRegion = LiveRegionMode.Polite
-            customActions = listOf(
-                CustomAccessibilityAction(nextLabel) {
-                    change(1)
-                    true
-                },
-                CustomAccessibilityAction(previousLabel) {
-                    change(-1)
-                    true
-                },
-            )
-        }.pointerInput(Unit) {
-            awaitEachGesture {
-                awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-                dragged = false
-                waitForUpOrCancellation()
-            }
-        }.pointerInput(current.id, photos.size, motion) {
-            detectHorizontalDragGestures(
-                onDragStart = { dragged = true },
-                onDragCancel = {
-                    scope.launch {
-                        offset.animateTo(
-                            0f,
-                            tween(if (motion) DesignTokens.motionDurationNavigation else 0),
-                        )
-                    }
-                },
-                onDragEnd = {
-                    scope.launch {
-                        if (kotlin.math.abs(offset.value) > 56 * density && photos.size > 1) {
-                            val direction = if (offset.value < 0) 1 else -1
-                            val target = (index + direction + photos.size) % photos.size
-                            try {
-                                model.bitmap(photos[target])
-                            } catch (cancelled: CancellationException) {
-                                throw cancelled
-                            } catch (_: ClientFailure) {
-                                select(target)
-                                offset.animateTo(
-                                    0f,
-                                    tween(if (motion) DesignTokens.motionDurationNavigation else 0),
-                                )
-                                return@launch
-                            } catch (_: IOException) {
-                                select(target)
-                                offset.animateTo(
-                                    0f,
-                                    tween(if (motion) DesignTokens.motionDurationNavigation else 0),
-                                )
-                                return@launch
-                            }
-                            if (motion) {
-                                offset.animateTo(
-                                    if (direction ==
-                                        1
-                                    ) {
-                                        -size.width.toFloat()
-                                    } else {
-                                        size.width.toFloat()
-                                    },
-                                    tween(DesignTokens.motionDurationNavigation),
-                                )
-                            }
-                            select(target)
-                            offset.snapTo(0f)
+            }.focusable().semantics {
+                contentDescription = count
+                liveRegion = LiveRegionMode.Polite
+                customActions = listOf(
+                    CustomAccessibilityAction(nextLabel) {
+                        advance(1, false)
+                        true
+                    },
+                    CustomAccessibilityAction(previousLabel) {
+                        advance(-1, false)
+                        true
+                    },
+                )
+            }.pointerInput(Unit) {
+                awaitEachGesture {
+                    awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                    dragged = false
+                    waitForUpOrCancellation()
+                }
+            }.pointerInput(current.id, photos.size, motion) {
+                detectHorizontalDragGestures(
+                    onDragStart = { dragged = true },
+                    onDragCancel = { controller.settle(motion) },
+                    onDragEnd = {
+                        if (kotlin.math.abs(controller.offset.value) > 56 * density &&
+                            photos.size > 1
+                        ) {
+                            advance(if (controller.offset.value < 0) 1 else -1, true)
                         } else {
-                            offset.animateTo(
-                                0f,
-                                tween(if (motion) DesignTokens.motionDurationNavigation else 0),
+                            controller.settle(motion)
+                        }
+                    },
+                ) { event, delta ->
+                    if (photos.size > 1 && !controller.busy) {
+                        event.consume()
+                        controller.drag(delta)
+                    }
+                }
+            },
+            contentAlignment = Alignment.Center,
+        ) {
+            if (controller.images[current.id] == null) {
+                if (controller.failed) {
+                    TextButton(controller::retry) { Text(stringResource(R.string.media_error)) }
+                } else {
+                    CircularProgressIndicator(Modifier.testTag("photo-stack-loading"))
+                }
+            } else {
+                val visible = if (full) listOf(current) else photos.drop(currentIndex).take(3)
+                visible.withIndex().toList().asReversed().forEach { (rank, photo) ->
+                    key(photo.id) {
+                        controller.images[photo.id]?.let { bitmap ->
+                            val portrait = bitmap.width < bitmap.height
+                            val cardWidth = if (full) {
+                                availableWidth
+                            } else if (portrait) {
+                                minOf(availableWidth * .78f, availableHeight * .88f * 2 / 3)
+                            } else {
+                                availableWidth * .88f
+                            }
+                            val cardHeight = if (full) {
+                                availableHeight
+                            } else {
+                                availableHeight *
+                                    if (portrait) .88f else .77f
+                            }
+                            StackPhotoCard(
+                                bitmap, photo.id.toString(), rank, if (rank == 0) count else null,
+                                controller.offset.value, controller.assembly.value, full, motion,
+                                { if (!dragged && !controller.busy) open() },
+                                Modifier.size(cardWidth, cardHeight),
                             )
                         }
                     }
-                },
-            ) { event, delta ->
-                if (photos.size >
-                    1
-                ) {
-                    event.consume()
-                    scope.launch { offset.snapTo(offset.value + delta) }
+                }
+                if (controller.failed) {
+                    TextButton(controller::retry, Modifier.align(Alignment.BottomCenter)) {
+                        Text(stringResource(R.string.media_error))
+                    }
                 }
             }
-        },
-        contentAlignment = Alignment.Center,
-    ) {
-        val frame = if (full) {
-            Modifier.matchParentSize()
-        } else {
-            Modifier.fillMaxWidth(.88f)
-                .fillMaxHeight(.77f)
-        }
-        if (!full && photos.size > 1) {
-            listOf(2, 1).forEach { delta ->
-                val next = photos[(index + delta) % photos.size]
-                Box(
-                    frame.graphicsLayer {
-                        rotationZ = if (motion) (if (delta == 1) -9f else 7f) else 0f
-                        alpha = if (delta == 1) .75f else .85f
-                    }.shadow(20.dp, RoundedCornerShape(12.dp))
-                        .clip(RoundedCornerShape(12.dp)).background(Color(0xffe4ded4))
-                        .padding(5.dp),
-                ) {
-                    PrivateImage(
-                        next.id.toString(),
-                        null,
-                        { model.content(next) },
-                        Modifier.matchParentSize().clip(RoundedCornerShape(7.dp)),
-                        cached = model.cached(next),
-                        loadBitmap = { model.bitmap(next) },
-                    )
-                }
-            }
-        }
-        Box(
-            frame.graphicsLayer {
-                translationX = offset.value
-                rotationZ = if (motion && !full) -1.5f + offset.value / 40 else 0f
-            }.shadow(if (full) 0.dp else 20.dp, RoundedCornerShape(12.dp))
-                .clip(RoundedCornerShape(if (full) 0.dp else 12.dp))
-                .background(if (full) Color.Transparent else Color(0xffe4ded4))
-                .padding(if (full) 0.dp else 5.dp).then(
-                    if (full) Modifier else Modifier.clickable { if (!dragged) open() },
-                ),
-        ) {
-            PrivateImage(
-                current.id.toString(),
-                count,
-                { model.content(current) },
-                Modifier.matchParentSize().clip(RoundedCornerShape(if (full) 0.dp else 7.dp)),
-                if (full) ContentScale.Fit else ContentScale.Crop,
-                cached = model.cached(current),
-                loadBitmap = { model.bitmap(current) },
-            )
         }
     }
 }

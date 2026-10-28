@@ -729,29 +729,37 @@
       health: unknown
       tests: []
 - id: TC-VIBE-IOS-BACK-ONLY
-  title: Возврат из вайба на iOS
+  title: Возврат из вайба на native
   lifecycle: active
   level: e2e
   risk: high
   source:
     path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
-    requirement: Компактная шапка вайба iOS
-    scenario: Возврат из вайба на iOS
-    sha256: c39bfdf27d9abbf61f5ad6e0ee75858f39f5a5bf5268ef80b0c7cdb4ff0dc7e4
+    requirement: Компактная шапка нативного вайба
+    scenario: Возврат из нативного вайба
+    sha256: 100f1155cb78849b8c315c0129817b46a0b9dbe07da127cff6b0851ca7c3eedf
   platforms:
     - ios
+    - android
   preconditions:
-    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной
-      клавиатурой.
+    - Изолированный QA API, точный кандидат выбранной платформы iOS/Android; тестовое устройство с
+      экранной клавиатурой.
+    - iOS/Android SHALL показывать стандартную кнопку «Назад» со стрелкой, единую с сервисными
+      страницами платформы, без общего названия приложения и ссылки «Прошедшие встречи». Название
+      встречи и счётчик SHALL сохраняться.
   steps:
     - action: Открыть вайб из чата и нажать стандартную кнопку «Назад».
-      expected: Тот же текстовый стиль возврата, что на сервисных страницах. Возврат в
-        тот же чат; бренд/Прошедшие встречи отсутствуют.
+      expected: Тот же текстовый стиль возврата, что на сервисных страницах. Возврат в тот же чат;
+        бренд/Прошедшие встречи отсутствуют.
   cleanup:
     - Очистить только собственные QA данные и восстановить настройки симулятора.
   automation:
     ios:
       status: manual
+      health: unknown
+      tests: []
+    android:
+      status: planned
       health: unknown
       tests: []
 - id: TC-VIBE-IOS-STABLE-SWIPE
@@ -761,25 +769,32 @@
   risk: high
   source:
     path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
-    requirement: Устойчивая геометрия свайпа iOS
+    requirement: Устойчивая геометрия нативного свайпа
     scenario: Фото не меняет размер после завершённого свайпа
-    sha256: f4680da8421a3f39f743332c17714383742afc789ba9b91a53c4b667f7153012
+    sha256: f412a535ba7be71a0b1221ae76d912cb1c2eb34f2169d3af4ceb22e8e0b27b87
   platforms:
     - ios
+    - android
   preconditions:
-    - Точный iOS candidate; свой альбом portrait/landscape/portrait с EXIF, cold
-      и warm cache.
+    - Изолированный QA API, точный кандидат выбранной платформы iOS/Android; тестовое устройство с
+      экранной клавиатурой.
+    - iOS/Android SHALL определять геометрию входящего снимка до показа его передней карточкой и
+      сохранять её после завершения жеста. Поздняя загрузка, декодирование или callback кеша SHALL
+      NOT менять размер уже показанного фото. Переход задней карточки в переднюю SHALL быть
+      непрерывным; отключённые анимации меняют снимок без промежуточного полёта.
   steps:
-    - action: Записать оба направления свайпа; сравнить размеры одной входящей
-        карточки в момент settling и через0.5/1/2с. Повторить с delayedimage и
-        ReduceMotion.
-      expected: Нет позднего скачка размера или замененного изображения. Promotion
-        непрерывен, settledgeometry стабильна; ReduceMotion без полёта. Tap
-        открывает правильное полное фото.
+    - action: Записать оба направления свайпа; сравнить размеры одной входящей карточки в момент settling
+        и через0.5/1/2с. Повторить с delayedimage и ReduceMotion.
+      expected: Нет позднего скачка размера или замененного изображения. Promotion непрерывен,
+        settledgeometry стабильна; ReduceMotion без полёта. Tap открывает правильное полное фото.
   cleanup:
     - Удалить только свои QA данные, вернуть тестовые настройки.
   automation:
     ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
       status: planned
       health: unknown
       tests: []

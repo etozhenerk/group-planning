@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_scope=${1:-all}
 case "$somewhere_scope" in
-    all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|chat) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|chat]\n' >&2; exit 2 ;;
+    all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -30,15 +30,17 @@ somewhere_remote="/data/local/tmp/somewhere-android-ui-$$.json"
 somewhere_fixture=
 somewhere_port=
 somewhere_evidence_ready=0
+somewhere_private_evidence=0
 somewhere_ui_output="/sdcard/Android/data/dev.groupplanning.android.uitesthost/files/ui-$$"
-if [ "$somewhere_scope" = media ]; then
+if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ]; then
+    somewhere_private_evidence=1
     somewhere_ui_output="/data/user/0/dev.groupplanning.android.uitesthost/files/ui-$$"
 fi
 cleanup() {
     somewhere_status=$?
     trap - EXIT
     mkdir -p "app/build/outputs/ui/$somewhere_scope-$$"
-    if [ "$somewhere_scope" = media ] && [ "$somewhere_evidence_ready" = 1 ]; then
+    if [ "$somewhere_private_evidence" = 1 ] && [ "$somewhere_evidence_ready" = 1 ]; then
         if "$somewhere_adb" -s "$ANDROID_SERIAL" exec-out run-as dev.groupplanning.android.uitesthost \
             tar -C "$somewhere_ui_output" -cf - . > "$somewhere_temporary/evidence.tar" &&
             tar -xf "$somewhere_temporary/evidence.tar" -C "app/build/outputs/ui/$somewhere_scope-$$/"; then
@@ -71,7 +73,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 (cd ../../backend && "${GO_BIN:-go}" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
 somewhere_fixture_scope=$somewhere_scope
-if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = chat ]; then somewhere_fixture_scope=calendar; fi
+if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = chat ]; then somewhere_fixture_scope=calendar; fi
 somewhere_chat=0
 if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = chat ]; then somewhere_chat=1; fi
 SOMEWHERE_ANDROID_CHAT_REALTIME="$somewhere_chat" SOMEWHERE_ANDROID_CHAT_READ_STATE="$somewhere_chat" \
@@ -96,19 +98,25 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 # unanswered invitation is part of that scenario. Design captures precede uploads.
 # Private evidence avoids Android 16 external-storage ownership races after reinstall.
 # This scope installs only the QA target and uses the same AndroidJUnitRunner cases.
-if [ "$somewhere_scope" = media ]; then
+if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ]; then
+    somewhere_ui_classes=dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet
+    somewhere_ui_result='OK (9 tests)'
+    if [ "$somewhere_scope" = support ]; then
+        somewhere_ui_classes=dev.groupplanning.android.SupportKeyboardUiTests
+        somewhere_ui_result='OK (1 test)'
+    fi
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa :app:installQa :app:installQaAndroidTest
     somewhere_evidence_ready=1
     "$somewhere_adb" -s "$ANDROID_SERIAL" shell am instrument -w -r \
         -e fixturePath "$somewhere_remote" \
         -e additionalTestOutputDir "$somewhere_ui_output" \
-        -e class dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet \
+        -e class "$somewhere_ui_classes" \
         dev.groupplanning.android.uitesthost.test/androidx.test.runner.AndroidJUnitRunner \
         > "$somewhere_temporary/instrumentation.log"
     cat "$somewhere_temporary/instrumentation.log"
     mkdir -p "app/build/outputs/ui/$somewhere_scope-$$"
     cp "$somewhere_temporary/instrumentation.log" "app/build/outputs/ui/$somewhere_scope-$$/"
-    grep -q '^OK (8 tests)' "$somewhere_temporary/instrumentation.log"
+    grep -Fqx "$somewhere_ui_result" "$somewhere_temporary/instrumentation.log"
     exit 0
 fi
 
