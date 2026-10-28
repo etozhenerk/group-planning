@@ -71,12 +71,16 @@ export const useReactionPopover = (
   }, [refs, update]);
 
   useLayoutEffect(() => {
-    refs.setReference(anchor.current);
+    if (refs.domReference.current !== anchor.current) {
+      refs.setReference(anchor.current);
+    }
+  });
 
+  useLayoutEffect(() => {
     if (open) {
       update();
     }
-  }, [anchor, refs, open, update]);
+  }, [open, update]);
 
   const inside = () => [
     ...Array.from(
