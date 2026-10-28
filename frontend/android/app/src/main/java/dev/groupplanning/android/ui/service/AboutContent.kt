@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,12 +38,6 @@ internal fun AboutContent(support: () -> Unit) {
             null,
             Modifier.size(76.dp),
             tint = Palette.text,
-        )
-        Text(
-            "somewhere",
-            fontSize = 31.sp,
-            letterSpacing = (-1.1).sp,
-            fontWeight = FontWeight.Bold,
         )
         Text(
             stringResource(R.string.about_intro),

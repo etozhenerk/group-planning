@@ -62,6 +62,8 @@ sh scripts/test-ui.sh feed
 sh scripts/test-ui.sh calendar       # календарь, история и создание из выбранного дня
 sh scripts/test-ui.sh accessibility
 sh scripts/test-ui.sh startup
+sh scripts/test-ui.sh native-usability # нативные picker/share, черновики, жесты, вкладки и помощь
+sh scripts/test-ui.sh help             # вопросы помощи при обычном и крупном тексте
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет

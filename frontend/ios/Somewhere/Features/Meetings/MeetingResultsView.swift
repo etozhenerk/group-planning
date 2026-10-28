@@ -8,7 +8,7 @@ struct MeetingResultsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             if owner.page.isLoading && owner.page.value == nil && !owner.empty {
-                MeetingCardsSkeleton(label: "Загрузка встреч")
+                DeferredPlaceholder { MeetingCardsSkeleton(label: "Загрузка встреч") }
             }
             if owner.page.error != nil {
                 StatusView(

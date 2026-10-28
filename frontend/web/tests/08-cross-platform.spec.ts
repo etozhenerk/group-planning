@@ -55,6 +55,7 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   const documentChooser = page.waitForEvent('filechooser');
   await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+  await page.getByRole('button', { name: 'Выбрать файлы', exact: true }).click();
   await (
     await documentChooser
   ).setFiles({
@@ -64,14 +65,14 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   });
   await page.getByLabel('Подпись к rules.txt').fill('Правила встречи от web');
   await page.getByRole('button', { name: 'Отправить', exact: true }).click();
-  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
   await expect(
     page.getByTestId('feed-message').filter({ hasText: 'rules.txt' }),
   ).toContainText('Правила встречи от web');
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   const photoChooser = page.waitForEvent('filechooser');
   await page.getByRole('menuitem', { name: 'Фото', exact: true }).click();
+  await page.getByRole('button', { name: 'Выбрать фото', exact: true }).click();
   await (
     await photoChooser
   ).setFiles({
@@ -80,8 +81,7 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
     buffer: Buffer.from(pixels, 'base64'),
   });
   await page.getByRole('button', { name: 'Отправить', exact: true }).click();
-  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
   await page.getByRole('link', { name: 'К моим встречам' }).click();
   await page.getByRole('button', { name: /^Прошедшие/ }).click();
   const past = page.getByTestId('meeting-card').filter({
@@ -89,11 +89,14 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   });
 
   await past.getByRole('link', { name: 'Добавить фото встречи', exact: true }).click();
-  await expect(page).toHaveURL(/\/meetings\/[^/]+\/memories$/);
+  await expect(page).toHaveURL(/\/meetings\/[^/]+\/memories\?action=upload$/);
   const albumId = new URL(page.url()).pathname.split('/')[2];
   expect(albumId).toBeTruthy();
   const memoryChooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Добавить фото', exact: true }).click();
+  await page
+    .getByRole('dialog', { name: 'Добавить фото в альбом' })
+    .getByRole('button', { name: 'Выбрать фото', exact: true })
+    .click();
   await (
     await memoryChooser
   ).setFiles({
@@ -102,8 +105,7 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
     buffer: Buffer.from(pixels, 'base64'),
   });
   await page.getByRole('button', { name: 'Добавить в альбом', exact: true }).click();
-  await expect(page.getByText('Добавлено', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
   await expect(page.getByText('1 / 1', { exact: true })).toBeVisible();
   await page.goto(`/meetings/${id}`);
   await expect(page.getByText('Hello from web', { exact: true })).toBeVisible();

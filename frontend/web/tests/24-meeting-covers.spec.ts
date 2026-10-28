@@ -104,7 +104,9 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await login(page, 'Саша');
     await page.goto('/meetings/new');
-    await page.getByText('Обложка', { exact: true }).click();
+    await expect(
+      page.getByRole('button', { name: 'Добавить фото', exact: true }),
+    ).toBeVisible();
     await page.getByLabel('Название', { exact: true }).fill(`Встреча с фото ${width}`);
     await setDate(page, '29.02.2028');
     const file = page.getByLabel('Выбрать фото', { exact: true });
@@ -202,7 +204,9 @@ test('lost creation response preserves the prepared photo and key after reload',
 }) => {
   await login(page, 'Саша');
   await page.goto('/meetings/new');
-  await page.getByText('Обложка', { exact: true }).click();
+  await expect(
+    page.getByRole('button', { name: 'Добавить фото', exact: true }),
+  ).toBeVisible();
   await page.getByLabel('Название', { exact: true }).fill('Фото без дубля');
   await setDate(page, '29.02.2028');
   await page.getByLabel('Выбрать фото').setInputFiles(await photo(page, '#a13932'));

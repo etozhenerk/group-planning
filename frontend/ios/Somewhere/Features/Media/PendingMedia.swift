@@ -11,4 +11,6 @@ struct PendingMedia: Identifiable, Sendable {
     var stage: Stage = .ready
     var problem: String?
     var caption = ""
+    var transferFailure: ClientFailure?
+    var transferPhase: String?
 }

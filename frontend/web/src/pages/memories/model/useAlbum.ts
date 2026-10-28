@@ -43,13 +43,13 @@ export const useAlbum = (count: number) => {
   };
 
   const start = (event: PointerEvent<HTMLDivElement>) => {
+    moved.current = false;
+
     if (event.button !== 0 || count < 2 || timer.current !== null) {
       return;
     }
 
-    moved.current = false;
     pointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const move = (event: PointerEvent<HTMLDivElement>) => {
@@ -63,6 +63,7 @@ export const useAlbum = (count: number) => {
     const dy = event.clientY - origin.y;
 
     if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 12) {
+      moved.current = true;
       pointer.current = null;
       setOffset(0);
 
@@ -71,6 +72,7 @@ export const useAlbum = (count: number) => {
 
     if (Math.abs(dx) > 5) {
       moved.current = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
     }
 
     setOffset(dx);

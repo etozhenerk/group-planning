@@ -20,6 +20,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.repository.SavedInvitationsData
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -35,7 +36,12 @@ internal fun SavedInvitationsScreen(
         Text(
             stringResource(R.string.home_invitations),
             Modifier.testTag("invitations-heading")
-                .padding(start = 20.dp, end = 20.dp, top = 28.dp, bottom = 12.dp),
+                .padding(
+                    start = DesignTokens.spaceS20,
+                    end = DesignTokens.spaceS20,
+                    top = DesignTokens.spaceS24 + DesignTokens.spaceS4,
+                    bottom = DesignTokens.spaceS12,
+                ),
             fontSize = 28.sp,
             lineHeight = 32.2.sp,
             letterSpacing = (-.9).sp,
@@ -44,7 +50,11 @@ internal fun SavedInvitationsScreen(
         tabs()
         LazyColumn(
             Modifier.weight(1f).fillMaxWidth().testTag("saved-invitations-list"),
-            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 110.dp),
+            contentPadding = PaddingValues(
+                start = DesignTokens.spaceS20,
+                end = DesignTokens.spaceS20,
+                bottom = DesignTokens.spaceS24,
+            ),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item {

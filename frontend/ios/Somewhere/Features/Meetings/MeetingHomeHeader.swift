@@ -14,7 +14,6 @@ struct MeetingHomeHeader: View {
             Menu {
                 Text(user.displayName)
                 Button("Выйти из аккаунта", action: logout)
-                Button("Удалить аккаунт", role: .destructive, action: deleteAccount)
             } label: {
                 Image(systemName: "person.crop.circle").font(.system(size: 24))
                     .foregroundStyle(AppPalette.muted).frame(width: 44, height: 44)

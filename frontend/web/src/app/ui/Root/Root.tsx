@@ -4,6 +4,7 @@ import { Outlet, useLocation, ScrollRestoration } from 'react-router';
 import { useSessionLifecycle } from '@/app/ui/Root/hooks/useSessionLifecycle';
 import { DeletionGate } from '@/features/delete-account';
 import { isDemo } from '@/shared/config';
+import { NavigationMotionProvider } from '@/widgets/navigation';
 
 export const Root = () => {
   useSessionLifecycle();
@@ -20,7 +21,9 @@ export const Root = () => {
         </div>
       )}
       <DeletionGate>
-        <Outlet />
+        <NavigationMotionProvider>
+          <Outlet />
+        </NavigationMotionProvider>
         {location.pathname === '/' && <ServiceFooter />}
       </DeletionGate>
       <ScrollRestoration

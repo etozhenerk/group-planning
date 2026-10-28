@@ -1,10 +1,8 @@
 package dev.groupplanning.android.ui.service
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,31 +33,8 @@ internal fun HelpContent(question: () -> Unit) {
             R.string.help_contacts_question to R.string.help_contacts_answer,
         )
             .forEachIndexed { index, (title, body) ->
-                Column(
-                    Modifier.fillMaxWidth().background(
-                        Color(0xff2e2e35),
-                        RoundedCornerShape(17.dp),
-                    ).clickable {
-                        expanded = if (index in expanded) expanded - index else expanded + index
-                    }.padding(18.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                ) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(if (index in expanded) "▾" else "▸", fontSize = 14.sp)
-                        Text(
-                            stringResource(title),
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                        )
-                    }
-                    if (index in expanded) {
-                        Text(
-                            stringResource(body),
-                            fontSize = 13.sp,
-                            lineHeight = 23.4.sp,
-                            color = Palette.muted,
-                        )
-                    }
+                HelpQuestion(stringResource(title), stringResource(body), index in expanded) {
+                    expanded = if (index in expanded) expanded - index else expanded + index
                 }
             }
         Column(

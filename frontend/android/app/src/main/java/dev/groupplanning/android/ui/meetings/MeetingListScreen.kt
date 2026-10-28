@@ -28,6 +28,7 @@ import dev.groupplanning.android.state.CalendarSelection
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.ExperienceSkeleton
 import dev.groupplanning.android.ui.components.StatusPanel
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
 import java.time.ZoneId
@@ -53,7 +54,7 @@ internal fun MeetingListScreen(
         }
     }
     val emptyAccount = data.counts?.total == 0
-    val page = data.page.takeIf { data.filter == selection.filter }
+    val page = data.pageFor(selection.filter)
     val loading = stringResource(R.string.calendar_loading)
     Column(Modifier.fillMaxSize()) {
         MeetingListHeading(selection.calendar || !emptyAccount, scrolled, create)
@@ -61,7 +62,11 @@ internal fun MeetingListScreen(
         LazyColumn(
             Modifier.weight(1f).fillMaxWidth().testTag("meetings-list"),
             state = scroll,
-            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 110.dp),
+            contentPadding = PaddingValues(
+                start = DesignTokens.spaceS20,
+                end = DesignTokens.spaceS20,
+                bottom = DesignTokens.spaceS24,
+            ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item(key = "toolbar") { MeetingToolbar(selection, data.counts, change) }

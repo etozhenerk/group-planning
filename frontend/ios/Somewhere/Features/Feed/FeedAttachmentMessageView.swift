@@ -60,7 +60,12 @@ struct FeedAttachmentMessageView: View {
             }
     }
     private var avatar: some View {
-        ParticipantAvatar(
-            user: entry.actor, size: 25, color: Color(designHex: own ? 0xd8c6ad : 0xc2b1d5))
+        MeetingInfoAvatar(
+            user: own ? session.profile ?? entry.actor : entry.actor,
+            size: DesignTokens.componentMobileChatMessageAvatar,
+            textSize: DesignTokens.typographySizeCaption,
+            weight: DesignTokens.typographyWeightSemibold,
+            color: own ? DesignTokens.colorRosterSand : DesignTokens.colorRosterMint,
+            textColor: DesignTokens.colorRosterText)
     }
 }

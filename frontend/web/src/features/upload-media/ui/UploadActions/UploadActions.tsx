@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
+import { useUploadPicker } from '@/features/upload-media/ui/UploadActions/hooks/useUploadPicker';
 import styles from '@/features/upload-media/ui/UploadActions/UploadActions.module.css';
 
 export type UploadActionsProps = {
@@ -9,10 +10,9 @@ export type UploadActionsProps = {
   choose: (files: FileList | null) => void;
   busy: boolean;
   ready: boolean;
-  complete: boolean;
   memory: boolean;
+  retry: boolean;
   send: () => void;
-  done: () => void;
 };
 
 export const UploadActions = ({
@@ -22,31 +22,37 @@ export const UploadActions = ({
   choose,
   busy,
   ready,
-  complete,
   memory,
+  retry,
   send,
-  done,
-}: UploadActionsProps) => (
-  <div className={styles.actions}>
-    <label className={styles.picker}>
-      <Plus size={18} aria-hidden="true" />
-      {hasFiles ? 'Выбрать ещё' : photo ? 'Выбрать фото' : 'Выбрать файлы'}
+}: UploadActionsProps) => {
+  const { input, button } = useUploadPicker();
+
+  return (
+    <div className={styles.actions}>
+      <button
+        type="button"
+        className={styles.picker}
+        ref={button}
+        disabled={busy}
+        onClick={() => input.current?.click()}
+      >
+        <Plus size={18} aria-hidden="true" />
+        {hasFiles ? 'Выбрать ещё' : photo ? 'Выбрать фото' : 'Выбрать файлы'}
+      </button>
       <input
+        ref={input}
         type="file"
+        hidden
         multiple
         accept={accept}
         aria-label={photo ? 'Выбрать фото' : 'Выбрать файлы'}
         onChange={(event) => {
           choose(event.target.files);
           event.target.value = '';
+          button.current?.focus({ preventScroll: true });
         }}
       />
-    </label>
-    {complete ? (
-      <button className={styles.primary} type="button" onClick={done}>
-        Готово
-      </button>
-    ) : (
       <button
         className={styles.primary}
         type="button"
@@ -55,8 +61,16 @@ export const UploadActions = ({
         aria-label={busy ? 'Загрузка файлов' : undefined}
         onClick={send}
       >
-        {busy ? <ButtonSpinner /> : memory ? 'Добавить в альбом' : 'Отправить'}
+        {busy ? (
+          <ButtonSpinner />
+        ) : retry ? (
+          'Повторить отправку'
+        ) : memory ? (
+          'Добавить в альбом'
+        ) : (
+          'Отправить'
+        )}
       </button>
-    )}
-  </div>
-);
+    </div>
+  );
+};

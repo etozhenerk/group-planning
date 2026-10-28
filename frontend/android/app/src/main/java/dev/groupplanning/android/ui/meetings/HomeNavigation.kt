@@ -1,5 +1,6 @@
 package dev.groupplanning.android.ui.meetings
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -49,20 +51,53 @@ internal fun HomeNavigation(selected: Int, select: (Int) -> Unit) {
         val width = maxWidth / 3
         val x by animateDpAsState(
             width * selected,
-            tween(if (LocalMotionEnabled.current) 260 else 0),
+            tween(
+                if (LocalMotionEnabled.current) {
+                    DesignTokens.motionDurationNavigation
+                } else {
+                    0
+                },
+            ),
             label = "navigation",
         )
         Box(
-            Modifier.offset { IntOffset(x.roundToPx(), 0) }.width(width).height(48.dp)
-                .background(Color(0xff4a4554), RoundedCornerShape(24.dp))
-                .border(1.dp, Color(0x16ddd3ed), RoundedCornerShape(24.dp)),
+            Modifier.offset { IntOffset(x.roundToPx(), 0) }
+                .width(width).height(DesignTokens.spaceS48)
+                .background(
+                    DesignTokens.colorNavigationSelected,
+                    RoundedCornerShape(DesignTokens.radiusPill),
+                )
+                .border(
+                    DesignTokens.spaceS1,
+                    DesignTokens.colorNavigationSelectedBorder,
+                    RoundedCornerShape(DesignTokens.radiusPill),
+                ),
         )
         Row(Modifier.fillMaxWidth()) {
             listOf(R.string.home_meetings, R.string.home_invitations, R.string.profile_title)
                 .forEachIndexed { index, label ->
-                    val tint = if (selected == index) Color(0xffeee5f7) else Palette.muted
+                    val tint by animateColorAsState(
+                        if (selected ==
+                            index
+                        ) {
+                            DesignTokens.colorNavigationSelectedText
+                        } else {
+                            Palette.muted
+                        },
+                        tween(
+                            if (LocalMotionEnabled.current) {
+                                DesignTokens.motionDurationNavigation
+                            } else {
+                                0
+                            },
+                        ),
+                        label = "navigation-color-$index",
+                    )
                     Column(
-                        Modifier.weight(1f).height(48.dp).clip(RoundedCornerShape(24.dp))
+                        Modifier.weight(
+                            1f,
+                        ).height(DesignTokens.spaceS48)
+                            .clip(RoundedCornerShape(DesignTokens.radiusPill))
                             .selectable(selected == index, role = Role.Tab, onClick = {
                                 select(index)
                             })

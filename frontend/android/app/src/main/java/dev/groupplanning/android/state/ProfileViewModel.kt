@@ -33,7 +33,7 @@ internal class ProfileViewModel(private val repository: ServiceRepository, scope
         val sessions = repository.sessions ?: return
         val generation = sessions.state.value.generation
         if (state.value.loading) return
-        mutable.value = ProfileState(loading = true)
+        mutable.value = state.value.copy(loading = true, error = false)
         viewModelScope.launch {
             try {
                 val profile = repository.profile(generation)
@@ -41,7 +41,10 @@ internal class ProfileViewModel(private val repository: ServiceRepository, scope
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: ClientFailure) {
-                if (sessions.isCurrent(generation)) mutable.value = ProfileState(error = true)
+                if (sessions.isCurrent(generation)) {
+                    mutable.value =
+                        state.value.copy(loading = false, error = true)
+                }
             }
         }
     }

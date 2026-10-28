@@ -59,9 +59,6 @@ for (const width of [390, 1440]) {
     expect(image).not.toBeNull();
     expect((image?.x ?? 0) - (panel?.x ?? 0)).toBeCloseTo(width < 740 ? 20 : 25, 0);
     await expect(dialog.getByRole('button', { name: 'Убрать first.png' })).toBeVisible();
-    await dialog.getByRole('button', { name: 'Повторить', exact: true }).click();
-    await expect(dialog.getByRole('status')).toHaveText('Добавлено');
-    expect(uploads).toBe(2);
     await dialog.evaluate((element) => {
       element.setAttribute('data-upload-exit-probe', 'true');
       element.setAttribute('data-upload-exit-valid', 'true');
@@ -71,10 +68,7 @@ for (const width of [390, 1440]) {
           samples++;
           element.setAttribute('data-upload-exit-samples', String(samples));
 
-          if (
-            !element.querySelector('img') ||
-            !element.textContent?.includes('Добавлено')
-          ) {
+          if (!element.querySelector('img')) {
             element.setAttribute('data-upload-exit-valid', 'false');
           }
         }
@@ -92,9 +86,13 @@ for (const width of [390, 1440]) {
         attributeFilter: ['open', 'data-motion'],
       });
     });
-    await dialog.getByRole('button', { name: 'Готово', exact: true }).click();
+    await dialog.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
     const closed = page.locator('[data-upload-exit-probe]');
     await expect(closed).not.toBeVisible();
+    expect(uploads).toBe(2);
+    await expect(
+      page.getByTestId('feed-message').filter({ has: page.locator('img') }),
+    ).toHaveCount(1);
     expect(Number(await closed.getAttribute('data-upload-exit-samples'))).toBeGreaterThan(
       0,
     );
@@ -102,6 +100,7 @@ for (const width of [390, 1440]) {
     await page.getByRole('button', { name: 'Добавить к встрече' }).click();
     const chooser = page.waitForEvent('filechooser');
     await page.getByRole('menuitem', { name: 'Фото', exact: true }).click();
+    await dialog.getByRole('button', { name: 'Выбрать фото', exact: true }).click();
     await (
       await chooser
     ).setFiles({ name: 'second.png', mimeType: 'image/png', buffer: bytes });

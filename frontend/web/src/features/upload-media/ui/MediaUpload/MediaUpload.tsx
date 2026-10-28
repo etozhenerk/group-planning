@@ -1,5 +1,6 @@
 import type { Session } from '@/entities/session';
 import { useMediaUpload } from '@/features/upload-media/model/useMediaUpload';
+import { useUploadCompletion } from '@/features/upload-media/ui/MediaUpload/hooks/useUploadCompletion';
 import { UploadActions } from '@/features/upload-media/ui/UploadActions';
 import { UploadItemRow } from '@/features/upload-media/ui/UploadItemRow';
 import { Status } from '@/shared/ui/Status';
@@ -13,6 +14,7 @@ export type MediaUploadProps = {
   photo: boolean;
   done: () => void;
   initialFiles?: File[];
+  active?: boolean;
 };
 
 export const MediaUpload = ({
@@ -22,8 +24,14 @@ export const MediaUpload = ({
   photo,
   done,
   initialFiles = [],
+  active = true,
 }: MediaUploadProps) => {
   const upload = useMediaUpload(id, session, purpose, photo, initialFiles);
+  const complete =
+    upload.items.length > 0 && upload.items.every((item) => item.state === 'done');
+
+  useUploadCompletion(complete, active, done);
+  const failures = upload.items.filter((item) => item.state === 'failed');
 
   if (upload.denied) {
     return <Status title="Доступ к встрече закрыт" />;
@@ -47,16 +55,23 @@ export const MediaUpload = ({
     <div className={styles.upload}>
       {upload.error && <p role="alert">{upload.error}</p>}
       <ul className={styles.items} data-photo={photo}>
-        {upload.items.map((item) => (
-          <UploadItemRow
-            key={item.id}
-            item={item}
-            remove={() => upload.remove(item.id)}
-            retry={() => void upload.deliver(item)}
-            caption={(value) => upload.caption(item.id, value)}
-          />
-        ))}
+        {upload.items
+          .filter((item) => complete || item.state !== 'done' || upload.busy)
+          .map((item) => (
+            <UploadItemRow
+              key={item.id}
+              item={item}
+              remove={() => upload.remove(item.id)}
+              busy={upload.busy}
+              caption={(value) => upload.caption(item.id, value)}
+            />
+          ))}
       </ul>
+      {!upload.busy && failures.length > 0 && (
+        <p role="alert">
+          {failures[0]?.error} Повторная отправка добавит только неотправленные файлы.
+        </p>
+      )}
       <p className={styles.hint}>Видно участникам встречи</p>
       <UploadActions
         photo={photo}
@@ -66,14 +81,13 @@ export const MediaUpload = ({
           : upload.limits.data.file_types
         ).join(',')}
         choose={upload.choose}
-        busy={upload.busy}
-        ready={upload.items.some((item) => item.state === 'ready' && !item.error)}
-        complete={
-          upload.items.length > 0 && upload.items.every((item) => item.state === 'done')
-        }
+        busy={upload.busy || complete}
+        retry={failures.length > 0}
+        ready={upload.items.some(
+          (item) => item.state === 'failed' || (item.state === 'ready' && !item.error),
+        )}
         memory={purpose === 'memory'}
         send={upload.upload}
-        done={done}
       />
     </div>
   );

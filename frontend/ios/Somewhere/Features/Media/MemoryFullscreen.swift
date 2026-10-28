@@ -69,6 +69,7 @@ struct MemoryFullscreen: View {
                 dismiss()
                 return .handled
             }
+            .task(id: selection) { await owner.prefetch(around: selection) }
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: selection)
             .onChange(of: owner.current) { _, current in if !current { dismiss() } }
     }

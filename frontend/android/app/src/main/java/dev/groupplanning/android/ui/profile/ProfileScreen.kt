@@ -37,6 +37,7 @@ import dev.groupplanning.android.ui.components.ExperienceSkeleton
 import dev.groupplanning.android.ui.components.UserAvatar
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
 import dev.groupplanning.android.ui.service.ProfileServiceNavigation
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -44,7 +45,6 @@ internal fun ProfileScreen(
     model: ProfileViewModel,
     service: (String) -> Unit,
     logout: () -> Unit,
-    delete: () -> Unit,
 ) {
     val state by model.state.collectAsStateWithLifecycle()
     LaunchedEffect(model) { model.load() }
@@ -55,7 +55,7 @@ internal fun ProfileScreen(
                 start = 20.dp,
                 end = 20.dp,
                 top = 28.dp,
-                bottom = 110.dp,
+                bottom = DesignTokens.spaceS24,
             ),
         ) {
             Text(
@@ -66,7 +66,7 @@ internal fun ProfileScreen(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 24.dp),
             )
-            if (state.loading) ExperienceSkeleton(profile = true)
+            if (state.loading && state.profile == null) ExperienceSkeleton(profile = true)
             if (state.error) {
                 TextButton(model::load) {
                     Text(
@@ -173,25 +173,13 @@ internal fun ProfileScreen(
                     }
                 }
             }
-            Row(
-                Modifier.fillMaxWidth().padding(top = 20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                TextButton(delete) {
-                    Text(
-                        stringResource(R.string.delete_account),
-                        color = Palette.error,
-                        fontSize = 13.sp,
-                    )
-                }
-                TextButton(logout) {
-                    Text(
-                        stringResource(R.string.experience_logout),
-                        fontSize = 14.sp,
-                    )
-                }
-            }
             ProfileServiceNavigation(service)
+            TextButton(logout, Modifier.fillMaxWidth().padding(top = DesignTokens.spaceS20)) {
+                Text(
+                    stringResource(R.string.experience_logout),
+                    fontSize = DesignTokens.typographySizeButton,
+                )
+            }
         }
     }
 }

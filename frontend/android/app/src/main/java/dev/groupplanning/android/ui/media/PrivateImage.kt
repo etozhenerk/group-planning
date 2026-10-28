@@ -1,5 +1,6 @@
 package dev.groupplanning.android.ui.media
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -30,9 +31,11 @@ internal fun PrivateImage(
     load: suspend () -> ByteArray,
     modifier: Modifier = Modifier,
     scale: ContentScale = ContentScale.Crop,
+    cached: Bitmap? = null,
+    loadBitmap: (suspend () -> Bitmap)? = null,
 ) {
     val scope = rememberCoroutineScope()
-    val model = remember(key) { ImageController(scope, load) }
+    val model = remember(key) { ImageController(scope, cached, loadBitmap, load) }
     val state by model.state.collectAsStateWithLifecycle()
     LaunchedEffect(model) { model.load() }
     Box(modifier, contentAlignment = Alignment.Center) {

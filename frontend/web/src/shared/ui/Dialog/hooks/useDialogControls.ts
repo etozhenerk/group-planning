@@ -53,6 +53,10 @@ export const useDialogControls = (
     backdrop,
     dismiss,
     cancel: (event: SyntheticEvent<HTMLDialogElement>) => {
+      if (event.target !== event.currentTarget) {
+        return;
+      }
+
       event.preventDefault();
       dismiss();
     },

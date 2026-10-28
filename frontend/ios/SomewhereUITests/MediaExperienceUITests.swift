@@ -35,8 +35,7 @@ final class MediaExperienceUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Отправить"].waitForExistence(timeout: 10))
         capture("refresh-photo-preview")
         app.buttons["Отправить"].tap()
-        XCTAssertTrue(app.staticTexts["Отправлено"].waitForExistence(timeout: 15))
-        app.buttons["media-picker-close"].tap()
+        XCTAssertTrue(app.buttons["media-picker-close"].waitForNonExistence(timeout: 20))
         XCTAssertEqual(input.value as? String, "Фото отдельно от сообщения")
         let attachment = app.buttons["Открыть фото"].firstMatch
         XCTAssertTrue(attachment.waitForExistence(timeout: 10))

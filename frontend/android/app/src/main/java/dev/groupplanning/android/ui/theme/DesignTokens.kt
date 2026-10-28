@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 2.5.2. Do not edit.
+// Generated from design-system/tokens.json · 3.0.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -24,6 +24,10 @@ internal object DesignTokens {
     val colorMessage = Color(0xff33343a)
     val colorMuted = Color(0xffb9b9c2)
     val colorNavigation = Color(0xff1d1e22)
+    val colorNavigationInactiveText = Color(0xff92939f)
+    val colorNavigationSelected = Color(0xff4a4554)
+    val colorNavigationSelectedBorder = Color(0x16ddd3ed)
+    val colorNavigationSelectedText = Color(0xffeee5f7)
     val colorOwnMessage = Color(0xffe0dce8)
     val colorOwnText = Color(0xff27252d)
     val colorParticipantChipAvatar = Color(0x10000000)
@@ -120,6 +124,14 @@ internal object DesignTokens {
     val componentEmojiDockSearchRadius = 9.dp
     val componentEmojiDockToolbarInsetInline = 8.dp
     val componentEmojiDockToolbarInsetTop = 5.dp
+    val componentHelpDisclosureMaximumWidth = 780.dp
+    val componentHelpDisclosureMobileInset = 20.dp
+    val componentHelpDisclosurePaddingBlock = 22.dp
+    val componentHelpDisclosurePaddingInline = 24.dp
+    val componentHelpDisclosureRadius = 16.dp
+    val componentHelpDisclosureSymbolLineLength = 14.dp
+    val componentHelpDisclosureSymbolSize = 20.dp
+    val componentHelpDisclosureSymbolStroke = 2.dp
     val componentIconFocusOffset = 5.dp
     val componentIconStrokeWidth = 1.7f
     val componentMeetingSettingsCoverGap = 12.dp
@@ -308,6 +320,8 @@ internal object DesignTokens {
     val typographyFamilyAndroid = "sans-serif"
     val typographyLineHeightBody = 1.5f
     val typographyLineHeightCardTitle = 1.25f
+    val typographyLineHeightHelpAnswer = 1.7f
+    val typographyLineHeightHelpQuestion = 1.5f
     val typographyLineHeightLabel = 1.4f
     val typographyLineHeightMeetingDescription = 1.6f
     val typographyLineHeightMobileFieldDescription = 1.45f
@@ -324,6 +338,8 @@ internal object DesignTokens {
     val typographySizeEmojiGroupLabel = 10.sp
     val typographySizeEmojiQuick = 28.sp
     val typographySizeHeading = 27.sp
+    val typographySizeHelpAnswer = 14.sp
+    val typographySizeHelpQuestion = 14.sp
     val typographySizeLabel = 11.sp
     val typographySizeMobileActionHeading = 28.sp
     val typographySizeMobileChatNarrowTitle = 14.sp
@@ -339,6 +355,7 @@ internal object DesignTokens {
     val typographySizeSmall = 13.sp
     val typographyWeightBold = 700f
     val typographyWeightBrand = 850f
+    val typographyWeightHelpQuestion = 550f
     val typographyWeightMedium = 500f
     val typographyWeightMobileChatTitle = 650f
     val typographyWeightMobileSheetTitle = 650f

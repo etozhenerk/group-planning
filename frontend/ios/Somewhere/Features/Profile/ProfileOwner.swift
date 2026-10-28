@@ -14,6 +14,7 @@ final class ProfileOwner {
         self.session = session
         userID = session.profile?.id
         lease = try? session.privateData.lease()
+        if session.privateData.profile?.id == userID { profile = session.privateData.profile }
     }
     var current: Bool {
         session.status == .authenticated && session.profile?.id == userID
@@ -30,6 +31,7 @@ final class ProfileOwner {
             guard current else { return }
             guard result.id == userID else { throw ClientFailure.invalidResponse }
             profile = result
+            session.privateData.profile = result
         } catch {
             if current, !(error is CancellationError) { failed = true }
         }

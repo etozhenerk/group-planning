@@ -1,5 +1,7 @@
 import SwiftUI
 
 struct SavedInvitationsLoading: View {
-    var body: some View { MeetingCardsSkeleton(label: "Загрузка приглашений") }
+    var body: some View {
+        DeferredPlaceholder { MeetingCardsSkeleton(label: "Загрузка приглашений") }
+    }
 }

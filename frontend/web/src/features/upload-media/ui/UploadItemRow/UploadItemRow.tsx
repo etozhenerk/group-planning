@@ -5,14 +5,25 @@ import styles from '@/features/upload-media/ui/UploadItemRow/UploadItemRow.modul
 export type UploadItemRowProps = {
   item: UploadItem;
   remove: () => void;
-  retry: () => void;
+  busy: boolean;
   caption: (value: string) => void;
 };
 
-export const UploadItemRow = ({ item, remove, retry, caption }: UploadItemRowProps) => (
+export const UploadItemRow = ({ item, remove, busy, caption }: UploadItemRowProps) => (
   <li className={styles.item} data-photo={!!item.preview}>
     {item.preview ? (
-      <img src={item.preview} alt="" className={styles.preview} />
+      <div className={styles.photo}>
+        <img src={item.preview} alt={item.file.name} className={styles.preview} />
+        <button
+          className={styles.remove}
+          type="button"
+          onClick={remove}
+          disabled={busy}
+          aria-label={`Убрать ${item.file.name}`}
+        >
+          <ChatIcon name="close" size={20} aria-hidden="true" />
+        </button>
+      </div>
     ) : (
       <div className={styles.file}>
         <ChatIcon name="file" size={24} aria-hidden="true" />
@@ -26,41 +37,17 @@ export const UploadItemRow = ({ item, remove, retry, caption }: UploadItemRowPro
             МБ
           </small>
         </div>
-        {item.state !== 'done' && (
-          <button type="button" onClick={remove} aria-label={`Убрать ${item.file.name}`}>
-            ×
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={remove}
+          disabled={busy}
+          aria-label={`Убрать ${item.file.name}`}
+        >
+          <ChatIcon name="close" size={20} aria-hidden="true" />
+        </button>
       </div>
     )}
-    {(item.state !== 'ready' || item.error) && (
-      <div className={styles.info}>
-        {item.state === 'uploading' && (
-          <progress
-            max={100}
-            value={item.progress}
-            aria-label={`Загрузка ${item.file.name}`}
-          />
-        )}
-        {item.state === 'done' && <span role="status">Добавлено</span>}
-        {item.error && <p role="alert">{item.error}</p>}
-        {item.state === 'failed' && (
-          <button type="button" onClick={retry}>
-            Повторить
-          </button>
-        )}
-      </div>
-    )}
-    {item.preview && item.state !== 'done' && (
-      <button
-        className={styles.remove}
-        type="button"
-        onClick={remove}
-        aria-label={`Убрать ${item.file.name}`}
-      >
-        Убрать фото
-      </button>
-    )}
+    {item.state === 'ready' && item.error && <p role="alert">{item.error}</p>}
     {!item.preview && (
       <label className={styles.caption}>
         Подпись
@@ -68,7 +55,7 @@ export const UploadItemRow = ({ item, remove, retry, caption }: UploadItemRowPro
           aria-label={`Подпись к ${item.file.name}`}
           placeholder="Добавьте пару слов"
           value={item.caption}
-          disabled={item.state !== 'ready'}
+          disabled={busy || item.state !== 'ready'}
           onChange={(event) => {
             if (Array.from(event.target.value).length <= 2000) {
               caption(event.target.value);

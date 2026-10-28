@@ -180,8 +180,7 @@ final class InvitationUITests: XCTestCase {
         let share = app.buttons["meeting-info-share"]
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         share.tap()
-        XCTAssertTrue(app.buttons["share-invitation"].waitForExistence(timeout: 5))
-        app.buttons["share-invitation"].tap()
+        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
         let copy = app.cells.matching(
             NSPredicate(format: "label IN %@", ["Скопировать", "Copy", "Copy Link", "Копировать"])
         ).firstMatch

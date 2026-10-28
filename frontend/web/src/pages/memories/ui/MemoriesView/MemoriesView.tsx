@@ -17,12 +17,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
 
   return (
     <Workspace navigation={<Navigation session={session} />}>
-      <main
-        id={view.uploading && !view.mobile ? undefined : 'main'}
-        className={styles.page}
-        hidden={view.uploading && !view.mobile}
-      >
-        <input {...view.picker.inputProps} />
+      <main id="main" className={styles.page}>
         <Link
           className={styles.back}
           to={view.fromChat ? `/meetings/${id}` : '/meetings?view=list&period=past'}
@@ -56,7 +51,6 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
         open={view.uploading}
         title="Добавить фото в альбом"
         onClose={view.close}
-        desktopPage
         chatAction
       >
         <UploadDraft
@@ -65,7 +59,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
           photo
           purpose="memory"
           active={view.uploading}
-          done={view.close}
+          done={view.complete}
         />
       </Dialog>
     </Workspace>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Добавление фото · somewhere</title>
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="media.css" />
+    <script type="module" src="media.js"></script>
+  </head>
+  <body>
+    <iframe title="Встреча" src="../../album-empty.html"></iframe>
+    <dialog aria-labelledby="upload-title">
+      <header>
+        <h2 id="upload-title">Добавить фото в альбом</h2>
+        <button id="close" class="icon-button" aria-label="Закрыть">×</button>
+      </header>
+      <div class="content">
+        <div id="previews" class="upload-grid"></div>
+        <p class="caption">Видно участникам встречи</p>
+        <div class="row spread">
+          <button id="choose" class="button subtle">+ Выбрать фото</button>
+          <button id="send" class="button primary" disabled>Добавить в альбом</button>
+          <input type="file" id="files" multiple hidden accept="image/jpeg,image/png,image/webp" />
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>

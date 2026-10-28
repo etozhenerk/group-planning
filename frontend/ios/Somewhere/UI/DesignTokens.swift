@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 2.5.2. Do not edit.
+// Generated from design-system/tokens.json · 3.0.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -114,6 +114,34 @@ enum DesignTokens {
         red: 0.11372549019607843,
         green: 0.11764705882352941,
         blue: 0.13333333333333333,
+        opacity: 1
+    )
+    static let colorNavigationInactiveText = Color(
+        .sRGB,
+        red: 0.5725490196078431,
+        green: 0.5764705882352941,
+        blue: 0.6235294117647059,
+        opacity: 1
+    )
+    static let colorNavigationSelected = Color(
+        .sRGB,
+        red: 0.2901960784313726,
+        green: 0.27058823529411763,
+        blue: 0.32941176470588235,
+        opacity: 1
+    )
+    static let colorNavigationSelectedBorder = Color(
+        .sRGB,
+        red: 0.8666666666666667,
+        green: 0.8274509803921568,
+        blue: 0.9294117647058824,
+        opacity: 0.08627450980392157
+    )
+    static let colorNavigationSelectedText = Color(
+        .sRGB,
+        red: 0.9333333333333333,
+        green: 0.8980392156862745,
+        blue: 0.9686274509803922,
         opacity: 1
     )
     static let colorOwnMessage = Color(
@@ -398,6 +426,14 @@ enum DesignTokens {
     static let componentEmojiDockSearchRadius = CGFloat(9)
     static let componentEmojiDockToolbarInsetInline = CGFloat(8)
     static let componentEmojiDockToolbarInsetTop = CGFloat(5)
+    static let componentHelpDisclosureMaximumWidth = CGFloat(780)
+    static let componentHelpDisclosureMobileInset = CGFloat(20)
+    static let componentHelpDisclosurePaddingBlock = CGFloat(22)
+    static let componentHelpDisclosurePaddingInline = CGFloat(24)
+    static let componentHelpDisclosureRadius = CGFloat(16)
+    static let componentHelpDisclosureSymbolLineLength = CGFloat(14)
+    static let componentHelpDisclosureSymbolSize = CGFloat(20)
+    static let componentHelpDisclosureSymbolStroke = CGFloat(2)
     static let componentIconFocusOffset = CGFloat(5)
     static let componentIconStrokeWidth = 1.7
     static let componentMeetingSettingsCoverGap = CGFloat(12)
@@ -586,6 +622,8 @@ enum DesignTokens {
     static let typographyFamilyIos = "system"
     static let typographyLineHeightBody = 1.5
     static let typographyLineHeightCardTitle = 1.25
+    static let typographyLineHeightHelpAnswer = 1.7
+    static let typographyLineHeightHelpQuestion = 1.5
     static let typographyLineHeightLabel = 1.4
     static let typographyLineHeightMeetingDescription = 1.6
     static let typographyLineHeightMobileFieldDescription = 1.45
@@ -602,6 +640,8 @@ enum DesignTokens {
     static let typographySizeEmojiGroupLabel = CGFloat(10)
     static let typographySizeEmojiQuick = CGFloat(28)
     static let typographySizeHeading = CGFloat(27)
+    static let typographySizeHelpAnswer = CGFloat(14)
+    static let typographySizeHelpQuestion = CGFloat(14)
     static let typographySizeLabel = CGFloat(11)
     static let typographySizeMobileActionHeading = CGFloat(28)
     static let typographySizeMobileChatNarrowTitle = CGFloat(14)
@@ -617,6 +657,7 @@ enum DesignTokens {
     static let typographySizeSmall = CGFloat(13)
     static let typographyWeightBold = 700
     static let typographyWeightBrand = 850
+    static let typographyWeightHelpQuestion = 550
     static let typographyWeightMedium = 500
     static let typographyWeightMobileChatTitle = 650
     static let typographyWeightMobileSheetTitle = 650

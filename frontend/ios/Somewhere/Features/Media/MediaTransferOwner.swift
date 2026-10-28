@@ -12,6 +12,8 @@ final class MediaTransferOwner {
     var problem: String?
     var completed: [MeetingMedia] = []
     var entries: [FeedEntry] = []
+    var completedBatch = 0
+    private var sendingBatch = false
     private var generation = UUID()
     @ObservationIgnored private var work: Task<Void, Never>?
     init(id: UUID, session: SessionStore, purpose: String) {
@@ -23,7 +25,10 @@ final class MediaTransferOwner {
     var current: Bool {
         session.status == .authenticated && lease.map { session.privateData.isCurrent($0) } == true
     }
-    var busy: Bool { pending.contains { $0.stage == .uploading } }
+    var busy: Bool { sendingBatch || pending.contains { $0.stage == .uploading } }
+    var canSend: Bool {
+        pending.contains { $0.stage == .ready || ($0.stage == .failed && $0.problem == nil) }
+    }
     func loadLimits() async {
         guard current, limits == nil else { return }
         do {
@@ -82,13 +87,26 @@ final class MediaTransferOwner {
     }
     func send() {
         guard current, !busy else { return }
+        let keys = pending.filter {
+            $0.stage == .ready || ($0.stage == .failed && $0.problem == nil)
+        }.map(\.id)
+        guard !keys.isEmpty else { return }
         work?.cancel()
+        sendingBatch = true
+        let version = generation
         work = Task {
-            for key in pending.filter({
-                $0.stage == .ready || ($0.stage == .failed && $0.problem == nil)
-            }).map(\.id) {
+            defer {
+                if generation == version {
+                    sendingBatch = false
+                    work = nil
+                }
+            }
+            for key in keys {
+                guard !Task.isCancelled, current, generation == version else { return }
                 await upload(key)
             }
+            guard current, generation == version else { return }
+            if pending.allSatisfy({ $0.stage == .published }) { completedBatch += 1 }
         }
     }
     func retry(_ key: UUID) {
@@ -103,6 +121,8 @@ final class MediaTransferOwner {
         let version = generation
         let file = pending[index]
         pending[index].stage = .uploading
+        pending[index].transferFailure = nil
+        pending[index].transferPhase = "prepare"
         do {
             var media: MeetingMedia
             if let prepared = file.media {
@@ -118,6 +138,7 @@ final class MediaTransferOwner {
                 throw ClientFailure.invalidResponse
             }
             pending[index].media = media
+            pending[index].transferPhase = "upload"
             media = try await session.send(
                 ExperienceRequests.upload(media, data: file.data), as: MediaEnvelope.self
             ).media
@@ -125,6 +146,7 @@ final class MediaTransferOwner {
             guard media.meetingID == id, media.purpose == purpose,
                 media.id == pending[index].media?.id
             else { throw ClientFailure.invalidResponse }
+            pending[index].transferPhase = "publish"
             let result = try await session.send(
                 ExperienceRequests.publish(media, key: file.publishKey, caption: file.caption),
                 as: MediaEnvelope.self)
@@ -135,6 +157,7 @@ final class MediaTransferOwner {
                 result.entry == nil || result.entry?.meetingID == id
             else { throw ClientFailure.invalidResponse }
             pending[index].stage = .published
+            pending[index].transferPhase = nil
             completed.append(result.media)
             if let entry = result.entry { entries.append(entry) }
         } catch {
@@ -142,12 +165,14 @@ final class MediaTransferOwner {
                 let index = pending.firstIndex(where: { $0.id == key })
             else { return }
             pending[index].stage = .failed
+            pending[index].transferFailure = .sanitized(error)
         }
     }
     func suspend() {
         generation = UUID()
         work?.cancel()
         work = nil
+        sendingBatch = false
         for index in pending.indices where pending[index].stage == .uploading {
             pending[index].stage = .failed
         }

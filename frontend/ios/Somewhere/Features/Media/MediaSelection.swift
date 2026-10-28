@@ -39,9 +39,15 @@ enum MediaSelection {
             throw ClientFailure.invalidRequest
         }
         let data = try Data(contentsOf: url)
+        let declared = values.contentType?.preferredMIMEType
+        let contentType =
+            declared == nil || declared == "application/octet-stream"
+            ? UTType(filenameExtension: url.pathExtension)?.preferredMIMEType
+                ?? "application/octet-stream"
+            : declared ?? "application/octet-stream"
         return PendingMedia(
             id: UUID(), publishKey: UUID(), name: url.lastPathComponent,
-            contentType: values.contentType?.preferredMIMEType ?? "application/octet-stream",
+            contentType: contentType,
             data: data)
     }
 }

@@ -20,7 +20,7 @@ struct MeetingFeedScreen: View {
                         }.foregroundStyle(AppPalette.error).padding(16)
                     }
                     if !owner.loaded && owner.problem == nil {
-                        ChatConversationSkeleton()
+                        DeferredPlaceholder { ChatConversationSkeleton() }
                             .padding(DesignTokens.spaceS16)
                         Spacer(minLength: DesignTokens.spaceS0)
                     } else {
@@ -34,12 +34,24 @@ struct MeetingFeedScreen: View {
                     }
                 }
                 .toolbar(.hidden, for: .navigationBar)
+                .background(
+                    InteractiveBackGesture(
+                        blocked: !owner.sheets.isEmpty || owner.mediaSelection != nil)
+                )
                 .safeAreaInset(edge: .top, spacing: 0) {
                     if owner.current {
                         MeetingFeedHeader(
                             owner: owner, viewport: viewport.size, sheetDismissal: sheetDismissal)
                     }
                 }
+                .modifier(
+                    MediaSelectionPresenter(
+                        owner: owner.media,
+                        kind: Binding(
+                            get: { owner.mediaSelection }, set: { owner.mediaSelection = $0 }),
+                        selected: { owner.openSheet(.media) }
+                    )
+                )
                 .accessibilityHidden(!owner.sheets.isEmpty)
                 .sheet(
                     isPresented: Binding(

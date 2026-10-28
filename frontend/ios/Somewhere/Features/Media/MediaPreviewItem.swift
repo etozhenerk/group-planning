@@ -31,9 +31,8 @@ struct MediaPreviewItem: View {
                 }
                 .designFont(13).foregroundStyle(AppPalette.accent).frame(minHeight: 44)
                 .disabled(owner.busy)
-            case .uploading: ProgressView("Отправляем…").designFont(12)
-            case .published:
-                Label("Отправлено", systemImage: "checkmark.circle").designFont(12)
+            case .uploading: EmptyView()
+            case .published: EmptyView()
             case .failed:
                 Text(file.problem ?? "Не удалось отправить файл.").designFont(12)
                     .foregroundStyle(AppPalette.error)

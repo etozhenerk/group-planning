@@ -11,6 +11,7 @@ final class MeetingListOwner {
     var counts: CalendarPage.Counts?
     var countsTime: Date?
     var monthFilter: CalendarFilter?
+    var calendarCache: [(filter: CalendarFilter, page: CalendarPage, pages: Int)] = []
     var loadedPages = 1
     var loadingMore = false
     var moreError: ClientFailure?
@@ -95,7 +96,25 @@ final class MeetingListOwner {
             month = ResourceState()
             monthFilter = nil
         }
+        if let cached = calendarCache.first(where: { $0.filter == selection.filter }) {
+            let token = page.begin()
+            page.succeed(cached.page, requestID: token)
+            loadedPages = cached.pages
+        }
+        if month.value == nil,
+            let cached = calendarCache.first(where: { $0.filter == selection.monthFilter })
+        {
+            let token = month.begin()
+            month.succeed(cached.page, requestID: token)
+            monthFilter = selection.monthFilter
+        }
         selectionID = UUID()
+    }
+
+    func remember(_ value: CalendarPage, filter: CalendarFilter, pages: Int) {
+        calendarCache.removeAll { $0.filter == filter }
+        calendarCache.append((filter, value, pages))
+        if calendarCache.count > 12 { calendarCache.removeFirst() }
     }
 
     func retry() { selectionID = UUID() }
@@ -110,6 +129,7 @@ final class MeetingListOwner {
 
     func logout() {
         cancel()
+        calendarCache = []
         counts = nil
         page = ResourceState()
         month = ResourceState()

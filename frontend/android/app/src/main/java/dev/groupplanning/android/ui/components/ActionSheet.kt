@@ -53,6 +53,7 @@ internal fun ActionSheet(
     modifier: Modifier = Modifier,
     canClose: Boolean = true,
     animateClose: Boolean = false,
+    closeRequested: Boolean = false,
     canDismiss: Boolean = canClose,
     actions: (@Composable ColumnScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
@@ -93,6 +94,9 @@ internal fun ActionSheet(
                 close()
             }
         }
+    }
+    LaunchedEffect(closeRequested) {
+        if (closeRequested) requestClose()
     }
     CompositionLocalProvider(LocalMobileSheet provides true) {
         ModalBottomSheet(

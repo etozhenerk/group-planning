@@ -39,6 +39,9 @@ export default defineConfig({
         '37-outbox-owner.spec.ts',
         '45-reaction-placement.spec.ts',
         '46-upload-sheet-layout.spec.ts',
+        '47-upload-picker.spec.ts',
+        '48-media-batch.spec.ts',
+        '49-service-navigation.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

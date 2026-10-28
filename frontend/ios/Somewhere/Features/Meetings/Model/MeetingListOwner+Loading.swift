@@ -33,6 +33,7 @@ extension MeetingListOwner {
             guard valid(run) else { return }
             loadedPages = fetched
             page.succeed(result, requestID: token)
+            remember(result, filter: filter, pages: fetched)
             acceptCounts(result)
             failures = month.error == nil ? 0 : failures + 1
         } catch {
@@ -59,6 +60,7 @@ extension MeetingListOwner {
             let result = try await session.send(filter.request(), as: CalendarPage.self)
             guard valid(run) else { return }
             month.succeed(result, requestID: token)
+            remember(result, filter: filter, pages: 1)
             acceptCounts(result)
         } catch {
             guard valid(run) else { return }

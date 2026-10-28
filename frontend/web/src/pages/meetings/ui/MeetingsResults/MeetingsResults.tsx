@@ -17,7 +17,7 @@ export const MeetingsResults = ({
   emptyTitle,
 }: MeetingsResultsProps) => {
   return (
-    <div className={styles.results}>
+    <div className={styles.results} aria-busy={query.isFetching}>
       {query.isPending ? (
         <MeetingsLoading agenda={agenda} />
       ) : (

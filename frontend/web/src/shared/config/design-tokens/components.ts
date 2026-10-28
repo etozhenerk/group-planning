@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 2.5.2. Do not edit.
+// Generated from design-system/tokens.json · 3.0.0. Do not edit.
 export const componentTokens = {
   componentActionColumnWidth: '700px',
   componentActionFieldGap: '18px',
@@ -65,6 +65,14 @@ export const componentTokens = {
   componentEmojiDockSearchRadius: '9px',
   componentEmojiDockToolbarInsetInline: '8px',
   componentEmojiDockToolbarInsetTop: '5px',
+  componentHelpDisclosureMaximumWidth: '780px',
+  componentHelpDisclosureMobileInset: '20px',
+  componentHelpDisclosurePaddingBlock: '22px',
+  componentHelpDisclosurePaddingInline: '24px',
+  componentHelpDisclosureRadius: '16px',
+  componentHelpDisclosureSymbolLineLength: '14px',
+  componentHelpDisclosureSymbolSize: '20px',
+  componentHelpDisclosureSymbolStroke: '2px',
   componentIconFocusOffset: '5px',
   componentIconStrokeWidth: '1.7',
   componentMeetingSettingsCoverGap: '12px',

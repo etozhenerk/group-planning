@@ -10,10 +10,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import dev.groupplanning.android.R
+import dev.groupplanning.android.ui.components.rememberLoadingVisible
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
 internal fun CoverSkeleton(modifier: Modifier = Modifier) {
+    if (!rememberLoadingVisible(true)) return
     val label = stringResource(R.string.cover_loading)
     Box(
         modifier.fillMaxSize().background(Palette.message).testTag("cover-loading").semantics {

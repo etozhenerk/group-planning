@@ -50,7 +50,6 @@ internal fun CreationScreen(
     created: (CreatedMeeting) -> Unit,
 ) {
     val state by model.state.collectAsStateWithLifecycle()
-    var coverExpanded by rememberSaveable { mutableStateOf(false) }
     var confirm by rememberSaveable { mutableStateOf(false) }
     val close = {
         if (!state.busy && !state.preparingCover) {
@@ -105,25 +104,19 @@ internal fun CreationScreen(
                         ).padding(20.dp),
                         verticalArrangement = Arrangement.spacedBy(18.dp),
                     ) {
+                        CoverEditor(
+                            value = state.record.value.cover,
+                            enabled = state.editable,
+                            busy = model::preparingCover,
+                            change = { cover -> model.change { it.copy(cover = cover) } },
+                            prominent = true,
+                        )
                         MeetingFields(
                             state.record.value,
                             state.editable,
                             state.ambiguous,
                             model::change,
                         )
-                        TextButton({ coverExpanded = !coverExpanded }) {
-                            Text(stringResource(R.string.cover_title), fontSize = 13.sp)
-                        }
-                        if (coverExpanded) {
-                            CoverEditor(
-                                value = state.record.value.cover,
-                                enabled = state.editable,
-                                busy = model::preparingCover,
-                                change = { cover ->
-                                    model.change { it.copy(cover = cover) }
-                                },
-                            )
-                        }
                         state.problem?.let {
                             Text(it, Modifier.testTag("create-problem"), color = Palette.error)
                         }

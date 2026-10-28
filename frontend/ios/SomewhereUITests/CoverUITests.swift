@@ -57,8 +57,6 @@ final class CoverUITests: XCTestCase {
         app.buttons["Дата"].tap()
         XCTAssertTrue(app.staticTexts["Дата встречи"].waitForExistence(timeout: 5))
         app.buttons["Готово"].tap()
-        reveal(app.buttons["create-cover-expand"], app)
-        app.buttons["create-cover-expand"].tap()
         reveal(app.buttons["cover-select"], app)
     }
     func testSelectionFailureCancellationAndLostResponseSurviveRelaunch() {

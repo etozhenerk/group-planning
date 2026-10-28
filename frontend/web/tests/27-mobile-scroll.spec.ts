@@ -195,41 +195,16 @@ test('closing a mobile sheet restores the background position and permits normal
 }) => {
   await page.setViewportSize({ width: 402, height: 600 });
   await login(page, 'Саша');
-  const title = `Прокрутка ${test.info().project.name}`;
-
-  for (let index = 0; index < 5; index++) {
-    await apiCreate(page, `${title} ${index}`);
-  }
-
-  await page.goto('/meetings');
-  await page.getByRole('button', { name: /Предстоящие/ }).click();
-  const meeting = page.getByRole('link', { name: new RegExp(`${title} 4`) });
-  await expect(page.getByRole('article').first()).toBeVisible();
-
-  while ((await meeting.count()) === 0) {
-    const more = page.getByRole('button', { name: 'Показать ещё', exact: true });
-    const count = await page.getByRole('article').count();
-    await expect(more).toBeVisible();
-    await more.click();
-    await expect.poll(() => page.getByRole('article').count()).toBeGreaterThan(count);
-  }
-
-  await expect(meeting).toBeVisible();
-  await page.evaluate(() => scrollTo(0, 200));
-  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
-  await page.evaluate(() => scrollTo(0, 200));
-  await expect(
-    page.getByRole('heading', { name: 'Мой профиль', exact: true }),
-  ).toBeVisible();
-  await page
-    .getByRole('button', { name: 'Удалить аккаунт', exact: true })
-    .evaluate((element) => element.scrollIntoView({ block: 'center' }));
+  await page.goto('/meetings/new');
+  await page.getByLabel('Название', { exact: true }).fill('Несохранённая встреча');
+  const cancel = page.getByRole('link', { name: 'Отмена', exact: true });
+  await cancel.scrollIntoViewIfNeeded();
   const before = await page.evaluate(() => scrollY);
-  const profile = page.getByRole('link', { name: 'Профиль', exact: true });
+  const profile = cancel;
   const profileBefore = await profile.boundingBox();
   expect(before).toBeGreaterThan(0);
-  await page.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Удалить аккаунт?' });
+  await cancel.click();
+  const dialog = page.getByRole('dialog', { name: 'Выйти из формы?' });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expect(page.locator('body')).toHaveCSS('position', 'fixed');
   await expect(page.locator('body')).toHaveCSS('top', `${-before}px`);

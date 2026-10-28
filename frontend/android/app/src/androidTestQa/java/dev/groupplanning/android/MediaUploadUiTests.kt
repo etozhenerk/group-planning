@@ -54,6 +54,25 @@ class MediaUploadUiTests {
                 fixture.waitText("Настолки у Саши")
                 compose.onNodeWithText("Настолки у Саши").performScrollTo().performClick()
                 fixture.waitTag("meeting-add")
+                compose.onNodeWithTag("message-composer").performTextInput("Черновик до выбора PDF")
+                repeat(2) {
+                    compose.onNodeWithTag("meeting-add").performClick()
+                    compose.onNodeWithTag("add-file").performClick()
+                    check(
+                        fixture.device.wait(
+                            Until.hasObject(By.pkg("com.google.android.documentsui")),
+                            10_000,
+                        ) ||
+                            fixture.device.hasObject(By.pkg("com.android.documentsui")),
+                    )
+                    compose.onNodeWithTag("upload-sheet").assertDoesNotExist()
+                    fixture.device.pressBack()
+                    fixture.waitTag("meeting-add")
+                    compose.onNodeWithTag("upload-sheet").assertDoesNotExist()
+                    compose.onNodeWithTag(
+                        "message-composer",
+                    ).assertTextContains("Черновик до выбора PDF")
+                }
                 compose.onNodeWithTag("meeting-add").performClick()
                 compose.onNodeWithTag("add-file").performClick()
                 checkNotNull(
@@ -79,9 +98,7 @@ class MediaUploadUiTests {
                     .assertTextContains("Правила для нашей игры 🍒")
                 compose.onNodeWithText("Отправить").performScrollTo()
                     .performSemanticsAction(SemanticsActions.OnClick) { it() }
-                fixture.waitText("Отправлено")
-                fixture.screenshot("refresh-upload-sent")
-                fixture.device.pressBack()
+                fixture.screenshot("refresh-upload-submitting")
                 fixture.waitAbsent("upload-sheet")
                 fixture.waitText("Правила для нашей игры 🍒")
                 fixture.waitText("Правила игры.pdf")

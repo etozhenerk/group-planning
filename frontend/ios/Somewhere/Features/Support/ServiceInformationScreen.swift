@@ -6,7 +6,8 @@ struct ServiceInformationScreen: View {
     @State private var support: SupportKind?
     @Environment(\.dismiss) private var dismiss
     private var heading: String {
-        document == .help ? "Нужна подсказка?" : document == .about ? "О somewhere" : document.title
+        document == .help
+            ? "Нужна подсказка?" : document == .about ? "О приложении" : document.title
     }
     var body: some View {
         ScrollView {
@@ -14,7 +15,7 @@ struct ServiceInformationScreen: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("← К встречам").designFont(13).foregroundStyle(AppPalette.accent)
+                    Text("← Назад").designFont(13).foregroundStyle(AppPalette.accent)
                         .frame(minHeight: 44)
                 }.accessibilityLabel("Назад")
                 Text(heading).designFont(28, weight: .bold).tracking(-0.9).padding(
@@ -78,7 +79,9 @@ struct ServiceInformationScreen: View {
             }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
         }.accessibilityIdentifier("service-information-scroll").background(AppPalette.background)
             .toolbar(.hidden, for: .navigationBar)
-            .safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
+            .safeAreaInset(edge: .top, spacing: DesignTokens.spaceS0) {
+                ServicePageHeader(symbolOnly: document == .about)
+            }
 
             .fullScreenCover(item: $support) { kind in
                 SupportScreen(api: api, kind: kind, screen: "other")

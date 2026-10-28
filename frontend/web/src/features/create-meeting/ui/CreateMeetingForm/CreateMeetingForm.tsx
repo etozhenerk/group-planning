@@ -15,22 +15,20 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
     <>
       <div>
         <form onSubmit={form.submit} className={styles['stack']}>
+          <CoverEditor
+            value={form.value.cover}
+            onChange={(cover) => form.change({ ...form.value, cover })}
+            onBusy={form.setPreparing}
+            disabled={form.locked}
+            invalid={!!form.errors.cover}
+            prominent
+          />
           <MeetingFields
             value={form.value}
             onChange={form.change}
             disabled={form.locked}
             errors={form.errors}
           />
-          <details className={styles.cover} open={!!form.value.cover || undefined}>
-            <summary>Обложка</summary>
-            <CoverEditor
-              value={form.value.cover}
-              onChange={(cover) => form.change({ ...form.value, cover })}
-              onBusy={form.setPreparing}
-              disabled={form.locked}
-              invalid={!!form.errors.cover}
-            />
-          </details>
           <p className={styles['error']} role="alert">
             {form.problem}
           </p>

@@ -32,26 +32,20 @@ final class MeetingInfoUITests: XCTestCase {
         let share = app.buttons["meeting-info-share"]
         MeetingInfoTestSupport.reveal(share, app: app)
         share.tap()
-        XCTAssertTrue(app.buttons["share-invitation"].waitForExistence(timeout: 5))
-        app.buttons["share-invitation"].tap()
+        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
         let copy = MeetingInfoTestSupport.copyAction(app)
         XCTAssertTrue(copy.waitForExistence(timeout: 5))
-        app.staticTexts["feed-title"].coordinate(
-            withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)
-        ).tap()
+        SystemShareTestSupport.cancel(app)
         MeetingInfoTestSupport.waitUntilGone(copy)
-        app.buttons["meeting-share-close"].tap()
         XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["meeting-people-collapse"].exists)
         MeetingInfoTestSupport.reveal(share, app: app)
         let clipboardVersion = UIPasteboard.general.changeCount
         share.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        app.buttons["share-invitation"].tap()
         XCTAssertTrue(copy.waitForExistence(timeout: 5))
         copy.tap()
         MeetingInfoTestSupport.waitUntilGone(copy)
         XCTAssertGreaterThan(UIPasteboard.general.changeCount, clipboardVersion)
-        app.buttons["meeting-share-close"].tap()
         XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
         let collapse = app.buttons["meeting-people-collapse"]
         MeetingInfoTestSupport.reveal(collapse, app: app)

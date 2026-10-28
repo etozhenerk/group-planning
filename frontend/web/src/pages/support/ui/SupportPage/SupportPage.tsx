@@ -1,4 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
+import { readReturnLocation } from '@/shared/lib/navigation';
+import { Link, useSearchParams, useLocation } from 'react-router';
 import { useSession } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
 import { Workspace } from '@/shared/ui/Workspace';
@@ -9,6 +10,8 @@ import styles from '@/pages/support/ui/SupportPage/SupportPage.module.css';
 
 export const SupportPage = () => {
   const session = useSession();
+  const location = useLocation();
+  const back = readReturnLocation(location.state);
   const [params] = useSearchParams();
   const kind = params.get('kind');
   const screen = params.get('screen');
@@ -16,8 +19,8 @@ export const SupportPage = () => {
   return (
     <Workspace navigation={<Navigation session={session.data ?? null} />}>
       <main id="main" className={styles.page}>
-        <Link className={styles.back} to="/meetings">
-          ← К встречам
+        <Link className={styles.back} to={back.path} state={back.state}>
+          ← Назад
         </Link>
         <h1>Что-то пошло не так?</h1>
         <p className={styles.intro}>

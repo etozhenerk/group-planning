@@ -79,7 +79,9 @@ export const create = async (
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
 
   if (cover) {
-    await page.getByText('Обложка', { exact: true }).click();
+    await expect(
+      page.getByRole('button', { name: 'Добавить фото', exact: true }),
+    ).toBeVisible();
     await page.getByLabel('Выбрать фото', { exact: true }).setInputFiles(cover);
     await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
   }

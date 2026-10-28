@@ -1,14 +1,17 @@
 package dev.groupplanning.android.ui.media
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -30,6 +33,7 @@ internal fun UploadSheet(
     if (state.revoked) return
     val selected = state.items.filter { it.value.purpose == purpose }
     val photo = selected.all { it.value.contentType.startsWith("image/") }
+    val initialBatch = remember(model, purpose) { state.completedBatch }
     val dismiss = {
         model.dismissCompleted(purpose)
         close()
@@ -38,6 +42,8 @@ internal fun UploadSheet(
         stringResource(if (photo) R.string.upload_photo_title else R.string.upload_file_title),
         dismiss,
         modifier = Modifier.testTag("upload-sheet"),
+        animateClose = true,
+        closeRequested = state.completedBatch > initialBatch && state.completedPurpose == purpose,
     ) {
         if (state.selecting) {
             LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -53,20 +59,39 @@ internal fun UploadSheet(
                 fontSize = DesignTokens.typographySizeCaption,
             )
         }
-        selected.chunked(if (photo) 2 else 1).forEach { group ->
-            Row(horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12)) {
-                group.forEach { row ->
-                    UploadSelectionItem(
-                        row,
-                        photo || selected.size > 1 || row.error,
-                        { model.local(row.value) },
-                        { model.caption(row.value.key, it) },
-                        { model.remove(row.value) },
-                        Modifier.weight(1f),
-                    )
+        if (photo) {
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val photoWidth = (maxWidth - DesignTokens.spaceS12) / 2
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12)) {
+                    items(selected, key = { it.value.key }) { row ->
+                        UploadPhotoPreview(
+                            row,
+                            { model.local(row.value) },
+                            { model.remove(row.value) },
+                            enabled = !state.sending && !state.selecting,
+                            modifier = Modifier.width(photoWidth),
+                        )
+                    }
                 }
-                if (photo && group.size == 1) Box(Modifier.weight(1f))
             }
+        } else {
+            selected.forEach { row ->
+                UploadSelectionItem(
+                    row,
+                    selected.size > 1 || row.error,
+                    { model.local(row.value) },
+                    { model.caption(row.value.key, it) },
+                    { model.remove(row.value) },
+                )
+            }
+        }
+        if (state.sending) LinearProgressIndicator(Modifier.fillMaxWidth())
+        if (selected.any { it.error }) {
+            Text(
+                stringResource(R.string.upload_error),
+                color = DesignTokens.colorError,
+                fontSize = DesignTokens.typographySizeCaption,
+            )
         }
         Text(
             stringResource(R.string.upload_visibility),
@@ -93,7 +118,7 @@ internal fun UploadSheet(
             more?.let {
                 CompactButton(
                     stringResource(R.string.upload_more),
-                    enabled = !state.selecting,
+                    enabled = !state.selecting && !state.sending,
                     icon = R.drawable.ic_plus,
                     click = it,
                 )
@@ -101,8 +126,9 @@ internal fun UploadSheet(
             CompactButton(
                 stringResource(R.string.upload_submit),
                 primary = true,
-                busy = selected.any { it.busy },
+                busy = state.sending,
                 enabled = !state.selecting &&
+                    !state.sending &&
                     selected.none {
                         val caption = it.value.caption
                         caption.codePointCount(0, caption.length) > 2000

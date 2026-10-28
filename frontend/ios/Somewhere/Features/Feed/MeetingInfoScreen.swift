@@ -28,9 +28,20 @@ struct MeetingInfoScreen: View {
                 )
                 if owner.invitation.organizer {
                     VStack(spacing: DesignTokens.spaceS0) {
-                        action(
-                            "Пригласить друзей", icon: .share, route: .share,
-                            identifier: "meeting-info-share")
+                        if let url = owner.invitation.shareURL {
+                            ShareLink(item: url, preview: SharePreview(meeting.title)) {
+                                HStack(spacing: DesignTokens.spaceS12) {
+                                    ChatIcon(kind: .share)
+                                    Text("Пригласить друзей")
+                                    Spacer(minLength: DesignTokens.spaceS0)
+                                }.designFont(DesignTokens.typographySizeButton)
+                                    .frame(
+                                        minHeight: DesignTokens.componentMobileRosterActionHeight
+                                    )
+                                    .contentShape(Rectangle())
+                            }.buttonStyle(ChatPressStyle()).accessibilityIdentifier(
+                                "meeting-info-share")
+                        }
                         action(
                             "Настройки встречи", icon: .settings, route: .settings,
                             identifier: "edit-meeting")

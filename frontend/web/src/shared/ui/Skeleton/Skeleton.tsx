@@ -1,3 +1,4 @@
+import { DelayedSkeleton } from '@/shared/ui/DelayedSkeleton';
 import type { CSSProperties } from 'react';
 import styles from '@/shared/ui/Skeleton/Skeleton.module.css';
 
@@ -12,9 +13,11 @@ export const Skeleton = ({
   height = 16,
   round = false,
 }: SkeletonProps) => (
-  <span
-    aria-hidden="true"
-    className={styles.block}
-    style={{ width, height, borderRadius: round ? '50%' : undefined }}
-  />
+  <DelayedSkeleton>
+    <span
+      aria-hidden="true"
+      className={styles.block}
+      style={{ width, height, borderRadius: round ? '50%' : undefined }}
+    />
+  </DelayedSkeleton>
 );

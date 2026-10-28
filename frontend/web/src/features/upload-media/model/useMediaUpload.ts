@@ -117,6 +117,7 @@ export const useMediaUpload = (
     if (
       item.state === 'done' ||
       item.state === 'uploading' ||
+      controllers.current.has(item.id) ||
       (item.error && item.state === 'ready') ||
       access.denied
     ) {
@@ -183,7 +184,9 @@ export const useMediaUpload = (
     denied: access.denied,
     upload: () =>
       items
-        .filter((item) => item.state === 'ready' && !item.error)
+        .filter(
+          (item) => item.state === 'failed' || (item.state === 'ready' && !item.error),
+        )
         .forEach((item) => void deliver(item)),
     busy: items.some((item) => item.state === 'uploading'),
   };

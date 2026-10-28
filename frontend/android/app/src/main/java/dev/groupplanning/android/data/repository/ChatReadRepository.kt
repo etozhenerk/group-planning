@@ -105,6 +105,20 @@ internal class ChatReadRepository(private val session: SessionRepository) {
                         },
                     ),
                     calendar = data.calendar.copy(
+                        cachedPages = data.calendar.cachedPages.mapValues { (_, page) ->
+                            page.copy(
+                                meetings = page.meetings.map {
+                                    if (it.id == access.id) {
+                                        it.copy(
+                                            unreadCount = info.unread,
+                                            firstUnread = info.firstUnread,
+                                        )
+                                    } else {
+                                        it
+                                    }
+                                },
+                            )
+                        },
                         page = data.calendar.page?.let { page ->
                             page.copy(
                                 meetings = page.meetings.map {

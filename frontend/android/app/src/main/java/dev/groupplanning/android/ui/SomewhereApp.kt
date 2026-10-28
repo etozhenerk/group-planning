@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,9 +31,11 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
+import dev.groupplanning.android.state.media.AvatarImages
 import dev.groupplanning.android.ui.account.AccountDeletionDialog
 import dev.groupplanning.android.ui.brand.BrandMotion
 import dev.groupplanning.android.ui.brand.BrandWordmark
+import dev.groupplanning.android.ui.components.LocalAvatarImages
 import dev.groupplanning.android.ui.components.LocalViewer
 import dev.groupplanning.android.ui.components.StatusPanel
 import dev.groupplanning.android.ui.covers.LocalCovers
@@ -54,6 +58,8 @@ internal fun SomewhereApp(model: AppViewModel) {
     val elapsed by model.elapsed.collectAsStateWithLifecycle()
     val ready by model.ready.collectAsStateWithLifecycle()
     val linkProblem by model.linkProblem.collectAsStateWithLifecycle()
+    val avatars = remember(snapshot.generation) { AvatarImages() }
+    DisposableEffect(avatars) { onDispose { avatars.clear() } }
     val motion = rememberMotionEnabled()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(model, lifecycle) {
@@ -69,6 +75,7 @@ internal fun SomewhereApp(model: AppViewModel) {
     }
     CompositionLocalProvider(
         LocalMotionEnabled provides motion,
+        LocalAvatarImages provides avatars,
         LocalCovers provides model.covers,
         LocalEmoji provides model.emoji,
         LocalSupport provides model.support,

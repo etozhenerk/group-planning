@@ -19,6 +19,7 @@ import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
 internal fun ExperienceSkeleton(modifier: Modifier = Modifier, profile: Boolean = false) {
+    if (!rememberLoadingVisible(true)) return
     val label = stringResource(R.string.calendar_loading)
     Column(
         modifier.fillMaxWidth().semantics { contentDescription = label },

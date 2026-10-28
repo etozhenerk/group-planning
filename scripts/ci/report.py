@@ -43,7 +43,7 @@ def stage_report(stage, steps):
         rows.append(
             f"| {cell(name)} | {ICONS.get(status, '❔')} {cell(status)} | {duration} |"
         )
-        if status != "failure":
+        if status not in ("failure", "cancelled"):
             continue
         code = result.get("exit_code")
         detail = f"### {cell(name)}" + (f" · exit {code}" if code is not None else "")
@@ -69,7 +69,7 @@ def workflow_report(needs):
         details = job.get("outputs", {}).get("failures", "")
         if details:
             failures.append(f"## {cell(name)}\n\n{details}")
-        elif status == "failure":
+        elif status in ("failure", "cancelled"):
             failures.append(
                 f"## {cell(name)}\n\nСм. лог job: ошибка до формирования отчёта "
                 "или при его публикации."

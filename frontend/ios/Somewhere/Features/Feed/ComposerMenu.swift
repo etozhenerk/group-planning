@@ -7,11 +7,11 @@ struct ComposerMenu: View {
         VStack(spacing: DesignTokens.spaceS0) {
             item("Фото", icon: .photo) {
                 owner.photoSelection = true
-                owner.openSheet(.media)
+                owner.mediaSelection = owner.photoSelection ? .photos : .files
             }
             item("Файл", icon: .file) {
                 owner.photoSelection = false
-                owner.openSheet(.media)
+                owner.mediaSelection = owner.photoSelection ? .photos : .files
             }
             Rectangle().fill(AppPalette.border).frame(height: DesignTokens.spaceS1).padding(
                 .horizontal, DesignTokens.spaceS10

@@ -4,27 +4,28 @@ import { Avatar } from '@/shared/ui/Avatar';
 import { Brand } from '@/shared/ui/Brand';
 import type { Session } from '@/entities/session';
 import styles from '@/widgets/navigation/ui/Navigation/Navigation.module.css';
+import { useNavigationMotion } from '@/widgets/navigation/ui/Navigation/hooks/useNavigationMotion';
 
 export type NavigationProps = { session: Session | null; sticky?: boolean };
 
 export const Navigation = ({ session }: NavigationProps) => {
   const { pathname } = useLocation();
   const profileSection = /^\/(profile|support|help|about|privacy|cookies)/.test(pathname);
+  const visible = /^\/(meetings|invitations|profile)\/?$/.test(pathname);
+  const section = profileSection ? 2 : pathname.startsWith('/invitations') ? 1 : 0;
+  const indicator = useNavigationMotion(section, visible);
 
   return (
     <nav
       className={styles.navigation}
-      data-mobile={/^\/(meetings|invitations|profile)\/?$/.test(pathname)}
+      data-mobile={visible}
       aria-label="Основная навигация"
     >
       <div className={styles.brand}>
         <Brand variant="navigation" />
       </div>
-      <div
-        className={styles.links}
-        data-section={profileSection ? 2 : pathname.startsWith('/invitations') ? 1 : 0}
-      >
-        <span className={styles.indicator} aria-hidden="true" />
+      <div className={styles.links} data-section={section}>
+        <span className={styles.indicator} aria-hidden="true" ref={indicator} />
         <NavLink
           to="/meetings"
           aria-label="Встречи"

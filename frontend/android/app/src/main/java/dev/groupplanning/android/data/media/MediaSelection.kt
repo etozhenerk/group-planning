@@ -28,7 +28,7 @@ internal class MediaSelection(context: Context) {
         ) { /* Temporary providers remain readable during this session. */ }
         val name = resolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
             ?.use { cursor -> if (cursor.moveToFirst()) cursor.getString(0) else null } ?: "file"
-        name to (resolver.getType(uri) ?: "application/octet-stream")
+        name to MediaMimeType.resolved(name, resolver.getType(uri))
     }
 
     suspend fun write(uri: Uri, bytes: ByteArray) = withContext(Dispatchers.IO) {
@@ -43,7 +43,7 @@ internal class MediaSelection(context: Context) {
             val name = resolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
                 ?.use { cursor -> if (cursor.moveToFirst()) cursor.getString(0) else null }
                 ?: "file"
-            val type = resolver.getType(uri) ?: "application/octet-stream"
+            val type = MediaMimeType.resolved(name, resolver.getType(uri))
             val output = ByteArrayOutputStream()
             resolver.openInputStream(uri)?.use { input ->
                 val buffer = ByteArray(8192)

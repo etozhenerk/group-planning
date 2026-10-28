@@ -22,18 +22,14 @@ struct MeetingInfoAvatar: View {
     }
 
     var body: some View {
-        Text(String(user.displayName.prefix(1)).uppercased())
+        Text(user.avatarURL == nil ? String(user.displayName.prefix(1)).uppercased() : "")
             .font(font).foregroundStyle(textColor)
             .frame(width: size, height: size).background(color, in: Circle())
             .overlay {
                 if let url = user.avatarURL, url.scheme == "https", url.user == nil,
                     url.password == nil
                 {
-                    AsyncImage(url: url) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        Color.clear
-                    }.frame(width: size, height: size).clipShape(Circle())
+                    AvatarPhoto(url: url).frame(width: size, height: size).clipShape(Circle())
                 }
             }.accessibilityHidden(true)
     }

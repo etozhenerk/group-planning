@@ -70,7 +70,14 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
         </div>
       </Link>
       {past && (
-        <Link className={styles.album} to={`/meetings/${meeting.id}/memories`}>
+        <Link
+          className={styles.album}
+          to={
+            meeting.memoryPhotoCount
+              ? `/meetings/${meeting.id}/memories`
+              : `/meetings/${meeting.id}/memories?action=upload`
+          }
+        >
           {meeting.memoryPreview?.length ? (
             <MemoryPreview photos={meeting.memoryPreview} user={user} />
           ) : (

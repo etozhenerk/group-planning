@@ -8,7 +8,11 @@ export type MemoryBannerProps = { meeting: Meeting; user: string };
 export const MemoryBanner = ({ meeting, user }: MemoryBannerProps) => (
   <Link
     className={styles.banner}
-    to={`/meetings/${meeting.id}/memories?from=chat`}
+    to={
+      meeting.memoryPhotoCount
+        ? `/meetings/${meeting.id}/memories?from=chat`
+        : `/meetings/${meeting.id}/memories?from=chat&action=upload&uploadOrigin=chat`
+    }
     aria-label={
       meeting.memoryPhotoCount
         ? 'Вайб встречи Открыть вайб'

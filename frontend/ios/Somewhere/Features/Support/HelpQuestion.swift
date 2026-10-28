@@ -4,30 +4,69 @@ struct HelpQuestion: View {
     let title: String
     let answer: String
     @State private var expanded: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric private var questionSize = DesignTokens.typographySizeHelpQuestion
+    @ScaledMetric private var answerSize = DesignTokens.typographySizeHelpAnswer
+
     init(title: String, answer: String, initiallyOpen: Bool) {
         self.title = title
         self.answer = answer
         _expanded = State(initialValue: initiallyOpen)
     }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
             Button {
-                expanded.toggle()
+                withAnimation(
+                    ChatMotion.animation(
+                        DesignTokens.motionDurationCard, reduceMotion: reduceMotion)
+                ) {
+                    expanded.toggle()
+                }
             } label: {
-                HStack(alignment: .top, spacing: 3) {
-                    Text(expanded ? "▾" : "▸").padding(.vertical, 2.85)
-                    Text(title).lineSpacing(5.7).padding(.vertical, 2.85)
-                        .multilineTextAlignment(.leading).frame(
-                            maxWidth: .infinity, alignment: .leading)
-                }.designFont(14, weight: .semibold).contentShape(Rectangle())
+                HStack(spacing: DesignTokens.spaceS24) {
+                    Text(title).font(.system(size: questionSize, weight: .medium))
+                        .lineSpacing(questionSpacing).padding(.vertical, questionSpacing / 2)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HelpDisclosureSymbol(expanded: expanded)
+                }.padding(DesignTokens.componentHelpDisclosureMobileInset)
+                    .frame(minHeight: DesignTokens.targetIos)
+                    .contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityLabel(title).accessibilityValue(
                 expanded ? "Развёрнуто" : "Свёрнуто")
-            if expanded {
-                Text(answer).designFont(13).lineSpacing(7.9).padding(.vertical, 3.95)
-                    .foregroundStyle(
-                        AppPalette.muted)
-            }
-        }.padding(18).frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(designHex: 0x2d2e35), in: RoundedRectangle(cornerRadius: 18))
+            Text(answer).font(.system(size: answerSize))
+                .lineSpacing(answerSpacing).padding(.vertical, answerSpacing / 2)
+                .foregroundStyle(DesignTokens.colorMuted)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, DesignTokens.componentHelpDisclosureMobileInset)
+                .padding(.bottom, DesignTokens.componentHelpDisclosureMobileInset)
+                .animation(
+                    ChatMotion.animation(
+                        DesignTokens.motionDurationFast, reduceMotion: reduceMotion)
+                ) {
+                    $0.opacity(expanded ? 1 : 0)
+                }
+                .frame(height: expanded ? nil : DesignTokens.spaceS0, alignment: .top)
+                .clipped().accessibilityHidden(!expanded)
+        }.frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                DesignTokens.colorSurface,
+                in: RoundedRectangle(cornerRadius: DesignTokens.componentHelpDisclosureRadius))
+    }
+
+    private var questionSpacing: CGFloat {
+        max(
+            0,
+            questionSize * DesignTokens.typographyLineHeightHelpQuestion
+                - UIFont.systemFont(ofSize: questionSize, weight: .medium).lineHeight)
+    }
+
+    private var answerSpacing: CGFloat {
+        max(
+            0,
+            answerSize * DesignTokens.typographyLineHeightHelpAnswer
+                - UIFont.systemFont(ofSize: answerSize).lineHeight)
     }
 }

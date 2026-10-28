@@ -31,7 +31,8 @@ internal class CalendarRepository(private val session: SessionRepository) {
             data.copy(
                 calendar = old.copy(
                     filter = filter, monthFilter = month, request = request, more = null,
-                    page = old.page.takeIf { same }, days = old.days.takeIf { same }.orEmpty(),
+                    page = if (same) old.page else old.pageFor(filter),
+                    days = old.days.takeIf { old.monthFilter == month }.orEmpty(),
                     pages = if (same) old.pages else 1, error = null, moreError = null,
                 ),
             )
@@ -56,6 +57,26 @@ internal class CalendarRepository(private val session: SessionRepository) {
                                 meetings = data.preserveNewerReadState(page.meetings, beforeRead)
                                     .filter { it.id !in data.denied },
                             ),
+                            cachedPages = (
+                                data.calendar.cachedPages + (
+                                    filter to page.copy(
+                                        meetings = data.preserveNewerReadState(
+                                            page.meetings,
+                                            beforeRead,
+                                        )
+                                            .filter { it.id !in data.denied },
+                                    )
+                                    ) + listOfNotNull(
+                                    month?.let { monthFilter ->
+                                        monthFilter to monthPage.copy(
+                                            meetings = data.preserveNewerReadState(
+                                                monthPage.meetings,
+                                                beforeRead,
+                                            ).filter { it.id !in data.denied },
+                                        )
+                                    },
+                                ).toMap()
+                                ).toList().takeLast(16).toMap(),
                             counts = monthPage.counts,
                             days = monthPage.days,
                             pages = loaded,

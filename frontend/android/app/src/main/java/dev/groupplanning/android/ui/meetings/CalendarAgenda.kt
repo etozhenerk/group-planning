@@ -19,6 +19,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.repository.CalendarData
 import dev.groupplanning.android.state.CalendarSelection
 import dev.groupplanning.android.ui.components.ActionButton
+import dev.groupplanning.android.ui.components.rememberLoadingVisible
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -31,8 +32,9 @@ internal fun CalendarAgenda(
     more: () -> Unit,
     open: (UUID) -> Unit,
 ) {
-    val page = data.page.takeIf { data.filter == selection.filter }
+    val page = data.pageFor(selection.filter)
     val loading = stringResource(R.string.calendar_loading)
+    val showLoading = rememberLoadingVisible(page == null && data.error == null)
     Column(
         Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -68,7 +70,7 @@ internal fun CalendarAgenda(
                 )
             }
         }
-        if (page == null && data.error == null) {
+        if (showLoading) {
             CircularProgressIndicator(
                 Modifier.semantics {
                     contentDescription = loading

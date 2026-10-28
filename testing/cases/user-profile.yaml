@@ -324,3 +324,41 @@
       status: planned
       health: unknown
       tests: []
+- id: TC-PROFILE-ACTIONS-ORDER
+  title: Выход расположен последним
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md
+    requirement: Упрощённые действия профиля
+    scenario: Выход расположен последним
+    sha256: daf6c9c0e2c231bd8f9c8e1490d9734a837a11046659d1ba52f6146a5fcf5ce4
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точные сборки и тестовый пользователь; все три клиента проверяются
+      отдельно, только собственные тестовые данные.
+  steps:
+    - action: Открыть профиль, прокрутить весь экран и прочитать доступные действия.
+      expected: Выход ниже сервисных ссылок, входа в удаление аккаунта и версии нет.
+    - action: Открыть О приложении и вернуться в профиль.
+      expected: Версия доступна в отдельном экране, видимое имя приложения не повторяется трижды; возврат
+        ведёт в профиль.
+  cleanup:
+    - Восстановить viewport, Reduce Motion и сеть; удалить собственные тестовые данные.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []

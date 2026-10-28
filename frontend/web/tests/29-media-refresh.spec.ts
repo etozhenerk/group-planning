@@ -9,7 +9,7 @@ import {
 import { feedSchema } from '@/shared/api';
 
 for (const width of [320, 390]) {
-  test(`an immediate file choice closes to chat with one click at ${width}px`, async ({
+  test(`an explicit file choice closes to chat with one click at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 844 });
@@ -33,8 +33,9 @@ for (const width of [320, 390]) {
 
     await page.getByRole('button', { name: 'Добавить к встрече' }).click();
     await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
-    await selected;
     const preview = page.getByRole('dialog', { name: 'Отправить файл', exact: true });
+    await preview.getByRole('button', { name: 'Выбрать файлы', exact: true }).click();
+    await selected;
     await expect(preview.getByLabel('Подпись к quick.txt')).toBeVisible();
     expect(await page.evaluate(() => history.length)).toBe(before + 1);
     await preview.getByRole('button', { name: 'Закрыть', exact: true }).click();
@@ -55,6 +56,19 @@ test('partial upload retries only the failed file and preserves the message draf
   await page.goto(`/meetings/${id}`);
   await page.getByLabel('Сообщение', { exact: true }).fill('Документы к встрече');
   let uploads = 0;
+  let rejectedPlan = false;
+  let planMedia = '';
+  await page.route(`**/api/v1/meetings/${id}/media/uploads`, async (route) => {
+    const body = route.request().postDataJSON() as { file_name: string };
+    const response = await route.fetch();
+    const data = (await response.json()) as { media: { id: string } };
+
+    if (body.file_name === 'plan.txt') {
+      planMedia = data.media.id;
+    }
+
+    await route.fulfill({ response });
+  });
   const reservations: string[] = [];
   page.on('request', (request) => {
     if (request.method() === 'POST' && request.url().endsWith('/media/uploads')) {
@@ -70,7 +84,8 @@ test('partial upload retries only the failed file and preserves the message draf
 
     uploads++;
 
-    if (uploads === 1) {
+    if (!rejectedPlan && route.request().url().endsWith(`/${planMedia}/content`)) {
+      rejectedPlan = true;
       await route.fulfill({
         status: 503,
         json: { error: { code: 'unavailable', field_errors: {}, request_id: 'test' } },
@@ -84,6 +99,9 @@ test('partial upload retries only the failed file and preserves the message draf
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   const fileChooser = page.waitForEvent('filechooser');
   await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+  await actionSurface(page, 'Отправить файл')
+    .getByRole('button', { name: 'Выбрать файлы', exact: true })
+    .click();
   await (
     await fileChooser
   ).setFiles([
@@ -95,15 +113,17 @@ test('partial upload retries only the failed file and preserves the message draf
   await preview.getByLabel('Подпись к plan.txt').fill('План на вечер');
   await preview.getByLabel('Подпись к list.txt').fill('Купим по дороге');
   await preview.getByRole('button', { name: 'Отправить', exact: true }).click();
-  await expect(preview.getByText('Добавлено', { exact: true })).toHaveCount(1);
+  await expect(preview.getByRole('alert')).toBeVisible();
+  await expect(preview.locator('progress')).toHaveCount(0);
+  await expect(preview.getByLabel('Подпись к plan.txt')).toBeVisible();
+  await expect(preview.getByLabel('Подпись к list.txt')).toHaveCount(0);
   await expect(
-    preview.getByRole('button', { name: 'Повторить', exact: true }),
+    preview.getByRole('button', { name: 'Повторить отправку', exact: true }),
   ).toBeVisible();
-  await preview.getByRole('button', { name: 'Повторить', exact: true }).click();
-  await expect(preview.getByText('Добавлено', { exact: true })).toHaveCount(2);
+  await preview.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
+  await expect(preview).not.toBeVisible();
   expect(uploads).toBe(3);
   expect(reservations).toHaveLength(2);
-  await preview.getByRole('button', { name: 'Готово', exact: true }).click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
     'Документы к встрече',
   );
@@ -146,13 +166,22 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   expect(changed.ok()).toBe(true);
   await expect.poll(async () => (await apiMeeting(page, id)).period).toBe('past');
   await page.goto(`/meetings/${id}`);
+  await page.getByLabel('Сообщение', { exact: true }).fill('Черновик перед альбомом');
   await page.getByRole('link', { name: 'Как всё прошло? Добавить фото' }).click();
-  await expect(page.getByRole('heading', { name: 'Как всё прошло?' })).toBeVisible();
+  const preview = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  await expect(preview).toBeVisible();
+  await preview.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/meetings/${id}$`));
+  await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
+    'Черновик перед альбомом',
+  );
+  await page.getByRole('link', { name: 'Как всё прошло? Добавить фото' }).click();
+  await expect(preview).toBeVisible();
   const photo = Buffer.from(
     await page.evaluate(() => {
       const canvas = document.createElement('canvas');
       canvas.width = 320;
-      canvas.height = 240;
+      canvas.height = 1600;
       const context = canvas.getContext('2d');
 
       if (!context) {
@@ -160,7 +189,7 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
       }
 
       context.fillStyle = '#aa7766';
-      context.fillRect(0, 0, 320, 240);
+      context.fillRect(0, 0, 320, 1600);
 
       return canvas.toDataURL('image/png').split(',')[1] ?? '';
     }),
@@ -168,18 +197,15 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   );
 
   const fileChooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Добавить фото', exact: true }).click();
+  await preview.getByRole('button', { name: 'Выбрать фото', exact: true }).click();
   await (
     await fileChooser
   ).setFiles([
     { name: 'one.png', mimeType: 'image/png', buffer: photo },
     { name: 'two.png', mimeType: 'image/png', buffer: photo },
   ]);
-  const preview = actionSurface(page, 'Добавить фото в альбом');
-
   await preview.getByRole('button', { name: 'Добавить в альбом' }).click();
-  await expect(preview.getByText('Добавлено', { exact: true })).toHaveCount(2);
-  await preview.getByRole('button', { name: 'Готово', exact: true }).click();
+  await expect(preview).not.toBeVisible();
   await expect(preview).not.toBeVisible();
   const stack = page.getByRole('group', {
     name: 'Фото встречи. Листайте клавишами влево и вправо',
@@ -217,6 +243,39 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   await expect(
     page.getByRole('dialog', { name: 'Фото встречи', exact: true }),
   ).toBeVisible();
+
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 390, height: 844 },
+    { width: 844, height: 390 },
+    { width: 320, height: 568 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const viewer = page.getByRole('dialog', { name: 'Фото встречи', exact: true });
+    const image = viewer.locator('img');
+    await expect(image).toBeVisible();
+    await expect(image).toHaveCSS('object-fit', 'contain');
+    await expect
+      .poll(async () =>
+        viewer.evaluate((element) => {
+          const image = element.querySelector('img')?.getBoundingClientRect();
+          const heading = element.querySelector('header')?.getBoundingClientRect();
+          const bounds = element.getBoundingClientRect();
+
+          return Boolean(
+            image &&
+            heading &&
+            image.top >= heading.bottom - 1 &&
+            image.bottom <= bounds.bottom + 1 &&
+            image.left >= bounds.left - 1 &&
+            image.right <= bounds.right + 1 &&
+            element.scrollHeight <= element.clientHeight + 1,
+          );
+        }),
+      )
+      .toBe(true);
+  }
+
   await expect(page.locator('body')).toHaveCSS('position', 'fixed');
   await page.keyboard.press('ArrowRight');
   await expect(
@@ -261,6 +320,9 @@ test('closing the upload preserves files and captions until leaving the meeting'
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   const chooser = page.waitForEvent('filechooser');
   await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+  await actionSurface(page, 'Отправить файл')
+    .getByRole('button', { name: 'Выбрать файлы', exact: true })
+    .click();
   await (
     await chooser
   ).setFiles({

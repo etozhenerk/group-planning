@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -75,25 +74,6 @@ internal fun UploadSelectionItem(
                     fontSize = 12.sp,
                 )
             }
-        }
-        if (row.busy) {
-            LinearProgressIndicator(
-                Modifier.fillMaxWidth().height(5.dp),
-            )
-        }
-        if (row.error) {
-            Text(
-                stringResource(R.string.upload_error),
-                color = Palette.error,
-                fontSize = 12.sp,
-            )
-        }
-        if (row.value.published) {
-            Text(
-                stringResource(R.string.upload_ready),
-                color = Palette.accent,
-                fontSize = 12.sp,
-            )
         }
         if (canRemove) {
             TextButton(

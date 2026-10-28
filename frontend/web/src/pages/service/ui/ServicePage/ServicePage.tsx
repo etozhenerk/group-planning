@@ -1,3 +1,4 @@
+import { readReturnLocation } from '@/shared/lib/navigation';
 import { Link, useLocation } from 'react-router';
 import { useSession } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
@@ -14,12 +15,13 @@ export const ServicePage = () => {
   const location = useLocation();
   const kind = location.pathname.slice(1) as ServiceKind;
   const content = serviceContent[kind] ?? serviceContent.about;
+  const back = readReturnLocation(location.state);
 
   return (
     <Workspace navigation={<Navigation session={session.data ?? null} />}>
       <main id="main" className={styles.page}>
-        <Link className={styles.back} to="/meetings">
-          ← К встречам
+        <Link className={styles.back} to={back.path} state={back.state}>
+          ← Назад
         </Link>
         <header className={styles.heading}>
           <h1>{content.title}</h1>

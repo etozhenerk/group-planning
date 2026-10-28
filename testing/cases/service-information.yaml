@@ -501,3 +501,83 @@
       status: manual
       health: unknown
       tests: []
+- id: TC-SERVICE-RETURN-CONTEXT
+  title: Назад возвращает на предыдущий экран
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Возврат из сервисных разделов
+    scenario: Назад возвращает на предыдущий экран
+    sha256: 90df1059eb2385396066065aa2ed33f60647c19390d5e7620feff963b52d53b0
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точные сборки и тестовый пользователь; все три клиента проверяются
+      отдельно, только собственные тестовые данные.
+  steps:
+    - action: Из профиля по очереди открыть Помощь, Cookie, Конфиденциальность, О приложении и нажать
+        Назад.
+      expected: Каждый возврат ведёт в профиль, а не во встречи.
+    - action: Из помощи открыть форму обращения и вернуться, затем открыть сервисную страницу прямой
+        ссылкой.
+      expected: Форма возвращается в помощь; прямая ссылка имеет работающий внутренний возврат без
+        внешнего redirect.
+  cleanup:
+    - Восстановить viewport, Reduce Motion и сеть; удалить собственные тестовые данные.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []
+- id: TC-HELP-DISCLOSURE-MOTION
+  title: Вопрос раскрывается по нажатию всей строки
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Плавное раскрытие вопросов
+    scenario: Вопрос раскрывается по нажатию всей строки
+    sha256: 348b8b7482d05acb80e5b2d265c52c915801043fe0459ec3fadaa149f691254f
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Точные QA-сборки; опубликованный FAQ 28.10.2026; обычный и крупный текст, Reduce Motion
+      проверяются по платформам.
+  steps:
+    - action: Открыть помощь из профиля, раскрыть закрытый вопрос нажатием всей строки и закрыть его;
+        зафиксировать промежуточные кадры.
+      expected: Плюс плавно становится минусом; высота ответа меняется без скачка, текст не обрезан,
+        закрытый ответ отсутствует для скринридера.
+    - action: Повторить клавиатурой/доступным действием и с крупным текстом; затем включить Reduce Motion.
+      expected: Фокус на том же вопросе; состояния объявлены, текст доступен полностью, в Reduce Motion
+        раскрытие мгновенное.
+  cleanup:
+    - Вернуть размер текста/Reduce Motion и исходный экран.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []

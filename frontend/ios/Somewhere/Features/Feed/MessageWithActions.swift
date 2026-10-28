@@ -92,7 +92,8 @@ struct MessageWithActions: View {
     @ViewBuilder private var message: some View {
         if entry.attachments.isEmpty {
             FeedMessageView(
-                user: entry.actor, text: entry.messageText ?? "", date: entry.occurredAt.date,
+                user: own ? owner.session.profile ?? entry.actor : entry.actor,
+                text: entry.messageText ?? "", date: entry.occurredAt.date,
                 own: own, entryID: entry.id, selected: owner.panel == .reaction(entry.id))
         } else {
             FeedAttachmentMessageView(

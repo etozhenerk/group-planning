@@ -5,6 +5,7 @@ struct MemoriesScreen: View {
     @State private var selection = 0
     @State private var grid = false
     @State private var adding = false
+    @State private var picker: MediaPickerKind?
     @State private var fullscreen = false
     @State private var reloadID = UUID()
     @Environment(\.dismiss) private var dismiss
@@ -36,7 +37,7 @@ struct MemoriesScreen: View {
                         .padding(.top, 8).accessibilityAddTraits(.isHeader)
                     }
                     Button {
-                        adding = true
+                        picker = .photos
                     } label: {
                         HStack(spacing: 9) {
                             ExperienceIcon(kind: .plus)
@@ -117,6 +118,13 @@ struct MemoriesScreen: View {
 
             .toolbar(.hidden, for: .navigationBar)
             .task(id: reloadID) { await owner.load() }
+            .task(id: "\(selection)-\(owner.photos.count)") {
+                await owner.prefetch(around: selection)
+            }
+            .modifier(
+                MediaSelectionPresenter(
+                    owner: owner.transfer, kind: $picker, selected: { adding = true })
+            )
             .sheet(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
                 MediaPickerPanel(owner: owner.transfer, photosOnly: true)
 

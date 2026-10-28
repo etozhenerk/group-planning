@@ -1,16 +1,13 @@
 package dev.groupplanning.android.state.media
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import dev.groupplanning.android.data.api.ClientFailure
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 internal data class ImageState(
     val bitmap: Bitmap? = null,
@@ -19,27 +16,18 @@ internal data class ImageState(
 )
 internal class ImageController(
     private val scope: CoroutineScope,
+    private val initial: Bitmap? = null,
+    private val loadBitmap: (suspend () -> Bitmap)? = null,
     private val loadBytes: suspend () -> ByteArray,
 ) {
-    private val mutable = MutableStateFlow(ImageState())
+    private val mutable = MutableStateFlow(ImageState(bitmap = initial))
     val state = mutable.asStateFlow()
     fun load() {
-        if (state.value.loading) return
+        if (state.value.loading || state.value.bitmap != null) return
         mutable.value = ImageState(loading = true)
         scope.launch {
             try {
-                val bytes = loadBytes()
-                val bitmap = withContext(Dispatchers.IO) {
-                    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
-                    val options = BitmapFactory.Options().apply {
-                        inSampleSize = generateSequence(1) { it * 2 }.first { sample ->
-                            bounds.outWidth / sample <= 2048 && bounds.outHeight / sample <= 2048
-                        }
-                    }
-                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options)
-                        ?: throw IOException("Invalid image")
-                }
+                val bitmap = loadBitmap?.invoke() ?: decodeImage(loadBytes())
                 mutable.value = ImageState(bitmap)
             } catch (cancelled: CancellationException) {
                 throw cancelled

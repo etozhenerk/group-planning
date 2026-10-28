@@ -174,6 +174,10 @@ internal fun MemoriesGallery(
                                                 itemIndex
                                             full = true
                                         },
+                                        cached = model.cached(photo),
+                                        loadBitmap = {
+                                            model.bitmap(photo)
+                                        },
                                     )
                                 }
                             }

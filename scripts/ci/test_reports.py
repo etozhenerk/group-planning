@@ -81,6 +81,16 @@ class ReportingTests(unittest.TestCase):
         self.assertIn("⏭ skipped", summary)
         self.assertNotIn("✅", summary)
 
+    def test_timeout_keeps_failures_seen_before_cancellation(self):
+        self.results.mkdir()
+        (self.results / "ui.json").write_text('{"exit_code": null}')
+        (self.results / "ui.log").write_text("error: button is outside keyboard\n")
+        with patch.object(report, "RESULTS", self.results):
+            summary, failures = report.stage_report("tests", {"ui": {"outcome": "cancelled"}})
+        self.assertIn("⏹ cancelled", summary)
+        self.assertIn("button is outside keyboard", failures)
+        self.assertNotIn("exit 0", failures)
+
     def test_summary_keeps_error_followed_by_verbose_cleanup(self):
         self.run_check(sys.executable, "-c", "print('error: assertion failed'); print('cleanup\\n' * 100)")
         excerpt = report.diagnostic(self.results / "check.log")

@@ -35,7 +35,6 @@ class CoverUiTests {
         fixture.device.pressBack()
         compose.onNodeWithContentDescription("Дата").performScrollTo().performClick()
         compose.onNodeWithTag("date-confirm").performClick()
-        compose.onNodeWithText("Обложка").performScrollTo().performClick()
         compose.onNodeWithTag("cover-select").performScrollTo()
     }
 

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "meeting-experience-refresh",
-  "designVersion": "2.5.2",
+  "designVersion": "3.0.0",
   "phase": "checkpoint",
-  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются. 28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки.",
   "implementer": "implementation-team:/root",
-  "report": "openspec/changes/meeting-experience-refresh/design-review-2.5.2.json",
+  "report": "openspec/changes/meeting-experience-refresh/design-review-3.0.0.json",
   "screens": [
     {
       "id": "list-native",
@@ -19,7 +19,11 @@
         "long-title",
         "no-cover",
         "large-text",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -404,7 +408,14 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "picker-before-sheet",
+        "picker-cancel-no-sheet",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -465,7 +476,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -491,7 +505,14 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "picker-before-sheet",
+        "picker-cancel-no-sheet",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -552,7 +573,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -744,7 +768,11 @@
         "long-title",
         "no-cover",
         "large-text",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1103,7 +1131,15 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1164,7 +1200,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -1186,7 +1225,15 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1247,7 +1294,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -1421,7 +1471,11 @@
         "long-title",
         "no-cover",
         "large-text",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1780,7 +1834,15 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1841,7 +1903,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -1863,7 +1928,15 @@
         "open",
         "cancel-return",
         "error-retry",
-        "close-reopen"
+        "close-reopen",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -1924,7 +1997,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -2098,7 +2174,11 @@
         "long-title",
         "no-cover",
         "large-text",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -2490,7 +2570,15 @@
         "error-retry",
         "close-reopen",
         "desktop-modal-over-chat",
-        "modal-close-draft-scroll-focus"
+        "modal-close-draft-scroll-focus",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -2551,7 +2639,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -2575,7 +2666,15 @@
         "error-retry",
         "close-reopen",
         "desktop-modal-over-chat",
-        "modal-close-draft-scroll-focus"
+        "modal-close-draft-scroll-focus",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -2636,7 +2735,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -2828,7 +2930,11 @@
         "long-title",
         "no-cover",
         "large-text",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -3220,7 +3326,15 @@
         "error-retry",
         "close-reopen",
         "desktop-modal-over-chat",
-        "modal-close-draft-scroll-focus"
+        "modal-close-draft-scroll-focus",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -3281,7 +3395,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -3305,7 +3422,15 @@
         "error-retry",
         "close-reopen",
         "desktop-modal-over-chat",
-        "modal-close-draft-scroll-focus"
+        "modal-close-draft-scroll-focus",
+        "form-first",
+        "picker-cancel-three-times",
+        "full-focus-outline",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
       ],
       "inputs": [
         "frontend/web/src",
@@ -3366,7 +3491,10 @@
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
         "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
-        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json"
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css"
       ],
       "contracts": [
         "docs/design/components/chat-actions.md",
@@ -7369,7 +7497,11 @@
         "today",
         "month-navigation",
         "long-title-no-cover",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -7435,7 +7567,11 @@
         "today",
         "month-navigation",
         "long-title-no-cover",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -7498,7 +7634,11 @@
         "today",
         "month-navigation",
         "long-title-no-cover",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -7561,7 +7701,11 @@
         "today",
         "month-navigation",
         "long-title-no-cover",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -7624,7 +7768,11 @@
         "today",
         "month-navigation",
         "long-title-no-cover",
-        "return-from-chat"
+        "return-from-chat",
+        "fast-load",
+        "background-refresh",
+        "tab-indicator-transition",
+        "tab-reduced-motion"
       ],
       "inputs": [
         "frontend/web/src",
@@ -7674,6 +7822,1695 @@
       "tasks": {
         "web": [
           "4.3"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-native",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "10.1",
+          "11.2"
+        ],
+        "android": [
+          "10.2",
+          "11.3"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-native",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "ios": [
+          "10.1",
+          "11.2"
+        ],
+        "android": [
+          "10.2",
+          "11.3"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-native",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "10.1",
+          "11.2"
+        ],
+        "android": [
+          "10.2",
+          "11.3"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-web-320",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-web-320",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-web-320",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-web-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-web-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-web-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-web-768",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-web-768",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-web-768",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-web-1440",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-web-1440",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-web-1440",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-media-web-844x390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "direct-upload",
+        "selected-carousel",
+        "batch-error-retry",
+        "preloaded-swipe",
+        "click-open",
+        "portrait-contain",
+        "landscape-contain",
+        "square-contain",
+        "return-index"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "profile-services-web-844x390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "logout-last",
+        "no-delete-version",
+        "about-one-brand",
+        "return-profile",
+        "slow-load",
+        "faq-open",
+        "faq-closed",
+        "faq-motion",
+        "faq-large-text",
+        "faq-reduced-motion"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/help-disclosure.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
+        ]
+      }
+    },
+    {
+      "id": "create-cover-web-844x390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "cover-first",
+        "picker-cancel",
+        "no-cover-submit"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/profile.html",
+        "openspec/changes/meeting-experience-refresh/assets/create.html"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "9.5",
+          "11.1"
         ]
       }
     }

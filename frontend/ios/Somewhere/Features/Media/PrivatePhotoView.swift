@@ -18,7 +18,7 @@ struct PrivatePhotoView: View {
     var body: some View {
         GeometryReader { geometry in
             Group {
-                if owner.current, let data = owner.data, let image = UIImage(data: data) {
+                if owner.current, let image = owner.image {
                     Image(uiImage: image).resizable().aspectRatio(
                         contentMode: fitting ? .fit : .fill)
                 } else if owner.failed {
@@ -33,7 +33,7 @@ struct PrivatePhotoView: View {
         }.accessibilityLabel("Фото: " + media.fileName)
             .task(id: reloadID) {
                 await owner.load()
-                if owner.current, let data = owner.data, let image = UIImage(data: data),
+                if owner.current, let image = owner.image,
                     image.size.height > 0
                 {
                     onAspect?(image.size.width / image.size.height)

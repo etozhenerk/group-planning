@@ -3,6 +3,9 @@ import Observation
 
 @MainActor @Observable
 final class PrivateData {
+    let mediaCache = PrivateMediaCache()
+    let avatars = AvatarImages()
+    var profile: AccountProfile?
     @ObservationIgnored var chatAnchors: [UUID: FeedScrollAnchor] = [:]
     var syncMeetings: Set<UUID> = []
     var chatProjections: [UUID: ChatProjectionCache] = [:]
@@ -39,6 +42,8 @@ final class PrivateData {
     }
 
     func revoke(_ id: UUID) {
+        mediaCache.revoke(id)
+        avatars.clear()
         chatAnchors.removeValue(forKey: id)
         syncMeetings.remove(id)
         chatProjections.removeValue(forKey: id)
@@ -59,6 +64,9 @@ final class PrivateData {
     }
 
     func clear() {
+        profile = nil
+        mediaCache.clear()
+        avatars.clear()
         chatAnchors = [:]
         syncMeetings = []
         chatProjections = [:]

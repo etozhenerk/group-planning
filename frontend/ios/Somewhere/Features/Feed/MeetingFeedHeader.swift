@@ -44,10 +44,10 @@ struct MeetingFeedHeader: View {
                 heading
             }.accessibilityIdentifier("meeting-heading")
                 .accessibilityFocused($focusedAction, equals: .heading)
-            if owner.invitation.organizer {
-                Button {
-                    open(.share, from: .share)
-                } label: {
+            if owner.invitation.organizer, !owner.showEmptyInvitation,
+                let url = owner.invitation.shareURL
+            {
+                ShareLink(item: url, preview: SharePreview(owner.meeting?.title ?? "Встреча")) {
                     ChatIcon(kind: .share)
                         .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
                         .contentShape(Rectangle())

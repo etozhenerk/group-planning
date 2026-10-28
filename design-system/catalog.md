@@ -1,4 +1,4 @@
-# Токены somewhere · 2.5.2
+# Токены somewhere · 3.0.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -26,6 +26,10 @@
 | color.message | color | #33343a | Смысловая роль message |
 | color.muted | color | #b9b9c2 | Смысловая роль muted |
 | color.navigation | color | #1d1e22 | Смысловая роль navigation |
+| color.navigationInactiveText | color | #92939f | Неактивная нижняя вкладка, утверждённый assets/styles.css mobile navigation |
+| color.navigationSelected | color | #4a4554 | Подложка выбранной нижней вкладки, утверждённый assets/styles.css:2330 |
+| color.navigationSelectedBorder | color | #ddd3ed16 | Рамка выбранной нижней вкладки, утверждённый assets/styles.css:2328 |
+| color.navigationSelectedText | color | #eee5f7 | Подпись выбранной нижней вкладки, утверждённый mobile nav |
 | color.ownMessage | color | #e0dce8 | Смысловая роль ownMessage |
 | color.ownText | color | #27252d | Смысловая роль ownText |
 | color.participantChipAvatar | color | #00000010 | Подложка инициала компактного участника; список встреч использует отдельные роли аватаров карточки |
@@ -122,6 +126,14 @@
 | component.emojiDock.searchRadius | dimension | 9px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-search |
 | component.emojiDock.toolbarInsetInline | dimension | 8px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-toolbar |
 | component.emojiDock.toolbarInsetTop | dimension | 5px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-toolbar |
+| component.helpDisclosure.maximumWidth | dimension | 780px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.mobileInset | dimension | 20px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.paddingBlock | dimension | 22px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.paddingInline | dimension | 24px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.radius | dimension | 16px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.symbolLineLength | dimension | 14px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.symbolSize | dimension | 20px | FAQ плюс/минус, одобренный макет 28.10.2026 |
+| component.helpDisclosure.symbolStroke | dimension | 2px | FAQ плюс/минус, одобренный макет 28.10.2026 |
 | component.icon.focusOffset | dimension | 5px | Отступ outline при фокусе по клавиатуре из styles.css :focus-visible; для иконки закрытия панели |
 | component.icon.strokeWidth | number | 1.7 | Толщина SVG-штриха из утверждённого styles.css svg.icon; для пиктограмм нового варианта панели |
 | component.meetingSettings.coverGap | dimension | 12px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-row |
@@ -313,6 +325,8 @@
 | typography.family.web | fontFamily | Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif | Системный fallback без сетевой подмены шрифта |
 | typography.lineHeight.body | number | 1.5 | Множитель высоты строки body |
 | typography.lineHeight.cardTitle | number | 1.25 | Множитель высоты строки cardTitle |
+| typography.lineHeight.helpAnswer | number | 1.7 | FAQ межстрочный множитель 28.10.2026 |
+| typography.lineHeight.helpQuestion | number | 1.5 | FAQ межстрочный множитель 28.10.2026 |
 | typography.lineHeight.label | number | 1.4 | Множитель высоты строки label |
 | typography.lineHeight.meetingDescription | number | 1.6 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .meeting-description |
 | typography.lineHeight.mobileFieldDescription | number | 1.45 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field > textarea |
@@ -329,6 +343,8 @@
 | typography.size.emojiGroupLabel | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-category-label |
 | typography.size.emojiQuick | dimension | 28px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .quick-reactions .emoji-choice |
 | typography.size.heading | dimension | 27px | Размер текста heading |
+| typography.size.helpAnswer | dimension | 14px | FAQ 28.10.2026 |
+| typography.size.helpQuestion | dimension | 14px | FAQ 28.10.2026 |
 | typography.size.label | dimension | 11px | Размер текста label |
 | typography.size.mobileActionHeading | dimension | 28px | Заголовок мобильной формы из h1 утверждённого styles.css; историческая полностраничная mobile-композиция, новые панели чата используют mobileSheetTitle |
 | typography.size.mobileChatNarrowTitle | dimension | 14px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css narrow header |
@@ -344,6 +360,7 @@
 | typography.size.small | dimension | 13px | Размер текста small |
 | typography.weight.bold | fontWeight | 700 | Начертание bold |
 | typography.weight.brand | fontWeight | 850 | Начертание brand |
+| typography.weight.helpQuestion | fontWeight | 550 | FAQ заголовок 28.10.2026 |
 | typography.weight.medium | fontWeight | 500 | Начертание medium |
 | typography.weight.mobileChatTitle | fontWeight | 650 | Принятый chat.css .meeting-heading > span:first-child, начертание заголовка чата |
 | typography.weight.mobileSheetTitle | fontWeight | 650 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet-header h1 |

@@ -1,5 +1,6 @@
 package dev.groupplanning.android.ui.invitation
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.HorizontalDivider
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,7 +49,22 @@ internal fun InvitationConversation(
     val presentation =
         rememberSaveable(id.toString(), saver = ChatPresentation.Saver) { ChatPresentation() }
     var information by rememberSaveable(id.toString()) { mutableStateOf(false) }
-    var sharing by rememberSaveable(id.toString()) { mutableStateOf(false) }
+    val context = LocalContext.current
+    val shareLabel = stringResource(R.string.invitation_share)
+    val feedState = feed?.state?.collectAsStateWithLifecycle()?.value
+    val share: () -> Unit = {
+        state.shareUrl?.let { url ->
+            context.startActivity(
+                Intent.createChooser(
+                    Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, url)
+                    },
+                    shareLabel,
+                ),
+            )
+        }
+    }
     val settings = feed?.settings?.collectAsStateWithLifecycle()?.value
     val informationFocus = remember { FocusRequester() }
     val headingFocus = remember { FocusRequester() }
@@ -56,7 +73,7 @@ internal fun InvitationConversation(
         mutableStateOf(MeetingChatOpener.Information)
     }
     var wasOpen by remember { mutableStateOf(false) }
-    val open = information || sharing || settings != null
+    val open = information || settings != null
     LaunchedEffect(open) {
         if (!open && wasOpen) {
             withFrameNanos { }
@@ -79,11 +96,14 @@ internal fun InvitationConversation(
                     opener = selected
                     information = true
                 },
-                if (details.organizer && state.shareUrl != null) {
+                if (details.organizer &&
+                    state.shareUrl != null &&
+                    feedState?.entries?.any { it.kind == "message" } == true
+                ) {
                     {
                         presentation.dismiss()
                         opener = MeetingChatOpener.Share
-                        sharing = true
+                        share()
                     }
                 } else {
                     null
@@ -105,7 +125,7 @@ internal fun InvitationConversation(
                 )
             }
         }
-        if (information || sharing || settings != null) {
+        if (information || settings != null) {
             MeetingSettingsSheet(
                 model = settings,
                 close = {
@@ -113,8 +133,6 @@ internal fun InvitationConversation(
                         null
                     ) {
                         feed?.closeSettings()
-                    } else if (sharing) {
-                        sharing = false
                     } else {
                         information =
                             false
@@ -125,29 +143,19 @@ internal fun InvitationConversation(
                     reload()
                     feed?.refresh()
                 },
-                parentTitle = if (sharing) {
-                    stringResource(
-                        R.string.invitation_share,
-                    )
-                } else {
-                    details.preview.title
-                },
+                parentTitle = details.preview.title,
             ) {
-                if (sharing && state.shareUrl != null) {
-                    MeetingShareContent(details.preview, state.shareUrl)
-                } else {
-                    val people = snapshot.data.participants[id]
-                    MeetingInformationContent(
-                        state.copy(details = details),
-                        people?.value,
-                        people?.error != null,
-                        choose,
-                        save,
-                        reload,
-                        share = { sharing = true },
-                    ) {
-                        details.meeting?.let { feed?.openSettings(it) }
-                    }
+                val people = snapshot.data.participants[id]
+                MeetingInformationContent(
+                    state.copy(details = details),
+                    people?.value,
+                    people?.error != null,
+                    choose,
+                    save,
+                    reload,
+                    share = share,
+                ) {
+                    details.meeting?.let { feed?.openSettings(it) }
                 }
             }
         }

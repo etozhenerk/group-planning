@@ -1070,3 +1070,41 @@
       status: manual
       health: unknown
       tests: []
+- id: TC-CREATE-COVER-FIRST
+  title: Обложка находится перед полями
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-creation/spec.md
+    requirement: Заметная обложка при создании
+    scenario: Обложка находится перед полями
+    sha256: 6fed16234bfdc8ee85fd69cbde4add219f69c39ab9b4454e59b58515d092e4ff
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный QA API, точные сборки и тестовый пользователь; все три клиента проверяются
+      отдельно, только собственные тестовые данные.
+  steps:
+    - action: Открыть создание встречи на desktop/mobile или native.
+      expected: Блок обложки первый, кнопка с иконкой доступна без раскрытия скрытого блока.
+    - action: Выбрать изображение, отменить замену, заполнить поля и создать; отдельно создать без фото.
+      expected: Отмена сохраняет ранее выбранное, созданная встреча имеет обложку; без фото создание тоже
+        работает.
+  cleanup:
+    - Восстановить viewport, Reduce Motion и сеть; удалить собственные тестовые данные.
+  automation:
+    web:
+      status: planned
+      health: unknown
+      tests: []
+    ios:
+      status: planned
+      health: unknown
+      tests: []
+    android:
+      status: planned
+      health: unknown
+      tests: []

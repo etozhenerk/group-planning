@@ -10,7 +10,12 @@ somewhere_filter=
 somewhere_auth_filter=
 somewhere_scope=
 somewhere_chat=0
+somewhere_native_filters=0
 case "${1:-all}" in
+    native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
+    help) somewhere_filter=-only-testing:SomewhereUITests/HelpDisclosureUITests; somewhere_scope=accessibility ;;
+    native-navigation) somewhere_filter=-only-testing:SomewhereUITests/NativeNavigationUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
+    media-native) somewhere_filter=-only-testing:SomewhereUITests/NativeMediaFlowUITests; somewhere_scope=accessibility ;;
     chat-sync) somewhere_filter=-only-testing:SomewhereUITests/ChatSyncUITests; somewhere_scope=chat; somewhere_chat=1 ;;
     telegram-chat) somewhere_filter=-only-testing:SomewhereUITests/TelegramChatUITests; somewhere_scope=accessibility ;;
     covers-large) somewhere_filter=-only-testing:SomewhereUITests/CoverUITests/testLargeTextAndSystemPickerCancellation; somewhere_scope=accessibility ;;
@@ -39,7 +44,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -72,7 +77,7 @@ trap 'exit 143' TERM
 somewhere_prepare_simulator
 
 case "${1:-all}" in
-    all|sheet-media|media|covers|covers-large)
+    all|native-usability|sheet-media|media|media-native|covers|covers-large)
         somewhere_photo=../../openspec/changes/meeting-experience-refresh/assets/boardgame.png
         printf 'QA_PHOTO_SOURCE=%s\n' "$somewhere_photo"
         shasum -a 256 "$somewhere_photo"
@@ -123,8 +128,19 @@ xcrun simctl install "$somewhere_simulator" .build/UITestDerivedData/Build/Produ
 somewhere_container=$(xcrun simctl get_app_container "$somewhere_simulator" dev.groupplanning.ios.uitesthost data)
 cp "$somewhere_temporary/config.json" "$somewhere_container/tmp/ui-fixture.json"
 chmod 600 "$somewhere_container/tmp/ui-fixture.json"
-if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "all" ]; then
+if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "all" ]; then
     python3 scripts/seed-ui-document.py "$somewhere_container/Documents"
+fi
+
+if [ "$somewhere_native_filters" = "1" ]; then
+    set -- -only-testing:SomewhereUITests/NativeMediaFlowUITests \
+        -only-testing:SomewhereUITests/NativeNavigationUITests \
+        -only-testing:SomewhereUITests/HelpDisclosureUITests \
+        -only-testing:SomewhereUITests/ChatShareListUITests \
+        -only-testing:SomewhereUITests/ChatMediaSheetUITests \
+        -only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex
+else
+    set -- ${somewhere_filter:+"$somewhere_filter"} ${somewhere_auth_filter:+"$somewhere_auth_filter"}
 fi
 
 xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug \
@@ -133,4 +149,4 @@ xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -sche
     -derivedDataPath .build/UITestDerivedData \
     -resultBundlePath ".build/UIResults-$(date -u +%Y%m%dT%H%M%S)-$$.xcresult" \
     -parallel-testing-enabled NO -collect-test-diagnostics never \
-    ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building ${somewhere_filter:+"$somewhere_filter"} ${somewhere_auth_filter:+"$somewhere_auth_filter"}
+    ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "$@"

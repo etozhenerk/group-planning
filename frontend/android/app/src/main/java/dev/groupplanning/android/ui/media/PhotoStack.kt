@@ -5,7 +5,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,8 +16,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +32,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -38,9 +45,13 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.R
+import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.MeetingMedia
 import dev.groupplanning.android.state.media.MediaViewModel
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
+import dev.groupplanning.android.ui.theme.DesignTokens
+import java.io.IOException
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 @Composable
@@ -55,6 +66,7 @@ internal fun PhotoStack(
 ) {
     if (photos.isEmpty()) return
     val offset = remember { Animatable(0f) }
+    var dragged by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val motion = LocalMotionEnabled.current
     val current = photos[index.coerceIn(photos.indices)]
@@ -66,7 +78,21 @@ internal fun PhotoStack(
         if (photos.size >
             1
         ) {
-            select((index + delta + photos.size) % photos.size)
+            scope.launch {
+                val target = (index + delta + photos.size) % photos.size
+                try {
+                    model.bitmap(photos[target])
+                    select(target)
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (
+                    _: ClientFailure,
+                ) {
+                    select(target)
+                } catch (_: IOException) {
+                    select(target)
+                }
+            }
         }
     }
     Box(
@@ -99,15 +125,47 @@ internal fun PhotoStack(
                     true
                 },
             )
+        }.pointerInput(Unit) {
+            awaitEachGesture {
+                awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                dragged = false
+                waitForUpOrCancellation()
+            }
         }.pointerInput(current.id, photos.size, motion) {
             detectHorizontalDragGestures(
+                onDragStart = { dragged = true },
                 onDragCancel = {
-                    scope.launch { offset.animateTo(0f, tween(if (motion) 260 else 0)) }
+                    scope.launch {
+                        offset.animateTo(
+                            0f,
+                            tween(if (motion) DesignTokens.motionDurationNavigation else 0),
+                        )
+                    }
                 },
                 onDragEnd = {
                     scope.launch {
                         if (kotlin.math.abs(offset.value) > 56 * density && photos.size > 1) {
                             val direction = if (offset.value < 0) 1 else -1
+                            val target = (index + direction + photos.size) % photos.size
+                            try {
+                                model.bitmap(photos[target])
+                            } catch (cancelled: CancellationException) {
+                                throw cancelled
+                            } catch (_: ClientFailure) {
+                                select(target)
+                                offset.animateTo(
+                                    0f,
+                                    tween(if (motion) DesignTokens.motionDurationNavigation else 0),
+                                )
+                                return@launch
+                            } catch (_: IOException) {
+                                select(target)
+                                offset.animateTo(
+                                    0f,
+                                    tween(if (motion) DesignTokens.motionDurationNavigation else 0),
+                                )
+                                return@launch
+                            }
                             if (motion) {
                                 offset.animateTo(
                                     if (direction ==
@@ -117,13 +175,16 @@ internal fun PhotoStack(
                                     } else {
                                         size.width.toFloat()
                                     },
-                                    tween(260),
+                                    tween(DesignTokens.motionDurationNavigation),
                                 )
                             }
-                            change(direction)
+                            select(target)
                             offset.snapTo(0f)
                         } else {
-                            offset.animateTo(0f, tween(if (motion) 260 else 0))
+                            offset.animateTo(
+                                0f,
+                                tween(if (motion) DesignTokens.motionDurationNavigation else 0),
+                            )
                         }
                     }
                 },
@@ -160,6 +221,8 @@ internal fun PhotoStack(
                         null,
                         { model.content(next) },
                         Modifier.matchParentSize().clip(RoundedCornerShape(7.dp)),
+                        cached = model.cached(next),
+                        loadBitmap = { model.bitmap(next) },
                     )
                 }
             }
@@ -172,7 +235,7 @@ internal fun PhotoStack(
                 .clip(RoundedCornerShape(if (full) 0.dp else 12.dp))
                 .background(if (full) Color.Transparent else Color(0xffe4ded4))
                 .padding(if (full) 0.dp else 5.dp).then(
-                    if (full) Modifier else Modifier.clickable(onClick = open),
+                    if (full) Modifier else Modifier.clickable { if (!dragged) open() },
                 ),
         ) {
             PrivateImage(
@@ -181,6 +244,8 @@ internal fun PhotoStack(
                 { model.content(current) },
                 Modifier.matchParentSize().clip(RoundedCornerShape(if (full) 0.dp else 7.dp)),
                 if (full) ContentScale.Fit else ContentScale.Crop,
+                cached = model.cached(current),
+                loadBitmap = { model.bitmap(current) },
             )
         }
     }

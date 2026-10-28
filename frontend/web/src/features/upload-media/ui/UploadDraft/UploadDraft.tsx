@@ -48,6 +48,7 @@ export const UploadDraft = ({
       session={session}
       photo={photo}
       purpose={purpose}
+      active={active}
       initialFiles={
         initial?.photo === photo && initial.purpose === purpose ? initial.files : []
       }

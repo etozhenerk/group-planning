@@ -13,6 +13,7 @@ internal data class CalendarData(
     val filter: CalendarFilter? = null,
     val monthFilter: CalendarFilter? = null,
     val page: CalendarPage? = null,
+    val cachedPages: Map<CalendarFilter, CalendarPage> = emptyMap(),
     val counts: CalendarCounts? = null,
     val days: List<CalendarDay> = emptyList(),
     val request: UUID? = null,
@@ -22,6 +23,27 @@ internal data class CalendarData(
     val pages: Int = 1,
     val failures: Int = 0,
 ) {
+    fun pageFor(value: CalendarFilter): CalendarPage? {
+        if (filter == value && page != null) return page
+        cachedPages[value]?.let { return it }
+        val month = cachedPages.entries.lastOrNull { (key, content) ->
+            key.period == value.period &&
+                key.from != null &&
+                key.to != null &&
+                value.from != null &&
+                value.to != null &&
+                key.from <= value.from &&
+                key.to >= value.to &&
+                content.nextCursor == null
+        }?.value ?: return null
+        return month.copy(
+            meetings = month.meetings.filter {
+                val date = it.localDate?.let(java.time.LocalDate::parse)
+                date != null && date >= value.from && date <= value.to
+            },
+        )
+    }
+
     fun refreshDelay(now: Instant): Long {
         val normal = (page?.refreshAfterSeconds ?: 5).toLong() * 1000
         if (failures > 0) return (normal * (1L shl failures.coerceAtMost(4))).coerceAtMost(60_000)

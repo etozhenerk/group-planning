@@ -39,12 +39,16 @@ struct ProfileScreen: View {
                         }.padding(20).background(
                             AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
                     } else {
-                        VStack(spacing: 22) {
-                            RoundedRectangle(cornerRadius: 22).frame(height: 245)
-                            RoundedRectangle(cornerRadius: 22).frame(height: 314.5)
-                            RoundedRectangle(cornerRadius: 22).frame(height: 182)
-                        }.foregroundStyle(AppPalette.surface).accessibilityLabel("Загрузка профиля")
+                        DeferredPlaceholder {
+                            VStack(spacing: 22) {
+                                RoundedRectangle(cornerRadius: 22).frame(height: 245)
+                                RoundedRectangle(cornerRadius: 22).frame(height: 314.5)
+                                RoundedRectangle(cornerRadius: 22).frame(height: 182)
+                            }.foregroundStyle(AppPalette.surface).accessibilityLabel(
+                                "Загрузка профиля")
+                        }
                     }
+                    ServiceLinks(api: owner.session.api, screen: "profile").padding(.top, 40)
                     HStack {
                         Spacer()
                         Button("Выйти", action: logout).designFont(14, weight: .semibold)
@@ -55,14 +59,9 @@ struct ProfileScreen: View {
                             }
                             .accessibilityLabel("Выйти из аккаунта")
                     }.padding(.top, 20)
-                    ServiceLinks(api: owner.session.api, screen: "profile").padding(.top, 40)
-                    Button("Удалить аккаунт", role: .destructive, action: deleteAccount)
-                        .accessibilityIdentifier("account-delete-open")
-                        .designFont(13).frame(minHeight: 44).padding(.top, 20)
+
                 }
-                Text(AppVersion.shortLabel).designFont(12).foregroundStyle(
-                    AppPalette.muted
-                ).padding(.top, 12)
+
             }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 100)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.background(AppPalette.background).task(id: retry) { await owner.load() }

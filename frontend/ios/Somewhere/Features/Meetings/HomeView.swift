@@ -28,7 +28,7 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            Group {
+            ZStack {
                 if section == .profile {
                     ProfileScreen(
                         session: session, logout: owner.logout, deleteAccount: deleteAccount)
@@ -69,6 +69,7 @@ struct HomeView: View {
             if let creator { CreateMeetingScreen(owner: creator, openMeeting: { path.append($0) }) }
         }
         .onChange(of: showingCreate) { old, new in if old && !new { refreshID = UUID() } }
+        .environment(\.avatarImages, session.privateData.avatars)
         .tint(AppPalette.accent)
     }
 

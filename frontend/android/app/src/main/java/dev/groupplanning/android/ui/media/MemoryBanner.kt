@@ -91,6 +91,8 @@ internal fun MemoryBanner(photos: List<MeetingMedia>, model: MediaViewModel, ope
                             "",
                             { model.content(photo) },
                             Modifier.padding(3.dp).clip(RoundedCornerShape(6.dp)),
+                            cached = model.cached(photo),
+                            loadBitmap = { model.bitmap(photo) },
                         )
                     }
                 }

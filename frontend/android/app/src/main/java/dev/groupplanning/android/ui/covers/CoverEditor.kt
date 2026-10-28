@@ -32,6 +32,7 @@ import dev.groupplanning.android.data.drafts.CoverDraft
 import dev.groupplanning.android.state.covers.CoverSelectionViewModel
 import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.AppIcon
+import dev.groupplanning.android.ui.components.CompactButton
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.UUID
@@ -46,6 +47,7 @@ internal fun CoverEditor(
     original: String? = null,
     meetingId: UUID? = null,
     compact: Boolean = false,
+    prominent: Boolean = false,
 ) {
     val repository = LocalCovers.current
     val model = remember { CoverSelectionViewModel() }
@@ -78,31 +80,40 @@ internal fun CoverEditor(
             }
     val actions: @Composable () -> Unit = {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            TextButton(
-                onClick = {
-                    val adapter = repository?.selection
-                    if (adapter != null) {
-                        model.select(adapter::select, onBusy, onChange)
-                    } else {
-                        picker.launch(
-                            PickVisualMediaRequest(
-                                ActivityResultContracts.PickVisualMedia.ImageOnly,
-                            ),
-                        )
-                    }
+            val select = {
+                val adapter = repository?.selection
+                if (adapter != null) {
+                    model.select(adapter::select, onBusy, onChange)
+                } else {
+                    picker.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+                    )
+                }
+            }
+            val label = stringResource(
+                if (source ==
+                    null
+                ) {
+                    R.string.cover_add
+                } else {
+                    R.string.cover_replace
                 },
-                enabled = enabled && !state.busy && repository != null,
-                modifier = Modifier.testTag("cover-select"),
-            ) {
-                Text(
-                    stringResource(
-                        if (source == null) {
-                            R.string.cover_add
-                        } else {
-                            R.string.cover_replace
-                        },
-                    ),
+            )
+            if (prominent) {
+                CompactButton(
+                    label,
+                    Modifier.fillMaxWidth().testTag("cover-select"),
+                    primary = true,
+                    icon = R.drawable.ic_photo,
+                    enabled = enabled && !state.busy && repository != null,
+                    click = select,
                 )
+            } else {
+                TextButton(
+                    select,
+                    enabled = enabled && !state.busy && repository != null,
+                    modifier = Modifier.testTag("cover-select"),
+                ) { Text(label) }
             }
             if (source != null) {
                 TextButton(

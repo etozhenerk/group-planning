@@ -18,6 +18,9 @@
 }
 
 .items[data-photo='true'] {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  display: flex;
+  gap: var(--ds-space-s12);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-block: var(--ds-space-s8);
 }

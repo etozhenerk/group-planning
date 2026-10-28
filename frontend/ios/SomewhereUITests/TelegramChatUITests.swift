@@ -69,25 +69,17 @@ final class TelegramChatUITests: XCTestCase {
         let share = app.buttons["meeting-info-share"]
         MeetingInfoTestSupport.reveal(share, app: app)
         share.tap()
-        XCTAssertTrue(app.buttons["meeting-share-close"].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["meeting-info-close"].exists)
-        app.buttons["invitation-copy"].tap()
-        XCTAssertTrue(app.buttons["Скопировано"].exists)
-        app.buttons["meeting-share-close"].tap()
+        let copy = SystemShareTestSupport.copy(app)
+        XCTAssertTrue(copy.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
+        copy.tap()
+        XCTAssertTrue(copy.waitForNonExistence(timeout: 5))
         XCTAssertTrue(app.buttons["meeting-people-collapse"].waitForExistence(timeout: 5))
         MeetingInfoTestSupport.reveal(share, app: app)
         let sharePosition = share.frame.minY
         share.tap()
-        let childClose = app.buttons["meeting-share-close"]
-        XCTAssertTrue(childClose.waitForExistence(timeout: 5))
-        let origin = app.coordinate(withNormalizedOffset: .zero)
-        origin.withOffset(CGVector(dx: app.frame.midX, dy: childClose.frame.midY))
-            .press(
-                forDuration: 0.1,
-                thenDragTo: origin.withOffset(CGVector(dx: app.frame.midX, dy: app.frame.maxY - 20))
-            )
+        SystemShareTestSupport.cancel(app)
         XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
-        XCTAssertFalse(childClose.exists)
         XCTAssertEqual(share.frame.minY, sharePosition, accuracy: 2)
         let settings = app.buttons["edit-meeting"]
         MeetingInfoTestSupport.reveal(settings, app: app)

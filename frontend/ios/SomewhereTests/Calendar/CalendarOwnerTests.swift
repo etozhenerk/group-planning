@@ -25,6 +25,34 @@ struct CalendarOwnerTests {
         #expect(owner.empty)
     }
 
+    @Test func revisitingFilterUsesOnlyItsCacheWhileRefreshing() async throws {
+        let h = try SessionHarness()
+        try await h.login()
+        let owner = MeetingListOwner(session: h.session)
+        let future = UUID()
+        let past = UUID()
+        await h.transport.enqueue(
+            "/api/v1/meetings", data: try CalendarFixtures.page(ids: [future]))
+        await owner.load()
+        owner.select(period: .past)
+        #expect(owner.page.value == nil)
+        await h.transport.enqueue(
+            "/api/v1/meetings", data: try CalendarFixtures.page(ids: [past], period: "past"))
+        await owner.load()
+        owner.select(period: .upcoming)
+        #expect(owner.items.map(\.id) == [future])
+        let gate = TestGate()
+        await h.transport.enqueue(
+            "/api/v1/meetings", data: try CalendarFixtures.page(ids: [future]), gate: gate)
+        let refresh = Task { await owner.load() }
+        try await h.transport.waitFor("/api/v1/meetings", count: 3)
+        #expect(owner.items.map(\.id) == [future] && owner.page.isLoading)
+        await gate.release()
+        await refresh.value
+        owner.select(period: .past)
+        #expect(owner.items.map(\.id) == [past])
+    }
+
     @Test func oldPeriodCannotReplaceNewData() async throws {
         let h = try SessionHarness()
         try await h.login()

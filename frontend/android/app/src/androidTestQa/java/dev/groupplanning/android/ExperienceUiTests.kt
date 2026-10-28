@@ -47,6 +47,7 @@ class ExperienceUiTests {
             fixture.screenshot("refresh-memory-stack")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
             fixture.waitText("2 / 3")
+            compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
             activity.recreate()
             fixture.waitText("2 / 3")
             compose.onNodeWithContentDescription("Все фото").performClick()

@@ -1,15 +1,27 @@
 import { expect, test } from '@playwright/test';
-import { login } from '@tests/helpers';
+import { login, csrf } from '@tests/helpers';
 import type { Page } from '@playwright/test';
 
 const openDeletion = async (page: Page) => {
-  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
-  await page.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();
+  const token = await csrf(page);
+  await page.evaluate((csrfToken) => {
+    const bytes = crypto.getRandomValues(new Uint8Array(32));
+    const operation = btoa(String.fromCharCode(...bytes))
+      .replaceAll('+', '-')
+      .replaceAll('/', '_')
+      .replaceAll('=', '');
+
+    sessionStorage.setItem(
+      'somewhere-account-deletion',
+      JSON.stringify({ token: operation, csrf: csrfToken }),
+    );
+  }, token);
+  await page.reload();
 
   return page.getByRole('dialog', { name: 'Удалить аккаунт?' });
 };
 
-test('confirmation explains consequences, cancels without a request, and adapts to narrow screens', async ({
+test('profile hides account deletion and keeps logout last on narrow screens', async ({
   page,
 }) => {
   await login(page, 'Саша');
@@ -19,24 +31,27 @@ test('confirmation explains consequences, cancels without a request, and adapts 
       deletions++;
     }
   });
-  const dialog = await openDeletion(page);
-  await expect(dialog).toContainText('Встречи без таких участников удалятся.');
-  await expect(dialog).toContainText('Удалённый аккаунт');
-  await expect(dialog).toHaveCSS('opacity', '1');
+  await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await expect(
-    dialog.getByRole('button', { name: 'Удалить аккаунт', exact: true }),
-  ).toHaveCSS('background-color', 'rgb(255, 184, 178)');
-  await page.screenshot({ path: 'test-results/account-deletion-wide.png' });
+    page.getByRole('button', { name: 'Удалить аккаунт', exact: true }),
+  ).toHaveCount(0);
+  const logout = page.getByRole('button', { name: 'Выйти из аккаунта', exact: true });
+  const services = page.getByRole('navigation', { name: 'О сервисе', exact: true });
+  expect(
+    await logout.evaluate(
+      (node, other) =>
+        Boolean(
+          other && other.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING,
+        ),
+      await services.elementHandle(),
+    ),
+  ).toBe(true);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.screenshot({ path: 'test-results/account-deletion-narrow.png' });
+  await logout.scrollIntoViewIfNeeded();
+  await expect(logout).toBeInViewport();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
   ).toBe(true);
-  await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Удалить аккаунт', exact: true }),
-  ).toBeFocused();
   expect(deletions).toBe(0);
   expect((await page.request.get('/api/v1/me')).status()).toBe(200);
 });
@@ -68,7 +83,7 @@ test('lost deletion response survives reload and repeats the same operation', as
     }
   });
   const dialog = await openDeletion(page);
-  await dialog.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Повторить', exact: true }).click();
   await expect(dialog.getByRole('alert')).toContainText(
     'Не удалось подтвердить удаление',
   );
@@ -113,7 +128,7 @@ test('expired session is not reported as deleted', async ({ page }) => {
     }
   });
   const dialog = await openDeletion(page);
-  await dialog.getByRole('button', { name: 'Удалить аккаунт', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Повторить', exact: true }).click();
   await expect(dialog.getByRole('alert')).toContainText('Сессия закончилась');
   await expect(page.getByText('Аккаунт удалён', { exact: true })).not.toBeVisible();
 });

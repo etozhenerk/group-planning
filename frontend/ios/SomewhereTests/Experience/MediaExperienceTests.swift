@@ -60,6 +60,34 @@ struct MediaExperienceTests {
         #expect(owner.data == nil)
         #expect(!owner.current)
     }
+    @Test func repeatedContentUsesSessionCacheAndRevocationClearsIt() async throws {
+        let harness = try SessionHarness()
+        try await harness.login()
+        let meetingID = UUID()
+        let item = try media(UUID(), meeting: meetingID)
+        let path = try harness.session.api.origin.url(for: ExperienceRequests.content(item)).path
+        await harness.transport.enqueue(path, data: Data("test".utf8), mime: "text/plain")
+        let first = MediaContentOwner(media: item, session: harness.session)
+        await first.load()
+        first.clear()
+        let second = MediaContentOwner(media: item, session: harness.session)
+        #expect(second.data == Data("test".utf8))
+        await second.load()
+        #expect(await harness.transport.count(path) == 1)
+        harness.session.updateMeetingAccess(meetingID, allowed: false)
+        #expect(harness.session.privateData.mediaCache.value(item.id) == nil)
+        let denied = MediaContentOwner(media: item, session: harness.session)
+        #expect(denied.data == nil && !denied.current)
+    }
+
+    private func waitForBatch(_ owner: MediaTransferOwner) async throws {
+        for _ in 0..<200 {
+            if !owner.busy { return }
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        throw ClientFailure.invalidRequest
+    }
+
     @Test func partialUploadPreservesSuccessAndRetriesSamePreparedFile() async throws {
         let harness = try SessionHarness()
         try await harness.login()
@@ -89,9 +117,16 @@ struct MediaExperienceTests {
         await harness.transport.enqueue(
             base + "/media/" + a.id.uuidString.lowercased() + "/publish", data: try envelope(a))
         let publishB = base + "/media/" + b.id.uuidString.lowercased() + "/publish"
-        await harness.transport.enqueue(publishB, status: 503)
-        await owner.upload(first.id)
-        await owner.upload(second.id)
+        let secondPublishGate = TestGate()
+        await harness.transport.enqueue(publishB, status: 503, gate: secondPublishGate)
+        owner.send()
+        try await harness.transport.waitFor(publishB)
+        #expect(owner.busy)
+        #expect(owner.pending[0].stage == .published)
+        #expect(owner.pending[1].stage == .uploading)
+        #expect(owner.completedBatch == 0)
+        await secondPublishGate.release()
+        try await waitForBatch(owner)
         #expect(owner.pending[0].stage == .published)
         #expect(owner.pending[1].stage == .failed)
         owner.setCaption("Не менять неопределённую публикацию", for: second.id)
@@ -100,7 +135,9 @@ struct MediaExperienceTests {
         await harness.transport.enqueue(
             base + "/media/" + b.id.uuidString.lowercased() + "/content", data: try envelope(b))
         await harness.transport.enqueue(publishB, data: try envelope(b))
-        await owner.upload(second.id)
+        owner.send()
+        try await waitForBatch(owner)
+        #expect(owner.completedBatch == 1)
         #expect(owner.pending[0].stage == .published)
         #expect(owner.pending[1].stage == .published)
         #expect(await harness.transport.count(base + "/media/uploads") == 2)

@@ -140,6 +140,8 @@ export {
 
 export { useMediaImage } from '@/entities/meeting/model/useMediaImage';
 
+export { usePreloadMedia } from '@/entities/meeting/model/usePreloadMedia';
+
 export { useMemories } from '@/entities/meeting/model/useMemories';
 
 export { MediaPhoto } from '@/entities/meeting/ui/MediaPhoto';

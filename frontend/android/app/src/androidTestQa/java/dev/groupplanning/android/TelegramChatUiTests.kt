@@ -216,10 +216,17 @@ class TelegramChatUiTests {
             compose.onNodeWithTag("close-action-sheet").performClick()
             fixture.waitTag("meeting-information")
             compose.onNodeWithTag("information-share").performScrollTo().performClick()
-            fixture.waitText(fixture.context.getString(R.string.invitation_copy_link))
-            compose.onAllNodes(hasTestTag("chat-action-sheet")).assertCountEquals(1)
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            check(
+                fixture.device.wait(
+                    androidx.test.uiautomator.Until.hasObject(
+                        androidx.test.uiautomator.By.pkg("com.android.intentresolver"),
+                    ),
+                    10_000,
+                ),
+            )
+            fixture.device.pressBack()
             fixture.waitTag("open-settings")
+            compose.onAllNodes(hasTestTag("chat-action-sheet")).assertCountEquals(1)
             compose.onNodeWithTag("close-action-sheet").performClick()
             fixture.waitAbsent("chat-action-sheet")
             compose.onNodeWithTag("message-composer").assertTextContains("Черновик в чате")

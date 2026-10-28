@@ -1,127 +1,76 @@
-import PhotosUI
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct MediaPickerPanel: View {
     @Bindable var owner: MediaTransferOwner
     var photosOnly = false
-    @State private var photos: [PhotosPickerItem] = []
-    @State private var importing = false
-    @State private var choosingPhotos = false
-    @State private var selecting = false
-    @State private var selectionError: String?
+    @State private var picker: MediaPickerKind?
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.chatSheetClose) private var close
+
     var body: some View {
         ActionFormSheet(
             title: photosOnly ? "Отправить фото" : "Отправить файл",
-            dismissDisabled: owner.busy || selecting,
+            dismissDisabled: owner.busy,
             scrollIdentifier: "media-picker-scroll", closeIdentifier: "media-picker-close"
         ) {
-            if selecting { ProgressView("Подготавливаем файлы…") }
-            if let problem = selectionError ?? owner.problem {
-                Text(problem).designFont(12).foregroundStyle(AppPalette.error)
-                Button("Повторить проверку") { Task { await owner.loadLimits() } }
+            if let problem = owner.problem {
+                Text(problem).designFont(DesignTokens.typographySizeCaption)
+                    .foregroundStyle(DesignTokens.colorError)
             }
             if photosOnly {
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    alignment: .leading, spacing: 16
-                ) {
-                    ForEach(owner.pending) { file in
-                        MediaPreviewItem(file: file, owner: owner)
-                    }
-                }
+                MediaPhotoSelection(owner: owner)
             } else {
-                ForEach(owner.pending) { file in MediaPreviewItem(file: file, owner: owner)
+                ForEach(owner.pending.filter { $0.stage != .published }) { file in
+                    MediaPreviewItem(file: file, owner: owner)
                 }
             }
-            Text("Видно участникам встречи").designFont(12).foregroundStyle(
-                AppPalette.muted)
-            HStack(spacing: 12) {
+            Text("Видно участникам встречи").designFont(DesignTokens.typographySizeCaption)
+                .foregroundStyle(DesignTokens.colorMuted)
+            if owner.busy {
+                ProgressView("Отправляем…").frame(maxWidth: .infinity)
+                    .accessibilityIdentifier("media-batch-progress")
+            }
+            HStack(spacing: DesignTokens.spaceS12) {
                 Button {
-                    if photosOnly { choosingPhotos = true } else { importing = true }
+                    picker = photosOnly ? .photos : .files
                 } label: {
-                    HStack(spacing: 9) {
-                        ExperienceIcon(kind: .plus)
-                        Text("Выбрать ещё")
-                    }
-                    .designFont(14, weight: .semibold).padding(.horizontal, 15)
-                    .frame(minHeight: 47)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 13).stroke(
-                            .white.opacity(0.125), lineWidth: 1)
-                    }
-                }.accessibilityLabel(photosOnly ? "Выбрать фото" : "Выбрать файл").disabled(
-                    selecting || owner.busy)
-                Spacer(minLength: 0)
-                if owner.pending.contains(where: { $0.stage == .ready }) {
-                    Button(action: owner.send) {
-                        Group {
-                            if owner.busy { ProgressView() } else { Text("Отправить") }
+                    Label("Выбрать ещё", systemImage: "plus")
+                        .designFont(DesignTokens.typographySizeButton, weight: .semibold)
+                        .padding(.horizontal, DesignTokens.componentButtonPaddingInline)
+                        .frame(minHeight: DesignTokens.componentButtonMinimumHeight)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: DesignTokens.componentButtonRadius)
+                                .stroke(
+                                    DesignTokens.colorBorderStrong, lineWidth: DesignTokens.spaceS1)
                         }
-                        .designFont(14, weight: .semibold).padding(.horizontal, 18)
-                        .frame(minHeight: 47)
-                        .foregroundStyle(AppPalette.actionText).background(
-                            AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-                    }.disabled(owner.busy)
-                }
-            }
-            if let limits = owner.limits {
-                Text(
-                    "До \(limits.maxFiles) файлов. Фото — до \(limits.maxPhotoBytes / 1024 / 1024) МБ, файлы — до \(limits.maxFileBytes / 1024 / 1024) МБ."
-                )
-                .designFont(11).foregroundStyle(AppPalette.muted).padding(.top, 24)
+                }.accessibilityLabel(photosOnly ? "Выбрать фото" : "Выбрать файл")
+                    .disabled(owner.busy)
+                Spacer(minLength: DesignTokens.spaceS0)
+                Button(action: owner.send) {
+                    Text(owner.pending.contains { $0.stage == .failed } ? "Повторить" : "Отправить")
+                        .designFont(DesignTokens.typographySizeButton, weight: .semibold)
+                        .padding(.horizontal, DesignTokens.componentButtonPaddingInline)
+                        .frame(minHeight: DesignTokens.componentButtonMinimumHeight)
+                        .foregroundStyle(DesignTokens.colorActionText)
+                        .background(
+                            DesignTokens.colorAction,
+                            in: RoundedRectangle(
+                                cornerRadius: DesignTokens.componentButtonRadius))
+                }.disabled(owner.busy || !owner.canSend)
+                    .accessibilityIdentifier("media-batch-send")
             }
         }
-        .interactiveDismissDisabled(owner.busy || selecting)
-        .task {
-            await owner.loadLimits()
-            owner.pending.removeAll { $0.stage == .published }
-            if owner.pending.isEmpty {
-                if photosOnly { choosingPhotos = true } else { importing = true }
-            }
+        .interactiveDismissDisabled(owner.busy)
+        .modifier(MediaSelectionPresenter(owner: owner, kind: $picker, selected: {}))
+        .task { await owner.loadLimits() }
+        .onChange(of: owner.completedBatch) { _, _ in
+            if let close { close.perform() } else { dismiss() }
         }
         .opacity(owner.current ? 1 : 0).accessibilityHidden(!owner.current)
         .onChange(of: owner.current) { _, current in
             if !current {
                 owner.suspend()
                 dismiss()
-            }
-        }
-        .photosPicker(
-            isPresented: $choosingPhotos, selection: $photos,
-            maxSelectionCount: owner.limits?.maxFiles ?? 10, matching: .images
-        )
-        .task(id: photos) {
-            guard !photos.isEmpty else { return }
-            selecting = true
-            selectionError = nil
-            defer { selecting = false }
-            var files: [PendingMedia] = []
-            do {
-                for item in photos {
-                    guard let data = try await item.loadTransferable(type: Data.self) else {
-                        throw ClientFailure.invalidResponse
-                    }
-                    try Task.checkCancellation()
-                    files.append(try MediaSelection.photo(data))
-                }
-                await owner.add(files)
-                photos = []
-            } catch {
-                if !(error is CancellationError) {
-                    selectionError = "Не удалось открыть фото. Выберите его ещё раз."
-                }
-            }
-        }
-        .fileImporter(
-            isPresented: $importing, allowedContentTypes: [.data], allowsMultipleSelection: true
-        ) { result in
-            do {
-                let files = try result.get().map(MediaSelection.file)
-                Task { await owner.add(files) }
-            } catch {
-                selectionError = "Не удалось открыть файл. Проверьте его размер и доступ."
             }
         }
     }

@@ -1,5 +1,5 @@
 export const serviceContent = {
-  about: { title: 'О somewhere', intro: 'Место для планов с друзьями.' },
+  about: { title: 'О приложении', intro: 'Место для планов с друзьями.' },
   help: {
     title: 'Нужна подсказка?',
     intro: 'Ответы на вопросы о встречах и приглашениях.',
@@ -30,6 +30,6 @@ export const serviceContent = {
     title: 'Cookie и данные браузера',
     intro: 'Что сохраняется на устройстве и зачем.',
   },
-};
+} as const;
 
 export type ServiceKind = keyof typeof serviceContent;

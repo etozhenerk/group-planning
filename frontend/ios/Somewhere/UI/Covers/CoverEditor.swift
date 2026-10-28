@@ -109,9 +109,16 @@ struct CoverEditor: View {
     }
 
     @ViewBuilder private var controls: some View {
-        Button(hasPhoto ? "Заменить" : "Добавить фото") {
-            selectPhoto()
-        }.frame(minHeight: DesignTokens.targetIos).accessibilityIdentifier("cover-select").disabled(
+        Button(action: selectPhoto) {
+            Label(hasPhoto ? "Заменить фото" : "Добавить фото", systemImage: "photo.badge.plus")
+                .designFont(DesignTokens.typographySizeButton, weight: .semibold)
+                .frame(maxWidth: .infinity, minHeight: DesignTokens.componentButtonMinimumHeight)
+                .foregroundStyle(DesignTokens.colorActionText)
+                .background(
+                    DesignTokens.colorAction,
+                    in: RoundedRectangle(
+                        cornerRadius: DesignTokens.componentButtonRadius))
+        }.accessibilityIdentifier("cover-select").disabled(
             disabled || owner.busy)
         if hasPhoto {
             Button("Убрать фото") {

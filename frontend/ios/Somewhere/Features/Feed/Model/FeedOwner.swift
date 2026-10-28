@@ -25,6 +25,13 @@ final class FeedOwner {
     var informationScrollOffset: CGFloat = 0
     var mediaPresented: Bool { sheets.contains(.media) }
     var photoSelection = false
+    var mediaSelection: MediaPickerKind? {
+        didSet { reads.cover(panel != nil || !sheets.isEmpty || mediaSelection != nil) }
+    }
+    var showEmptyInvitation: Bool {
+        loaded && !hasHistory && !hasNewer && outgoing.isEmpty
+            && !records.contains { $0.kind == "message" } && invitation.organizer
+    }
     let lease: PrivateData.Lease?
     var records: [FeedEntry] = []
     var outgoing: [OutgoingMessage] = []

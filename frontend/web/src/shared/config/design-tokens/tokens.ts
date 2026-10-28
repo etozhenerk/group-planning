@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 2.5.2. Do not edit.
+// Generated from design-system/tokens.json · 3.0.0. Do not edit.
 import { foundationTokens } from '@/shared/config/design-tokens/foundations';
 import { componentTokens } from '@/shared/config/design-tokens/components';
 

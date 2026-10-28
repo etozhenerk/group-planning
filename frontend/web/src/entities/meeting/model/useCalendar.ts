@@ -15,6 +15,8 @@ export const useCalendar = (user: string, filter: CalendarFilter, enabled = true
     queryFn: ({ pageParam, signal }) => listCalendar(filter, pageParam, signal),
     getNextPageParam: (page) => page.nextCursor,
     enabled: !!user && enabled,
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === user ? previous : undefined,
     retry: false,
     refetchOnMount: 'always',
     refetchOnWindowFocus: 'always',

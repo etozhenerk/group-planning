@@ -51,6 +51,18 @@ final class MemoriesOwner: Identifiable {
             loaded = true
         } catch { if current, !(error is CancellationError) { failed = true } }
     }
+    func prefetch(around selection: Int) async {
+        guard current, !photos.isEmpty else { return }
+        // Serial neighbour prefetch bounds network/memory work and gives the next swipe priority.
+        for delta in [0, 1, -1, 2] {
+            guard current, !Task.isCancelled else { return }
+            let photo = photos[(selection + delta + photos.count) % photos.count]
+            if session.privateData.mediaCache.value(photo.id) != nil { continue }
+            let content = MediaContentOwner(media: photo, session: session)
+            await content.load()
+        }
+    }
+
     func clear() {
         transfer.suspend()
         photos = []

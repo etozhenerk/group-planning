@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 2.5.2. Do not edit.
+// Generated from design-system/tokens.json · 3.0.0. Do not edit.
 export const foundationTokens = {
   breakpointChatCompactHeight: '500px',
   breakpointChatNarrowWidth: '350px',
@@ -20,6 +20,10 @@ export const foundationTokens = {
   colorMessage: '#33343a',
   colorMuted: '#b9b9c2',
   colorNavigation: '#1d1e22',
+  colorNavigationInactiveText: '#92939f',
+  colorNavigationSelected: '#4a4554',
+  colorNavigationSelectedBorder: '#ddd3ed16',
+  colorNavigationSelectedText: '#eee5f7',
   colorOwnMessage: '#e0dce8',
   colorOwnText: '#27252d',
   colorParticipantChipAvatar: '#00000010',
@@ -95,6 +99,8 @@ export const foundationTokens = {
   typographyFamilyWeb: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   typographyLineHeightBody: '1.5',
   typographyLineHeightCardTitle: '1.25',
+  typographyLineHeightHelpAnswer: '1.7',
+  typographyLineHeightHelpQuestion: '1.5',
   typographyLineHeightLabel: '1.4',
   typographyLineHeightMeetingDescription: '1.6',
   typographyLineHeightMobileFieldDescription: '1.45',
@@ -111,6 +117,8 @@ export const foundationTokens = {
   typographySizeEmojiGroupLabel: '10px',
   typographySizeEmojiQuick: '28px',
   typographySizeHeading: '27px',
+  typographySizeHelpAnswer: '14px',
+  typographySizeHelpQuestion: '14px',
   typographySizeLabel: '11px',
   typographySizeMobileActionHeading: '28px',
   typographySizeMobileChatNarrowTitle: '14px',
@@ -126,6 +134,7 @@ export const foundationTokens = {
   typographySizeSmall: '13px',
   typographyWeightBold: '700',
   typographyWeightBrand: '850',
+  typographyWeightHelpQuestion: '550',
   typographyWeightMedium: '500',
   typographyWeightMobileChatTitle: '650',
   typographyWeightMobileSheetTitle: '650',

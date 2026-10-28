@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.groupplanning.android.data.repository.AvatarRepository
+import dev.groupplanning.android.state.media.AvatarImages
 import dev.groupplanning.android.state.media.ImageController
 import dev.groupplanning.android.ui.theme.DesignTokens
 
@@ -40,10 +40,16 @@ internal fun UserAvatar(
     textColor: Color = DesignTokens.colorRosterText,
     textWeight: FontWeight = FontWeight.SemiBold,
 ) {
-    val repository = remember { AvatarRepository() }
+    val fallback = remember { AvatarImages() }
+    val images = LocalAvatarImages.current ?: fallback
     val scope = rememberCoroutineScope()
-    val image = remember(url) { url?.let { ImageController(scope) { repository.bytes(it) } } }
-    val bitmap = image?.state?.collectAsStateWithLifecycle()?.value?.bitmap
+    val image = remember(url, images) {
+        url?.let { value ->
+            ImageController(scope, images.cached(value), { images.load(value) }) { byteArrayOf() }
+        }
+    }
+    val imageState = image?.state?.collectAsStateWithLifecycle()?.value
+    val bitmap = imageState?.bitmap
     LaunchedEffect(image) { image?.load() }
     Box(
         modifier.size(size).clip(CircleShape).background(avatarColor).semantics {
@@ -52,12 +58,14 @@ internal fun UserAvatar(
         },
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            name.trim().take(1),
-            color = textColor,
-            fontSize = textSize,
-            fontWeight = textWeight,
-        )
+        if (url == null || imageState?.error == true) {
+            Text(
+                name.trim().take(1),
+                color = textColor,
+                fontSize = textSize,
+                fontWeight = textWeight,
+            )
+        }
         bitmap?.let {
             Image(
                 it.asImageBitmap(),

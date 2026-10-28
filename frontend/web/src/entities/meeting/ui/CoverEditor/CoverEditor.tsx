@@ -1,3 +1,4 @@
+import { CoverActions } from '@/entities/meeting/ui/CoverActions';
 import { ImagePlus } from 'lucide-react';
 import { useMobileLayout } from '@/shared/lib/media';
 import { useRef } from 'react';
@@ -15,6 +16,7 @@ export type CoverEditorProps = {
   onBusy: (busy: boolean) => void;
   invalid?: boolean;
   compact?: boolean;
+  prominent?: boolean;
 };
 
 export const CoverEditor = ({
@@ -25,6 +27,7 @@ export const CoverEditor = ({
   onBusy,
   invalid = false,
   compact = false,
+  prominent = false,
 }: CoverEditorProps) => {
   const mobile = useMobileLayout() && compact;
   const input = useRef<HTMLInputElement>(null);
@@ -33,7 +36,12 @@ export const CoverEditor = ({
   const hasPhoto = !!value || !!existing?.url;
 
   return (
-    <section className={styles.editor} aria-label="Обложка" data-compact={mobile}>
+    <section
+      className={styles.editor}
+      aria-label="Обложка"
+      data-compact={mobile}
+      data-prominent={prominent}
+    >
       <span className={styles.label}>
         Обложка{' '}
         <small>
@@ -74,24 +82,14 @@ export const CoverEditor = ({
         disabled={disabled || selection.busy}
         onChange={selection.choose}
       />
-      <div className={styles.actions}>
-        <button
-          type="button"
-          disabled={disabled || selection.busy}
-          onClick={() => input.current?.click()}
-        >
-          {hasPhoto ? 'Заменить' : 'Добавить фото'}
-        </button>
-        {hasPhoto && (
-          <button
-            type="button"
-            disabled={disabled || selection.busy}
-            onClick={selection.remove}
-          >
-            Убрать фото
-          </button>
-        )}
-      </div>
+      <CoverActions
+        compact={mobile}
+        prominent={prominent}
+        hasPhoto={hasPhoto}
+        disabled={disabled || selection.busy}
+        choose={() => input.current?.click()}
+        remove={selection.remove}
+      />
       {(selection.problem || invalid) && (
         <p role="alert" className={styles.error}>
           {selection.problem || 'Не удалось сохранить фото. Выберите другое.'}

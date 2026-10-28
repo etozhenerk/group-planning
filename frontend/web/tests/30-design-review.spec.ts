@@ -326,6 +326,7 @@ test('approved HTML and implemented screens at four widths', async ({
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       const chooser = page.waitForEvent('filechooser');
       await page.getByRole('menuitem', { name: 'Фото', exact: true }).click();
+      await page.getByRole('button', { name: 'Выбрать фото', exact: true }).click();
       await (
         await chooser
       ).setFiles([path.join(assets, 'boardgame.png'), path.join(assets, 'dinner.png')]);
@@ -343,6 +344,7 @@ test('approved HTML and implemented screens at four widths', async ({
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       const documentChooser = page.waitForEvent('filechooser');
       await page.getByRole('menuitem', { name: 'Файл', exact: true }).click();
+      await page.getByRole('button', { name: 'Выбрать файлы', exact: true }).click();
       await (
         await documentChooser
       ).setFiles({

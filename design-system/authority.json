@@ -1,7 +1,7 @@
 {
-  "revision": "chat-desktop-keyboard-2026-10-28-2.5.2",
-  "sourceCommit": "ba987791",
-  "approval": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+  "revision": "web-media-flow-2026-10-28-3.0.0",
+  "sourceCommit": "c3e3451d",
+  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,9 @@
     "Общие основы"
   ],
   "corrections": [
+    "28.10.2026: нижние вкладки перетекают общим индикатором за motion.navigation, Reduce Motion мгновенно; область показа не расширяется. Общий photo batch carousel и preload относятся ко всем клиентам.",
+    "3.0.0 native: picker-first; selected-only sheet; system share; swipe не tap; карусель/overlayX/batchstate/auto-close; cache; emptyInvite; edge-back; профиль/cover/loading по последним прямым решениям.",
+    "3.0.0: web picker только из формы; cancel сохраняет форму; прямой вход в добавление вайба; compact desktop Dialog; contain полного фото. Native отдельно, токены прежние.",
     "2.5.2: desktop удаление только клавиатурой в composer; поиск меняет запрос. Мобильная кнопка прежняя. Противоречивое общее ожидание кнопки в тесте уточнено по прямому решению пользователя; новые UI-элементы и токены не добавляются.",
     "2.5.1: state=context-zero явно показывает строку Кто прочитал под реакциями в общем popup собственного accepted сообщения; menu exit предшествует readers sheet/dialog, возврат к bubble. Токены прежние.",
     "2.5.0: конкретизирован уже принятый UX v1 read/unread, readers sheet и bounded history; существующие композиции/токены сохраняются. Фрагмент state=list задаёт только badge, не новый список.",
@@ -51,7 +54,7 @@
   "sources": [
     {
       "path": "openspec/changes/meeting-experience-refresh/ux.md",
-      "sha256": "ed5f5a20f22876c5a7538ec82247c2a468e8a0d15a30db40416ca943fa9cd712"
+      "sha256": "c29b9a1deb18c24cd00d6947170dabb6f4d91023e373f2e84717e37718f65869"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
@@ -319,7 +322,7 @@
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
-      "sha256": "76121f9981da20d32b549344b8467211a3da93b00d22c4c92aa6e161416246ea"
+      "sha256": "19994bff1d28aae54877600703bf21cd32574ef5c2647c6681301c8a25a989db"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
@@ -415,7 +418,35 @@
     },
     {
       "path": "docs/design/components/chat-actions.md",
-      "sha256": "9c4f8c877a109a79ffdcf06f5cd8b520e160c6d74f7b83f68b293f2d5897ad83"
+      "sha256": "d6aa6cc73bfcdfecf30e70f7c96541f022fc1329a44c2d56f6323e5f525ebca6"
+    },
+    {
+      "path": "docs/design/components/memories.md",
+      "sha256": "849a0e83e7cddad296ad2a1366298213b5b99d8dbe129d1e6c1e2cb20111d3bd"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+      "sha256": "842097b76dda92f97115384ce7c3f037e607fb31ccf16cfa6016a98b39d28c91"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+      "sha256": "6c507e7368d9d0ed5b3e1c4cb4c940d3e17f59654d128031bf3eee94a9fe9b7c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+      "sha256": "6729c9a171e740b8c23256548deaed733368f92ed233589e6d1ee30c13dde925"
+    },
+    {
+      "path": "docs/design/components/navigation.md",
+      "sha256": "92ad0dff8654de82526374de1e898c42a0fd3c12f9f79dd7bccbd28e0ab7698f"
+    },
+    {
+      "path": "docs/design/components/help-disclosure.md",
+      "sha256": "57fa321f384690044cf25e4aaa28a18587ee8e753f344f6c3c79063869da745a"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html",
+      "sha256": "7db591c59e039860a937674c29796916a2e3fa8080e62f64ffb7cb764fd4f6a2"
     }
   ],
   "history": [
@@ -952,6 +983,11 @@
           "sha256": "bfbbdb27a422ff656d46c9dc81f5bb57ba50bb66aa4e0f84a43d66f1553d5f2c"
         }
       ]
+    },
+    {
+      "revision": "chat-desktop-keyboard-2026-10-28-2.5.2",
+      "approval": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+      "sourceCommit": "ba987791"
     }
   ],
   "approvedWorkingTree": {

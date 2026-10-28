@@ -44,6 +44,9 @@ internal data class PrivateData(
         readVersions = readVersions - id,
         chatReadInfo = chatReadInfo - id,
         calendar = calendar.copy(
+            cachedPages = calendar.cachedPages.mapValues { (_, page) ->
+                page.copy(meetings = page.meetings.filter { it.id != id })
+            },
             page = calendar.page?.let { page ->
                 page.copy(meetings = page.meetings.filter { it.id != id })
             },

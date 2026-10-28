@@ -27,6 +27,7 @@ import androidx.compose.ui.window.DialogProperties
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.SupportViewModel
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -59,7 +60,10 @@ internal fun ServiceDialog(
                 Column {
                     MeetingsHeader()
                     TextButton(back, Modifier.padding(start = 8.dp, top = 28.dp)) {
-                        Text(stringResource(R.string.service_back_meetings), fontSize = 13.sp)
+                        Text(
+                            stringResource(R.string.experience_back),
+                            fontSize = DesignTokens.typographySizeSmall,
+                        )
                     }
                     if (page == "support" &&
                         support != null

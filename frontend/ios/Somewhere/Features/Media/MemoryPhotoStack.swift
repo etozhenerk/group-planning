@@ -20,46 +20,38 @@ struct MemoryPhotoStack: View {
                         .rotationEffect(.degrees(reduceMotion ? 0 : offset == 2 ? -9 : 7))
                         .opacity(offset == 2 ? 0.75 : 0.85).accessibilityHidden(true)
                     }
-                    Button(action: open) {
-                        picture(owner.photos[selection], report: true)
-                            .frame(
-                                width: aspect < 1
-                                    ? min(
-                                        geometry.size.width * 0.78,
-                                        geometry.size.height * 0.88 * 2 / 3)
-                                    : geometry.size.width * 0.88,
-                                height: geometry.size.height * (aspect < 1 ? 0.88 : 0.77)
-                            )
-                            .rotationEffect(
-                                .degrees(reduceMotion ? 0 : -1.5 + Double(translation / 30))
-                            )
-                            .offset(x: reduceMotion ? 0 : translation)
-                    }.buttonStyle(.plain).accessibilityLabel("Открыть фото \(selection + 1)")
+                    picture(owner.photos[selection], report: true)
+                        .frame(
+                            width: aspect < 1
+                                ? min(
+                                    geometry.size.width * 0.78, geometry.size.height * 0.88 * 2 / 3)
+                                : geometry.size.width * 0.88,
+                            height: geometry.size.height * (aspect < 1 ? 0.88 : 0.77)
+                        )
+                        .overlay {
+                            PhotoStackTouch(
+                                changed: { if flight == nil { translation = $0 } },
+                                ended: { distance in
+                                    if abs(distance) > 60 {
+                                        move(distance < 0 ? 1 : -1, width: geometry.size.width)
+                                    } else {
+                                        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.26))
+                                        { translation = 0 }
+                                    }
+                                }, open: { if flight == nil { open() } })
+                        }
+                        .rotationEffect(
+                            .degrees(reduceMotion ? 0 : -1.5 + Double(translation / 30))
+                        )
+                        .offset(x: reduceMotion ? 0 : translation)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("Открыть фото \(selection + 1)")
+                        .accessibilityAddTraits(.isButton)
+                        .accessibilityAction { if flight == nil { open() } }
+
                 }
             }.frame(width: geometry.size.width, height: geometry.size.height)
                 .contentShape(Rectangle()).focusable()
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 20)
-                        .onChanged { value in
-                            if abs(value.translation.width) > abs(value.translation.height),
-                                flight == nil
-                            {
-                                translation = value.translation.width
-                            }
-                        }.onEnded { value in
-                            if abs(value.translation.width) > 60
-                                && abs(value.translation.width) > abs(value.translation.height)
-                            {
-                                move(
-                                    value.translation.width < 0 ? 1 : -1, width: geometry.size.width
-                                )
-                            } else {
-                                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.26)) {
-                                    translation = 0
-                                }
-                            }
-                        }
-                )
                 .accessibilityValue("Фото \(selection + 1) из \(owner.photos.count)")
                 .accessibilityAdjustableAction { step($0 == .increment ? 1 : -1) }
                 .onKeyPress(.leftArrow) {

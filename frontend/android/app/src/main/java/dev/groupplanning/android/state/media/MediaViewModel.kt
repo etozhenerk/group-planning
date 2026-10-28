@@ -1,5 +1,6 @@
 package dev.groupplanning.android.state.media
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +30,9 @@ internal data class UploadItem(
 internal data class MediaState(
     val items: List<UploadItem> = emptyList(),
     val selecting: Boolean = false,
+    val sending: Boolean = false,
+    val completedBatch: Int = 0,
+    val completedPurpose: String? = null,
     val selectionError: Boolean = false,
     val photos: List<MeetingMedia> = emptyList(),
     val next: String? = null,
@@ -52,6 +56,8 @@ internal class MediaViewModel(
     private var captionSave: Job? = null
     private val previews = linkedMapOf<UUID, ByteArray>()
     private val previewLock = Mutex()
+    private val decoded = DecodedImages()
+    private var preloading: Job? = null
     private val openLock = Mutex()
 
     init {
@@ -67,6 +73,8 @@ internal class MediaViewModel(
                     sending?.cancel()
                     access = null
                     previews.clear()
+                    decoded.clear()
+                    preloading?.cancel()
                     mutable.value = MediaState(revoked = true)
                 }
             }
@@ -99,7 +107,7 @@ internal class MediaViewModel(
     }
 
     fun choose(uris: List<Uri>, purpose: String, photo: Boolean) {
-        if (uris.isEmpty() || state.value.selecting) return
+        if (uris.isEmpty() || state.value.selecting || state.value.sending) return
         mutable.value =
             state.value.copy(selecting = true, selectionError = false, purpose = purpose)
         viewModelScope.launch {
@@ -217,7 +225,12 @@ internal class MediaViewModel(
         val lease = access ?: return
         if (sending?.isActive == true) return
         val rows = state.value.items.filter { it.value.purpose == purpose && !it.value.published }
-        if (rows.any { it.value.caption.codePointCount(0, it.value.caption.length) > 2000 }) return
+        if (rows.isEmpty() ||
+            rows.any { it.value.caption.codePointCount(0, it.value.caption.length) > 2000 }
+        ) {
+            return
+        }
+        mutable.value = state.value.copy(sending = true, completedPurpose = null)
         rows.forEach { row -> update(row.value.key) { it.copy(busy = true, error = false) } }
         sending = viewModelScope.launch {
             captionSave?.join()
@@ -252,6 +265,16 @@ internal class MediaViewModel(
                     if (access == lease) update(row.value.key) { it.copy(busy = false) }
                 }
             }
+            if (access != lease) return@launch
+            val completed = rows.all { row ->
+                state.value.items.any { it.value.key == row.value.key && it.value.published }
+            }
+            mutable.value = state.value.copy(
+                sending = false,
+                completedBatch = state.value.completedBatch + if (completed) 1 else 0,
+                completedPurpose = purpose.takeIf { completed },
+            )
+            dismissCompleted(purpose)
             if (purpose == "memory") loadMemories()
         }
     }
@@ -277,15 +300,20 @@ internal class MediaViewModel(
         mutable.value = state.value.copy(loading = true, loadError = false)
         viewModelScope.launch {
             try {
-                val page = repository.memories(lease, state.value.next.takeIf { more })
-                if (access == lease) {
-                    val previous = if (more) state.value.photos else emptyList()
-                    val photos = (previous + page.photos).distinctBy { it.id }
-                    mutable.value = state.value.copy(
-                        photos = photos,
-                        next = page.nextCursor,
-                    )
-                }
+                var cursor = state.value.next.takeIf { more }
+                var photos = if (more) state.value.photos else emptyList()
+                val visited = mutableSetOf<String>()
+                do {
+                    val page = repository.memories(lease, cursor)
+                    if (access != lease) return@launch
+                    photos = (photos + page.photos).distinctBy { it.id }
+                    mutable.value = state.value.copy(photos = photos, next = page.nextCursor)
+                    prefetch(photos, 0)
+                    cursor = page.nextCursor
+                    if (cursor != null && !visited.add(cursor)) {
+                        throw ClientFailure(FailureKind.InvalidResponse)
+                    }
+                } while (cursor != null)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: ClientFailure) {
@@ -346,20 +374,39 @@ internal class MediaViewModel(
         if (access != lease) throw ClientFailure(FailureKind.AccessRevoked)
         if (item.kind == "photo") {
             previews[item.id] = bytes
-            while (previews.size > 3) previews.remove(previews.keys.first())
+            while (previews.values.sumOf { it.size.toLong() } > 64L * 1024 * 1024 &&
+                previews.size > 1
+            ) {
+                previews.remove(previews.keys.first())
+            }
         }
         bytes
     }
 
+    fun cached(item: MeetingMedia): Bitmap? = decoded.get(item.id.toString())
+
+    suspend fun bitmap(item: MeetingMedia): Bitmap {
+        val lease = access ?: throw ClientFailure(FailureKind.AccessRevoked)
+        repository.sessions.withAccess(lease) { }
+        cached(item)?.let { return it }
+        val image = decodeImage(content(item))
+        repository.sessions.withAccess(lease) { decoded.put(item.id.toString(), image) }
+        return image
+    }
+
     fun prefetch(photos: List<MeetingMedia>, index: Int) {
-        if (photos.size < 2) return
-        viewModelScope.launch {
-            val next = (index + 1) % photos.size
-            val previous = (index + photos.size - 1) % photos.size
-            for (item in listOf(next, previous)) {
+        preloading?.cancel()
+        if (photos.isEmpty()) return
+        preloading = viewModelScope.launch {
+            // Start at the visible photo, then warm the whole album with one request at a time.
+            for (offset in photos.indices) {
                 try {
-                    content(photos[item])
-                } catch (_: ClientFailure) { }
+                    bitmap(photos[(index + offset) % photos.size])
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (_: ClientFailure) {
+                    // A failed prefetch remains retryable through the visible image.
+                } catch (_: IOException) { }
             }
         }
     }

@@ -55,13 +55,13 @@ struct FeedTimeline: View {
                                     previousDate: index == 0 ? nil : timeline[index - 1].date,
                                     owner: owner)
                             }
-                            if !entries.contains(where: { $0.kind == "message" }),
-                                owner.invitation.organizer,
+                            if owner.showEmptyInvitation,
                                 let url = owner.invitation.shareURL
                             {
                                 VStack(spacing: 12) {
                                     Text("Позовём остальных?").font(.headline)
-                                    ShareLink("Пригласить друзей", item: url).frame(minHeight: 44)
+                                    InvitationShareButton(
+                                        url: url, title: owner.meeting?.title ?? "Встреча")
                                 }.padding(24)
                             }
 

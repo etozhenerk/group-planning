@@ -7,12 +7,7 @@ export const useAlbumPaging = (
   count: number,
 ) => {
   useEffect(() => {
-    if (
-      query.hasNextPage &&
-      !query.isFetchingNextPage &&
-      !query.isFetchNextPageError &&
-      count - index < 4
-    ) {
+    if (query.hasNextPage && !query.isFetchingNextPage && !query.isFetchNextPageError) {
       void query.fetchNextPage();
     }
   }, [query, index, count]);

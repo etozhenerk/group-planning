@@ -1,51 +1,46 @@
-import { useFilePicker } from '@/shared/lib/file-picker';
 import { useAlbumPaging } from '@/pages/memories/model/useAlbumPaging';
-import { useSearchParams } from 'react-router';
-import { useMemories, useMeeting } from '@/entities/meeting';
-import { useMobileLayout } from '@/shared/lib/media';
-import { useUploadSelection } from '@/features/upload-media';
+import { useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { useMemories, useMeeting, usePreloadMedia } from '@/entities/meeting';
 import { useAlbum } from '@/pages/memories/model/useAlbum';
 
 export const useMemoriesView = (id: string, user: string) => {
-  const mobile = useMobileLayout();
+  const navigate = useNavigate();
   const query = useMemories(id, user);
   const meeting = useMeeting(id, user);
-  const photos = query.data?.pages.flatMap((page) => page.photos) ?? [];
+  const photos = useMemo(
+    () => query.data?.pages.flatMap((page) => page.photos) ?? [],
+    [query.data],
+  );
+
+  usePreloadMedia(id, user, photos);
   const album = useAlbum(photos.length);
   useAlbumPaging(query, album.index, photos.length);
   const [params, setParams] = useSearchParams();
   const uploading = params.get('action') === 'upload';
   const fromChat = params.get('from') === 'chat';
   const origin = fromChat ? { from: 'chat' } : {};
-  const upload = useUploadSelection(user, id);
-  const picker = useFilePicker((files) =>
-    upload.begin({
-      files,
-      photo: true,
-      purpose: 'memory',
-    }),
-  );
-
   const current = photos.find((photo) => photo.id === params.get('photo'));
-  const close = () => setParams(origin, { replace: true, preventScrollReset: true });
+  const close = () => {
+    if (uploading && params.get('uploadOrigin') === 'chat') {
+      void navigate(`/meetings/${id}`, { replace: true, preventScrollReset: true });
+    } else {
+      setParams(origin, { replace: true, preventScrollReset: true });
+    }
+  };
 
   return {
-    mobile,
     query,
     meeting,
     photos,
     album,
     uploading,
     fromChat,
-    picker,
     current,
     close,
+    complete: () => setParams(origin, { replace: true, preventScrollReset: true }),
     choose: () => {
       setParams({ ...origin, action: 'upload' }, { preventScrollReset: true });
-
-      if (!upload.selection || upload.selection.purpose !== 'memory') {
-        picker.choose(true);
-      }
     },
     open: (index: number) => {
       const photo = photos[index];

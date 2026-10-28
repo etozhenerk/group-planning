@@ -66,11 +66,16 @@ class PhotoPickerUiTests {
                 val picker = Pattern.compile(".*(?:photopicker|providers\\.media).*")
                 assertTrue(fixture.device.wait(Until.hasObject(By.pkg(picker)), 10_000))
                 fixture.screenshot("design-photo-picker")
+                val output = checkNotNull(
+                    androidx.test.platform.app.InstrumentationRegistry
+                        .getArguments().getString("additionalTestOutputDir"),
+                )
+                fixture.device.dumpWindowHierarchy(java.io.File(output, "photo-picker.xml"))
                 val thumbnail = fixture.device.wait(
                     Until.findObject(
                         By.pkg(picker).desc(
-                            Pattern.compile("(?i)(Photo|Фото|Фотография)\\b.*"),
-                        ).clickable(true),
+                            Pattern.compile("(?i).*(Photo|Фото|Фотография).*"),
+                        ),
                     ),
                     10_000,
                 )
@@ -78,7 +83,7 @@ class PhotoPickerUiTests {
                 checkNotNull(thumbnail).click()
                 fixture.screenshot("design-photo-picker-selected")
                 val confirm = fixture.device.wait(
-                    Until.findObject(By.text(Pattern.compile("(Add|Добавить).*"))),
+                    Until.findObject(By.text(Pattern.compile("(Add|Добавить|Done|Готово).*"))),
                     5_000,
                 )
                 checkNotNull(confirm).click()
@@ -94,8 +99,7 @@ class PhotoPickerUiTests {
                 fixture.screenshot("design-upload-photo")
                 compose.onNodeWithText("Отправить").performScrollTo()
                     .performSemanticsAction(SemanticsActions.OnClick) { it() }
-                fixture.waitText("Отправлено")
-                fixture.device.pressBack()
+                fixture.waitAbsent("upload-sheet")
                 fixture.waitTag("message-composer")
                 compose.waitUntil(15_000) {
                     compose.onAllNodes(
