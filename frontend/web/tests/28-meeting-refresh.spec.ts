@@ -125,7 +125,12 @@ test('support keeps input after error, retries the same request, and returns ser
   });
   await page.goto('/privacy');
   await expect(page.getByText('Проект документа', { exact: true })).toBeVisible();
-  await expect(page.getByText('Будет заполнено', { exact: true })).toHaveCount(3);
+  await expect(page.getByText('Малахов Михаил Олегович', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText('Россия, законодательство Российской Федерации', { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText('smwhere@yandex.ru', { exact: true })).toBeVisible();
+  await expect(page.getByText('Будет заполнено', { exact: true })).toHaveCount(0);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth),
   ).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));

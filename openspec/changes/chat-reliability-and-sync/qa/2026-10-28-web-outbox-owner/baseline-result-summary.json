@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "startTime": "2026-10-28T10:52:00.143Z",
+    "duration": 9531.235,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "reload releases a pending POST owner without waiting for its durable lease",
+      "project": "",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 5982,
+          "retry": 0,
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  34 |   gate.release?.();\n  35 |   await expect(input).toHaveValue('Отдельный новый черновик');\n> 36 |   await expect.poll(() => keys.length).toBe(2);\n     |                                        ^\n  37 |   expect(keys[0]).toBeTruthy();\n  38 |   expect(keys[1]).toBe(keys[0]);\n  39 |   await expect(\n    at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/37-outbox-owner.spec.ts:36:40"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -121,9 +121,18 @@ export const purgePrivateStore = (user?: string, meeting?: string) => {
   });
 };
 
-const leaseSchema = z.object({ owner: z.string(), until: z.number() });
+const leaseSchema = z.object({
+  owner: z.string(),
+  until: z.number(),
+  browserOwned: z.boolean().optional(),
+});
 
-export const claimPrivateScope = (scope: PrivateScope, owner: string, release = false) =>
+export const claimPrivateScope = (
+  scope: PrivateScope,
+  owner: string,
+  release = false,
+  browserOwned = false,
+) =>
   privateTransaction(async (transaction) => {
     await checkPrivateScope(transaction, scope);
     const store = transaction.objectStore('leases');
@@ -131,14 +140,19 @@ export const claimPrivateScope = (scope: PrivateScope, owner: string, release = 
     const value: unknown = await idbResult(store.get(key));
     const lease = leaseSchema.safeParse(value);
 
-    if (lease.success && lease.data.owner !== owner && lease.data.until > Date.now()) {
+    if (
+      lease.success &&
+      lease.data.owner !== owner &&
+      lease.data.until > Date.now() &&
+      !(browserOwned && lease.data.browserOwned && !release)
+    ) {
       return false;
     }
 
     if (release) {
       store.delete(key);
     } else {
-      store.put({ owner, until: Date.now() + 30_000 }, key);
+      store.put({ owner, until: Date.now() + 30_000, browserOwned }, key);
     }
 
     return true;

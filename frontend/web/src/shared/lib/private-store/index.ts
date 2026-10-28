@@ -8,6 +8,8 @@ export {
 
 export type { PrivateScope } from '@/shared/lib/private-store/scope';
 
+export { withPrivateScopeLock } from '@/shared/lib/private-store/withPrivateScopeLock';
+
 export {
   observePrivateStore,
   publishPrivateStore,

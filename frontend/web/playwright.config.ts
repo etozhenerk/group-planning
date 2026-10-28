@@ -36,6 +36,7 @@ export default defineConfig({
         '35-emoji-motion.spec.ts',
         '36-action-menu-motion.spec.ts',
         '37-chat-persistence.spec.ts',
+        '37-outbox-owner.spec.ts',
         '45-reaction-placement.spec.ts',
         '46-upload-sheet-layout.spec.ts',
       ],

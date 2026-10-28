@@ -141,7 +141,10 @@ test('history and a stale settings form preserve authoritative state', async ({
 
   await page.goto(`/meetings/${id}`);
   await expect(page.getByText('Запись истории 0', { exact: true })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Предыдущие записи' }).click();
+  const history = page.getByRole('list', { name: 'Разговор встречи' }).locator('..');
+
+  // Reaching the top loads history automatically and may remove the fallback button.
+  await history.evaluate((element) => element.scrollTo({ top: 0 }));
   await expect(page.getByText('Запись истории 0', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Информация о встрече' }).click();
   await page.getByRole('button', { name: 'Изменить настройки', exact: true }).click();

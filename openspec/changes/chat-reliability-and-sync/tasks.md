@@ -27,21 +27,21 @@ UI также требует отдельного актуального design-
 
 ## 2. Backend: ограниченные данные и синхронизация
 
-- [x] 2.1 Ввести bounded Reader-порты page/around, lookup text intent и entry_id для media retry; проверить memory clone/rollback, initial/after/before/around, пустой хвост, uint64, cancel, access-before-data, lost ACK и прежний API. Полный Feed сохранить для остальных потребителей.
-- [x] 2.2 Реализовать порты в PostgreSQL с аддитивной миграцией и индексами; проверить cloud integration/EXPLAIN на 1k/10k/100k без локальной БД и полного чтения JSON, записать результат в отчёт.
-- [x] 2.3 Реализовать stream epoch, change journal и atomic outbox для сообщений/карточек/RSVP/worker; проверить commit/rollback и parity memory/PostgreSQL, включая no-op без лишнего события.
-- [x] 2.4 Добавить snapshot/sync, bounded through_cursor, invalidation и reset; проверить гонку snapshot→subscribe, несколько страниц, порядок/повторы, старую карточку и истечение cursor по chat-sync/spec.md.
-- [x] 2.5 Обновить удаление аккаунта/встречи и retention для новых данных; проверить обезличивание старых диапазонов, отсутствие прежних имён при replay и доставку terminal invalidation после удаления встречи.
-- [x] 2.6 Обновить OpenAPI/fixtures и backend README по новым endpoint/параметрам; выполнить api:check/api:test и проверки Go из backend/AGENTS.md, зафиксировать сохранённую совместимость старых DTO.
+- [ ] 2.1 Ввести bounded Reader-порты page/around, lookup text intent и entry_id для media retry; проверить memory clone/rollback, initial/after/before/around, пустой хвост, uint64, cancel, access-before-data, lost ACK и прежний API. Полный Feed сохранить для остальных потребителей.
+- [ ] 2.2 Реализовать порты в PostgreSQL с аддитивной миграцией и индексами; проверить cloud integration/EXPLAIN на 1k/10k/100k без локальной БД и полного чтения JSON, записать результат в отчёт.
+- [ ] 2.3 Реализовать stream epoch, change journal и atomic outbox для сообщений/карточек/RSVP/worker; проверить commit/rollback и parity memory/PostgreSQL, включая no-op без лишнего события.
+- [ ] 2.4 Добавить snapshot/sync, bounded through_cursor, invalidation и reset; проверить гонку snapshot→subscribe, несколько страниц, порядок/повторы, старую карточку и истечение cursor по chat-sync/spec.md.
+- [ ] 2.5 Обновить удаление аккаунта/встречи и retention для новых данных; проверить обезличивание старых диапазонов, отсутствие прежних имён при replay и доставку terminal invalidation после удаления встречи.
+- [ ] 2.6 Обновить OpenAPI/fixtures и backend README по новым endpoint/параметрам; выполнить api:check/api:test и проверки Go из backend/AGENTS.md, зафиксировать сохранённую совместимость старых DTO.
 
 ## 3. Backend: поток и прочитанность
 
-- [x] 3.1 Подключить адаптер Centrifuge с cookie/Origin и native session auth, лимитами/expiry/revocation; проверить чужие подписки, завершение сессии и отсутствие текста/токенов в hint/логах.
-- [x] 3.2 Реализовать dispatcher с повтором и mock в memory; проверить crash до publish/после publish, потерю NOTIFY, рестарт, медленного клиента и восстановление без потерь/дублей.
-- [x] 3.3 Добавить отдельные unread baseline и actual read marker; проверить атомарную инициализацию/RSVP, max двух устройств, валидацию позиции и отсутствие ложных receipts при baseline.
-- [x] 3.4 Реализовать unread/first-unread, batch receipt counts и страницы readers для автора; проверить чужие ID, текущий состав, rejoin, скрытые голоса, удалённый аккаунт и стоимость агрегатов на 100k истории.
-- [x] 3.5 Добавить private invalidation списка и receipts_changed, coalescing/no-op; проверить обновление второго устройства, отсутствие цикла read→sync→read и поведение старого клиента без markers.
-- [x] 3.6 Дополнить контракт, fixtures, документацию feature flags/recovery/отката и метрики без текста; выполнить API и Go/race проверки по локальным правилам, записать версии и результаты.
+- [ ] 3.1 Подключить адаптер Centrifuge с cookie/Origin и native session auth, лимитами/expiry/revocation; проверить чужие подписки, завершение сессии и отсутствие текста/токенов в hint/логах.
+- [ ] 3.2 Реализовать dispatcher с повтором и mock в memory; проверить crash до publish/после publish, потерю NOTIFY, рестарт, медленного клиента и восстановление без потерь/дублей.
+- [ ] 3.3 Добавить отдельные unread baseline и actual read marker; проверить атомарную инициализацию/RSVP, max двух устройств, валидацию позиции и отсутствие ложных receipts при baseline.
+- [ ] 3.4 Реализовать unread/first-unread, batch receipt counts и страницы readers для автора; проверить чужие ID, текущий состав, rejoin, скрытые голоса, удалённый аккаунт и стоимость агрегатов на 100k истории.
+- [ ] 3.5 Добавить private invalidation списка и receipts_changed, coalescing/no-op; проверить обновление второго устройства, отсутствие цикла read→sync→read и поведение старого клиента без markers.
+- [ ] 3.6 Дополнить контракт, fixtures, документацию feature flags/recovery/отката и метрики без текста; выполнить API и Go/race проверки по локальным правилам, записать версии и результаты.
 
 ## 4. Web
 
@@ -120,3 +120,11 @@ hashes сохранены. Задачи 2.1–3.6 временно открыт�
 24/24 и обязательный uncached suite прошли, qa:ready одинаково успешен локально
 и в чистой копии без приватных dotenv. Задачи 2.1–3.6 снова закрыты по новому
 plan/run-fresh; testing-manifest ссылается на этот прогон.
+
+## Outbox acceptance follow-up, 28.10.2026
+
+Новый детерминированный web-regression проверяет перезагрузку при удержанном
+POST до commit и добавлен к TC-CHAT-SYNC-E77C7AE6. Общий catalogHash изменился.
+Код backend не менялся; прежние отчёты сохранены, задачи 2.1–3.6 временно открыты
+до свежего независимого прогона на новом каталоге. Web-очередь, календарь и
+подтверждённые реквизиты проходят новую приёмку; старые pass не переносятся.

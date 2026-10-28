@@ -18,6 +18,14 @@ import type { FeedEntry } from '@/entities/meeting';
 
 vi.mock('@/shared/lib/private-store', () => ({
   claimPrivateScope: vi.fn(() => Promise.resolve(true)),
+  withPrivateScopeLock: async (
+    _scope: unknown,
+    operation: (browserOwned: boolean) => Promise<void>,
+  ) => {
+    await operation(false);
+
+    return true;
+  },
 }));
 vi.mock('@/features/send-message/model/messageStore', async (original) => ({
   ...(await original<object>()),
@@ -69,6 +77,31 @@ const options = () => ({
   changed: vi.fn(),
   denied: vi.fn(),
   storageError: vi.fn(),
+});
+
+it('does not claim ownership for draft changes without outgoing messages', async () => {
+  document = emptyMessageDocument();
+  document.draft.text = 'Private draft';
+  const opts = options();
+  const queue = createMessageQueue(opts);
+  await queue.drain();
+  expect(claimPrivateScope).not.toHaveBeenCalled();
+  expect(opts.send).not.toHaveBeenCalled();
+  queue.stop();
+});
+
+it('does not start a POST if the queue stops during its durable sending update', async () => {
+  const opts = options();
+  const queue = createMessageQueue(opts);
+  vi.mocked(updateMessageDocument).mockImplementationOnce((_scope, change) => {
+    document = change(document);
+    queue.stop();
+
+    return Promise.resolve(document);
+  });
+  await queue.drain();
+  expect(opts.send).not.toHaveBeenCalled();
+  expect(opts.accepted).not.toHaveBeenCalled();
 });
 
 it('serializes several intents, persists sending before POST, and removes only a matching ACK', async () => {

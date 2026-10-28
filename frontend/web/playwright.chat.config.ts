@@ -2,7 +2,11 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: ['37-chat-persistence.spec.ts', '38-chat-sync.spec.ts'],
+  testMatch: [
+    '37-chat-persistence.spec.ts',
+    '37-outbox-owner.spec.ts',
+    '38-chat-sync.spec.ts',
+  ],
   fullyParallel: false,
   workers: 1,
   timeout: 45_000,

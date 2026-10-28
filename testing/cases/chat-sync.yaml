@@ -260,6 +260,11 @@
         аккаунтом.
       expected: До очистки draft intent был на диске. После проверки аккаунта/прав повтор использует прежние ID
         и тело; серверная запись одна.
+    - action: На web удержать POST до commit, перезагрузить страницу, не дожидаясь истечения
+        старого владения, и сохранить отдельный новый черновик.
+      expected: В браузере с Web Locks повтор начинается после восстановления доступа, без ожидания
+        30-секундного срока старой страницы. Ключ и тело не меняются, запись на сервере одна,
+        новый черновик сохранён. Непросроченное владение живого старого клиента не перехватывается.
     - action: На web открыть вторую вкладку, передать ей очередь после закрытия первой; затем выполнить logout.
       expected: Атомарное владение не создаёт двух активных отправок одного intent; logout очищает общее
         хранилище и владельцев обеих вкладок. Native подтверждает изоляцию после cold start.
@@ -274,6 +279,10 @@
       tests:
         - path: frontend/web/tests/37-chat-persistence.spec.ts
           selector: "reload after server commit and lost ACK reconciles one message without dropping a new draft"
+          runner: web-chat-e2e
+          level: e2e
+        - path: frontend/web/tests/37-outbox-owner.spec.ts
+          selector: "reload releases a pending POST owner without waiting for its durable lease"
           runner: web-chat-e2e
           level: e2e
     ios:

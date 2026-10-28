@@ -203,56 +203,79 @@ test('rejected intent retry keeps its key and restore never overwrites a newer d
   await expect(row).toHaveCount(0);
 });
 
-test('two tabs share one durable intent owner while its POST is in flight', async ({
-  page,
-  context,
-}) => {
-  await login(page, 'Саша');
-  const { meeting } = await apiCreate(page, 'Один владелец исходящего');
-  await page.goto(`/meetings/${meeting.id}`);
-  const second = await context.newPage();
-  await second.goto(`/meetings/${meeting.id}`);
-  await expect(second.getByLabel('Сообщение', { exact: true })).toBeVisible();
-  let posts = 0;
-  const gate: { release?: () => void } = {};
-  await context.route(`**/meetings/${meeting.id}/messages`, async (route) => {
-    posts += 1;
-    await new Promise<void>((resolve) => {
-      gate.release = resolve;
-    });
-    await route.continue();
-  });
-  await page.getByLabel('Сообщение', { exact: true }).fill('Общий intent двух вкладок');
-  await page.getByRole('button', { name: 'Отправить сообщение' }).click();
-  await expect.poll(() => posts).toBe(1);
+for (const browserLocks of [true, false]) {
+  test(
+    browserLocks
+      ? 'two tabs share one durable intent owner while its POST is in flight'
+      : 'two tabs share one durable intent owner without Web Locks',
+    async ({ page, context }) => {
+      if (!browserLocks) {
+        await context.addInitScript(() => {
+          Object.defineProperty(navigator, 'locks', {
+            configurable: true,
+            value: undefined,
+          });
+        });
+      }
 
-  for (const target of [page, second]) {
-    const row = target
-      .getByTestId('feed-message')
-      .filter({ hasText: 'Общий intent двух вкладок' });
+      await login(page, 'Саша');
+      const { meeting } = await apiCreate(page, 'Один владелец исходящего');
+      await page.goto(`/meetings/${meeting.id}`);
+      const second = await context.newPage();
+      await second.goto(`/meetings/${meeting.id}`);
+      await expect(second.getByLabel('Сообщение', { exact: true })).toBeVisible();
+      let posts = 0;
+      const gate: { release?: () => void } = {};
+      await context.route(`**/meetings/${meeting.id}/messages`, async (route) => {
+        posts += 1;
+        await new Promise<void>((resolve) => {
+          gate.release = resolve;
+        });
+        await route.continue();
+      });
+      await page
+        .getByLabel('Сообщение', { exact: true })
+        .fill('Общий intent двух вкладок');
+      await page.getByRole('button', { name: 'Отправить сообщение' }).click();
+      await expect.poll(() => posts).toBe(1);
 
-    await expect(row).toHaveAttribute('data-delivery', /queued|sending/);
-    await row.evaluate((element) => element.setAttribute('data-before-ack', 'mounted'));
-  }
+      for (const target of [page, second]) {
+        const row = target
+          .getByTestId('feed-message')
+          .filter({ hasText: 'Общий intent двух вкладок' });
 
-  await page.waitForTimeout(3_500);
-  expect(posts).toBe(1);
-  gate.release?.();
+        await expect(row).toHaveAttribute('data-delivery', /queued|sending/);
+        await row.evaluate((element) =>
+          element.setAttribute('data-before-ack', 'mounted'),
+        );
+      }
 
-  for (const target of [page, second]) {
-    await expect(
-      target.getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }),
-    ).toHaveAttribute('data-delivery', 'accepted');
-    await expect(
-      target.getByTestId('feed-message').filter({ hasText: 'Общий intent двух вкладок' }),
-    ).toHaveAttribute('data-before-ack', 'mounted');
-  }
+      await page.waitForTimeout(3_500);
+      expect(posts).toBe(1);
+      gate.release?.();
 
-  expect(posts).toBe(1);
-  const feed = feedSchema.parse(
-    await (await page.request.get(`/api/v1/meetings/${meeting.id}/feed?limit=50`)).json(),
+      for (const target of [page, second]) {
+        await expect(
+          target
+            .getByTestId('feed-message')
+            .filter({ hasText: 'Общий intent двух вкладок' }),
+        ).toHaveAttribute('data-delivery', 'accepted');
+        await expect(
+          target
+            .getByTestId('feed-message')
+            .filter({ hasText: 'Общий intent двух вкладок' }),
+        ).toHaveAttribute('data-before-ack', 'mounted');
+      }
+
+      expect(posts).toBe(1);
+      const feed = feedSchema.parse(
+        await (
+          await page.request.get(`/api/v1/meetings/${meeting.id}/feed?limit=50`)
+        ).json(),
+      );
+
+      expect(feed.entries.filter((entry) => entry.kind === 'message')).toHaveLength(1);
+      await second.close();
+    },
   );
-
-  expect(feed.entries.filter((entry) => entry.kind === 'message')).toHaveLength(1);
-  await second.close();
-});
+}

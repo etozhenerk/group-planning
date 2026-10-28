@@ -13,14 +13,17 @@ export const changeMonth = (day: string, months: number): string =>
 export const monthRange = (day: string) => {
   const first = Temporal.PlainDate.from(day).with({ day: 1 });
   const from = first.subtract({ days: first.dayOfWeek - 1 }).toString();
+  const last = first.with({ day: first.daysInMonth });
+  const to = last.add({ days: 8 - last.dayOfWeek }).toString();
 
-  return { from, to: addDays(from, 42) };
+  return { from, to };
 };
 
 export const monthDays = (day: string): string[] => {
-  const { from } = monthRange(day);
+  const { from, to } = monthRange(day);
+  const length = Temporal.PlainDate.from(from).until(to).days;
 
-  return Array.from({ length: 42 }, (_, index) => addDays(from, index));
+  return Array.from({ length }, (_, index) => addDays(from, index));
 };
 
 export const monthLabel = (day: string): string =>

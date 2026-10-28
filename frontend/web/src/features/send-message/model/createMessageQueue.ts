@@ -1,5 +1,5 @@
 import { ApiError } from '@/shared/api';
-import { claimPrivateScope } from '@/shared/lib/private-store';
+import { claimPrivateScope, withPrivateScopeLock } from '@/shared/lib/private-store';
 import type { PrivateScope } from '@/shared/lib/private-store';
 import {
   readMessageDocument,
@@ -89,66 +89,81 @@ export const createMessageQueue = (options: Options) => {
     running = true;
 
     try {
-      if (!(await claimPrivateScope(options.scope, owner))) {
-        schedule();
+      const current = await readMessageDocument(options.scope);
 
+      if (!active() || !current.intents.some((item) => item.state !== 'rejected')) {
         return;
       }
 
-      while (active()) {
-        const document = await readMessageDocument(options.scope);
-        const intent = document.intents.find((item) => item.state !== 'rejected');
-
-        if (!intent || !active()) {
-          break;
-        }
-
-        if (!(await claimPrivateScope(options.scope, owner))) {
-          schedule();
-          break;
-        }
-
-        await update(intent, 'sending');
-        controller = new AbortController();
-
+      const locked = await withPrivateScopeLock(options.scope, async (browserOwned) => {
         try {
-          const entry = await options.send(
-            intent,
-            AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]),
-          );
+          while (active()) {
+            const document = await readMessageDocument(options.scope);
+            const intent = document.intents.find((item) => item.state !== 'rejected');
 
-          if (!active()) {
-            break;
+            if (!intent || !active()) {
+              break;
+            }
+
+            if (!(await claimPrivateScope(options.scope, owner, false, browserOwned))) {
+              schedule();
+              break;
+            }
+
+            await update(intent, 'sending');
+
+            if (!active()) {
+              break;
+            }
+
+            controller = new AbortController();
+
+            try {
+              const entry = await options.send(
+                intent,
+                AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]),
+              );
+
+              if (!active()) {
+                break;
+              }
+
+              if (!matchingMessage(entry, options.scope, intent)) {
+                throw new ApiError(502, 'invalid_ack');
+              }
+
+              options.accepted(entry);
+              await update(intent, 'accepted');
+              attempt = 0;
+            } catch (error) {
+              if (!active()) {
+                break;
+              }
+
+              if (error instanceof ApiError && [401, 403, 404].includes(error.status)) {
+                stopped = true;
+                options.denied();
+                break;
+              }
+
+              const rejected =
+                error instanceof ApiError && [400, 409, 422].includes(error.status);
+
+              await update(intent, rejected ? 'rejected' : 'uncertain');
+
+              if (!rejected) {
+                schedule();
+                break;
+              }
+            }
           }
-
-          if (!matchingMessage(entry, options.scope, intent)) {
-            throw new ApiError(502, 'invalid_ack');
-          }
-
-          options.accepted(entry);
-          await update(intent, 'accepted');
-          attempt = 0;
-        } catch (error) {
-          if (!active()) {
-            break;
-          }
-
-          if (error instanceof ApiError && [401, 403, 404].includes(error.status)) {
-            stopped = true;
-            options.denied();
-            break;
-          }
-
-          const rejected =
-            error instanceof ApiError && [400, 409, 422].includes(error.status);
-
-          await update(intent, rejected ? 'rejected' : 'uncertain');
-
-          if (!rejected) {
-            schedule();
-            break;
-          }
+        } finally {
+          await claimPrivateScope(options.scope, owner, true).catch(() => undefined);
         }
+      });
+
+      if (!locked) {
+        schedule();
       }
     } catch {
       if (active()) {
@@ -156,7 +171,6 @@ export const createMessageQueue = (options: Options) => {
       }
     } finally {
       running = false;
-      await claimPrivateScope(options.scope, owner, true).catch(() => undefined);
 
       if (dirty && active() && timer === undefined) {
         queueMicrotask(() => {

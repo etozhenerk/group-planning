@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { privacySections } from '@/pages/service/model/privacy';
+import { privacyOperatorFields, privacySections } from '@/pages/service/model/privacy';
 import { CookiesContent } from '@/pages/service/ui/CookiesContent';
 import styles from '@/pages/service/ui/PolicyContent/PolicyContent.module.css';
 
@@ -9,7 +9,7 @@ export const PolicyContent = ({ kind }: PolicyContentProps) => (
   <>
     <div className={styles.draft}>
       <span>Проект документа</span>
-      <p>Реквизиты и условия хранения дополним перед публикацией.</p>
+      <p>Условия обработки и хранения уточним перед публикацией.</p>
     </div>
     {kind === 'cookies' ? (
       <CookiesContent />
@@ -38,14 +38,12 @@ export const PolicyContent = ({ kind }: PolicyContentProps) => (
               <h2>{section.title}</h2>
               {section.key === 'operator' && (
                 <dl className={styles.fields}>
-                  {['Оператор', 'Страна и применимое право', 'Контакт для обращений'].map(
-                    (label) => (
-                      <div key={label}>
-                        <dt>{label}</dt>
-                        <dd>Будет заполнено</dd>
-                      </div>
-                    ),
-                  )}
+                  {privacyOperatorFields.map(([label, value]) => (
+                    <div key={label}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
                 </dl>
               )}
               {section.paragraphs.map((paragraph, index) => (
