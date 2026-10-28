@@ -1,0 +1,65 @@
+/* Draft composition only. Existing button, typography and album stay in styles.css. */
+@import url("../../../../../../frontend/web/src/app/styles/design-tokens.css");
+@import url("../../../../../../frontend/web/src/shared/ui/ButtonSpinner/ButtonSpinner.module.css");
+
+.album-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s12);
+  max-width: 100%;
+}
+
+.album-actions .button {
+  white-space: normal;
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
+  text-align: center;
+}
+
+.album-actions .button:disabled {
+  color: var(--ds-color-muted);
+  cursor: default;
+  filter: none;
+}
+
+.album-actions .icon {
+  flex-shrink: 0;
+}
+
+.download-feedback {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s12);
+  margin: var(--ds-space-s12) 0;
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-small);
+}
+
+.download-feedback p {
+  margin: 0;
+}
+
+.download-feedback.error {
+  color: var(--ds-color-error);
+}
+
+body[data-platform="android"] .album-actions .button,
+body[data-platform="android"] .download-feedback .button {
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-android));
+}
+
+body[data-platform="ios"] .album-actions .button,
+body[data-platform="ios"] .download-feedback .button {
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-ios));
+}
+
+@media (max-width: 739px) {
+  .album-actions {
+    margin-top: var(--ds-space-s16);
+  }
+
+  .vibes-heading .album-actions .button {
+    margin-top: 0;
+  }
+}

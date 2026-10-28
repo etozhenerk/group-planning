@@ -1,0 +1,995 @@
+diff --git a/frontend/ios/Config/Info.plist b/frontend/ios/Config/Info.plist
+index 537ab62c..91d71f3f 100644
+--- a/frontend/ios/Config/Info.plist
++++ b/frontend/ios/Config/Info.plist
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0"><dict>
++    <key>NSPhotoLibraryAddUsageDescription</key><string>Чтобы сохранять фотографии встреч в вашу галерею.</string>
+     <key>SomewhereAPIOrigin</key><string>$(SOMEWHERE_API_ORIGIN)</string>
+     <key>SomewhereLinkScheme</key><string>$(SOMEWHERE_LINK_SCHEME)</string>
+     <key>SomewhereYandexClientID</key><string>$(SOMEWHERE_YANDEX_CLIENT_ID)</string>
+diff --git a/frontend/ios/Config/UIInfo.plist b/frontend/ios/Config/UIInfo.plist
+index 442c60fe..bf302515 100644
+--- a/frontend/ios/Config/UIInfo.plist
++++ b/frontend/ios/Config/UIInfo.plist
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0"><dict>
++    <key>NSPhotoLibraryAddUsageDescription</key><string>Чтобы сохранять фотографии встреч в вашу галерею.</string>
+     <key>SomewhereAPIOrigin</key><string>$(SOMEWHERE_API_ORIGIN)</string>
+     <key>SomewhereLinkScheme</key><string>$(SOMEWHERE_LINK_SCHEME)</string>
+     <key>SomewhereYandexClientID</key><string>$(SOMEWHERE_YANDEX_CLIENT_ID)</string>
+diff --git a/frontend/ios/Somewhere/Data/API/APIClient+Download.swift b/frontend/ios/Somewhere/Data/API/APIClient+Download.swift
+new file mode 100644
+index 00000000..24923c87
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/API/APIClient+Download.swift
+@@ -0,0 +1,28 @@
++import Foundation
++
++extension APIClient {
++    func download(
++        _ request: APIRequest, to fileURL: URL, expectedBytes: Int, contentType: String,
++        credential: StoredSession, using transport: any HTTPFileTransport
++    ) async throws {
++        guard request.method == .get, request.body == nil, request.expectedStatus == 200,
++            request.meetingID != nil
++        else { throw ClientFailure.invalidRequest }
++        var wire = URLRequest(url: try origin.url(for: request))
++        wire.httpMethod = "GET"
++        wire.cachePolicy = .reloadIgnoringLocalCacheData
++        wire.httpShouldHandleCookies = false
++        wire.setValue(contentType, forHTTPHeaderField: "Accept")
++        wire.setValue("Bearer " + credential.token, forHTTPHeaderField: "Authorization")
++        do {
++            try await transport.download(
++                wire, to: fileURL, expectedBytes: expectedBytes, contentType: contentType)
++            try Task.checkCancellation()
++        } catch {
++            if Task.isCancelled || (error as? URLError)?.code == .cancelled {
++                throw CancellationError()
++            }
++            throw ClientFailure.sanitized(error)
++        }
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/API/AlbumFileBuffer.swift b/frontend/ios/Somewhere/Data/API/AlbumFileBuffer.swift
+new file mode 100644
+index 00000000..20d0a193
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/API/AlbumFileBuffer.swift
+@@ -0,0 +1,39 @@
++import Foundation
++
++final class AlbumFileBuffer {
++    static let chunkBytes = 64 * 1024
++    private let handle: FileHandle
++    private let expectedBytes: Int
++    private var received = 0
++    private var chunk = Data()
++
++    init(fileURL: URL, expectedBytes: Int) throws {
++        guard (1...AlbumPhoto.maximumPhotoBytes).contains(expectedBytes) else {
++            throw ClientFailure.invalidRequest
++        }
++        self.expectedBytes = expectedBytes
++        handle = try FileHandle(forWritingTo: fileURL)
++        try handle.truncate(atOffset: 0)
++        chunk.reserveCapacity(Self.chunkBytes)
++    }
++
++    func append(_ byte: UInt8) throws {
++        guard received < expectedBytes else { throw ClientFailure.invalidResponse }
++        received += 1
++        chunk.append(byte)
++        if chunk.count == Self.chunkBytes {
++            try Task.checkCancellation()
++            try handle.write(contentsOf: chunk)
++            chunk.removeAll(keepingCapacity: true)
++        }
++    }
++
++    func finish() throws {
++        try Task.checkCancellation()
++        guard received == expectedBytes else { throw ClientFailure.invalidResponse }
++        try handle.write(contentsOf: chunk)
++        chunk.removeAll(keepingCapacity: true)
++    }
++
++    func close() throws { try handle.close() }
++}
+diff --git a/frontend/ios/Somewhere/Data/API/HTTPFileTransport.swift b/frontend/ios/Somewhere/Data/API/HTTPFileTransport.swift
+new file mode 100644
+index 00000000..9696f481
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/API/HTTPFileTransport.swift
+@@ -0,0 +1,7 @@
++import Foundation
++
++protocol HTTPFileTransport: Sendable {
++    func download(
++        _ request: URLRequest, to fileURL: URL, expectedBytes: Int, contentType: String
++    ) async throws
++}
+diff --git a/frontend/ios/Somewhere/Data/API/Models/MemorySnapshot.swift b/frontend/ios/Somewhere/Data/API/Models/MemorySnapshot.swift
+new file mode 100644
+index 00000000..42b7d065
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/API/Models/MemorySnapshot.swift
+@@ -0,0 +1,20 @@
++import Foundation
++
++struct MemorySnapshot: Decodable, Sendable {
++    let photos: [MeetingMedia]
++
++    enum CodingKeys: String, CodingKey {
++        case photos
++        case nextCursor = "next_cursor"
++    }
++
++    init(photos: [MeetingMedia]) { self.photos = photos }
++
++    init(from decoder: any Decoder) throws {
++        let values = try decoder.container(keyedBy: CodingKeys.self)
++        guard try values.decodeNil(forKey: .nextCursor) else {
++            throw AlbumSaveFailure.invalidSnapshot
++        }
++        photos = try values.decode([MeetingMedia].self, forKey: .photos)
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/API/URLSessionFileTransport.swift b/frontend/ios/Somewhere/Data/API/URLSessionFileTransport.swift
+new file mode 100644
+index 00000000..602f1c3e
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/API/URLSessionFileTransport.swift
+@@ -0,0 +1,43 @@
++import Foundation
++
++actor URLSessionFileTransport: HTTPFileTransport {
++    private let session: URLSession
++
++    init(configuration: URLSessionConfiguration = .ephemeral) {
++        configuration.httpShouldSetCookies = false
++        configuration.httpCookieStorage = nil
++        configuration.urlCache = nil
++        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
++        configuration.timeoutIntervalForRequest = 30
++        configuration.timeoutIntervalForResource = 60
++        session = URLSession(
++            configuration: configuration, delegate: NoRedirectDelegate(), delegateQueue: nil)
++    }
++
++    deinit { session.invalidateAndCancel() }
++
++    func download(
++        _ request: URLRequest, to fileURL: URL, expectedBytes: Int, contentType: String
++    ) async throws {
++        guard request.url?.scheme == "https", fileURL.isFileURL,
++            (1...AlbumPhoto.maximumPhotoBytes).contains(expectedBytes)
++        else { throw ClientFailure.invalidRequest }
++        try Task.checkCancellation()
++        let (bytes, response) = try await session.bytes(for: request)
++        defer { bytes.task.cancel() }
++        guard let http = response as? HTTPURLResponse else { throw ClientFailure.invalidResponse }
++        guard http.statusCode == 200 else { throw ClientFailure.http(http.statusCode, nil) }
++        guard http.url == request.url, http.mimeType?.lowercased() == contentType,
++            http.expectedContentLength == -1 || http.expectedContentLength == Int64(expectedBytes)
++        else { throw ClientFailure.invalidResponse }
++        let writer = try AlbumFileBuffer(fileURL: fileURL, expectedBytes: expectedBytes)
++        do {
++            for try await byte in bytes { try writer.append(byte) }
++            try writer.finish()
++        } catch {
++            do { try writer.close() } catch { throw AlbumSaveFailure.storage }
++            throw error
++        }
++        try writer.close()
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumDownloadService.swift b/frontend/ios/Somewhere/Data/Album/AlbumDownloadService.swift
+new file mode 100644
+index 00000000..35348f1c
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumDownloadService.swift
+@@ -0,0 +1,70 @@
++import Foundation
++
++@MainActor
++final class AlbumDownloadService {
++    private static var active = false
++    private let source: any AlbumPhotoSource
++    private let library: any AlbumPhotoLibrary
++    private let files: AlbumTemporaryFiles
++    private var completed: (operationID: UUID, count: Int)?
++
++    init(
++        source: any AlbumPhotoSource, library: any AlbumPhotoLibrary,
++        files: AlbumTemporaryFiles = AlbumTemporaryFiles()
++    ) {
++        self.source = source
++        self.library = library
++        self.files = files
++    }
++
++    func save(operationID: UUID) async throws -> Int {
++        try checkPreparation()
++        if let completed, completed.operationID == operationID { return completed.count }
++        guard !Self.active else { throw AlbumSaveFailure.busy }
++        Self.active = true
++        defer { Self.active = false }
++        try await library.requireAddPermission()
++        try checkPreparation()
++        let snapshot = try await source.snapshot()
++        try checkPreparation()
++        let photos = try AlbumPhoto.validate(snapshot, meetingID: source.meetingID)
++        let directory = try await files.create()
++        var savedCount = 0
++        do {
++            try checkPreparation()
++            var prepared: [AlbumPreparedPhoto] = []
++            prepared.reserveCapacity(photos.count)
++            for photo in photos {
++                let file = try await files.prepare(photo, in: directory)
++                try checkPreparation()
++                try await source.download(photo, to: file)
++                try checkPreparation()
++                let item = AlbumPreparedPhoto(photo: photo, fileURL: file)
++                try await files.validate(item)
++                try checkPreparation()
++                prepared.append(item)
++            }
++            try await source.verifyAccess()
++            try checkPreparation()
++            // The PhotoKit transaction owns the outcome from this point. Cancellation or
++            // revocation cannot undo a submitted save; keep files until its completion.
++            try await library.save(prepared)
++            savedCount = prepared.count
++            completed = (operationID, savedCount)
++        } catch {
++            do { try await files.remove(directory) } catch {
++                throw AlbumSaveFailure.cleanup(savedCount: 0)
++            }
++            throw error
++        }
++        do { try await files.remove(directory) } catch {
++            throw AlbumSaveFailure.cleanup(savedCount: savedCount)
++        }
++        return savedCount
++    }
++
++    private func checkPreparation() throws {
++        try Task.checkCancellation()
++        try source.checkAccess()
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumPhoto.swift b/frontend/ios/Somewhere/Data/Album/AlbumPhoto.swift
+new file mode 100644
+index 00000000..9ce08db9
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumPhoto.swift
+@@ -0,0 +1,34 @@
++import Foundation
++
++struct AlbumPhoto: Equatable, Sendable {
++    static let maximumPhotoBytes = 10 * 1024 * 1024
++    static let maximumAlbumBytes = 1024 * 1024 * 1024
++    let id: UUID
++    let contentType: String
++    let sizeBytes: Int
++    let fileName: String
++
++    static func validate(_ snapshot: MemorySnapshot, meetingID: UUID) throws -> [AlbumPhoto] {
++        guard !snapshot.photos.isEmpty else { throw AlbumSaveFailure.empty }
++        var seen = Set<UUID>()
++        var total = 0
++        return try snapshot.photos.map { media in
++            let extensions = ["image/jpeg": "jpg", "image/png": "png", "image/webp": "webp"]
++            guard media.meetingID == meetingID, media.purpose == "memory",
++                media.kind == "photo", media.status == "published",
++                seen.insert(media.id).inserted, let suffix = extensions[media.contentType],
++                (1...maximumPhotoBytes).contains(media.sizeBytes),
++                media.sizeBytes <= maximumAlbumBytes - total
++            else { throw AlbumSaveFailure.invalidSnapshot }
++            total += media.sizeBytes
++            return AlbumPhoto(
++                id: media.id, contentType: media.contentType, sizeBytes: media.sizeBytes,
++                fileName: media.id.uuidString.lowercased() + "." + suffix)
++        }
++    }
++}
++
++struct AlbumPreparedPhoto: Sendable {
++    let photo: AlbumPhoto
++    let fileURL: URL
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumPhotoLibrary.swift b/frontend/ios/Somewhere/Data/Album/AlbumPhotoLibrary.swift
+new file mode 100644
+index 00000000..43916005
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumPhotoLibrary.swift
+@@ -0,0 +1,8 @@
++import Foundation
++
++@MainActor
++protocol AlbumPhotoLibrary {
++    func requireAddPermission() async throws
++    /// Once submitted, wait for the system's completion even if the caller cancels.
++    func save(_ photos: [AlbumPreparedPhoto]) async throws
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumPhotoSource.swift b/frontend/ios/Somewhere/Data/Album/AlbumPhotoSource.swift
+new file mode 100644
+index 00000000..81f540b1
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumPhotoSource.swift
+@@ -0,0 +1,10 @@
++import Foundation
++
++@MainActor
++protocol AlbumPhotoSource {
++    var meetingID: UUID { get }
++    func checkAccess() throws
++    func snapshot() async throws -> MemorySnapshot
++    func download(_ photo: AlbumPhoto, to fileURL: URL) async throws
++    func verifyAccess() async throws
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumSaveFailure.swift b/frontend/ios/Somewhere/Data/Album/AlbumSaveFailure.swift
+new file mode 100644
+index 00000000..5b968ae9
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumSaveFailure.swift
+@@ -0,0 +1,11 @@
++import Foundation
++
++enum AlbumSaveFailure: Error, Equatable, Sendable {
++    case busy
++    case empty
++    case invalidSnapshot
++    case permissionRequired
++    case storage
++    case photoLibrary
++    case cleanup(savedCount: Int)
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/AlbumTemporaryFiles.swift b/frontend/ios/Somewhere/Data/Album/AlbumTemporaryFiles.swift
+new file mode 100644
+index 00000000..ee75011d
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/AlbumTemporaryFiles.swift
+@@ -0,0 +1,75 @@
++import Foundation
++
++actor AlbumTemporaryFiles {
++    private let root: URL
++    private var owned: Set<String> = []
++
++    init(root: URL = URL.applicationSupportDirectory.appendingPathComponent("AlbumDownloads")) {
++        self.root = root.standardizedFileURL
++    }
++
++    func create() throws -> URL {
++        let manager = FileManager.default
++        try manager.createDirectory(
++            at: root, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
++        let rootValues = try root.resourceValues(forKeys: [.isSymbolicLinkKey, .isDirectoryKey])
++        guard rootValues.isSymbolicLink != true, rootValues.isDirectory == true else {
++            throw AlbumSaveFailure.storage
++        }
++        // Only our UUID-named operation directories; never enumerate or follow their contents.
++        for old in try manager.contentsOfDirectory(at: root, includingPropertiesForKeys: nil) {
++            if old.lastPathComponent.hasPrefix("album-"),
++                UUID(uuidString: String(old.lastPathComponent.dropFirst(6))) != nil
++            {
++                try manager.removeItem(at: old)
++                owned.remove(old.path)
++            }
++        }
++        var directory = root.appendingPathComponent("album-" + UUID().uuidString.lowercased())
++        try manager.createDirectory(
++            at: directory, withIntermediateDirectories: false,
++            attributes: [.posixPermissions: 0o700, .protectionKey: FileProtectionType.complete])
++        owned.insert(directory.path)
++        do {
++            var values = URLResourceValues()
++            values.isExcludedFromBackup = true
++            try directory.setResourceValues(values)
++            return directory
++        } catch {
++            try remove(directory)
++            throw error
++        }
++    }
++
++    func prepare(_ photo: AlbumPhoto, in directory: URL) throws -> URL {
++        guard owned.contains(directory.path),
++            photo.fileName == URL(fileURLWithPath: photo.fileName).lastPathComponent
++        else { throw AlbumSaveFailure.storage }
++        let file = directory.appendingPathComponent(photo.fileName)
++        guard
++            FileManager.default.createFile(
++                atPath: file.path, contents: nil,
++                attributes: [.posixPermissions: 0o600, .protectionKey: FileProtectionType.complete])
++        else { throw AlbumSaveFailure.storage }
++        return file
++    }
++
++    func validate(_ item: AlbumPreparedPhoto) throws {
++        guard owned.contains(item.fileURL.deletingLastPathComponent().path) else {
++            throw AlbumSaveFailure.storage
++        }
++        let values = try item.fileURL.resourceValues(
++            forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
++        guard values.isRegularFile == true, values.isSymbolicLink != true,
++            values.fileSize == item.photo.sizeBytes
++        else { throw ClientFailure.invalidResponse }
++    }
++
++    func remove(_ directory: URL) throws {
++        guard owned.contains(directory.path) else { throw AlbumSaveFailure.storage }
++        if FileManager.default.fileExists(atPath: directory.path) {
++            try FileManager.default.removeItem(at: directory)
++        }
++        owned.remove(directory.path)
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/PhotoKitAlbumLibrary.swift b/frontend/ios/Somewhere/Data/Album/PhotoKitAlbumLibrary.swift
+new file mode 100644
+index 00000000..69c619ef
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/PhotoKitAlbumLibrary.swift
+@@ -0,0 +1,39 @@
++import Foundation
++import Photos
++
++@MainActor
++struct PhotoKitAlbumLibrary: AlbumPhotoLibrary {
++    func requireAddPermission() async throws {
++        var status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
++        if status == .notDetermined {
++            status = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
++        }
++        guard status == .authorized else { throw AlbumSaveFailure.permissionRequired }
++    }
++
++    func save(_ photos: [AlbumPreparedPhoto]) async throws {
++        guard !photos.isEmpty else { throw AlbumSaveFailure.empty }
++        guard PHPhotoLibrary.authorizationStatus(for: .addOnly) == .authorized else {
++            throw AlbumSaveFailure.permissionRequired
++        }
++        // File resources preserve the bytes and EXIF; no UIImage/JPEG round trip.
++        try await withCheckedThrowingContinuation {
++            (continuation: CheckedContinuation<Void, any Error>) in
++            PHPhotoLibrary.shared().performChanges {
++                for item in photos {
++                    let request = PHAssetCreationRequest.forAsset()
++                    let options = PHAssetResourceCreationOptions()
++                    options.originalFilename = item.photo.fileName
++                    options.shouldMoveFile = false
++                    request.addResource(with: .photo, fileURL: item.fileURL, options: options)
++                }
++            } completionHandler: { saved, _ in
++                if saved {
++                    continuation.resume()
++                } else {
++                    continuation.resume(throwing: AlbumSaveFailure.photoLibrary)
++                }
++            }
++        }
++    }
++}
+diff --git a/frontend/ios/Somewhere/Data/Album/SessionAlbumSource.swift b/frontend/ios/Somewhere/Data/Album/SessionAlbumSource.swift
+new file mode 100644
+index 00000000..24725d53
+--- /dev/null
++++ b/frontend/ios/Somewhere/Data/Album/SessionAlbumSource.swift
+@@ -0,0 +1,52 @@
++import Foundation
++
++@MainActor
++final class SessionAlbumSource: AlbumPhotoSource {
++    let meetingID: UUID
++    private let session: SessionStore
++    private let lease: PrivateData.Lease
++    private let transport: any HTTPFileTransport
++
++    init(
++        meetingID: UUID, session: SessionStore,
++        transport: any HTTPFileTransport = URLSessionFileTransport()
++    ) throws {
++        self.meetingID = meetingID
++        self.session = session
++        self.transport = transport
++        lease = try session.privateData.lease(for: meetingID)
++        try checkAccess()
++    }
++
++    func checkAccess() throws {
++        guard session.status == .authenticated else { throw ClientFailure.staleSession }
++        guard session.privateData.isCurrent(lease) else { throw ClientFailure.accessRevoked }
++    }
++
++    func snapshot() async throws -> MemorySnapshot {
++        try checkAccess()
++        let snapshot = try await session.send(
++            ExperienceRequests.meeting(meetingID, ["memories", "snapshot"]), as: MemorySnapshot.self
++        )
++        try checkAccess()
++        return snapshot
++    }
++
++    func download(_ photo: AlbumPhoto, to fileURL: URL) async throws {
++        try checkAccess()
++        try await session.download(
++            ExperienceRequests.meeting(
++                meetingID, ["media", photo.id.uuidString.lowercased(), "content"]),
++            to: fileURL, expectedBytes: photo.sizeBytes, contentType: photo.contentType,
++            using: transport)
++        try checkAccess()
++    }
++
++    func verifyAccess() async throws {
++        try checkAccess()
++        let meeting = try await session.send(
++            ExperienceRequests.meeting(meetingID, []), as: Meeting.self)
++        try checkAccess()
++        guard meeting.id == meetingID else { throw ClientFailure.invalidResponse }
++    }
++}
+diff --git a/frontend/ios/Somewhere/State/SessionStore.swift b/frontend/ios/Somewhere/State/SessionStore.swift
+index bff7ab85..8e87436a 100644
+--- a/frontend/ios/Somewhere/State/SessionStore.swift
++++ b/frontend/ios/Somewhere/State/SessionStore.swift
+@@ -157,6 +157,18 @@ final class SessionStore {
+         }
+     }
+ 
++    func download(
++        _ request: APIRequest, to fileURL: URL, expectedBytes: Int, contentType: String,
++        using transport: any HTTPFileTransport
++    ) async throws {
++        let api = self.api
++        try await perform(request) { credential in
++            try await api.download(
++                request, to: fileURL, expectedBytes: expectedBytes, contentType: contentType,
++                credential: credential, using: transport)
++        }
++    }
++
+     private func perform<Value: Sendable>(
+         _ request: APIRequest,
+         operation: @escaping @Sendable (StoredSession) async throws -> Value
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/AlbumDownloadTests.swift b/frontend/ios/SomewhereTests/AlbumDownload/AlbumDownloadTests.swift
+new file mode 100644
+index 00000000..e31af959
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/AlbumDownloadTests.swift
+@@ -0,0 +1,132 @@
++import Foundation
++import Testing
++
++@testable import Somewhere
++
++@MainActor @Suite(.serialized)
++struct AlbumDownloadTests {
++    @Test func fullSnapshotUsesOriginalBytesOnceAndExcludesNewPhotos() async throws {
++        let harness = try AlbumHarness(count: 103)
++        let ids = harness.source.media.map(\.id)
++        harness.source.onDownload = {
++            harness.source.media.append(try harness.source.photo())
++        }
++        let operation = UUID()
++        #expect(try await harness.service.save(operationID: operation) == 103)
++        #expect(try await harness.service.save(operationID: operation) == 103)
++        #expect(harness.source.snapshotCalls == 1)
++        #expect(harness.source.downloaded == ids)
++        #expect(harness.source.verifyCalls == 1)
++        #expect(harness.library.saved.count == 1)
++        #expect(harness.library.saved[0].allSatisfy { $0 == harness.source.data })
++        #expect(Set(harness.library.names).count == 103)
++        #expect(harness.library.names.allSatisfy { !$0.contains("/") })
++        try harness.expectClean()
++    }
++
++    @Test func permissionDeniedDoesNotDownloadOrCreateFiles() async throws {
++        let harness = try AlbumHarness()
++        harness.library.denied = true
++        await #expect(throws: AlbumSaveFailure.permissionRequired) {
++            try await harness.service.save(operationID: UUID())
++        }
++        #expect(harness.source.snapshotCalls == 0)
++        #expect(harness.library.saved.isEmpty)
++        try harness.expectClean()
++    }
++
++    @Test func revocationAfterLateDownloadCleansEverythingWithoutSaving() async throws {
++        let harness = try AlbumHarness()
++        harness.source.onDownload = { harness.source.revoked = true }
++        await #expect(throws: ClientFailure.accessRevoked) {
++            try await harness.service.save(operationID: UUID())
++        }
++        #expect(harness.library.saved.isEmpty)
++        try harness.expectClean()
++    }
++
++    @Test func revocationAtFinalVerificationDoesNotCommit() async throws {
++        let harness = try AlbumHarness()
++        harness.source.onVerify = { harness.source.revoked = true }
++        await #expect(throws: ClientFailure.accessRevoked) {
++            try await harness.service.save(operationID: UUID())
++        }
++        #expect(harness.source.downloaded.count == 2)
++        #expect(harness.library.saved.isEmpty)
++        try harness.expectClean()
++    }
++
++    @Test func cancellationBeforeCommitAndConcurrentTapCannotSave() async throws {
++        let harness = try AlbumHarness()
++        var worker: Task<Int, any Error>?
++        harness.source.onDownload = {
++            await #expect(throws: AlbumSaveFailure.busy) {
++                try await harness.service.save(operationID: UUID())
++            }
++            worker?.cancel()
++        }
++        worker = Task { try await harness.service.save(operationID: UUID()) }
++        await #expect(throws: CancellationError.self) { try await worker?.value }
++        #expect(harness.library.saved.isEmpty)
++        try harness.expectClean()
++    }
++
++    @Test func cancellationAfterCommitStartsWaitsForOutcomeAndCleans() async throws {
++        let harness = try AlbumHarness()
++        let operation = UUID()
++        var worker: Task<Int, any Error>?
++        harness.library.onSave = {
++            worker?.cancel()
++            harness.source.revoked = true
++            await Task.yield()
++        }
++        worker = Task { try await harness.service.save(operationID: operation) }
++        #expect(try await worker?.value == 2)
++        #expect(harness.library.saved.count == 1)
++        try harness.expectClean()
++    }
++
++    @Test func partialDownloadAndGalleryFailureCleanFiles() async throws {
++        let harness = try AlbumHarness()
++        harness.source.data = Data([1])
++        await #expect(throws: ClientFailure.invalidResponse) {
++            try await harness.service.save(operationID: UUID())
++        }
++        #expect(harness.library.saved.isEmpty)
++        try harness.expectClean()
++        let gallery = try AlbumHarness()
++        gallery.library.onSave = { throw AlbumSaveFailure.photoLibrary }
++        await #expect(throws: AlbumSaveFailure.photoLibrary) {
++            try await gallery.service.save(operationID: UUID())
++        }
++        try gallery.expectClean()
++    }
++
++    @Test func snapshotRejectsDuplicatesWrongPurposeOversizeAndPagination() throws {
++        let source = try AlbumSourceFake()
++        let duplicate = source.media + source.media
++        #expect(throws: AlbumSaveFailure.invalidSnapshot) {
++            try AlbumPhoto.validate(MemorySnapshot(photos: duplicate), meetingID: source.meetingID)
++        }
++        for media in [
++            try source.photo(size: AlbumPhoto.maximumPhotoBytes + 1),
++            try source.photo(purpose: "chat"),
++        ] {
++            #expect(throws: AlbumSaveFailure.invalidSnapshot) {
++                try AlbumPhoto.validate(
++                    MemorySnapshot(photos: [media]), meetingID: source.meetingID)
++            }
++        }
++        let oversized = try (0..<103).map { _ in
++            try source.photo(size: AlbumPhoto.maximumPhotoBytes)
++        }
++        #expect(throws: AlbumSaveFailure.invalidSnapshot) {
++            try AlbumPhoto.validate(MemorySnapshot(photos: oversized), meetingID: source.meetingID)
++        }
++        for json in ["{\"photos\":[]}", "{\"photos\":[],\"next_cursor\":\"next\"}"] {
++            #expect(throws: (any Error).self) {
++                try JSONDecoder().decode(MemorySnapshot.self, from: Data(json.utf8))
++            }
++        }
++    }
++}
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/AlbumFakes.swift b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFakes.swift
+new file mode 100644
+index 00000000..26c40634
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFakes.swift
+@@ -0,0 +1,92 @@
++import Foundation
++import Testing
++
++@testable import Somewhere
++
++@MainActor
++final class AlbumSourceFake: AlbumPhotoSource {
++    let meetingID = UUID()
++    var data = Data([0xFF, 0xD8, 0x45, 0x78, 0x69, 0x66, 0x00, 0xFF, 0xD9])
++    var media: [MeetingMedia] = []
++    var snapshotCalls = 0
++    var downloaded: [UUID] = []
++    var verifyCalls = 0
++    var revoked = false
++    var onDownload: (@MainActor () async throws -> Void)?
++    var onVerify: (@MainActor () throws -> Void)?
++
++    init(count: Int = 2) throws {
++        media = try (0..<count).map { _ in try photo() }
++    }
++
++    func photo(size: Int? = nil, purpose: String = "memory") throws -> MeetingMedia {
++        try MeetingMedia(
++            id: UUID(), meetingID: meetingID, fileName: "../../duplicate.jpg",
++            contentType: "image/jpeg", sizeBytes: size ?? data.count,
++            kind: "photo", purpose: purpose, status: "published",
++            downloadURL: "https://untrusted.example/secret", thumbnailURL: nil,
++            createdAt: APIInstant("2026-10-20T12:00:00Z"),
++            uploadedBy: UserProfile(id: UUID(), displayName: "Тест"))
++    }
++
++    func checkAccess() throws {
++        if revoked { throw ClientFailure.accessRevoked }
++    }
++
++    func snapshot() async throws -> MemorySnapshot {
++        snapshotCalls += 1
++        return MemorySnapshot(photos: media)
++    }
++
++    func download(_ photo: AlbumPhoto, to fileURL: URL) async throws {
++        downloaded.append(photo.id)
++        try await onDownload?()
++        try data.write(to: fileURL)
++    }
++
++    func verifyAccess() async throws {
++        verifyCalls += 1
++        try onVerify?()
++    }
++}
++
++@MainActor
++final class AlbumLibraryFake: AlbumPhotoLibrary {
++    var denied = false
++    var permissionCalls = 0
++    var saved: [[Data]] = []
++    var names: [String] = []
++    var onSave: (@MainActor () async throws -> Void)?
++
++    func requireAddPermission() async throws {
++        permissionCalls += 1
++        if denied { throw AlbumSaveFailure.permissionRequired }
++    }
++
++    func save(_ photos: [AlbumPreparedPhoto]) async throws {
++        saved.append(try photos.map { try Data(contentsOf: $0.fileURL) })
++        names = photos.map { $0.fileURL.lastPathComponent }
++        try await onSave?()
++    }
++}
++
++@MainActor
++struct AlbumHarness {
++    let source: AlbumSourceFake
++    let library = AlbumLibraryFake()
++    let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++    let service: AlbumDownloadService
++
++    init(count: Int = 2) throws {
++        source = try AlbumSourceFake(count: count)
++        service = AlbumDownloadService(
++            source: source, library: library, files: AlbumTemporaryFiles(root: root))
++    }
++
++    func expectClean() throws {
++        if FileManager.default.fileExists(atPath: root.path) {
++            #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
++            try FileManager.default.removeItem(at: root)
++        }
++    }
++}
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileBufferTests.swift b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileBufferTests.swift
+new file mode 100644
+index 00000000..aa109631
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileBufferTests.swift
+@@ -0,0 +1,35 @@
++import Foundation
++import Testing
++
++@testable import Somewhere
++
++struct AlbumFileBufferTests {
++    @Test func streamsAcrossBoundariesWithoutChangingBytes() throws {
++        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        #expect(FileManager.default.createFile(atPath: file.path, contents: nil))
++        let original = Data((0..<(AlbumFileBuffer.chunkBytes * 2 + 7)).map { UInt8($0 % 251) })
++        let writer = try AlbumFileBuffer(fileURL: file, expectedBytes: original.count)
++        for byte in original { try writer.append(byte) }
++        try writer.finish()
++        try writer.close()
++        #expect(try Data(contentsOf: file) == original)
++        try FileManager.default.removeItem(at: file)
++    }
++
++    @Test func rejectsShortExcessAndOversizeWithoutGrowingPastLimit() throws {
++        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        #expect(FileManager.default.createFile(atPath: file.path, contents: nil))
++        let writer = try AlbumFileBuffer(fileURL: file, expectedBytes: 2)
++        try writer.append(1)
++        #expect(throws: ClientFailure.invalidResponse) { try writer.finish() }
++        try writer.append(2)
++        #expect(throws: ClientFailure.invalidResponse) { try writer.append(3) }
++        try writer.finish()
++        try writer.close()
++        #expect(try Data(contentsOf: file) == Data([1, 2]))
++        #expect(throws: ClientFailure.invalidRequest) {
++            try AlbumFileBuffer(fileURL: file, expectedBytes: AlbumPhoto.maximumPhotoBytes + 1)
++        }
++        try FileManager.default.removeItem(at: file)
++    }
++}
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileTransportFake.swift b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileTransportFake.swift
+new file mode 100644
+index 00000000..f2bd1aba
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/AlbumFileTransportFake.swift
+@@ -0,0 +1,25 @@
++import Foundation
++
++@testable import Somewhere
++
++actor AlbumFileTransportFake: HTTPFileTransport {
++    private(set) var requests: [URLRequest] = []
++    private(set) var wasCancelled = false
++    let gate: TestGate?
++    let failure: ClientFailure?
++
++    init(gate: TestGate? = nil, failure: ClientFailure? = nil) {
++        self.gate = gate
++        self.failure = failure
++    }
++
++    func download(
++        _ request: URLRequest, to fileURL: URL, expectedBytes: Int, contentType: String
++    ) async throws {
++        requests.append(request)
++        if let gate { await gate.wait() }
++        wasCancelled = Task.isCancelled
++        if let failure { throw failure }
++        try Data(repeating: 1, count: expectedBytes).write(to: fileURL)
++    }
++}
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/AlbumTemporaryFilesTests.swift b/frontend/ios/SomewhereTests/AlbumDownload/AlbumTemporaryFilesTests.swift
+new file mode 100644
+index 00000000..cd35ab3b
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/AlbumTemporaryFilesTests.swift
+@@ -0,0 +1,28 @@
++import Foundation
++import Testing
++
++@testable import Somewhere
++
++struct AlbumTemporaryFilesTests {
++    @Test func abandonedCleanupNeverFollowsLinksOutsideOwnedRoot() async throws {
++        let base = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        let root = base.appendingPathComponent("exports")
++        let outside = base.appendingPathComponent("keep")
++        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
++        try FileManager.default.createDirectory(at: outside, withIntermediateDirectories: true)
++        let original = outside.appendingPathComponent("photo.jpg")
++        try Data([1, 2, 3]).write(to: original)
++        let abandoned = root.appendingPathComponent("album-" + UUID().uuidString)
++        try FileManager.default.createSymbolicLink(at: abandoned, withDestinationURL: outside)
++        let storage = AlbumTemporaryFiles(root: root)
++        let current = try await storage.create()
++        #expect(!FileManager.default.fileExists(atPath: abandoned.path))
++        #expect(try Data(contentsOf: original) == Data([1, 2, 3]))
++        await #expect(throws: AlbumSaveFailure.storage) { try await storage.remove(outside) }
++        let attributes = try FileManager.default.attributesOfItem(atPath: current.path)
++        #expect((attributes[.posixPermissions] as? NSNumber)?.intValue == 0o700)
++        try await storage.remove(current)
++        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
++        try FileManager.default.removeItem(at: base)
++    }
++}
+diff --git a/frontend/ios/SomewhereTests/AlbumDownload/SessionAlbumSourceTests.swift b/frontend/ios/SomewhereTests/AlbumDownload/SessionAlbumSourceTests.swift
+new file mode 100644
+index 00000000..d7d6dbfe
+--- /dev/null
++++ b/frontend/ios/SomewhereTests/AlbumDownload/SessionAlbumSourceTests.swift
+@@ -0,0 +1,86 @@
++import Foundation
++import Testing
++
++@testable import Somewhere
++
++@MainActor @Suite(.serialized)
++struct SessionAlbumSourceTests {
++    @Test func fullSnapshotAndContentUseConfiguredOriginAndFixedLease() async throws {
++        let harness = try SessionHarness()
++        try await harness.login()
++        let media = try AlbumSourceFake(count: 103)
++        let meetingID = media.meetingID
++        let json = try APICoding.encode(media.media)
++        var snapshot = Data("{\"photos\":".utf8)
++        snapshot.append(json)
++        snapshot.append(Data(",\"next_cursor\":null}".utf8))
++        let path = "/api/v1/meetings/" + meetingID.uuidString.lowercased()
++        await harness.transport.enqueue(path + "/memories/snapshot", data: snapshot)
++        let transport = AlbumFileTransportFake()
++        let source = try SessionAlbumSource(
++            meetingID: meetingID, session: harness.session, transport: transport)
++        let result = try await source.snapshot()
++        #expect(result.photos.count == 103)
++        let photo = try #require(AlbumPhoto.validate(result, meetingID: meetingID).first)
++        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        try await source.download(photo, to: file)
++        try FileManager.default.removeItem(at: file)
++        let wire = try #require(await transport.requests.first)
++        #expect(wire.url?.host == "api.example.test")
++        #expect(wire.url?.scheme == "https")
++        #expect(wire.url?.path == path + "/media/" + photo.id.uuidString.lowercased() + "/content")
++        #expect(wire.value(forHTTPHeaderField: "Authorization") == "Bearer test-session")
++        #expect(wire.httpShouldHandleCookies == false)
++        harness.session.updateMeetingAccess(meetingID, allowed: false)
++        harness.session.updateMeetingAccess(meetingID, allowed: true)
++        #expect(throws: ClientFailure.accessRevoked) { try source.checkAccess() }
++    }
++
++    @Test func forbiddenContentRevokesScope() async throws {
++        let harness = try SessionHarness()
++        try await harness.login()
++        let media = try AlbumSourceFake(count: 1)
++        let source = try SessionAlbumSource(
++            meetingID: media.meetingID, session: harness.session,
++            transport: AlbumFileTransportFake(failure: .http(403, nil)))
++        let photo = try #require(
++            AlbumPhoto.validate(MemorySnapshot(photos: media.media), meetingID: media.meetingID)
++                .first)
++        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        await #expect(throws: ClientFailure.http(403, nil)) {
++            try await source.download(photo, to: file)
++        }
++        #expect(harness.session.privateData.denied.contains(media.meetingID))
++        #expect(throws: ClientFailure.accessRevoked) { try source.checkAccess() }
++    }
++
++    @Test func logoutCancelsDownloadAndRejectsLateResponse() async throws {
++        let harness = try SessionHarness()
++        try await harness.login()
++        let media = try AlbumSourceFake(count: 1)
++        let gate = TestGate()
++        let transport = AlbumFileTransportFake(gate: gate)
++        let source = try SessionAlbumSource(
++            meetingID: media.meetingID, session: harness.session, transport: transport)
++        let photo = try #require(
++            AlbumPhoto.validate(MemorySnapshot(photos: media.media), meetingID: media.meetingID)
++                .first)
++        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
++        let worker = Task { try await source.download(photo, to: file) }
++        for _ in 0..<200 {
++            if await transport.requests.count == 1 { break }
++            try await Task.sleep(for: .milliseconds(5))
++        }
++        #expect(await transport.requests.count == 1)
++        await harness.transport.enqueue("/api/v1/auth/logout", status: 204)
++        do { try await harness.session.logout() } catch {
++            // Session is invalidated before the best-effort logout endpoint finishes.
++            #expect(harness.session.status == .signedOut)
++        }
++        await gate.release()
++        await #expect(throws: ClientFailure.staleSession) { try await worker.value }
++        #expect(await transport.wasCancelled)
++        #expect(throws: ClientFailure.staleSession) { try source.checkAccess() }
++        try FileManager.default.removeItem(at: file)
++    }
++}

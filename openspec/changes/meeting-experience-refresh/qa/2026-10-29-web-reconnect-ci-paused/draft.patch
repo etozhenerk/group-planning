@@ -1,0 +1,84 @@
+diff --git a/frontend/web/tests/38-chat-sync.spec.ts b/frontend/web/tests/38-chat-sync.spec.ts
+index 97a1ec91..e3f02806 100644
+--- a/frontend/web/tests/38-chat-sync.spec.ts
++++ b/frontend/web/tests/38-chat-sync.spec.ts
+@@ -1,4 +1,5 @@
+ import { test, expect } from '@playwright/test';
++import type { WebSocket } from '@playwright/test';
+ import { randomUUID } from 'node:crypto';
+ import path from 'node:path';
+ import { apiCreate, login, writeHeaders } from '@tests/helpers';
+@@ -165,19 +166,38 @@ test('reconnect performs HTTP catch-up and terminal auth stops SDK retry loops',
+ }) => {
+   const { meeting } = await apiCreate(page, 'Возвращение сети');
+   const headers = await writeHeaders(page);
+-  let subscriptions = 0;
+   let connections = 0;
++  const sockets: WebSocket[] = [];
++  const subscribed = new Set<WebSocket>();
+   page.on('websocket', (socket) => {
+     connections += 1;
++    sockets.push(socket);
+     socket.on('framereceived', ({ payload }) => {
+-      if (String(payload).includes('subscribe')) {
+-        subscriptions += 1;
++      for (const line of String(payload).split('\n')) {
++        if (!line) {
++          continue;
++        }
++
++        const reply: unknown = JSON.parse(line);
++
++        if (typeof reply === 'object' && reply !== null && 'subscribe' in reply) {
++          subscribed.add(socket);
++        }
+       }
+     });
+   });
+   await page.goto(`/meetings/${meeting.id}`);
+-  await expect.poll(() => subscriptions).toBeGreaterThan(0);
++  await expect.poll(() => subscribed.size).toBeGreaterThan(0);
++  const initial = sockets.find((socket) => subscribed.has(socket));
++
++  if (!initial) {
++    throw new Error('Initial WebSocket must acknowledge the meeting subscription');
++  }
++
+   await context.setOffline(true);
++  // The protocol command can finish before the page handles offline and closes WS.
++  await expect.poll(() => page.evaluate(() => navigator.onLine)).toBe(false);
++  await expect.poll(() => initial.isClosed()).toBe(true);
+   const key = randomUUID();
+   const response = await page.request.post(`/api/v1/meetings/${meeting.id}/messages`, {
+     headers: { ...headers, 'Idempotency-Key': key },
+@@ -190,6 +210,21 @@ test('reconnect performs HTTP catch-up and terminal auth stops SDK retry loops',
+     page.getByTestId('feed-message').filter({ hasText: 'Пришло во время отключения' }),
+   ).toHaveAttribute('data-delivery', 'accepted');
+   await expect.poll(() => connections).toBeGreaterThan(1);
++  await expect
++    .poll(() =>
++      sockets.some(
++        (socket) => socket !== initial && subscribed.has(socket) && !socket.isClosed(),
++      ),
++    )
++    .toBe(true);
++  const restored = sockets.findLast(
++    (socket) => socket !== initial && subscribed.has(socket) && !socket.isClosed(),
++  );
++
++  if (!restored) {
++    throw new Error('A new WebSocket must acknowledge the meeting subscription');
++  }
++
+   await page.route('**/api/v1/me', (route) =>
+     route.fulfill({
+       status: 401,
+@@ -198,6 +233,8 @@ test('reconnect performs HTTP catch-up and terminal auth stops SDK retry loops',
+     }),
+   );
+   await context.setOffline(true);
++  await expect.poll(() => page.evaluate(() => navigator.onLine)).toBe(false);
++  await expect.poll(() => restored.isClosed()).toBe(true);
+   const before = connections;
+   await context.setOffline(false);
+   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
