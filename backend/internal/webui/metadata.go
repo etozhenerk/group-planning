@@ -97,12 +97,17 @@ func (h *handler) invitation(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) defaultMetadata() metadata {
+	image := h.origin + "/share-card.png"
+	if h.imageVersion != "" {
+		image += "?v=" + h.imageVersion
+	}
+
 	return metadata{
 		Title:       "somewhere — встречи с друзьями",
 		PageTitle:   "somewhere — встречи с друзьями",
 		Description: "Пригласите друзей на встречу. Ответы, детали и общий разговор — в somewhere.",
 		URL:         h.origin + "/",
-		Image:       h.origin + "/share-card.png",
+		Image:       image,
 		ImageType:   "image/png",
 		ImageAlt:    "somewhere — встречи с друзьями",
 		ImageWidth:  1200,

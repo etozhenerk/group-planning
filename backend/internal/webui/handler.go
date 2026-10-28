@@ -3,6 +3,8 @@ package webui
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -21,10 +23,11 @@ type InvitationReader interface {
 }
 
 type handler struct {
-	directory   string
-	origin      string
-	invitations InvitationReader
-	static      http.Handler
+	directory    string
+	origin       string
+	invitations  InvitationReader
+	static       http.Handler
+	imageVersion string
 }
 
 // New serves a prebuilt client. The trusted HTTPS origin supplies canonical URLs.
@@ -44,7 +47,13 @@ func New(invitations InvitationReader, directory, origin string) (http.Handler, 
 		return nil, fmt.Errorf("web directory must contain a built index.html with a head element")
 	}
 
-	return &handler{directory: directory, origin: origin, invitations: invitations, static: http.FileServer(http.Dir(directory))}, nil
+	imageVersion := ""
+	if image, err := os.ReadFile(filepath.Join(directory, "share-card.png")); err == nil {
+		digest := sha256.Sum256(image)
+		imageVersion = hex.EncodeToString(digest[:8])
+	}
+
+	return &handler{directory: directory, origin: origin, invitations: invitations, static: http.FileServer(http.Dir(directory)), imageVersion: imageVersion}, nil
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

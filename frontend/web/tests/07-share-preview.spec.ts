@@ -1,5 +1,14 @@
 import { expect, test } from '@playwright/test';
+import { createHash } from 'node:crypto';
 import { apiCreate, apiMeeting, login, writeHeaders } from '@tests/helpers';
+
+const expectBrandedImage = (image: string | null, origin: string) => {
+  const url = new URL(image ?? '');
+  expect(url.origin).toBe(new URL(origin).origin);
+  expect(url.pathname).toBe('/share-card.png');
+  expect([...url.searchParams.keys()]).toEqual(['v']);
+  expect(url.searchParams.get('v')).toMatch(/^[a-f0-9]{16}$/);
+};
 
 test('short invitation provides fresh metadata and PNG without JavaScript', async ({
   page,
@@ -52,7 +61,7 @@ test('short invitation provides fresh metadata and PNG without JavaScript', asyn
     .locator('meta[property="og:image"]')
     .getAttribute('content');
 
-  expect(image).toBe(new URL('/share-card.png', invitation).href);
+  expectBrandedImage(image, invitation);
   const picture = await context.request.get(image ?? '');
   expect(picture.status()).toBe(200);
   expect(picture.headers()['content-type']).toContain('image/png');
@@ -116,7 +125,7 @@ test('home exposes one complete preview to a crawler without JavaScript', async 
   );
   const image = await page.locator('meta[property="og:image"]').getAttribute('content');
 
-  expect(image).toBe(new URL('/share-card.png', url).href);
+  expectBrandedImage(image, url);
   const picture = await context.request.get(image ?? '');
 
   expect(picture.status()).toBe(200);
@@ -125,6 +134,16 @@ test('home exposes one complete preview to a crawler without JavaScript', async 
 
   expect(png.readUInt32BE(16)).toBe(1200);
   expect(png.readUInt32BE(20)).toBe(630);
+  expect(new URL(image ?? '').searchParams.get('v')).toBe(
+    createHash('sha256').update(png).digest('hex').slice(0, 16),
+  );
+  const head = await context.request.head(image ?? '');
+  expect(head.status()).toBe(200);
+  expect((await head.body()).length).toBe(0);
+  const imagePage = await context.newPage();
+  expect((await imagePage.goto(image ?? ''))?.status()).toBe(200);
+  await expect(imagePage.locator('img')).toHaveJSProperty('naturalWidth', 1200);
+  await expect(imagePage.locator('img')).toHaveJSProperty('naturalHeight', 630);
   await context.close();
 });
 
@@ -232,7 +251,7 @@ test('public invitation preview follows cover add, replacement and removal', asy
         [1, 3, 5].map((start) => Number.parseInt(color.slice(start, start + 2), 16)),
       );
     } else {
-      expect(image).toBe(new URL('/share-card.png', created.invitation_url).href);
+      expectBrandedImage(image, created.invitation_url);
     }
 
     if (previousImage) {

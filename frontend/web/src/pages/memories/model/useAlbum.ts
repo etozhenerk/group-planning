@@ -61,7 +61,7 @@ export const useAlbum = (count: number) => {
   const start = (event: PointerEvent<HTMLDivElement>) => {
     moved.current = false;
 
-    if (event.button !== 0 || count < 2 || timer.current !== null) {
+    if (event.button !== 0 || timer.current !== null) {
       return;
     }
 

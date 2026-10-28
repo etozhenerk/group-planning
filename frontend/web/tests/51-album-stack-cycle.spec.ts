@@ -74,9 +74,26 @@ test('both stack swipe directions advance and the last photo reassembles without
   await swipe(1);
   await expect(page.getByText('3 / 3', { exact: true })).toBeVisible();
   await expect(viewer).not.toBeVisible();
-  await swipe(1);
-  await expect(stack).toHaveAttribute('data-resetting', 'true');
-  const motion = await stack.evaluate(async (element) => {
+  const recording = stack.evaluate(async (element) => {
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        observer.disconnect();
+        reject(new Error('Stack reset did not start'));
+      }, 5000);
+
+      const observer = new MutationObserver(() => {
+        if (element.getAttribute('data-resetting') === 'true') {
+          clearTimeout(timer);
+          observer.disconnect();
+          resolve();
+        }
+      });
+
+      observer.observe(element, {
+        attributes: true,
+        attributeFilter: ['data-resetting'],
+      });
+    });
     const frames: { opacity: number; scale: number; width: number; height: number }[] =
       [];
 
@@ -101,6 +118,8 @@ test('both stack swipe directions advance and the last photo reassembles without
     return frames;
   });
 
+  const [motion] = await Promise.all([recording, swipe(1)]);
+
   expect(motion.length).toBeGreaterThan(2);
   expect(motion.some((frame) => frame.opacity > 0 && frame.opacity < 1)).toBe(true);
   expect(motion.every((frame) => Math.abs(frame.scale - 1) < 0.001)).toBe(true);
@@ -115,4 +134,61 @@ test('both stack swipe directions advance and the last photo reassembles without
   await expect(page.getByText('1 / 3', { exact: true })).toBeVisible();
   await expect(stack).toHaveAttribute('data-resetting', 'false');
   await expect(stack).toHaveAttribute('data-moving', 'false');
+});
+
+test('a single photo separates every drag from a deliberate tap', async ({ page }) => {
+  await login(page, 'Саша');
+  const { meeting } = await apiCreate(page, 'Одно фото без случайного открытия');
+  const changed = await page.request.patch(`/api/v1/meetings/${meeting.id}`, {
+    headers: await writeHeaders(page),
+    data: {
+      expected_revision: meeting.revision,
+      starts_at: null,
+      starts_on: '2026-10-01',
+      timezone: 'UTC',
+    },
+  });
+
+  expect(changed.ok()).toBe(true);
+  await page.goto(`/meetings/${meeting.id}/memories?action=upload`);
+  const dialog = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  await dialog
+    .getByLabel('Выбрать фото', { exact: true })
+    .setInputFiles('public/share-card.png');
+  await dialog.getByRole('button', { name: 'Добавить в альбом' }).click();
+  await expect(dialog).not.toBeVisible();
+  const stack = page.getByRole('group', {
+    name: 'Фото встречи. Листайте клавишами влево и вправо',
+  });
+
+  const viewer = page.getByRole('dialog', { name: 'Фото встречи', exact: true });
+  await expect(stack.locator('img')).toHaveCount(1);
+
+  for (const [dx, dy] of [
+    [130, 0],
+    [-130, 0],
+    [24, 0],
+    [0, 40],
+  ]) {
+    const box = await stack.boundingBox();
+
+    if (!box) {
+      throw new Error('Missing stack');
+    }
+
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + (dx ?? 0), y + (dy ?? 0), { steps: 8 });
+    await page.mouse.up();
+    await expect(viewer).not.toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`/meetings/${meeting.id}/memories$`));
+    await expect(page.getByText('1 / 1', { exact: true })).toBeVisible();
+    await expect(stack).toHaveAttribute('data-moving', 'false');
+    await expect(stack).toHaveAttribute('data-resetting', 'false');
+  }
+
+  await stack.getByRole('button', { name: 'Открыть фото 1', exact: true }).click();
+  await expect(viewer).toBeVisible();
 });
