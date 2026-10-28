@@ -59,6 +59,11 @@ export const useReactionPopover = (
 
   const refs = floating.refs;
   const update = floating.update;
+  const setFloating = useCallback(
+    (element: HTMLDivElement | null) => refs.setFloating(element),
+    [refs],
+  );
+
   const resize = useCallback(() => {
     // Measure the new content before flip reuses the previous panel's height limit.
     refs.floating.current?.style.removeProperty('--reaction-available-height');
@@ -111,5 +116,5 @@ export const useReactionPopover = (
     common: { transitionTimingFunction: designTokens.motionEasingStandard },
   });
 
-  return { ...floating, ...interactions, transition, inside, resize };
+  return { ...floating, ...interactions, transition, inside, resize, setFloating };
 };

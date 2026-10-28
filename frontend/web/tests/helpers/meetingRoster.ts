@@ -49,6 +49,8 @@ export const meetingRoster = async (browser: Browser, organizer: Page) => {
 
       if (name === 'Лена') {
         member = page;
+      } else {
+        await context.close();
       }
     }
 

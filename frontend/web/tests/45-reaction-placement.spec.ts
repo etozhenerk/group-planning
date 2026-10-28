@@ -78,6 +78,16 @@ for (const viewport of [
   test(`expanded reactions remain usable at ${viewport.width}x${viewport.height}`, async ({
     page,
   }) => {
+    const renderErrors: string[] = [];
+    page.on('pageerror', (error) => renderErrors.push(error.message));
+    page.on('console', (message) => {
+      if (
+        message.type() === 'error' &&
+        /React|Maximum update depth/i.test(message.text())
+      ) {
+        renderErrors.push(message.text());
+      }
+    });
     await page.setViewportSize(viewport);
     await login(page, 'Саша');
     const { meeting } = await apiCreate(page, 'Реакции в низком окне');
@@ -151,5 +161,35 @@ for (const viewport of [
     ).toBeVisible();
     await expect(target).toBeFocused();
     expect(await history.evaluate((element) => element.scrollTop)).toBeCloseTo(before);
+    expect(renderErrors).toEqual([]);
+    const composer = page.getByLabel('Сообщение', { exact: true });
+    await composer.fill('Черновик после реакции');
+
+    for (let cycle = 0; cycle < 3; cycle++) {
+      await target.press('Enter');
+      await picker.getByRole('button', { name: 'Все эмодзи' }).click();
+      await picker.getByRole('searchbox', { name: 'Найти эмодзи' }).fill('пицца');
+      const committed = page.waitForResponse(
+        (response) =>
+          response.request().method() === 'PUT' && response.url().endsWith('/reactions'),
+      );
+
+      await picker
+        .getByRole('button', {
+          name: `${cycle % 2 === 0 ? 'Снять' : 'Поставить'} реакцию: пицца`,
+          exact: true,
+        })
+        .click();
+      expect((await committed).status()).toBe(200);
+      await expect(picker).toHaveCount(0);
+      await expect(
+        message.getByRole('button', { name: '🍕: 1', exact: true }),
+      ).toHaveCount(cycle % 2 === 0 ? 0 : 1);
+      await expect(composer).toHaveValue('Черновик после реакции');
+      await expect(
+        page.getByRole('heading', { name: 'Не удалось открыть страницу' }),
+      ).toHaveCount(0);
+      expect(renderErrors).toEqual([]);
+    }
   });
 }

@@ -24,6 +24,7 @@ test('TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independ
       [fixture.member, false],
     ] as const) {
       for (const width of [320, 390, 768, 1440]) {
+        await viewer.bringToFront();
         await viewer.setViewportSize({ width, height: 844 });
         await viewer.goto(
           new URL(`/meetings/${fixture.meeting.id}`, fixture.invitation_url).href,

@@ -39,7 +39,7 @@ export const ReactionPopover = ({
         returnFocus={anchor}
       >
         <div
-          ref={(element) => popover.refs.setFloating(element)}
+          ref={popover.setFloating}
           style={popover.floatingStyles}
           className={styles.panel}
           aria-label="Реакция"
