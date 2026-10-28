@@ -39,7 +39,7 @@ final class FixtureTransport: HTTPTransport {
         if scenario == "audit-loading", request.url?.path == "/api/v1/me" {
             try await Task.sleep(for: .seconds(7))
         }
-        try FixtureResponseGate.before(request)
+        try await FixtureResponseGate.before(request)
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw ClientFailure.invalidResponse }
         return try await FixtureResponseGate.apply((data, http), to: request)

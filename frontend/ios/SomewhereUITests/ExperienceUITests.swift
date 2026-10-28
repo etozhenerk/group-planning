@@ -100,7 +100,7 @@ final class ExperienceUITests: XCTestCase {
         capture("refresh-system-photo-picker")
         cancelPicker.tap()
         XCTAssertTrue(input.waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["media-picker-close"].exists)
+        XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
         capture("refresh-attachments")
         XCTAssertEqual(input.value as? String, "Жду встречи ❤️")
         XCUIDevice.shared.press(.home)

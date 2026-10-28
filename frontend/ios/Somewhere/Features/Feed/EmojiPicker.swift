@@ -61,9 +61,9 @@ struct EmojiPicker: View {
                 .padding(.top, DesignTokens.componentEmojiDockToolbarInsetTop)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DesignTokens.spaceS0) {
-                    categoryButton("", label: "Недавние", symbol: "◷")
+                    categoryButton("", label: "Недавние", icon: "EmojiCategoryClock")
                     ForEach(EmojiPickerCategory.allCases) { value in
-                        categoryButton(value.id, label: value.label, symbol: value.symbol)
+                        categoryButton(value.id, label: value.label, icon: value.icon)
                     }
                 }
             }.fixedSize(horizontal: false, vertical: true)
@@ -144,17 +144,22 @@ struct EmojiPicker: View {
             }
     }
 
-    private func categoryButton(_ value: String, label: String, symbol: String) -> some View {
+    private func categoryButton(_ value: String, label: String, icon: String) -> some View {
         Button {
             category = value
             query = ""
         } label: {
-            Text(symbol).designFont(DesignTokens.typographySizeEmojiCategory)
+            Image(icon).resizable().scaledToFit()
+                .frame(
+                    width: DesignTokens.componentEmojiDockCategoryIconSize,
+                    height: DesignTokens.componentEmojiDockCategoryIconSize
+                )
+                .accessibilityHidden(true)
                 .foregroundStyle(
                     category == value && query.isEmpty
                         ? DesignTokens.colorAccent : DesignTokens.colorMuted
                 )
-                .frame(minWidth: DesignTokens.targetIos, minHeight: DesignTokens.targetIos)
+                .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
                 .contentShape(Rectangle())
                 .overlay(alignment: .bottom) {
                     if category == value && query.isEmpty {
@@ -164,7 +169,8 @@ struct EmojiPicker: View {
                                 height: DesignTokens.componentEmojiDockCategoryIndicator)
                     }
                 }
-        }.accessibilityLabel(label).accessibilityAddTraits(
-            category == value && query.isEmpty ? .isSelected : [])
+        }.accessibilityIdentifier("emoji-category-" + (value.isEmpty ? "recent" : value))
+            .accessibilityLabel(label).accessibilityAddTraits(
+                category == value && query.isEmpty ? .isSelected : [])
     }
 }

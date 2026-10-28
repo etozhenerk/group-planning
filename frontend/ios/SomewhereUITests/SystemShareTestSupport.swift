@@ -27,6 +27,6 @@ enum SystemShareTestSupport {
             close.tap()
         }
         XCTAssertTrue(action.waitForNonExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
+        XCTAssertFalse(app.staticTexts["meeting-share-header"].exists)
     }
 }

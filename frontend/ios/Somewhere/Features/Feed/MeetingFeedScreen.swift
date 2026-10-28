@@ -59,10 +59,7 @@ struct MeetingFeedScreen: View {
                         set: { presented in
                             if !presented { owner.closeSheet() }
                         }),
-                    onDismiss: {
-                        owner.reload()
-                        sheetDismissal += 1
-                    }
+                    onDismiss: { sheetDismissal += 1 }
                 ) {
                     ChatSheetContent(owner: owner)
                 }

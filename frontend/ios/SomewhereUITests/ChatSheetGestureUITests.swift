@@ -11,8 +11,9 @@ final class ChatSheetGestureUITests: XCTestCase {
         ChatSheetTestSupport.openAction("new-preparation-task", app: app)
         let field = app.descendants(matching: .any)["preparation-title"].firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 5))
-        let restingHeader = app.buttons["action-form-close"].frame
+        let restingHeader = app.staticTexts["action-form-header"].frame
         field.tap()
+        ChatSheetTestSupport.assertSoftwareKeyboard(app, field: field)
         field.typeText("Забрать пиццу по дороге")
         ChatSheetTestSupport.assertSoftwareKeyboard(app, field: field)
         ExperienceScreenshot.save("sheet-task-keyboard", test: self)
@@ -22,13 +23,15 @@ final class ChatSheetGestureUITests: XCTestCase {
             app.buttons["action-keyboard-done"].tap()
         }
         ExperienceScreenshot.save("sheet-task-before-swipe", test: self)
-        XCTAssertEqual(app.buttons["action-form-close"].frame.minY, restingHeader.minY, accuracy: 1)
+        XCTAssertEqual(
+            app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
         ChatSheetTestSupport.dismissBySwipe(app)
         ChatSheetTestSupport.openAction("new-preparation-task", app: app)
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         XCTAssertEqual(field.value as? String, "Забрать пиццу по дороге")
         ExperienceScreenshot.save("sheet-task-swipe-reopen", test: self)
-        XCTAssertEqual(app.buttons["action-form-close"].frame.minY, restingHeader.minY, accuracy: 1)
+        XCTAssertEqual(
+            app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
     }
 
     func testPlaceAndExplanationSurviveSheetSwipe() {
@@ -37,7 +40,7 @@ final class ChatSheetGestureUITests: XCTestCase {
         ChatSheetTestSupport.openAction("new-place-poll", app: app)
         let place = app.descendants(matching: .any)["place-poll-place"].firstMatch
         XCTAssertTrue(place.waitForExistence(timeout: 5))
-        let restingHeader = app.buttons["action-form-close"].frame
+        let restingHeader = app.staticTexts["action-form-header"].frame
         place.tap()
         place.typeText("Кафе у метро")
         app.buttons["action-keyboard-done"].tap()
@@ -52,14 +55,16 @@ final class ChatSheetGestureUITests: XCTestCase {
             app.buttons["action-keyboard-done"].tap()
         }
         ExperienceScreenshot.save("sheet-place-before-swipe", test: self)
-        XCTAssertEqual(app.buttons["action-form-close"].frame.minY, restingHeader.minY, accuracy: 1)
+        XCTAssertEqual(
+            app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
         ChatSheetTestSupport.dismissBySwipe(app)
         ChatSheetTestSupport.openAction("new-place-poll", app: app)
         XCTAssertTrue(place.waitForExistence(timeout: 5))
         XCTAssertEqual(place.value as? String, "Кафе у метро")
         XCTAssertEqual(explanation.value as? String, "Всем удобно добираться")
         ExperienceScreenshot.save("sheet-place-swipe-reopen", test: self)
-        XCTAssertEqual(app.buttons["action-form-close"].frame.minY, restingHeader.minY, accuracy: 1)
+        XCTAssertEqual(
+            app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
     }
 
     func testDateSettingsSurviveSheetSwipe() {
@@ -68,10 +73,10 @@ final class ChatSheetGestureUITests: XCTestCase {
         ChatSheetTestSupport.openAction("new-date-poll", app: app)
         app.buttons["Вариант 1"].tap()
         XCTAssertTrue(app.buttons["picker-done"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["picker-close"].isHittable)
+        XCTAssertTrue(app.staticTexts["picker-header"].isHittable)
         ExperienceScreenshot.save("sheet-date-picker", test: self)
-        app.buttons["picker-close"].tap()
-        XCTAssertTrue(app.buttons["action-form-close"].waitForExistence(timeout: 5))
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "picker-header")
+        XCTAssertTrue(app.staticTexts["action-form-header"].waitForExistence(timeout: 5))
         ExperienceScreenshot.save("sheet-date-after-picker", test: self)
         let multiple = app.switches["Несколько ответов"]
         ChatSheetTestSupport.reveal(multiple, in: app.scrollViews["action-form-scroll"], app: app)

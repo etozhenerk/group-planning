@@ -35,7 +35,7 @@ final class MediaExperienceUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Отправить"].waitForExistence(timeout: 10))
         capture("refresh-photo-preview")
         app.buttons["Отправить"].tap()
-        XCTAssertTrue(app.buttons["media-picker-close"].waitForNonExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
         XCTAssertEqual(input.value as? String, "Фото отдельно от сообщения")
         let attachment = app.buttons["Открыть фото"].firstMatch
         XCTAssertTrue(attachment.waitForExistence(timeout: 10))
@@ -64,7 +64,7 @@ final class MediaExperienceUITests: XCTestCase {
         mine.press(forDuration: 0.7)
         XCTAssertTrue(app.staticTexts["Саша"].waitForExistence(timeout: 5))
         capture("refresh-reaction-people")
-        app.buttons["reaction-people-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "reaction-people-header")
         revealReaction(mine, app: app)
         mine.tap()
         let removed = XCTNSPredicateExpectation(

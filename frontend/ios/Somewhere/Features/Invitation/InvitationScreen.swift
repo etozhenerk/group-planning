@@ -4,15 +4,18 @@ struct InvitationScreen: View {
     @State private var owner: InvitationOwner
     @Environment(\.scenePhase) private var phase
     var warning: String?
+    let allowsPullToRefresh: Bool
     var authenticating: Bool
     var signIn: () -> Void
 
     init(
         target: InvitationTarget, api: APIClient, session: SessionStore?, warning: String? = nil,
+        allowsPullToRefresh: Bool = true,
         authenticating: Bool = false, signIn: @escaping () -> Void = {}
     ) {
         _owner = State(initialValue: InvitationOwner(target: target, api: api, session: session))
         self.warning = warning
+        self.allowsPullToRefresh = allowsPullToRefresh
         self.authenticating = authenticating
         self.signIn = signIn
     }
@@ -23,11 +26,12 @@ struct InvitationScreen: View {
                 !session.privateData.denied.contains(value.meetingID)
             {
                 MeetingFeedScreen(id: value.meetingID, session: session, invitation: owner)
+            } else if allowsPullToRefresh {
+                invitation.refreshable { await owner.load() }
             } else {
                 invitation
             }
         }
-        .refreshable { await owner.load() }
         .task(id: phase) {
             guard phase == .active else {
                 owner.suspend()

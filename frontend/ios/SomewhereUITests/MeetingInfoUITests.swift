@@ -32,12 +32,12 @@ final class MeetingInfoUITests: XCTestCase {
         let share = app.buttons["meeting-info-share"]
         MeetingInfoTestSupport.reveal(share, app: app)
         share.tap()
-        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
+        XCTAssertFalse(app.staticTexts["meeting-share-header"].exists)
         let copy = MeetingInfoTestSupport.copyAction(app)
         XCTAssertTrue(copy.waitForExistence(timeout: 5))
         SystemShareTestSupport.cancel(app)
         MeetingInfoTestSupport.waitUntilGone(copy)
-        XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["meeting-info-header"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["meeting-people-collapse"].exists)
         MeetingInfoTestSupport.reveal(share, app: app)
         let clipboardVersion = UIPasteboard.general.changeCount
@@ -46,7 +46,7 @@ final class MeetingInfoUITests: XCTestCase {
         copy.tap()
         MeetingInfoTestSupport.waitUntilGone(copy)
         XCTAssertGreaterThan(UIPasteboard.general.changeCount, clipboardVersion)
-        XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["meeting-info-header"].waitForExistence(timeout: 5))
         let collapse = app.buttons["meeting-people-collapse"]
         MeetingInfoTestSupport.reveal(collapse, app: app)
         collapse.tap()
@@ -54,7 +54,7 @@ final class MeetingInfoUITests: XCTestCase {
         XCTAssertFalse(MeetingInfoTestSupport.person(3, app: app).exists)
         XCTAssertTrue(app.buttons["edit-meeting"].exists)
         ExperienceScreenshot.save("info-organizer-collapsed-after-share", test: self)
-        app.buttons["meeting-info-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         XCTAssertEqual(message.value as? String, "Уточню состав")
     }
@@ -101,7 +101,7 @@ final class MeetingInfoUITests: XCTestCase {
         XCTAssertTrue(confirmed.waitForExistence(timeout: 10))
         XCTAssertTrue(confirmed.label.contains("Вы пока не уверены"))
         XCTAssertFalse(app.buttons["message-send"].exists)
-        XCTAssertFalse(app.buttons["meeting-info-close"].exists)
+        XCTAssertFalse(app.staticTexts["meeting-info-header"].exists)
         XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
         ExperienceScreenshot.save("info-member-saved-rsvp", test: self)
         let invitation = app.scrollViews["invitation-screen"]
@@ -129,11 +129,11 @@ final class MeetingInfoUITests: XCTestCase {
         XCTAssertTrue(app.frame.contains(edit.frame))
         ExperienceScreenshot.save("info-organizer-large-expanded", test: self)
         edit.tap()
-        XCTAssertTrue(app.buttons["settings-close"].waitForExistence(timeout: 5))
-        app.buttons["settings-close"].tap()
-        XCTAssertTrue(app.buttons["meeting-info-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["settings-header"].waitForExistence(timeout: 5))
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
+        XCTAssertTrue(app.staticTexts["meeting-info-header"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["meeting-people-collapse"].exists)
-        app.buttons["meeting-info-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
     }
 
@@ -157,7 +157,7 @@ final class MeetingInfoUITests: XCTestCase {
         collapse.tap()
         XCTAssertTrue(summary.waitForExistence(timeout: 5))
         XCTAssertFalse(MeetingInfoTestSupport.person(4, app: app).exists)
-        XCTAssertTrue(app.buttons["meeting-info-close"].isHittable)
+        XCTAssertTrue(app.staticTexts["meeting-info-header"].isHittable)
         ExperienceScreenshot.save("info-member-large-collapsed", test: self)
     }
 }

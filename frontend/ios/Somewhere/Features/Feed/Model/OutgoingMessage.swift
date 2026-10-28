@@ -7,6 +7,13 @@ struct OutgoingMessage: Identifiable, Codable, Equatable, Sendable {
     let createdAt: Date
     var status: Status
 
+    var pendingSince: Date? {
+        switch status {
+        case .queued, .sending: createdAt
+        case .uncertain, .rejected: nil
+        }
+    }
+
     func matches(_ entry: FeedEntry, actor: UUID?, meeting: UUID) -> Bool {
         let plainText: Bool
         switch entry.payload["attachments"] {

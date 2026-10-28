@@ -31,10 +31,10 @@ final class DatePollUITests: XCTestCase {
         multiple.tap()
         let changed = multiple.value as? String
         for _ in 0..<5 {
-            if app.buttons["action-form-close"].isHittable { break }
+            if app.staticTexts["action-form-header"].isHittable { break }
             app.scrollViews["action-form-scroll"].swipeDown()
         }
-        app.buttons["action-form-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-date-poll"].tap()
@@ -48,7 +48,7 @@ final class DatePollUITests: XCTestCase {
         submit.tap()
         XCTAssertTrue(app.staticTexts["poll-error"].waitForExistence(timeout: 10))
         capture("poll-create-error")
-        app.buttons["action-form-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-date-poll"].tap()

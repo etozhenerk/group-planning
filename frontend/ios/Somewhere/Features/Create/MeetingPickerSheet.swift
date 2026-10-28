@@ -12,16 +12,11 @@ struct MeetingPickerSheet<Content: View>: View {
             HStack(spacing: 16) {
                 Text(title).font(.title2.weight(.semibold))
                     .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
-                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityAddTraits(.isHeader).accessibilityIdentifier(
+                        "meeting-picker-header")
                 Spacer(minLength: 8)
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark").font(.system(size: 20, weight: .semibold))
-                        .foregroundStyle(AppPalette.muted).frame(width: 44, height: 44)
-                        .background(AppPalette.background.opacity(0.5), in: Circle())
-                }.buttonStyle(.plain).accessibilityLabel("Закрыть выбор")
-            }.padding(.horizontal, 24).padding(.top, 20).padding(.bottom, 8)
+            }.frame(minHeight: DesignTokens.targetIos).padding(.horizontal, 24).padding(.top, 20)
+                .padding(.bottom, 8)
             ScrollView {
                 content().padding(.horizontal, 16).padding(.vertical, 8)
             }.scrollBounceBehavior(.basedOnSize).scrollIndicators(.hidden)
@@ -37,6 +32,7 @@ struct MeetingPickerSheet<Content: View>: View {
         }
         .background(AppPalette.surface.ignoresSafeArea())
         .foregroundStyle(AppPalette.text).tint(AppPalette.accent).preferredColorScheme(.dark)
+        .accessibilityAction(.escape) { dismiss() }
         .presentationBackground(AppPalette.surface)
         .presentationCornerRadius(30).presentationDragIndicator(.visible)
         .presentationDetents(typeSize.isAccessibilitySize ? [.large] : [.height(height), .large])

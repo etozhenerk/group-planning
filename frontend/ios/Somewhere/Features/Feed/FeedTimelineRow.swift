@@ -14,17 +14,27 @@ struct FeedTimelineRow: View {
                 )
                 .foregroundStyle(AppPalette.muted).frame(minHeight: 16.5).padding(.vertical, 4)
             }
-            if let entry = item.entry {
-                if owner.reads.divider == entry.id { ChatUnreadDivider() }
-                record(entry).id(entry.id).background {
+            if let entry = item.entry, owner.reads.divider == entry.id { ChatUnreadDivider() }
+            Group {
+                if item.outgoing != nil
+                    || item.entry?.kind == "message"
+                        && item.entry?.payloadVersion == 1
+                {
+                    MessageWithActions(
+                        entry: item.entry, owner: owner,
+                        own: item.entry.map { $0.actor.id == owner.session.profile?.id } ?? true,
+                        outgoing: item.outgoing)
+                } else if let entry = item.entry {
+                    record(entry)
+                }
+            }.background {
+                if let entry = item.entry {
                     GeometryReader { row in
                         Color.clear.preference(
                             key: FeedRowFrames.self,
                             value: [entry.id: row.frame(in: .named("timeline"))])
-                    }
+                    }.id(entry.id)
                 }
-            } else if let outgoing = item.outgoing {
-                OutgoingMessageView(value: outgoing, owner: owner)
             }
         }
     }
@@ -52,8 +62,6 @@ struct FeedTimelineRow: View {
         {
             PlacePollCard(
                 pollID: id, meeting: meeting, entry: entry, own: own, session: owner.session)
-        } else if entry.kind == "message", entry.payloadVersion == 1 {
-            MessageWithActions(entry: entry, owner: owner, own: own)
         } else {
             FeedRecordView(entry: entry, own: own)
         }

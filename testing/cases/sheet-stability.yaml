@@ -41,17 +41,42 @@
       тестового устройства.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/55-sheet-controls.spec.ts
+          selector: mobile handle dismisses without refresh; body pull and busy guard
+            preserve draft; confirmed save refreshes
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift
+          selector: testDismissAndChildReturnDoNotRefreshMeeting
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift
+          selector: testBusySheetRejectsSwipeThenClosesAfterOneSubmission
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetControlsUiTests.kt
+          selector: handleAccessibilitySwipeBackAndBackdropDismissWithoutCloseIconOrRefresh
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/DatePollUiTests.kt
+          selector: createVoteAndApplyDateWithoutTime
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/TelegramChatUiTests.kt
+          selector: settingsAndShareReturnThroughOneInformationSheet
+          runner: android-ui
+          level: e2e
 - id: TC-SHEET-NO-REFRESH
   title: Свайп не обновляет содержимое панели
   lifecycle: active
@@ -85,27 +110,68 @@
       realtime
 
       обновляют данные независимо от dismiss.
+    - Данные загружены, realtime установлен либо расписание штатного
+      fallback-poll отдельно записано; окно проверки отличает фоновую
+      синхронизацию от запросов, вызванных жестом. Сохраняются draft, scroll и
+      журнал запросов.
   steps:
-    - action: пользователь свайпает вниз или закрывает панель без подтверждённой
-        мутации
-      expected: загрузка не запускается и состояние родителя не сбрасывается; успешное
-        сохранение обновляет данные один раз
+    - action: "Открыть каждую применимую нижнюю панель: сведения, настройки, опросы,
+        задачу, вложения, приглашение и список людей. Прокрутить тело к началу и
+        свайпнуть вниз внутри содержимого, включая жест, после которого панель
+        остаётся открытой."
+      expected: Не появляется refresh-индикатор, не сбрасываются draft, scroll и
+        загруженные данные; жест не добавляет запросов
+        detail/feed/participants/sync или перезагрузку страницы браузера.
+    - action: Повторить свайп за handle/шапку, закрыть верхнюю панель и вернуться в
+        родительскую; открыть снова.
+      expected: Закрытие и возврат не инициируют обновление, состояние родителя и
+        черновик сохранены. Dirty/busy guards продолжают работать.
+    - action: Отправить валидную форму, дождаться подтверждения; отдельно получить
+        изменение другого синтетического участника через realtime.
+      expected: Успешная мутация и realtime обновляют данные. Последующее закрытие
+        панели не добавляет повторного refresh; запрет свайпа не отключает
+        синхронизацию.
   cleanup:
     - Удалить только созданные fixture данные; восстановить временные настройки
       тестового устройства.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/55-sheet-controls.spec.ts
+          selector: mobile handle dismisses without refresh; body pull and busy guard
+            preserve draft; confirmed save refreshes
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift
+          selector: testDismissAndChildReturnDoNotRefreshMeeting
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift
+          selector: testBodySwipeKeepsDraftAndDoesNotRefresh
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift
+          selector: testPresentedInvitationBodyDoesNotRefresh
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift
+          selector: testOrdinaryRevokedPreviewKeepsPrivacyAndRejoin
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetDismissLiveUiTests.kt
+          selector: swipeAndBackKeepDraftWithoutRefreshingMeetingContent
+          runner: android-ui
+          level: e2e
 - id: TC-READERS-STABLE-VIEWPORT
   title: Ответ списка не двигает панель
   lifecycle: active
@@ -144,17 +210,30 @@
       тестового устройства.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/56-readers-stability.spec.ts
+          selector: readers keep one viewport through loading, empty, error, list and
+            pagination
+          runner: web-read-e2e
+          level: e2e
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift
+          selector: testPendingAcknowledgementAndReadersKeepGeometry
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetControlsUiTests.kt
+          selector: readersLoadingEmptyErrorShortAndLongListKeepOneViewport
+          runner: android-ui
+          level: e2e
 - id: TC-CHAT-PENDING-INDICATOR
   title: Быстрая и медленная отправка
   lifecycle: active
@@ -197,17 +276,33 @@
       тестового устройства.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/57-pending-metadata.spec.ts
+          selector: preserves message node and metadata geometry
+          runner: web-chat-e2e
+          level: e2e
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift
+          selector: testPendingAcknowledgementAndReadersKeepGeometry
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ChatPendingIndicatorUiTests.kt
+          selector: slowAckShowsDelayedSpinnerWithoutResettingAtSendingOrMovingTheRow
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ChatPendingIndicatorUiTests.kt
+          selector: fastAckNeverShowsAnIndicatorAndCancelsItsTimer
+          runner: android-ui
+          level: e2e
 - id: TC-IOS-EMOJI-CATEGORY-ALIGN
   title: Переключение категорий iOS
   lifecycle: active
@@ -240,6 +335,10 @@
       тестового устройства.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift
+          selector: testCategoryTargetsRemainEqualWhenSelected
+          runner: ios-ui
+          level: e2e

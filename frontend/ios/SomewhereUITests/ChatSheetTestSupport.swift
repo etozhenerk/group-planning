@@ -12,8 +12,9 @@ enum ChatSheetTestSupport {
         ExperienceScreenshot.save(name, test: test)
     }
 
-    static func launch(large: Bool = false) -> XCUIApplication {
-        let app = XCUIApplication()
+    static func launch(large: Bool = false, application: XCUIApplication? = nil) -> XCUIApplication
+    {
+        let app = application ?? XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "design"
         app.launchEnvironment["SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"] = UUID().uuidString
         app.launchArguments = [
@@ -55,18 +56,25 @@ enum ChatSheetTestSupport {
     }
 
     static func dismissBySwipe(
-        _ app: XCUIApplication, closeIdentifier: String = "action-form-close"
+        _ app: XCUIApplication, headerIdentifier: String = "action-form-header"
     ) {
-        let close = app.buttons[closeIdentifier]
+        if app.buttons["action-keyboard-done"].isHittable {
+            app.buttons["action-keyboard-done"].tap()
+        }
+        let close = app.staticTexts[headerIdentifier]
         XCTAssertTrue(close.waitForExistence(timeout: 5))
+        swipeDownFromHeader(app, headerIdentifier: headerIdentifier)
+        let gone = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "exists == false"), object: close)
+        XCTAssertEqual(XCTWaiter.wait(for: [gone], timeout: 5), .completed)
+    }
+
+    static func swipeDownFromHeader(_ app: XCUIApplication, headerIdentifier: String) {
+        let close = app.staticTexts[headerIdentifier]
         let origin = app.coordinate(withNormalizedOffset: .zero)
         let start = origin.withOffset(CGVector(dx: app.frame.midX, dy: close.frame.midY))
         let end = origin.withOffset(CGVector(dx: app.frame.midX, dy: app.frame.maxY - 20))
         start.press(forDuration: 0.1, thenDragTo: end)
-        let gone = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "exists == false"), object: close)
-        XCTAssertEqual(XCTWaiter.wait(for: [gone], timeout: 5), .completed)
-        XCTAssertTrue(app.buttons["meeting-add"].isHittable)
     }
 
     static func openAction(_ identifier: String, app: XCUIApplication) {
@@ -74,17 +82,23 @@ enum ChatSheetTestSupport {
         let action = app.buttons[identifier]
         XCTAssertTrue(action.waitForExistence(timeout: 5))
         action.tap()
-        XCTAssertTrue(app.buttons["action-form-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["action-form-header"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["action-form-close"].exists)
     }
 
     static func assertSoftwareKeyboard(_ app: XCUIApplication, field: XCUIElement) {
         let keyboard = app.keyboards.firstMatch
         XCTAssertTrue(keyboard.waitForExistence(timeout: 5))
+        let visible = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in
+                MainActor.assumeIsolated { app.frame.contains(keyboard.frame) }
+            }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [visible], timeout: 5), .completed)
         XCTAssertGreaterThan(keyboard.keys.count, 10)
         XCTAssertGreaterThan(keyboard.frame.height, 200)
         XCTAssertTrue(app.frame.contains(keyboard.frame))
         XCTAssertLessThanOrEqual(field.frame.maxY, keyboard.frame.minY)
-        let close = app.buttons["action-form-close"]
+        let close = app.staticTexts["action-form-header"]
         XCTAssertTrue(close.isHittable)
         XCTAssertLessThanOrEqual(close.frame.maxY, keyboard.frame.minY)
     }
@@ -119,7 +133,7 @@ enum ChatSheetTestSupport {
         _ submit: XCUIElement, app: XCUIApplication, scroll: XCUIElement
     ) -> Bool {
         guard submit.isHittable, app.frame.contains(submit.frame),
-            submit.frame.minY >= app.buttons["action-form-close"].frame.maxY
+            submit.frame.minY >= app.staticTexts["action-form-header"].frame.maxY
         else { return false }
         let keyboard = app.keyboards.firstMatch
         let done = app.buttons["action-keyboard-done"]

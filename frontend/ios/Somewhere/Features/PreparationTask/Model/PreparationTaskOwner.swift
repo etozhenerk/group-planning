@@ -13,6 +13,7 @@ final class PreparationTaskOwner {
     var problem: String?
     var pending: APIRequest?
     var sendingAction: PreparationAction?
+    private(set) var successfulMutation: UUID?
     @ObservationIgnored private var version = UUID()
 
     init(meetingID: UUID, session: SessionStore) {
@@ -74,6 +75,7 @@ final class PreparationTaskOwner {
             guard current, stamp == version else { return }
             try receive(value)
             pending = nil
+            successfulMutation = UUID()
 
         } catch {
             guard stamp == version else { return }

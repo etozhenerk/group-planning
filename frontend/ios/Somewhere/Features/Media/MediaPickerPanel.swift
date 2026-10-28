@@ -11,7 +11,7 @@ struct MediaPickerPanel: View {
         ActionFormSheet(
             title: photosOnly ? "Отправить фото" : "Отправить файл",
             dismissDisabled: owner.busy,
-            scrollIdentifier: "media-picker-scroll", closeIdentifier: "media-picker-close"
+            scrollIdentifier: "media-picker-scroll", headerIdentifier: "media-picker-header"
         ) {
             if let problem = owner.problem {
                 Text(problem).designFont(DesignTokens.typographySizeCaption)

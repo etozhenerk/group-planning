@@ -16,14 +16,14 @@ enum EmojiPickerCategory: String, CaseIterable, Identifiable {
         }
     }
 
-    var symbol: String {
+    var icon: String {
         switch self {
-        case .faces: "☺︎"
-        case .nature: "❀"
-        case .food: "♧"
-        case .travel: "✈︎"
-        case .objects: "☼"
-        case .symbols: "♡"
+        case .faces: "EmojiCategorySmile"
+        case .nature: "EmojiCategoryLeaf"
+        case .food: "EmojiCategoryFood"
+        case .travel: "EmojiCategoryPlane"
+        case .objects: "EmojiCategoryBulb"
+        case .symbols: "EmojiCategoryHeart"
         }
     }
 

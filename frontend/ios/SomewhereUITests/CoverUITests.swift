@@ -95,7 +95,7 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
         app.buttons["edit-meeting"].tap()
-        XCTAssertTrue(app.buttons["settings-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["settings-header"].waitForExistence(timeout: 5))
         assertSettingsCover(present: true, app: app)
         capture("ios-cover-persisted-settings")
     }

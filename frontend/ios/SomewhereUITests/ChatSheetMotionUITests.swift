@@ -16,12 +16,12 @@ final class ChatSheetMotionUITests: XCTestCase {
             ("new-preparation-task", "task"),
         ] {
             ChatSheetTestSupport.openAction(identifier, app: app)
-            let close = app.buttons["action-form-close"]
+            let close = app.staticTexts["action-form-header"]
             XCTAssertTrue(close.isHittable)
             XCTAssertTrue(app.frame.contains(close.frame))
             XCTAssertFalse(app.buttons["home-tab-calendar"].exists)
             ExperienceScreenshot.save("motion-" + name + "-open", test: self)
-            close.tap()
+            ChatSheetTestSupport.dismissBySwipe(app)
             let dismissed = XCTNSPredicateExpectation(
                 predicate: NSPredicate(format: "exists == false"), object: close)
             XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 5), .completed)

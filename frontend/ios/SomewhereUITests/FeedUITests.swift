@@ -25,7 +25,7 @@ final class FeedUITests: XCTestCase {
         var bottom = keyboard.exists ? min(frame.maxY, keyboard.frame.minY) : frame.maxY
         let done = app.buttons["action-keyboard-done"]
         if done.exists { bottom = min(bottom, done.frame.minY) }
-        let top = max(frame.minY, app.buttons["settings-close"].frame.maxY)
+        let top = max(frame.minY, app.staticTexts["settings-header"].frame.maxY)
         let height = bottom - top
         XCTAssertGreaterThan(height, 80)
         let origin = app.coordinate(withNormalizedOffset: .zero)
@@ -161,8 +161,8 @@ final class FeedUITests: XCTestCase {
         XCTAssertTrue(app.buttons["settings-save"].isHittable)
         app.buttons["settings-save"].tap()
         XCTAssertTrue(app.buttons["settings-reload"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["settings-close"].isHittable)
-        XCTAssertGreaterThan(app.buttons["settings-close"].frame.minY, 45)
+        XCTAssertTrue(app.staticTexts["settings-header"].isHittable)
+        XCTAssertGreaterThan(app.staticTexts["settings-header"].frame.minY, 45)
         capture("feed-settings-conflict", app)
         app.buttons["settings-reload"].tap()
         for _ in 0..<5 {
@@ -179,7 +179,7 @@ final class FeedUITests: XCTestCase {
         app.buttons["settings-save"].tap()
         XCTAssertTrue(app.staticTexts["Вечер настолок"].waitForExistence(timeout: 10))
         capture("feed-settings-saved", app)
-        app.buttons["meeting-info-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 10))
         XCTAssertEqual(field("message-input", app: app).value as? String, "Ещё думаю")
         app.terminate()

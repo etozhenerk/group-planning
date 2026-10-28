@@ -90,7 +90,7 @@ final class DesignExperienceUITests: XCTestCase {
                 app.descendants(matching: .any)[field].firstMatch.waitForExistence(timeout: 5))
             XCTAssertFalse(app.buttons["home-tab-calendar"].exists)
             XCTAssertFalse(app.buttons["action-form-back"].exists)
-            XCTAssertTrue(app.buttons["action-form-close"].isHittable)
+            XCTAssertTrue(app.staticTexts["action-form-header"].isHittable)
             if name == "action-task" {
                 let input = app.descendants(matching: .any)[field].firstMatch
                 input.tap()
@@ -99,7 +99,7 @@ final class DesignExperienceUITests: XCTestCase {
                 XCTAssertTrue(app.buttons["preparation-recipient"].waitForExistence(timeout: 5))
             }
             capture(name)
-            app.buttons["action-form-close"].tap()
+            ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
             XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         }
     }
@@ -130,17 +130,17 @@ final class DesignExperienceUITests: XCTestCase {
         XCTAssertGreaterThan(keyboard.frame.height, 200)
         XCTAssertTrue(app.frame.contains(keyboard.frame))
         XCTAssertLessThanOrEqual(title.frame.maxY, keyboard.frame.minY)
-        XCTAssertTrue(app.buttons["settings-close"].isHittable)
-        XCTAssertLessThanOrEqual(app.buttons["settings-close"].frame.maxY, keyboard.frame.minY)
+        XCTAssertTrue(app.staticTexts["settings-header"].isHittable)
+        XCTAssertLessThanOrEqual(app.staticTexts["settings-header"].frame.maxY, keyboard.frame.minY)
         capture("settings-keyboard")
-        app.buttons["settings-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
         XCTAssertTrue(edit.waitForExistence(timeout: 5))
         edit.tap()
         XCTAssertTrue(title.waitForExistence(timeout: 5))
         XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
         capture("settings-reopen")
-        app.buttons["settings-close"].tap()
-        app.buttons["meeting-info-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["feed-back"].tap()
         app.buttons["home-tab-person.crop.circle"].tap()
@@ -164,7 +164,7 @@ final class DesignExperienceUITests: XCTestCase {
         ] {
             app.buttons["meeting-add"].tap()
             app.buttons[identifier].tap()
-            let close = app.buttons["action-form-close"]
+            let close = app.staticTexts["action-form-header"]
             XCTAssertTrue(close.waitForExistence(timeout: 5))
             XCTAssertTrue(close.isHittable)
             XCTAssertTrue(app.frame.contains(close.frame))
@@ -185,7 +185,7 @@ final class DesignExperienceUITests: XCTestCase {
             XCTAssertTrue(app.frame.contains(close.frame))
             XCTAssertTrue(close.isHittable)
             capture("action-" + name + "-large-text-submit")
-            close.tap()
+            ChatSheetTestSupport.dismissBySwipe(app)
             XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         }
     }

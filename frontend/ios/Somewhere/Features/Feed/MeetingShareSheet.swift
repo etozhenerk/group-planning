@@ -6,7 +6,7 @@ struct MeetingShareSheet: View {
     @State private var copied = false
 
     var body: some View {
-        ActionFormSheet(title: "Пригласить друзей", closeIdentifier: "meeting-share-close") {
+        ActionFormSheet(title: "Пригласить друзей", headerIdentifier: "meeting-share-header") {
             if let url = owner.invitation.shareURL {
                 VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
                     Text(owner.meeting?.title ?? "Встреча").designFont(

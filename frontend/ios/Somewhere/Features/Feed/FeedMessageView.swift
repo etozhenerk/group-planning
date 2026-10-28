@@ -7,6 +7,7 @@ struct FeedMessageView: View {
     let own: Bool
     var entryID: UUID?
     var selected = false
+    var pendingSince: Date?
     @ScaledMetric(relativeTo: .body) private var bodySize = DesignTokens.typographySizeChatMessage
     @ScaledMetric(relativeTo: .caption) private var authorSize = DesignTokens.typographySizeLabel
     @State private var availableWidth = DesignTokens.spaceS0
@@ -34,6 +35,7 @@ struct FeedMessageView: View {
                         .foregroundStyle(own ? DesignTokens.colorMuted : DesignTokens.colorAccent)
                     Text(FeedPresentation.time(date)).font(.system(size: authorSize))
                         .foregroundStyle(DesignTokens.colorMuted)
+                    if own { MessagePendingIndicator(since: pendingSince) }
                 }
                 Text(text).font(.system(size: bodySize))
                     .frame(width: textWidth, alignment: .leading).fixedSize(

@@ -43,7 +43,7 @@ struct ActionDateField: View {
                 }.actionField().contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityLabel(title).accessibilityValue(label)
         }.sheet(isPresented: $presented) {
-            ActionFormSheet(title: title, closeIdentifier: "picker-close") {
+            ActionFormSheet(title: title, headerIdentifier: "picker-header") {
                 if !timeOnly {
                     DatePicker(title, selection: $draft, displayedComponents: .date)
                         .datePickerStyle(.graphical).labelsHidden()

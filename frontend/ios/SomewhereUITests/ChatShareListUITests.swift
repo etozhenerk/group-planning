@@ -53,7 +53,7 @@ final class ChatShareListUITests: XCTestCase {
         XCTAssertGreaterThanOrEqual(share.frame.height, 44)
         print("SOMEWHERE_SHARE_TOUCH hittable=\(share.isHittable) frame=\(share.frame)")
         share.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
+        XCTAssertFalse(app.staticTexts["meeting-share-header"].exists)
     }
 
     func testListWithoutCoverReturnsToSamePosition() {

@@ -21,6 +21,7 @@ struct InvitationRouteView: View {
             } else {
                 InvitationScreen(
                     target: target, api: api, session: session, warning: warning,
+                    allowsPullToRefresh: false,
                     authenticating: authenticating, signIn: signIn
                 )
                 .id(target.id + ":" + (session?.profile?.id.uuidString ?? "anonymous"))

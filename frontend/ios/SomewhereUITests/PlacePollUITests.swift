@@ -36,7 +36,7 @@ final class PlacePollUITests: XCTestCase {
         explanation.tap()
         explanation.typeText("Рядом с метро")
         app.buttons["action-keyboard-done"].tap()
-        app.buttons["action-form-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-place-poll"].tap()

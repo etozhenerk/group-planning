@@ -10,7 +10,7 @@ struct PreparationTaskDetails: View {
     var body: some View {
         ActionFormSheet(
             title: header, dismissDisabled: owner.busy,
-            scrollIdentifier: "preparation-details", closeIdentifier: "preparation-details-close"
+            scrollIdentifier: "preparation-details", headerIdentifier: "preparation-details-header"
         ) {
             if let action = confirmation, let task = owner.task {
                 Text(

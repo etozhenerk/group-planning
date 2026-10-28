@@ -4,10 +4,12 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
     let title: String
     var dismissDisabled = false
     var scrollIdentifier = "action-form-scroll"
-    var closeIdentifier = "action-form-close"
+    var headerIdentifier = "action-form-header"
     var scrollOffset: Binding<CGFloat>?
+    var fixedContentHeight: CGFloat?
     @ViewBuilder let content: () -> Content
     @ViewBuilder let footer: () -> Footer
+    @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.dismiss) private var dismiss
     @Environment(\.chatSheetClose) private var chatClose
     @State private var contentHeight = DesignTokens.targetIos
@@ -27,18 +29,40 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
                 }
         }
         .interactiveDismissDisabled(dismissDisabled || chatClose?.hasParent == true)
-        .presentationDetents([
-            .height(
-                max(
-                    DesignTokens.componentMobileSheetMinimumHeight,
-                    contentHeight + headerHeight + footerHeight))
-        ])
+        .presentationDetents(detents)
+        .accessibilityAction(.escape, close)
         .presentationCompactAdaptation(.sheet)
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(DesignTokens.componentMobileSheetRadius)
         .presentationBackground(DesignTokens.colorSurface)
         .preferredColorScheme(.dark).foregroundStyle(DesignTokens.colorText).tint(
             DesignTokens.colorAccent)
+    }
+
+    private var contentInsets: CGFloat {
+        DesignTokens.componentMobileSheetContentInsetTop
+            + DesignTokens.componentMobileSheetContentInsetBottom
+    }
+
+    private var detents: Set<PresentationDetent> {
+        if let fixedContentHeight {
+            if typeSize.isAccessibilitySize { return [.large] }
+            // All asynchronous states share this height, including the first presentation.
+            return [
+                .height(
+                    max(
+                        DesignTokens.componentMobileSheetMinimumHeight,
+                        fixedContentHeight + contentInsets
+                            + DesignTokens.componentMobileSheetHeaderHeight
+                            + DesignTokens.componentMobileSheetGrabInsetTop))
+            ]
+        }
+        return [
+            .height(
+                max(
+                    DesignTokens.componentMobileSheetMinimumHeight,
+                    contentHeight + headerHeight + footerHeight))
+        ]
     }
 
     private var sheetBody: some View {
@@ -63,6 +87,7 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
                     contentHeight = $0
                 }
             }.scrollDismissesKeyboard(.interactively).scrollBounceBehavior(.basedOnSize)
+                .frame(maxHeight: fixedContentHeight.map { $0 + contentInsets })
                 .accessibilityIdentifier(scrollIdentifier)
             footerView
         }.background(DesignTokens.colorSurface)
@@ -85,13 +110,8 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
                 weight: DesignTokens.typographyWeightMobileSheetTitle, relativeTo: .title3
             )
             .fixedSize(horizontal: false, vertical: true).accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier(headerIdentifier)
             Spacer(minLength: DesignTokens.spaceS8)
-            Button(action: close) {
-                ExperienceIcon(kind: .close, size: DesignTokens.componentNavigationIcon)
-                    .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
-                    .contentShape(Rectangle())
-            }.buttonStyle(.plain).disabled(dismissDisabled).accessibilityLabel("Закрыть")
-                .accessibilityIdentifier(closeIdentifier)
         }.frame(minHeight: DesignTokens.componentMobileSheetHeaderHeight)
             .padding(.horizontal, DesignTokens.componentMobileSheetGrabInsetInline)
             .padding(.top, DesignTokens.componentMobileSheetGrabInsetTop)
@@ -131,14 +151,16 @@ extension ActionFormSheet where Footer == EmptyView {
     init(
         title: String, dismissDisabled: Bool = false,
         scrollIdentifier: String = "action-form-scroll",
-        closeIdentifier: String = "action-form-close", scrollOffset: Binding<CGFloat>? = nil,
+        headerIdentifier: String = "action-form-header", scrollOffset: Binding<CGFloat>? = nil,
+        fixedContentHeight: CGFloat? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.title = title
         self.dismissDisabled = dismissDisabled
         self.scrollIdentifier = scrollIdentifier
-        self.closeIdentifier = closeIdentifier
+        self.headerIdentifier = headerIdentifier
         self.scrollOffset = scrollOffset
+        self.fixedContentHeight = fixedContentHeight
         self.content = content
         footer = { EmptyView() }
     }

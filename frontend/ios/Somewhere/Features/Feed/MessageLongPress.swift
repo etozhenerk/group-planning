@@ -3,17 +3,19 @@ import UIKit
 
 struct MessageLongPress: ViewModifier {
     @Binding var pressed: Bool
+    var enabled = true
     let perform: () -> Void
 
     @ViewBuilder func body(content: Content) -> some View {
         if #available(iOS 18, *) {
             content.gesture(
-                MessagePressRecognizer(pressed: $pressed, perform: perform))
+                MessagePressRecognizer(pressed: $pressed, enabled: enabled, perform: perform))
         } else {
             content.onLongPressGesture(
                 minimumDuration: DesignTokens.motionDurationReactionLongPress,
                 maximumDistance: DesignTokens.componentReactionPickerLongPressMovementTolerance,
-                perform: perform, onPressingChanged: { pressed = $0 })
+                perform: { if enabled { perform() } },
+                onPressingChanged: { pressed = enabled && $0 })
         }
     }
 }
@@ -21,6 +23,7 @@ struct MessageLongPress: ViewModifier {
 @available(iOS 18, *)
 private struct MessagePressRecognizer: UIGestureRecognizerRepresentable {
     @Binding var pressed: Bool
+    var enabled = true
     let perform: () -> Void
 
     func makeUIGestureRecognizer(context: Context) -> UILongPressGestureRecognizer {
@@ -29,7 +32,12 @@ private struct MessagePressRecognizer: UIGestureRecognizerRepresentable {
         recognizer.allowableMovement =
             DesignTokens.componentReactionPickerLongPressMovementTolerance
         recognizer.delegate = context.coordinator
+        recognizer.isEnabled = enabled
         return recognizer
+    }
+
+    func updateUIGestureRecognizer(_ recognizer: UILongPressGestureRecognizer, context: Context) {
+        recognizer.isEnabled = enabled
     }
 
     func handleUIGestureRecognizerAction(

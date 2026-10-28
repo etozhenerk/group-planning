@@ -193,7 +193,6 @@ final class FeedOwner {
             readers = nil
         }
         if sheets.last == .information { informationReturn = closed }
-        reload()
     }
 
     func openReactions(_ id: UUID) {

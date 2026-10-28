@@ -19,10 +19,10 @@ final class NativeMediaFlowUITests: XCTestCase {
                     format: "label IN %@", ["Cancel", "Отмена", "Отменить"])
             ).firstMatch
             XCTAssertTrue(cancel.waitForExistence(timeout: 10))
-            XCTAssertFalse(app.buttons["media-picker-close"].exists)
+            XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
             cancel.tap()
             XCTAssertTrue(input.waitForExistence(timeout: 5))
-            XCTAssertFalse(app.buttons["media-picker-close"].exists)
+            XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
             XCTAssertEqual(input.value as? String, "Файл и фото позже")
         }
         ExperienceScreenshot.save("native-media-cancel-preserved", test: self)
@@ -36,7 +36,7 @@ final class NativeMediaFlowUITests: XCTestCase {
         input.typeText("Фото отдельно")
         app.buttons["meeting-add"].tap()
         app.buttons["Фото"].tap()
-        XCTAssertFalse(app.buttons["media-picker-close"].exists)
+        XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
         let photo = app.images.matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 10))
         photo.tap()
@@ -80,7 +80,7 @@ final class NativeMediaFlowUITests: XCTestCase {
         removes.element(boundBy: 1).tap()
         XCTAssertEqual(previews.count, 1)
         send.tap()
-        XCTAssertTrue(app.buttons["media-picker-close"].waitForNonExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
         XCTAssertEqual(input.value as? String, "Фото отдельно")
         let photoMessage = app.buttons["Открыть фото"].firstMatch
         XCTAssertTrue(photoMessage.waitForExistence(timeout: 10))
@@ -118,7 +118,7 @@ final class NativeMediaFlowUITests: XCTestCase {
         XCTAssertTrue(send.isEnabled)
         ExperienceScreenshot.save("native-pdf-selected", test: self)
         send.tap()
-        XCTAssertTrue(app.buttons["media-picker-close"].waitForNonExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
         XCTAssertTrue(
             app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "somewhere-qa-rules.pdf"))
                 .firstMatch.waitForExistence(timeout: 10))

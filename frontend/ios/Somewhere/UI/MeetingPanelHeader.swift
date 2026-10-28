@@ -11,15 +11,16 @@ struct MeetingPanelHeader: View {
             Text(title).font(.system(size: titleSize, weight: .bold)).accessibilityAddTraits(
                 .isHeader)
             Spacer(minLength: 4)
-            if !back { button }
         }.padding(.horizontal, 18).padding(.vertical, 8).foregroundStyle(AppPalette.text)
             .background(AppPalette.surface)
     }
     private var button: some View {
         Button(action: action) {
-            Image(systemName: back ? "chevron.left" : "xmark").font(.system(size: 18))
-                .frame(width: 44, height: 44).contentShape(Rectangle())
-        }.buttonStyle(.plain).accessibilityLabel(back ? "Назад" : "Готово")
-            .accessibilityIdentifier(back ? "settings-back" : "meeting-info-close")
+            Image(systemName: "chevron.left").font(
+                .system(size: DesignTokens.componentNavigationIcon)
+            )
+            .frame(width: 44, height: 44).contentShape(Rectangle())
+        }.buttonStyle(.plain).accessibilityLabel("Назад")
+            .accessibilityIdentifier("settings-back")
     }
 }

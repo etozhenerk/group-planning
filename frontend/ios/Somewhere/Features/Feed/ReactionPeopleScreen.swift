@@ -16,7 +16,7 @@ struct ReactionPeopleScreen: View {
     var body: some View {
         ActionFormSheet(
             title: "Кто отреагировал", scrollIdentifier: "reaction-people",
-            closeIdentifier: "reaction-people-close"
+            headerIdentifier: "reaction-people-header"
         ) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DesignTokens.spaceS6) {

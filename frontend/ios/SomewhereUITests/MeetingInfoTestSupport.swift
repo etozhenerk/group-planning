@@ -7,7 +7,7 @@ enum MeetingInfoTestSupport {
     static func open(_ app: XCUIApplication) {
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["meeting-info-close"].isHittable)
+        XCTAssertTrue(app.staticTexts["meeting-info-header"].isHittable)
     }
 
     static func person(_ index: Int, app: XCUIApplication) -> XCUIElement {
@@ -19,7 +19,7 @@ enum MeetingInfoTestSupport {
     static func reveal(_ element: XCUIElement, app: XCUIApplication) {
         let scroll = app.scrollViews["meeting-info"]
         for _ in 0..<12 {
-            let top = max(scroll.frame.minY, app.buttons["meeting-info-close"].frame.maxY)
+            let top = max(scroll.frame.minY, app.staticTexts["meeting-info-header"].frame.maxY)
             if element.exists, element.isHittable, scroll.frame.contains(element.frame),
                 element.frame.minY >= top
             {

@@ -10,8 +10,19 @@ enum FixtureResponseGate {
         let method: String?
     }
 
-    static func before(_ request: URLRequest) throws {
-        guard let (rule, root) = try matchingRule(request), rule.mode == "offline" else { return }
+    static func before(_ request: URLRequest) async throws {
+        guard let (rule, root) = try matchingRule(request) else { return }
+        if rule.mode == "hold-before" {
+            try Data("waiting".utf8).write(
+                to: root.appendingPathComponent("requested"), options: .atomic)
+            while FileManager.default.fileExists(
+                atPath: root.appendingPathComponent("rule.json").path)
+            {
+                try await Task.sleep(for: .milliseconds(50))
+            }
+            return
+        }
+        guard rule.mode == "offline" else { return }
         try Data("offline".utf8).write(
             to: root.appendingPathComponent("requested"), options: .atomic)
         throw URLError(.notConnectedToInternet)

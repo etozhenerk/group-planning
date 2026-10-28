@@ -8,7 +8,7 @@ struct MeetingInfoScreen: View {
     var body: some View {
         ActionFormSheet(
             title: owner.meeting?.title ?? "О встрече", scrollIdentifier: "meeting-info",
-            closeIdentifier: "meeting-info-close",
+            headerIdentifier: "meeting-info-header",
             scrollOffset: Binding(
                 get: { owner.informationScrollOffset }, set: { owner.informationScrollOffset = $0 })
         ) {
@@ -53,11 +53,12 @@ struct MeetingInfoScreen: View {
                 }
             }
         }.task(id: reloadID) {
-            await owner.reloadDetails(version: owner.generation)
-            await owner.openInfo()
             if let route = owner.informationReturn {
                 restoredAction = route
                 owner.informationReturn = nil
+            } else {
+                await owner.reloadDetails(version: owner.generation)
+                await owner.openInfo()
             }
         }
     }

@@ -26,7 +26,7 @@ final class ChatMediaSheetUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Отправлено"].exists)
         XCTAssertFalse(app.staticTexts["Подпись"].exists)
         ExperienceScreenshot.save("sheet-photo-unsent", test: self)
-        app.buttons["media-picker-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "media-picker-header")
         XCTAssertEqual(message.value as? String, "Фото пока выбираю")
         app.buttons["meeting-add"].tap()
         app.buttons["Фото"].tap()
@@ -44,7 +44,7 @@ final class ChatMediaSheetUITests: XCTestCase {
         XCTAssertEqual(
             app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Убрать фото ")).count,
             1)
-        app.buttons["media-picker-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "media-picker-header")
         XCTAssertEqual(message.value as? String, "Фото пока выбираю")
     }
 
@@ -64,7 +64,7 @@ final class ChatMediaSheetUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Отправлено"].exists)
         ExperienceScreenshot.save("sheet-file-unsent-caption", test: self)
         let originalCaptionID = caption.identifier
-        app.buttons["media-picker-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "media-picker-header")
         app.buttons["meeting-add"].tap()
         app.buttons["Файл"].tap()
         chooseFixtureDocument(app)
@@ -93,7 +93,7 @@ final class ChatMediaSheetUITests: XCTestCase {
         XCTAssertTrue(cancel.waitForExistence(timeout: 10))
         cancel.tap()
         XCTAssertTrue(message.waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["media-picker-close"].exists)
+        XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
         XCTAssertFalse(app.buttons["Убрать файл"].exists)
         ExperienceScreenshot.save("sheet-file-picker-cancel", test: self)
         XCTAssertEqual(message.value as? String, "Документ добавлю позже")

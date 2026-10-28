@@ -61,7 +61,7 @@ final class InvitationUITests: XCTestCase {
             XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
             XCTAssertTrue(app.buttons["rsvp-going"].isSelected)
             XCTAssertFalse(app.buttons["rsvp-save"].exists)
-            app.buttons["meeting-info-close"].tap()
+            ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         } else {
             let saved = XCTNSPredicateExpectation(
                 predicate: NSPredicate(format: "label CONTAINS %@", confirmation),
@@ -110,7 +110,7 @@ final class InvitationUITests: XCTestCase {
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
         XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Компания, 2 участника")
-        app.buttons["meeting-info-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         capture("invitation-accepted", app)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)
         XCTAssertFalse(
@@ -180,7 +180,7 @@ final class InvitationUITests: XCTestCase {
         let share = app.buttons["meeting-info-share"]
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         share.tap()
-        XCTAssertFalse(app.buttons["meeting-share-close"].exists)
+        XCTAssertFalse(app.staticTexts["meeting-share-header"].exists)
         let copy = app.cells.matching(
             NSPredicate(format: "label IN %@", ["Скопировать", "Copy", "Copy Link", "Копировать"])
         ).firstMatch

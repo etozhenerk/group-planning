@@ -66,7 +66,7 @@ final class PreparationTaskUITests: XCTestCase {
         app.buttons["preparation-create"].tap()
         XCTAssertTrue(app.staticTexts["preparation-error"].waitForExistence(timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
-        app.buttons["action-form-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         app.buttons["meeting-add"].tap()
         app.buttons["new-preparation-task"].tap()
@@ -86,7 +86,7 @@ final class PreparationTaskUITests: XCTestCase {
 
     func testAcceptanceRetryAndCompletion() {
         let app = open("task-recipient", suffix: "200")
-        app.buttons["preparation-details-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "preparation-details-header")
         let accept = app.buttons["preparation-accept"]
         XCTAssertTrue(accept.waitForExistence(timeout: 10))
         XCTAssertEqual(accept.label, "Взять на себя")
@@ -104,7 +104,7 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Задача у вас"].exists)
         capture("ios-task-accepted")
         task.tap()
-        XCTAssertTrue(app.buttons["preparation-details-close"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["preparation-details-header"].waitForExistence(timeout: 5))
         app.buttons["preparation-complete"].tap()
         XCTAssertTrue(app.staticTexts["Выполнено · Лена"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["preparation-complete"].exists)
@@ -143,7 +143,7 @@ final class PreparationTaskUITests: XCTestCase {
         }
         confirm.tap()
         XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 10))
-        app.buttons["preparation-details-close"].tap()
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "preparation-details-header")
         XCTAssertTrue(
             app.staticTexts["Задача отменена · Саша · «Заказать пиццу»"].waitForExistence(
                 timeout: 10))

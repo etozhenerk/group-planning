@@ -10,7 +10,7 @@ struct MeetingSettingsScreen: View {
     var body: some View {
         ActionFormSheet(
             title: "Настройки встречи", dismissDisabled: owner.saving || owner.preparingCover,
-            scrollIdentifier: "meeting-settings", closeIdentifier: "settings-close"
+            scrollIdentifier: "meeting-settings", headerIdentifier: "settings-header"
         ) {
             if owner.current {
                 MeetingSettingsFields(owner: owner)
