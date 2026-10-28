@@ -64,6 +64,11 @@ const setupPhotoStack = (): void => {
       return;
     }
 
+    if (stage.dataset.bounded === "true" && (current + direction < 0 || current + direction >= photos.length)) {
+      settle();
+      return;
+    }
+
     moving = true;
     stage.classList.add("is-moving");
     const duration = reducedMotion() ? 0 : 290;

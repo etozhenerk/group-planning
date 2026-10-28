@@ -5,6 +5,7 @@ import { FeedTimeline, useConversationSurface } from '@/widgets/conversation';
 import { MeetingHeader } from '@/pages/meeting/ui/MeetingHeader';
 import { MemoryBanner } from '@/pages/meeting/ui/MemoryBanner';
 import styles from '@/pages/meeting/ui/MeetingConversation/MeetingConversation.module.css';
+import { useState } from 'react';
 import type { RefObject } from 'react';
 
 export type MeetingConversationProps = {
@@ -23,6 +24,7 @@ export const MeetingConversation = ({
   detailsTrigger,
 }: MeetingConversationProps) => {
   const surface = useConversationSurface(meeting.id, session.user.id);
+  const [empty, setEmpty] = useState(true);
 
   return (
     <main
@@ -38,6 +40,7 @@ export const MeetingConversation = ({
         organizer={meeting.organizerId === session.user.id}
         showDetails={showDetails}
         detailsTrigger={detailsTrigger}
+        empty={empty}
       />
       {meeting.period === 'past' && (
         <MemoryBanner meeting={meeting} user={session.user.id} />
@@ -47,6 +50,7 @@ export const MeetingConversation = ({
         session={session}
         organizer={meeting.organizerId === session.user.id}
         surface={surface}
+        onEmptyChange={setEmpty}
       />
     </main>
   );

@@ -1,7 +1,7 @@
 {
-  "revision": "web-media-flow-2026-10-28-3.0.0",
+  "revision": "ios-media-polish-2026-10-28-3.0.1",
   "sourceCommit": "c3e3451d",
-  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах.",
+  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "3.0.1 iOS: последнее явное уточнение пользователя и два native raw-макета; старые шапка/полноширинные preview/цикл iOS отменены.",
     "28.10.2026: нижние вкладки перетекают общим индикатором за motion.navigation, Reduce Motion мгновенно; область показа не расширяется. Общий photo batch carousel и preload относятся ко всем клиентам.",
     "3.0.0 native: picker-first; selected-only sheet; system share; swipe не tap; карусель/overlayX/batchstate/auto-close; cache; emptyInvite; edge-back; профиль/cover/loading по последним прямым решениям.",
     "3.0.0: web picker только из формы; cancel сохраняет форму; прямой вход в добавление вайба; compact desktop Dialog; contain полного фото. Native отдельно, токены прежние.",
@@ -54,7 +55,7 @@
   "sources": [
     {
       "path": "openspec/changes/meeting-experience-refresh/ux.md",
-      "sha256": "c29b9a1deb18c24cd00d6947170dabb6f4d91023e373f2e84717e37718f65869"
+      "sha256": "94a7970cace5b008dec9da43784b237c4f3c25b4a8ca29a351cd90d753d9b1d9"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
@@ -62,7 +63,7 @@
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/interactions.js",
-      "sha256": "97da474c053987efa468093faa6dabaec8f486a0ebdf33771fb696510a56b230"
+      "sha256": "bf3c9164698262395a41d128a1691feeabb5dec98562209713d124894fb70a19"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/list.html",
@@ -422,7 +423,7 @@
     },
     {
       "path": "docs/design/components/memories.md",
-      "sha256": "849a0e83e7cddad296ad2a1366298213b5b99d8dbe129d1e6c1e2cb20111d3bd"
+      "sha256": "0bf373c503317ec19ea1c235b4a342123a9226cfe34e3b8e0abe373cf418dfee"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
@@ -447,6 +448,14 @@
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html",
       "sha256": "7db591c59e039860a937674c29796916a2e3fa8080e62f64ffb7cb764fd4f6a2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-ios-media-polish/album-native.html",
+      "sha256": "ff55cdab3eed337aa7d8a0b1751ba101f47d841a7436fa521b6c1120cd6a3b60"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-ios-media-polish/upload-native.html",
+      "sha256": "888bda404c3a89cf0e0adca626ddf2983fa34df4cd9228ed4575db72a9d31bb3"
     }
   ],
   "history": [

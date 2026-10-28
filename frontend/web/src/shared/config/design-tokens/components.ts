@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.0. Do not edit.
+// Generated from design-system/tokens.json · 3.0.1. Do not edit.
 export const componentTokens = {
   componentActionColumnWidth: '700px',
   componentActionFieldGap: '18px',
@@ -186,6 +186,10 @@ export const componentTokens = {
   componentParticipantRosterAvatarSize: '30px',
   componentParticipantRosterRowGap: '14px',
   componentParticipantRosterStackGap: '18px',
+  componentPhotoPreviewHeight: '132px',
+  componentPhotoPreviewRemoveOutset: '6px',
+  componentPhotoPreviewRemoveSize: '24px',
+  componentPhotoPreviewWidth: '176px',
   componentReactionChipBorderWidth: '1px',
   componentReactionChipGap: '5px',
   componentReactionChipOpenerIcon: '18px',

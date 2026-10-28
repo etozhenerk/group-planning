@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.0. Do not edit.
+// Generated from design-system/tokens.json · 3.0.1. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -245,6 +245,10 @@ internal object DesignTokens {
     val componentParticipantRosterAvatarSize = 30.dp
     val componentParticipantRosterRowGap = 14.dp
     val componentParticipantRosterStackGap = 18.dp
+    val componentPhotoPreviewHeight = 132.dp
+    val componentPhotoPreviewRemoveOutset = 6.dp
+    val componentPhotoPreviewRemoveSize = 24.dp
+    val componentPhotoPreviewWidth = 176.dp
     val componentReactionChipBorderWidth = 1.dp
     val componentReactionChipGap = 5.dp
     val componentReactionChipOpenerIcon = 18.dp

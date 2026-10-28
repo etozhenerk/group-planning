@@ -90,11 +90,13 @@ for (const width of [320, 402, 430]) {
         .toBeLessThanOrEqual(1);
     }
 
+    await expect(
+      header.getByRole('button', { name: 'Пригласить друзей', exact: true }),
+    ).toHaveCount(0);
     const back = header.getByRole('link', { name: 'К моим встречам', exact: true });
     const controls = [
       back,
       heading,
-      header.getByRole('button', { name: 'Пригласить друзей', exact: true }),
       header.getByRole('button', { name: 'Информация о встрече', exact: true }),
     ];
 

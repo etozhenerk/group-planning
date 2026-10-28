@@ -661,3 +661,28 @@
       status: planned
       health: unknown
       tests: []
+- id: TC-MEDIA-IOS-COMPACT-PREVIEW
+  title: Край следующего фото и удаление на углу
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md
+    requirement: Компактный предпросмотр фото iOS
+    scenario: Край следующего фото и удаление на углу
+    sha256: fb47a4f65ff20ecaafb75d354c2feefb7d36eb028bb2d1169ca637e0a663c756
+  platforms:
+    - ios
+  preconditions:
+    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной клавиатурой.
+  steps:
+    - action: Участник выбирает три фото и открывает панель перед отправкой
+      expected: Виден край следующего фото, горизонтальный свайп открывает следующее превью, крестик на
+        углу удаляет только выбранное фото, область нажатия не обрезана
+  cleanup:
+    - Очистить только собственные QA данные и восстановить настройки симулятора.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []

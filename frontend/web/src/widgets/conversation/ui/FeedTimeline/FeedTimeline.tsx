@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { newMessagesLabel } from '@/widgets/conversation/lib/feedKey';
 import { InvitePrompt } from '@/widgets/conversation/ui/InvitePrompt';
 import { FeedUnavailable } from '@/widgets/conversation/ui/FeedUnavailable';
@@ -14,6 +15,7 @@ export type FeedTimelineProps = {
   session: Session;
   organizer?: boolean;
   surface: ConversationSurface;
+  onEmptyChange?: (empty: boolean) => void;
 };
 
 export const FeedTimeline = ({
@@ -21,6 +23,7 @@ export const FeedTimeline = ({
   session,
   organizer = false,
   surface,
+  onEmptyChange,
 }: FeedTimelineProps) => {
   const { query, reactions, viewport, entries, read } = useFeedTimeline(
     id,
@@ -28,6 +31,13 @@ export const FeedTimeline = ({
     surface.boundary,
     surface.panel !== null,
   );
+
+  const empty =
+    !query.data?.hasOlder && !entries.some((entry) => entry.kind === 'message');
+
+  useEffect(() => {
+    onEmptyChange?.(empty);
+  }, [empty, onEmptyChange]);
 
   if (query.access.denied || query.isPending || !query.data) {
     return <FeedUnavailable query={query} />;
@@ -62,11 +72,7 @@ export const FeedTimeline = ({
           reactions={reactions.data ?? []}
           surface={surface}
         />
-        {organizer &&
-          query.data.participantCount === 1 &&
-          !query.data.entries.some((entry) => entry.kind === 'message') && (
-            <InvitePrompt id={id} />
-          )}
+        {organizer && empty && <InvitePrompt id={id} />}
         <FeedHistory
           hasOlder={!!query.data.window?.hasNewer}
           loading={query.loadingNewer}

@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 3.0.0. Do not edit.
+// Generated from design-system/tokens.json · 3.0.1. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -547,6 +547,10 @@ enum DesignTokens {
     static let componentParticipantRosterAvatarSize = CGFloat(30)
     static let componentParticipantRosterRowGap = CGFloat(14)
     static let componentParticipantRosterStackGap = CGFloat(18)
+    static let componentPhotoPreviewHeight = CGFloat(132)
+    static let componentPhotoPreviewRemoveOutset = CGFloat(6)
+    static let componentPhotoPreviewRemoveSize = CGFloat(24)
+    static let componentPhotoPreviewWidth = CGFloat(176)
     static let componentReactionChipBorderWidth = CGFloat(1)
     static let componentReactionChipGap = CGFloat(5)
     static let componentReactionChipOpenerIcon = CGFloat(18)

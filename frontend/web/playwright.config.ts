@@ -42,6 +42,7 @@ export default defineConfig({
         '47-upload-picker.spec.ts',
         '48-media-batch.spec.ts',
         '49-service-navigation.spec.ts',
+        '50-empty-chat-invite.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

@@ -581,3 +581,29 @@
       status: planned
       health: unknown
       tests: []
+- id: TC-SUPPORT-IOS-KEYBOARD
+  title: Исправление невалидного обращения iOS
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/service-information/spec.md
+    requirement: Отправка обратной связи iOS без блокировки клавиатуры
+    scenario: Исправление невалидного обращения iOS
+    sha256: 752dac92ca9a8906cc79d911e6eea4301bde6ac8715e868352e13d952406226d
+  platforms:
+    - ios
+  preconditions:
+    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной клавиатурой.
+  steps:
+    - action: Участник открывает форму из профиля, вводит короткий текст, скрывает клавиатуру кнопкой
+        «Готово» и нажимает «Отправить», исправляет текст и повторяет
+      expected: Короткий текст даёт понятную ошибку без запроса; клавиатура остаётся скрываемой,
+        исправленный текст принимается изолированным API, возврат ведёт в профиль
+  cleanup:
+    - Очистить только собственные QA данные и восстановить настройки симулятора.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []

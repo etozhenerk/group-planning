@@ -1,4 +1,4 @@
-# Токены somewhere · 3.0.0
+# Токены somewhere · 3.0.1
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -247,6 +247,10 @@
 | component.participantRoster.avatarSize | dimension | 30px | Аватар строки полного состава из .avatar исходного styles.css |
 | component.participantRoster.rowGap | dimension | 14px | Промежуток аватара и текста из .row исходного styles.css |
 | component.participantRoster.stackGap | dimension | 18px | Интервал строк из .stack исходного styles.css,18px |
+| component.photoPreview.height | dimension | 132px | Компактный iOS preview по прямой коррекции пользователя 28.10.2026 |
+| component.photoPreview.removeOutset | dimension | 6px | Компактный iOS preview по прямой коррекции пользователя 28.10.2026 |
+| component.photoPreview.removeSize | dimension | 24px | Компактный iOS preview по прямой коррекции пользователя 28.10.2026 |
+| component.photoPreview.width | dimension | 176px | Компактный iOS preview по прямой коррекции пользователя 28.10.2026 |
 | component.reactionChip.borderWidth | dimension | 1px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .reaction-chip |
 | component.reactionChip.gap | dimension | 5px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .reaction-chip |
 | component.reactionChip.openerIcon | dimension | 18px | Исторический размер 1.3.0; отдельные постоянные opener-кнопки отменены в 2.0.0. Не использовать для сообщений. |

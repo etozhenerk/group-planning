@@ -11,6 +11,7 @@ export type MeetingHeaderProps = {
   title: string;
   description: string;
   organizer: boolean;
+  empty: boolean;
   showDetails: () => void;
   detailsTrigger: RefObject<HTMLButtonElement | null>;
 };
@@ -20,6 +21,7 @@ export const MeetingHeader = ({
   title,
   description,
   organizer,
+  empty,
   showDetails,
   detailsTrigger,
 }: MeetingHeaderProps) => {
@@ -58,7 +60,7 @@ export const MeetingHeader = ({
           <p>{description}</p>
         </div>
       )}
-      {organizer && (
+      {organizer && !empty && (
         <div className={styles['header-share']}>
           <ShareInvitation id={id} compact />
         </div>

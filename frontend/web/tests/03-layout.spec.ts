@@ -40,12 +40,12 @@ for (const width of [320, 390, 768, 1440]) {
       .locator('header')
       .getByRole('button', { name: 'Пригласить друзей', exact: true });
 
-    const share = headerShare;
+    const share = page.getByRole('button', { name: 'Пригласить друзей', exact: true });
 
     const info = page.getByRole('button', { name: 'Информация о встрече' });
-    await expect(headerShare).toHaveCount(1);
+    await expect(headerShare).toHaveCount(0);
 
-    for (const action of [share, info]) {
+    for (const action of [info]) {
       const bounds = await action.boundingBox();
       const center = (bounds?.y ?? 0) + (bounds?.height ?? 0) / 2;
       expect(center).toBeCloseTo((title?.y ?? 0) + (title?.height ?? 0) / 2, 0);

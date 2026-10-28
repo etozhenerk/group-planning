@@ -303,7 +303,7 @@
     path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
     requirement: Фотостопка с жестовым управлением
     scenario: Первое, последнее и единственное фото
-    sha256: 4b6ac065521e26f48975b19556eace32e1f2a4b61b9dde7f513d2b5b3e1e457b
+    sha256: c9b159b106b5a220404fdff9a8202611d3d629d62f8dec0f7f49f357a0bdc5cd
   platforms:
     - web
     - ios
@@ -318,8 +318,10 @@
       ArrowLeft/ArrowRight SHALL переключать фото вне текстового ввода. Сетка,
       счётчик и полноэкранный просмотр SHALL оставаться доступны.
   steps:
-    - action: в альбоме несколько фото и участник листает за границу
-      expected: просмотр продолжается циклически для единственного фото перелистывание не запускается
+    - action: В альбоме из двух и трёх фото свайпнуть влево, вправо и за обе границы; повторить для одного
+        фото.
+      expected: "iOS: влево следующий, вправо предыдущий, за границей индекс не меняется; один снимок не
+        листается. Остальные платформы сохраняют ранее описанный цикл."
   cleanup:
     - Удалить созданные тестовые данные или сбросить собственный fixture; восстановить изменённые
       настройки.
@@ -655,5 +657,29 @@
   automation:
     web:
       status: planned
+      health: unknown
+      tests: []
+- id: TC-VIBE-IOS-BACK-ONLY
+  title: Возврат из вайба на iOS
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md
+    requirement: Компактная шапка вайба iOS
+    scenario: Возврат из вайба на iOS
+    sha256: 7fc0aa5c0731e8d624631e7cd1498a7d2c5d1350f3a0f197cb6499f917a11b8a
+  platforms:
+    - ios
+  preconditions:
+    - Изолированный QA API, точный iOS candidate; живой симулятор с экранной клавиатурой.
+  steps:
+    - action: участник открывает вайб из чата и нажимает стрелку назад
+      expected: возвращается в тот же чат; общий бренд и подпись «Прошедшие встречи» отсутствуют
+  cleanup:
+    - Очистить только собственные QA данные и восстановить настройки симулятора.
+  automation:
+    ios:
+      status: manual
       health: unknown
       tests: []

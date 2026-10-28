@@ -27,7 +27,8 @@ const child = spawn(
       GOMAXPROCS: '2',
       SOMEWHERE_BROWSER_FIXTURE: '1',
       SOMEWHERE_BROWSER_CHAT_REALTIME: process.env.SOMEWHERE_BROWSER_CHAT_REALTIME ?? '1',
-      SOMEWHERE_BROWSER_DIST: path.join(root, '.cache/web-demo'),
+      SOMEWHERE_BROWSER_DIST:
+        process.env.SOMEWHERE_BROWSER_DIST ?? path.join(root, '.cache/web-demo'),
       SOMEWHERE_BROWSER_ADDR: '127.0.0.1:8458',
     },
   },
