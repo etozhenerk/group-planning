@@ -1,5 +1,5 @@
 import { usePhotoGesture } from '@/features/view-media/model/usePhotoGesture';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { lockBackgroundScroll } from '@/shared/lib/lockBackgroundScroll';
 import { PhotoHeading } from '@/features/view-media/ui/PhotoHeading';
 import type { Media } from '@/shared/api';
@@ -25,19 +25,30 @@ export const PhotoViewer = ({
 }: PhotoViewerProps) => {
   const gesture = usePhotoGesture(change);
   const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const dialog = ref.current;
 
     if (!dialog) {
       return;
     }
 
+    const previous = document.activeElement;
+    const fallback = previous?.parentElement?.closest<HTMLElement>('[tabindex]');
     dialog.showModal();
     const unlock = lockBackgroundScroll(dialog);
 
     return () => {
       dialog.close();
       unlock();
+      const target = previous?.isConnected ? previous : fallback;
+
+      if (
+        target instanceof HTMLElement &&
+        target.isConnected &&
+        !document.querySelector('dialog[open]')
+      ) {
+        target.focus({ preventScroll: true });
+      }
     };
   }, []);
 

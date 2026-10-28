@@ -25,8 +25,8 @@
   background: transparent;
 }
 
-.picker:focus-visible,
-.primary:focus-visible {
+:root:not([data-input-modality='pointer']) .picker:focus,
+:root:not([data-input-modality='pointer']) .primary:focus {
   outline: var(--ds-space-s2) solid var(--ds-color-accent);
   outline-offset: var(--ds-component-icon-focus-offset);
 }

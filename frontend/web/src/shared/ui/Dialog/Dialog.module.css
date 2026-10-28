@@ -262,7 +262,9 @@ button.icon {
   color: var(--ds-color-muted);
 }
 
-.chat-action[data-mobile='true'] button.icon:focus-visible {
+:root:not([data-input-modality='pointer'])
+  .chat-action[data-mobile='true']
+  button.icon:focus {
   outline: var(--ds-space-s2) solid var(--ds-color-accent);
   outline-offset: var(--ds-component-icon-focus-offset);
 }

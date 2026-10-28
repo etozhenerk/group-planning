@@ -171,6 +171,19 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
     await expect(viewer.getByText(/1 \/ 3$/)).toBeVisible();
     await close.tap();
     await expect(viewer).not.toBeVisible();
+    const focus = await stack.evaluate((element) => {
+      const active = document.activeElement;
+
+      return {
+        restored: active === element || element.contains(active),
+        outline: active ? getComputedStyle(active).outlineStyle : null,
+      };
+    });
+
+    expect(focus.restored).toBe(true);
+    expect(focus.outline).toBe('none');
+    await expect(stack).toBeFocused();
+    await expect(stack).toHaveCSS('outline-style', 'none');
     await expect(photo).toHaveCSS('outline-style', 'none');
   } finally {
     await test.info().attach('trusted-touch-events', {

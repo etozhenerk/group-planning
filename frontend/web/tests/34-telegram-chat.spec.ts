@@ -269,6 +269,10 @@ test('reaction people replace the picker and browser Back returns to the same me
   await expect(row.getByRole('button', { name: 'Добавить реакцию' })).toHaveCount(0);
   await expect(row.getByRole('button', { name: 'Кто отреагировал' })).toHaveCount(0);
   await expect(picker).toHaveCount(0);
+  await expect(row.getByTestId('message-actions')).toHaveCSS(
+    'outline-color',
+    'rgba(0, 0, 0, 0)',
+  );
   await row.getByTestId('message-actions').press('Enter');
   await expect(picker).toBeVisible();
   await expect(picker.getByRole('button', { name: '❤️', exact: true })).toBeFocused();
@@ -282,6 +286,8 @@ test('reaction people replace the picker and browser Back returns to the same me
   await expect(filter).toHaveAttribute('aria-pressed', 'true');
   await filter.click();
   await expect(filter).toBeFocused();
+  await expect(filter).toHaveCSS('outline-style', 'solid');
+  await expect(filter).toHaveCSS('outline-width', '1px');
   await expect(people.getByRole('list')).toContainText('Саша');
   await page.screenshot({ path: test.info().outputPath('reaction-people-filter.png') });
   await page.goBack();

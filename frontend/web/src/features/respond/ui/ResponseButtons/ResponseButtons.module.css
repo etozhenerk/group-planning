@@ -69,6 +69,10 @@ button.primary,
   color: var(--ds-color-action-text);
 }
 
-.meeting .response-buttons button[aria-pressed='true']:not(:focus-visible) {
+.meeting .response-buttons button[aria-pressed='true']:not(:focus),
+:root[data-input-modality='pointer']
+  .meeting
+  .response-buttons
+  button[aria-pressed='true'] {
   outline: none;
 }

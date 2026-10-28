@@ -59,14 +59,39 @@ button:disabled:not(.g-button) {
   font-weight: 650;
 }
 
-:focus-visible {
+:where(:focus-visible),
+:where(html[data-input-modality='keyboard']) :where(:focus) {
   outline: 3px solid var(--focus);
   outline-offset: 4px;
 }
 
 /* Safari can retain focus-visible after pointer-opened dialogs and focus return. */
 
-html[data-input-modality='pointer'] :where(button, a, [role='button']):focus-visible,
+:where(html[data-input-modality='pointer'])
+  :where(:focus-visible):not(
+    :where(
+      input:not(
+        [type='checkbox'],
+        [type='radio'],
+        [type='file'],
+        [type='button'],
+        [type='submit'],
+        [type='reset'],
+        [type='range'],
+        [type='color']
+      ),
+      textarea,
+      select,
+      [contenteditable]:not([contenteditable='false']),
+      [role='textbox'],
+      [role='searchbox'],
+      [role='combobox'],
+      [role='spinbutton']
+    )
+  ) {
+  outline: none;
+}
+
 html[data-input-modality='pointer'] .g-button:focus-visible::before {
   outline: none !important;
 }
