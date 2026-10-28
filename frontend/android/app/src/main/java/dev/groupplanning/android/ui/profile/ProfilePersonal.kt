@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,6 +23,7 @@ import dev.groupplanning.android.ui.theme.Palette
 @Composable
 internal fun ProfilePersonal(profile: OwnProfile) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val missing = stringResource(R.string.profile_unspecified)
     val fields = listOf(
         R.string.profile_login to profile.login,
@@ -51,7 +54,9 @@ internal fun ProfilePersonal(profile: OwnProfile) {
         verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
         fields.forEach { (label, value) ->
-            Column {
+            Column(
+                Modifier.testTag("profile-field-${resources.getResourceEntryName(label)}"),
+            ) {
                 Text(
                     stringResource(label),
                     fontSize = 12.sp,

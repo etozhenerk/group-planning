@@ -29,9 +29,13 @@ somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-android-ui.XXXXXX")
 somewhere_remote="/data/local/tmp/somewhere-android-ui-$$.json"
 somewhere_fixture=
 somewhere_port=
+somewhere_ui_output="/sdcard/Android/data/dev.groupplanning.android.uitesthost/files/ui-$$"
 cleanup() {
     somewhere_status=$?
     trap - EXIT
+    mkdir -p "app/build/outputs/ui/$somewhere_scope-$$"
+    "$somewhere_adb" -s "$ANDROID_SERIAL" pull "$somewhere_ui_output/." "app/build/outputs/ui/$somewhere_scope-$$/" >/dev/null 2>&1 || true
+    "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -rf "$somewhere_ui_output" >/dev/null 2>&1 || true
     "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -f "$somewhere_remote" >/dev/null 2>&1 || true
     if [ -n "$somewhere_port" ]; then
         "$somewhere_adb" -s "$ANDROID_SERIAL" reverse --remove "tcp:$somewhere_port" >/dev/null 2>&1 || true
@@ -52,6 +56,9 @@ trap 'exit 143' TERM
 (cd ../../backend && "${GO_BIN:-go}" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
 somewhere_fixture_scope=$somewhere_scope
 if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = chat ]; then somewhere_fixture_scope=calendar; fi
+somewhere_chat=0
+if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = chat ]; then somewhere_chat=1; fi
+SOMEWHERE_ANDROID_CHAT_REALTIME="$somewhere_chat" SOMEWHERE_ANDROID_CHAT_READ_STATE="$somewhere_chat" \
 SOMEWHERE_ANDROID_FIXTURE=1 SOMEWHERE_ANDROID_FIXTURE_SCOPE="$somewhere_fixture_scope" SOMEWHERE_ANDROID_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestAndroidFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
@@ -74,13 +81,14 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 if [ "$somewhere_scope" = all ]; then
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        "-Pandroid.testInstrumentationRunnerArguments.additionalTestOutputDir=$somewhere_ui_output" \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.EmojiSearchUiTests,dev.groupplanning.android.ChatQueueUiTests,dev.groupplanning.android.ChatReadUiTests,dev.groupplanning.android.ChatReadLiveUiTests,dev.groupplanning.android.ProfileFieldsUiTests,dev.groupplanning.android.ComposerMenuLifecycleUiTests,dev.groupplanning.android.EmojiDockLifecycleUiTests,dev.groupplanning.android.ReactionFeedbackLifecycleUiTests,dev.groupplanning.android.ReactionPickerLifecycleUiTests,dev.groupplanning.android.ReactionPopupLifecycleUiTests,dev.groupplanning.android.MotionPreferenceUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
         :app:connectedQaAndroidTest
 fi
 
 if [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = profile ] || [ "$somewhere_scope" = account ] || [ "$somewhere_scope" = calendar ] || [ "$somewhere_scope" = auth ] || [ "$somewhere_scope" = polls ] || [ "$somewhere_scope" = saved ] || [ "$somewhere_scope" = places ] || [ "$somewhere_scope" = tasks ] || [ "$somewhere_scope" = covers ]; then
     somewhere_classes=dev.groupplanning.android.CalendarUiTests
-    if [ "$somewhere_scope" = chat ]; then somewhere_classes=dev.groupplanning.android.TelegramChatUiTests; fi
+    if [ "$somewhere_scope" = chat ]; then somewhere_classes=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.EmojiSearchUiTests,dev.groupplanning.android.ChatQueueUiTests,dev.groupplanning.android.ChatReadUiTests,dev.groupplanning.android.ChatReadLiveUiTests; fi
     if [ "$somewhere_scope" = experience ]; then somewhere_classes=dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests; fi
     if [ "$somewhere_scope" = account ]; then somewhere_classes=dev.groupplanning.android.AccountDeletionUiTests; fi
     if [ "$somewhere_scope" = profile ]; then somewhere_classes=dev.groupplanning.android.ProfileFieldsUiTests; fi
@@ -94,6 +102,7 @@ if [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = experience ] || [ "$s
     fi
     ./gradlew --no-daemon -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
+        "-Pandroid.testInstrumentationRunnerArguments.additionalTestOutputDir=$somewhere_ui_output" \
         "-Pandroid.testInstrumentationRunnerArguments.class=$somewhere_classes" \
         :app:connectedQaAndroidTest
     exit 0

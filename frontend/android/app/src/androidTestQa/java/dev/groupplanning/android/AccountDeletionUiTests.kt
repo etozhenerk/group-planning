@@ -3,12 +3,14 @@ package dev.groupplanning.android
 import android.content.Intent
 import android.os.ParcelFileDescriptor
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
@@ -33,14 +35,16 @@ class AccountDeletionUiTests {
             shell("settings put system font_scale 2.0")
             launch("account-large").use {
                 waitFor("meetings-list")
-                compose.onNode(hasContentDescription("Профиль:", substring = true)).performClick()
-                compose.onNodeWithText("Удалить аккаунт").performClick()
+                compose.onNode(hasTestTag("home-profile")).performClick()
+                compose.onNodeWithText("Удалить аккаунт").performScrollTo().performClick()
                 waitText("Удалить аккаунт?")
-                compose.onNodeWithText("Удалить аккаунт").assertIsDisplayed()
+                compose.onNode(
+                    hasText("Удалить аккаунт") and hasAnyAncestor(isDialog()),
+                ).assertIsDisplayed()
                 compose.onNodeWithText("Отмена").assertIsDisplayed()
                 screenshot("account-large-text")
                 device.pressBack()
-                waitFor("meetings-list")
+                waitFor("profile-start")
             }
         } finally {
             if (original == "null") {
@@ -69,17 +73,16 @@ class AccountDeletionUiTests {
     @Test fun cancelThenDeleteThroughApi() {
         launch("account").use {
             waitFor("meetings-list")
-            val profile = hasContentDescription("Профиль:", substring = true)
+            val profile = hasTestTag("home-profile")
             compose.onNode(profile).performClick()
-            compose.onNodeWithText("Удалить аккаунт").performClick()
+            compose.onNodeWithText("Удалить аккаунт").performScrollTo().performClick()
             waitText("Удалить аккаунт?")
             screenshot("account-confirmation")
             compose.onNodeWithText("Отмена").performClick()
-            waitFor("meetings-list")
-            compose.onNode(profile).performClick()
-            compose.onNodeWithText("Удалить аккаунт").performClick()
+            waitFor("profile-start")
+            compose.onNodeWithText("Удалить аккаунт").performScrollTo().performClick()
             waitText("Удалить аккаунт?")
-            compose.onNodeWithText("Удалить аккаунт").performClick()
+            compose.onNode(hasText("Удалить аккаунт") and hasAnyAncestor(isDialog())).performClick()
             waitText("Аккаунт удалён")
             assertTrue(compose.onAllNodes(profile).fetchSemanticsNodes().isEmpty())
             screenshot("account-deleted")

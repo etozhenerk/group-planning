@@ -16,19 +16,26 @@ import kotlinx.coroutines.launch
 /** QA-only observation; never records credentials, query cursors or message payloads. */
 internal object QaChatProbe {
     val requests = CopyOnWriteArrayList<String>()
+    val events = CopyOnWriteArrayList<String>()
+    fun mark(label: String) {
+        events.add("${android.os.SystemClock.elapsedRealtime()} $label")
+    }
     val signals = CopyOnWriteArrayList<String>()
     private val interruptions = MutableStateFlow(0)
     fun interruptMeeting() {
         interruptions.value++
     }
     fun request(method: String, path: String, cursor: Boolean = false) {
+        val safePath = path.replace(Regex("/invitations/[^/]+"), "/invitations/:token")
+        mark("HTTP $method $safePath cursor=$cursor")
         requests.add(
-            method + " " + path.replace(Regex("/invitations/[^/]+"), "/invitations/:token") +
+            method + " " + safePath +
                 if (cursor) " (cursor present)" else "",
         )
     }
     fun reset() {
         requests.clear()
+        events.clear()
         signals.clear()
     }
     fun observe(real: ChatRealtime): ChatRealtime = object : ChatRealtime {
@@ -53,6 +60,7 @@ internal object QaChatProbe {
                 try {
                     events.collect { signal ->
                         signals.add("$channel:${signal.javaClass.simpleName}")
+                        mark("$channel:${signal.javaClass.simpleName}")
                         emit(signal)
                     }
                 } finally {

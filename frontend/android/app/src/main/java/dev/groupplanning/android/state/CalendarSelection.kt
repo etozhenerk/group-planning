@@ -24,14 +24,17 @@ internal data class CalendarSelection(
     }
     val monthFilter: CalendarFilter? get() = if (calendar) {
         val first = grid.first()
-        CalendarFilter(period, first, first.plusDays(42))
+        CalendarFilter(period, first, grid.last().plusDays(1))
     } else {
         null
     }
     val grid: List<LocalDate> get() {
         val first = day.withDayOfMonth(1)
             .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-        return List(42) { first.plusDays(it.toLong()) }
+        val monthStart = day.withDayOfMonth(1)
+        val offset = java.time.temporal.ChronoUnit.DAYS.between(first, monthStart).toInt()
+        val count = ((offset + monthStart.lengthOfMonth() + 6) / 7) * 7
+        return List(count) { first.plusDays(it.toLong()) }
     }
 
     fun select(date: LocalDate): CalendarSelection = if (period == MeetingPeriod.Past) {

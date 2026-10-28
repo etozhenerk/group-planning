@@ -36,6 +36,8 @@ class FeedUiTests {
     }
 
     @After fun restoreKeyboardPreference() {
+        QaResponseGate.releaseHistory()
+        QaResponseGate.rejectMessage = false
         keyboardPreference?.let {
             if (it == "null") {
                 fixture.shell("settings delete secure show_ime_with_hard_keyboard")
@@ -47,17 +49,30 @@ class FeedUiTests {
     }
 
     @Test fun historySendRetryInformationAndSettingsFollowSharedDesign() {
+        QaResponseGate.holdHistory()
         fixture.launch("feed-owner", "RERERERERERERERERERERA").use { activity ->
             fixture.waitTag("message-composer")
             fixture.waitText("Я захвачу настолки. Пиццу закажем, когда соберёмся?")
             fixture.screenshot("feed-latest")
-            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasTestTag("feed-history"))
+            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasTestTag("feed-entry-9"))
+            compose.waitUntil(10_000) { QaResponseGate.historyEntered }
+            compose.onNodeWithTag("feed-timeline")
+                .performScrollToNode(hasTestTag("chat-history-loading"))
             val before = compose.onNodeWithTag("feed-entry-9").fetchSemanticsNode().boundsInRoot.top
-            compose.onNodeWithTag("feed-history").performClick()
+            compose.onNodeWithTag("chat-history-loading").assertExists()
+            fixture.screenshot("feed-history-held")
+            QaResponseGate.releaseHistory()
             compose.waitUntil(10_000) {
-                compose.onAllNodes(hasTestTag("feed-history")).fetchSemanticsNodes().isEmpty()
+                compose.onAllNodes(
+                    hasTestTag("chat-history-loading"),
+                ).fetchSemanticsNodes().isEmpty()
             }
+            val immediate = compose.onNodeWithTag(
+                "feed-entry-9",
+            ).fetchSemanticsNode().boundsInRoot.top
+            fixture.screenshot("feed-history-merged")
             val after = compose.onNodeWithTag("feed-entry-9").fetchSemanticsNode().boundsInRoot.top
+            println("SOMEWHERE_HISTORY_ANCHOR before=$before immediate=$immediate settled=$after")
             assertEquals(before, after, 3f)
             fixture.screenshot("feed-history")
             compose.onNodeWithTag("feed-end").performClick()
@@ -80,11 +95,13 @@ class FeedUiTests {
             compose.onNodeWithContentDescription("Информация о встрече").assertIsDisplayed()
             compose.onNodeWithTag("message-send").assertIsDisplayed()
             fixture.screenshot("feed-keyboard")
+            QaResponseGate.rejectMessage = true
             compose.onNodeWithTag("message-send").performClick()
             fixture.waitTag("message-retry")
             fixture.screenshot("feed-retry")
             activity.recreate()
             fixture.waitTag("message-retry")
+            QaResponseGate.rejectMessage = false
             compose.onNodeWithTag("message-retry").performClick()
             compose.waitUntil(10_000) {
                 compose.onAllNodes(hasTestTag("message-pending")).fetchSemanticsNodes().isEmpty()

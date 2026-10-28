@@ -1,7 +1,8 @@
 package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasAnySibling
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -45,18 +46,21 @@ class ProfileFieldsUiTests {
                     "full" -> {
                         compose.onNodeWithText("23 декабря 1990")
                             .performScrollTo().assertIsDisplayed()
-                        compose.onNodeWithText("Мужской").assertIsDisplayed()
+                        fixture.screenshot("profile-full-before-gender-scroll")
+                        compose.onNodeWithText("Мужской").performScrollTo().assertIsDisplayed()
                     }
                     "partial" -> {
                         compose.onNodeWithText("23 декабря").performScrollTo().assertIsDisplayed()
                         compose.onNodeWithText("23 декабря 1990").assertDoesNotExist()
                         compose.onNode(
-                            hasText("Не указано") and hasAnySibling(hasText("Пол")),
+                            hasText("Не указано") and
+                                hasAnyAncestor(hasTestTag("profile-field-profile_sex")),
                         ).performScrollTo().assertIsDisplayed()
                     }
                     else -> {
                         compose.onNode(
-                            hasText("Не указано") and hasAnySibling(hasText("Дата рождения")),
+                            hasText("Не указано") and
+                                hasAnyAncestor(hasTestTag("profile-field-profile_birthday")),
                         ).performScrollTo().assertIsDisplayed()
                         compose.onNodeWithText("23 декабря").assertDoesNotExist()
                     }

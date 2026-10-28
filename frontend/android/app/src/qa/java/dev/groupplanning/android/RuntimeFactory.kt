@@ -78,12 +78,20 @@ internal object RuntimeFactory {
                 ) {
                     throw IOException("Offline authentication fixture")
                 }
-                chain.proceed(
+                QaResponseGate.before(chain.request())
+                val response = chain.proceed(
                     chain.request().newBuilder().header(
                         "X-Somewhere-Test-Scenario",
                         scenario,
                     ).build(),
                 )
+                try {
+                    QaResponseGate.after(chain.request())
+                    response
+                } catch (failure: IOException) {
+                    response.close()
+                    throw failure
+                }
             }.build()
         val credential = config.cases[scenario]
         if (scenario == "invite-anonymous" || scenario == "profile-fields") {

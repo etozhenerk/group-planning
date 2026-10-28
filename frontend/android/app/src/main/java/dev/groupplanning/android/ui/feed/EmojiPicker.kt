@@ -4,17 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -192,23 +189,5 @@ internal fun EmojiPicker(
             }
         }
     }
-    BoxWithConstraints(modifier.background(DesignTokens.colorSurface)) {
-        if (maxHeight < DesignTokens.targetAndroid * 4) {
-            LazyVerticalGrid(GridCells.Adaptive(cell), Modifier.testTag("emoji-grid")) {
-                item(span = { GridItemSpan(maxLineSpan) }) { toolbar() }
-                item(span = { GridItemSpan(maxLineSpan) }) { categoryRow() }
-                results()
-            }
-        } else {
-            Column {
-                toolbar()
-                categoryRow()
-                LazyVerticalGrid(
-                    GridCells.Adaptive(cell),
-                    Modifier.weight(1f).testTag("emoji-grid"),
-                    content = results,
-                )
-            }
-        }
-    }
+    EmojiPickerLayout(cell, toolbar, categoryRow, results, modifier)
 }

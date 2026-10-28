@@ -131,11 +131,18 @@ class ChatReadLiveUiTests {
                 fixture.device.pressBack()
                 fixture.waitAbsent("emoji-dock")
                 compose.onNodeWithTag("message-composer").assertTextContains("Черновик 🧭")
-                Thread.sleep(1_500)
-                val idle = QaChatProbe.requests.size
+                // Flush viewport dwell work, then wait for its read-marker/WS catch-up.
+                // Virtual Compose time is not an HTTP idle observation window.
                 compose.mainClock.advanceTimeBy(6_000)
                 compose.waitForIdle()
-                Thread.sleep(1_000)
+                compose.waitUntil(10_000) {
+                    val last = QaChatProbe.events.lastOrNull()?.substringBefore(' ')?.toLongOrNull()
+                    last != null && android.os.SystemClock.elapsedRealtime() - last >= 2_500
+                }
+                QaChatProbe.mark("IDLE START")
+                val idle = QaChatProbe.requests.size
+                Thread.sleep(12_000)
+                QaChatProbe.mark("IDLE END")
                 assertEquals(
                     "Healthy SDK must not poll HTTP at idle",
                     idle,
@@ -181,6 +188,7 @@ class ChatReadLiveUiTests {
                     .put("meeting_id", id).put("own_entry_id", ownId)
                     .put("sdk", "CentrifugeJava 0.8.0")
                     .put("signals", JSONArray(QaChatProbe.signals.toList()))
+                    .put("events", JSONArray(QaChatProbe.events.toList()))
                     .put("requests", JSONArray(QaChatProbe.requests.toList())).toString(2),
             )
         }

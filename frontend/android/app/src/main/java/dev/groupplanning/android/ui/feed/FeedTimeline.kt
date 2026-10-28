@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -86,7 +87,9 @@ internal fun FeedTimeline(
     val position = remember { TimelinePosition() }
     var viewportBounds by remember { mutableStateOf(Rect.Zero) }
     val geometries = remember { mutableStateMapOf<UUID, Rect>() }
-    FeedViewportEffect(list, rows, state, position, viewport)
+    var headingHeight by remember { mutableStateOf(0f) }
+    val headingGap = with(LocalDensity.current) { DesignTokens.spaceS20.toPx() }
+    FeedViewportEffect(list, rows, state, position, headingHeight, viewport)
     LaunchedEffect(
         list,
         rows,
@@ -169,7 +172,9 @@ internal fun FeedTimeline(
                                         ),
                                     )
                                 },
-                                Modifier.fillMaxWidth(),
+                                Modifier.fillMaxWidth().onGloballyPositioned {
+                                    headingHeight = it.size.height + headingGap
+                                },
                                 fontSize = 11.sp,
                                 lineHeight = 16.5.sp,
                                 color = Palette.muted,

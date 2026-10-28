@@ -10,6 +10,8 @@ import android.provider.Settings
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.printToString
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
@@ -55,10 +57,16 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     }
 
     fun waitText(text: String) {
-        compose.waitUntil(15_000) {
-            compose.onAllNodes(hasText(text)).fetchSemanticsNodes().isNotEmpty()
+        try {
+            compose.waitUntil(15_000) {
+                compose.onAllNodes(hasText(text)).fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.waitForIdle()
+        } catch (failure: AssertionError) {
+            println("SOMEWHERE_WAIT_TEXT_FAILURE=$text\n" + compose.onRoot().printToString())
+            screenshot("wait-text-failure-${System.currentTimeMillis()}")
+            throw failure
         }
-        compose.waitForIdle()
     }
 
     fun shell(command: String): String = ParcelFileDescriptor.AutoCloseInputStream(

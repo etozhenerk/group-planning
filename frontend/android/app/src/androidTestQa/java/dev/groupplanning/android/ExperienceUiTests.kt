@@ -7,6 +7,7 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -90,7 +91,13 @@ class ExperienceUiTests {
             compose.onNodeWithText("3 / 3").assertIsDisplayed()
             fixture.screenshot("refresh-memory-landscape-large-no-motion")
             compose.onNodeWithContentDescription("Все фото").performClick()
-            compose.onNodeWithContentDescription("1 / 3").assertExists()
+            val firstPhoto = fixture.context.getString(R.string.memories_count, 1, 3)
+            compose.waitUntil(10_000) {
+                compose.onAllNodes(
+                    hasContentDescription(firstPhoto),
+                ).fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.onNodeWithContentDescription(firstPhoto).assertIsDisplayed()
             fixture.screenshot("refresh-memory-landscape-large-grid")
         } finally {
             activity.onActivity {

@@ -27,7 +27,7 @@ class CalendarSelectionTests {
         val date = LocalDate.parse("2026-01-31")
         val selection = CalendarSelection(calendar = true).select(date)
         assertEquals(LocalDate.parse("2026-02-28"), selection.shiftMonth(1).day)
-        assertEquals(42, selection.grid.size)
+        assertEquals(35, selection.grid.size)
         assertEquals(java.time.DayOfWeek.MONDAY, selection.grid.first().dayOfWeek)
         val history = selection.copy(period = MeetingPeriod.Past)
             .select(LocalDate.parse("2025-12-12"))
@@ -35,6 +35,27 @@ class CalendarSelectionTests {
         assertEquals(history, CalendarSelection.restore(history.saved()))
         assertNull(selection.copy(calendar = false).creationDay)
         assertNull(selection.copy(undated = true).creationDay)
+    }
+
+    @Test fun gridContainsOnlyCompleteWeeksCoveringMonthAndQueriesSameRange() {
+        for ((month, first, last) in listOf(
+            Triple("2021-02-15", "2021-02-01", "2021-02-28"),
+            Triple("2026-10-31", "2026-09-28", "2026-11-01"),
+            Triple("2027-05-20", "2027-04-26", "2027-06-06"),
+        )) {
+            val selection = CalendarSelection(calendar = true).select(LocalDate.parse(month))
+            val start = LocalDate.parse(first)
+            val end = LocalDate.parse(last)
+            val count = java.time.temporal.ChronoUnit.DAYS.between(start, end).toInt() + 1
+            assertEquals(count, selection.grid.size)
+            assertEquals(start, selection.grid.first())
+            assertEquals(end, selection.grid.last())
+            selection.grid.forEachIndexed { index, day ->
+                assertEquals(start.plusDays(index.toLong()), day)
+            }
+            assertEquals(start, selection.monthFilter?.from)
+            assertEquals(end.plusDays(1), selection.monthFilter?.to)
+        }
     }
 
     @Test fun todayLeavesUndatedAndPreservesPeriod() {

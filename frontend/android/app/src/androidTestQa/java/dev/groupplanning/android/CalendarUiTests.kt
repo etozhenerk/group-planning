@@ -21,11 +21,14 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -78,8 +81,13 @@ class CalendarUiTests {
             compose.onNodeWithTag("day-${LocalDate.now()}").assertIsSelected()
             compose.onNodeWithText("Прошедшие").assertIsSelected()
             compose.onNodeWithTag("meetings-list").performScrollToNode(hasText("Без даты · 1"))
-            compose.onNodeWithText("Без даты · 1").performClick()
+            compose.onNodeWithTag("meetings-list").performTouchInput { swipeUp() }
+            val undated = compose.onNodeWithText("Без даты · 1")
+            val navigation = compose.onNodeWithTag("home-profile").fetchSemanticsNode().boundsInRoot
+            assertTrue(undated.fetchSemanticsNode().boundsInRoot.bottom < navigation.top)
+            undated.performClick()
             fixture.waitText("Поход")
+            compose.onNodeWithText("Поход").assertIsDisplayed()
             screenshot("calendar-android-undated")
         }
     }
@@ -109,10 +117,12 @@ class CalendarUiTests {
             button.performClick()
             fixture.waitTag("create-form")
             compose.onNodeWithContentDescription("Дата").performScrollTo().assertTextContains(
-                selected.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                selected.format(
+                    DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru")),
+                ),
             )
             compose.onNodeWithContentDescription("Время").performScrollTo()
-                .assertTextContains("Выберите время")
+                .assertTextContains("ЧЧ:ММ")
             screenshot("calendar-android-prefilled")
         }
     }

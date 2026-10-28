@@ -5,6 +5,7 @@ package dev.groupplanning.android.data.api.models
 import java.util.UUID
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
 internal data class ChatCapabilities(
@@ -58,22 +59,40 @@ internal data class ChatProjection(
 ) {
     val key: String get() = "$resourceKind:$resourceId"
 
-    fun validFor(meeting: UUID): Boolean {
-        val scoped = entry?.meetingId?.let { it == meeting } != false &&
+    fun validFor(meeting: UUID, snapshotEntry: FeedEntry? = null): Boolean {
+        val referencedEntry = entry ?: snapshotEntry
+        val scoped = referencedEntry?.meetingId?.let { it == meeting } != false &&
             datePoll?.meetingId?.let { it == meeting } != false &&
             placePoll?.meetingId?.let { it == meeting } != false &&
             task?.meetingId?.let { it == meeting } != false
         val resource = when (resourceKind) {
-            "entry" -> entry?.id ?: resourceId.takeIf { reactions != null }
+            "entry" -> referencedEntry?.id ?: resourceId.takeIf { reactions != null }
             "date_poll" -> datePoll?.id
             "place_poll" -> placePoll?.id
             "preparation_task" -> task?.id
             else -> null
         }
+        val links = resourceKind != "entry" ||
+            (
+                datePoll?.let {
+                    references(referencedEntry, "date_poll_", "poll_id", it.id)
+                } != false &&
+                    placePoll?.let {
+                        references(referencedEntry, "place_poll_", "poll_id", it.id)
+                    } != false &&
+                    task?.let {
+                        references(referencedEntry, "preparation_task_", "task_id", it.id)
+                    } != false
+                )
         return scoped &&
+            links &&
             resource == resourceId &&
             reactions.orEmpty().all { it.entryId == resourceId }
     }
+
+    private fun references(entry: FeedEntry?, prefix: String, key: String, id: UUID): Boolean =
+        entry?.kind?.startsWith(prefix) == true &&
+            (entry.payload[key] as? JsonPrimitive)?.content == id.toString()
 }
 
 @Serializable

@@ -22,6 +22,7 @@ internal class TimelinePosition {
     var adjusting by mutableStateOf(false)
     var movingToTail = false
     var anchor: ChatViewport? = null
+    var anchorHeadingInset: Float? = null
 }
 
 @Composable
@@ -30,6 +31,7 @@ internal fun FeedViewportEffect(
     rows: List<FeedRow>,
     state: FeedState,
     position: TimelinePosition,
+    headingHeight: Float,
     save: (ChatViewport) -> Unit,
 ) {
     val density = LocalDensity.current.density
@@ -48,6 +50,7 @@ internal fun FeedViewportEffect(
             if (state.newerLoading || state.newerError) 1 else 0
         position.following = target == null && !state.hasNewer
         position.anchor = target?.let { ChatViewport(it, offset, false) }
+        position.anchorHeadingInset = null
         if (rows.isNotEmpty()) {
             list.scrollToItem(index)
             val item = snapshotFlow { list.layoutInfo.visibleItemsInfo.find { it.index == index } }
@@ -62,7 +65,7 @@ internal fun FeedViewportEffect(
         position.adjusting = false
         position.ready = true
     }
-    LaunchedEffect(list, rows, state.hasNewer, density) {
+    LaunchedEffect(list, rows, state.hasNewer, density, headingHeight) {
         val reversed = rows.asReversed()
         snapshotFlow { list.layoutInfo to list.isScrollInProgress }.collect { (layout, scrolling) ->
             if (!position.ready || position.adjusting || reversed.isEmpty()) return@collect
@@ -74,6 +77,7 @@ internal fun FeedViewportEffect(
             if (position.following && !state.hasNewer) {
                 val value = ChatViewport(null, 0f, true)
                 position.anchor = value
+                position.anchorHeadingInset = null
                 save(value)
                 return@collect
             }
@@ -82,6 +86,9 @@ internal fun FeedViewportEffect(
                 reversed.find { row -> row.key == it.key }?.entry?.id == saved?.entry
             }
             if (!scrolling && saved?.entry != null) {
+                val inset = feedHeadingInset(rows, saved.entry, headingHeight)
+                if (position.anchorHeadingInset == null) position.anchorHeadingInset = inset
+                val headingShift = (position.anchorHeadingInset ?: 0f) - (inset ?: 0f)
                 if (existing == null) {
                     val index = reversed.indexOfFirst { it.entry?.id == saved.entry }
                     if (index >= 0) {
@@ -97,7 +104,7 @@ internal fun FeedViewportEffect(
                                 val top =
                                     list.layoutInfo.viewportEndOffset - restored.offset -
                                         restored.size
-                                list.scrollBy(saved.offsetDp * density - top)
+                                list.scrollBy(saved.offsetDp * density + headingShift - top)
                             }
                         } finally {
                             position.adjusting = false
@@ -105,7 +112,7 @@ internal fun FeedViewportEffect(
                         return@collect
                     }
                 } else {
-                    val desired = saved.offsetDp * density
+                    val desired = saved.offsetDp * density + headingShift
                     val top = layout.viewportEndOffset - existing.offset - existing.size
                     val difference = top - desired
                     if (abs(difference) > density) {
@@ -132,6 +139,7 @@ internal fun FeedViewportEffect(
                     false,
                 )
             position.anchor = value
+            position.anchorHeadingInset = feedHeadingInset(rows, id, headingHeight)
             save(value)
         }
     }

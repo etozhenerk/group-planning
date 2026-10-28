@@ -42,7 +42,10 @@ internal class ChatRepository(
                 result.cursor.length <= 2048 &&
                 result.projections.size <= 100 &&
                 result.projections.all { projection ->
-                    projection.validFor(access.id) &&
+                    projection.validFor(
+                        access.id,
+                        result.entries.firstOrNull { it.id == projection.resourceId },
+                    ) &&
                         (
                             projection.resourceKind != "entry" ||
                                 result.entries.any { it.id == projection.resourceId }
