@@ -1,0 +1,333 @@
+{
+  "hash": "2cd9f4ce798ff3ec8963206c6540c3f094d09ef216eba55e177801855d7f79e1",
+  "gaps": [],
+  "cases": [
+    {
+      "id": "TC-SHEET-CONTROLS-NO-CLOSE",
+      "title": "Закрытие нижней панели без крестика",
+      "lifecycle": "active",
+      "level": "e2e",
+      "risk": "normal",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "requirement": "Нижние панели без лишних управляющих элементов",
+        "scenario": "Закрытие нижней панели без крестика",
+        "sha256": "5e3a477d907934b420a869d5c2c8e5a455009b01c6714ca1f6977d8c8e9221cb"
+      },
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "preconditions": [
+        "Изолированное приложение и synthetic данные; фиксируются точная сборка, viewport, время и published4.0.0.",
+        "### Requirement: Нижние панели без лишних управляющих элементов\n\nBottom sheets web, iOS и Android SHALL NOT показывать крестик закрытия. Они SHALL\nсохранять доступное закрытие жестом/системным действием и guards/контекст.\nКрестики удаления фото, desktop modal и fullscreen viewer не входят в правило.\nDismiss и свайп вниз SHALL NOT запускать refresh; успешная мутация и realtime\nобновляют данные независимо от dismiss."
+      ],
+      "steps": [
+        {
+          "action": "пользователь открывает панель сведений, настроек, опроса, задачи, медиа или списка людей",
+          "expected": "крестик закрытия отсутствует; жест и доступное dismiss-действие закрывают верхний контекст, сохраняя draft и focus"
+        }
+      ],
+      "cleanup": [
+        "Удалить только созданные fixture данные; восстановить временные настройки тестового устройства."
+      ],
+      "automation": {
+        "web": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/web/tests/55-sheet-controls.spec.ts",
+              "selector": "mobile handle dismisses without refresh; body pull and busy guard preserve draft; confirmed save refreshes",
+              "runner": "web-chat-e2e",
+              "level": "e2e"
+            }
+          ]
+        },
+        "ios": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift",
+              "selector": "testDismissAndChildReturnDoNotRefreshMeeting",
+              "runner": "ios-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift",
+              "selector": "testBusySheetRejectsSwipeThenClosesAfterOneSubmission",
+              "runner": "ios-ui",
+              "level": "e2e"
+            }
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetControlsUiTests.kt",
+              "selector": "handleAccessibilitySwipeBackAndBackdropDismissWithoutCloseIconOrRefresh",
+              "runner": "android-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/DatePollUiTests.kt",
+              "selector": "createVoteAndApplyDateWithoutTime",
+              "runner": "android-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/TelegramChatUiTests.kt",
+              "selector": "settingsAndShareReturnThroughOneInformationSheet",
+              "runner": "android-ui",
+              "level": "e2e"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "TC-SHEET-NO-REFRESH",
+      "title": "Свайп не обновляет содержимое панели",
+      "lifecycle": "active",
+      "level": "e2e",
+      "risk": "normal",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "requirement": "Нижние панели без лишних управляющих элементов",
+        "scenario": "Свайп не обновляет содержимое панели",
+        "sha256": "2de6ab5aa9120fbb3502fc34335147f3ea8197f4663fa82f5a8d6c015be25f03"
+      },
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "preconditions": [
+        "Изолированное приложение и synthetic данные; фиксируются точная сборка, viewport, время и published4.0.0.",
+        "### Requirement: Нижние панели без лишних управляющих элементов\n\nBottom sheets web, iOS и Android SHALL NOT показывать крестик закрытия. Они SHALL\nсохранять доступное закрытие жестом/системным действием и guards/контекст.\nКрестики удаления фото, desktop modal и fullscreen viewer не входят в правило.\nDismiss и свайп вниз SHALL NOT запускать refresh; успешная мутация и realtime\nобновляют данные независимо от dismiss.",
+        "Данные загружены, realtime установлен либо расписание штатного fallback-poll отдельно записано; окно проверки отличает фоновую синхронизацию от запросов, вызванных жестом. Сохраняются draft, scroll и журнал запросов."
+      ],
+      "steps": [
+        {
+          "action": "Открыть каждую применимую нижнюю панель: сведения, настройки, опросы, задачу, вложения, приглашение и список людей. Прокрутить тело к началу и свайпнуть вниз внутри содержимого, включая жест, после которого панель остаётся открытой.",
+          "expected": "Не появляется refresh-индикатор, не сбрасываются draft, scroll и загруженные данные; жест не добавляет запросов detail/feed/participants/sync или перезагрузку страницы браузера."
+        },
+        {
+          "action": "Повторить свайп за handle/шапку, закрыть верхнюю панель и вернуться в родительскую; открыть снова.",
+          "expected": "Закрытие и возврат не инициируют обновление, состояние родителя и черновик сохранены. Dirty/busy guards продолжают работать."
+        },
+        {
+          "action": "Отправить валидную форму, дождаться подтверждения; отдельно получить изменение другого синтетического участника через realtime.",
+          "expected": "Успешная мутация и realtime обновляют данные. Последующее закрытие панели не добавляет повторного refresh; запрет свайпа не отключает синхронизацию."
+        }
+      ],
+      "cleanup": [
+        "Удалить только созданные fixture данные; восстановить временные настройки тестового устройства."
+      ],
+      "automation": {
+        "web": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/web/tests/55-sheet-controls.spec.ts",
+              "selector": "mobile handle dismisses without refresh; body pull and busy guard preserve draft; confirmed save refreshes",
+              "runner": "web-chat-e2e",
+              "level": "e2e"
+            }
+          ]
+        },
+        "ios": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift",
+              "selector": "testDismissAndChildReturnDoNotRefreshMeeting",
+              "runner": "ios-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift",
+              "selector": "testBodySwipeKeepsDraftAndDoesNotRefresh",
+              "runner": "ios-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift",
+              "selector": "testPresentedInvitationBodyDoesNotRefresh",
+              "runner": "ios-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetGuardUITests.swift",
+              "selector": "testOrdinaryRevokedPreviewKeepsPrivacyAndRejoin",
+              "runner": "ios-ui",
+              "level": "e2e"
+            }
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetDismissLiveUiTests.kt",
+              "selector": "swipeAndBackKeepDraftWithoutRefreshingMeetingContent",
+              "runner": "android-ui",
+              "level": "e2e"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "TC-READERS-STABLE-VIEWPORT",
+      "title": "Ответ списка не двигает панель",
+      "lifecycle": "active",
+      "level": "e2e",
+      "risk": "normal",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "requirement": "Стабильное открытие списка прочитавших",
+        "scenario": "Ответ списка не двигает панель",
+        "sha256": "fcf4ad7b8c2fb1205a5fefc151b7ec6bd7524c23840847d11b2915b4e467e480"
+      },
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "preconditions": [
+        "Изолированное приложение и synthetic данные; фиксируются точная сборка, viewport, время и published4.0.0.",
+        "### Requirement: Стабильное открытие списка прочитавших\n\nПанель SHALL с первого кадра резервировать viewport трёх строк с двумя штатными\nпромежутками. Loading, empty, error и list SHALL NOT менять detent или положение\nсодержимого; длинный список прокручивается внутри."
+      ],
+      "steps": [
+        {
+          "action": "пользователь открывает список и получает пустой, короткий, длинный ответ или ошибку",
+          "expected": "header и viewport остаются на прежнем месте без скачка; длинный список доступен прокруткой"
+        }
+      ],
+      "cleanup": [
+        "Удалить только созданные fixture данные; восстановить временные настройки тестового устройства."
+      ],
+      "automation": {
+        "web": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/web/tests/56-readers-stability.spec.ts",
+              "selector": "readers keep one viewport through loading, empty, error, list and pagination",
+              "runner": "web-read-e2e",
+              "level": "e2e"
+            }
+          ]
+        },
+        "ios": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift",
+              "selector": "testPendingAcknowledgementAndReadersKeepGeometry",
+              "runner": "ios-ui",
+              "level": "e2e"
+            }
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/SheetControlsUiTests.kt",
+              "selector": "readersLoadingEmptyErrorShortAndLongListKeepOneViewport",
+              "runner": "android-ui",
+              "level": "e2e"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "TC-CHAT-PENDING-INDICATOR",
+      "title": "Быстрая и медленная отправка",
+      "lifecycle": "active",
+      "level": "e2e",
+      "risk": "normal",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "requirement": "Отложенный индикатор отправки без изменения геометрии",
+        "scenario": "Быстрая и медленная отправка",
+        "sha256": "280f9ea44c0ec145bc8dee628a874d16698a1816ef5e5d3ae97d934a92632ee7"
+      },
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "preconditions": [
+        "Изолированное приложение и synthetic данные; фиксируются точная сборка, viewport, время и published4.0.0.",
+        "### Requirement: Отложенный индикатор отправки без изменения геометрии\n\nQueued/sending SHALL NOT показывать текст отправки. Постоянный слот metadata SHALL\nбыть пуст первые2000ms от enqueue, затем показывать небольшой спиннер. Переход\nqueued→sending SHALL NOT сбрасывать таймер; ACK SHALL сохранять UI-идентичность\nи высоту строки. Ошибки и действия повтора сохраняются."
+      ],
+      "steps": [
+        {
+          "action": "пользователь отправляет сообщение с быстрым ACK, затем с ACK дольше двух секунд",
+          "expected": "у первого индикатор не мелькает; у второго спиннер появляется после2000ms без изменения высоты и scroll anchor; ACK не перемонтирует строку"
+        }
+      ],
+      "cleanup": [
+        "Удалить только созданные fixture данные; восстановить временные настройки тестового устройства."
+      ],
+      "automation": {
+        "web": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/web/tests/57-pending-metadata.spec.ts",
+              "selector": "preserves message node and metadata geometry",
+              "runner": "web-chat-e2e",
+              "level": "e2e"
+            }
+          ]
+        },
+        "ios": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/ios/SomewhereUITests/ChatSheetStabilityUITests.swift",
+              "selector": "testPendingAcknowledgementAndReadersKeepGeometry",
+              "runner": "ios-ui",
+              "level": "e2e"
+            }
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "health": "unknown",
+          "tests": [
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ChatPendingIndicatorUiTests.kt",
+              "selector": "slowAckShowsDelayedSpinnerWithoutResettingAtSendingOrMovingTheRow",
+              "runner": "android-ui",
+              "level": "e2e"
+            },
+            {
+              "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ChatPendingIndicatorUiTests.kt",
+              "selector": "fastAckNeverShowsAnIndicatorAndCancelsItsTimer",
+              "runner": "android-ui",
+              "level": "e2e"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

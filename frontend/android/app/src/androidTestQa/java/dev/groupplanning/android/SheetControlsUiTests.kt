@@ -16,6 +16,7 @@ import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.state.feed.ChatReadingState
 import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.feed.ChatReadersSheet
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.SomewhereTheme
 import java.util.UUID
 import org.junit.Assert.assertEquals
@@ -56,6 +57,16 @@ class SheetControlsUiTests {
                 compose.onNodeWithTag("action-sheet-content")
                     .fetchSemanticsNode().boundsInWindow,
             )
+            if (next.readers.size >= 3) {
+                val rows = next.readers.take(3).map {
+                    compose.onNodeWithTag("chat-reader-${it.id}")
+                        .fetchSemanticsNode().boundsInWindow
+                }
+                val expectedGap = with(compose.density) { DesignTokens.spaceS12.toPx() }
+                rows.zipWithNext().forEach { (previous, following) ->
+                    assertEquals(expectedGap, following.top - previous.bottom, 1f)
+                }
+            }
             fixture.screenshot("readers-fixed-$index")
         }
         compose.onNodeWithText("Участник 7").performScrollTo().assertIsDisplayed()

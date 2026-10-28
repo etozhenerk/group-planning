@@ -70,24 +70,29 @@ internal fun ChatReadersSheet(
                 }
             }
         }
-        state.readers.forEach { user ->
-            Row(
-                Modifier.heightIn(min = DesignTokens.componentMobileRosterRowHeight),
-                horizontalArrangement = Arrangement.spacedBy(
-                    DesignTokens.componentMobileRosterRowGap,
-                ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                UserAvatar(
-                    user.displayName,
-                    user.avatarUrl,
-                    size = DesignTokens.componentMobileRosterAvatarSize,
-                )
-                Text(
-                    user.displayName,
-                    Modifier.weight(1f),
-                    fontSize = DesignTokens.typographySizeSmall,
-                )
+        if (state.readers.isNotEmpty()) {
+            Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12)) {
+                state.readers.forEach { user ->
+                    Row(
+                        Modifier.heightIn(min = DesignTokens.componentMobileRosterRowHeight)
+                            .testTag("chat-reader-${user.id}"),
+                        horizontalArrangement = Arrangement.spacedBy(
+                            DesignTokens.componentMobileRosterRowGap,
+                        ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        UserAvatar(
+                            user.displayName,
+                            user.avatarUrl,
+                            size = DesignTokens.componentMobileRosterAvatarSize,
+                        )
+                        Text(
+                            user.displayName,
+                            Modifier.weight(1f),
+                            fontSize = DesignTokens.typographySizeSmall,
+                        )
+                    }
+                }
             }
         }
         if (state.error) {
