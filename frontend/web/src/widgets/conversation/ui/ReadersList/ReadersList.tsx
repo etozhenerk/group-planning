@@ -40,7 +40,7 @@ export const ReadersList = ({
   }, [query.denied, close]);
 
   return (
-    <div className={styles.content} data-mobile={mobile}>
+    <div className={styles.content} data-mobile={mobile} data-testid="readers-viewport">
       {query.isPending && (
         <div role="status" aria-label="Загружаем список" className={styles.loading}>
           {[0, 1, 2].map((index) => (

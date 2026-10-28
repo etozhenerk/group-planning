@@ -25,14 +25,15 @@ export const FeedRecordActions = ({
 
   return (
     <>
-      {entry.delivery && entry.clientRequestId && (
-        <MessageDelivery
-          user={session.user.id}
-          meeting={entry.meetingId}
-          id={entry.clientRequestId}
-          state={entry.delivery}
-        />
-      )}
+      {(entry.delivery === 'uncertain' || entry.delivery === 'rejected') &&
+        entry.clientRequestId && (
+          <MessageDelivery
+            user={session.user.id}
+            meeting={entry.meetingId}
+            id={entry.clientRequestId}
+            state={entry.delivery}
+          />
+        )}
       {interactive && (
         <MessageReactions
           id={entry.meetingId}

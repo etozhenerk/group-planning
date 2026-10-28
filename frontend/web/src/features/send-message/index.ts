@@ -5,3 +5,5 @@ export { usePendingMessages } from '@/features/send-message/model/usePendingMess
 export { MessageDelivery } from '@/features/send-message/ui/MessageDelivery';
 
 export { matchingMessage } from '@/features/send-message/model/createMessageQueue';
+
+export { MessagePendingIndicator } from '@/features/send-message/ui/MessagePendingIndicator';

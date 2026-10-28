@@ -6,6 +6,8 @@ export default defineConfig({
     '37-chat-persistence.spec.ts',
     '37-outbox-owner.spec.ts',
     '38-chat-sync.spec.ts',
+    '55-sheet-controls.spec.ts',
+    '57-pending-metadata.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,

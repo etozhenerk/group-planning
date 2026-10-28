@@ -1,3 +1,4 @@
+import { useWindowProjection } from '@/entities/meeting/model/useWindowProjection';
 import type { Conversation } from '@/entities/meeting/model/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryChatReceipts } from '@/entities/meeting/api/readState';
@@ -20,7 +21,7 @@ export const useReadReceipts = (
 
   const scope = [...privateKey(user, id, access.epoch, 'receipts'), stream];
 
-  return useQuery<Awaited<ReturnType<typeof queryChatReceipts>>['receipts']>({
+  const query = useQuery<Awaited<ReturnType<typeof queryChatReceipts>>['receipts']>({
     queryKey: [...scope, version, entries.join(',')],
     enabled: enabled && !access.denied && entries.length > 0,
     placeholderData: (previous, previousQuery) =>
@@ -56,4 +57,8 @@ export const useReadReceipts = (
     gcTime: 0,
     retry: false,
   });
+
+  const data = useWindowProjection(scope, entries, query, access.denied || !enabled);
+
+  return { ...query, data };
 };

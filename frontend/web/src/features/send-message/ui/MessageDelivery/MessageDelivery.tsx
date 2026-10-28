@@ -9,7 +9,7 @@ export type MessageDeliveryProps = {
   user: string;
   meeting: string;
   id: string;
-  state: 'queued' | 'sending' | 'uncertain' | 'rejected';
+  state: 'uncertain' | 'rejected';
 };
 
 export const MessageDelivery = ({ user, meeting, id, state }: MessageDeliveryProps) => {
@@ -25,11 +25,7 @@ export const MessageDelivery = ({ user, meeting, id, state }: MessageDeliveryPro
   return (
     <div className={styles.status} data-testid="message-delivery">
       <span role="status">
-        {state === 'rejected'
-          ? 'Не удалось отправить'
-          : state === 'uncertain'
-            ? 'Проверяем отправку'
-            : 'Отправляем…'}
+        {state === 'rejected' ? 'Не удалось отправить' : 'Проверяем отправку'}
       </span>
       {state === 'rejected' && (
         <>

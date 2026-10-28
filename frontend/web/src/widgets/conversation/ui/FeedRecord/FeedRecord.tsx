@@ -8,7 +8,7 @@ import styles from '@/widgets/conversation/ui/FeedRecord/FeedRecord.module.css';
 import type { Session } from '@/entities/session';
 import type { FeedEntry } from '@/entities/meeting';
 import { Avatar } from '@/shared/ui/Avatar';
-import { clockLabel } from '@/shared/lib/time';
+import { FeedMessageMetadata } from '@/widgets/conversation/ui/FeedMessageMetadata';
 
 export type FeedRecordProps = {
   read?:
@@ -55,10 +55,7 @@ export const FeedRecord = ({
         size={surface.mobile ? 'mobile-chat' : 'chat'}
       />
       <div className={styles['message-content']}>
-        <div className={styles['message-author']}>
-          <strong>{entry.actor.displayName}</strong>
-          <time dateTime={entry.occurredAt}>{clockLabel(entry.occurredAt)}</time>
-        </div>
+        <FeedMessageMetadata entry={entry} own={own} />
         <div
           ref={gesture.anchor}
           className={styles.target}

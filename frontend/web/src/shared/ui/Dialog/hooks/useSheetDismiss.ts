@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import type { PointerEvent, RefObject } from 'react';
+import type { MouseEvent, PointerEvent, RefObject } from 'react';
+import { dialogHasBusyAction } from '@/shared/ui/Dialog/hooks/useDialogBusy';
 import { reducedDialogMotion } from '@/shared/ui/Dialog/lib/dialogMotion';
 
 type Gesture = { id: number; y: number; lastY: number; time: number; speed: number };
@@ -7,10 +8,23 @@ type Gesture = { id: number; y: number; lastY: number; time: number; speed: numb
 export const useSheetDismiss = (
   ref: RefObject<HTMLDialogElement | null>,
   onClose: () => void,
+  enabled: boolean,
 ) => {
   const gesture = useRef<Gesture | null>(null);
+  const moved = useRef(false);
+  const handle = useRef(false);
   const settling = useRef<Animation | null>(null);
-  useEffect(() => () => settling.current?.cancel(), []);
+  const frame = useRef<number | undefined>(undefined);
+  useEffect(
+    () => () => {
+      settling.current?.cancel();
+
+      if (frame.current !== undefined) {
+        cancelAnimationFrame(frame.current);
+      }
+    },
+    [],
+  );
 
   const reset = (dialog: HTMLDialogElement) => {
     const transform = getComputedStyle(dialog).transform;
@@ -27,16 +41,27 @@ export const useSheetDismiss = (
     const dialog = ref.current;
 
     if (
+      !enabled ||
       !dialog ||
+      dialogHasBusyAction(dialog) ||
       dialog.dataset['motion'] !== 'open' ||
       dialog.dataset['mobile'] !== 'true' ||
       event.button !== 0 ||
-      (event.target instanceof Element && event.target.closest('button'))
+      (event.target instanceof Element &&
+        event.target.closest('button:not([data-sheet-handle])'))
     ) {
       return;
     }
 
     settling.current?.cancel();
+
+    if (frame.current !== undefined) {
+      cancelAnimationFrame(frame.current);
+    }
+
+    moved.current = false;
+    handle.current =
+      event.target instanceof Element && !!event.target.closest('[data-sheet-handle]');
     gesture.current = {
       id: event.pointerId,
       y: event.clientY,
@@ -56,6 +81,7 @@ export const useSheetDismiss = (
     }
 
     const distance = Math.max(0, event.clientY - drag.y);
+    moved.current ||= Math.abs(event.clientY - drag.y) > 4;
     drag.speed = (event.clientY - drag.lastY) / Math.max(1, event.timeStamp - drag.time);
     drag.lastY = event.clientY;
     drag.time = event.timeStamp;
@@ -82,6 +108,13 @@ export const useSheetDismiss = (
     if (!cancelled && (distance > Math.min(120, dialog.offsetHeight * 0.22) || fast)) {
       dialog.dataset['dragging'] = 'false';
       onClose();
+      frame.current = requestAnimationFrame(() => {
+        frame.current = undefined;
+
+        if (dialog.open && dialog.dataset['motion'] !== 'closing') {
+          reset(dialog);
+        }
+      });
     } else {
       reset(dialog);
     }
@@ -91,6 +124,21 @@ export const useSheetDismiss = (
     start,
     move,
     end,
-    cancel: (event: PointerEvent<HTMLDivElement>) => end(event, true),
+    cancel: (event: PointerEvent<HTMLDivElement>) => {
+      if (event.target === event.currentTarget) {
+        end(event, true);
+      }
+    },
+    click: (event: MouseEvent<HTMLDivElement>) => {
+      if (moved.current && event.detail > 0) {
+        event.preventDefault();
+        event.stopPropagation();
+      } else if (handle.current && event.target === event.currentTarget) {
+        onClose();
+      }
+
+      moved.current = false;
+      handle.current = false;
+    },
   };
 };

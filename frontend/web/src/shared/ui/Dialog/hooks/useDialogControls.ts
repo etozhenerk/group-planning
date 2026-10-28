@@ -1,6 +1,7 @@
 import { useEffect, useId } from 'react';
 import type { RefObject, SyntheticEvent } from 'react';
 import { useBackdropDismiss } from '@/shared/ui/Dialog/hooks/useBackdropDismiss';
+import { dialogHasBusyAction } from '@/shared/ui/Dialog/hooks/useDialogBusy';
 import { useSheetDismiss } from '@/shared/ui/Dialog/hooks/useSheetDismiss';
 
 export const useDialogControls = (
@@ -20,6 +21,7 @@ export const useDialogControls = (
         event.key === 'Escape' &&
         !event.defaultPrevented &&
         dismissible &&
+        !dialogHasBusyAction(ref.current) &&
         !document.querySelector('dialog:modal, .g-popup_open')
       ) {
         event.preventDefault();
@@ -30,19 +32,20 @@ export const useDialogControls = (
     document.addEventListener('keydown', escape);
 
     return () => document.removeEventListener('keydown', escape);
-  }, [inline, open, dismissible, onClose]);
+  }, [inline, open, dismissible, onClose, ref]);
   const dismiss = () => {
-    if (dismissible) {
+    if (dismissible && !dialogHasBusyAction(ref.current)) {
       onClose();
     }
   };
 
-  const swipe = useSheetDismiss(ref, dismiss);
+  const swipe = useSheetDismiss(ref, dismiss, dismissible);
   const heading = useId();
   const backdrop = useBackdropDismiss(dismiss);
 
   return {
     region: {
+      onClickCapture: swipe.click,
       onPointerDown: swipe.start,
       onPointerMove: swipe.move,
       onPointerUp: swipe.end,

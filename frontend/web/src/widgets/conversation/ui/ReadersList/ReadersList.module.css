@@ -1,7 +1,28 @@
 .content {
   overflow-y: auto;
-  min-height: 0;
-  max-height: 100%;
+  box-sizing: border-box;
+  height: calc(
+    3 * var(--ds-component-mobile-roster-row-height) + 2 * var(--ds-space-s12)
+  );
+  max-height: max(
+    var(--ds-space-s0),
+    calc(
+      var(--visual-viewport-height, 100dvh) -
+        var(--ds-component-mobile-sheet-top-reserve) -
+        var(--ds-component-mobile-sheet-grab-inset-top) -
+        var(--ds-component-mobile-sheet-handle-height) -
+        var(--ds-component-mobile-sheet-handle-gap) -
+        var(--ds-component-mobile-sheet-header-height) -
+        var(--ds-component-mobile-sheet-content-inset-top) -
+        max(
+          var(--ds-component-mobile-sheet-content-inset-bottom),
+          env(safe-area-inset-bottom)
+        )
+    )
+  );
+  flex-shrink: 0;
+  overscroll-behavior: contain;
+  overflow-anchor: none;
 }
 
 .list {
@@ -9,11 +30,12 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--ds-component-participant-roster-row-gap);
+  gap: var(--ds-space-s12);
 }
 
 .list li,
 .loading > div {
+  min-height: var(--ds-component-mobile-roster-row-height);
   display: flex;
   align-items: center;
   gap: var(--ds-space-s12);
@@ -21,11 +43,7 @@
 
 .loading {
   display: grid;
-  gap: var(--ds-component-participant-roster-row-gap);
-}
-
-.content[data-mobile='true'] .list {
-  gap: 0;
+  gap: var(--ds-space-s12);
 }
 
 .content[data-mobile='true'] .list li {

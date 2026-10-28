@@ -105,7 +105,7 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     outputs:
       failures: ${{ steps.report.outputs.failures }}
     steps:
@@ -134,10 +134,26 @@ jobs:
         id: browser
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
         run: python3 scripts/ci/run.py browser npx --no-install playwright install --with-deps chromium webkit
+      - name: Browser test bundle
+        id: demo
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py demo npm run build:demo --workspace @somewhere/web
       - name: Browser scenarios with Go API
         id: e2e
-        if: ${{ !cancelled() && steps.ready.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py e2e npm run web:test:e2e
+        if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py e2e npm exec --workspace @somewhere/web -- playwright test
+      - name: Realtime chat and pending messages
+        id: chat
+        if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py chat npm exec --workspace @somewhere/web -- playwright test --config playwright.chat.config.ts
+      - name: Read state and readers sheets
+        id: read
+        if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py read npm exec --workspace @somewhere/web -- playwright test --config playwright.read.config.ts
+      - name: Chat history window
+        id: window
+        if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts
       - name: Stage report and logs
         id: report
         if: always()

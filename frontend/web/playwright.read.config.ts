@@ -6,6 +6,7 @@ export default defineConfig({
     '41-chat-read-state.spec.ts',
     '42-chat-first-unread.spec.ts',
     '43-chat-read-visibility.spec.ts',
+    '56-readers-stability.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,

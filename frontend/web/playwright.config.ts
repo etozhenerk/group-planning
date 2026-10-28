@@ -10,6 +10,9 @@ export default defineConfig({
     '41-chat-read-state.spec.ts',
     '42-chat-first-unread.spec.ts',
     '43-chat-read-visibility.spec.ts',
+    '55-sheet-controls.spec.ts',
+    '56-readers-stability.spec.ts',
+    '57-pending-metadata.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,
@@ -45,6 +48,7 @@ export default defineConfig({
         '50-empty-chat-invite.spec.ts',
         '51-album-stack-cycle.spec.ts',
         '53-pointer-focus.spec.ts',
+        '58-reaction-range-error.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

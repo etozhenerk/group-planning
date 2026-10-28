@@ -1,3 +1,4 @@
+import { useWindowProjection } from '@/entities/meeting/model/useWindowProjection';
 import { useChatSyncEnabled } from '@/entities/meeting/model/useChatSyncEnabled';
 import { z } from 'zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -50,7 +51,9 @@ export const useReactions = (id: string, user: string, entries: string[]) => {
     gcTime: 0,
   });
 
-  return query;
+  const data = useWindowProjection(scope, entries, query, access.denied);
+
+  return { ...query, data };
 };
 
 export const setReaction = (
