@@ -3,6 +3,7 @@ import XCTest
 @MainActor
 final class ExperienceUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
     private func launch(large: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "audit-owner"
@@ -105,7 +106,16 @@ final class ExperienceUITests: XCTestCase {
         XCUIDevice.shared.press(.home)
         app.activate()
         XCTAssertEqual(input.value as? String, "Жду встречи ❤️")
-        app.buttons["feed-back"].tap()
+        let back = app.buttons["feed-back"]
+        let returned = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in
+                app.frame.contains(back.frame) && back.isHittable
+                    && back.frame.width >= 43.5 && back.frame.height >= 43.5
+            }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [returned], timeout: 5), .completed)
+        print("SOMEWHERE_BACK_TOUCH hittable=\(back.isHittable) frame=\(back.frame)")
+        capture("refresh-before-back")
+        back.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         XCTAssertTrue(card.waitForExistence(timeout: 10))
     }
     func testMemoryStackGridAndFullScreenPreserveIndex() {
@@ -171,5 +181,4 @@ final class ExperienceUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Обращение принято"].waitForExistence(timeout: 15))
         capture("refresh-support-success")
     }
-
 }

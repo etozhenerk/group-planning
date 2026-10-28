@@ -170,11 +170,24 @@ final class EntryUITests: XCTestCase {
         XCTAssertEqual(app.buttons.matching(identifier: "Создать встречу").count, 1)
         capture("empty-list", app)
     }
-    func testListErrorAndRetry() {
-        let app = launch("list-error")
+    func testListErrorAndRetry() throws {
+        let app = XCUIApplication()
+        app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "list-error"
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        let gate = try ResponseGate(app, path: "/api/v1/meetings", mode: "unavailable")
+        defer {
+            app.terminate()
+            do { try gate.cleanUp() } catch { XCTFail("Response gate cleanup failed: \(error)") }
+        }
+        ExperienceScreenshot.configure(app)
+        app.launch()
         XCTAssertTrue(app.staticTexts["Не удалось загрузить встречи"].waitForExistence(timeout: 15))
+        XCTAssertTrue(gate.requested)
+        capture("list-error", app)
+        try gate.release()
         app.buttons["Попробовать ещё раз"].tap()
         XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
+        capture("list-recovered", app)
     }
     func testCloseWarningAndDraftRestoration() {
         let app = launch("draft")

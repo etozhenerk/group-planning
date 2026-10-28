@@ -130,6 +130,11 @@ struct FeedTimeline: View {
                             $0.value.maxY > 0 && $0.value.minY < geometry.size.height
                         }
                         .min { $0.value.minY < $1.value.minY }
+                        if owner.loadingHistory, let top {
+                            // The user can keep scrolling while a page is in flight.
+                            // Restore the current viewport, not the request's old position.
+                            historyAnchor = FeedScrollAnchor(id: top.key, frame: top.value)
+                        }
                         owner.anchorID = followsLatest ? nil : top?.key
                         if let top, !followsLatest {
                             owner.session.privateData.chatAnchors[owner.id] = FeedScrollAnchor(

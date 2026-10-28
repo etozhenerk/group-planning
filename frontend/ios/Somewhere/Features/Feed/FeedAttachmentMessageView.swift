@@ -12,7 +12,8 @@ struct FeedAttachmentMessageView: View {
             if own { Spacer(minLength: 0) } else { avatar }
             VStack(alignment: own ? .trailing : .leading, spacing: 5) {
                 HStack(alignment: .firstTextBaseline, spacing: 9) {
-                    Text(entry.actor.displayName).designFont(11, weight: .semibold)
+                    Text(own ? String(localized: "Вы") : entry.actor.displayName).designFont(
+                        11, weight: .semibold)
                     Text(FeedPresentation.time(entry.occurredAt.date)).designFont(11)
                 }.foregroundStyle(AppPalette.muted).frame(minHeight: 16.5)
                 VStack(alignment: .leading, spacing: 8) {

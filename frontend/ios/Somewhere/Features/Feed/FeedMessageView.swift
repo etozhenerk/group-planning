@@ -11,6 +11,8 @@ struct FeedMessageView: View {
     @ScaledMetric(relativeTo: .caption) private var authorSize = DesignTokens.typographySizeLabel
     @State private var availableWidth = DesignTokens.spaceS0
 
+    private var authorName: String { own ? String(localized: "Вы") : user.displayName }
+
     private var textWidth: CGFloat? {
         guard availableWidth > 0 else { return nil }
         let natural = (text as NSString).size(withAttributes: [
@@ -28,7 +30,7 @@ struct FeedMessageView: View {
             if own { Spacer(minLength: DesignTokens.spaceS0) } else { avatar }
             VStack(alignment: own ? .trailing : .leading, spacing: DesignTokens.spaceS4) {
                 HStack(spacing: DesignTokens.spaceS10) {
-                    Text(user.displayName).font(.system(size: authorSize, weight: .semibold))
+                    Text(authorName).font(.system(size: authorSize, weight: .semibold))
                         .foregroundStyle(own ? DesignTokens.colorMuted : DesignTokens.colorAccent)
                     Text(FeedPresentation.time(date)).font(.system(size: authorSize))
                         .foregroundStyle(DesignTokens.colorMuted)
@@ -62,7 +64,7 @@ struct FeedMessageView: View {
                 availableWidth = $0
             }
             .accessibilityElement(children: .combine)
-            .accessibilityLabel("\(user.displayName), \(FeedPresentation.time(date)). \(text)")
+            .accessibilityLabel("\(authorName), \(FeedPresentation.time(date)). \(text)")
     }
 
     private var bubble: UnevenRoundedRectangle {

@@ -143,6 +143,10 @@ final class DatePollUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
         ExperienceScreenshot.configure(app)
         app.launch()
+        if scenario == "poll-hidden" {
+            XCTAssertTrue(app.buttons["period-past"].waitForExistence(timeout: 15))
+            app.buttons["period-past"].tap()
+        }
         let card = app.buttons["meeting-card-d3c50000-0000-4000-8000-000000000" + suffix]
         XCTAssertTrue(card.waitForExistence(timeout: 15))
         card.tap()

@@ -6,6 +6,7 @@ final class ChatSyncUITests: XCTestCase {
 
     func testSDKSendReadersKeyboardAndDraftRestart() async throws {
         let counterpart = try NativeChatCounterpart()
+        addTeardownBlock { @MainActor in try await counterpart.leave() }
         try await counterpart.join()
         let app = XCUIApplication()
         let trace = FileManager.default.temporaryDirectory.appendingPathComponent(

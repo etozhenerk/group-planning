@@ -109,7 +109,7 @@ final class InvitationUITests: XCTestCase {
                 .waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Кто придёт, 2 участника")
+        XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Компания, 2 участника")
         app.buttons["meeting-info-close"].tap()
         capture("invitation-accepted", app)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)
@@ -177,9 +177,11 @@ final class InvitationUITests: XCTestCase {
         card.tap()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
-        let share = app.buttons["share-invitation"]
+        let share = app.buttons["meeting-info-share"]
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         share.tap()
+        XCTAssertTrue(app.buttons["share-invitation"].waitForExistence(timeout: 5))
+        app.buttons["share-invitation"].tap()
         let copy = app.cells.matching(
             NSPredicate(format: "label IN %@", ["Скопировать", "Copy", "Copy Link", "Копировать"])
         ).firstMatch

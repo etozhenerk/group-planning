@@ -57,6 +57,7 @@ struct ProfileScreen: View {
                     }.padding(.top, 20)
                     ServiceLinks(api: owner.session.api, screen: "profile").padding(.top, 40)
                     Button("Удалить аккаунт", role: .destructive, action: deleteAccount)
+                        .accessibilityIdentifier("account-delete-open")
                         .designFont(13).frame(minHeight: 44).padding(.top, 20)
                 }
                 Text(AppVersion.shortLabel).designFont(12).foregroundStyle(

@@ -38,11 +38,15 @@ struct CreateDatePollScreen: View {
                     }.disabled(!owner.editable)
                 }
                 if form.dates.count < 20 {
-                    Button("Добавить дату") { form.addDate() }
-                        .foregroundStyle(DesignTokens.colorAccent).frame(
-                            minHeight: DesignTokens.targetIos
-                        )
-                        .disabled(!owner.editable)
+                    Button {
+                        form.addDate()
+                    } label: {
+                        HStack(spacing: DesignTokens.spaceS8) {
+                            ChatIcon(kind: .plus, size: DesignTokens.componentMobileFieldIconSize)
+                            Text("Добавить дату")
+                        }.frame(minHeight: DesignTokens.targetIos)
+                    }
+                    .foregroundStyle(DesignTokens.colorAccent).disabled(!owner.editable)
                 }
             }
             DatePollSettingsFields(settings: $form.settings).disabled(!owner.editable)

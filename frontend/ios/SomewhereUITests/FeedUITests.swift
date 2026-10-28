@@ -33,8 +33,15 @@ final class FeedUITests: XCTestCase {
         let lower = origin.withOffset(CGVector(dx: frame.minX + 10, dy: top + height * 0.8))
         (down ? upper : lower).press(forDuration: 0.05, thenDragTo: down ? lower : upper)
     }
-    func testConversationHistoryRetryBackgroundAndSettings() {
+    func testConversationHistoryRetryBackgroundAndSettings() throws {
         let app = XCUIApplication()
+        let gate = try ResponseGate(
+            app, path: "/api/v1/meetings/88888888-8888-4888-8888-888888888888/feed",
+            queryName: "before_sequence", mode: "hold")
+        defer {
+            app.terminate()
+            do { try gate.cleanUp() } catch { XCTFail("Response gate cleanup failed: \(error)") }
+        }
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "feed-owner"
         app.launchArguments = [
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
@@ -60,21 +67,28 @@ final class FeedUITests: XCTestCase {
         let headerY = header.frame.minY
         capture("feed-latest", app)
         let scroll = app.scrollViews["feed-timeline"]
-        for _ in 0..<25 {
-            if app.buttons["feed-history"].isHittable { break }
-            scroll.swipeDown(velocity: .fast)
-        }
-        XCTAssertTrue(app.buttons["feed-history"].isHittable)
         let anchor = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "Сообщение 07")
         ).firstMatch
+        for _ in 0..<25 {
+            if gate.requested && anchor.isHittable { break }
+            scroll.swipeDown(velocity: .fast)
+        }
+        XCTAssertTrue(gate.requested, "Approaching history must request the previous page")
+        XCTAssertTrue(anchor.isHittable)
         let previousY = anchor.frame.minY
-        app.buttons["feed-history"].tap()
-        XCTAssertTrue(anchor.waitForExistence(timeout: 10))
+        let loading = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == %@", "Загружаем сообщения")
+        ).firstMatch
+        XCTAssertTrue(loading.exists)
+        capture("feed-history-loading", app)
+        try gate.release()
         let loaded = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "exists == false"), object: app.buttons["feed-history"])
-        XCTAssertEqual(XCTWaiter.wait(for: [loaded], timeout: 5), .completed)
-        XCTAssertEqual(anchor.frame.minY, previousY, accuracy: 6)
+            predicate: NSPredicate(format: "exists == false"), object: loading)
+        XCTAssertEqual(XCTWaiter.wait(for: [loaded], timeout: 10), .completed)
+        XCTAssertTrue(anchor.waitForExistence(timeout: 10))
+        XCTAssertEqual(anchor.frame.minY, previousY, accuracy: 2)
+        capture("feed-history-loaded-anchor", app)
         for _ in 0..<6 {
             if app.staticTexts.matching(
                 NSPredicate(format: "label CONTAINS %@", "Возьмите настолки, пиццу закажу я.")
@@ -93,20 +107,35 @@ final class FeedUITests: XCTestCase {
         let input = field("message-input", app: app)
         input.tap()
         input.typeText("Пицца будет к семи")
+        // Keep the network unavailable until the explicit retry. With realtime,
+        // a committed message can be confirmed by sync despite a lost HTTP reply.
+        try gate.configure(
+            path: "/api/v1/meetings/88888888-8888-4888-8888-888888888888/messages",
+            mode: "offline", method: "POST")
         app.buttons["message-send"].tap()
-        XCTAssertTrue(app.buttons["retry-message"].waitForExistence(timeout: 10))
+        let retry = app.buttons.matching(
+            NSPredicate(
+                format: "label == %@ AND identifier BEGINSWITH %@", "Повторить", "outgoing-message-"
+            )
+        ).firstMatch
+        let latest = app.buttons["feed-new-messages"]
+        XCTAssertTrue(latest.waitForExistence(timeout: 5))
+        latest.tap()
+        XCTAssertTrue(retry.waitForExistence(timeout: 10))
+        XCTAssertTrue(gate.requested)
         capture("feed-message-retry", app)
         XCUIDevice.shared.press(.home)
         app.activate()
-        XCTAssertTrue(app.buttons["retry-message"].waitForExistence(timeout: 10))
-        app.buttons["retry-message"].tap()
+        XCTAssertTrue(retry.waitForExistence(timeout: 10))
+        try gate.release()
+        retry.tap()
         let confirmed = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "exists == false"), object: app.buttons["retry-message"])
+            predicate: NSPredicate(format: "exists == false"), object: retry)
         XCTAssertEqual(XCTWaiter.wait(for: [confirmed], timeout: 10), .completed)
         XCTAssertEqual(
             app.staticTexts.matching(
                 NSPredicate(
-                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Саша, ",
+                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Вы, ",
                     "Пицца будет к семи")
             )
             .count, 1)

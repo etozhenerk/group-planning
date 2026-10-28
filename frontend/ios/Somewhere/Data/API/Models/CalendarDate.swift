@@ -43,11 +43,13 @@ enum CalendarDate {
 
     static func days(_ selected: String) -> [String] {
         guard let date = parse(selected),
-            let first = calendar.dateInterval(of: .month, for: date)?.start
+            let first = calendar.dateInterval(of: .month, for: date)?.start,
+            let days = calendar.range(of: .day, in: .month, for: date)
         else { return [] }
         let offset = (calendar.component(.weekday, from: first) + 5) % 7
         let start = adding(string(first), component: .day, value: -offset)
-        return (0..<42).map { adding(start, component: .day, value: $0) }
+        let count = ((offset + days.count + 6) / 7) * 7
+        return (0..<count).map { adding(start, component: .day, value: $0) }
     }
 
     static func heading(_ day: String, format: String) -> String {

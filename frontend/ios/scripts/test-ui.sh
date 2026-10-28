@@ -9,8 +9,9 @@ somewhere_go=${GO_BIN:-go}
 somewhere_filter=
 somewhere_auth_filter=
 somewhere_scope=
+somewhere_chat=0
 case "${1:-all}" in
-    chat-sync) somewhere_filter=-only-testing:SomewhereUITests/ChatSyncUITests; somewhere_scope=chat ;;
+    chat-sync) somewhere_filter=-only-testing:SomewhereUITests/ChatSyncUITests; somewhere_scope=chat; somewhere_chat=1 ;;
     telegram-chat) somewhere_filter=-only-testing:SomewhereUITests/TelegramChatUITests; somewhere_scope=accessibility ;;
     covers-large) somewhere_filter=-only-testing:SomewhereUITests/CoverUITests/testLargeTextAndSystemPickerCancellation; somewhere_scope=accessibility ;;
     sheet-gestures) somewhere_filter=-only-testing:SomewhereUITests/ChatSheetGestureUITests; somewhere_scope=accessibility ;;
@@ -24,7 +25,7 @@ case "${1:-all}" in
     experience) somewhere_filter=-only-testing:SomewhereUITests/ExperienceUITests; somewhere_scope=accessibility ;;
     account) somewhere_filter=-only-testing:SomewhereUITests/AccountDeletionUITests; somewhere_scope=account ;;
     profile) somewhere_filter=-only-testing:SomewhereUITests/ProfileFieldsUITests; somewhere_scope=profile ;;
-    all) somewhere_filter=-skip-testing:SomewhereUITests/ChatSheetMotionUITests ;;
+    all) somewhere_filter=-skip-testing:SomewhereUITests/ChatSheetMotionUITests; somewhere_chat=1 ;;
     auth) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAndLoginFailure; somewhere_auth_filter=-only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent; somewhere_scope=auth ;;
     onboarding-large) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAtLargeText; somewhere_scope=accessibility ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
@@ -43,6 +44,7 @@ esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
 somewhere_fixture=
+somewhere_control_written=0
 cleanup() {
     somewhere_status=$?
     trap - EXIT
@@ -53,7 +55,13 @@ cleanup() {
             somewhere_status=1
         fi
     fi
-    if [ "$somewhere_scope" = "chat" ]; then rm -f .build/chat-fixture-control.json; fi
+    if [ "$somewhere_control_written" = "1" ]; then
+        rm -f .build/chat-fixture-control.json
+        if [ -f "$somewhere_temporary/previous-chat-control.json" ]; then
+            cp "$somewhere_temporary/previous-chat-control.json" .build/chat-fixture-control.json
+            chmod 600 .build/chat-fixture-control.json
+        fi
+    fi
     somewhere_release_simulator
     rm -rf "$somewhere_temporary"
     exit "$somewhere_status"
@@ -77,6 +85,9 @@ if [ -n "${SOMEWHERE_IOS_FIXTURE_BINARY:-}" ]; then
 else
     (cd ../../backend && "$somewhere_go" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
 fi
+if [ "$somewhere_chat" = "1" ]; then
+    export SOMEWHERE_IOS_CHAT_REALTIME=1 SOMEWHERE_IOS_CHAT_READ_STATE=1
+fi
 SOMEWHERE_IOS_FIXTURE_SCOPE="$somewhere_scope" SOMEWHERE_IOS_FIXTURE=1 SOMEWHERE_IOS_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestIOSFixture$' -test.v -test.timeout 0 \
     > "$somewhere_temporary/fixture.log" 2>&1 &
@@ -91,10 +102,15 @@ while [ ! -f "$somewhere_temporary/config.json" ]; do
     sleep 0.1
 done
 
-if [ "$somewhere_scope" = "chat" ]; then
+if [ "$somewhere_chat" = "1" ]; then
     mkdir -p .build
+    if [ -f .build/chat-fixture-control.json ]; then
+        cp .build/chat-fixture-control.json "$somewhere_temporary/previous-chat-control.json"
+        chmod 600 "$somewhere_temporary/previous-chat-control.json"
+    fi
     cp "$somewhere_temporary/config.json" .build/chat-fixture-control.json
     chmod 600 .build/chat-fixture-control.json
+    somewhere_control_written=1
 fi
 
 xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug \

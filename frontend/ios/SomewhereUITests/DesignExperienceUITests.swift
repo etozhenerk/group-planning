@@ -69,8 +69,8 @@ final class DesignExperienceUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Предложить место"].waitForExistence(timeout: 5))
         capture("menu")
         app.buttons["meeting-add"].tap()
-        app.buttons["Добавить эмодзи"].tap()
-        XCTAssertTrue(app.textFields["Поиск эмодзи"].waitForExistence(timeout: 5))
+        app.buttons["composer-emoji-toggle"].tap()
+        XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5))
         capture("emoji")
     }
     func testActionFormsMatchApprovedLayout() {
@@ -160,7 +160,7 @@ final class DesignExperienceUITests: XCTestCase {
         for (identifier, name, heading, submitIdentifier) in [
             ("new-preparation-task", "task", "Предложить задачу", "preparation-create"),
             ("new-place-poll", "place", "Предложить место", "place-poll-create"),
-            ("new-date-poll", "date", "Предложить дату", "poll-create"),
+            ("new-date-poll", "date", "Новая дата встречи", "poll-create"),
         ] {
             app.buttons["meeting-add"].tap()
             app.buttons[identifier].tap()
@@ -177,12 +177,11 @@ final class DesignExperienceUITests: XCTestCase {
             let submit = app.buttons[submitIdentifier]
             let scroll = app.scrollViews["action-form-scroll"]
             XCTAssertTrue(scroll.exists)
-            for _ in 0..<8 {
-                if submit.exists && scroll.frame.contains(submit.frame) { break }
-                scroll.swipeUp()
-            }
             XCTAssertTrue(submit.exists)
-            XCTAssertTrue(scroll.frame.contains(submit.frame))
+            XCTAssertTrue(submit.isHittable)
+            XCTAssertTrue(app.frame.contains(submit.frame))
+            XCTAssertGreaterThanOrEqual(submit.frame.minY, close.frame.maxY)
+            XCTAssertGreaterThanOrEqual(submit.frame.height, 44)
             XCTAssertTrue(app.frame.contains(close.frame))
             XCTAssertTrue(close.isHittable)
             capture("action-" + name + "-large-text-submit")

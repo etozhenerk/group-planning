@@ -15,6 +15,7 @@ final class NativeChatCounterpart {
     private let session: URLSession
     private let token: String
     private let meeting = ChatSheetTestSupport.sharedMeeting
+    private var joinedRevision: String?
 
     init() throws {
         let path = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
@@ -40,9 +41,20 @@ final class NativeChatCounterpart {
     func join() async throws {
         let invitation = Data("0000000000009501".utf8).base64EncodedString()
             .replacingOccurrences(of: "=", with: "")
-        _ = try await request(
+        let result = try await request(
             "invitations/" + invitation + "/rsvp", method: "PUT",
             body: ["answer": "going", "expected_revision": "0"])
+        joinedRevision = try XCTUnwrap(result["rsvp_revision"] as? String)
+    }
+
+    func leave() async throws {
+        guard let revision = joinedRevision else { return }
+        let result = try await request(
+            "meetings/" + meeting + "/rsvp", method: "PUT",
+            body: ["answer": "not_going", "expected_revision": revision])
+        XCTAssertEqual(result["rsvp"] as? String, "not_going")
+        XCTAssertEqual(result["can_access_feed"] as? Bool, false)
+        joinedRevision = nil
     }
 
     func read(_ text: String) async throws {

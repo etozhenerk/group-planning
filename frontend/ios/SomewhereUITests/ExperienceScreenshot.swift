@@ -6,6 +6,11 @@ enum ExperienceScreenshot {
     private static var contextFile: URL?
 
     static func configure(_ app: XCUIApplication) {
+        // Keep this namespace on the application across relaunches in one scenario.
+        // A new application starts with its own draft/outbox storage.
+        if app.launchEnvironment["SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"] == nil {
+            app.launchEnvironment["SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"] = UUID().uuidString
+        }
         let file = FileManager.default.temporaryDirectory.appendingPathComponent(
             "somewhere-ui-context-" + UUID().uuidString + ".json")
         contextFile = file

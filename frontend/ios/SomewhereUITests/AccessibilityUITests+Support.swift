@@ -10,6 +10,7 @@ extension AccessibilityUITests {
             "-UIPreferredContentSizeCategoryName",
             large ? "UICTContentSizeCategoryAccessibilityXXXL" : "UICTContentSizeCategoryL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         return app
     }

@@ -13,8 +13,11 @@ enum UITestBootstrap {
     }
     static func runtime() -> AppRuntime {
         let scenario = ProcessInfo.processInfo.environment["SOMEWHERE_UI_SCENARIO"] ?? "onboarding"
+        let namespace = ProcessInfo.processInfo.environment[
+            "SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"
+        ].flatMap(UUID.init(uuidString:))
         let directory = URL.applicationSupportDirectory.appendingPathComponent(
-            "UITestDrafts/" + scenario)
+            "UITestDrafts/" + scenario + "/" + (namespace?.uuidString ?? "default"))
         let drafts = DraftRepository(storage: FileDraftStorage(directory: directory))
         do {
             let file = URL.temporaryDirectory.appendingPathComponent("ui-fixture.json")
@@ -23,10 +26,6 @@ enum UITestBootstrap {
                 config.origin.port != nil
             else { throw ClientFailure.invalidOrigin }
             let origin = try APIOrigin(config.origin)
-            let namespace = ProcessInfo.processInfo.environment[
-                "SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"
-            ]
-            .flatMap(UUID.init(uuidString:))
             let chat = namespace.map { namespace in
                 ChatRepository(
                     storage: EncryptedChatStorage(

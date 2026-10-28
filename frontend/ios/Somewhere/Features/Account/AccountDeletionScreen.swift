@@ -44,6 +44,7 @@ struct AccountDeletionScreen: View {
                         .buttonStyle(.borderedProminent).tint(AppPalette.error)
                         .foregroundStyle(AppPalette.background)
                         .disabled(session.deletionBusy)
+                        .accessibilityIdentifier("account-delete-submit")
                         .accessibilityLabel(
                             session.deletionBusy
                                 ? "Удаление аккаунта"
@@ -51,6 +52,7 @@ struct AccountDeletionScreen: View {
                     }
                 }.padding(24)
             }
+            .accessibilityIdentifier("account-deletion-form")
             .navigationTitle("Удалить аккаунт?")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
