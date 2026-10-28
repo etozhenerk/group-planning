@@ -87,10 +87,44 @@ jobs:
         with:
           stage: checkers
           steps: ${{ toJSON(steps) }}
-  tests:
-    name: Unit and UI tests
+  unit:
+    name: Unit tests
     runs-on: xcode-27
-    timeout-minutes: 35
+    timeout-minutes: 20
+    outputs:
+      failures: ${{ steps.report.outputs.failures }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select pinned Xcode
+        id: ready
+        run: |
+          echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Models, transport and Keychain tests
+        id: unit
+        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
+        run: python3 scripts/ci/run.py unit sh frontend/ios/scripts/test.sh
+      - name: Upload full Xcode diagnostics when requested
+        if: ${{ !cancelled() && inputs.full_diagnostics == true }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ios-unit-xcresult-${{ github.run_attempt }}
+          path: frontend/ios/.build/TestResults-*.xcresult
+          include-hidden-files: true
+          retention-days: 7
+      - name: Stage report and logs
+        id: report
+        if: always()
+        uses: ./.github/actions/ci-report
+        with:
+          stage: unit-tests
+          steps: ${{ toJSON(steps) }}
+  tests:
+    name: UI tests
+    runs-on: xcode-27
+    timeout-minutes: 50
     outputs:
       failures: ${{ steps.report.outputs.failures }}
     steps:
@@ -107,10 +141,6 @@ jobs:
         id: ready
         run: |
           echo "DEVELOPER_DIR=/Applications/Xcode_$(cat frontend/ios/.xcode-version).app/Contents/Developer" >> "$GITHUB_ENV"
-      - name: Models, transport and Keychain tests
-        id: unit
-        if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
-        run: python3 scripts/ci/run.py unit sh frontend/ios/scripts/test.sh
       - name: UI scenarios and accessibility
         id: ui
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
@@ -119,10 +149,8 @@ jobs:
         if: ${{ !cancelled() && inputs.full_diagnostics == true }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: ios-xcresult-${{ github.run_attempt }}
-          path: |
-            frontend/ios/.build/TestResults-*.xcresult
-            frontend/ios/.build/UIResults-*.xcresult
+          name: ios-ui-xcresult-${{ github.run_attempt }}
+          path: frontend/ios/.build/UIResults-*.xcresult
           include-hidden-files: true
           retention-days: 7
       - name: Stage report and logs
@@ -130,12 +158,12 @@ jobs:
         if: always()
         uses: ./.github/actions/ci-report
         with:
-          stage: tests
+          stage: ui-tests
           steps: ${{ toJSON(steps) }}
   summary:
     name: Run summary
     if: always()
-    needs: [build, checkers, tests]
+    needs: [build, checkers, unit, tests]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
