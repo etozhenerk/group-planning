@@ -10,9 +10,12 @@ struct MediaPhotoSelection: View {
                     VStack(alignment: .leading, spacing: DesignTokens.spaceS8) {
                         if let image = UIImage(data: file.data) {
                             Image(uiImage: image).resizable().scaledToFill()
-                                .containerRelativeFrame(.horizontal)
-                                .aspectRatio(1, contentMode: .fit)
-                                .clipped().clipShape(
+                                .frame(
+                                    width: DesignTokens.componentPhotoPreviewWidth,
+                                    height: DesignTokens.componentPhotoPreviewHeight
+                                )
+                                .clipped()
+                                .clipShape(
                                     RoundedRectangle(
                                         cornerRadius: DesignTokens.componentButtonRadius)
                                 )
@@ -21,26 +24,46 @@ struct MediaPhotoSelection: View {
                                     Button {
                                         owner.remove(file.id)
                                     } label: {
-                                        ExperienceIcon(kind: .close)
-                                            .frame(
-                                                width: DesignTokens.targetIos,
-                                                height: DesignTokens.targetIos
-                                            )
-                                            .foregroundStyle(DesignTokens.colorText)
-                                            .background(DesignTokens.colorBackground, in: Circle())
-                                    }.accessibilityLabel("Убрать фото " + file.name).disabled(
-                                        owner.busy)
+                                        ExperienceIcon(
+                                            kind: .close,
+                                            size: DesignTokens.componentMobileFieldIconSize
+                                        )
+                                        .frame(
+                                            width: DesignTokens.componentPhotoPreviewRemoveSize,
+                                            height: DesignTokens.componentPhotoPreviewRemoveSize
+                                        )
+                                        .foregroundStyle(DesignTokens.colorText)
+                                        .background(DesignTokens.colorBackground, in: Circle())
+                                        .overlay {
+                                            Circle().stroke(
+                                                DesignTokens.colorBorderStrong,
+                                                lineWidth: DesignTokens.spaceS1)
+                                        }
+                                        .frame(
+                                            width: DesignTokens.targetIos,
+                                            height: DesignTokens.targetIos
+                                        )
+                                        .contentShape(Rectangle())
+                                    }.accessibilityLabel("Убрать фото " + file.name)
+                                        .disabled(owner.busy)
+                                        .offset(x: removeOffset, y: -removeOffset)
                                 }
                         }
                         if file.stage == .failed {
                             Text(file.problem ?? "Не удалось отправить фото.")
                                 .designFont(DesignTokens.typographySizeCaption)
                                 .foregroundStyle(DesignTokens.colorError)
-                                .containerRelativeFrame(.horizontal)
+                                .frame(
+                                    width: DesignTokens.componentPhotoPreviewWidth,
+                                    alignment: .leading)
                         }
                     }
                 }
-            }
+            }.padding(.vertical, removeOffset).padding(.trailing, removeOffset)
         }.scrollIndicators(.hidden).accessibilityIdentifier("media-photo-carousel")
+    }
+    private var removeOffset: CGFloat {
+        (DesignTokens.targetIos - DesignTokens.componentPhotoPreviewRemoveSize) / 2
+            + DesignTokens.componentPhotoPreviewRemoveOutset
     }
 }

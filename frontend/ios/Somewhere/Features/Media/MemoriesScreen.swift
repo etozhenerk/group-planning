@@ -16,13 +16,11 @@ struct MemoriesScreen: View {
                     Button {
                         dismiss()
                     } label: {
-                        HStack(spacing: 7) {
-                            ExperienceIcon(kind: .back, size: 18)
-                            Text("Прошедшие встречи")
-                        }
-                        .designFont(13).foregroundStyle(AppPalette.accent).frame(
-                            minHeight: 44)
-                    }.accessibilityLabel("Готово")
+                        ExperienceIcon(kind: .back, size: DesignTokens.componentMobileChatIconSize)
+                            .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                            .contentShape(Rectangle())
+                            .foregroundStyle(AppPalette.accent)
+                    }.accessibilityLabel("Назад").accessibilityIdentifier("memories-back")
                     if owner.current, let meeting = owner.meeting {
                         Text(
                             ExperienceDate.label(
@@ -113,30 +111,30 @@ struct MemoriesScreen: View {
                         }
                     }
                 }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
-            }.background(AppPalette.background)
-        }.safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
+            }.background(AppPalette.background).accessibilityIdentifier("memories-scroll")
+        }
 
-            .toolbar(.hidden, for: .navigationBar)
-            .task(id: reloadID) { await owner.load() }
-            .task(id: "\(selection)-\(owner.photos.count)") {
-                await owner.prefetch(around: selection)
-            }
-            .modifier(
-                MediaSelectionPresenter(
-                    owner: owner.transfer, kind: $picker, selected: { adding = true })
-            )
-            .sheet(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
-                MediaPickerPanel(owner: owner.transfer, photosOnly: true)
+        .toolbar(.hidden, for: .navigationBar)
+        .task(id: reloadID) { await owner.load() }
+        .task(id: "\(selection)-\(owner.photos.count)") {
+            await owner.prefetch(around: selection)
+        }
+        .modifier(
+            MediaSelectionPresenter(
+                owner: owner.transfer, kind: $picker, selected: { adding = true })
+        )
+        .sheet(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
+            MediaPickerPanel(owner: owner.transfer, photosOnly: true)
 
+        }
+        .fullScreenCover(isPresented: $fullscreen) {
+            MemoryFullscreen(owner: owner, selection: $selection)
+        }
+        .onChange(of: owner.current) { _, current in
+            if !current {
+                owner.clear()
+                dismiss()
             }
-            .fullScreenCover(isPresented: $fullscreen) {
-                MemoryFullscreen(owner: owner, selection: $selection)
-            }
-            .onChange(of: owner.current) { _, current in
-                if !current {
-                    owner.clear()
-                    dismiss()
-                }
-            }
+        }
     }
 }

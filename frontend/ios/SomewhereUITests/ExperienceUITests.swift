@@ -69,7 +69,7 @@ final class ExperienceUITests: XCTestCase {
         reveal(toggle, app: app)
         XCTAssertEqual(toggle.value as? String, "0")
         capture("refresh-support")
-        app.buttons["Закрыть"].tap()
+        app.buttons["Назад"].tap()
         XCTAssertTrue(app.buttons["Где найти приглашения с ответом «Возможно»?"].exists)
         app.buttons["Назад"].tap()
         XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 5))
@@ -130,10 +130,25 @@ final class ExperienceUITests: XCTestCase {
         let first = app.buttons["Открыть фото 1"]
         XCTAssertTrue(first.waitForExistence(timeout: 10))
         capture("refresh-memory-stack")
+        XCTAssertFalse(app.scrollViews["memories-scroll"].staticTexts["brand-wordmark"].exists)
+        XCTAssertFalse(app.scrollViews["memories-scroll"].staticTexts["Прошедшие встречи"].exists)
+        XCTAssertTrue(app.buttons["memories-back"].isHittable)
+        first.swipeRight()
+        XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 5))
+        first.swipeLeft()
+        XCTAssertTrue(app.staticTexts["2 из 3"].waitForExistence(timeout: 5))
+        app.buttons["Открыть фото 2"].swipeRight()
+        XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 5))
         first.swipeLeft()
         XCTAssertTrue(app.staticTexts["2 из 3"].waitForExistence(timeout: 5))
         app.buttons["Открыть фото 2"].tap()
         XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5))
+        app.swipeLeft()
+        XCTAssertTrue(app.staticTexts["3 из 3"].waitForExistence(timeout: 5))
+        app.swipeLeft()
+        XCTAssertTrue(app.staticTexts["3 из 3"].waitForExistence(timeout: 5))
+        app.swipeRight()
+        XCTAssertTrue(app.staticTexts["2 из 3"].waitForExistence(timeout: 5))
         app.swipeLeft()
         XCTAssertTrue(app.staticTexts["3 из 3"].waitForExistence(timeout: 5))
         capture("refresh-memory-fullscreen")
@@ -146,7 +161,7 @@ final class ExperienceUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         capture("refresh-memory-landscape")
         XCUIDevice.shared.orientation = .portrait
-        app.buttons["Готово"].tap()
+        app.buttons["memories-back"].tap()
         XCTAssertTrue(album.waitForExistence(timeout: 5))
     }
     func testProfileAtLargeText() {

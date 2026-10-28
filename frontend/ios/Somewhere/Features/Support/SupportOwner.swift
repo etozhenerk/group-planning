@@ -24,12 +24,33 @@ final class SupportOwner {
         self.screen = screen
     }
     var valid: Bool {
-        (10...3000).contains(description.trimmingCharacters(in: .whitespacesAndNewlines).count)
-            && (email.isEmpty || (email.contains("@") && !email.contains(" ")))
-            && (screenshot?.data.count ?? 0) <= 5 * 1024 * 1024
+        validationErrors.isEmpty
+    }
+    private var normalizedEmail: String {
+        email.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    private var validationErrors: [String: String] {
+        var errors: [String: String] = [:]
+        let count = description.trimmingCharacters(in: .whitespacesAndNewlines).count
+        if count < 10 {
+            errors["description"] = "Расскажите подробнее — нужно хотя бы 10 символов."
+        } else if count > 3000 {
+            errors["description"] = "Сократите сообщение до 3000 символов."
+        }
+        if !normalizedEmail.isEmpty
+            && (!normalizedEmail.contains("@") || normalizedEmail.contains(" "))
+        {
+            errors["email"] = "Проверьте адрес почты или оставьте поле пустым."
+        }
+        if (screenshot?.data.count ?? 0) > 5 * 1024 * 1024 {
+            errors["screenshot"] = "Выберите скриншот до 5 МБ."
+        }
+        return errors
     }
     func submit() async {
-        guard valid, !sending else { return }
+        guard !sending else { return }
+        fieldErrors = validationErrors
+        guard fieldErrors.isEmpty else { return }
         let version = generation
         sending = true
         problem = nil
@@ -81,7 +102,7 @@ final class SupportOwner {
             let content = Content(
                 kind: kind,
                 description: description.trimmingCharacters(in: .whitespacesAndNewlines),
-                screen: screen, email: email.isEmpty ? nil : email,
+                screen: screen, email: normalizedEmail.isEmpty ? nil : normalizedEmail,
                 screenshot: screenshot.map {
                     Screenshot(
                         fileName: $0.name, contentType: $0.contentType,

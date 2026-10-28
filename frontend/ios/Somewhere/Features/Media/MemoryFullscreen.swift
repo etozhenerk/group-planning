@@ -75,6 +75,7 @@ struct MemoryFullscreen: View {
     }
     private func step(_ delta: Int) {
         guard owner.photos.count > 1 else { return }
-        selection = (selection + delta + owner.photos.count) % owner.photos.count
+        selection = MediaPhotoNavigation.index(
+            from: selection, delta: delta, count: owner.photos.count)
     }
 }

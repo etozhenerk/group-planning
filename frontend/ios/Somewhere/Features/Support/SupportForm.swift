@@ -132,7 +132,10 @@ struct SupportForm: View {
                 Text(problem).designFont(12).foregroundStyle(AppPalette.error)
             }
             Rectangle().fill(AppPalette.border).frame(height: 1)
-            Button(action: submit) {
+            Button {
+                focused = nil
+                submit()
+            } label: {
                 Group {
                     if owner.sending {
                         ProgressView()
@@ -142,14 +145,18 @@ struct SupportForm: View {
                 }
                 .frame(maxWidth: .infinity, minHeight: 46).foregroundStyle(AppPalette.actionText)
                 .background(AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-            }.disabled(!owner.valid || owner.sending)
+            }.disabled(owner.sending)
             NavigationLink("Политика конфиденциальности") {
                 ServiceInformationScreen(document: .privacy, api: owner.api)
             }.designFont(10)
         }.padding(.horizontal, 17).padding(.vertical, 20)
             .background(Color(designHex: 0x2d2e35), in: RoundedRectangle(cornerRadius: 22))
-            .onChange(of: owner.fieldErrors) { _, errors in
-                focused = ["description", "email"].first { errors[$0] != nil }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Готово") { focused = nil }
+                        .accessibilityIdentifier("support-keyboard-done")
+                }
             }
     }
 }

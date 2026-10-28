@@ -18,10 +18,10 @@ struct SupportScreen: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("← К встречам").designFont(13).foregroundStyle(
+                        Text("← Назад").designFont(13).foregroundStyle(
                             AppPalette.accent
                         ).frame(minHeight: 44)
-                    }.accessibilityLabel("Закрыть")
+                    }.accessibilityLabel("Назад")
                     if let reference = owner.reference {
                         VStack(spacing: 18) {
                             Text("✓").designFont(32).foregroundStyle(
@@ -60,10 +60,12 @@ struct SupportScreen: View {
                     }
                 }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28).disabled(
                     owner.sending)
-            }.accessibilityIdentifier("support-scroll").background(AppPalette.background).toolbar(
-                .hidden, for: .navigationBar
-            )
-            .safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
+            }.scrollDismissesKeyboard(.interactively)
+                .accessibilityIdentifier("support-scroll").background(AppPalette.background)
+                .toolbar(
+                    .hidden, for: .navigationBar
+                )
+                .safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
         }.task(id: submission) {
             if submission {
                 await owner.submit()

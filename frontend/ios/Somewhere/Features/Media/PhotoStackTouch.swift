@@ -31,12 +31,12 @@ struct PhotoStackTouch: UIViewRepresentable {
 
         func gestureRecognizerShouldBegin(_ recognizer: UIGestureRecognizer) -> Bool {
             guard let pan = recognizer as? UIPanGestureRecognizer else { return true }
-            let velocity = pan.velocity(in: pan.view)
+            let velocity = pan.velocity(in: pan.view?.window)
             return abs(velocity.x) > abs(velocity.y)
         }
 
         @objc func pan(_ recognizer: UIPanGestureRecognizer) {
-            let distance = recognizer.translation(in: recognizer.view).x
+            let distance = recognizer.translation(in: recognizer.view?.window).x
             switch recognizer.state {
             case .began, .changed: value.changed(distance)
             case .ended: value.ended(distance)

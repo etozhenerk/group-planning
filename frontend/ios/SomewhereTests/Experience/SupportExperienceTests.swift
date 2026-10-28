@@ -6,6 +6,34 @@ import Testing
 @Suite("Feedback privacy and retry")
 @MainActor
 struct SupportExperienceTests {
+    @Test func invalidDraftExplainsFailureAndCanBeCorrectedWithoutLosingText() async throws {
+        let harness = try SessionHarness()
+        let owner = SupportOwner(api: harness.session.api, kind: .problem, screen: "profile")
+        owner.description = "Баг"
+        owner.email = "не почта"
+        await owner.submit()
+        #expect(owner.fieldErrors["description"]?.contains("10") == true)
+        #expect(owner.fieldErrors["email"] != nil)
+        #expect(owner.description == "Баг")
+        #expect(!owner.sending)
+        #expect(owner.reference == nil)
+        #expect(await harness.transport.requests.isEmpty)
+        owner.description = "Не удаётся скрыть клавиатуру формы"
+        owner.email = "  sasha@example.com  "
+        await harness.transport.enqueue(
+            "/api/v1/support/feedback",
+            data: Data(
+                "{\"id\":\"\(UUID())\",\"reference\":\"SW-125\",\"status\":\"accepted\"}".utf8),
+            status: 201)
+        await owner.submit()
+        #expect(owner.reference == "SW-125")
+        #expect(owner.fieldErrors.isEmpty)
+        let requests = await harness.transport.requests
+        #expect(requests.count == 1)
+        let body = try #require(requests.first?.httpBody)
+        let object = try #require(JSONSerialization.jsonObject(with: body) as? [String: Any])
+        #expect(object["email"] as? String == "sasha@example.com")
+    }
     @Test func validationAndRateLimitKeepFieldsWithoutSuccess() async throws {
         let harness = try SessionHarness()
         let owner = SupportOwner(api: harness.session.api, kind: .problem, screen: "profile")

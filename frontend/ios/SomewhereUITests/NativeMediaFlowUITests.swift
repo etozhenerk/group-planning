@@ -40,6 +40,9 @@ final class NativeMediaFlowUITests: XCTestCase {
         let photo = app.images.matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 10))
         photo.tap()
+        let second = app.images.matching(identifier: "PXGGridLayout-Info").element(boundBy: 1)
+        XCTAssertTrue(second.exists)
+        second.tap()
         let add = app.buttons["Add"]
         XCTAssertTrue(add.waitForExistence(timeout: 5))
         add.tap()
@@ -49,7 +52,33 @@ final class NativeMediaFlowUITests: XCTestCase {
         XCTAssertTrue(
             app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Убрать фото "))
                 .firstMatch.exists)
+        let previews = app.images.matching(identifier: "Выбранное фото")
+        XCTAssertEqual(previews.count, 2)
+        let firstPreview = previews.element(boundBy: 0).frame
+        let secondPreview = previews.element(boundBy: 1).frame
+        // iOS 27 floating sheets scale their layout to the inset presentation surface.
+        // Image accessibility bounds include the clipped fill; the stride measures the card.
+        let presentationScale = app.scrollViews["media-picker-scroll"].frame.width / app.frame.width
+        XCTAssertGreaterThan(presentationScale, 0.9)
+        XCTAssertLessThanOrEqual(presentationScale, 1)
+        XCTAssertEqual(
+            (secondPreview.minX - firstPreview.minX) / presentationScale - 12, 176, accuracy: 1)
+        XCTAssertEqual(firstPreview.height / presentationScale, 132, accuracy: 1)
+        XCTAssertGreaterThan(secondPreview.midX, firstPreview.midX)
+        XCTAssertLessThan(secondPreview.minX, app.scrollViews["media-photo-carousel"].frame.maxX)
+        let removes = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Убрать фото "))
+        XCTAssertGreaterThanOrEqual(removes.firstMatch.frame.width / presentationScale, 43.5)
+        XCTAssertGreaterThanOrEqual(removes.firstMatch.frame.height / presentationScale, 43.5)
+        XCTAssertGreaterThan(removes.firstMatch.frame.maxX, firstPreview.maxX)
+        XCTAssertTrue(
+            app.scrollViews["media-photo-carousel"].frame.contains(removes.firstMatch.frame))
+        print(
+            "PHOTO_PREVIEW_BOUNDS first=\(firstPreview) second=\(secondPreview) remove=\(removes.firstMatch.frame) scale=\(presentationScale)"
+        )
         ExperienceScreenshot.save("native-photo-carousel", test: self)
+        removes.element(boundBy: 1).tap()
+        XCTAssertEqual(previews.count, 1)
         send.tap()
         XCTAssertTrue(app.buttons["media-picker-close"].waitForNonExistence(timeout: 20))
         XCTAssertEqual(input.value as? String, "Фото отдельно")
