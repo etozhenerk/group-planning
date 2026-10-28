@@ -103,6 +103,13 @@ export const useAlbum = (count: number) => {
     setOffset(0);
   };
 
+  const lostCapture = (event: PointerEvent<HTMLDivElement>) => {
+    // Touch transfers implicit capture from the photo button to this stack.
+    if (event.target === event.currentTarget) {
+      cancel();
+    }
+  };
+
   const end = (event: PointerEvent<HTMLDivElement>) => {
     const origin = pointer.current;
 
@@ -152,6 +159,7 @@ export const useAlbum = (count: number) => {
     move,
     end,
     cancel,
+    lostCapture,
     keyboard,
     canOpen: () => !moved.current && !moving,
   };

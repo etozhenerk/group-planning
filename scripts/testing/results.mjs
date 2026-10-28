@@ -70,7 +70,9 @@ export const inspectRun = async (root, plan, run, directory, options = {}) => {
         throw new Error(`Not independent manual verification: ${result.id}`);
       if (!kinds.has('interaction')) throw new Error(`Missing interaction evidence: ${result.id}`);
       const testCase = catalog.cases.find((c) => c.id === expected.caseId);
-      if (testCase.level === 'e2e' && !kinds.has('screenshot')) throw new Error(`Missing screenshot: ${result.id}`);
+      const environment = plan.environments.find((e) => e.id === expected.environment);
+      const uiPlatform = ['web', 'ios', 'android'].includes(environment.platform);
+      if (uiPlatform && testCase.level === 'e2e' && !kinds.has('screenshot')) throw new Error(`Missing screenshot: ${result.id}`);
     } else if (result.executor.kind !== 'runner' || !kinds.has('raw')) {
       throw new Error(`Missing raw automated result: ${result.id}`);
     } else await checkAutomated(catalog, plan, expected, result, directory);

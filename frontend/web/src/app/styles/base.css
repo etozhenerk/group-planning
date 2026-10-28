@@ -64,6 +64,13 @@ button:disabled:not(.g-button) {
   outline-offset: 4px;
 }
 
+/* Safari can retain focus-visible after pointer-opened dialogs and focus return. */
+
+html[data-input-modality='pointer'] :where(button, a, [role='button']):focus-visible,
+html[data-input-modality='pointer'] .g-button:focus-visible::before {
+  outline: none !important;
+}
+
 h1,
 h2,
 h3,

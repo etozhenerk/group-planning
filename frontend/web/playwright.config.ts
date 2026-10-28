@@ -44,6 +44,7 @@ export default defineConfig({
         '49-service-navigation.spec.ts',
         '50-empty-chat-invite.spec.ts',
         '51-album-stack-cycle.spec.ts',
+        '53-pointer-focus.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

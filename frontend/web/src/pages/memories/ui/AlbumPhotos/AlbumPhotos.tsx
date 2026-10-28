@@ -46,7 +46,7 @@ export const AlbumPhotos = ({ photos, user, album, open }: AlbumPhotosProps) => 
       onPointerMove={album.move}
       onPointerUp={album.end}
       onPointerCancel={album.cancel}
-      onLostPointerCapture={album.cancel}
+      onLostPointerCapture={album.lostCapture}
     >
       {Array.from({ length: Math.min(3, photos.length) }, (_, depth) => ({
         photo: photos[(album.index + depth) % photos.length],

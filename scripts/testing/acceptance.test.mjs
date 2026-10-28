@@ -12,7 +12,7 @@ import { exportReport } from './report.mjs';
 import { checkManifests } from './manifests.mjs';
 import { sha256 } from '../design/files.mjs';
 
-const fixture = async (t) => {
+const fixture = async (t, platform = 'web') => {
   const root = await mkdtemp(join(tmpdir(), 'somewhere-qa-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   const put = async (path, value) => { const target = join(root, path); await mkdir(join(target, '..'), { recursive: true }); await writeFile(target, typeof value === 'string' || Buffer.isBuffer(value) ? value : JSON.stringify(value)); };
@@ -22,16 +22,16 @@ const fixture = async (t) => {
   await put('src/app.test.ts', "test('entry works', () => {});");
   const c = { id: 'TC-ENTRY', title: 'Entry', lifecycle: 'active', level: 'e2e', risk: 'critical',
     source: { path: source, requirement: 'Join', scenario: 'Allowed', sha256: scenarioBlocks(body)[0].sha256 },
-    platforms: ['web'], preconditions: ['Isolated guest'], steps: [{ action: 'Join', expected: 'Chat opens' }], cleanup: ['Delete guest'],
-    automation: { web: { status: 'manual', health: 'unknown', tests: [] } } };
-  const config = { schemaVersion: 1, sources: [source], excludedSources: [], profiles: { desktop: { platform: 'web' }, mobile: { platform: 'web' } },
-    releaseProfiles: { web: ['desktop', 'mobile'] }, inputs: { web: ['src'] },
-    runners: { unit: { platforms: ['web'], cwd: '.', command: [process.execPath, '-e', 'console.log("actual runner")'], required: true, scope: 'source' } },
+    platforms: [platform], preconditions: ['Isolated guest'], steps: [{ action: 'Join', expected: 'Chat opens' }], cleanup: ['Delete guest'],
+    automation: { [platform]: { status: 'manual', health: 'unknown', tests: [] } } };
+  const config = { schemaVersion: 1, sources: [source], excludedSources: [], profiles: { desktop: { platform }, mobile: { platform } },
+    releaseProfiles: { [platform]: ['desktop', 'mobile'] }, inputs: { [platform]: ['src'] },
+    runners: { unit: { platforms: [platform], cwd: '.', command: [process.execPath, '-e', 'console.log("actual runner")'], required: true, scope: 'source' } },
     manifests: [], legacyChanges: ['feature'], nonProductChanges: [] };
   const save = async () => { await put('testing/config.json', config); await put('testing/cases/cases.yaml', stringify([c])); };
   await save();
-  const env = { id: 'desktop', profile: 'desktop', platform: 'web', application: 'product', url: 'http://127.0.0.1:9999', build: 'fixture', os: 'test', device: 'chromium', locale: 'ru', timezone: 'Europe/Moscow', data: 'isolated', backend: 'fixture-api' };
-  const plan = (extra = {}) => makePlan(root, { purpose: 'feature', component: 'web', selectedCases: [c.id], environments: [env], implementer: 'author', id: 'run', ...extra });
+  const env = { id: 'desktop', profile: 'desktop', platform, application: 'product', url: 'http://127.0.0.1:9999', build: 'fixture', os: 'test', device: 'chromium', locale: 'ru', timezone: 'Europe/Moscow', data: 'isolated', backend: 'fixture-api' };
+  const plan = (extra = {}) => makePlan(root, { purpose: 'feature', component: platform, selectedCases: [c.id], environments: [env], implementer: 'author', id: 'run', ...extra });
   const pass = async (p) => {
     await put('evidence/actions.txt', 'Clicked Join on product; observed chat and sent a message.');
     await put('evidence/view.png', Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlSAAAAAASUVORK5CYII=', 'base64'));
@@ -115,6 +115,24 @@ test('code edits stale an otherwise successful feature run', async (t) => {
   const f = await fixture(t); const p = await f.plan(); const r = await f.addEvidence(await f.pass(p));
   await f.put('src/app.ts', 'export const app = 2;');
   await assert.rejects(inspectRun(f.root, p, r, f.root, { ready: true }), /Stale implementation/);
+});
+
+test('manual UI e2e requires a screenshot on every client platform', async (t) => {
+  for (const platform of ['web', 'ios', 'android']) {
+    const f = await fixture(t, platform); const p = await f.plan(); const r = await f.addEvidence(await f.pass(p));
+    assert.equal((await inspectRun(f.root, p, r, f.root, { ready: true })).ready, true);
+    r.checks[0].evidence = r.checks[0].evidence.filter((e) => e.kind !== 'screenshot');
+    await assert.rejects(inspectRun(f.root, p, r, f.root, { ready: true }), /Missing screenshot/);
+  }
+});
+
+test('manual backend e2e accepts interaction evidence without an artificial screenshot', async (t) => {
+  const f = await fixture(t, 'backend'); const p = await f.plan(); const r = await f.pass(p);
+  await f.put('evidence/api.txt', 'POST entry returned 201; subsequent GET returned the created entry.');
+  r.checks[0].evidence = [await evidenceFor(f.root, 'evidence/api.txt', 'interaction')];
+  assert.equal((await inspectRun(f.root, p, r, f.root, { ready: true })).ready, true);
+  r.checks[0].evidence = [];
+  await assert.rejects(inspectRun(f.root, p, r, f.root, { ready: true }), /Missing interaction/);
 });
 
 test('automated pass requires the actual matched runner test to pass', async (t) => {
