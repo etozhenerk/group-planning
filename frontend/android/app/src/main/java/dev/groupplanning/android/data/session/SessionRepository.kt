@@ -136,6 +136,12 @@ internal class SessionRepository(
     suspend fun content(request: ApiRequest, lease: RequestLease): ByteArray =
         perform(request, lease.generation, lease) { saved -> api.content(request, saved) }
 
+    suspend fun <T> meetingOperation(access: MeetingAccess, block: suspend () -> T): T = perform(
+        ApiRequest(emptyList(), meetingId = access.id),
+        access.request.generation,
+        access.request,
+    ) { block() }
+
     private suspend fun <T> perform(
         request: ApiRequest,
         expectedGeneration: Long?,

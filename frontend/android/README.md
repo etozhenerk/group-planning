@@ -63,10 +63,15 @@ sh scripts/test-ui.sh
 sh scripts/test-ui.sh calendar
 sh scripts/test-ui.sh auth
 sh scripts/test-ui.sh experience
+ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh
 ```
 
 `check.sh` выполняет чистую сборку обеих конфигураций, проверку Kotlin-оформления,
-Lint, JVM-тесты и сборку instrumentation APK. `test-device.sh` выполняет
+Lint, JVM-тесты и сборку instrumentation APK. `test-album-gallery.sh` проверяет
+реальный MediaStore только в отдельном QA-приложении: скрытые записи,
+публикацию оригинальных байтов/EXIF и удаление только собственных записей.
+Использует уже запущенное устройство из `ANDROID_SERIAL`; API и вход не нужны.
+`test-device.sh` выполняет
 проверки Android Keystore и защищённого контекста приглашения на уже запущенном устройстве.
 `test-ui.sh` требует Go 1.27.2 и Python 3: поднимает отдельный HTTPS API из Go-теста,
 запускает Compose UI-тесты и затем останавливает только свой сервер. Живое demo

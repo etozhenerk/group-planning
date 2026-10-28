@@ -2,6 +2,7 @@ package dev.groupplanning.android.data
 
 import android.content.Context
 import dev.groupplanning.android.BuildConfig
+import dev.groupplanning.android.data.album.MediaStoreAlbumGallery
 import dev.groupplanning.android.data.api.ApiClient
 import dev.groupplanning.android.data.api.ApiOrigin
 import dev.groupplanning.android.data.auth.FileAuthAttemptStorage
@@ -16,6 +17,7 @@ import dev.groupplanning.android.data.media.MediaSelection
 import dev.groupplanning.android.data.media.MediaStorage
 import dev.groupplanning.android.data.outbox.FileMessageStorage
 import dev.groupplanning.android.data.outbox.MessageOutbox
+import dev.groupplanning.android.data.repository.AlbumDownloadRepository
 import dev.groupplanning.android.data.repository.CoverRepository
 import dev.groupplanning.android.data.repository.EmojiRepository
 import dev.groupplanning.android.data.repository.FeedRepository
@@ -44,6 +46,7 @@ internal class ClientRuntime(
     val emoji: EmojiRepository? = null,
     val media: MediaRepository? = null,
     val service: ServiceRepository? = null,
+    val albumDownloads: AlbumDownloadRepository? = null,
 ) {
     val meetings: MeetingRepository? = sessions?.let(::MeetingRepository)
 
@@ -97,6 +100,13 @@ internal class ClientRuntime(
             return ClientRuntime(
                 sessions = sessions,
                 media = media,
+                albumDownloads = sessions?.let {
+                    AlbumDownloadRepository(
+                        it,
+                        MediaStoreAlbumGallery(context.applicationContext),
+                        File(context.cacheDir, "album-downloads-$key"),
+                    )
+                },
                 emoji = EmojiRepository(context),
                 service = api?.let {
                     ServiceRepository(
