@@ -28,18 +28,20 @@ export const ReactionChooser = ({
   useLayoutEffect(resize, [all, resize]);
 
   return all ? (
-    <div className={styles.full}>
+    <div className={styles.full} data-reaction-expanded>
       <div className={styles.context}>
         <span>Реакция на сообщение</span>
         <p>{context}</p>
       </div>
-      <EmojiDock
-        onSelect={choose}
-        onClose={close}
-        reaction
-        selected={selected}
-        pending={pending}
-      />
+      <div className={styles.emoji}>
+        <EmojiDock
+          onSelect={choose}
+          onClose={close}
+          reaction
+          selected={selected}
+          pending={pending}
+        />
+      </div>
       {readers && (
         <button type="button" className={styles.readers} onClick={readers}>
           Кто прочитал

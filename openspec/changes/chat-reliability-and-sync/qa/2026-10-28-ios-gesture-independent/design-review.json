@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "d31bb5f8f9d6048ac5ef699da6abe323688af918c691a0a10f11f457b873bca0",
+  "reviewer": "/root/backend_independent_resume",
+  "reviewedAt": "2026-10-28T09:21:04.112095+00:00",
+  "mode": "live",
+  "environment": "Frozen SomewhereUITestHost cb599c2e…; iPhone18Pro simulator iOS27.0,402×874pt/874×402pt, SFUI, ru_RU, Europe/Moscow, contentSizeCategoryL; initial legacy then explicit realtime/read-state memory fixture.",
+  "summary": "Needs fixes: P1 composer toggle inserts emoji, P2 category symbols differ from approved raw. Partial live review; shared context and iOS source changed after captures, no current design acceptance.",
+  "checks": [
+    {
+      "screen": "chat-reactions-native",
+      "platform": "ios",
+      "state": "full-anchored-context",
+      "status": "needs-fixes",
+      "observations": "Anchored full selection, composer and scroll grid work in viewed states. Category toolbar differs: iOS colored 😀🧑🐻🍎⚽🚗 vs approved monochrome ◷☺❀♧✈☼♡. No native exception found in chat-actions/publication.",
+      "evidence": [
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence/text-full-picker.png",
+          "sha256": "0ed19a6ead2516d205efea4727c1b26a75f43d2d02603f916c7d48bb61709e87",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence/reference-full.png",
+          "sha256": "54b91a619496d83c84752b8060dd24d65f39e5d3b4c5fc65decb623cde6643ce",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/raw/gesture01.log",
+          "sha256": "be0887d8a7b941411d95e5b59300cd6f1c833e1ca9540ab6c29855c29af8e256",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-reactions-native",
+      "platform": "ios",
+      "state": "long-press-scroll-cancel",
+      "status": "blocked",
+      "observations": "Legacy profile live photo/text pan does not open picker, tap/hold distinguished; source changed after captures. Realtime complete gesture repeat and reduced-motion/accessibility remaining.",
+      "evidence": [
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence/photo-pan-cancels-hold.png",
+          "sha256": "5f8118ad98a33631c86c49592b9dcdc6b1eb1878f9ad86cb16e82682087a8def",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence/reference-quick.png",
+          "sha256": "c1d03734a2deb9401759ca16d91befabe1da9778a4b70378e439dafa105aca34",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/raw/gesture03.log",
+          "sha256": "2052c2165e0843777d581676ec12aeb03219085a908545da6c087af62570700f",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-emoji-native",
+      "platform": "ios",
+      "state": "keyboard-toggle-selection",
+      "status": "needs-fixes",
+      "observations": "IOS-COMPOSER-TOGGLE-INSERTS-EMOJI-001: two consecutive accessible toggle taps insert 🥲 in previously empty composer, without emoji selection. Recorded on clean app, unique storage namespace, realtime/read enabled.",
+      "evidence": [
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/realtime/evidence/rapid-toggle-0.png",
+          "sha256": "696f706068399d599fa45cc3cc41403fdac57062c4d153c9f0dc5446c4d8a8aa",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence/reference-full.png",
+          "sha256": "54b91a619496d83c84752b8060dd24d65f39e5d3b4c5fc65decb623cde6643ce",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/realtime/composer-toggle.log",
+          "sha256": "54332318a72e0cb916e5be03e5022272909d45c903306f65e39bd9cd2dc06896",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

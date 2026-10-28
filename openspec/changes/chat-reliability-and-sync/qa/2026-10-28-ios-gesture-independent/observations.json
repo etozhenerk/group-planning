@@ -1,0 +1,33 @@
+{
+  "scope": "Независимый targeted iOS gesture/design review; не полная приёмка iOS или release.",
+  "candidate": "cb599c2e04d69d427888c42b09761bf61eb7063a7122c60fc218adec2978ac27",
+  "legacyRuns": {
+    "existingUI": "3 tests pass",
+    "ownGesture01": "2 tests pass",
+    "ownGesture02": "failed: short fixture did not overflow; invalid scrolling precondition; preserved",
+    "ownGesture03": "2 tests pass, long-text pan459→792.7, photo pan578.3→514.3; grid scroll kept anchor; close delta≤2pt",
+    "readMedia": "4 passed, ChatSync blocked by wrong capabilities"
+  },
+  "realtimeRuns": {
+    "actualCapabilities": {
+      "sync": true,
+      "read_state": true,
+      "realtime": true
+    },
+    "existingUI": "photo/full picker/people passed; ChatSync subscribed, sent, observed empty→1 readers, received counterpart, no idle polling; failed later because composer already contained unexpected 🥰",
+    "cleanChat": "blocked: reused counterpart RSVP expected_revision=0 gave409 before UI; not a second product reproduction",
+    "independentComposer": "confirmed P1 with clean install + unique storage namespace: empty→🥲 after two composer toggle taps, no emoji selection"
+  },
+  "findings": [
+    "IOS-COMPOSER-TOGGLE-INSERTS-EMOJI-001 P1",
+    "IOS-EMOJI-CATEGORIES-DESIGN-002 P2: colored emoji category symbols differ from approved monochrome raw"
+  ],
+  "limits": [
+    "Legacy capability results not promoted to realtime acceptance.",
+    "No complete14-case pass: fault injection/revoke, multi-reader pagination, accessibility actions/VoiceOver, large text/ReduceMotion not completely exercised.",
+    "Landscape picker visible; landscape keyboard was outside visible viewport in observed tree. No landscape+software IME pass.",
+    "No physical-device frame p95 or commit-to-render/capacity measurement.",
+    "Shared cross run has not started: later web/iOS fixes require a new exact candidate.",
+    "Root changed iOS categories and shared web inputs after captures; contexts are preserved, not rewritten to current."
+  ]
+}

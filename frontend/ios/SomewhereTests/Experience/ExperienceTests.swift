@@ -91,4 +91,11 @@ struct ExperienceTests {
         privateData.clear()
         #expect(privateData.recentEmoji.isEmpty)
     }
+
+    @Test func approvedEmojiGroupsKeepEveryCatalogEntryReachableExactlyOnce() {
+        #expect(!EmojiCatalog.entries.isEmpty)
+        for entry in EmojiCatalog.entries {
+            #expect(EmojiPickerCategory.allCases.filter { $0.contains(entry) }.count == 1)
+        }
+    }
 }

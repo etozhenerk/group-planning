@@ -1,0 +1,65 @@
+sandbox-exec: sandbox_apply: Operation not permitted
+sandbox-exec: sandbox_apply: Operation not permitted
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:18:23: warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+16 |  let second=25.9+Double(index)*0.05
+17 |  var actual=CMTime.zero
+18 |  let cg=try generator.copyCGImage(at:CMTime(seconds:second,preferredTimescale:600),actualTime:&actual)
+   |                       `- warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+19 |  let img=NSImage(cgImage:cg,size:NSSize(width:cg.width,height:cg.height))
+20 |  let x=index%columns*w, y=(count/columns-1-index/columns)*h
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:30:10: warning: 'outputURL' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+28 | try JSONSerialization.data(withJSONObject:samples,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("motion-samples.json"))
+29 | let exporter=AVAssetExportSession(asset:asset,presetName:AVAssetExportPreset640x480)!
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+   |          `- warning: 'outputURL' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:30:90: warning: 'outputFileType' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+28 | try JSONSerialization.data(withJSONObject:samples,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("motion-samples.json"))
+29 | let exporter=AVAssetExportSession(asset:asset,presetName:AVAssetExportPreset640x480)!
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+   |                                                                                          `- warning: 'outputFileType' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:32:46: warning: 'exportAsynchronously(completionHandler:)' was deprecated in macOS 15.0 [#DeprecatedDeclaration]
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+   |                                              `- warning: 'exportAsynchronously(completionHandler:)' was deprecated in macOS 15.0 [#DeprecatedDeclaration]
+33 | print("export",exporter.status.rawValue,"duration",asset.duration.seconds)
+34 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:33:25: warning: 'status' was deprecated in macOS 15.0: Use states(updateInterval:) instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+33 | print("export",exporter.status.rawValue,"duration",asset.duration.seconds)
+   |                         `- warning: 'status' was deprecated in macOS 15.0: Use states(updateInterval:) instead [#DeprecatedDeclaration]
+34 | 
+
+sysctlbyname for kern.hv_vmm_present failed with status -1Swift/ErrorType.swift:254: Fatal error: Error raised at top level: Error Domain=AVFoundationErrorDomain Code=-11821 "Cannot Decode" UserInfo={NSLocalizedFailureReason=The media data could not be decoded. It may be damaged., NSLocalizedDescription=Cannot Decode, NSUnderlyingError=0x74871d10b0 {Error Domain=NSOSStatusErrorDomain Code=-12911 "(null)"}}
+Stack dump:
+0.	Program arguments: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -interpret openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -module-cache-path /tmp/somewhere-ios-independent-20261028/mac-module-cache -no-color-diagnostics -Xcc -fno-color-diagnostics -new-driver-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver -empty-abi-descriptor -no-auto-bridging-header-chaining -module-name main -disable-clang-spi -target-sdk-version 27.0 -target-sdk-name macosx27.0 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/local/lib/swift/host/plugins#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -- /tmp/somewhere-ios-independent-20261028/gestures-live.mp4 openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/evidence
+1.	Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
+2.	Compiling with effective version 5.10
+3.	While running user code "openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift"
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+0  swift-frontend           0x00000001072dfbd0 llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) + 56
+1  swift-frontend           0x00000001072dd358 llvm::sys::RunSignalHandlers() + 172
+2  swift-frontend           0x00000001072e01c8 SignalHandler(int, __siginfo*, void*) + 360
+3  libsystem_platform.dylib 0x000000018bcb0144 _sigtramp + 56
+4  libswiftCore.dylib       0x00000001a0370d4c $ss17_assertionFailure__4file4line5flagss5NeverOs12StaticStringV_SSAHSus6UInt32VtF + 216
+5  libswiftCore.dylib       0x00000001a02508e8 swift_errorInMain + 632
+6  (error)                  0x00000001141091c4
+7  swift-frontend           0x0000000100f7115c llvm::orc::runAsMain(int (*)(int, char**), llvm::ArrayRef<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>, std::__1::optional<llvm::StringRef>) + 908
+8  swift-frontend           0x0000000100e794a0 swift::SwiftJIT::runMain(llvm::ArrayRef<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>) + 636
+9  swift-frontend           0x0000000100e8580c swift::RunImmediately(swift::CompilerInstance&, std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>> const&, swift::IRGenOptions const&, swift::SILOptions const&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>&&) + 964
+10 swift-frontend           0x0000000100df7b7c processCommandLineAndRunImmediately(swift::CompilerInstance&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>&&, llvm::PointerUnion<swift::ModuleDecl*, swift::SourceFile*>, swift::FrontendObserver*, int&) + 484
+11 swift-frontend           0x0000000100df0b98 performCompileStepsPostSILGen(swift::CompilerInstance&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>, llvm::PointerUnion<swift::ModuleDecl*, swift::SourceFile*>, swift::PrimarySpecificPaths const&, int&, swift::FrontendObserver*, llvm::ArrayRef<char const*>, llvm::ArrayRef<swift::PrimarySpecificPaths>) + 2408
+12 swift-frontend           0x0000000100defdd0 swift::performCompileStepsPostSema(swift::CompilerInstance&, int&, swift::FrontendObserver*, llvm::ArrayRef<char const*>) + 3944
+13 swift-frontend           0x0000000100df5798 performCompile(swift::CompilerInstance&, int&, swift::FrontendObserver*, llvm::ArrayRef<char const*>) + 4268
+14 swift-frontend           0x0000000100df1dc4 swift::performFrontend(llvm::ArrayRef<char const*>, char const*, void*, swift::FrontendObserver*) + 3776
+15 swift-frontend           0x0000000100d71008 swift::mainEntry(int, char const**) + 5600
+16 dyld                     0x000000018b8cfe80 start + 6688

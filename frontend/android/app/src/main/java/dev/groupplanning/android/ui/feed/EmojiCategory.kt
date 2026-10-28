@@ -24,7 +24,13 @@ internal fun EmojiCategory(emoji: String, label: String, active: Boolean, choose
                 contentDescription = label
                 selected = active
             },
-        ) { Text(emoji, fontSize = DesignTokens.typographySizeEmojiCategory) }
+        ) {
+            Text(
+                emoji,
+                fontSize = DesignTokens.typographySizeEmojiCategory,
+                color = if (active) DesignTokens.colorAccent else DesignTokens.colorMuted,
+            )
+        }
         if (active) {
             Box(
                 Modifier.align(Alignment.BottomCenter)

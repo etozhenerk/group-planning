@@ -22,12 +22,52 @@ test('emoji dock preserves selection, supports repeated insertion and restores t
   await page.getByRole('button', { name: 'Выбрать эмодзи', exact: true }).click();
   const dock = page.getByRole('region', { name: 'Выбор эмодзи', exact: true });
   const search = dock.getByRole('searchbox', { name: 'Найти эмодзи' });
+  const categories = dock.getByRole('group', { name: 'Категории эмодзи' });
+  await expect(categories.getByRole('button')).toHaveText([
+    '◷',
+    '☺︎',
+    '❀',
+    '♧',
+    '✈︎',
+    '☼',
+    '♡',
+  ]);
+
+  for (const label of [
+    'Недавние',
+    'Лица и люди',
+    'Природа',
+    'Еда и напитки',
+    'Места и поездки',
+    'Предметы',
+    'Символы',
+  ]) {
+    await expect(
+      categories.getByRole('button', { name: label, exact: true }),
+    ).toBeVisible();
+  }
+
+  await categories.getByRole('button', { name: 'Еда и напитки', exact: true }).click();
+  await expect(
+    categories.getByRole('button', { name: 'Еда и напитки', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    dock.getByRole('button', { name: 'Вставить: пицца', exact: true }),
+  ).toBeAttached();
   await expect(search).not.toBeFocused();
   await expect(search).toHaveCSS('font-size', '16px');
   await search.fill('пицца');
   await dock.getByRole('button', { name: 'Вставить: пицца', exact: true }).click();
   await dock.getByRole('button', { name: 'Вставить: пицца', exact: true }).click();
   await expect(input).toHaveValue('Возьму 🍕🍕 завтра');
+  await categories.getByRole('button', { name: 'Недавние', exact: true }).click();
+  await expect(dock.getByRole('button', { name: /^Вставить:/ })).toHaveCount(1);
+  await expect(
+    dock.getByRole('button', { name: 'Вставить: пицца', exact: true }),
+  ).toBeVisible();
+  await expect(
+    dock.getByRole('heading', { name: 'Лица и люди', exact: true }),
+  ).toHaveCount(0);
   await expect(dock).toBeVisible();
   await page.screenshot({ path: test.info().outputPath('emoji-dock-selection.png') });
   await dock

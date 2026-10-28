@@ -4,6 +4,8 @@ import { createHash } from 'node:crypto';
 
 export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
+const isPrivateEnvironment = (name) =>
+  (name === '.env' || name.startsWith('.env.')) && !name.endsWith('.example');
 export const safePath = async (root, path) => {
   if (
     typeof path !== 'string' ||
@@ -26,6 +28,14 @@ export const treeFiles = async (root, paths) => {
     const info = await stat(absolute);
     if (info.isDirectory()) {
       for (const entry of (await readdir(absolute)).sort()) {
+        // Record runtime configuration separately; never fingerprint private dotenv values.
+        // Keep committed example configurations as implementation inputs.
+        if (
+          isPrivateEnvironment(entry) ||
+          entry === 'local.properties' ||
+          (path === 'frontend/ios/Config' && entry === 'Local.xcconfig')
+        )
+          continue;
         if (
           [
             'node_modules',
@@ -34,6 +44,9 @@ export const treeFiles = async (root, paths) => {
             '.git',
             'dist',
             '.gradle',
+            '.kotlin',
+            '.idea',
+            '.vscode',
             '.DS_Store',
             'xcuserdata',
             'test-results',

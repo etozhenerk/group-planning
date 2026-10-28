@@ -32,12 +32,18 @@
     )
   );
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--ds-color-surface);
   border: var(--ds-space-s1) solid var(--ds-color-border-strong);
   border-radius: var(--ds-component-reaction-picker-full-radius);
   padding: 0 var(--ds-component-reaction-picker-full-inset-inline)
     var(--ds-component-reaction-picker-quick-inset);
+}
+
+.emoji {
+  flex: 1;
+  min-height: var(--ds-component-emoji-dock-compact-height);
 }
 
 .context {

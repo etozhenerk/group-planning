@@ -1,0 +1,418 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 1 -xctestrun /tmp/somewhere-ios-independent-20261028/frozen.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /tmp/somewhere-ios-independent-20261028/existing.xcresult test-without-building "-only-testing:SomewhereUITests/TelegramChatUITests/testAnchoredReactionFullPickerAndPeopleFilter" "-only-testing:SomewhereUITests/MediaExperienceUITests/testPhotoPickerPreviewPublishAndPrivateFullScreen" "-only-testing:SomewhereUITests/MediaExperienceUITests/testReactionToggleAndMembers"
+
+Writing result bundle at path:
+	/tmp/somewhere-ios-independent-20261028/existing.xcresult
+
+2026-10-28 11:47:34.380 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:47:35.744999+0300 SomewhereUITests-Runner[16123:3247102] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-28 11:47:39.460.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 11:47:39.460.
+Test Suite 'MediaExperienceUITests' started at 2026-10-28 11:47:39.460.
+Test Case '-[SomewhereUITests.MediaExperienceUITests testPhotoPickerPreviewPublishAndPrivateFullScreen]' started.
+    t =     0.00s Start Test at 2026-10-28 11:47:39.463
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-10-28 11:47:39.550 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-28 11:47:39.551 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-28 11:47:39.559 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[16123]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a570398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a664310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.94s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.38s Waiting 15.0s for "meeting-card-88888888-8888-4888-8888-888888888888" Button to exist
+    t =     5.46s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-88888888-8888-4888-8888-888888888888" Button`
+    t =     5.46s         Checking existence of `"meeting-card-88888888-8888-4888-8888-888888888888" Button`
+    t =     5.56s Tap "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     5.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.56s     Find the "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     5.58s     Check for interrupting elements affecting "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     5.61s     Synthesize event
+    t =     5.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.34s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.42s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.42s         Checking existence of `"meeting-add" Button`
+    t =     7.47s Tap "message-input" TextView
+    t =     7.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.48s     Find the "message-input" TextView
+    t =     7.52s     Check for interrupting elements affecting "message-input" TextView
+    t =     7.55s     Synthesize event
+    t =     7.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.12s Type 'Фото отдельно от с...' into "message-input" TextView
+    t =     8.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.12s     Find the "message-input" TextView
+    t =     8.19s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.25s     Synthesize event
+    t =     8.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.89s Tap "meeting-add" Button
+    t =     8.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.89s     Find the "meeting-add" Button
+    t =     8.96s     Check for interrupting elements affecting "meeting-add" Button
+    t =     9.01s     Synthesize event
+    t =     9.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.31s Tap "Фото" Button
+    t =     9.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.31s     Find the "Фото" Button
+    t =     9.36s     Check for interrupting elements affecting "Фото" Button
+    t =     9.40s     Synthesize event
+    t =     9.70s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.21s Waiting 10.0s for "PXGGridLayout-Info" Image to exist
+    t =    11.28s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    11.28s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    11.36s         Capturing element debug description
+    t =    12.22s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    12.22s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    12.31s         Capturing element debug description
+    t =    13.27s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    13.27s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    13.34s         Capturing element debug description
+    t =    14.22s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    14.22s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    14.53s Tap "PXGGridLayout-Info" Image
+    t =    14.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.54s     Find the "PXGGridLayout-Info" Image
+    t =    14.63s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    14.69s     Synthesize event
+    t =    14.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.99s Waiting 5.0s for "Add" Button to exist
+    t =    16.07s     Checking `Expect predicate `existsNoRetry == 1` for object "Add" Button`
+    t =    16.07s         Checking existence of `"Add" Button`
+    t =    16.13s Tap "Add" Button
+    t =    16.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.13s     Find the "Add" Button
+    t =    16.19s     Check for interrupting elements affecting "Add" Button
+    t =    16.25s     Synthesize event
+    t =    16.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.55s Waiting 10.0s for "Отправить" Button to exist
+    t =    17.62s     Checking `Expect predicate `existsNoRetry == 1` for object "Отправить" Button`
+    t =    17.62s         Checking existence of `"Отправить" Button`
+    t =    18.27s Added attachment named 'refresh-photo-preview'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-photo-preview.png
+    t =    18.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-photo-preview.json
+    t =    18.46s Tap "Отправить" Button
+    t =    18.46s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.46s     Find the "Отправить" Button
+    t =    18.49s     Check for interrupting elements affecting "Отправить" Button
+    t =    18.51s     Synthesize event
+    t =    18.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.81s Waiting 15.0s for "Отправлено" StaticText to exist
+    t =    19.87s     Checking `Expect predicate `existsNoRetry == 1` for object "Отправлено" StaticText`
+    t =    19.87s         Checking existence of `"Отправлено" StaticText`
+    t =    19.91s Tap "media-picker-close" Button
+    t =    19.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.91s     Find the "media-picker-close" Button
+    t =    19.94s     Check for interrupting elements affecting "media-picker-close" Button
+    t =    19.97s     Synthesize event
+    t =    20.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.61s Find the "message-input" TextView
+    t =    20.65s Waiting 10.0s for "Открыть фото" Button to exist
+    t =    21.73s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото" Button`
+    t =    21.73s         Checking existence of `"Открыть фото" Button`
+    t =    22.32s Added attachment named 'refresh-published-photo'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-published-photo.png
+    t =    22.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-published-photo.json
+    t =    22.53s Tap "Открыть фото" Button
+    t =    22.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.54s     Find the "Открыть фото" Button
+    t =    22.58s     Check for interrupting elements affecting "chat-message-54f44bef-5506-4924-a27f-78275a31ac67" Button
+    t =    22.61s     Synthesize event
+    t =    22.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.27s Waiting 10.0s for "Закрыть" Button to exist
+    t =    24.35s     Checking `Expect predicate `existsNoRetry == 1` for object "Закрыть" Button`
+    t =    24.35s         Checking existence of `"Закрыть" Button`
+    t =    24.94s Added attachment named 'refresh-private-photo'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-private-photo.png
+    t =    24.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-private-photo.json
+    t =    25.17s Tap "Закрыть" Button
+    t =    25.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.17s     Find the "Закрыть" Button
+    t =    25.21s     Check for interrupting elements affecting "Закрыть" Button
+    t =    25.25s     Synthesize event
+    t =    25.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.87s Checking existence of `"message-input" TextView`
+    t =    25.91s Tear Down
+Test Case '-[SomewhereUITests.MediaExperienceUITests testPhotoPickerPreviewPublishAndPrivateFullScreen]' passed (26.328 seconds).
+Test Case '-[SomewhereUITests.MediaExperienceUITests testReactionToggleAndMembers]' started.
+    t =     0.00s Start Test at 2026-10-28 11:48:05.792
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:16159
+2026-10-28 11:48:05.841 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:05.847 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:05.849 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:06.914 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-28 11:48:06.914 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-28 11:48:06.922 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.34s         Setting up automation session
+    t =     3.79s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.21s Waiting 15.0s for "meeting-card-88888888-8888-4888-8888-888888888888" Button to exist
+    t =     6.29s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-88888888-8888-4888-8888-888888888888" Button`
+    t =     6.29s         Checking existence of `"meeting-card-88888888-8888-4888-8888-888888888888" Button`
+    t =     6.36s Tap "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     6.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.37s     Find the "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     6.39s     Check for interrupting elements affecting "meeting-card-88888888-8888-4888-8888-888888888888" Button
+    t =     6.41s     Synthesize event
+    t =     6.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.12s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.18s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.18s         Checking existence of `"meeting-add" Button`
+    t =     8.24s Waiting 10.0s for StaticText (First Match) to exist
+    t =     9.32s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =     9.32s         Checking existence of `StaticText (First Match)`
+    t =     9.36s Press StaticText (First Match) for 1.0 seconds
+    t =     9.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.36s     Find the StaticText (First Match)
+    t =     9.40s     Check for interrupting elements affecting "chat-message-cccccccc-cccc-4ccc-8ccc-000000000056" StaticText
+    t =     9.44s     Synthesize event
+    t =    10.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.68s Waiting 5.0s for "❤️" Button to exist
+    t =    11.74s     Checking `Expect predicate `existsNoRetry == 1` for object "❤️" Button`
+    t =    11.74s         Checking existence of `"❤️" Button`
+    t =    11.78s Tap "❤️" Button
+    t =    11.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.78s     Find the "❤️" Button
+    t =    11.82s     Check for interrupting elements affecting "❤️" Button
+    t =    11.86s     Synthesize event
+    t =    12.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.16s Waiting 10.0s for Button (First Match) to exist
+    t =    13.21s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    13.21s         Checking existence of `Button (First Match)`
+    t =    13.25s Find the Button (First Match)
+    t =    13.30s Find the "reaction-chip-❤️" Button
+    t =    13.33s Find the "message-input" TextView
+    t =    13.38s Find the "reaction-chip-❤️" Button
+    t =    13.43s Find the "reaction-chip-❤️" Button
+    t =    13.46s Find the "message-input" TextView
+    t =    14.04s Added attachment named 'refresh-reaction'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-reaction.png
+    t =    14.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-reaction.json
+    t =    14.26s Press "reaction-chip-❤️" Button for 0.7 seconds
+    t =    14.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.26s     Find the "reaction-chip-❤️" Button
+    t =    14.30s     Check for interrupting elements affecting "reaction-chip-❤️" Button
+    t =    14.33s     Synthesize event
+    t =    15.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.50s Waiting 5.0s for "Саша" StaticText to exist
+    t =    16.55s     Checking `Expect predicate `existsNoRetry == 1` for object "Саша" StaticText`
+    t =    16.56s         Checking existence of `"Саша" StaticText`
+    t =    17.11s Added attachment named 'refresh-reaction-people'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-reaction-people.png
+    t =    17.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/refresh-reaction-people.json
+    t =    17.24s Tap "reaction-people-close" Button
+    t =    17.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.25s     Find the "reaction-people-close" Button
+    t =    17.27s     Check for interrupting elements affecting "reaction-people-close" Button
+    t =    17.29s     Synthesize event
+    t =    17.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.93s Find the "reaction-chip-❤️" Button
+    t =    17.98s Find the "reaction-chip-❤️" Button
+    t =    18.01s Find the "message-input" TextView
+    t =    18.05s Find the "reaction-chip-❤️" Button
+    t =    18.10s Find the "reaction-chip-❤️" Button
+    t =    18.13s Find the "message-input" TextView
+    t =    18.17s Tap "reaction-chip-❤️" Button
+    t =    18.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.18s     Find the "reaction-chip-❤️" Button
+    t =    18.21s     Check for interrupting elements affecting "reaction-chip-❤️" Button
+    t =    18.25s     Synthesize event
+    t =    18.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.60s Checking `Expect predicate `exists == 0` for object "reaction-chip-❤️" Button`
+    t =    19.60s     Checking existence of `"reaction-chip-❤️" Button`
+    t =    19.68s Tear Down
+Test Case '-[SomewhereUITests.MediaExperienceUITests testReactionToggleAndMembers]' passed (19.908 seconds).
+Test Suite 'MediaExperienceUITests' passed at 2026-10-28 11:48:25.700.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 46.237 (46.240) seconds
+Test Suite 'TelegramChatUITests' started at 2026-10-28 11:48:25.701.
+Test Case '-[SomewhereUITests.TelegramChatUITests testAnchoredReactionFullPickerAndPeopleFilter]' started.
+    t =     0.00s Start Test at 2026-10-28 11:48:25.702
+    t =     0.02s Set Up
+    t =     0.02s     Setting device orientation to Portrait
+    t =     0.03s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:16961
+2026-10-28 11:48:25.751 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:25.752 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:25.752 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:26.799 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-28 11:48:26.799 xcodebuild[15852:3246918] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-28 11:48:26.805 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.31s         Setting up automation session
+    t =     3.67s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.06s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.13s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.13s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.21s Checking existence of `"home-tab-calendar" Button`
+    t =     6.24s Find the "home-tab-calendar" Button
+    t =     6.27s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.29s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.36s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.41s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.44s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.45s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.47s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.50s     Synthesize event
+    t =     6.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.19s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.27s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.27s         Checking existence of `"meeting-add" Button`
+    t =     8.31s Waiting 10.0s for "chat-message-ded00000-0000-4000-8000-000000000013" Any to exist
+    t =     9.34s     Checking `Expect predicate `existsNoRetry == 1` for object "chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =     9.34s         Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =     9.40s Checking existence of `Button (First Match)`
+    t =     9.44s Press "chat-message-ded00000-0000-4000-8000-000000000013" Any for 0.7 seconds
+    t =     9.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.44s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =     9.50s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =     9.53s     Synthesize event
+    t =    10.46s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.47s Waiting 5.0s for "reaction-expand" Button to exist
+    t =    11.54s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-expand" Button`
+    t =    11.54s         Checking existence of `"reaction-expand" Button`
+    t =    11.57s Tap "reaction-expand" Button
+    t =    11.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.57s     Find the "reaction-expand" Button
+    t =    11.59s     Check for interrupting elements affecting "reaction-expand" Button
+    t =    11.61s     Synthesize event
+    t =    11.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.96s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    13.04s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    13.05s         Checking existence of `"emoji-search" TextField`
+    t =    13.11s Tap "emoji-search" TextField
+    t =    13.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.11s     Find the "emoji-search" TextField
+    t =    13.15s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    13.18s     Synthesize event
+    t =    13.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.63s Type 'пицца' into "emoji-search" TextField
+    t =    13.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.63s     Find the "emoji-search" TextField
+    t =    13.70s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    13.74s     Synthesize event
+    t =    14.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.15s Tap "emoji-🍕" Button
+    t =    14.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.15s     Find the "emoji-🍕" Button
+    t =    14.20s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    14.24s     Synthesize event
+    t =    14.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.55s Waiting 10.0s for Button (First Match) to exist
+    t =    15.63s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    15.63s         Checking existence of `Button (First Match)`
+    t =    15.67s Press Button (First Match) for 0.7 seconds
+    t =    15.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.67s     Find the Button (First Match)
+    t =    15.70s     Check for interrupting elements affecting "reaction-chip-🍕" Button
+    t =    15.73s     Synthesize event
+    t =    16.66s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.87s Waiting 5.0s for "reaction-filter-🍕" Button to exist
+    t =    17.92s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-filter-🍕" Button`
+    t =    17.92s         Checking existence of `"reaction-filter-🍕" Button`
+    t =    17.96s Find the "reaction-filter-🍕" Button
+    t =    17.98s Tap "reaction-filter-all" Button
+    t =    17.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.98s     Find the "reaction-filter-all" Button
+    t =    18.01s     Check for interrupting elements affecting "reaction-filter-all" Button
+    t =    18.03s     Synthesize event
+    t =    18.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.34s Find the "reaction-filter-all" Button
+    t =    18.90s Added attachment named 'telegram-reaction-people'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/telegram-reaction-people.png
+    t =    18.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.96s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/380ECEC4-B64A-46A3-B535-08EDE3C56C1B/tmp/somewhere-design-verification/telegram-reaction-people.json
+    t =    19.04s Tap "reaction-people-close" Button
+    t =    19.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.04s     Find the "reaction-people-close" Button
+    t =    19.07s     Check for interrupting elements affecting "reaction-people-close" Button
+    t =    19.09s     Synthesize event
+    t =    19.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.73s Checking existence of `"reaction-chip-🍕" Button`
+    t =    19.77s Find the "reaction-chip-🍕" Button
+    t =    20.85s Checking `Expect predicate `enabled == 1` for object "reaction-chip-🍕" Button`
+    t =    20.85s     Find the "reaction-chip-🍕" Button
+    t =    20.89s Tap "reaction-chip-🍕" Button
+    t =    20.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.90s     Find the "reaction-chip-🍕" Button
+    t =    20.93s     Check for interrupting elements affecting "reaction-chip-🍕" Button
+    t =    20.95s     Synthesize event
+    t =    21.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.30s Checking `Expect predicate `exists == 0` for object "reaction-chip-🍕" Button`
+    t =    22.30s     Checking existence of `"reaction-chip-🍕" Button`
+    t =    22.35s Tear Down
+    t =    22.35s     Setting device orientation to Portrait
+    t =    22.35s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.TelegramChatUITests testAnchoredReactionFullPickerAndPeopleFilter]' passed (22.631 seconds).
+Test Suite 'TelegramChatUITests' passed at 2026-10-28 11:48:48.333.
+	 Executed 1 test, with 0 failures (0 unexpected) in 22.631 (22.632) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-10-28 11:48:48.333.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 68.868 (68.873) seconds
+Test Suite 'Selected tests' passed at 2026-10-28 11:48:48.334.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 68.868 (68.874) seconds
+2026-10-28 11:48:48.374 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.374 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.374 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.386 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.386 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.387 xcodebuild[15852:3246918] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:48:48.647 xcodebuild[15852:3246918] [MT] IDETestOperationsObserverDebug: 74.304 elapsed -- Testing started completed.
+2026-10-28 11:48:48.647 xcodebuild[15852:3246918] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-28 11:48:48.647 xcodebuild[15852:3246918] [MT] IDETestOperationsObserverDebug: 74.304 sec, +74.304 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/somewhere-ios-independent-20261028/existing.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

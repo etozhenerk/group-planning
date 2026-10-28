@@ -1,0 +1,40 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 1 -xctestrun /tmp/somewhere-ios-independent-20261028/frozen.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /tmp/somewhere-ios-independent-20261028/realtime/clean-chat.xcresult test-without-building "-only-testing:SomewhereUITests/ChatSyncUITests"
+
+Writing result bundle at path:
+	/tmp/somewhere-ios-independent-20261028/realtime/clean-chat.xcresult
+
+2026-10-28 12:09:32.521 xcodebuild[52533:3347546] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:09:33.670068+0300 SomewhereUITests-Runner[52785:3347638] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-28 12:09:36.333.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 12:09:36.334.
+Test Suite 'ChatSyncUITests' started at 2026-10-28 12:09:36.334.
+Test Case '-[SomewhereUITests.ChatSyncUITests testSDKSendReadersKeyboardAndDraftRestart]' started.
+    t =     0.00s Start Test at 2026-10-28 12:09:36.336
+    t =     0.02s Set Up
+/Users/misha/.codex/worktrees/chat-ios-sync/group-planning/frontend/ios/SomewhereUITests/NativeChatCounterpart.swift:95: error: -[SomewhereUITests.ChatSyncUITests testSDKSendReadersKeyboardAndDraftRestart] : failed: caught error: "Error Domain=ChatFixtureHTTP Code=409 "(null)""
+    t =     0.30s Tear Down
+Test Case '-[SomewhereUITests.ChatSyncUITests testSDKSendReadersKeyboardAndDraftRestart]' failed (0.310 seconds).
+Test Suite 'ChatSyncUITests' failed at 2026-10-28 12:09:36.646.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.310 (0.312) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-10-28 12:09:36.647.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.310 (0.313) seconds
+Test Suite 'Selected tests' failed at 2026-10-28 12:09:36.647.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.310 (0.314) seconds
+2026-10-28 12:09:36.676 xcodebuild[52533:3347546] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:09:36.676 xcodebuild[52533:3347546] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:09:36.677 xcodebuild[52533:3347546] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:09:36.946 xcodebuild[52533:3347546] [MT] IDETestOperationsObserverDebug: 4.461 elapsed -- Testing started completed.
+2026-10-28 12:09:36.946 xcodebuild[52533:3347546] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-28 12:09:36.946 xcodebuild[52533:3347546] [MT] IDETestOperationsObserverDebug: 4.461 sec, +4.461 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/somewhere-ios-independent-20261028/realtime/clean-chat.xcresult
+
+Failing tests:
+	ChatSyncUITests.testSDKSendReadersKeyboardAndDraftRestart()
+
+** TEST EXECUTE FAILED **
+
+Testing started

@@ -1,0 +1,369 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 1 -xctestrun /tmp/somewhere-ios-independent-20261028/independent.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /tmp/somewhere-ios-independent-20261028/gesture02.xcresult test-without-building "-only-testing:SomewhereUITests/IndependentGestureReview/testTextFullPeopleCloseAndLandscape"
+
+Writing result bundle at path:
+	/tmp/somewhere-ios-independent-20261028/gesture02.xcresult
+
+2026-10-28 11:53:51.121 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:53:52.240209+0300 SomewhereUITests-Runner[25477:3274743] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-28 11:53:54.862.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 11:53:54.863.
+Test Suite 'IndependentGestureReview' started at 2026-10-28 11:53:54.863.
+Test Case '-[SomewhereUITests.IndependentGestureReview testTextFullPeopleCloseAndLandscape]' started.
+    t =     0.00s Start Test at 2026-10-28 11:53:54.865
+    t =     0.02s Set Up
+    t =     0.02s     Setting device orientation to Portrait
+    t =     0.03s         Wait for com.apple.springboard to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+2026-10-28 11:53:54.956 xcodebuild[25230:3274376] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-28 11:53:54.956 xcodebuild[25230:3274376] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-28 11:53:54.965 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.50s         Setting up automation session
+objc[25477]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10640c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106544310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.80s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.14s Waiting 20.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.21s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.21s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.32s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.32s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.35s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.38s     Synthesize event
+    t =     5.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.13s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.21s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.21s         Checking existence of `"meeting-add" Button`
+    t =     7.28s Tap "message-input" TextView
+    t =     7.28s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.29s     Find the "message-input" TextView
+    t =     7.31s     Check for interrupting elements affecting "message-input" TextView
+    t =     7.33s     Synthesize event
+    t =     7.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.80s Type 'До XX после' into "message-input" TextView
+    t =     7.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.17s     Find the "message-input" TextView
+    t =     8.25s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.29s     Synthesize event
+    t =     8.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.75s Tap "meeting-add" Button
+    t =     8.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.76s     Find the "meeting-add" Button
+    t =     8.80s     Check for interrupting elements affecting "meeting-add" Button
+    t =     8.84s     Synthesize event
+    t =     9.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.14s Waiting 5.0s for "new-date-poll" Button to exist
+    t =    10.22s     Checking `Expect predicate `existsNoRetry == 1` for object "new-date-poll" Button`
+    t =    10.22s         Checking existence of `"new-date-poll" Button`
+    t =    10.27s Tap "meeting-add" Button
+    t =    10.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.27s     Find the "meeting-add" Button
+    t =    10.31s     Check for interrupting elements affecting "meeting-add" Button
+    t =    10.33s     Synthesize event
+    t =    10.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.15s Find the "message-input" TextView
+    t =    11.19s Waiting 10.0s for "chat-message-ded00000-0000-4000-8000-000000000013" StaticText to exist
+    t =    12.26s     Checking `Expect predicate `existsNoRetry == 1` for object "chat-message-ded00000-0000-4000-8000-000000000013" StaticText`
+    t =    12.27s         Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" StaticText`
+    t =    12.31s Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" StaticText`
+    t =    12.33s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.37s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.39s Find the "feed-back" Button
+    t =    12.42s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.44s Find the "meeting-add" Button
+    t =    12.47s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+INDEPENDENT_STEP 1793177647.356453 text-before-pan
+    t =    12.49s Requesting snapshot of accessibility hierarchy for app with pid 25484
+    t =    12.62s Requesting snapshot of accessibility hierarchy for app with pid 25484
+INDEPENDENT_TREE Optional(Attributes: Application, 0x105c00b40, pid: 25484, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x105c00b40, pid: 25484, label: 'somewhere QA'
+    Window (Main), 0x105c01900, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x105c01a40, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x105c017c0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x105c00c80, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x105c01e00, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x105c01b80, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x105c01cc0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x105c01f40, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x105c02080, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x105c02440, {{0.0, 0.0}, {402.0, 874.0}}
+                        Button, 0x105c02300, {{12.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-back', label: 'Назад'
+                          Image, 0x105c03200, {{12.0, 73.0}, {44.0, 44.0}}, label: 'ChatLeft'
+                        Image, 0x105c035c0, {{62.0, 75.0}, {40.0, 40.0}}, label: 'ChatCalendar'
+                        Button, 0x105c03480, {{108.0, 73.0}, {182.0, 44.0}}, identifier: 'meeting-heading', label: 'Настолки у Саши, 31 октября · 19:00 · 6 участников'
+                          StaticText, 0x105c03d40, {{108.0, 77.7}, {138.0, 19.3}}, identifier: 'feed-title', label: 'Настолки у Саши'
+                          StaticText, 0x105c003c0, {{108.0, 99.0}, {180.0, 13.3}}, label: '31 октября · 19:00 · 6 участников'
+                        Button, 0x105c00500, {{296.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-share', label: 'Пригласить друзей'
+                          Image, 0x102e26d00, {{296.0, 73.0}, {44.0, 44.0}}, label: 'ChatShare'
+                        Button, 0x102e270c0, {{346.0, 73.0}, {44.0, 44.0}}, identifier: 'meeting-info-open', label: 'Информация о встрече'
+                          Image, 0x102e27200, {{346.0, 73.0}, {44.0, 44.0}}, label: 'ChatInfo'
+                        ScrollView, 0x102e27480, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'feed-timeline'
+                          Other, 0x102e275c0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x102e27840, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x102e27980, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x102e27700, {{0.0, 128.0}, {402.0, 650.0}}
+                            Other, 0x102e248c0, {{16.0, 151.6}, {370.0, 480.6}}
+                              StaticText, 0x102e25040, {{178.2, 151.6}, {45.7, 13.3}}, label: 'Сегодня'
+                              StaticText, 0x1062c0000, {{16.0, 190.7}, {353.0, 56.3}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000011', label: 'Лена, 18:24. Я принесу настолки. Во что будем играть?'
+                                StaticText, 0x1062c0140, {{52.0, 190.7}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x1062c0280, {{90.3, 190.7}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x1062c03c0, {{16.0, 210.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x1062c0500, {{66.0, 219.0}, {288.7, 17.0}}, label: 'Я принесу настолки. Во что будем играть?'
+                              Button, 0x1062c0640, {{52.0, 249.0}, {49.0, 43.7}}, identifier: 'reaction-chip-❤️', label: '❤️, 2'
+                                StaticText, 0x1062c0780, {{60.0, 261.8}, {21.0, 18.0}}, label: '❤️'
+                                StaticText, 0x1062c08c0, {{86.0, 264.2}, {7.0, 13.3}}, label: '2'
+                              StaticText, 0x1062c0a00, {{28.0, 313.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000012', label: 'Саша, 18:24. Давайте начнём с чего-нибудь простого 🙂'
+                                StaticText, 0x1062c0b40, {{279.7, 313.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x1062c0c80, {{320.7, 313.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x1062c0dc0, {{358.0, 332.3}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x1062c0f00, {{42.0, 341.3}, {279.0, 33.7}}, label: 'Давайте начнём с чего-нибудь простого 🙂'
+                              StaticText, 0x1062c1040, {{16.0, 406.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000013', label: 'Лена, 18:24. Тогда беру две игры. И можно заказать пиццу!'
+                                StaticText, 0x1062c1180, {{52.0, 406.0}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x1062c12c0, {{90.3, 406.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x1062c1400, {{16.0, 425.3}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x1062c1540, {{66.0, 434.3}, {210.3, 33.7}}, label: 'Тогда беру две игры. И можно заказать пиццу!'
+                              Button, 0x1062c1680, {{52.0, 481.0}, {63.7, 44.0}}, identifier: 'reaction-chip-🍕', label: '🍕, 1, ваша реакция', Selected
+                                StaticText, 0x1062c17c0, {{60.0, 494.0}, {21.0, 18.0}}, label: '🍕'
+                                StaticText, 0x1062c1900, {{86.0, 496.3}, {5.3, 13.3}}, label: '1'
+                                Image, 0x1062c1a40, {{97.7, 498.7}, {8.7, 8.7}}, identifier: 'checkmark', label: 'Выбрано', Selected
+                              Image, 0x1062c1b80, {{66.0, 559.0}, {15.0, 15.0}}, label: 'ChatTask'
+                              StaticText, 0x1062c1cc0, {{88.0, 560.3}, {104.3, 12.0}}, label: 'Новая задача · Саша'
+                              StaticText, 0x1062c1e00, {{346.3, 560.3}, {25.7, 12.0}}, label: '11:45'
+                              Button, 0x1062c1f40, {{66.0, 574.0}, {306.0, 44.0}}, identifier: 'preparation-task-53585f9f-38d5-4893-be8e-70440c134ced', label: 'Заказать пиццу'
+                                StaticText, 0x1062c2080, {{66.0, 574.0}, {306.0, 44.0}}, label: 'Заказать пиццу'
+                                Image, 0x1062c21c0, {{354.0, 590.0}, {18.0, 18.0}}, label: 'ChatRight'
+                              StaticText, 0x1062c2300, {{66.0, 617.8}, {101.0, 14.3}}, label: 'Исполняет Миша'
+                          Other, 0x1062c2440, {{369.0, 128.0}, {30.0, 650.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x1062c2580, {{396.0, 131.0}, {3.0, 644.0}}
+                          Other, 0x1062c26c0, {{369.0, 128.0}, {30.0, 650.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x1062c2800, {{396.0, 131.0}, {3.0, 644.0}}
+                        Button, 0x1062c2940, {{10.0, 786.0}, {44.0, 44.0}}, identifier: 'meeting-add', label: 'Добавить к встрече'
+                          Image, 0x1062c2a80, {{10.0, 786.0}, {44.0, 44.0}}, label: 'ChatPlus'
+                        TextView, 0x1062c2bc0, {{60.0, 786.0}, {238.0, 44.0}}, identifier: 'message-input', label: 'Сообщение', value: До XX после
+                          Other, 0x1062c2d00, {{60.0, 786.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                            Other, 0x1062c2e40, {{60.0, 786.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x1062c2f80, {{52.8, 772.5}, {16.5, 16.5}}
+                              Other, 0x1062c30c0, {{60.0, 786.0}, {2.0, 0.0}}
+                            Other, 0x1062c3200, {{60.0, 786.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x1062c3340, {{52.8, 772.5}, {16.5, 16.5}}
+                              Other, 0x1062c3480, {{60.0, 786.0}, {2.0, 0.0}}
+                          Other, 0x1062c35c0, {{265.0, 786.0}, {30.0, 44.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x1062c3700, {{292.0, 789.0}, {3.0, 38.0}}
+                          Other, 0x1062c3840, {{62.0, 805.0}, {236.0, 22.0}}, label: 'Горизонтальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x1062c3980, {{65.0, 824.0}, {230.0, 3.0}}
+                        Button, 0x1062c3ac0, {{298.0, 786.0}, {44.0, 44.0}}, identifier: 'composer-emoji-toggle', label: 'Выбрать эмодзи', value: Закрыто
+                          Image, 0x1062c3c00, {{298.0, 786.0}, {44.0, 44.0}}, label: 'ComposerSmile'
+                        Button, 0x1062c3d40, {{348.0, 786.0}, {44.0, 44.0}}, identifier: 'message-send', label: 'Отправить сообщение'
+                          Image, 0x1062c3e80, {{348.0, 786.0}, {44.0, 44.0}}, label: 'ChatSend'
+                        Other, 0x1062d8000, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                        Other, 0x1062d8140, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                Toolbar, 0x1062d8280, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x1062d83c0, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x1062d8500, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1062d8640, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1062d8780, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x105c00b40, pid: 25484, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x1062d88c0, pid: 25484, label: 'somewhere QA'
+  }
+)
+INDEPENDENT_CONTEXT {
+  "capturedAt" : "2026-10-28T08:53:57Z",
+  "contentSizeCategory" : "UICTContentSizeCategoryL",
+  "fonts" : [
+    ".SFUI-Regular",
+    ".SFUI-Bold"
+  ],
+  "locale" : "ru_RU",
+  "os" : "Version 27.0 (Build 24A434)",
+  "reducedMotion" : false,
+  "renderedFontSizes" : {
+    "heading" : 28,
+    "small" : 13
+  },
+  "runtime" : "27.0",
+  "source" : "SwiftUI environment in SomewhereUITestHost",
+  "textScale" : "large",
+  "timezone" : "Europe\/Moscow"
+}
+    t =    12.74s Added attachment named 'text-before-pan'
+    t =    12.75s Press "chat-message-ded00000-0000-4000-8000-000000000013" StaticText[0.50, 0.50] for 0.1 seconds, then drag to "chat-message-ded00000-0000-4000-8000-000000000013" StaticText[0.50, 0.50] -> (0.0, -150.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    12.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.75s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.77s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.80s     Synthesize event
+    t =    12.81s         Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.83s         Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.86s         Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.89s         Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.91s         Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    13.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.46s Checking existence of `"reaction-expand" Button`
+    t =    14.51s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+INDEPENDENT_PAN textYBefore=406.0 textYAfter=406.0
+    t =    14.55s Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+/openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:79: error: -[SomewhereUITests.IndependentGestureReview testTextFullPeopleCloseAndLandscape] : XCTAssertGreaterThan failed: ("0.0") is not greater than ("5.0")
+    t =    14.62s Tear Down
+INDEPENDENT_STEP 1793177649.48456 failure
+    t =    14.62s     Requesting snapshot of accessibility hierarchy for app with pid 25484
+    t =    14.75s     Requesting snapshot of accessibility hierarchy for app with pid 25484
+INDEPENDENT_TREE Optional(Attributes: Application, 0x1062dbd40, pid: 25484, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x1062dbd40, pid: 25484, label: 'somewhere QA'
+    Window (Main), 0x1062dbe80, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1062da440, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1062d8b40, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x1062d8c80, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x1062d8dc0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1062d8f00, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1062d9040, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x1062d9180, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1062d92c0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x1062d9400, {{0.0, 0.0}, {402.0, 874.0}}
+                        Button, 0x1062d9540, {{12.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-back', label: 'Назад'
+                          Image, 0x1062da300, {{12.0, 73.0}, {44.0, 44.0}}, label: 'ChatLeft'
+                        Image, 0x1062da800, {{62.0, 75.0}, {40.0, 40.0}}, label: 'ChatCalendar'
+                        Button, 0x1062dbc00, {{108.0, 73.0}, {182.0, 44.0}}, identifier: 'meeting-heading', label: 'Настолки у Саши, 31 октября · 19:00 · 6 участников'
+                          StaticText, 0x1062da580, {{108.0, 77.7}, {138.0, 19.3}}, identifier: 'feed-title', label: 'Настолки у Саши'
+                          StaticText, 0x1062da080, {{108.0, 99.0}, {180.0, 13.3}}, label: '31 октября · 19:00 · 6 участников'
+                        Button, 0x1062da1c0, {{296.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-share', label: 'Пригласить друзей'
+                          Image, 0x1062d9e00, {{296.0, 73.0}, {44.0, 44.0}}, label: 'ChatShare'
+                        Button, 0x1062d9f40, {{346.0, 73.0}, {44.0, 44.0}}, identifier: 'meeting-info-open', label: 'Информация о встрече'
+                          Image, 0x1062d9a40, {{346.0, 73.0}, {44.0, 44.0}}, label: 'ChatInfo'
+                        ScrollView, 0x1062d9cc0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'feed-timeline'
+                          Other, 0x1062d9b80, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x1062d9900, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x1062d9680, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x1062d97c0, {{0.0, 128.0}, {402.0, 650.0}}
+                            Other, 0x105c03c00, {{16.0, 151.6}, {370.0, 480.6}}
+                              StaticText, 0x105c03e80, {{178.2, 151.6}, {45.7, 13.3}}, label: 'Сегодня'
+                              StaticText, 0x105c00f00, {{16.0, 190.7}, {353.0, 56.3}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000011', label: 'Лена, 18:24. Я принесу настолки. Во что будем играть?'
+                                StaticText, 0x105c01040, {{52.0, 190.7}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x105c02940, {{90.3, 190.7}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x105c02bc0, {{16.0, 210.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x105c02d00, {{66.0, 219.0}, {288.7, 17.0}}, label: 'Я принесу настолки. Во что будем играть?'
+                              Button, 0x105c02f80, {{52.0, 249.0}, {49.0, 43.7}}, identifier: 'reaction-chip-❤️', label: '❤️, 2'
+                                StaticText, 0x105c02e40, {{60.0, 261.8}, {21.0, 18.0}}, label: '❤️'
+                                StaticText, 0x105c030c0, {{86.0, 264.2}, {7.0, 13.3}}, label: '2'
+                              StaticText, 0x105c03340, {{28.0, 313.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000012', label: 'Саша, 18:24. Давайте начнём с чего-нибудь простого 🙂'
+                                StaticText, 0x105c03840, {{279.7, 313.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x105c03980, {{320.7, 313.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x105c03700, {{358.0, 332.3}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x105c03ac0, {{42.0, 341.3}, {279.0, 33.7}}, label: 'Давайте начнём с чего-нибудь простого 🙂'
+                              StaticText, 0x10ea6c000, {{16.0, 406.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000013', label: 'Лена, 18:24. Тогда беру две игры. И можно заказать пиццу!'
+                                StaticText, 0x10ea6c140, {{52.0, 406.0}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x10ea6c280, {{90.3, 406.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x10ea6c3c0, {{16.0, 425.3}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x10ea6c500, {{66.0, 434.3}, {210.3, 33.7}}, label: 'Тогда беру две игры. И можно заказать пиццу!'
+                              Button, 0x10ea6c640, {{52.0, 481.0}, {63.7, 44.0}}, identifier: 'reaction-chip-🍕', label: '🍕, 1, ваша реакция', Selected
+                                StaticText, 0x10ea6c780, {{60.0, 494.0}, {21.0, 18.0}}, label: '🍕'
+                                StaticText, 0x10ea6c8c0, {{86.0, 496.3}, {5.3, 13.3}}, label: '1'
+                                Image, 0x10ea6ca00, {{97.7, 498.7}, {8.7, 8.7}}, identifier: 'checkmark', label: 'Выбрано', Selected
+                              Image, 0x10ea6cb40, {{66.0, 559.0}, {15.0, 15.0}}, label: 'ChatTask'
+                              StaticText, 0x10ea6cc80, {{88.0, 560.3}, {104.3, 12.0}}, label: 'Новая задача · Саша'
+                              StaticText, 0x10ea6cdc0, {{346.3, 560.3}, {25.7, 12.0}}, label: '11:45'
+                              Button, 0x10ea6cf00, {{66.0, 574.0}, {306.0, 44.0}}, identifier: 'preparation-task-53585f9f-38d5-4893-be8e-70440c134ced', label: 'Заказать пиццу'
+                                StaticText, 0x10ea6d040, {{66.0, 574.0}, {306.0, 44.0}}, label: 'Заказать пиццу'
+                                Image, 0x10ea6d180, {{354.0, 590.0}, {18.0, 18.0}}, label: 'ChatRight'
+                              StaticText, 0x10ea6d2c0, {{66.0, 617.8}, {101.0, 14.3}}, label: 'Исполняет Миша'
+                          Other, 0x10ea6d400, {{369.0, 128.0}, {30.0, 650.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10ea6d540, {{396.0, 131.0}, {3.0, 644.0}}
+                          Other, 0x10ea6d680, {{369.0, 128.0}, {30.0, 650.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10ea6d7c0, {{396.0, 131.0}, {3.0, 644.0}}
+                        Button, 0x10ea6d900, {{10.0, 786.0}, {44.0, 44.0}}, identifier: 'meeting-add', label: 'Добавить к встрече'
+                          Image, 0x10ea6da40, {{10.0, 786.0}, {44.0, 44.0}}, label: 'ChatPlus'
+                        TextView, 0x10ea6db80, {{60.0, 786.0}, {238.0, 44.0}}, identifier: 'message-input', label: 'Сообщение', value: До XX после
+                          Other, 0x10ea6dcc0, {{60.0, 786.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                            Other, 0x10ea6de00, {{60.0, 786.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x10ea6df40, {{52.8, 772.5}, {16.5, 16.5}}
+                              Other, 0x10ea6e080, {{60.0, 786.0}, {2.0, 0.0}}
+                            Other, 0x10ea6e1c0, {{60.0, 786.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x10ea6e300, {{52.8, 772.5}, {16.5, 16.5}}
+                              Other, 0x10ea6e440, {{60.0, 786.0}, {2.0, 0.0}}
+                          Other, 0x10ea6e580, {{265.0, 786.0}, {30.0, 44.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10ea6e6c0, {{292.0, 789.0}, {3.0, 38.0}}
+                          Other, 0x10ea6e800, {{62.0, 805.0}, {236.0, 22.0}}, label: 'Горизонтальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10ea6e940, {{65.0, 824.0}, {230.0, 3.0}}
+                        Button, 0x10ea6ea80, {{298.0, 786.0}, {44.0, 44.0}}, identifier: 'composer-emoji-toggle', label: 'Выбрать эмодзи', value: Закрыто
+                          Image, 0x10ea6ebc0, {{298.0, 786.0}, {44.0, 44.0}}, label: 'ComposerSmile'
+                        Button, 0x10ea6ed00, {{348.0, 786.0}, {44.0, 44.0}}, identifier: 'message-send', label: 'Отправить сообщение'
+                          Image, 0x10ea6ee40, {{348.0, 786.0}, {44.0, 44.0}}, label: 'ChatSend'
+                        Other, 0x10ea6ef80, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                        Other, 0x10ea6f0c0, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                Toolbar, 0x10ea6f200, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x10ea6f340, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x10ea6f480, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10ea6f5c0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10ea6f700, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x1062dbd40, pid: 25484, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x10ea6f840, pid: 25484, label: 'somewhere QA'
+  }
+)
+INDEPENDENT_CONTEXT {
+  "capturedAt" : "2026-10-28T08:53:57Z",
+  "contentSizeCategory" : "UICTContentSizeCategoryL",
+  "fonts" : [
+    ".SFUI-Regular",
+    ".SFUI-Bold"
+  ],
+  "locale" : "ru_RU",
+  "os" : "Version 27.0 (Build 24A434)",
+  "reducedMotion" : false,
+  "renderedFontSizes" : {
+    "heading" : 28,
+    "small" : 13
+  },
+  "runtime" : "27.0",
+  "source" : "SwiftUI environment in SomewhereUITestHost",
+  "textScale" : "large",
+  "timezone" : "Europe\/Moscow"
+}
+    t =    14.87s     Added attachment named 'failure'
+    t =    14.87s     Setting device orientation to Portrait
+    t =    14.87s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.IndependentGestureReview testTextFullPeopleCloseAndLandscape]' failed (14.882 seconds).
+2026-10-28 11:54:09.747323+0300 SomewhereUITests-Runner[25477:3274743] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-10-28 11:54:09.747487+0300 SomewhereUITests-Runner[25477:3274814] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-10-28 11:54:09.815 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:09.815 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:09.816 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:10.093 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:10.108 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:10.109 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:10.110 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:10.917786+0300 SomewhereUITests-Runner[26215:3276874] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-10-28 11:54:13.460.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 11:54:13.460.
+Test Suite 'SomewhereUITests.xctest' passed at 2026-10-28 11:54:13.460.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-28 11:54:13.461.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+2026-10-28 11:54:13.478 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:13.478 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:13.479 xcodebuild[25230:3274376] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 11:54:13.750 xcodebuild[25230:3274376] [MT] IDETestOperationsObserverDebug: 22.663 elapsed -- Testing started completed.
+2026-10-28 11:54:13.750 xcodebuild[25230:3274376] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-28 11:54:13.750 xcodebuild[25230:3274376] [MT] IDETestOperationsObserverDebug: 22.663 sec, +22.663 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/somewhere-ios-independent-20261028/gesture02.xcresult
+
+Failing tests:
+	IndependentGestureReview.testTextFullPeopleCloseAndLandscape()
+
+** TEST EXECUTE FAILED **
+
+Testing started

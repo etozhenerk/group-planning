@@ -1,0 +1,738 @@
+{"database": "somewhere_integration", "createdForThisRun": true, "marker": "codex-chat-independent-c3781270f5ee4dfe842ca033e9301034"}
+=== RUN   TestMeetingDeletionLargeHistoryIntegration
+    account_removal_feed_test.go:159: history=100001 sparse/max_uint64 rollback+commit batches=202 max_rows=1000 max_statement_ms=10.552
+--- PASS: TestMeetingDeletionLargeHistoryIntegration (14.68s)
+=== RUN   TestChatDispatchPendingIndexIntegration
+    chat_dispatch_plan_test.go:54: outbox=5000 active_leases=100 bounded_ready_rows=100
+--- PASS: TestChatDispatchPendingIndexIntegration (0.21s)
+=== RUN   TestChatDispatchLeaseRollbackRecoveryIntegration
+--- PASS: TestChatDispatchLeaseRollbackRecoveryIntegration (0.04s)
+=== RUN   TestChatDispatchElapsedRetryIntegration
+--- PASS: TestChatDispatchElapsedRetryIntegration (0.04s)
+=== RUN   TestChatJournalAtomicRangeIntegration
+--- PASS: TestChatJournalAtomicRangeIntegration (0.07s)
+=== RUN   TestChatAccountOutboxIntegration
+--- PASS: TestChatAccountOutboxIntegration (0.08s)
+=== RUN   TestChatMigrationPreservesLegacyMeetingIntegration
+--- PASS: TestChatMigrationPreservesLegacyMeetingIntegration (1.16s)
+=== RUN   TestChatJournalBoundedQueryPlanIntegration
+    chat_plan_test.go:74: history=100000 after=0 execution_ms=0.563 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=50000 execution_ms=0.828 scans=1 budget_rows=101
+    chat_plan_test.go:74: history=100000 after=100000 execution_ms=0.029 scans=1 budget_rows=101
+--- PASS: TestChatJournalBoundedQueryPlanIntegration (8.44s)
+=== RUN   TestChatReadState100kPlanIntegration
+    chat_read_plan_test.go:41: activation history=100000 current_members=3 elapsed_ms=3.844
+    chat_read_plan_test.go:130: history=100000 query=unread-count execution_ms=42.327 feed_row_budget=100000 plan=[
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 929.11,
+              "Total Cost": 929.12,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Startup Time": 42.304,
+              "Actual Total Time": 42.305,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Shared Hit Blocks": 6488,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Index Only Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Scan Direction": "Forward",
+                  "Index Name": "feed_unread_messages",
+                  "Relation Name": "feed_entries",
+                  "Alias": "feed_entries",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 927.86,
+                  "Plan Rows": 500,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.033,
+                  "Actual Total Time": 36.559,
+                  "Actual Rows": 100000,
+                  "Actual Loops": 1,
+                  "Index Cond": "((meeting_id = 'chat-b6d701fb2f67c5fdd7946914'::text) AND (sequence > '0'::numeric))",
+                  "Rows Removed by Index Recheck": 0,
+                  "Filter": "(actor_id <> 'chat-b6d701fb2f67c5fdd7946914-guest'::text)",
+                  "Rows Removed by Filter": 0,
+                  "Heap Fetches": 100000,
+                  "Shared Hit Blocks": 6488,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.089,
+            "Triggers": [
+            ],
+            "Execution Time": 42.327
+          }
+        ]
+    chat_read_plan_test.go:130: history=100000 query=first-unread execution_ms=0.042 feed_row_budget=1 plan=[
+          {
+            "Plan": {
+              "Node Type": "Limit",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0.42,
+              "Total Cost": 2.27,
+              "Plan Rows": 1,
+              "Plan Width": 41,
+              "Actual Startup Time": 0.027,
+              "Actual Total Time": 0.028,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Index Only Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Scan Direction": "Forward",
+                  "Index Name": "feed_unread_messages",
+                  "Relation Name": "feed_entries",
+                  "Alias": "feed_entries",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 927.86,
+                  "Plan Rows": 500,
+                  "Plan Width": 41,
+                  "Actual Startup Time": 0.026,
+                  "Actual Total Time": 0.026,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "((meeting_id = 'chat-b6d701fb2f67c5fdd7946914'::text) AND (sequence > '0'::numeric))",
+                  "Rows Removed by Index Recheck": 0,
+                  "Filter": "(actor_id <> 'chat-b6d701fb2f67c5fdd7946914-guest'::text)",
+                  "Rows Removed by Filter": 0,
+                  "Heap Fetches": 1,
+                  "Shared Hit Blocks": 4,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.135,
+            "Triggers": [
+            ],
+            "Execution Time": 0.042
+          }
+        ]
+    chat_read_plan_test.go:130: history=100000 query=receipts-100 execution_ms=0.974 feed_row_budget=100 plan=[
+          {
+            "Plan": {
+              "Node Type": "Nested Loop",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Join Type": "Inner",
+              "Startup Cost": 0.42,
+              "Total Cost": 3407.50,
+              "Plan Rows": 100,
+              "Plan Width": 40,
+              "Actual Startup Time": 0.054,
+              "Actual Total Time": 0.915,
+              "Actual Rows": 100,
+              "Actual Loops": 1,
+              "Inner Unique": false,
+              "Shared Hit Blocks": 500,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Function Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Function Name": "unnest",
+                  "Alias": "requested",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 1.00,
+                  "Plan Rows": 100,
+                  "Plan Width": 40,
+                  "Actual Startup Time": 0.016,
+                  "Actual Total Time": 0.025,
+                  "Actual Rows": 100,
+                  "Actual Loops": 1,
+                  "Shared Hit Blocks": 0,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                },
+                {
+                  "Node Type": "Subquery Scan",
+                  "Parent Relationship": "Inner",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Alias": "f",
+                  "Startup Cost": 0.42,
+                  "Total Cost": 8.46,
+                  "Plan Rows": 1,
+                  "Plan Width": 41,
+                  "Actual Startup Time": 0.005,
+                  "Actual Total Time": 0.005,
+                  "Actual Rows": 1,
+                  "Actual Loops": 100,
+                  "Filter": "((f.meeting_id = 'chat-b6d701fb2f67c5fdd7946914'::text) AND (f.actor_id = 'chat-b6d701fb2f67c5fdd7946914-owner'::text) AND (f.kind = 'message'::text))",
+                  "Rows Removed by Filter": 0,
+                  "Shared Hit Blocks": 400,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0,
+                  "Plans": [
+                    {
+                      "Node Type": "Limit",
+                      "Parent Relationship": "Subquery",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Startup Cost": 0.42,
+                      "Total Cost": 8.44,
+                      "Plan Rows": 1,
+                      "Plan Width": 139,
+                      "Actual Startup Time": 0.004,
+                      "Actual Total Time": 0.004,
+                      "Actual Rows": 1,
+                      "Actual Loops": 100,
+                      "Shared Hit Blocks": 400,
+                      "Shared Read Blocks": 0,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 0,
+                      "Temp Written Blocks": 0,
+                      "Plans": [
+                        {
+                          "Node Type": "Index Scan",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Scan Direction": "Forward",
+                          "Index Name": "feed_entries_pkey",
+                          "Relation Name": "feed_entries",
+                          "Alias": "feed_entries",
+                          "Startup Cost": 0.42,
+                          "Total Cost": 8.44,
+                          "Plan Rows": 1,
+                          "Plan Width": 139,
+                          "Actual Startup Time": 0.004,
+                          "Actual Total Time": 0.004,
+                          "Actual Rows": 1,
+                          "Actual Loops": 100,
+                          "Index Cond": "(id = requested.id)",
+                          "Rows Removed by Index Recheck": 0,
+                          "Shared Hit Blocks": 400,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Node Type": "Aggregate",
+                  "Strategy": "Plain",
+                  "Partial Mode": "Simple",
+                  "Parent Relationship": "SubPlan",
+                  "Subplan Name": "SubPlan 3",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 25.59,
+                  "Total Cost": 25.60,
+                  "Plan Rows": 1,
+                  "Plan Width": 8,
+                  "Actual Startup Time": 0.002,
+                  "Actual Total Time": 0.002,
+                  "Actual Rows": 1,
+                  "Actual Loops": 100,
+                  "Shared Hit Blocks": 100,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0,
+                  "Plans": [
+                    {
+                      "Node Type": "Nested Loop",
+                      "Parent Relationship": "Outer",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Join Type": "Anti",
+                      "Startup Cost": 0.30,
+                      "Total Cost": 25.59,
+                      "Plan Rows": 1,
+                      "Plan Width": 0,
+                      "Actual Startup Time": 0.001,
+                      "Actual Total Time": 0.001,
+                      "Actual Rows": 0,
+                      "Actual Loops": 100,
+                      "Inner Unique": false,
+                      "Shared Hit Blocks": 100,
+                      "Shared Read Blocks": 0,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 0,
+                      "Temp Written Blocks": 0,
+                      "Plans": [
+                        {
+                          "Node Type": "Nested Loop",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Join Type": "Inner",
+                          "Startup Cost": 0.15,
+                          "Total Cost": 17.41,
+                          "Plan Rows": 1,
+                          "Plan Width": 35,
+                          "Actual Startup Time": 0.001,
+                          "Actual Total Time": 0.001,
+                          "Actual Rows": 0,
+                          "Actual Loops": 100,
+                          "Inner Unique": true,
+                          "Join Filter": "((m.organizer_id = r.user_id) OR (SubPlan 1))",
+                          "Rows Removed by Join Filter": 0,
+                          "Shared Hit Blocks": 100,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0,
+                          "Plans": [
+                            {
+                              "Node Type": "Seq Scan",
+                              "Parent Relationship": "Outer",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Relation Name": "meeting_read_markers",
+                              "Alias": "r",
+                              "Startup Cost": 0.00,
+                              "Total Cost": 1.05,
+                              "Plan Rows": 1,
+                              "Plan Width": 65,
+                              "Actual Startup Time": 0.001,
+                              "Actual Total Time": 0.001,
+                              "Actual Rows": 0,
+                              "Actual Loops": 100,
+                              "Filter": "((user_id <> 'chat-b6d701fb2f67c5fdd7946914-owner'::text) AND (read_through_sequence >= f.sequence) AND (meeting_id = 'chat-b6d701fb2f67c5fdd7946914'::text))",
+                              "Rows Removed by Filter": 3,
+                              "Shared Hit Blocks": 100,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            },
+                            {
+                              "Node Type": "Index Scan",
+                              "Parent Relationship": "Inner",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Scan Direction": "Forward",
+                              "Index Name": "meetings_pkey",
+                              "Relation Name": "meetings",
+                              "Alias": "m",
+                              "Startup Cost": 0.15,
+                              "Total Cost": 8.17,
+                              "Plan Rows": 1,
+                              "Plan Width": 64,
+                              "Actual Startup Time": 0.000,
+                              "Actual Total Time": 0.000,
+                              "Actual Rows": 0,
+                              "Actual Loops": 0,
+                              "Index Cond": "(id = 'chat-b6d701fb2f67c5fdd7946914'::text)",
+                              "Rows Removed by Index Recheck": 0,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            },
+                            {
+                              "Node Type": "Index Scan",
+                              "Parent Relationship": "SubPlan",
+                              "Subplan Name": "SubPlan 1",
+                              "Parallel Aware": false,
+                              "Async Capable": false,
+                              "Scan Direction": "Forward",
+                              "Index Name": "rsvps_user",
+                              "Relation Name": "rsvps",
+                              "Alias": "v",
+                              "Startup Cost": 0.15,
+                              "Total Cost": 8.18,
+                              "Plan Rows": 1,
+                              "Plan Width": 0,
+                              "Actual Startup Time": 0.000,
+                              "Actual Total Time": 0.000,
+                              "Actual Rows": 0,
+                              "Actual Loops": 0,
+                              "Index Cond": "((user_id = r.user_id) AND (meeting_id = r.meeting_id))",
+                              "Rows Removed by Index Recheck": 0,
+                              "Filter": "((document ->> 'Answer'::text) = 'going'::text)",
+                              "Rows Removed by Filter": 0,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 0,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            }
+                          ]
+                        },
+                        {
+                          "Node Type": "Index Only Scan",
+                          "Parent Relationship": "Inner",
+                          "Parallel Aware": false,
+                          "Async Capable": false,
+                          "Scan Direction": "Forward",
+                          "Index Name": "removed_meeting_users_pkey",
+                          "Relation Name": "removed_meeting_users",
+                          "Alias": "removed",
+                          "Startup Cost": 0.15,
+                          "Total Cost": 8.17,
+                          "Plan Rows": 1,
+                          "Plan Width": 32,
+                          "Actual Startup Time": 0.000,
+                          "Actual Total Time": 0.000,
+                          "Actual Rows": 0,
+                          "Actual Loops": 0,
+                          "Index Cond": "(user_id = r.user_id)",
+                          "Rows Removed by Index Recheck": 0,
+                          "Heap Fetches": 0,
+                          "Shared Hit Blocks": 0,
+                          "Shared Read Blocks": 0,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.362,
+            "Triggers": [
+            ],
+            "Execution Time": 0.974
+          }
+        ]
+    chat_read_plan_test.go:154: history=100000 query=unread samples=20 p95_ms=38.058 budget_ms=100
+    chat_read_plan_test.go:154: history=100000 query=receipts samples=20 p95_ms=1.501 budget_ms=100
+--- PASS: TestChatReadState100kPlanIntegration (18.51s)
+=== RUN   TestChatReadStateAtomicIntegration
+--- PASS: TestChatReadStateAtomicIntegration (0.09s)
+=== RUN   TestChatRetentionAndSyncIntegration
+--- PASS: TestChatRetentionAndSyncIntegration (0.07s)
+=== RUN   TestChatLegacyStreamInitializationIntegration
+--- PASS: TestChatLegacyStreamInitializationIntegration (0.04s)
+=== RUN   TestFeedBoundedQueryPlansIntegration
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/initial
+    feed_plan_test.go:121: history=1000 query=initial planning_ms=0.256 execution_ms=0.063 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/after
+    feed_plan_test.go:121: history=1000 query=after planning_ms=0.089 execution_ms=0.051 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/before
+    feed_plan_test.go:121: history=1000 query=before planning_ms=0.065 execution_ms=0.042 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/empty-tail
+    feed_plan_test.go:121: history=1000 query=empty-tail planning_ms=0.089 execution_ms=0.020 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/tail
+    feed_plan_test.go:121: history=1000 query=tail planning_ms=0.074 execution_ms=0.044 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/entry
+    feed_plan_test.go:121: history=1000 query=entry planning_ms=0.082 execution_ms=0.027 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/intent
+    feed_plan_test.go:121: history=1000 query=intent planning_ms=0.100 execution_ms=0.029 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/initial
+    feed_plan_test.go:121: history=10000 query=initial planning_ms=0.203 execution_ms=0.047 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/after
+    feed_plan_test.go:121: history=10000 query=after planning_ms=0.081 execution_ms=0.063 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/before
+    feed_plan_test.go:121: history=10000 query=before planning_ms=0.066 execution_ms=0.066 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/empty-tail
+    feed_plan_test.go:121: history=10000 query=empty-tail planning_ms=0.065 execution_ms=0.019 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/tail
+    feed_plan_test.go:121: history=10000 query=tail planning_ms=0.077 execution_ms=0.039 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/entry
+    feed_plan_test.go:121: history=10000 query=entry planning_ms=0.050 execution_ms=0.020 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/intent
+    feed_plan_test.go:121: history=10000 query=intent planning_ms=0.058 execution_ms=0.018 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/initial
+    feed_plan_test.go:121: history=100000 query=initial planning_ms=0.227 execution_ms=0.054 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/after
+    feed_plan_test.go:121: history=100000 query=after planning_ms=0.075 execution_ms=0.057 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/before
+    feed_plan_test.go:121: history=100000 query=before planning_ms=0.088 execution_ms=0.050 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/empty-tail
+    feed_plan_test.go:121: history=100000 query=empty-tail planning_ms=0.068 execution_ms=0.020 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/tail
+    feed_plan_test.go:121: history=100000 query=tail planning_ms=0.085 execution_ms=0.054 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/entry
+    feed_plan_test.go:121: history=100000 query=entry planning_ms=0.083 execution_ms=0.023 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/intent
+    feed_plan_test.go:121: history=100000 query=intent planning_ms=0.089 execution_ms=0.020 feed_scans=1 budget_rows=1
+--- PASS: TestFeedBoundedQueryPlansIntegration (22.20s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/1000 (0.16s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/10000 (1.22s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/100000 (20.81s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/intent (0.00s)
+=== RUN   TestFeedWindowIntegration
+=== RUN   TestFeedWindowIntegration/initial
+=== RUN   TestFeedWindowIntegration/after-zero
+=== RUN   TestFeedWindowIntegration/after-gap
+=== RUN   TestFeedWindowIntegration/after-high
+=== RUN   TestFeedWindowIntegration/after-max
+=== RUN   TestFeedWindowIntegration/before-max
+=== RUN   TestFeedWindowIntegration/before-gap
+=== RUN   TestFeedWindowIntegration/before-zero
+--- PASS: TestFeedWindowIntegration (0.04s)
+    --- PASS: TestFeedWindowIntegration/initial (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-zero (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-high (0.00s)
+    --- PASS: TestFeedWindowIntegration/after-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-max (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-gap (0.00s)
+    --- PASS: TestFeedWindowIntegration/before-zero (0.00s)
+=== RUN   TestFeedWindowSnapshotRollbackIntegration
+--- PASS: TestFeedWindowSnapshotRollbackIntegration (0.03s)
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/1000
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=1 samples=20 p95_ms=0.664 max_ms=1.743 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=1 samples=20 p95_ms=0.449 max_ms=0.801 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=1 samples=20 p95_ms=0.338 max_ms=0.406 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=1 samples=20 p95_ms=0.731 max_ms=0.746 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=1 samples=20 p95_ms=0.332 max_ms=0.385 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=1 samples=20 p95_ms=0.627 max_ms=0.827 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=50 samples=20 p95_ms=0.526 max_ms=0.635 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=50 samples=20 p95_ms=0.941 max_ms=1.075 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=50 samples=20 p95_ms=0.281 max_ms=0.365 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=50 samples=20 p95_ms=0.386 max_ms=0.525 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=50 samples=20 p95_ms=0.632 max_ms=0.644 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=50 samples=20 p95_ms=1.229 max_ms=1.492 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=100 samples=20 p95_ms=1.149 max_ms=1.248 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=100 samples=20 p95_ms=0.795 max_ms=1.099 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=100 samples=20 p95_ms=0.532 max_ms=0.789 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=100 samples=20 p95_ms=0.390 max_ms=0.455 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=100 samples=20 p95_ms=0.741 max_ms=1.486 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=100 samples=20 p95_ms=2.347 max_ms=2.395 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/10000
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=1 samples=20 p95_ms=0.456 max_ms=1.176 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=1 samples=20 p95_ms=0.463 max_ms=0.555 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=1 samples=20 p95_ms=0.363 max_ms=0.411 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=1 samples=20 p95_ms=0.452 max_ms=0.472 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=1 samples=20 p95_ms=0.420 max_ms=0.470 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=1 samples=20 p95_ms=0.719 max_ms=0.795 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=50 samples=20 p95_ms=0.958 max_ms=0.977 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=50 samples=20 p95_ms=0.780 max_ms=0.919 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=50 samples=20 p95_ms=0.519 max_ms=0.531 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=50 samples=20 p95_ms=0.471 max_ms=0.473 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=50 samples=20 p95_ms=0.797 max_ms=0.915 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=50 samples=20 p95_ms=1.559 max_ms=1.898 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=100 samples=20 p95_ms=1.072 max_ms=1.201 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=100 samples=20 p95_ms=1.134 max_ms=1.203 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=100 samples=20 p95_ms=0.406 max_ms=0.432 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=100 samples=20 p95_ms=0.385 max_ms=0.469 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=100 samples=20 p95_ms=0.936 max_ms=1.232 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=100 samples=20 p95_ms=1.965 max_ms=2.108 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/100000
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=1 samples=20 p95_ms=0.487 max_ms=1.213 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=1 samples=20 p95_ms=0.446 max_ms=0.462 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=1 samples=20 p95_ms=0.492 max_ms=0.538 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=1 samples=20 p95_ms=0.502 max_ms=0.527 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=1 samples=20 p95_ms=0.439 max_ms=0.725 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=1 samples=20 p95_ms=1.616 max_ms=1.641 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=50 samples=20 p95_ms=1.516 max_ms=1.556 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=50 samples=20 p95_ms=0.622 max_ms=0.680 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=50 samples=20 p95_ms=0.526 max_ms=0.547 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=50 samples=20 p95_ms=0.386 max_ms=0.945 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=50 samples=20 p95_ms=1.026 max_ms=1.104 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=50 samples=20 p95_ms=1.625 max_ms=2.386 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=100 samples=20 p95_ms=1.020 max_ms=1.276 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=100 samples=20 p95_ms=1.628 max_ms=1.650 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=100 samples=20 p95_ms=0.519 max_ms=0.617 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=100 samples=20 p95_ms=0.475 max_ms=0.551 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=100 samples=20 p95_ms=1.280 max_ms=2.193 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=100 samples=20 p95_ms=2.219 max_ms=2.345 budget_ms=100 includes=transaction+SQL+JSONdecode
+--- PASS: TestIndependentRepeatFeedSQLLatencyIntegration (45.29s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/1000 (0.33s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/10000 (6.99s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/100000 (37.95s)
+PASS
+=== RUN   TestIndependentRepeatSQLProcessRestartDeletionAndEpoch
+    repeat_sql_process_test.go:73: child phase=commit-crash exit=73 output==== RUN   TestIndependentRepeatSQLChild
+        COMMITTED id=fa596a79-c44c-4996-abc0-d3f8a62a65f5 sequence=5 pid=61957
+    repeat_sql_process_test.go:74: child phase=api-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        API_RESTART status=200 changes=1 pid=61962
+        --- PASS: TestIndependentRepeatSQLChild (0.02s)
+        PASS
+    repeat_sql_process_test.go:75: child phase=publish-crash exit=74 output==== RUN   TestIndependentRepeatSQLChild
+        PUBLISHED event=1f409d61-803d-4324-945b-ef53efe976c7 target=meeting pid=61967
+    repeat_sql_process_test.go:76: child phase=recover exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        RECOVERED event=1f409d61-803d-4324-945b-ef53efe976c7 target=meeting pid=61972
+        RECOVERED event=78f5471f-aa00-448e-b485-305e7a674abc target=user pid=61972
+        RECOVERED event=ddb93621-db9a-402c-abac-ad2b0d88c35d target=user pid=61972
+        RECOVERED event=f3bccc91-f5c9-44b2-9e4c-24305b29589f target=user pid=61972
+        DRAIN acknowledged=4 deleted=4 pid=61972
+        --- PASS: TestIndependentRepeatSQLChild (0.02s)
+        PASS
+    repeat_sql_process_test.go:84: simulated no-journal writer + explicit epoch replacement: oldHTTP cursor410; fresh snapshot preserves interval message and preceding history; schema-compatible disabled capability still serves legacy feed. Production oldbinary rollback was not attempted
+    repeat_sql_process_test.go:99: child phase=terminal-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        TERMINAL_RESTART delivered=true acknowledged=3 pid=61978
+        --- PASS: TestIndependentRepeatSQLChild (0.04s)
+        PASS
+    repeat_sql_process_test.go:100: distinct process PIDs: committed crash73 before publish; API restart HTTP200 delta1; publish crash74 before ACK; periodic no-NOTIFY drain replayed same event; SQL rollback atomic; account DELETE with activeWS revoked sockets/cleared marker+recipient; deletedmeeting removedhistory/stream, newprocess delivered durable terminal hint
+--- PASS: TestIndependentRepeatSQLProcessRestartDeletionAndEpoch (0.45s)
+PASS
+{"database": "somewhere_integration", "removedOwnTemporaryDatabase": true}

@@ -1,0 +1,575 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 1 -xctestrun /tmp/somewhere-ios-independent-20261028/independent.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /tmp/somewhere-ios-independent-20261028/realtime/composer-toggle.xcresult test-without-building "-only-testing:SomewhereUITests/IndependentGestureReview/testRapidComposerToggleDoesNotInsertEmoji"
+
+Writing result bundle at path:
+	/tmp/somewhere-ios-independent-20261028/realtime/composer-toggle.xcresult
+
+2026-10-28 12:12:12.869 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:14.072915+0300 SomewhereUITests-Runner[57710:3360741] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-28 12:12:16.983.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 12:12:16.984.
+Test Suite 'IndependentGestureReview' started at 2026-10-28 12:12:16.984.
+Test Case '-[SomewhereUITests.IndependentGestureReview testRapidComposerToggleDoesNotInsertEmoji]' started.
+    t =     0.00s Start Test at 2026-10-28 12:12:16.987
+    t =     0.02s Set Up
+    t =     0.02s     Setting device orientation to Portrait
+    t =     0.03s         Wait for com.apple.springboard to idle
+    t =     0.06s Open dev.groupplanning.ios.uitesthost
+    t =     0.06s     Launch dev.groupplanning.ios.uitesthost
+2026-10-28 12:12:17.109 xcodebuild[57465:3360409] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-28 12:12:17.109 xcodebuild[57465:3360409] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-28 12:12:17.119 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.54s         Setting up automation session
+objc[57710]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106940398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106a78310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.91s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.30s Waiting 20.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.38s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.38s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.48s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.48s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.51s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.54s     Synthesize event
+    t =     5.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.29s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.37s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.37s         Checking existence of `"meeting-add" Button`
+    t =     7.42s Tap "message-input" TextView
+    t =     7.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.42s     Find the "message-input" TextView
+    t =     7.45s     Check for interrupting elements affecting "message-input" TextView
+    t =     7.48s     Synthesize event
+    t =     7.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.97s Type 'Проверка переключе...' into "message-input" TextView
+    t =     7.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.98s     Find the "message-input" TextView
+    t =     8.03s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.07s     Synthesize event
+    t =     8.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.65s Tap "message-send" Button
+    t =     8.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.66s     Find the "message-send" Button
+    t =     8.71s     Check for interrupting elements affecting "message-send" Button
+    t =     8.75s     Synthesize event
+    t =     9.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.57s Find the "message-input" TextView
+INDEPENDENT_COMPOSER before=Optional()
+    t =     9.63s Tap "composer-emoji-toggle" Button
+    t =     9.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.64s     Find the "composer-emoji-toggle" Button
+    t =     9.68s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =     9.72s     Synthesize event
+    t =    10.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.01s Tap "composer-emoji-toggle" Button
+    t =    10.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.02s     Find the "composer-emoji-toggle" Button
+    t =    10.07s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    10.11s     Synthesize event
+    t =    10.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+INDEPENDENT_STEP 1793178747.9226708 rapid-toggle-0
+    t =    10.94s Requesting snapshot of accessibility hierarchy for app with pid 58426
+    t =    11.25s Requesting snapshot of accessibility hierarchy for app with pid 58426
+INDEPENDENT_TREE Optional(Attributes: Application, 0x106487700, pid: 58426, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x106487700, pid: 58426, label: 'somewhere QA'
+    Window (Main), 0x106484dc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x106485cc0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x106485040, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x106485180, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x106486bc0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x106486e40, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x106486f80, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x106487200, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1064870c0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x106487340, {{0.0, 0.0}, {402.0, 874.0}}
+                        Button, 0x1064875c0, {{12.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-back', label: 'Назад'
+                          Image, 0x106487480, {{12.0, 73.0}, {44.0, 44.0}}, label: 'ChatLeft'
+                        Image, 0x106487840, {{62.0, 75.0}, {40.0, 40.0}}, label: 'ChatCalendar'
+                        Button, 0x106487ac0, {{108.0, 73.0}, {182.0, 44.0}}, identifier: 'meeting-heading', label: 'Настолки у Саши, 31 октября · 19:00 · 7 участников'
+                          StaticText, 0x106487c00, {{108.0, 77.7}, {138.0, 19.3}}, identifier: 'feed-title', label: 'Настолки у Саши'
+                          StaticText, 0x106487980, {{108.0, 99.0}, {179.3, 13.3}}, label: '31 октября · 19:00 · 7 участников'
+                        Button, 0x106487d40, {{296.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-share', label: 'Пригласить друзей'
+                          Image, 0x106487e80, {{296.0, 73.0}, {44.0, 44.0}}, label: 'ChatShare'
+                        Button, 0x106484640, {{346.0, 73.0}, {44.0, 44.0}}, identifier: 'meeting-info-open', label: 'Информация о встрече'
+                          Image, 0x106484a00, {{346.0, 73.0}, {44.0, 44.0}}, label: 'ChatInfo'
+                        ScrollView, 0x10368f480, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'feed-timeline'
+                          Other, 0x10368f0c0, {{0.0, -390.0}, {402.0, 902.0}}
+                            Other, 0x10368f700, {{16.0, -366.4}, {370.0, 858.8}}
+                              StaticText, 0x10368f840, {{178.2, -366.4}, {45.7, 13.3}}, label: 'Сегодня'
+                              StaticText, 0x10368f980, {{16.0, -327.3}, {353.0, 56.3}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000011', label: 'Лена, 18:24. Я принесу настолки. Во что будем играть?'
+                                StaticText, 0x10368fac0, {{52.0, -327.3}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x10368fd40, {{90.3, -327.3}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x10368fc00, {{16.0, -308.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x10368d400, {{66.0, -299.0}, {288.7, 17.0}}, label: 'Я принесу настолки. Во что будем играть?'
+                              Button, 0x10368d540, {{52.0, -269.0}, {49.0, 43.7}}, identifier: 'reaction-chip-❤️', label: '❤️, 2'
+                                StaticText, 0x107630000, {{60.0, -256.2}, {21.0, 18.0}}, label: '❤️'
+                                StaticText, 0x107630140, {{86.0, -253.8}, {7.0, 13.3}}, label: '2'
+                              StaticText, 0x107630280, {{28.0, -205.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000012', label: 'Саша, 18:24. Давайте начнём с чего-нибудь простого 🙂'
+                                StaticText, 0x1076303c0, {{279.7, -205.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x107630500, {{320.7, -205.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x107630640, {{358.0, -185.7}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x107630780, {{42.0, -176.7}, {279.0, 33.7}}, label: 'Давайте начнём с чего-нибудь простого 🙂'
+                              Button, 0x1076308c0, {{312.3, -115.3}, {73.7, 14.3}}, identifier: 'message-readers-ded00000-0000-4000-8000-000000000012', label: 'Прочитали 1'
+                              StaticText, 0x107630a00, {{16.0, -66.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000013', label: 'Лена, 18:24. Тогда беру две игры. И можно заказать пиццу!'
+                                StaticText, 0x107630b40, {{52.0, -66.0}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x107630c80, {{90.3, -66.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x107630dc0, {{16.0, -46.7}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x107630f00, {{66.0, -37.7}, {210.3, 33.7}}, label: 'Тогда беру две игры. И можно заказать пиццу!'
+                              Image, 0x107631040, {{66.0, 41.0}, {15.0, 15.0}}, label: 'ChatTask'
+                              StaticText, 0x107631180, {{88.0, 42.3}, {104.3, 12.0}}, label: 'Новая задача · Саша'
+                              StaticText, 0x1076312c0, {{345.0, 42.3}, {27.0, 12.0}}, label: '12:05'
+                              Button, 0x107631400, {{66.0, 56.0}, {306.0, 44.0}}, identifier: 'preparation-task-be3e614f-1609-4460-bcfd-47acc9fc1be2', label: 'Заказать пиццу'
+                                StaticText, 0x107631540, {{66.0, 56.0}, {306.0, 44.0}}, label: 'Заказать пиццу'
+                                Image, 0x107631680, {{354.0, 72.0}, {18.0, 18.0}}, label: 'ChatRight'
+                              StaticText, 0x1076317c0, {{66.0, 99.8}, {101.0, 14.3}}, label: 'Исполняет Миша'
+                              StaticText, 0x107631900, {{98.0, 170.2}, {206.0, 35.0}}, label: 'Саша присоединяется к встрече, 12:06'
+                                StaticText, 0x107631a40, {{98.0, 170.2}, {206.0, 15.7}}, label: 'Саша присоединяется к встрече'
+                                StaticText, 0x107631b80, {{186.3, 191.8}, {29.3, 13.3}}, label: '12:06'
+                              StaticText, 0x107631cc0, {{149.0, 237.2}, {237.0, 56.5}}, identifier: 'chat-message-76050ce4-8f40-4344-b996-ab06de20bf65', label: 'Саша, 12:06. Проверка чата 924427B8'
+                                StaticText, 0x107631e00, {{279.7, 237.2}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x107631f40, {{320.7, 237.2}, {29.3, 13.3}}, label: '12:06'
+                                StaticText, 0x107632080, {{358.0, 256.7}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x1076321c0, {{163.0, 265.5}, {172.3, 17.0}}, label: 'Проверка чата 924427B8'
+                              Button, 0x107632300, {{312.3, 310.3}, {73.7, 14.3}}, identifier: 'message-readers-76050ce4-8f40-4344-b996-ab06de20bf65', label: 'Прочитали 1'
+                              StaticText, 0x107632440, {{16.0, 359.7}, {205.0, 56.3}}, identifier: 'chat-message-cc392ea5-2652-4b00-ac36-8e759e035426', label: 'Саша, 12:06. Входящее 94F4287C'
+                                StaticText, 0x107632580, {{52.0, 359.7}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x1076326c0, {{93.0, 359.7}, {29.3, 13.3}}, label: '12:06'
+                                StaticText, 0x107632800, {{16.0, 379.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x107632940, {{66.0, 388.0}, {140.7, 17.0}}, label: 'Входящее 94F4287C'
+                              StaticText, 0x107632a80, {{153.0, 436.0}, {233.0, 56.3}}, identifier: 'chat-message-0c3a3810-bab9-43f5-a31a-00484a10a2ff', label: 'Саша, 12:12. Проверка переключения'
+                                StaticText, 0x107632bc0, {{281.7, 436.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x107632d00, {{322.7, 436.0}, {27.3, 13.3}}, label: '12:12'
+                                StaticText, 0x107632e40, {{358.0, 455.3}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x107632f80, {{167.0, 464.3}, {168.3, 17.0}}, label: 'Проверка переключения'
+                          Other, 0x1076330c0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x107633200, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x107633340, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x107633480, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x1076335c0, {{369.0, 128.0}, {30.0, 366.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 97 %
+                            Other, 0x107633700, {{396.0, 263.3}, {3.0, 223.0}}
+                          Other, 0x107633840, {{369.0, 128.0}, {30.0, 366.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 97 %
+                            Other, 0x107633980, {{396.0, 263.3}, {3.0, 223.0}}
+                        Button, 0x107633ac0, {{10.0, 502.0}, {44.0, 44.0}}, identifier: 'meeting-add', label: 'Добавить к встрече'
+                          Image, 0x107633c00, {{10.0, 502.0}, {44.0, 44.0}}, label: 'ChatPlus'
+                        TextView, 0x107633d40, {{60.0, 502.0}, {238.0, 44.0}}, identifier: 'message-input', label: 'Сообщение', value: 🥲
+                          Other, 0x107633e80, {{60.0, 502.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                            Other, 0x107634000, {{60.0, 502.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x107634140, {{52.8, 488.5}, {16.5, 16.5}}
+                              Other, 0x107634280, {{60.0, 502.0}, {2.0, 0.0}}
+                            Other, 0x1076343c0, {{60.0, 502.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x107634500, {{52.8, 488.5}, {16.5, 16.5}}
+                              Other, 0x107634640, {{60.0, 502.0}, {2.0, 0.0}}
+                          Other, 0x107634780, {{265.0, 502.0}, {30.0, 44.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x1076348c0, {{292.0, 505.0}, {3.0, 38.0}}
+                          Other, 0x107634a00, {{60.0, 521.0}, {238.0, 22.0}}, label: 'Горизонтальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x107634b40, {{65.0, 540.0}, {230.0, 3.0}}
+                        Button, 0x107634c80, {{298.0, 502.0}, {44.0, 44.0}}, identifier: 'composer-emoji-toggle', label: 'Вернуться к клавиатуре', value: Открыто
+                          Image, 0x107634dc0, {{298.0, 502.0}, {44.0, 44.0}}, label: 'ChatKeyboard'
+                        Button, 0x107634f00, {{348.0, 502.0}, {44.0, 44.0}}, identifier: 'message-send', label: 'Отправить сообщение'
+                          Image, 0x107635040, {{348.0, 502.0}, {44.0, 44.0}}, label: 'ChatSend'
+                        Button, 0x107635180, {{350.0, 561.0}, {44.0, 44.0}}, identifier: 'emoji-delete', label: 'Удалить предыдущий символ'
+                          Image, 0x1076352c0, {{350.0, 561.0}, {44.0, 44.0}}, label: 'ChatBackspace'
+                        Image, 0x107635400, {{19.0, 574.7}, {17.0, 17.0}}, label: 'ChatSearch'
+                        TextField, 0x107635540, {{44.0, 572.0}, {291.0, 22.0}}, identifier: 'emoji-search', placeholderValue: 'Поиск эмодзи'
+                        ScrollView, 0x107635680, {{0.0, 605.0}, {402.0, 44.0}}
+                          Other, 0x1076357c0, {{0.0, 605.0}, {440.0, 44.0}}
+                            Button, 0x107635900, {{0.0, 605.0}, {44.0, 44.0}}, label: 'Недавние'
+                            Button, 0x107635a40, {{44.0, 605.0}, {44.0, 44.0}}, label: 'Эмоции', Selected
+                            Button, 0x107635b80, {{88.0, 605.0}, {44.0, 44.0}}, label: 'Люди'
+                            Button, 0x107635cc0, {{132.0, 605.0}, {44.0, 44.0}}, label: 'Природа'
+                            Button, 0x107635e00, {{176.0, 605.0}, {44.0, 44.0}}, label: 'Еда'
+                            Button, 0x107635f40, {{220.0, 605.0}, {44.0, 44.0}}, label: 'Путешествия'
+                            Button, 0x107636080, {{264.0, 605.0}, {44.0, 44.0}}, label: 'Занятия'
+                            Button, 0x1076361c0, {{308.0, 605.0}, {44.0, 44.0}}, label: 'Предметы'
+                            Button, 0x107636300, {{352.0, 605.0}, {44.0, 44.0}}, label: 'Символы'
+                            Button, 0x107636440, {{396.0, 605.0}, {44.0, 44.0}}, label: 'Флаги'
+                        ScrollView, 0x107636580, {{0.0, 649.0}, {402.0, 225.0}}, identifier: 'emoji-results'
+                          Other, 0x1076366c0, {{0.0, 649.0}, {402.0, 999.0}}
+                            StaticText, 0x107636800, {{8.0, 654.0}, {40.0, 12.0}}, label: 'Эмоции'
+                            Other, 0x107636940, {{8.0, 670.0}, {386.0, 396.0}}
+                              Button, 0x107636a80, {{8.0, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😀', label: 'широко улыбается'
+                              Button, 0x107636bc0, {{56.3, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😃', label: 'смеется'
+                              Button, 0x107636d00, {{104.7, 670.0}, {48.0, 44.0}}, identifier: 'emoji-😄', label: 'смеется с закрытыми глазами'
+                              Button, 0x107636e40, {{152.7, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😁', label: 'светится от счастья'
+                              Button, 0x107636f80, {{201.0, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😆', label: 'смеется с прищуренными глазами'
+                              Button, 0x1076370c0, {{249.3, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😅', label: 'нервно смеется'
+                              Button, 0x107637200, {{297.7, 670.0}, {48.0, 44.0}}, identifier: 'emoji-🤣', label: 'катается со смеху'
+                              Button, 0x107637340, {{345.7, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😂', label: 'смеется до слез'
+                              Button, 0x107637480, {{8.0, 714.0}, {48.3, 44.0}}, identifier: 'emoji-🙂', label: 'слегка улыбается'
+                              Button, 0x1076375c0, {{56.3, 714.0}, {48.3, 44.0}}, identifier: 'emoji-🙃', label: 'вверх тормашками'
+                              Button, 0x107637700, {{104.7, 714.0}, {48.0, 44.0}}, identifier: 'emoji-🫠', label: 'тает'
+                              Button, 0x107637840, {{152.7, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😉', label: 'подмигивает'
+                              Button, 0x107637980, {{201.0, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😊', label: 'довольно улыбается'
+                              Button, 0x107637ac0, {{249.3, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😇', label: 'с нимбом'
+                              Button, 0x107637c00, {{297.7, 714.0}, {48.0, 44.0}}, identifier: 'emoji-🥰', label: 'улыбающееся лицо с сердечками'
+                              Button, 0x107637d40, {{345.7, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😍', label: 'влюбленное лицо'
+                              Button, 0x107637e80, {{8.0, 758.0}, {48.3, 44.0}}, identifier: 'emoji-🤩', label: 'звезды в глазах'
+                              Button, 0x10764c000, {{56.3, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😘', label: 'воздушный поцелуй'
+                              Button, 0x10764c140, {{104.7, 758.0}, {48.0, 44.0}}, identifier: 'emoji-😗', label: 'целует'
+                              Button, 0x10764c280, {{152.7, 758.0}, {48.3, 44.0}}, identifier: 'emoji-☺️', label: 'улыбается'
+                              Button, 0x10764c3c0, {{201.0, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😚', label: 'целует с закрытыми глазами'
+                              Button, 0x10764c500, {{249.3, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😙', label: 'счастливый поцелуй'
+                              Button, 0x10764c640, {{297.7, 758.0}, {48.0, 44.0}}, identifier: 'emoji-🥲', label: 'улыбающееся лицо со слезой'
+                              Button, 0x10764c780, {{345.7, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😋', label: 'вкусно'
+                              Button, 0x10764c8c0, {{8.0, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😛', label: 'показывает язык'
+                              Button, 0x10764ca00, {{56.3, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😜', label: 'показывает язык и подмигивает'
+                              Button, 0x10764cb40, {{104.7, 802.0}, {48.0, 44.0}}, identifier: 'emoji-🤪', label: 'сумасшедшее лицо'
+                              Button, 0x10764cc80, {{152.7, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😝', label: 'морщится и показывает язык'
+                              Button, 0x10764cdc0, {{201.0, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🤑', label: 'деньги в глазах'
+                              Button, 0x10764cf00, {{249.3, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🤗', label: 'обнимает'
+                              Button, 0x10764d040, {{297.7, 802.0}, {48.0, 44.0}}, identifier: 'emoji-🤭', label: 'прикрывает рот рукой'
+                              Button, 0x10764d180, {{345.7, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🫢', label: 'прикрывает рот рукой с открытыми глазами'
+                              Button, 0x10764d2c0, {{8.0, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🫣', label: 'подсматривает'
+                              Button, 0x10764d400, {{56.3, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤫', label: 'тс-с-с'
+                              Button, 0x10764d540, {{104.7, 846.0}, {48.0, 44.0}}, identifier: 'emoji-🤔', label: 'думает'
+                              Button, 0x10764d680, {{152.7, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🫡', label: 'воинское приветствие'
+                              Button, 0x10764d7c0, {{201.0, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤐', label: 'рот на замке'
+                              Button, 0x10764d900, {{249.3, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤨', label: 'не верит'
+                              Button, 0x10764da40, {{297.7, 846.0}, {48.0, 44.0}}, identifier: 'emoji-😐', label: 'все равно'
+                              Button, 0x10764db80, {{345.7, 846.0}, {48.3, 44.0}}, identifier: 'emoji-😑', label: 'без эмоций'
+                              Button, 0x10764dcc0, {{8.0, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😶', label: 'лицо без рта'
+                              Button, 0x10764de00, {{56.3, 890.0}, {48.3, 44.0}}, identifier: 'emoji-🫥', label: 'лицо пунктиром'
+                              Button, 0x10764df40, {{104.7, 890.0}, {48.0, 44.0}}, identifier: 'emoji-😶‍🌫️', label: 'лицо в облаках'
+                              Button, 0x10764e080, {{152.7, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😏', label: 'ухмыляется'
+                              Button, 0x10764e1c0, {{201.0, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😒', label: 'скучает'
+                              Button, 0x10764e300, {{249.3, 890.0}, {48.3, 44.0}}, identifier: 'emoji-🙄', label: 'закатывает глаза'
+                              Button, 0x10764e440, {{297.7, 890.0}, {48.0, 44.0}}, identifier: 'emoji-😬', label: 'гримаса'
+                              Button, 0x10764e580, {{345.7, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😮‍💨', label: 'выдыхает'
+                              Button, 0x10764e6c0, {{8.0, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🤥', label: 'лжец'
+                              Button, 0x10764e800, {{56.3, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🫨', label: 'трясущееся лицо'
+                              Button, 0x10764e940, {{104.7, 934.0}, {48.0, 44.0}}, identifier: 'emoji-🙂‍↔️', label: 'отрицательно качает головой'
+                              Button, 0x10764ea80, {{152.7, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🙂‍↕️', label: 'положительно качает головой'
+                              Button, 0x10764ebc0, {{201.0, 934.0}, {48.3, 44.0}}, identifier: 'emoji-😌', label: 'испытывает облегчение'
+                              Button, 0x10764ed00, {{249.3, 934.0}, {48.3, 44.0}}, identifier: 'emoji-😔', label: 'размышляет'
+                              Button, 0x10764ee40, {{297.7, 934.0}, {48.0, 44.0}}, identifier: 'emoji-😪', label: 'хочет спать'
+                              Button, 0x10764ef80, {{345.7, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🤤', label: 'пускает слюни'
+                              Button, 0x10764f0c0, {{8.0, 978.0}, {48.3, 44.0}}, identifier: 'emoji-😴', label: 'спит'
+                              Button, 0x10764f200, {{56.3, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🫩', label: 'лицо с мешками под глазами'
+                              Button, 0x10764f340, {{104.7, 978.0}, {48.0, 44.0}}, identifier: 'emoji-😷', label: 'в медицинской маске'
+                              Button, 0x10764f480, {{152.7, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤒', label: 'с градусником во рту'
+                              Button, 0x10764f5c0, {{201.0, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤕', label: 'с перевязанной головой'
+                              Button, 0x10764f700, {{249.3, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤢', label: 'тошнит'
+                              Button, 0x10764f840, {{297.7, 978.0}, {48.0, 44.0}}, identifier: 'emoji-🤮', label: 'рвота'
+                              Button, 0x10764f980, {{345.7, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤧', label: 'чихает'
+                              Button, 0x10764fac0, {{8.0, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥵', label: 'жар'
+                              Button, 0x10764fc00, {{56.3, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥶', label: 'мерзнет'
+                              Button, 0x10764fd40, {{104.7, 1022.0}, {48.0, 44.0}}, identifier: 'emoji-🥴', label: 'чувствует головокружение'
+                              Button, 0x10764fe80, {{152.7, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-😵', label: 'головокружение'
+                              Button, 0x107650000, {{201.0, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-😵‍💫', label: 'ошеломление'
+                              Button, 0x107650140, {{249.3, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🤯', label: 'взрыв мозга'
+                              Button, 0x107650280, {{297.7, 1022.0}, {48.0, 44.0}}, identifier: 'emoji-🤠', label: 'в ковбойской шляпе'
+                              Button, 0x1076503c0, {{345.7, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥳', label: 'на вечеринке'
+                          Other, 0x107650500, {{369.0, 649.0}, {30.0, 163.0}}, label: 'Вертикальная полоса прокрутки, 6 страниц', value: 0 %
+                            Other, 0x107650640, {{396.0, 652.0}, {3.0, 36.0}}
+                          Other, 0x107650780, {{369.0, 649.0}, {30.0, 163.0}}, label: 'Вертикальная полоса прокрутки, 6 страниц', value: 0 %
+                            Other, 0x1076508c0, {{396.0, 652.0}, {3.0, 36.0}}
+                        Other, 0x107650a00, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                Toolbar, 0x107650b40, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x107650c80, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x107650dc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107650f00, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107651040, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x106487700, pid: 58426, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x107651180, pid: 58426, label: 'somewhere QA'
+  }
+)
+INDEPENDENT_CONTEXT {
+  "capturedAt" : "2026-10-28T09:12:20Z",
+  "contentSizeCategory" : "UICTContentSizeCategoryL",
+  "fonts" : [
+    ".SFUI-Regular",
+    ".SFUI-Bold"
+  ],
+  "locale" : "ru_RU",
+  "os" : "Version 27.0 (Build 24A434)",
+  "reducedMotion" : false,
+  "renderedFontSizes" : {
+    "heading" : 28,
+    "small" : 13
+  },
+  "runtime" : "27.0",
+  "source" : "SwiftUI environment in SomewhereUITestHost",
+  "textScale" : "large",
+  "timezone" : "Europe\/Moscow"
+}
+    t =    11.41s Added attachment named 'rapid-toggle-0'
+    t =    11.41s Find the "message-input" TextView
+INDEPENDENT_COMPOSER after=Optional(🥲)
+    t =    11.46s Find the "message-input" TextView
+/openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:78: error: -[SomewhereUITests.IndependentGestureReview testRapidComposerToggleDoesNotInsertEmoji] : XCTAssertTrue failed
+    t =    11.53s Tear Down
+INDEPENDENT_STEP 1793178748.511455 failure
+    t =    11.53s     Requesting snapshot of accessibility hierarchy for app with pid 58426
+    t =    11.80s     Requesting snapshot of accessibility hierarchy for app with pid 58426
+INDEPENDENT_TREE Optional(Attributes: Application, 0x107651180, pid: 58426, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x107651180, pid: 58426, label: 'somewhere QA'
+    Window (Main), 0x1076512c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107651400, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107651540, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x107651680, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x1076517c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x107651900, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x107651a40, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107651b80, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x107651cc0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x107651e00, {{0.0, 0.0}, {402.0, 874.0}}
+                        Button, 0x107653340, {{12.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-back', label: 'Назад'
+                          Image, 0x107653200, {{12.0, 73.0}, {44.0, 44.0}}, label: 'ChatLeft'
+                        Image, 0x107652f80, {{62.0, 75.0}, {40.0, 40.0}}, label: 'ChatCalendar'
+                        Button, 0x107652940, {{108.0, 73.0}, {182.0, 44.0}}, identifier: 'meeting-heading', label: 'Настолки у Саши, 31 октября · 19:00 · 7 участников'
+                          StaticText, 0x107652a80, {{108.0, 77.7}, {138.0, 19.3}}, identifier: 'feed-title', label: 'Настолки у Саши'
+                          StaticText, 0x1076526c0, {{108.0, 99.0}, {179.3, 13.3}}, label: '31 октября · 19:00 · 7 участников'
+                        Button, 0x107652800, {{296.0, 73.0}, {44.0, 44.0}}, identifier: 'feed-share', label: 'Пригласить друзей'
+                          Image, 0x107652300, {{296.0, 73.0}, {44.0, 44.0}}, label: 'ChatShare'
+                        Button, 0x107652580, {{346.0, 73.0}, {44.0, 44.0}}, identifier: 'meeting-info-open', label: 'Информация о встрече'
+                          Image, 0x107652440, {{346.0, 73.0}, {44.0, 44.0}}, label: 'ChatInfo'
+                        ScrollView, 0x1076521c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'feed-timeline'
+                          Other, 0x107651f40, {{0.0, -390.0}, {402.0, 902.0}}
+                            Other, 0x107652080, {{16.0, -366.4}, {370.0, 858.8}}
+                              StaticText, 0x1064866c0, {{178.2, -366.4}, {45.7, 13.3}}, label: 'Сегодня'
+                              StaticText, 0x106486940, {{16.0, -327.3}, {353.0, 56.3}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000011', label: 'Лена, 18:24. Я принесу настолки. Во что будем играть?'
+                                StaticText, 0x106485a40, {{52.0, -327.3}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x106485540, {{90.3, -327.3}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x106485b80, {{16.0, -308.0}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x106485e00, {{66.0, -299.0}, {288.7, 17.0}}, label: 'Я принесу настолки. Во что будем играть?'
+                              Button, 0x106485f40, {{52.0, -269.0}, {49.0, 43.7}}, identifier: 'reaction-chip-❤️', label: '❤️, 2'
+                                StaticText, 0x1064861c0, {{60.0, -256.2}, {21.0, 18.0}}, label: '❤️'
+                                StaticText, 0x106486080, {{86.0, -253.8}, {7.0, 13.3}}, label: '2'
+                              StaticText, 0x106486300, {{28.0, -205.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000012', label: 'Саша, 18:24. Давайте начнём с чего-нибудь простого 🙂'
+                                StaticText, 0x106486580, {{279.7, -205.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x106486440, {{320.7, -205.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x10fa24000, {{358.0, -185.7}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x10fa24140, {{42.0, -176.7}, {279.0, 33.7}}, label: 'Давайте начнём с чего-нибудь простого 🙂'
+                              Button, 0x10fa24280, {{312.3, -115.3}, {73.7, 14.3}}, identifier: 'message-readers-ded00000-0000-4000-8000-000000000012', label: 'Прочитали 1'
+                              StaticText, 0x10fa243c0, {{16.0, -66.0}, {358.0, 73.0}}, identifier: 'chat-message-ded00000-0000-4000-8000-000000000013', label: 'Лена, 18:24. Тогда беру две игры. И можно заказать пиццу!'
+                                StaticText, 0x10fa24500, {{52.0, -66.0}, {28.3, 13.3}}, label: 'Лена'
+                                StaticText, 0x10fa24640, {{90.3, -66.0}, {29.3, 13.3}}, label: '18:24'
+                                StaticText, 0x10fa24780, {{16.0, -46.7}, {28.0, 28.0}}, label: 'Л'
+                                StaticText, 0x10fa248c0, {{66.0, -37.7}, {210.3, 33.7}}, label: 'Тогда беру две игры. И можно заказать пиццу!'
+                              Image, 0x10fa24a00, {{66.0, 41.0}, {15.0, 15.0}}, label: 'ChatTask'
+                              StaticText, 0x10fa24b40, {{88.0, 42.3}, {104.3, 12.0}}, label: 'Новая задача · Саша'
+                              StaticText, 0x10fa24c80, {{345.0, 42.3}, {27.0, 12.0}}, label: '12:05'
+                              Button, 0x10fa24dc0, {{66.0, 56.0}, {306.0, 44.0}}, identifier: 'preparation-task-be3e614f-1609-4460-bcfd-47acc9fc1be2', label: 'Заказать пиццу'
+                                StaticText, 0x10fa24f00, {{66.0, 56.0}, {306.0, 44.0}}, label: 'Заказать пиццу'
+                                Image, 0x10fa25040, {{354.0, 72.0}, {18.0, 18.0}}, label: 'ChatRight'
+                              StaticText, 0x10fa25180, {{66.0, 99.8}, {101.0, 14.3}}, label: 'Исполняет Миша'
+                              StaticText, 0x10fa252c0, {{98.0, 170.2}, {206.0, 35.0}}, label: 'Саша присоединяется к встрече, 12:06'
+                                StaticText, 0x10fa25400, {{98.0, 170.2}, {206.0, 15.7}}, label: 'Саша присоединяется к встрече'
+                                StaticText, 0x10fa25540, {{186.3, 191.8}, {29.3, 13.3}}, label: '12:06'
+                              StaticText, 0x10fa25680, {{149.0, 237.2}, {237.0, 56.5}}, identifier: 'chat-message-76050ce4-8f40-4344-b996-ab06de20bf65', label: 'Саша, 12:06. Проверка чата 924427B8'
+                                StaticText, 0x10fa257c0, {{279.7, 237.2}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x10fa25900, {{320.7, 237.2}, {29.3, 13.3}}, label: '12:06'
+                                StaticText, 0x10fa25a40, {{358.0, 256.7}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x10fa25b80, {{163.0, 265.5}, {172.3, 17.0}}, label: 'Проверка чата 924427B8'
+                              Button, 0x10fa25cc0, {{312.3, 310.3}, {73.7, 14.3}}, identifier: 'message-readers-76050ce4-8f40-4344-b996-ab06de20bf65', label: 'Прочитали 1'
+                              StaticText, 0x10fa25e00, {{16.0, 359.7}, {205.0, 56.3}}, identifier: 'chat-message-cc392ea5-2652-4b00-ac36-8e759e035426', label: 'Саша, 12:06. Входящее 94F4287C'
+                                StaticText, 0x10fa25f40, {{52.0, 359.7}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x10fa26080, {{93.0, 359.7}, {29.3, 13.3}}, label: '12:06'
+                                StaticText, 0x10fa261c0, {{16.0, 379.0}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x10fa26300, {{66.0, 388.0}, {140.7, 17.0}}, label: 'Входящее 94F4287C'
+                              StaticText, 0x10fa26440, {{153.0, 436.0}, {233.0, 56.3}}, identifier: 'chat-message-0c3a3810-bab9-43f5-a31a-00484a10a2ff', label: 'Саша, 12:12. Проверка переключения'
+                                StaticText, 0x10fa26580, {{281.7, 436.0}, {31.0, 13.3}}, label: 'Саша'
+                                StaticText, 0x10fa266c0, {{322.7, 436.0}, {27.3, 13.3}}, label: '12:12'
+                                StaticText, 0x10fa26800, {{358.0, 455.3}, {28.0, 28.0}}, label: 'С'
+                                StaticText, 0x10fa26940, {{167.0, 464.3}, {168.3, 17.0}}, label: 'Проверка переключения'
+                          Other, 0x10fa26a80, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x10fa26bc0, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x10fa26d00, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x10fa26e40, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x10fa26f80, {{369.0, 128.0}, {30.0, 366.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 97 %
+                            Other, 0x10fa270c0, {{396.0, 263.3}, {3.0, 223.0}}
+                          Other, 0x10fa27200, {{369.0, 128.0}, {30.0, 366.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 97 %
+                            Other, 0x10fa27340, {{396.0, 263.3}, {3.0, 223.0}}
+                        Button, 0x10fa27480, {{10.0, 502.0}, {44.0, 44.0}}, identifier: 'meeting-add', label: 'Добавить к встрече'
+                          Image, 0x10fa275c0, {{10.0, 502.0}, {44.0, 44.0}}, label: 'ChatPlus'
+                        TextView, 0x10fa27700, {{60.0, 502.0}, {238.0, 44.0}}, identifier: 'message-input', label: 'Сообщение', value: 🥲
+                          Other, 0x10fa27840, {{60.0, 502.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                            Other, 0x10fa27980, {{60.0, 502.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x10fa27ac0, {{52.8, 488.5}, {16.5, 16.5}}
+                              Other, 0x10fa27c00, {{60.0, 502.0}, {2.0, 0.0}}
+                            Other, 0x10fa27d40, {{60.0, 502.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                              Other, 0x10fa27e80, {{52.8, 488.5}, {16.5, 16.5}}
+                              Other, 0x10fa28000, {{60.0, 502.0}, {2.0, 0.0}}
+                          Other, 0x10fa28140, {{265.0, 502.0}, {30.0, 44.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10fa28280, {{292.0, 505.0}, {3.0, 38.0}}
+                          Other, 0x10fa283c0, {{60.0, 521.0}, {238.0, 22.0}}, label: 'Горизонтальная полоса прокрутки, 1 страница', value: 0 %
+                            Other, 0x10fa28500, {{65.0, 540.0}, {230.0, 3.0}}
+                        Button, 0x10fa28640, {{298.0, 502.0}, {44.0, 44.0}}, identifier: 'composer-emoji-toggle', label: 'Вернуться к клавиатуре', value: Открыто
+                          Image, 0x10fa28780, {{298.0, 502.0}, {44.0, 44.0}}, label: 'ChatKeyboard'
+                        Button, 0x10fa288c0, {{348.0, 502.0}, {44.0, 44.0}}, identifier: 'message-send', label: 'Отправить сообщение'
+                          Image, 0x10fa28a00, {{348.0, 502.0}, {44.0, 44.0}}, label: 'ChatSend'
+                        Button, 0x10fa28b40, {{350.0, 561.0}, {44.0, 44.0}}, identifier: 'emoji-delete', label: 'Удалить предыдущий символ'
+                          Image, 0x10fa28c80, {{350.0, 561.0}, {44.0, 44.0}}, label: 'ChatBackspace'
+                        Image, 0x10fa28dc0, {{19.0, 574.7}, {17.0, 17.0}}, label: 'ChatSearch'
+                        TextField, 0x10fa28f00, {{44.0, 572.0}, {291.0, 22.0}}, identifier: 'emoji-search', placeholderValue: 'Поиск эмодзи'
+                        ScrollView, 0x10fa29040, {{0.0, 605.0}, {402.0, 44.0}}
+                          Other, 0x10fa29180, {{0.0, 605.0}, {440.0, 44.0}}
+                            Button, 0x10fa292c0, {{0.0, 605.0}, {44.0, 44.0}}, label: 'Недавние'
+                            Button, 0x10fa29400, {{44.0, 605.0}, {44.0, 44.0}}, label: 'Эмоции', Selected
+                            Button, 0x10fa29540, {{88.0, 605.0}, {44.0, 44.0}}, label: 'Люди'
+                            Button, 0x10fa29680, {{132.0, 605.0}, {44.0, 44.0}}, label: 'Природа'
+                            Button, 0x10fa297c0, {{176.0, 605.0}, {44.0, 44.0}}, label: 'Еда'
+                            Button, 0x10fa29900, {{220.0, 605.0}, {44.0, 44.0}}, label: 'Путешествия'
+                            Button, 0x10fa29a40, {{264.0, 605.0}, {44.0, 44.0}}, label: 'Занятия'
+                            Button, 0x10fa29b80, {{308.0, 605.0}, {44.0, 44.0}}, label: 'Предметы'
+                            Button, 0x10fa29cc0, {{352.0, 605.0}, {44.0, 44.0}}, label: 'Символы'
+                            Button, 0x10fa29e00, {{396.0, 605.0}, {44.0, 44.0}}, label: 'Флаги'
+                        ScrollView, 0x10fa29f40, {{0.0, 649.0}, {402.0, 225.0}}, identifier: 'emoji-results'
+                          Other, 0x10fa2a080, {{0.0, 649.0}, {402.0, 999.0}}
+                            StaticText, 0x10fa2a1c0, {{8.0, 654.0}, {40.0, 12.0}}, label: 'Эмоции'
+                            Other, 0x10fa2a300, {{8.0, 670.0}, {386.0, 396.0}}
+                              Button, 0x10fa2a440, {{8.0, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😀', label: 'широко улыбается'
+                              Button, 0x10fa2a580, {{56.3, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😃', label: 'смеется'
+                              Button, 0x10fa2a6c0, {{104.7, 670.0}, {48.0, 44.0}}, identifier: 'emoji-😄', label: 'смеется с закрытыми глазами'
+                              Button, 0x10fa2a800, {{152.7, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😁', label: 'светится от счастья'
+                              Button, 0x10fa2a940, {{201.0, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😆', label: 'смеется с прищуренными глазами'
+                              Button, 0x10fa2aa80, {{249.3, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😅', label: 'нервно смеется'
+                              Button, 0x10fa2abc0, {{297.7, 670.0}, {48.0, 44.0}}, identifier: 'emoji-🤣', label: 'катается со смеху'
+                              Button, 0x10fa2ad00, {{345.7, 670.0}, {48.3, 44.0}}, identifier: 'emoji-😂', label: 'смеется до слез'
+                              Button, 0x10fa2ae40, {{8.0, 714.0}, {48.3, 44.0}}, identifier: 'emoji-🙂', label: 'слегка улыбается'
+                              Button, 0x10fa2af80, {{56.3, 714.0}, {48.3, 44.0}}, identifier: 'emoji-🙃', label: 'вверх тормашками'
+                              Button, 0x10fa2b0c0, {{104.7, 714.0}, {48.0, 44.0}}, identifier: 'emoji-🫠', label: 'тает'
+                              Button, 0x10fa2b200, {{152.7, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😉', label: 'подмигивает'
+                              Button, 0x10fa2b340, {{201.0, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😊', label: 'довольно улыбается'
+                              Button, 0x10fa2b480, {{249.3, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😇', label: 'с нимбом'
+                              Button, 0x10fa2b5c0, {{297.7, 714.0}, {48.0, 44.0}}, identifier: 'emoji-🥰', label: 'улыбающееся лицо с сердечками'
+                              Button, 0x10fa2b700, {{345.7, 714.0}, {48.3, 44.0}}, identifier: 'emoji-😍', label: 'влюбленное лицо'
+                              Button, 0x10fa2b840, {{8.0, 758.0}, {48.3, 44.0}}, identifier: 'emoji-🤩', label: 'звезды в глазах'
+                              Button, 0x10fa2b980, {{56.3, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😘', label: 'воздушный поцелуй'
+                              Button, 0x10fa2bac0, {{104.7, 758.0}, {48.0, 44.0}}, identifier: 'emoji-😗', label: 'целует'
+                              Button, 0x10fa2bc00, {{152.7, 758.0}, {48.3, 44.0}}, identifier: 'emoji-☺️', label: 'улыбается'
+                              Button, 0x10fa2bd40, {{201.0, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😚', label: 'целует с закрытыми глазами'
+                              Button, 0x10fa2be80, {{249.3, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😙', label: 'счастливый поцелуй'
+                              Button, 0x10fa30000, {{297.7, 758.0}, {48.0, 44.0}}, identifier: 'emoji-🥲', label: 'улыбающееся лицо со слезой'
+                              Button, 0x10fa30140, {{345.7, 758.0}, {48.3, 44.0}}, identifier: 'emoji-😋', label: 'вкусно'
+                              Button, 0x10fa30280, {{8.0, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😛', label: 'показывает язык'
+                              Button, 0x10fa303c0, {{56.3, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😜', label: 'показывает язык и подмигивает'
+                              Button, 0x10fa30500, {{104.7, 802.0}, {48.0, 44.0}}, identifier: 'emoji-🤪', label: 'сумасшедшее лицо'
+                              Button, 0x10fa30640, {{152.7, 802.0}, {48.3, 44.0}}, identifier: 'emoji-😝', label: 'морщится и показывает язык'
+                              Button, 0x10fa30780, {{201.0, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🤑', label: 'деньги в глазах'
+                              Button, 0x10fa308c0, {{249.3, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🤗', label: 'обнимает'
+                              Button, 0x10fa30a00, {{297.7, 802.0}, {48.0, 44.0}}, identifier: 'emoji-🤭', label: 'прикрывает рот рукой'
+                              Button, 0x10fa30b40, {{345.7, 802.0}, {48.3, 44.0}}, identifier: 'emoji-🫢', label: 'прикрывает рот рукой с открытыми глазами'
+                              Button, 0x10fa30c80, {{8.0, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🫣', label: 'подсматривает'
+                              Button, 0x10fa30dc0, {{56.3, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤫', label: 'тс-с-с'
+                              Button, 0x10fa30f00, {{104.7, 846.0}, {48.0, 44.0}}, identifier: 'emoji-🤔', label: 'думает'
+                              Button, 0x10fa31040, {{152.7, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🫡', label: 'воинское приветствие'
+                              Button, 0x10fa31180, {{201.0, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤐', label: 'рот на замке'
+                              Button, 0x10fa312c0, {{249.3, 846.0}, {48.3, 44.0}}, identifier: 'emoji-🤨', label: 'не верит'
+                              Button, 0x10fa31400, {{297.7, 846.0}, {48.0, 44.0}}, identifier: 'emoji-😐', label: 'все равно'
+                              Button, 0x10fa31540, {{345.7, 846.0}, {48.3, 44.0}}, identifier: 'emoji-😑', label: 'без эмоций'
+                              Button, 0x10fa31680, {{8.0, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😶', label: 'лицо без рта'
+                              Button, 0x10fa317c0, {{56.3, 890.0}, {48.3, 44.0}}, identifier: 'emoji-🫥', label: 'лицо пунктиром'
+                              Button, 0x10fa31900, {{104.7, 890.0}, {48.0, 44.0}}, identifier: 'emoji-😶‍🌫️', label: 'лицо в облаках'
+                              Button, 0x10fa31a40, {{152.7, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😏', label: 'ухмыляется'
+                              Button, 0x10fa31b80, {{201.0, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😒', label: 'скучает'
+                              Button, 0x10fa31cc0, {{249.3, 890.0}, {48.3, 44.0}}, identifier: 'emoji-🙄', label: 'закатывает глаза'
+                              Button, 0x10fa31e00, {{297.7, 890.0}, {48.0, 44.0}}, identifier: 'emoji-😬', label: 'гримаса'
+                              Button, 0x10fa31f40, {{345.7, 890.0}, {48.3, 44.0}}, identifier: 'emoji-😮‍💨', label: 'выдыхает'
+                              Button, 0x10fa32080, {{8.0, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🤥', label: 'лжец'
+                              Button, 0x10fa321c0, {{56.3, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🫨', label: 'трясущееся лицо'
+                              Button, 0x10fa32300, {{104.7, 934.0}, {48.0, 44.0}}, identifier: 'emoji-🙂‍↔️', label: 'отрицательно качает головой'
+                              Button, 0x10fa32440, {{152.7, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🙂‍↕️', label: 'положительно качает головой'
+                              Button, 0x10fa32580, {{201.0, 934.0}, {48.3, 44.0}}, identifier: 'emoji-😌', label: 'испытывает облегчение'
+                              Button, 0x10fa326c0, {{249.3, 934.0}, {48.3, 44.0}}, identifier: 'emoji-😔', label: 'размышляет'
+                              Button, 0x10fa32800, {{297.7, 934.0}, {48.0, 44.0}}, identifier: 'emoji-😪', label: 'хочет спать'
+                              Button, 0x10fa32940, {{345.7, 934.0}, {48.3, 44.0}}, identifier: 'emoji-🤤', label: 'пускает слюни'
+                              Button, 0x10fa32a80, {{8.0, 978.0}, {48.3, 44.0}}, identifier: 'emoji-😴', label: 'спит'
+                              Button, 0x10fa32bc0, {{56.3, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🫩', label: 'лицо с мешками под глазами'
+                              Button, 0x10fa32d00, {{104.7, 978.0}, {48.0, 44.0}}, identifier: 'emoji-😷', label: 'в медицинской маске'
+                              Button, 0x10fa32e40, {{152.7, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤒', label: 'с градусником во рту'
+                              Button, 0x10fa32f80, {{201.0, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤕', label: 'с перевязанной головой'
+                              Button, 0x10fa330c0, {{249.3, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤢', label: 'тошнит'
+                              Button, 0x10fa33200, {{297.7, 978.0}, {48.0, 44.0}}, identifier: 'emoji-🤮', label: 'рвота'
+                              Button, 0x10fa33340, {{345.7, 978.0}, {48.3, 44.0}}, identifier: 'emoji-🤧', label: 'чихает'
+                              Button, 0x10fa33480, {{8.0, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥵', label: 'жар'
+                              Button, 0x10fa335c0, {{56.3, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥶', label: 'мерзнет'
+                              Button, 0x10fa33700, {{104.7, 1022.0}, {48.0, 44.0}}, identifier: 'emoji-🥴', label: 'чувствует головокружение'
+                              Button, 0x10fa33840, {{152.7, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-😵', label: 'головокружение'
+                              Button, 0x10fa33980, {{201.0, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-😵‍💫', label: 'ошеломление'
+                              Button, 0x10fa33ac0, {{249.3, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🤯', label: 'взрыв мозга'
+                              Button, 0x10fa33c00, {{297.7, 1022.0}, {48.0, 44.0}}, identifier: 'emoji-🤠', label: 'в ковбойской шляпе'
+                              Button, 0x10fa33d40, {{345.7, 1022.0}, {48.3, 44.0}}, identifier: 'emoji-🥳', label: 'на вечеринке'
+                          Other, 0x10fa33e80, {{369.0, 649.0}, {30.0, 163.0}}, label: 'Вертикальная полоса прокрутки, 6 страниц', value: 0 %
+                            Other, 0x10fa34000, {{396.0, 652.0}, {3.0, 36.0}}
+                          Other, 0x10fa34140, {{369.0, 649.0}, {30.0, 163.0}}, label: 'Вертикальная полоса прокрутки, 6 страниц', value: 0 %
+                            Other, 0x10fa34280, {{396.0, 652.0}, {3.0, 36.0}}
+                        Other, 0x10fa343c0, {{0.0, 0.0}, {0.0, 0.0}}, Disabled
+                Toolbar, 0x10fa34500, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x10fa34640, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x10fa34780, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10fa348c0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10fa34a00, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x107651180, pid: 58426, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x10fa34b40, pid: 58426, label: 'somewhere QA'
+  }
+)
+INDEPENDENT_CONTEXT {
+  "capturedAt" : "2026-10-28T09:12:20Z",
+  "contentSizeCategory" : "UICTContentSizeCategoryL",
+  "fonts" : [
+    ".SFUI-Regular",
+    ".SFUI-Bold"
+  ],
+  "locale" : "ru_RU",
+  "os" : "Version 27.0 (Build 24A434)",
+  "reducedMotion" : false,
+  "renderedFontSizes" : {
+    "heading" : 28,
+    "small" : 13
+  },
+  "runtime" : "27.0",
+  "source" : "SwiftUI environment in SomewhereUITestHost",
+  "textScale" : "large",
+  "timezone" : "Europe\/Moscow"
+}
+    t =    11.96s     Added attachment named 'failure'
+    t =    11.96s     Setting device orientation to Portrait
+    t =    11.96s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.IndependentGestureReview testRapidComposerToggleDoesNotInsertEmoji]' failed (11.975 seconds).
+2026-10-28 12:12:28.962667+0300 SomewhereUITests-Runner[57710:3360741] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-10-28 12:12:28.962833+0300 SomewhereUITests-Runner[57710:3361149] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-10-28 12:12:28.981 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:28.981 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:28.982 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:29.253 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:29.268 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:29.269 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:29.269 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:30.093696+0300 SomewhereUITests-Runner[58458:3362668] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-10-28 12:12:32.722.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-28 12:12:32.722.
+Test Suite 'SomewhereUITests.xctest' passed at 2026-10-28 12:12:32.723.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-28 12:12:32.723.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+2026-10-28 12:12:32.741 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:32.741 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:32.742 xcodebuild[57465:3360409] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-28 12:12:33.010 xcodebuild[57465:3360409] [MT] IDETestOperationsObserverDebug: 20.173 elapsed -- Testing started completed.
+2026-10-28 12:12:33.010 xcodebuild[57465:3360409] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-28 12:12:33.010 xcodebuild[57465:3360409] [MT] IDETestOperationsObserverDebug: 20.173 sec, +20.173 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/somewhere-ios-independent-20261028/realtime/composer-toggle.xcresult
+
+Failing tests:
+	IndependentGestureReview.testRapidComposerToggleDoesNotInsertEmoji()
+
+** TEST EXECUTE FAILED **
+
+Testing started

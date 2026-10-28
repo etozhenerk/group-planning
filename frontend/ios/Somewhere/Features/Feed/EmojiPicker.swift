@@ -10,14 +10,15 @@ struct EmojiPicker: View {
     @State private var category = ""
     @State private var recent: [String] = []
     @FocusState private var searchFocused: Bool
-    private let symbols = ["😀", "🧑", "🐻", "🍎", "⚽️", "🚗", "💡", "❤️", "🏳️"]
 
     private var results: [EmojiCatalogEntry] {
         if query.isEmpty, category.isEmpty {
             return recent.compactMap { symbol in EmojiCatalog.entries.first { $0.emoji == symbol } }
         }
         return EmojiCatalog.entries.filter { entry in
-            if query.isEmpty { return entry.categoryName == category }
+            if query.isEmpty {
+                return EmojiPickerCategory(rawValue: category)?.contains(entry) == true
+            }
             return entry.name.localizedCaseInsensitiveContains(query)
                 || entry.keywords.contains { $0.localizedCaseInsensitiveContains(query) }
                 || entry.emoji == query
@@ -61,9 +62,8 @@ struct EmojiPicker: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DesignTokens.spaceS0) {
                     categoryButton("", label: "Недавние", symbol: "◷")
-                    ForEach(Array(EmojiCatalog.categories.enumerated()), id: \.element) {
-                        index, value in
-                        categoryButton(value, label: value, symbol: symbols[index % symbols.count])
+                    ForEach(EmojiPickerCategory.allCases) { value in
+                        categoryButton(value.id, label: value.label, symbol: value.symbol)
                     }
                 }
             }.fixedSize(horizontal: false, vertical: true)
@@ -74,7 +74,8 @@ struct EmojiPicker: View {
                 VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
                     Text(
                         query.isEmpty
-                            ? (category.isEmpty ? "Недавние" : category) : "Результаты поиска"
+                            ? (EmojiPickerCategory(rawValue: category)?.label ?? "Недавние")
+                            : "Результаты поиска"
                     )
                     .designFont(DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2)
                     .foregroundStyle(DesignTokens.colorMuted)
@@ -139,7 +140,7 @@ struct EmojiPicker: View {
         }.background(DesignTokens.colorSurface).buttonStyle(ChatPressStyle())
             .onAppear {
                 recent = privateData?.recentEmoji ?? []
-                if recent.isEmpty { category = EmojiCatalog.categories.first ?? "" }
+                if recent.isEmpty { category = EmojiPickerCategory.faces.id }
             }
     }
 
@@ -149,16 +150,21 @@ struct EmojiPicker: View {
             query = ""
         } label: {
             Text(symbol).designFont(DesignTokens.typographySizeEmojiCategory)
+                .foregroundStyle(
+                    category == value && query.isEmpty
+                        ? DesignTokens.colorAccent : DesignTokens.colorMuted
+                )
                 .frame(minWidth: DesignTokens.targetIos, minHeight: DesignTokens.targetIos)
                 .contentShape(Rectangle())
                 .overlay(alignment: .bottom) {
-                    if category == value {
+                    if category == value && query.isEmpty {
                         Capsule().fill(DesignTokens.colorAccent)
                             .frame(
                                 width: DesignTokens.targetIos / 2,
                                 height: DesignTokens.componentEmojiDockCategoryIndicator)
                     }
                 }
-        }.accessibilityLabel(label).accessibilityAddTraits(category == value ? .isSelected : [])
+        }.accessibilityLabel(label).accessibilityAddTraits(
+            category == value && query.isEmpty ? .isSelected : [])
     }
 }

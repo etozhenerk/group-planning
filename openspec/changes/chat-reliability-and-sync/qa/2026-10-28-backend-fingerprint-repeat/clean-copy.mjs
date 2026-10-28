@@ -1,0 +1,21 @@
+import { readFile,writeFile,mkdir,copyFile,symlink } from 'node:fs/promises';
+import { dirname,resolve } from 'node:path';
+import { readCatalog,sourceHash } from '../../../../../scripts/testing/catalog.mjs';
+import { treeFiles } from '../../../../../scripts/design/files.mjs';
+import { spawnSync } from 'node:child_process';
+const root='/Users/misha/Documents/Codex/projects/group-planning';
+const qa='openspec/changes/chat-reliability-and-sync/qa/2026-10-28-backend-fingerprint-repeat';
+const clean='/tmp/somewhere-backend-fingerprint-clean-20261028';
+const catalog=await readCatalog(root);const sources=[...catalog.config.sources,...catalog.config.excludedSources.map(s=>s.path)];
+const refs=catalog.cases.flatMap(c=>Object.values(c.automation).flatMap(a=>a.tests.map(t=>t.path)));
+const files=[...new Set([...(await treeFiles(root,['scripts','testing',...catalog.config.inputs.backend])),...sources,...refs,...await treeFiles(root,[qa]),'package.json'])].sort();
+await mkdir(clean);
+for(const name of files){const dst=resolve(clean,name);await mkdir(dirname(dst),{recursive:true});await copyFile(resolve(root,name),dst);}
+await symlink(resolve(root,'node_modules'),resolve(clean,'node_modules'),'dir');
+const cleanCatalog=await readCatalog(clean);const mainHash=await sourceHash(root,catalog.config,['backend']);const cleanHash=await sourceHash(clean,cleanCatalog.config,['backend']);
+if(mainHash!==cleanHash || catalog.hash!==cleanCatalog.hash)throw Error('Clean-copy fingerprint/catalog mismatch');
+const args=[resolve(clean,'scripts/testing/cli.mjs'),'ready','--plan',resolve(clean,qa,'plan.json'),'--run',resolve(clean,qa,'run-fresh.json')];
+const result=spawnSync(process.execPath,args,{cwd:clean,encoding:'utf8'});
+await writeFile(resolve(root,qa,'clean-copy-qa-ready.log'),result.stdout+result.stderr);
+await writeFile(resolve(root,qa,'clean-copy-verification.json'),JSON.stringify({checkedAt:new Date().toISOString(),cleanRoot:clean,files:files.length,privateDotenvCopied:files.filter(p=>/\/.env(?:\.|$)/.test(p)&&!p.endsWith('.example')),mainHash,cleanHash,catalogHash:catalog.hash,cleanCatalogHash:cleanCatalog.hash,qaReadyExitCode:result.status,method:'Clean copy contains only public fingerprint inputs, catalog/spec/test references and this QA evidence. No .git/private dotenv/runtime configuration copied; node_modules shared only for tooling.'},null,2)+'\n');
+if(result.status!==0)throw Error(result.stdout+result.stderr);console.log(result.stdout);

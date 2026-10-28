@@ -1,0 +1,38 @@
+{
+  "id": "IOS-COMPOSER-TOGGLE-INSERTS-EMOJI-001",
+  "severity": "P1",
+  "status": "confirmed",
+  "observedAt": "2026-10-28T09:14:34.186729+00:00",
+  "candidate": "cb599c2e04d69d427888c42b09761bf61eb7063a7122c60fc218adec2978ac27",
+  "device": "iPhone18Pro iOS27.0 31262733-50DC-46A5-938E-4C462D70F109",
+  "capabilities": {
+    "sync": true,
+    "read_state": true,
+    "realtime": true
+  },
+  "cases": [
+    "TC-CHAT-87982DEF",
+    "TC-CHAT-EMOJI-DISMISS-FOCUS",
+    "TC-CHAT-COMPOSER-CARET"
+  ],
+  "preconditions": [
+    "Only SomewhereUITestHost; clean install before isolated probe",
+    "Fresh random local storage namespace",
+    "Isolated memory API with actual capabilities recorded"
+  ],
+  "steps": [
+    "Open design meeting deb00000-0000-4000-8000-000000000002",
+    "Focus composer, type Проверка переключения, send; assert/log empty composer",
+    "Tap composer-emoji-toggle twice consecutively via actual XCTest gestures, without selecting an emoji",
+    "Observe composer"
+  ],
+  "expected": "Dock opens, next tap returns to keyboard/composer without changing text.",
+  "actual": "First pair unexpectedly inserted 🥲. Earlier independent ChatSyncUITests pair inserted 🥰; screenshot proves it existed before lifecycle background/foreground.",
+  "evidence": [
+    "realtime/composer-toggle.log",
+    "realtime/evidence/rapid-toggle-0.png",
+    "realtime/evidence/chat-receipt-before-open.png",
+    "IndependentGestureReview.swift"
+  ],
+  "limits": "XCTest uses actual coordinate taps resolved from accessible button; no programmatic product-state mutation. Exact internal cause not asserted; a moving hit target is a hypothesis."
+}

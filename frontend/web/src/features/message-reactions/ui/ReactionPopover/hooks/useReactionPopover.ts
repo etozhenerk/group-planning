@@ -13,6 +13,7 @@ import {
 import { useCallback, useLayoutEffect } from 'react';
 import type { RefObject } from 'react';
 import { designTokens } from '@/shared/config/design-tokens';
+import { reactionGap } from '@/features/message-reactions/ui/ReactionPopover/lib/reactionGap';
 import { useMediaQuery } from '@/shared/lib/media';
 
 export const useReactionPopover = (
@@ -33,9 +34,12 @@ export const useReactionPopover = (
     placement: 'top',
     strategy: 'fixed',
     middleware: [
-      offset(Number.parseFloat(designTokens.componentReactionPickerAnchorGap)),
+      offset(({ placement }) => reactionGap(anchor.current, placement)),
       flip(bounds),
-      shift(bounds),
+      shift(({ elements }) => ({
+        ...bounds(),
+        crossAxis: elements.floating.querySelector('[data-reaction-expanded]') !== null,
+      })),
       size(() => ({
         ...bounds(),
         apply: ({ availableWidth, availableHeight, elements }) => {
@@ -63,7 +67,11 @@ export const useReactionPopover = (
 
   useLayoutEffect(() => {
     refs.setReference(anchor.current);
-  }, [anchor, refs, open]);
+
+    if (open) {
+      update();
+    }
+  }, [anchor, refs, open, update]);
 
   const inside = () => [
     ...Array.from(

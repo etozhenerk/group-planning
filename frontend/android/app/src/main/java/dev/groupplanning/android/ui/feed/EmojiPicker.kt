@@ -56,15 +56,14 @@ internal fun EmojiPicker(
     val recent by model.recent.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
     var category by rememberSaveable { mutableStateOf("") }
-    val categories = catalog.distinctBy { it.category }
+    val activeGroup = emojiGroups.find { it.id == category } ?: emojiGroups.first()
     val filtered = when {
         query.isNotBlank() -> catalog.filter {
             (it.name + " " + it.keywords.joinToString(" "))
                 .contains(query.trim(), ignoreCase = true)
         }
         category == "recent" -> recent.mapNotNull { emoji -> catalog.find { it.emoji == emoji } }
-        category.isNotEmpty() -> catalog.filter { it.category == category }
-        else -> catalog.filter { it.category == categories.firstOrNull()?.category }
+        else -> catalog.filter { it.category in activeGroup.categories }
     }
     val toolbar: @Composable () -> Unit = {
         Row(
@@ -133,19 +132,18 @@ internal fun EmojiPicker(
             EmojiCategory(
                 "◷",
                 stringResource(R.string.emoji_recent),
-                category == "recent",
+                query.isBlank() && category == "recent",
             ) {
                 category = "recent"
                 query = ""
             }
-            categories.forEach { item ->
+            emojiGroups.forEach { group ->
                 EmojiCategory(
-                    item.emoji,
-                    item.categoryName,
-                    category == item.category ||
-                        (category.isEmpty() && item.category == categories.firstOrNull()?.category),
+                    group.icon,
+                    stringResource(group.label),
+                    query.isBlank() && category != "recent" && activeGroup.id == group.id,
                 ) {
-                    category = item.category
+                    category = group.id
                     query = ""
                 }
             }

@@ -21,8 +21,11 @@ const readRecent = (): string[] => {
 
 export const useEmoji = (onSelect: (value: string) => void) => {
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('Недавние');
   const [recent, setRecent] = useState(readRecent);
+  const [category, setCategory] = useState(() =>
+    recent.length ? 'Недавние' : 'Лица и люди',
+  );
+
   const choose = (value: string) => {
     const next = [value, ...recent.filter((item) => item !== value)].slice(0, 24);
     setRecent(next);
@@ -50,13 +53,7 @@ export const useEmoji = (onSelect: (value: string) => void) => {
     setCategory,
     choose,
     values,
-    groups:
-      !query && category === 'Недавние'
-        ? [
-            { title: 'Недавние', values },
-            { title: 'Смайлы и эмоции', values: searchEmoji('', 'Эмоции') },
-          ]
-        : [{ title: query ? 'Результаты поиска' : category, values }],
+    groups: [{ title: query ? 'Результаты поиска' : category, values }],
     categories: ['Недавние', ...emojiCategories],
   };
 };

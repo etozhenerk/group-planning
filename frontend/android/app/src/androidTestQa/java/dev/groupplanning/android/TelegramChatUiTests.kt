@@ -8,6 +8,7 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
@@ -84,7 +85,19 @@ class TelegramChatUiTests {
             compose.onNodeWithTag("emoji-open").performClick()
             fixture.waitTag("emoji-dock")
             input.assert(selectedRange)
+            compose.onNodeWithContentDescription("Лица и люди").assertIsSelected()
             compose.onNodeWithTag("emoji-search").performTextReplacement("пицца")
+            listOf(
+                "Недавние",
+                "Лица и люди",
+                "Природа",
+                "Еда и напитки",
+                "Места и поездки",
+                "Предметы",
+                "Символы",
+            ).forEach { label ->
+                compose.onNodeWithContentDescription(label).assertIsNotSelected()
+            }
             input.assert(selectedRange)
             compose.onNodeWithText("🍕").performScrollTo().performClick()
             input.assertTextContains("До 🍕 после")

@@ -1,0 +1,48 @@
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:18:23: warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+16 |  let second=25.9+Double(index)*0.05
+17 |  var actual=CMTime.zero
+18 |  let cg=try generator.copyCGImage(at:CMTime(seconds:second,preferredTimescale:600),actualTime:&actual)
+   |                       `- warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+19 |  let img=NSImage(cgImage:cg,size:NSSize(width:cg.width,height:cg.height))
+20 |  let x=index%columns*w, y=(count/columns-1-index/columns)*h
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:30:10: warning: 'outputURL' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+28 | try JSONSerialization.data(withJSONObject:samples,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("motion-samples.json"))
+29 | let exporter=AVAssetExportSession(asset:asset,presetName:AVAssetExportPreset640x480)!
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+   |          `- warning: 'outputURL' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:30:90: warning: 'outputFileType' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+28 | try JSONSerialization.data(withJSONObject:samples,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("motion-samples.json"))
+29 | let exporter=AVAssetExportSession(asset:asset,presetName:AVAssetExportPreset640x480)!
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+   |                                                                                          `- warning: 'outputFileType' was deprecated in macOS 27.0: Use export(to:as:) async throws instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:32:46: warning: 'exportAsynchronously(completionHandler:)' was deprecated in macOS 15.0 [#DeprecatedDeclaration]
+30 | exporter.outputURL=output.appendingPathComponent("motion-quick-full-close.mp4");exporter.outputFileType = .mp4
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+   |                                              `- warning: 'exportAsynchronously(completionHandler:)' was deprecated in macOS 15.0 [#DeprecatedDeclaration]
+33 | print("export",exporter.status.rawValue,"duration",asset.duration.seconds)
+34 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:33:25: warning: 'status' was deprecated in macOS 15.0: Use states(updateInterval:) instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+33 | print("export",exporter.status.rawValue,"duration",asset.duration.seconds)
+   |                         `- warning: 'status' was deprecated in macOS 15.0: Use states(updateInterval:) instead [#DeprecatedDeclaration]
+34 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/extract-motion.swift:33:58: warning: 'duration' was deprecated in macOS 13.0: Use load(.duration) instead [#DeprecatedDeclaration]
+31 | exporter.timeRange=CMTimeRange(start:CMTime(seconds:25.9,preferredTimescale:600),duration:CMTime(seconds:5,preferredTimescale:600))
+32 | let done=DispatchSemaphore(value:0);exporter.exportAsynchronously{done.signal()};done.wait()
+33 | print("export",exporter.status.rawValue,"duration",asset.duration.seconds)
+   |                                                          `- warning: 'duration' was deprecated in macOS 13.0: Use load(.duration) instead [#DeprecatedDeclaration]
+34 | 
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+export 3 duration 73.15166666666667

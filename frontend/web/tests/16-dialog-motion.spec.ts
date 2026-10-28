@@ -13,7 +13,11 @@ for (const width of [390, 1440]) {
     const dialog = page.getByRole('dialog', { name: meeting.title });
     await open.click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
-    const height = (await dialog.boundingBox())?.height;
+    const height = await dialog.evaluate((element) =>
+      element instanceof HTMLElement ? element.offsetHeight : 0,
+    );
+
+    expect(height).toBeGreaterThan(0);
 
     if (width < 740) {
       await expect(
@@ -32,7 +36,12 @@ for (const width of [390, 1440]) {
         exact: true,
       }),
     ).toBeVisible();
-    expect((await dialog.boundingBox())?.height).toBeCloseTo(height ?? 0, -1);
+    // Desktop exit scales the painted box; retained content must keep its layout height.
+    expect(
+      await dialog.evaluate((element) =>
+        element instanceof HTMLElement ? element.offsetHeight : 0,
+      ),
+    ).toBe(height);
     await expect(page.locator('body')).toHaveCSS('position', 'fixed');
     await expect(dialog).not.toBeVisible();
     await expect(open).toBeFocused();

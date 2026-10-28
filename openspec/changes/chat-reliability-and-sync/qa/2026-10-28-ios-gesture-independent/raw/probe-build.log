@@ -1,0 +1,687 @@
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:22:9: error: cannot find 'XCTAssertTrue' in scope
+ 20 |         app.launch()
+ 21 |         let card = app.buttons["meeting-card-" + meeting]
+ 22 |         XCTAssertTrue(card.waitForExistence(timeout: 20)); card.tap()
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 23 |         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+ 24 |     }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:23:9: error: cannot find 'XCTAssertTrue' in scope
+ 21 |         let card = app.buttons["meeting-card-" + meeting]
+ 22 |         XCTAssertTrue(card.waitForExistence(timeout: 20)); card.tap()
+ 23 |         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 24 |     }
+ 25 |     private func capture(_ name: String) {
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:37:9: error: cannot find 'XCTAssertTrue' in scope
+ 35 |             if element.exists && element.frame.midY < app.buttons["feed-back"].frame.maxY + 16 { scroll.swipeDown() } else { scroll.swipeUp() }
+ 36 |         }
+ 37 |         XCTAssertTrue(element.isHittable)
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 38 |     }
+ 39 |     private func settle() { let e = XCTestExpectation(description: "settle"); DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { e.fulfill() }; _ = XCTWaiter.wait(for: [e], timeout: 1) }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:42:43: error: cannot find 'XCTAssertTrue' in scope
+ 40 |     private func draft() {
+ 41 |         let input = app.textViews["message-input"]; input.tap(); input.typeText("До XX после")
+ 42 |         app.buttons["meeting-add"].tap(); XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 5)); app.buttons["meeting-add"].tap(); settle()
+    |                                           `- error: cannot find 'XCTAssertTrue' in scope
+ 43 |         XCTAssertEqual(input.value as? String, "До XX после")
+ 44 |     }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:43:9: error: cannot find 'XCTAssertEqual' in scope
+ 41 |         let input = app.textViews["message-input"]; input.tap(); input.typeText("До XX после")
+ 42 |         app.buttons["meeting-add"].tap(); XCTAssertTrue(app.buttons["new-date-poll"].waitForExistence(timeout: 5)); app.buttons["meeting-add"].tap(); settle()
+ 43 |         XCTAssertEqual(input.value as? String, "До XX после")
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 44 |     }
+ 45 |     func testPhotoTapHoldPanAndReturn() {
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:49:9: error: cannot find 'XCTAssertTrue' in scope
+ 47 |         draft()
+ 48 |         let photo = app.buttons["Открыть фото"].firstMatch
+ 49 |         XCTAssertTrue(photo.waitForExistence(timeout: 10)); reveal(photo)
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 50 |         capture("photo-before-tap"); let before = photo.frame
+ 51 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); capture("photo-fullscreen")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:51:22: error: cannot find 'XCTAssertTrue' in scope
+ 49 |         XCTAssertTrue(photo.waitForExistence(timeout: 10)); reveal(photo)
+ 50 |         capture("photo-before-tap"); let before = photo.frame
+ 51 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); capture("photo-fullscreen")
+    |                      `- error: cannot find 'XCTAssertTrue' in scope
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:52:56: error: cannot find 'XCTAssertFalse' in scope
+ 50 |         capture("photo-before-tap"); let before = photo.frame
+ 51 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); capture("photo-fullscreen")
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                 `- error: cannot find 'XCTAssertFalse' in scope
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:52:56: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 50 |         capture("photo-before-tap"); let before = photo.frame
+ 51 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); capture("photo-fullscreen")
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                 `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:53:9: error: cannot find 'XCTAssertEqual' in scope
+ 51 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); capture("photo-fullscreen")
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 55 |         capture("photo-quick-held")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:54:40: error: cannot find 'XCTAssertTrue' in scope
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                        `- error: cannot find 'XCTAssertTrue' in scope
+ 55 |         capture("photo-quick-held")
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:54:116: error: cannot find 'XCTAssertFalse' in scope
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                                                                                    `- error: cannot find 'XCTAssertFalse' in scope
+ 55 |         capture("photo-quick-held")
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:54:116: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 52 |         app.buttons["Закрыть"].tap(); settle(); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 53 |         XCTAssertEqual(photo.frame.minY, before.minY, accuracy: 2)
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                                                                                    `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 55 |         capture("photo-quick-held")
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:56:36: error: cannot find 'XCTAssertTrue' in scope
+ 54 |         photo.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); XCTAssertFalse(app.buttons["Закрыть"].exists)
+ 55 |         capture("photo-quick-held")
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+    |                                 `- error: cannot find 'XCTAssertTrue' in scope
+ 57 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+ 58 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); app.buttons["Закрыть"].tap(); settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:57:9: error: cannot find 'XCTAssertEqual' in scope
+ 55 |         capture("photo-quick-held")
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+ 57 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 58 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); app.buttons["Закрыть"].tap(); settle()
+ 59 |         reveal(photo); let oldY = photo.frame.minY
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:58:22: error: cannot find 'XCTAssertTrue' in scope
+ 56 |         app.buttons["🔥"].tap(); XCTAssertTrue(app.buttons["reaction-chip-🔥"].waitForExistence(timeout: 5))
+ 57 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+ 58 |         photo.tap(); XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5)); app.buttons["Закрыть"].tap(); settle()
+    |                      `- error: cannot find 'XCTAssertTrue' in scope
+ 59 |         reveal(photo); let oldY = photo.frame.minY
+ 60 |         let start = photo.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:63:9: error: cannot find 'XCTAssertFalse' in scope
+ 61 |         let end = start.withOffset(CGVector(dx: 0, dy: -180))
+ 62 |         start.press(forDuration: 0.05, thenDragTo: end); settle()
+ 63 |         XCTAssertFalse(app.buttons["reaction-expand"].exists); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |         `- error: cannot find 'XCTAssertFalse' in scope
+ 64 |         print("INDEPENDENT_PAN photoYBefore=\(oldY) photoYAfter=\(photo.frame.minY)")
+ 65 |         capture("photo-pan-cancels-hold")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:63:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 61 |         let end = start.withOffset(CGVector(dx: 0, dy: -180))
+ 62 |         start.press(forDuration: 0.05, thenDragTo: end); settle()
+ 63 |         XCTAssertFalse(app.buttons["reaction-expand"].exists); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 64 |         print("INDEPENDENT_PAN photoYBefore=\(oldY) photoYAfter=\(photo.frame.minY)")
+ 65 |         capture("photo-pan-cancels-hold")
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:63:64: error: cannot find 'XCTAssertFalse' in scope
+ 61 |         let end = start.withOffset(CGVector(dx: 0, dy: -180))
+ 62 |         start.press(forDuration: 0.05, thenDragTo: end); settle()
+ 63 |         XCTAssertFalse(app.buttons["reaction-expand"].exists); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                                `- error: cannot find 'XCTAssertFalse' in scope
+ 64 |         print("INDEPENDENT_PAN photoYBefore=\(oldY) photoYAfter=\(photo.frame.minY)")
+ 65 |         capture("photo-pan-cancels-hold")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:63:64: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 61 |         let end = start.withOffset(CGVector(dx: 0, dy: -180))
+ 62 |         start.press(forDuration: 0.05, thenDragTo: end); settle()
+ 63 |         XCTAssertFalse(app.buttons["reaction-expand"].exists); XCTAssertFalse(app.buttons["Закрыть"].exists)
+    |                                                                `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 64 |         print("INDEPENDENT_PAN photoYBefore=\(oldY) photoYAfter=\(photo.frame.minY)")
+ 65 |         capture("photo-pan-cancels-hold")
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:66:9: error: cannot find 'XCTAssertEqual' in scope
+ 64 |         print("INDEPENDENT_PAN photoYBefore=\(oldY) photoYAfter=\(photo.frame.minY)")
+ 65 |         capture("photo-pan-cancels-hold")
+ 66 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 67 |     }
+ 68 |     func testTextFullPeopleCloseAndLandscape() {
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:72:9: error: cannot find 'XCTAssertTrue' in scope
+ 70 |         draft()
+ 71 |         let message = app.staticTexts["chat-message-ded00000-0000-4000-8000-000000000013"]
+ 72 |         XCTAssertTrue(message.waitForExistence(timeout: 10)); reveal(message)
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 73 |         let originY = message.frame.minY
+ 74 |         capture("text-before-pan")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:77:9: error: cannot find 'XCTAssertFalse' in scope
+ 75 |         let start = message.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+ 76 |         start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: 150))); settle()
+ 77 |         XCTAssertFalse(app.buttons["reaction-expand"].exists)
+    |         `- error: cannot find 'XCTAssertFalse' in scope
+ 78 |         print("INDEPENDENT_PAN textYBefore=\(originY) textYAfter=\(message.frame.minY)")
+ 79 |         capture("text-pan-cancels-hold"); reveal(message)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:77:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 75 |         let start = message.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+ 76 |         start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: 150))); settle()
+ 77 |         XCTAssertFalse(app.buttons["reaction-expand"].exists)
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 78 |         print("INDEPENDENT_PAN textYBefore=\(originY) textYAfter=\(message.frame.minY)")
+ 79 |         capture("text-pan-cancels-hold"); reveal(message)
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:81:42: error: cannot find 'XCTAssertTrue' in scope
+ 79 |         capture("text-pan-cancels-hold"); reveal(message)
+ 80 |         let before = message.frame
+ 81 |         message.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); capture("text-quick-held")
+    |                                          `- error: cannot find 'XCTAssertTrue' in scope
+ 82 |         app.buttons["reaction-expand"].tap(); XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5)); capture("text-full-picker")
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:82:47: error: cannot find 'XCTAssertTrue' in scope
+ 80 |         let before = message.frame
+ 81 |         message.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); capture("text-quick-held")
+ 82 |         app.buttons["reaction-expand"].tap(); XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5)); capture("text-full-picker")
+    |                                               `- error: cannot find 'XCTAssertTrue' in scope
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:83:9: error: cannot find 'XCTAssertTrue' in scope
+ 81 |         message.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); capture("text-quick-held")
+ 82 |         app.buttons["reaction-expand"].tap(); XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5)); capture("text-full-picker")
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:83:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 81 |         message.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-expand"].waitForExistence(timeout: 5)); capture("text-quick-held")
+ 82 |         app.buttons["reaction-expand"].tap(); XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5)); capture("text-full-picker")
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:85:9: error: cannot find 'XCTAssertFalse' in scope
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+    |         `- error: cannot find 'XCTAssertFalse' in scope
+ 86 |         XCTAssertEqual(message.frame.minY, before.minY, accuracy: 2)
+ 87 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:85:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 83 |         XCTAssertTrue(app.buttons["message-send"].isHittable)
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 86 |         XCTAssertEqual(message.frame.minY, before.minY, accuracy: 2)
+ 87 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:86:9: error: cannot find 'XCTAssertEqual' in scope
+ 84 |         app.buttons["reaction-picker-close"].tap(); settle()
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+ 86 |         XCTAssertEqual(message.frame.minY, before.minY, accuracy: 2)
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 87 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+ 88 |         capture("text-picker-closed-anchor")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:87:9: error: cannot find 'XCTAssertEqual' in scope
+ 85 |         XCTAssertFalse(app.textFields["emoji-search"].exists)
+ 86 |         XCTAssertEqual(message.frame.minY, before.minY, accuracy: 2)
+ 87 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после")
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 88 |         capture("text-picker-closed-anchor")
+ 89 |         message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:90:54: error: cannot find 'XCTAssertTrue' in scope
+ 88 |         capture("text-picker-closed-anchor")
+ 89 |         message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap()
+ 90 |         let search = app.textFields["emoji-search"]; XCTAssertTrue(search.waitForExistence(timeout: 5)); search.tap(); search.typeText("пицца")
+    |                                                      `- error: cannot find 'XCTAssertTrue' in scope
+ 91 |         XCTAssertTrue(app.buttons["emoji-🍕"].waitForExistence(timeout: 5)); capture("text-full-search-ime"); app.buttons["emoji-🍕"].tap()
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:91:9: error: cannot find 'XCTAssertTrue' in scope
+ 89 |         message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap()
+ 90 |         let search = app.textFields["emoji-search"]; XCTAssertTrue(search.waitForExistence(timeout: 5)); search.tap(); search.typeText("пицца")
+ 91 |         XCTAssertTrue(app.buttons["emoji-🍕"].waitForExistence(timeout: 5)); capture("text-full-search-ime"); app.buttons["emoji-🍕"].tap()
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:93:9: error: cannot find 'XCTAssertTrue' in scope
+ 91 |         XCTAssertTrue(app.buttons["emoji-🍕"].waitForExistence(timeout: 5)); capture("text-full-search-ime"); app.buttons["emoji-🍕"].tap()
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:94:39: error: cannot find 'XCTAssertTrue' in scope
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+    |                                       `- error: cannot find 'XCTAssertTrue' in scope
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:94:120: error: cannot find 'XCTAssertTrue' in scope
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+    |                                                                                                                     `- error: cannot find 'XCTAssertTrue' in scope
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:94:120: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 92 |         let mine = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")).firstMatch
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+    |                                                                                                                     `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:95:83: error: cannot find 'XCTAssertTrue' in scope
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+    |                                                                                   `- error: cannot find 'XCTAssertTrue' in scope
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:95:83: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 93 |         XCTAssertTrue(mine.waitForExistence(timeout: 5)); reveal(mine); settle(); let chipBefore = mine.frame
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+    |                                                                                   `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:96:63: error: cannot find 'XCTAssertTrue' in scope
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+    |                                                               `- error: cannot find 'XCTAssertTrue' in scope
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:96:91: error: cannot find 'XCTAssertEqual' in scope
+ 94 |         mine.press(forDuration: 0.7); XCTAssertTrue(app.buttons["reaction-filter-🍕"].waitForExistence(timeout: 5)); XCTAssertTrue(app.buttons["reaction-filter-🍕"].isSelected)
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+    |                                                                                           `- error: cannot find 'XCTAssertEqual' in scope
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:97:9: error: cannot find 'XCTAssertEqual' in scope
+ 95 |         capture("people-filter-pizza"); app.buttons["reaction-filter-all"].tap(); XCTAssertTrue(app.buttons["reaction-filter-all"].isSelected); capture("people-filter-all")
+ 96 |         app.buttons["reaction-people-close"].tap(); settle(); XCTAssertTrue(mine.exists); XCTAssertEqual(mine.frame.minY, chipBefore.minY, accuracy: 2)
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+    |         `- error: cannot find 'XCTAssertEqual' in scope
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+ 99 |         XCTAssertTrue(app.buttons["reaction-picker-close"].isHittable); XCTAssertTrue(app.buttons["message-send"].isHittable); capture("full-landscape")
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:120:9: note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+118 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+119 | */
+120 | #define XCTAssertEqual(expression1, expression2, ...) \
+    |         `- note: macro 'XCTAssertEqual' unavailable: function like macros not supported
+121 |     _XCTPrimitiveAssertEqual(nil, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
+122 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:99:9: error: cannot find 'XCTAssertTrue' in scope
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+ 99 |         XCTAssertTrue(app.buttons["reaction-picker-close"].isHittable); XCTAssertTrue(app.buttons["message-send"].isHittable); capture("full-landscape")
+    |         `- error: cannot find 'XCTAssertTrue' in scope
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:99:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+ 99 |         XCTAssertTrue(app.buttons["reaction-picker-close"].isHittable); XCTAssertTrue(app.buttons["message-send"].isHittable); capture("full-landscape")
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:99:73: error: cannot find 'XCTAssertTrue' in scope
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+ 99 |         XCTAssertTrue(app.buttons["reaction-picker-close"].isHittable); XCTAssertTrue(app.buttons["message-send"].isHittable); capture("full-landscape")
+    |                                                                         `- error: cannot find 'XCTAssertTrue' in scope
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:81:9: note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 79 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 80 | */
+ 81 | #define XCTAssertTrue(expression, ...) \
+    |         `- note: macro 'XCTAssertTrue' unavailable: function like macros not supported
+ 82 |     _XCTPrimitiveAssertTrue(nil, expression, @#expression, __VA_ARGS__)
+ 83 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:99:73: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+ 97 |         XCTAssertEqual(app.textViews["message-input"].value as? String, "До XX после"); capture("people-closed-anchor")
+ 98 |         reveal(message); message.press(forDuration: 0.7); app.buttons["reaction-expand"].tap(); XCUIDevice.shared.orientation = .landscapeLeft; settle()
+ 99 |         XCTAssertTrue(app.buttons["reaction-picker-close"].isHittable); XCTAssertTrue(app.buttons["message-send"].isHittable); capture("full-landscape")
+    |                                                                         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:102:9: error: cannot find 'XCTAssertFalse' in scope
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+102 |         XCTAssertFalse(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reaction-open-")).firstMatch.exists)
+    |         `- error: cannot find 'XCTAssertFalse' in scope
+103 |     }
+104 | }
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/Headers/XCTestAssertions.h:90:9: note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 88 |  * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+ 89 | */
+ 90 | #define XCTAssertFalse(expression, ...) \
+    |         `- note: macro 'XCTAssertFalse' unavailable: function like macros not supported
+ 91 |     _XCTPrimitiveAssertFalse(nil, expression, @#expression, __VA_ARGS__)
+ 92 | 
+
+openspec/changes/chat-reliability-and-sync/qa/2026-10-28-ios-gesture-independent/IndependentGestureReview.swift:102:9: error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+100 |         app.buttons["reaction-picker-close"].tap(); settle(); capture("landscape-close")
+101 |         XCUIDevice.shared.orientation = .portrait; settle()
+102 |         XCTAssertFalse(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reaction-open-")).firstMatch.exists)
+    |         `- error: failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)
+103 |     }
+104 | }
