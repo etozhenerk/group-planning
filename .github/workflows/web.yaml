@@ -141,19 +141,19 @@ jobs:
       - name: Browser scenarios with Go API
         id: e2e
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py e2e npm exec --workspace @somewhere/web -- playwright test
+        run: python3 scripts/ci/run.py e2e npm exec --workspace @somewhere/web -- playwright test --reporter=github,line
       - name: Realtime chat and pending messages
         id: chat
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py chat npm exec --workspace @somewhere/web -- playwright test --config playwright.chat.config.ts
+        run: python3 scripts/ci/run.py chat npm exec --workspace @somewhere/web -- playwright test --config playwright.chat.config.ts --reporter=github,line
       - name: Read state and readers sheets
         id: read
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py read npm exec --workspace @somewhere/web -- playwright test --config playwright.read.config.ts
+        run: python3 scripts/ci/run.py read npm exec --workspace @somewhere/web -- playwright test --config playwright.read.config.ts --reporter=github,line
       - name: Chat history window
         id: window
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts
+        run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts --reporter=github,line
       - name: Stage report and logs
         id: report
         if: always()
