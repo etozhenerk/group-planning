@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/albumexport"
 	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
@@ -95,7 +96,13 @@ func ServeWithSupportStorage(ctx context.Context, listener net.Listener, store m
 		publicFeedback = nil
 	}
 
-	var handler http.Handler = httpapi.NewWithRealtime(app, service, publicFeedback, logger, stream, deletion)
+	exports, err := albumexport.New(ctx, app, time.Now)
+	if err != nil {
+		return err
+	}
+	defer exports.Close()
+
+	var handler http.Handler = httpapi.NewWithExports(app, service, publicFeedback, logger, stream, exports, deletion)
 	if config.WebDirectory != "" {
 		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
 		if err != nil {

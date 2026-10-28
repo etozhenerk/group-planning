@@ -19,6 +19,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/albumexport"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/realtime"
@@ -59,6 +60,11 @@ type meetingHTTPTest struct {
 
 func newMeetingHTTPTest(t *testing.T, options ...meetings.Option) *meetingHTTPTest {
 	t.Helper()
+	return newMeetingHTTPTestWithHandler(t, nil, options...)
+}
+
+func newMeetingHTTPTestWithHandler(t *testing.T, wrap func(http.Handler, *meetingHTTPTest) http.Handler, options ...meetings.Option) *meetingHTTPTest {
+	t.Helper()
 	h := &meetingHTTPTest{t: t, store: memory.New()}
 	h.clock.Store(time.Now().Unix())
 	h.server = httptest.NewUnstartedServer(nil)
@@ -80,7 +86,7 @@ func newMeetingHTTPTest(t *testing.T, options ...meetings.Option) *meetingHTTPTe
 		t.Fatal(err)
 	}
 
-	options = append(options, meetings.WithMediaContent(memory.NewMediaContent()))
+	options = append([]meetings.Option{meetings.WithMediaContent(memory.NewMediaContent())}, options...)
 	h.app = meetings.NewService(h.store, func() time.Time { return time.Unix(h.clock.Load(), 0) }, options...)
 	var stream RealtimeHandler
 	if h.app.ChatReadStateEnabled() {
@@ -103,7 +109,17 @@ func newMeetingHTTPTest(t *testing.T, options ...meetings.Option) *meetingHTTPTe
 		})
 	}
 
-	h.server.Config.Handler = NewWithRealtime(h.app, service, fixtureSupport(), slog.New(slog.NewJSONHandler(&h.logs, nil)), stream, testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
+	exports, err := albumexport.New(t.Context(), h.app, func() time.Time { return time.Unix(h.clock.Load(), 0) })
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(exports.Close)
+	h.server.Config.Handler = NewWithExports(h.app, service, fixtureSupport(), slog.New(slog.NewJSONHandler(&h.logs, nil)), stream, exports, testAccounts(h.store, identities, service, func() time.Time { return time.Unix(h.clock.Load(), 0) }))
+	if wrap != nil {
+		h.server.Config.Handler = wrap(h.server.Config.Handler, h)
+	}
+
 	h.server.StartTLS()
 	t.Cleanup(h.server.Close)
 	h.anonymous = h.client(false)
@@ -186,6 +202,10 @@ func (h *meetingHTTPTest) request(client *http.Client, method, path string, body
 
 		if len(parts) >= 8 && parts[3] == "meetings" && parts[5] == "messages" {
 			parts[6] = "{entry_id}"
+		}
+
+		if len(parts) >= 8 && parts[5] == "memories" && parts[6] == "exports" {
+			parts[7] = "{export_id}"
 		}
 
 		route = strings.Join(parts, "/")

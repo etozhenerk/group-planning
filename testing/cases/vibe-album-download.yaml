@@ -27,9 +27,17 @@
       файлы/записи галереи, восстановить сеть.
   automation:
     backend:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: backend/internal/httpapi/album_export_test.go
+          selector: TestAlbumExportOpenAPIResponses
+          runner: backend-unit-integration
+          level: integration
+        - path: backend/internal/albumexport/manager_test.go
+          selector: TestArchiveFullFrozenSnapshotOriginalBytesAndSafeNames
+          runner: backend-unit-integration
+          level: unit
     web:
       status: planned
       health: unknown
@@ -69,9 +77,17 @@
       файлы/записи галереи, восстановить сеть.
   automation:
     backend:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: backend/internal/httpapi/album_export_test.go
+          selector: TestAlbumExportOpenAPIResponses
+          runner: backend-unit-integration
+          level: integration
+        - path: backend/internal/albumexport/manager_test.go
+          selector: TestArchiveFullFrozenSnapshotOriginalBytesAndSafeNames
+          runner: backend-unit-integration
+          level: unit
     web:
       status: planned
       health: unknown
@@ -140,9 +156,17 @@
       файлы/записи галереи, восстановить сеть.
   automation:
     backend:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: backend/internal/httpapi/album_export_test.go
+          selector: TestAlbumExportOpenAPIResponses
+          runner: backend-unit-integration
+          level: integration
+        - path: backend/internal/albumexport/manager_test.go
+          selector: TestAccessExpirySessionAndShutdownCleanup
+          runner: backend-unit-integration
+          level: unit
     web:
       status: planned
       health: unknown

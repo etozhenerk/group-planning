@@ -8,6 +8,7 @@ const modulePath = "github.com/etozhenerk/group-planning/backend"
 // Longest matching package boundary wins; an adapter is not part of its domain.
 var dependencies = map[string][]string{
 	"internal/meetings":         {"internal/imagecontent"},
+	"internal/albumexport":      {"internal/meetings"},
 	"internal/imagecontent":     {},
 	"internal/support":          {"internal/imagecontent"},
 	"internal/support/telegram": {"internal/support"},
@@ -19,9 +20,9 @@ var dependencies = map[string][]string{
 	"internal/storage/postgres": {"internal/meetings", "internal/identity", "internal/support"},
 	"cmd/migrate":               {"internal/storage/postgres"},
 	"internal/storage/memory":   {"internal/meetings", "internal/identity", "internal/support"},
-	"internal/httpapi":          {"internal/meetings", "internal/identity", "internal/accounts", "internal/support"},
+	"internal/httpapi":          {"internal/meetings", "internal/identity", "internal/accounts", "internal/support", "internal/albumexport"},
 	"internal/webui":            {"internal/meetings"},
-	"internal/server":           {"internal/accounts", "internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/storage/files", "internal/httpapi", "internal/webui", "internal/support", "internal/support/telegram", "internal/realtime"},
+	"internal/server":           {"internal/accounts", "internal/meetings", "internal/identity", "internal/identity/yandex", "internal/storage/memory", "internal/storage/files", "internal/httpapi", "internal/webui", "internal/support", "internal/support/telegram", "internal/realtime", "internal/albumexport"},
 	"internal/architecture":     {},
 	"cmd/server":                {"internal/meetings", "internal/server", "internal/storage/memory", "internal/storage/postgres"},
 	"cmd/storage-demo":          {"internal/meetings", "internal/storage/memory"},
@@ -98,6 +99,8 @@ func restrictedSymbol(source, imported, symbol string) bool {
 	}
 
 	switch target {
+	case "internal/albumexport":
+		return symbol == "New"
 	case "internal/support":
 		switch symbol {
 		case "Store", "Records", "Delivery", "New":

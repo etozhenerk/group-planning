@@ -26,6 +26,7 @@ func registerMeetings(mux *http.ServeMux, app *meetings.Service, service *identi
 	mux.HandleFunc("/api/v1/meetings/{id}/media/{media_id}/content", h.mediaContent)
 	mux.HandleFunc("/api/v1/meetings/{id}/media/{media_id}/publish", h.publishMedia)
 	mux.HandleFunc("/api/v1/meetings/{id}/memories", h.memories)
+	mux.HandleFunc("/api/v1/meetings/{id}/memories/snapshot", h.memorySnapshot)
 	mux.HandleFunc("/api/v1/meetings/{id}/cover", h.readCover)
 	mux.HandleFunc("/api/v1/invitations/{token}/cover", h.readInvitationCover)
 	mux.HandleFunc("/api/v1/meetings", h.collection)

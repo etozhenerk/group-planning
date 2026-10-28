@@ -12,6 +12,9 @@ func TestDependencyPolicy(t *testing.T) {
 		name, source, dependency string
 		allowed                  bool
 	}{
+		{"export adapter to operations", "internal/albumexport", modulePath + "/internal/meetings", true},
+		{"export adapter cannot access storage", "internal/albumexport", modulePath + "/internal/storage/memory", false},
+		{"composition to exports", "internal/server", modulePath + "/internal/albumexport", true},
 		{"transport to operations", "internal/httpapi", modulePath + "/internal/meetings", true},
 		{"transport to account operation", "internal/httpapi", modulePath + "/internal/accounts", true},
 		{"account to identity operation", "internal/accounts", modulePath + "/internal/identity", true},
@@ -56,6 +59,9 @@ var app *m.Service`, ""},
 		{"account cannot access records", "internal/accounts/example.go", `package accounts
 import "MODULE/internal/identity"
 var records identity.Records`, "application operations"},
+		{"export storage bypass", "internal/albumexport/example.go", `package albumexport
+import "MODULE/internal/meetings"
+var reader meetings.Reader`, "application operations"},
 		{"storage alias", "internal/httpapi/example.go", `package httpapi
 import m "MODULE/internal/meetings"
 type Store = m.Store`, "application operations"},

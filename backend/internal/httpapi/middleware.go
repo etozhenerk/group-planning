@@ -38,6 +38,11 @@ func (w *responseWriter) Write(data []byte) (int, error) {
 	return w.ResponseWriter.Write(data)
 }
 
+// SetWriteDeadline permits a bounded download deadline through the wrapper.
+func (w *responseWriter) SetWriteDeadline(deadline time.Time) error {
+	return http.NewResponseController(w.ResponseWriter).SetWriteDeadline(deadline)
+}
+
 func middleware(next http.Handler, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		started := time.Now()

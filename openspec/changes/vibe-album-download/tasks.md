@@ -8,6 +8,11 @@
 
 - [ ] 2.1 Добавить атомарный снимок альбома, приватную подготовку/состояние/скачивание/отмену ZIP с bounded temp и cleanup; integration проверяет полный набор, совпадающие имена, отзыв, чужой ID, отмену и срок. Обновить OpenAPI и документацию, выполнить Go race/vet/build/format/dependencies и api:test.
 
+Backend реализован и прошёл независимый feature-test/qa:ready по трём кейсам.
+[Проверенный объём](qa/backend-checkpoint-20261028.md). Детальный план/evidence
+пока сохранён локально; checkbox ожидает включения его в общий manifest
+приёмки. Это не блокирует реализацию клиентов и не означает выпуска API.
+
 ## 3. Клиенты
 
 - [ ] 3.1 Web: вторичная кнопка, подготовка/отмена/ошибка, download браузера без Blob, cleanup на уход/выход; unit+E2E на desktop/mobile и независимые feature-test/design-review, qa:ready/design:ready.

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/etozhenerk/group-planning/backend/internal/accounts"
+	"github.com/etozhenerk/group-planning/backend/internal/albumexport"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/support"
@@ -46,6 +47,11 @@ func NewWithSupport(app *meetings.Service, service *identity.Service, feedback *
 
 // NewWithRealtime enables the optional authenticated WebSocket adapter.
 func NewWithRealtime(app *meetings.Service, service *identity.Service, feedback *support.Service, logger *slog.Logger, stream RealtimeHandler, deletion ...*accounts.Service) http.Handler {
+	return NewWithExports(app, service, feedback, logger, stream, nil, deletion...)
+}
+
+// NewWithExports adds a lifecycle-managed private album export adapter.
+func NewWithExports(app *meetings.Service, service *identity.Service, feedback *support.Service, logger *slog.Logger, stream RealtimeHandler, exports *albumexport.Manager, deletion ...*accounts.Service) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if !getOnly(w, r) {
@@ -57,6 +63,7 @@ func NewWithRealtime(app *meetings.Service, service *identity.Service, feedback 
 		}{"ok"})
 	})
 	registerMeetings(mux, app, service, stream != nil)
+	registerAlbumExports(mux, app, service, exports)
 	if stream != nil && service != nil {
 		mux.HandleFunc("/api/v1/realtime", realtimeRoute(service, stream))
 	}

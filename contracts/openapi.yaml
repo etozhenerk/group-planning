@@ -3110,6 +3110,308 @@ paths:
             minimum: 1
             maximum: 100
             default: 50
+  /api/v1/meetings/{id}/memories/snapshot:
+    get:
+      operationId: getMemorySnapshot
+      summary: Полный снимок опубликованных фото альбома
+      description: Единый снимок всех опубликованных memory-фото в порядке created_at/id, без пагинации. Только участник прошедшей встречи. Поздние загрузки не меняют уже возвращённый набор; каждое чтение bytes проверяет текущий доступ.
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemorySnapshot"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/memories/exports:
+    post:
+      operationId: prepareMemoryExport
+      summary: Подготовить приватный ZIP альбома
+      description: Фиксирует полный снимок. Один удерживаемый экспорт на пользователя и два на процесс; 429 album_export_busy и Retry-After при занятости. Тот же ключ возвращает удерживаемый экспорт. Пустой альбом — 409 album_empty. Подготовка до двух минут, ready живёт до десяти минут. Web требует Origin и CSRF.
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - $ref: "#/components/parameters/CSRF"
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+      responses:
+        "202":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumExport"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/memories/exports/{export_id}:
+    get:
+      operationId: getMemoryExport
+      summary: Состояние приватного ZIP
+      description: Только владелец с текущим доступом и действующей исходной сессией. Чужой, использованный, отменённый или истёкший ID — 404. failed не предоставляет файл; удалить экспорт и повторить подготовку.
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: export_id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumExport"
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+    delete:
+      operationId: cancelMemoryExport
+      summary: Отменить и очистить приватный ZIP
+      description: Прерывает подготовку или передачу, удаляет временный файл. Повтор для удалённого ID — 404. Web требует Origin и CSRF.
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: export_id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+        - $ref: "#/components/parameters/CSRF"
+      responses:
+        "204":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
+  /api/v1/meetings/{id}/memories/exports/{export_id}/download:
+    get:
+      operationId: downloadMemoryExport
+      summary: Скачать полностью подготовленный ZIP
+      description: Одна передача владельцу с повторной проверкой сессии и участия. Content-Disposition attachment, Content-Length полного файла. Только полный 200; Range игнорируется, resume и повторное скачивание требуют новой подготовки. preparing/failed — 409 album_export_pending. При отмене, отзыве или сетевой ошибке соединение прерывается и файл удаляется. Готовый архив не сохраняется после окончания передачи.
+      tags: [meetings]
+      security:
+        - WebSession: []
+        - NativeSession: []
+      x-implemented: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: export_id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        "200":
+          description: Успешный ответ
+          headers:
+            X-Request-ID:
+              schema:
+                $ref: "#/components/schemas/UUID"
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/APIError"
+        "401":
+          $ref: "#/components/responses/APIError"
+        "403":
+          $ref: "#/components/responses/APIError"
+        "404":
+          $ref: "#/components/responses/APIError"
+        "405":
+          $ref: "#/components/responses/APIError"
+        "409":
+          $ref: "#/components/responses/APIError"
+        "413":
+          $ref: "#/components/responses/APIError"
+        "415":
+          $ref: "#/components/responses/APIError"
+        "422":
+          $ref: "#/components/responses/APIError"
+        "429":
+          $ref: "#/components/responses/APIError"
+        "500":
+          $ref: "#/components/responses/APIError"
+        "503":
+          $ref: "#/components/responses/APIError"
   /api/v1/support/feedback:
     post:
       operationId: submitSupportFeedback
@@ -5260,6 +5562,35 @@ components:
         - media
         - entry
       additionalProperties: true
+    MemorySnapshot:
+      type: object
+      properties:
+        photos:
+          type: array
+          items:
+            $ref: "#/components/schemas/Media"
+        next_cursor:
+          type: "null"
+      required: [photos, next_cursor]
+      additionalProperties: false
+    AlbumExport:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 128
+        state:
+          type: string
+          enum: [preparing, ready, failed]
+        count:
+          type: integer
+          minimum: 1
+        expires_at:
+          type: string
+          format: date-time
+      required: [id, state, count, expires_at]
+      additionalProperties: false
     MemoriesPage:
       type: object
       properties:
