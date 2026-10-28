@@ -1,0 +1,31 @@
+[WebServer] (node:27779) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:27844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (1.1s)
+  ✓   2 [chromium] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (895ms)
+  ✓   3 [chromium] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (591ms)
+  ✓   4 [chromium] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (888ms)
+  ✓   5 [chromium] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (870ms)
+  ✓   6 [chromium] › tests/37-chat-persistence.spec.ts:207:3 › two tabs share one durable intent owner while its POST is in flight (4.7s)
+  ✓   7 [chromium] › tests/37-chat-persistence.spec.ts:207:3 › two tabs share one durable intent owner without Web Locks (4.6s)
+  ✓   8 [chromium] › tests/37-outbox-owner.spec.ts:5:1 › reload releases a pending POST owner without waiting for its durable lease (956ms)
+  ✓   9 [chromium] › tests/37-outbox-owner.spec.ts:51:1 › a live legacy owner keeps its lease until expiry (3.9s)
+(node:29163) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [webkit] › tests/37-chat-persistence.spec.ts:5:1 › durable draft survives reload and several offline intents retain independent ids (1.8s)
+  ✓  11 [webkit] › tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (1.3s)
+  ✓  12 [webkit] › tests/37-chat-persistence.spec.ts:99:1 › unavailable IndexedDB leaves the draft untouched and sends no POST (908ms)
+  ✓  13 [webkit] › tests/37-chat-persistence.spec.ts:133:1 › logout purges IndexedDB and stops a second tab from sending the previous user queue (1.4s)
+  ✓  14 [webkit] › tests/37-chat-persistence.spec.ts:169:1 › rejected intent retry keeps its key and restore never overwrites a newer draft (1.2s)
+  ✓  15 [webkit] › tests/37-chat-persistence.spec.ts:207:3 › two tabs share one durable intent owner while its POST is in flight (5.2s)
+  ✓  16 [webkit] › tests/37-chat-persistence.spec.ts:207:3 › two tabs share one durable intent owner without Web Locks (5.3s)
+  ✓  17 [webkit] › tests/37-outbox-owner.spec.ts:5:1 › reload releases a pending POST owner without waiting for its durable lease (1.4s)
+  ✓  18 [webkit] › tests/37-outbox-owner.spec.ts:51:1 › a live legacy owner keeps its lease until expiry (4.3s)
+
+  18 passed (45.3s)

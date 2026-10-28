@@ -1,7 +1,7 @@
 {
-  "revision": "chat-reliability-2026-10-27-read-context-2.5.1",
-  "sourceCommit": "7fa0a5f",
-  "approval": "27.10.2026: конкретизация ранее разрешённого UX v1 и контракта2.5.0 — пункт Кто прочитал в контекстном меню своего сообщения, без новой функции или постоянной кнопки.",
+  "revision": "chat-desktop-keyboard-2026-10-28-2.5.2",
+  "sourceCommit": "ba987791",
+  "approval": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "2.5.2: desktop удаление только клавиатурой в composer; поиск меняет запрос. Мобильная кнопка прежняя. Противоречивое общее ожидание кнопки в тесте уточнено по прямому решению пользователя; новые UI-элементы и токены не добавляются.",
     "2.5.1: state=context-zero явно показывает строку Кто прочитал под реакциями в общем popup собственного accepted сообщения; menu exit предшествует readers sheet/dialog, возврат к bubble. Токены прежние.",
     "2.5.0: конкретизирован уже принятый UX v1 read/unread, readers sheet и bounded history; существующие композиции/токены сохраняются. Фрагмент state=list задаёт только badge, не новый список.",
     "2.4.1: исправлено описание scope исходящих — принятый UX v1 и same-row states относятся к web, iOS и Android; композиция/значения токенов прежние, приёмка каждой платформы отдельная.",
@@ -50,7 +51,7 @@
   "sources": [
     {
       "path": "openspec/changes/meeting-experience-refresh/ux.md",
-      "sha256": "27f3d1c66451c7ef1c29955d0d5511aa71a00e6afd821bccac75276bda46d6c7"
+      "sha256": "ed5f5a20f22876c5a7538ec82247c2a468e8a0d15a30db40416ca943fa9cd712"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
@@ -318,7 +319,7 @@
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
-      "sha256": "01f25f1fb5329a3c71a3d32d702e6b24c15567474924820fbc09feabd53ab601"
+      "sha256": "76121f9981da20d32b549344b8467211a3da93b00d22c4c92aa6e161416246ea"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
@@ -411,6 +412,10 @@
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts",
       "sha256": "78c91a8d473058acd79ed510e87c4991614c33ed56014716e863f6e934baf248"
+    },
+    {
+      "path": "docs/design/components/chat-actions.md",
+      "sha256": "9c4f8c877a109a79ffdcf06f5cd8b520e160c6d74f7b83f68b293f2d5897ad83"
     }
   ],
   "history": [
@@ -1065,5 +1070,24 @@
     "version": "2.4.1",
     "reviewedSourceUpdates": [],
     "note": "Documentation scope clarification of approved UX v1; raw values unchanged; no acceptance claimed."
+  },
+  "desktopKeyboardPublication": {
+    "version": "2.5.2",
+    "date": "2026-10-28",
+    "decision": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "27f3d1c66451c7ef1c29955d0d5511aa71a00e6afd821bccac75276bda46d6c7",
+        "sha256": "ed5f5a20f22876c5a7538ec82247c2a468e8a0d15a30db40416ca943fa9cd712"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "previousSha256": "01f25f1fb5329a3c71a3d32d702e6b24c15567474924820fbc09feabd53ab601",
+        "sha256": "76121f9981da20d32b549344b8467211a3da93b00d22c4c92aa6e161416246ea"
+      }
+    ],
+    "prototypeChange": "Отклонённый черновик с кнопкой не публикуется. Ранее принятая desktop-композиция сохраняется.",
+    "acceptance": "Нужен новый независимый keyboard-проход; прежние hashes/evidence сохранены."
   }
 }

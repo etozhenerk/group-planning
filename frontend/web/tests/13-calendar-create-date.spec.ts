@@ -53,6 +53,11 @@ for (const width of [320, 1440]) {
       await expect(agenda.getByText('0 встреч', { exact: true })).toBeVisible();
 
       if (width <= 1180) {
+        const filters = page.getByRole('navigation', { name: 'Вид встреч' });
+        const filtersDocumentY = await filters.evaluate(
+          (element) => element.getBoundingClientRect().top + window.scrollY,
+        );
+
         await page.evaluate(() => window.scrollTo(0, 340));
         await expect(controls).toHaveAttribute('data-pinned', 'true');
         const bounds = await controls.boundingBox();
@@ -71,10 +76,16 @@ for (const width of [320, 1440]) {
         await expect(
           controls.getByRole('button', { name: 'Календарь', exact: true }),
         ).toHaveCount(0);
-        const filters = page.getByRole('navigation', { name: 'Вид встреч' });
-        expect((await filters.boundingBox())!.y).toBeLessThan(
-          (await controls.boundingBox())!.y,
+        // A short month may reach the scroll limit while filters sit beneath the header.
+        const filterBounds = await filters.boundingBox();
+        expect(filterBounds!.y + filterBounds!.height).toBeLessThanOrEqual(
+          bounds!.y + bounds!.height,
         );
+        expect(
+          await filters.evaluate(
+            (element) => element.getBoundingClientRect().top + window.scrollY,
+          ),
+        ).toBeCloseTo(filtersDocumentY, 0);
         await expect(heading).toHaveCSS('box-shadow', 'none');
       }
 

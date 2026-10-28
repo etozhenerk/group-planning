@@ -113,7 +113,7 @@ expected и source hashes. В проверенном snapshot SHA256 файла
 | Новый case ID | Согласованный сценарий |
 | --- | --- |
 | `TC-CHAT-EMOJI-SELECTION` | Русский поиск заменяет только выделение; следующий выбор идёт после вставки без отправки и закрытия dock |
-| `TC-CHAT-EMOJI-GRAPHEME` | Удаление целого составного Unicode-grapheme с сохранением соседнего текста |
+| `TC-CHAT-EMOJI-GRAPHEME` | Удаление целого составного Unicode-grapheme с сохранением соседнего текста: mobile-кнопка в доке, desktop Backspace в composer; поиск не удаляет черновик |
 | `TC-CHAT-EMOJI-LOW-HEIGHT` | Dock под composer, собственный скролл сетки, доступные ввод/отправка при low-height, IME, landscape и крупном тексте |
 | `TC-CHAT-EMOJI-DISMISS-FOCUS` | Web Escape/Android Back закрывают без IME; iOS возвращается кнопкой клавиатуры с сохранением selection |
 | `TC-CHAT-SHEET-RETURN` | Сведения → Share/настройки → сведения → чат; одна панель, родительский фокус, черновики, ошибка/повтор |

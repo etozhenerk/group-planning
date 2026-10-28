@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "meeting-experience-refresh",
-  "designVersion": "2.5.1",
+  "designVersion": "2.5.2",
   "phase": "checkpoint",
-  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout.",
+  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
   "implementer": "implementation-team:/root",
-  "report": "openspec/changes/meeting-experience-refresh/design-review-2.5.1.json",
+  "report": "openspec/changes/meeting-experience-refresh/design-review-2.5.2.json",
   "screens": [
     {
       "id": "list-native",
@@ -7355,6 +7355,325 @@
       "tasks": {
         "web": [
           "4.6"
+        ]
+      }
+    },
+    {
+      "id": "calendar-native",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "states": [
+        "selected-day-october-five-weeks",
+        "today",
+        "month-navigation",
+        "long-title-no-cover",
+        "return-from-chat"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/interactions.js"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "5.1"
+        ],
+        "android": [
+          "6.1"
+        ]
+      }
+    },
+    {
+      "id": "calendar-web-320",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "selected-day-october-five-weeks",
+        "today",
+        "month-navigation",
+        "long-title-no-cover",
+        "return-from-chat"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/interactions.js"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.3"
+        ]
+      }
+    },
+    {
+      "id": "calendar-web-390",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "selected-day-october-five-weeks",
+        "today",
+        "month-navigation",
+        "long-title-no-cover",
+        "return-from-chat"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/interactions.js"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.3"
+        ]
+      }
+    },
+    {
+      "id": "calendar-web-768",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "selected-day-october-five-weeks",
+        "today",
+        "month-navigation",
+        "long-title-no-cover",
+        "return-from-chat"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/interactions.js"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.3"
+        ]
+      }
+    },
+    {
+      "id": "calendar-web-1440",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "selected-day-october-five-weeks",
+        "today",
+        "month-navigation",
+        "long-title-no-cover",
+        "return-from-chat"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "frontend/ios/Somewhere",
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "frontend/ios/scripts",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/interactions.js"
+      ],
+      "contracts": [
+        "docs/design/components/meeting-card.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "4.3"
         ]
       }
     }

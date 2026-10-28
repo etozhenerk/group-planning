@@ -1,0 +1,47 @@
+[WebServer] (node:80693) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:80694) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:80998) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft (6.0s)
+
+
+  1) tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+       98 |   gate.release?.();
+       99 |   await expect(input).toHaveValue('Следующий черновик');
+    > 100 |   await expect.poll(() => keys.length).toBe(2);
+          |                                        ^
+      101 |   expect(keys[0]).toBeTruthy();
+      102 |   expect(keys[1]).toBe(keys[0]);
+      103 |   await expect(
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/37-chat-persistence.spec.ts:100:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-history-autoload-20261028/reload-baseline-results/37-chat-persistence-reload-a1ff9-ithout-dropping-a-new-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-history-autoload-20261028/reload-baseline-results/37-chat-persistence-reload-a1ff9-ithout-dropping-a-new-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-history-autoload-20261028/reload-baseline-results/37-chat-persistence-reload-a1ff9-ithout-dropping-a-new-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-history-autoload-20261028/reload-baseline-results/37-chat-persistence-reload-a1ff9-ithout-dropping-a-new-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/37-chat-persistence.spec.ts:65:1 › reload after server commit and lost ACK reconciles one message without dropping a new draft 
