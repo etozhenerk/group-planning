@@ -115,7 +115,7 @@ class DesignVisualUiTests {
                     .assertDoesNotExist()
                 if (field == "preparation-title") {
                     compose.onNodeWithTag(field).performTextInput("Заказать пиццу")
-                    compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                    compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
                     fixture.screenshot("design-action-task-keyboard")
                     fixture.device.pressBack()
                 }
@@ -124,7 +124,7 @@ class DesignVisualUiTests {
                 if (field == "place-poll-place") {
                     compose.onNodeWithTag(field).performTextInput("Кафе у парка")
                     compose.onNodeWithTag("place-poll-explanation").performTextInput("Тихий зал")
-                    compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                    compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
                     fixture.screenshot("design-action-place-keyboard")
                     fixture.device.pressBack()
                 }

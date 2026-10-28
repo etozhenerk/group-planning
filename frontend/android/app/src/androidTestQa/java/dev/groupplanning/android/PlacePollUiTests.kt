@@ -51,7 +51,7 @@ class PlacePollUiTests {
             fixture.waitTag("place-poll-error")
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             fixture.screenshot("android-place-create-error")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitAbsent("chat-action-sheet")
             compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-place-poll").performClick()

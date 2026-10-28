@@ -34,7 +34,7 @@ class ChatActionRevocationUiTests {
                 ).performClick()
                 fixture.waitTag("meeting-information")
                 compose.onNodeWithTag("information-share").assertDoesNotExist()
-                compose.onNodeWithTag("close-action-sheet").performClick()
+                fixture.closeActionSheet()
                 fixture.waitAbsent("chat-action-sheet")
                 openTask()
                 compose.onNodeWithTag("preparation-title")
@@ -54,7 +54,7 @@ class ChatActionRevocationUiTests {
                         .config[SemanticsProperties.EditableText].text,
                 )
                 fixture.screenshot("sheet-new-draft-after-rejoining")
-                compose.onNodeWithTag("close-action-sheet").performClick()
+                fixture.closeActionSheet()
             }
         } finally {
             otherDevice.respond(fixture.token, RsvpAnswer.NotGoing)

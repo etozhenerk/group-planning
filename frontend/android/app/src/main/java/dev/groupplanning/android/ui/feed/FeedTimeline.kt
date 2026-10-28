@@ -220,7 +220,7 @@ internal fun FeedTimeline(
                         }
                     }
                 }
-                if (state.ready && state.entries.none { it.kind == "message" }) {
+                if (state.ready && rows.none { it.text != null }) {
                     item(key = "invite-friends") { empty() }
                 }
                 if (state.hasHistory || state.historyLoading || state.historyError) {

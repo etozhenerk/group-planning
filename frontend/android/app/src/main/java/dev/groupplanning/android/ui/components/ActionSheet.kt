@@ -5,17 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -34,12 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import dev.groupplanning.android.R
+import androidx.compose.ui.unit.Dp
 import dev.groupplanning.android.ui.feed.LocalChatPresentation
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.theme.DesignTokens
@@ -55,6 +52,7 @@ internal fun ActionSheet(
     animateClose: Boolean = false,
     closeRequested: Boolean = false,
     canDismiss: Boolean = canClose,
+    contentViewport: Dp? = null,
     actions: (@Composable ColumnScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -100,7 +98,10 @@ internal fun ActionSheet(
     }
     CompositionLocalProvider(LocalMobileSheet provides true) {
         ModalBottomSheet(
-            onDismissRequest = { if (canClose) close() },
+            onDismissRequest = {
+                // Material Back also calls this after a vetoed hide; the guard handled it.
+                if (canClose && sheet.currentValue == SheetValue.Hidden) close()
+            },
             sheetState = sheet,
             containerColor = DesignTokens.colorSurface,
             contentColor = DesignTokens.colorText,
@@ -121,7 +122,7 @@ internal fun ActionSheet(
                 ) {
                     Text(
                         title,
-                        Modifier.weight(1f).semantics { heading() },
+                        Modifier.weight(1f).semantics { heading() }.testTag("action-sheet-heading"),
                         fontSize = DesignTokens.typographySizeMobileSheetTitle,
                         lineHeight = DesignTokens.typographySizeMobileSheetTitle *
                             DesignTokens.typographyLineHeightMobileSheetTitle,
@@ -129,18 +130,18 @@ internal fun ActionSheet(
                             DesignTokens.typographyWeightMobileSheetTitle.toInt(),
                         ),
                     )
-                    val closeLabel = stringResource(R.string.experience_close)
-                    IconButton(
-                        requestClose,
-                        Modifier.size(DesignTokens.targetAndroid).semantics {
-                            contentDescription = closeLabel
-                        }.testTag("close-action-sheet"),
-                        enabled = canClose && !closing,
-                    ) { AppIcon(R.drawable.ic_close) }
                 }
                 contentState.SaveableStateProvider(title) {
                     Column(
                         Modifier.weight(1f, fill = false).fillMaxWidth()
+                            .then(
+                                contentViewport?.let {
+                                    Modifier.height(
+                                        it + DesignTokens.componentMobileSheetContentInsetTop +
+                                            DesignTokens.componentMobileSheetContentInsetBottom,
+                                    )
+                                } ?: Modifier,
+                            ).testTag("action-sheet-content")
                             .verticalScroll(rememberScrollState()).padding(
                                 start = DesignTokens.componentMobileSheetContentInsetInline,
                                 end = DesignTokens.componentMobileSheetContentInsetInline,

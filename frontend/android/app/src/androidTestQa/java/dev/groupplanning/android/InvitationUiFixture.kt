@@ -14,10 +14,12 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToString
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import java.io.File
 import java.time.Instant
 import java.util.TimeZone
+import java.util.regex.Pattern
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -54,6 +56,21 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
             compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isEmpty()
         }
         compose.waitForIdle()
+    }
+
+    fun closeActionSheet() {
+        val keyboard = By.pkg(Pattern.compile(".*inputmethod.*"))
+        if (device.hasObject(keyboard)) {
+            device.pressBack()
+            compose.waitUntil(5_000) { !device.hasObject(keyboard) }
+        }
+        if (compose.onAllNodes(
+                hasTestTag("chat-action-sheet"),
+            ).fetchSemanticsNodes().isNotEmpty()
+        ) {
+            device.pressBack()
+            compose.waitForIdle()
+        }
     }
 
     fun waitText(text: String) {

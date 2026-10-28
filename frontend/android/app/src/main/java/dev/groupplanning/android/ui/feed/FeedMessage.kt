@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -49,6 +51,7 @@ internal fun FeedMessage(
     reactionAnchor: ReactionAnchor? = null,
     status: @Composable () -> Unit = {},
     body: @Composable (() -> Unit)? = null,
+    delivery: @Composable () -> Unit = {},
 ) {
     val avatarInset = with(LocalDensity.current) {
         (DesignTokens.typographySizeLabel * DesignTokens.typographyLineHeightBody).toDp() +
@@ -113,6 +116,13 @@ internal fun FeedMessage(
                     lineHeight =
                     DesignTokens.typographySizeLabel * DesignTokens.typographyLineHeightBody,
                 )
+                if (own) {
+                    Box(
+                        Modifier.size(DesignTokens.componentMessageDeliveryIndicatorSize)
+                            .testTag("message-delivery-slot"),
+                        contentAlignment = Alignment.Center,
+                    ) { delivery() }
+                }
             }
             Column(
                 Modifier.then(

@@ -248,12 +248,12 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     }
 
     fun closePollCreation() {
-        if (pollCreation.value?.state?.value?.busy == true) return
-        pollCreation.value?.let { model ->
-            if (model.state.value.poll == null) savedPollCreation = model else model.stop()
-        }
+        val model = pollCreation.value ?: return
+        if (model.state.value.busy) return
+        val created = model.state.value.poll != null
+        if (created) model.stop() else savedPollCreation = model
         mutableCreation.value = null
-        refresh()
+        if (created) refresh()
     }
 
     fun createPlacePoll(meeting: Meeting) {
@@ -268,12 +268,12 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     }
 
     fun closePlaceCreation() {
-        if (placeCreation.value?.state?.value?.busy == true) return
-        placeCreation.value?.let { model ->
-            if (model.state.value.poll == null) savedPlaceCreation = model else model.stop()
-        }
+        val model = placeCreation.value ?: return
+        if (model.state.value.busy) return
+        val created = model.state.value.poll != null
+        if (created) model.stop() else savedPlaceCreation = model
         mutablePlaceCreation.value = null
-        refresh()
+        if (created) refresh()
     }
 
     fun createPreparationTask() {
@@ -288,18 +288,12 @@ internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope
     }
 
     fun closeTaskCreation() {
-        if (taskCreation.value?.operation?.state?.value?.busy == true) return
-        taskCreation.value?.let { model ->
-            if (model.operation.state.value.task ==
-                null
-            ) {
-                savedTaskCreation = model
-            } else {
-                model.stop()
-            }
-        }
+        val model = taskCreation.value ?: return
+        if (model.operation.state.value.busy) return
+        val created = model.operation.state.value.task != null
+        if (created) model.stop() else savedTaskCreation = model
         mutableTaskCreation.value = null
-        refresh()
+        if (created) refresh()
     }
 
     private fun clearPolls() {

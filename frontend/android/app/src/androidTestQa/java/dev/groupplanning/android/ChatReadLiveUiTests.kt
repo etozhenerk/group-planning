@@ -110,7 +110,7 @@ class ChatReadLiveUiTests {
                 ).getJSONObject("user").getString("display_name")
                 fixture.waitText(ownerName)
                 fixture.screenshot("read-people")
-                compose.onNodeWithTag("close-action-sheet").performClick()
+                fixture.closeActionSheet()
                 fixture.waitAbsent("chat-readers")
                 val closedBefore = QaChatProbe.signals.count { it == "meeting:closed" }
                 QaChatProbe.interruptMeeting()

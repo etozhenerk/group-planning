@@ -49,6 +49,7 @@ internal fun FeedMessageRow(
         react = entry?.let { { openReaction(it) } },
         highlighted = entry != null && presentation.reaction == entry.id,
         reactionAnchor = anchor,
+        delivery = { PendingMessageIndicator(pending) },
         status = {
             if (pending != null) {
                 OutgoingStatus(pending, canRecover, {

@@ -38,10 +38,15 @@ internal fun ChatReadersSheet(
         close,
         Modifier.testTag("chat-readers"),
         animateClose = true,
+        contentViewport = DesignTokens.componentMobileRosterRowHeight * 3 +
+            DesignTokens.spaceS12 * 2,
     ) {
         if (state.loading && state.readers.isEmpty()) {
             val loading = stringResource(R.string.chat_read_loading)
-            Column(Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = loading }) {
+            Column(
+                Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = loading },
+                verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12),
+            ) {
                 repeat(3) {
                     Row(
                         Modifier.heightIn(min = DesignTokens.componentMobileRosterRowHeight),

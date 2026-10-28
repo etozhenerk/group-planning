@@ -50,7 +50,7 @@ class PreparationTaskUiTests {
             scenario.recreate()
             fixture.waitTag("preparation-error")
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitAbsent("chat-action-sheet")
             compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-preparation-task").performClick()

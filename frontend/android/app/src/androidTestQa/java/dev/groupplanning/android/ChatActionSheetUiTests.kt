@@ -58,10 +58,10 @@ class ChatActionSheetUiTests {
                     hasText(fixture.context.getString(heading)) and
                         SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
                 ).assertIsDisplayed()
-                compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
                 compose.onNodeWithTag(submit).assertIsDisplayed()
                 fixture.screenshot("sheet-reduced-motion-$action")
-                compose.onNodeWithTag("close-action-sheet").performClick()
+                fixture.closeActionSheet()
                 fixture.waitAbsent("chat-action-sheet")
                 compose.onNodeWithTag("message-composer").assertIsDisplayed()
             }
@@ -85,7 +85,7 @@ class ChatActionSheetUiTests {
                     hasText(fixture.context.getString(heading)) and
                         SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
                 ).assertIsDisplayed()
-                compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
                 compose.onNodeWithTag(submit).assertIsDisplayed()
                 fixture.screenshot("sheet-large-$action")
                 fixture.device.pressBack()
@@ -97,13 +97,13 @@ class ChatActionSheetUiTests {
             compose.onNodeWithTag("participants-expand").performScrollTo().performClick()
             compose.onAllNodes(hasTestTag("participant-roster-row")).assertCountEquals(6)
             compose.onNodeWithTag("open-settings").performScrollTo().assertIsDisplayed()
-            compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+            compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
             fixture.screenshot("sheet-large-information-expanded")
             compose.onNodeWithTag("participants-collapse").performScrollTo().performClick()
             verifyCompactPeople()
             compose.onNodeWithTag("information-share").performScrollTo().assertIsDisplayed()
             fixture.screenshot("sheet-large-information-collapsed")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
         }
     }
 
@@ -128,13 +128,13 @@ class ChatActionSheetUiTests {
                         val keyboard = environment.keyboardBounds() ?: return@waitUntil false
                         val fieldBounds = compose.onNodeWithTag(field)
                             .fetchSemanticsNode().boundsInWindow
-                        val closeBounds = compose.onNodeWithTag("close-action-sheet")
+                        val headingBounds = compose.onNodeWithTag("action-sheet-heading")
                             .fetchSemanticsNode().boundsInWindow
-                        fieldBounds.bottom <= keyboard.top && closeBounds.bottom <= keyboard.top
+                        fieldBounds.bottom <= keyboard.top && headingBounds.bottom <= keyboard.top
                     }
-                    compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+                    compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
                 }
-                compose.onNodeWithTag("close-action-sheet").performClick()
+                fixture.closeActionSheet()
                 fixture.waitAbsent("chat-action-sheet")
                 compose.waitUntil(10_000) { environment.keyboardBounds() == null }
                 compose.onNodeWithTag("message-composer").assertIsDisplayed()
@@ -166,7 +166,7 @@ class ChatActionSheetUiTests {
             openAction("new-preparation-task")
             compose.onNodeWithTag("preparation-title").assertTextContains("Принести игру")
             fixture.screenshot("sheet-swipe-restored")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitAbsent("chat-action-sheet")
             openInformation()
             verifyCompactPeople()
@@ -183,7 +183,7 @@ class ChatActionSheetUiTests {
                 hasText("Настолки у Саши") and
                     SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading),
             ).assertIsDisplayed()
-            compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+            compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
             compose.onAllNodes(hasTestTag("chat-action-sheet")).assertCountEquals(1)
             listOf(
                 R.string.support_title,
@@ -207,14 +207,14 @@ class ChatActionSheetUiTests {
             fixture.device.pressBack()
             fixture.waitTag("meeting-information")
             compose.onAllNodes(hasTestTag("chat-action-sheet")).assertCountEquals(1)
-            compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+            compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
             fixture.screenshot("sheet-meeting-information-share-return")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitAbsent("chat-action-sheet")
             fixture.waitTag("message-composer")
             openInformation()
             verifyCompactPeople()
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
         }
     }
 
@@ -241,14 +241,14 @@ class ChatActionSheetUiTests {
             compose.onNodeWithTag("information-rsvp-Maybe").performScrollTo().assertIsSelected()
             compose.onNodeWithTag("rsvp-save").assertExists()
             fixture.screenshot("sheet-information-member-response")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitTag("message-composer")
             openInformation()
             verifyCompactPeople()
             compose.onNodeWithTag("information-rsvp-Maybe").performScrollTo().assertIsSelected()
             compose.onNodeWithTag("information-rsvp-Going").performClick()
             compose.onNodeWithTag("rsvp-save").assertDoesNotExist()
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
         }
     }
 
@@ -273,7 +273,7 @@ class ChatActionSheetUiTests {
             hasTestTag("meeting-cover") and hasAnyAncestor(hasTestTag("meeting-information")),
             useUnmergedTree = true,
         ).assertCountEquals(0)
-        compose.onNodeWithTag("close-action-sheet").assertIsDisplayed()
+        compose.onNodeWithTag("close-action-sheet").assertDoesNotExist()
     }
 
     private fun openChat() {

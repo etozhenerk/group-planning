@@ -35,7 +35,7 @@ class DatePollUiTests {
             compose.onNodeWithTag("poll-create").assertIsDisplayed().performClick()
             fixture.waitTag("poll-error")
             fixture.screenshot("poll-create-uncertain")
-            compose.onNodeWithTag("close-action-sheet").performClick()
+            fixture.closeActionSheet()
             fixture.waitAbsent("chat-action-sheet")
             compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-date-poll").performClick()

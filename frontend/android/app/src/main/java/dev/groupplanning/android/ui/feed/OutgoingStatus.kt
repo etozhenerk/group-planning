@@ -20,7 +20,7 @@ internal fun OutgoingStatus(
     recover: () -> Unit,
 ) {
     val status = when (pending.status) {
-        DeliveryStatus.Queued, DeliveryStatus.Sending -> R.string.message_sending
+        DeliveryStatus.Queued, DeliveryStatus.Sending -> return
         DeliveryStatus.Uncertain -> R.string.message_unconfirmed
         DeliveryStatus.Rejected -> R.string.message_rejected
     }

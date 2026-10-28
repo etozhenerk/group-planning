@@ -24,6 +24,7 @@ class ActionDraftTests {
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         backgroundScope.launch { model.runActive() }
         runCurrent()
+        val initialReads = h.transport.requests.filter { it.method == "GET" }
         model.createPoll(Fixtures.meeting())
         val date = checkNotNull(model.pollCreation.value)
         date.change { it.copy(dates = listOf("2026-11-01", "2026-11-02")) }
@@ -51,6 +52,11 @@ class ActionDraftTests {
         assertSame(task, model.taskCreation.value)
         assertEquals("Заказать пиццу", task.state.value.title)
         model.closeTaskCreation()
+        model.closePollCreation()
+        model.closePlaceCreation()
+        model.closeTaskCreation()
+        runCurrent()
+        assertEquals(initialReads, h.transport.requests.filter { it.method == "GET" })
 
         h.session.updateAccess(h.id, false)
         runCurrent()
