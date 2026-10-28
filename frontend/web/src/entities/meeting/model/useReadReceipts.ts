@@ -2,6 +2,7 @@ import type { Conversation } from '@/entities/meeting/model/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryChatReceipts } from '@/entities/meeting/api/readState';
 import { guarded, privateKey, useAccess } from '@/entities/meeting/model/access';
+import { retainWindowProjection } from '@/entities/meeting/lib/retainWindowProjection';
 
 export const useReadReceipts = (
   id: string,
@@ -17,14 +18,19 @@ export const useReadReceipts = (
     privateKey(user, id, access.epoch, 'feed'),
   )?.sync?.streamEpoch;
 
-  return useQuery({
-    queryKey: [
-      ...privateKey(user, id, access.epoch, 'receipts'),
-      stream,
-      version,
-      entries.join(','),
-    ],
+  const scope = [...privateKey(user, id, access.epoch, 'receipts'), stream];
+
+  return useQuery<Awaited<ReturnType<typeof queryChatReceipts>>['receipts']>({
+    queryKey: [...scope, version, entries.join(',')],
     enabled: enabled && !access.denied && entries.length > 0,
+    placeholderData: (previous, previousQuery) =>
+      retainWindowProjection(
+        scope,
+        entries,
+        previous,
+        previousQuery?.queryKey,
+        access.denied || !enabled,
+      ),
     queryFn: ({ signal }) =>
       guarded(client, user, id, access.epoch, async () => {
         const receipts = [];

@@ -4,14 +4,24 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { request, writeOptions } from '@/shared/api';
 import { guarded, privateKey, useAccess } from '@/entities/meeting/model/access';
 import { entryReactionsSchema } from '@/entities/meeting/model/reactions';
+import { retainWindowProjection } from '@/entities/meeting/lib/retainWindowProjection';
 
 export const useReactions = (id: string, user: string, entries: string[]) => {
   const client = useQueryClient();
   const access = useAccess(user, id);
   const sync = useChatSyncEnabled(user, access.epoch);
-  const query = useQuery({
-    queryKey: [...privateKey(user, id, access.epoch, 'reactions'), entries.join(',')],
+  const scope = privateKey(user, id, access.epoch, 'reactions');
+  const query = useQuery<z.infer<typeof entryReactionsSchema>[]>({
+    queryKey: [...scope, entries.join(',')],
     enabled: !!entries.length && !access.denied,
+    placeholderData: (previous, previousQuery) =>
+      retainWindowProjection(
+        scope,
+        entries,
+        previous,
+        previousQuery?.queryKey,
+        access.denied,
+      ),
     queryFn: ({ signal }) =>
       guarded(client, user, id, access.epoch, async () => {
         const values = [];
