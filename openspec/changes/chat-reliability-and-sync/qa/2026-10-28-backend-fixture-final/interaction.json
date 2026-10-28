@@ -1,0 +1,586 @@
+{
+  "executor": "/root/backend_independent_resume",
+  "productionSourceSHA256": "3a3816f7d71b858a5d5e98a7e510ecb6da4c9f57188db5a9b44247bb2da9d96f",
+  "candidate": "631d726ccefd1d836ff02e0842ec4228ae4a8aa6ad12ca638fb9e09ded92ba66",
+  "phase": "completed",
+  "methodProvenance": "Only unchanged mapping/probe source reused; all runtime outcomes, timestamps, hashes, SQL database/processes and metrics generated afresh. Required suite and independent probes were freshly executed with -count=1; earlier candidates remain separate historical evidence.",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-READ-STATE-068DA926",
+      "status": "passed",
+      "action": "HTTPS PUT150→140→150, следующий sync; list и author receipts. Дополнительно fault на втором hint и retry через60с.",
+      "expected": "Marker=max; no-op без нового change/outbox; согласованные projections.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadLateHintRollbackAndNoop"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. independent_read_review_test.go:120: second-hint failure rolled back marker/journal/outbox; successful marker=4; +60s noop unchanged; final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadLateHintRollbackAndNoop",
+          "output": "independent_read_review_test.go:120: second-hint failure rolled back marker/journal/outbox; successful marker=4; +60s noop unchanged",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentFinalHTTP150UUIDAndScope",
+          "output": "final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "status": "passed",
+      "action": "HTTPS0/01/+1/-1/decimal/overflow/max и beyondtail151; outsider и отзыв RSVP; sparse uint64 gaps.",
+      "expected": "Невалидные позиции отклонены, read state не раскрыт, нет продвижения.",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor; independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadSparseUint64MessageBoundary",
+          "output": "independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-284DD6EE",
+      "status": "passed",
+      "action": "Два foreign message, одно own, hidden poll vote/close, reaction; snapshot и два MarkRead.",
+      "expected": "Только два чужих сообщения unread; затем1 и0 с правильным first_unread.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-8A47BDBD",
+      "status": "passed",
+      "action": "10k legacy activation и concurrent commit; receipt/readers доSync; unauthorized/invalid/continuation и revoke между фазами.",
+      "expected": "Baseline атомарен, actual0, нет ложных receipts; legacy epoch стабилен, посторонний не создаёт stream.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinal10kActivationCommitRace",
+        "TestIndependentReadActivationLegacyReceipts",
+        "TestIndependentLegacyReadInitAuthorizationAndNoEffects",
+        "TestIndependentLegacyReadInitRechecksAccessAcrossTransactions"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_service_test.go:46: 10k activation race trial0 tail=10003 baseline=10003 actual=0 unread=0 expected=0 receipt0; final_read_service_test.go:46: 10k activation race trial1 tail=10003 baseline=10003 actual=0 unread=0 expected=0 receipt0; independent_read_review_test.go:44: after activation before any sync: receipts={Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0} error=<nil>; independent_read_review_test.go:51: after activation before any sync: readers={UserIDs:[] ReaderCount:0 ProjectionVersion:0 NextCursor:} error=<nil>; independent_read_review_test.go:59: same receipt query after unrelated sync: {Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0}",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinal10kActivationCommitRace",
+          "output": "final_read_service_test.go:46: 10k activation race trial0 tail=10003 baseline=10003 actual=0 unread=0 expected=0 receipt0",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentFinal10kActivationCommitRace",
+          "output": "final_read_service_test.go:46: 10k activation race trial1 tail=10003 baseline=10003 actual=0 unread=0 expected=0 receipt0",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "output": "independent_read_review_test.go:44: after activation before any sync: receipts={Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0} error=<nil>",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "output": "independent_read_review_test.go:51: after activation before any sync: readers={UserIDs:[] ReaderCount:0 ProjectionVersion:0 NextCursor:} error=<nil>",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "output": "independent_read_review_test.go:59: same receipt query after unrelated sync: {Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0}",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-5869F951",
+      "status": "passed",
+      "action": "Третий участник C join после100 старых сообщений; query before/after actual PUT.",
+      "expected": "Baseline не даёт receipt; отдельный marker даёт.",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-51E51F41",
+      "status": "passed",
+      "action": "B withdraw, новые foreign rows, rejoin, повтор прежнего lower marker; чтение list.",
+      "expected": "Старые baseline/actual сохранены; доступные новые сообщения unread.",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle",
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread; independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadDisableReenablePreservesBaseline",
+          "output": "independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-EC05E2CA",
+      "status": "passed",
+      "action": "103readers, revoke одного/remove account другого; страницы50/50/1 и HTTP DELETEme при saved cursor.",
+      "expected": "Удалённые/вышедшие и автор исключены, aggregate текущий без полного feed.",
+      "freshRuntimeSelectors": [
+        "TestIndependentReadersPaginationRevokeAndScopedCursor",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. independent_read_review_test.go:173: 103 readers -> current101 after revoke/delete; pages 50/50/1; nonauthor/outsider denied; exact 7d expiry reset; independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadersPaginationRevokeAndScopedCursor",
+          "output": "independent_read_review_test.go:173: 103 readers -> current101 after revoke/delete; pages 50/50/1; nonauthor/outsider denied; exact 7d expiry reset",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "status": "passed",
+      "action": "Empty author readers; nonauthor/outsider;100/101IDs; own+foreign; uppercase UUID и mixedcase duplicate.",
+      "expected": "Ограничения/права до выдачи; UUID canonical, duplicates без partial response.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker; independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTP150UUIDAndScope",
+          "output": "final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "passed",
+      "action": "Повторены memory bounds/copies/rollback/cancel и sparse uint64; на отдельной пустой SQL DB выполнены EXPLAIN для 1k/10k/100k, а также 54 комбинации initial/after-zero/empty-after-tail/before-first/before-tail/around × limit 1/50/100 × размеры истории, по 20 измерений SQL+JSON decode. Затем штатный Store.Update(DeleteMeeting) очищал каждую свою встречу.",
+      "expected": "Страницы ограничены и отсортированы, права/cancel/точность сохранены, индекс и LIMIT исключают полное чтение; p95 ≤100 ms. Завершение и очистка собственных данных без ошибки.",
+      "freshRuntimeSelectors": [
+        "TestFeedWindowBoundsLookupsAndCopies",
+        "TestFeedAroundBoundsAndCopies",
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestFeedWindowIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestIndependentRepeatFeedSQLLatencyIntegration",
+        "TestMeetingDeletionLargeHistoryIntegration"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. SQL вызовы прошли на отдельной nonce-guarded БД, штатный rollback/delete/restart и cleanup завершены. independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts; repeat_feed_latency_test.go:13: cloud integration database is not configured",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadSparseUint64MessageBoundary",
+          "output": "independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentRepeatFeedSQLLatencyIntegration",
+          "output": "repeat_feed_latency_test.go:13: cloud integration database is not configured",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [
+        "TestFeedWindowIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestIndependentRepeatFeedSQLLatencyIntegration",
+        "TestMeetingDeletionLargeHistoryIntegration"
+      ],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:32:34.396594+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-791FF479",
+      "status": "passed",
+      "action": "HTTP/WS cookie и native; foreign/duplicateOrigin, mixed/duplicateBearer, чужойchannel, forged identity; cookie HTTP PUT безCSRF.",
+      "expected": "Server-derived identity, origin/access checks, WS не отменяет CSRF.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing",
+        "TestRealtimeHTTPAuthenticationBoundary",
+        "TestRealtimeSocketAuthorizationPrivacyRecoveryAndLogout",
+        "TestChatReadHTTP"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. ",
+      "observedAssertions": [],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "passed",
+      "action": "Активный WS, Logout и отдельно TTL2s; late committedhint; последующие HTTPsync/capabilities и WSreconnect.",
+      "expected": "Закрытие, повторная аутентификация и отсутствие late-data после expiry/revoke.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSessionExpiryRevokeAndLateRequests"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. ",
+      "observedAssertions": [],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-1DC708F2",
+      "status": "passed",
+      "action": "Полученhint; HTTPsync блокирован доread-snapshot; commit RSVPwithdraw; releaseбарьера; read/feed/send и recover.",
+      "expected": "Отзыв до payload не обходится hint/receipt.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. repeat_transport_test.go:95: receivedhint→HTTP blocked before read snapshot→committed RSVP revoke→HTTP403; WSunsubscribe2003; read/feed/send403; late recovery103 without payload",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatHintThenDelayedHTTPRevocation",
+          "output": "repeat_transport_test.go:95: receivedhint→HTTP blocked before read snapshot→committed RSVP revoke→HTTP403; WSunsubscribe2003; read/feed/send403; late recovery103 without payload",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-6DD0CC09",
+      "status": "passed",
+      "action": "Hidden anonymous poll: vote owner, sync guest, close worker, sync старойкарточки; readstate и serializedjournal/hints.",
+      "expected": "Не раскрыть чужой выбор до закрытия; после закрытия только разрешённый итог.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A91C53BB",
+      "status": "passed",
+      "action": "Сверка security.md, runtime-topology report и deployment-verification без production операций.",
+      "expected": "Неподтверждённая защитаbackup не объявляется проверенной.",
+      "freshRuntimeSelectors": [],
+      "actual": "Server-readable text and no E2EE are explicit. Existing age job evidence is historical; disk/key lifecycle and candidate restore are unconfirmed. Synthetic historical drill does not establish application sessions/receipts or RPO/RTO.",
+      "observedAssertions": [],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:33:31.730660+00:00",
+      "finishedAt": "2026-10-28T11:33:31.730660+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-BDBF283F",
+      "status": "passed",
+      "action": "Capture timeout/reconnect/410reset/storage-read500/panic500/storage-write500, explicit rejectedtokenquery и JSONjournal/outbox.",
+      "expected": "Все diagnostics fault paths безcontent/credentials; клиентское хранение отдельно.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatFaultDiagnosticsCapture",
+        "TestIndependentRepeatRejectedCredentialsNeverInURL"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. repeat_recovery_test.go:49: credential query rejected400; URL/query not logged; repeat_transport_test.go:109: captured timeout/reconnect/reset/storage-read500/panic500/storage-write500; body/errors/tokens/cursor absent from HTTP logs and error envelopes; journal/outbox reference-only, request_id+status+duration retained; no credential URL used",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatRejectedCredentialsNeverInURL",
+          "output": "repeat_recovery_test.go:49: credential query rejected400; URL/query not logged",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentRepeatFaultDiagnosticsCapture",
+          "output": "repeat_transport_test.go:109: captured timeout/reconnect/reset/storage-read500/panic500/storage-write500; body/errors/tokens/cursor absent from HTTP logs and error envelopes; journal/outbox reference-only, request_id+status+duration retained; no credential URL used",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A3B3BFE7",
+      "status": "passed",
+      "action": "На SQL создан marker и pending outbox; штатный HTTP DELETE /api/v1/me удалил owner при активном WS. Повторён sync старого cursor, проверены текущая анонимная проекция и отсутствие marker/адресных hints. Затем удалён последний участник с активным WS, остановлен собственный API/broker, observer подключён из нового executable process и выполнен drain.",
+      "expected": "Удалённые аккаунты теряют доступ; private state и история встречи удалены, прежнее имя не возвращается, durable terminal hint переживает удаление встречи и restart без приватного текста.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatAccountOutboxIntegration",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. SQL вызовы прошли на отдельной nonce-guarded БД, штатный rollback/delete/restart и cleanup завершены. independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor; repeat_sql_process_test.go:69: isolated cloud integration database required",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+          "output": "repeat_sql_process_test.go:69: isolated cloud integration database required",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatAccountOutboxIntegration"
+      ],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:32:34.396594+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-5EFD24A6",
+      "status": "passed",
+      "action": "Pollclose worker без нового message; sync постаромуcursor; account removal и повтор oldrange.",
+      "expected": "Current oldcard projection и historyinvalidated безпрежнегоимени.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll",
+        "TestChatSyncAccountReplayHasCurrentNames"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-BC07BEB1",
+      "status": "passed",
+      "action": "Snapshot→commit→subscribe безhint; controlledoffline300s + explicit brokerRemoveHistory;100commits; reconnect/catchup150msRTT. Отдельно preservedhistory recoveredtrue→HTTPcatchup.",
+      "expected": "Snapshot-subscribe gap;100offlinechanges recovery≤2s приRTT150ms даже послеSDKrecovery.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=622.507042ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatGapOfflineRecoveryRTT150",
+          "output": "repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=622.507042ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-AA76CADB",
+      "status": "passed",
+      "action": "На отдельной SQL DB executable process сохранил message/change/outbox и аварийно вышел до publish; новый API прочитал delta по исходному cursor. Следующий process вышел после publish до ACK, новый process drain без NOTIFY повторил event. Дополнительно проверен rollback предметной транзакции; локальные slow consumer/retention и HTTP catch-up уже выполнены на этом кандидате.",
+      "expected": "Commit переживает process restart; pending outbox доставляется без нового сообщения/NOTIFY, повтор безопасен, rollback не оставляет record/change/outbox; slow consumer отключается восстановимо и HTTP сохраняет доступные изменения.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatJournalAtomicRangeIntegration",
+        "TestChatDispatchLeaseRollbackRecoveryIntegration",
+        "TestChatDispatchElapsedRetryIntegration",
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. SQL вызовы прошли на отдельной nonce-guarded БД, штатный rollback/delete/restart и cleanup завершены. repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=622.507042ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up; repeat_sql_process_test.go:69: isolated cloud integration database required",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatGapOfflineRecoveryRTT150",
+          "output": "repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=622.507042ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+          "output": "repeat_sql_process_test.go:69: isolated cloud integration database required",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatJournalAtomicRangeIntegration",
+        "TestChatDispatchLeaseRollbackRecoveryIntegration",
+        "TestChatDispatchElapsedRetryIntegration"
+      ],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:32:34.396594+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-F6CFB5E9",
+      "status": "passed",
+      "action": "HTTPforgedcursor, trimjournal, прежнийcursor и freshsnapshot; service user-scope,expiry8d,retention; SQLretention.",
+      "expected": "400 malformed,410reset, права доcursor; история доступна freshsnapshot.",
+      "freshRuntimeSelectors": [
+        "TestChatSyncHTTP",
+        "TestChatRetentionResetAndOutboxReplacement",
+        "TestChatSyncScopeExpiryAndHiddenProjection"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. ",
+      "observedAssertions": [],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-14D92D7D",
+      "status": "passed",
+      "action": "HTTPpost ACK не используется клиентом; часы+31d, relogin, repeat sameintent и changedbody; actor-scoped service lookup.",
+      "expected": "ТотжеentryID/sequence, конфликт тела; чужойactor scope не смешан.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+        "TestFeedAndTextRetryNeverReadFullHistory"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+          "output": "final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "status": "passed",
+      "action": "В свежем локальном runtime с историей 10k повторены text/photo/file до и после 31 дней при запрете полного Feed; изменены text/caption, actor/meeting и права, проверена attachment copy. В SQL проверены entry_id и intent tuple lookup на 1k/10k/100k; отдельно memory/SQL rollback.",
+      "expected": "Повтор сохраняет один ID/sequence и attachments, legacy captionless hash; конфликт/отзыв прав не обходится; копии независимы, rollback атомарен, 100k lookup индексирован и ограничен.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+        "TestFeedAndTextRetryNeverReadFullHistory",
+        "TestMediaRetryNeverReadsFullHistory",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. SQL вызовы прошли на отдельной nonce-guarded БД, штатный rollback/delete/restart и cleanup завершены. repeat_media_lookup_test.go:30: 10k bounded Store that rejects fullFeed: photo legacy/no-caption↔empty modern hash, file+caption, text direct tuple retries before/after31d preserve ID/sequence+attachment; wrongactor/meeting and revokedaccess denied; changedtext conflict; returned attachment clone independent",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+          "output": "repeat_media_lookup_test.go:30: 10k bounded Store that rejects fullFeed: photo legacy/no-caption↔empty modern hash, file+caption, text direct tuple retries before/after31d preserve ID/sequence+attachment; wrongactor/meeting and revokedaccess denied; changedtext conflict; returned attachment clone independent",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration"
+      ],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:32:34.396594+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "status": "passed",
+      "action": "105changes; HTTPpage100, commitT+1, page5, discard/retry lastpage, nextcycle.",
+      "expected": "Fixedthrough, idempotentretry, следующийцикл получаетT+1.",
+      "freshRuntimeSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+          "output": "final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:30:06.491913+00:00"
+    },
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "passed",
+      "action": "На SQL test-only writer добавил запись без journal; только у собственной встречи явно заменён epoch. Прежний cursor проверен через service/HTTP, получен новый snapshot. Сервер с отключёнными capabilities обслужил старые feed/send/retry DTO; затем sync снова включён.",
+      "expected": "Rollback interval не теряет историю: старый cursor требует reset, новый snapshot включает запись. Schema-compatible выключенный sync/read оставляет прежние HTTP права/ID/idempotency.",
+      "freshRuntimeSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "actual": "Все перечисленные независимые сценарии заново завершились PASS на текущем snapshot. Содержательные runtime assertions и свежие SQL/process результаты приложены. SQL вызовы прошли на отдельной nonce-guarded БД, штатный rollback/delete/restart и cleanup завершены. independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread; repeat_sql_process_test.go:69: isolated cloud integration database required",
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadDisableReenablePreservesBaseline",
+          "output": "independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread",
+          "evidence": "runtime.jsonl"
+        },
+        {
+          "test": "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+          "output": "repeat_sql_process_test.go:69: isolated cloud integration database required",
+          "evidence": "runtime.jsonl"
+        }
+      ],
+      "freshSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch"
+      ],
+      "startedAt": "2026-10-28T11:29:32.408891+00:00",
+      "finishedAt": "2026-10-28T11:32:34.396594+00:00"
+    }
+  ]
+}
