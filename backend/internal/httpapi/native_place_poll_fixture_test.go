@@ -84,6 +84,7 @@ type nativePlaceFaults struct {
 	mu                       sync.Mutex
 	createFailed, voteFailed bool
 	service                  *meetings.Service
+	store                    *memory.Store
 }
 
 func (f *nativePlaceFaults) handler(api http.Handler) http.Handler {
@@ -109,13 +110,41 @@ func (f *nativePlaceFaults) handler(api http.Handler) http.Handler {
 		}
 
 		api.ServeHTTP(w, r)
-		if scenario == "place-close" && isPoll && r.Method == http.MethodGet {
-			parts := strings.Split(r.URL.Path, "/")
+		if scenario == "place-close" && r.Method == http.MethodGet {
 			// First read is deliberately before the worker catches up; GET remains read-only.
-			// The fixture delivers the overdue mock job after the response.
-			_ = f.service.ClosePlacePoll(r.Context(), parts[len(parts)-1])
+			// The fixture delivers the same overdue mock job after either client read path.
+			if isPoll {
+				parts := strings.Split(r.URL.Path, "/")
+				_ = f.service.ClosePlacePoll(r.Context(), parts[len(parts)-1])
+			} else if r.URL.Path == "/api/v1/meetings/d3c60000-0000-4000-8000-000000000200/sync" {
+				f.closeAfterSync(r.Context())
+			}
 		}
 	})
+}
+
+func (f *nativePlaceFaults) closeAfterSync(ctx context.Context) {
+	var ids []string
+	if err := f.store.View(ctx, func(reader meetings.Reader) error {
+		polls, err := reader.PlacePolls()
+		if err != nil {
+			return err
+		}
+
+		for _, poll := range polls {
+			if poll.MeetingID == "d3c60000-0000-4000-8000-000000000200" && poll.State == meetings.PlacePollOpen {
+				ids = append(ids, poll.ID)
+			}
+		}
+
+		return nil
+	}); err != nil {
+		return
+	}
+
+	for _, id := range ids {
+		_ = f.service.ClosePlacePoll(ctx, id)
+	}
 }
 
 func verifyNativePlaceFixture(t *testing.T, store *memory.Store) {

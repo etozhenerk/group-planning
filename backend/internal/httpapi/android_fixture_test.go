@@ -73,7 +73,7 @@ func TestAndroidFixture(t *testing.T) {
 	seedNativeMemoryFixture(t, store, service, app, owner)
 	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
 	savedFaults := &nativeSavedInvitationFaults{}
-	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
+	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now), store: store}
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now)}
 	coverFaults := &nativeCoverFaults{}
 	pollFaults := &nativePollFaults{}

@@ -103,7 +103,7 @@ func TestIOSFixture(t *testing.T) {
 	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
 	feedFaults := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
 	savedFaults := &nativeSavedInvitationFaults{}
-	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now)}
+	placeFaults := &nativePlaceFaults{service: meetings.NewService(store, time.Now), store: store}
 	// iOS reads participants while opening invitation metadata, before showing the task form.
 	taskFaults := &nativePreparationFaults{store: store, service: meetings.NewService(store, time.Now), peopleFailAt: 2}
 	coverFaults := &nativeCoverFaults{}
