@@ -7,7 +7,9 @@ test('TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independ
   page,
   browser,
 }) => {
-  test.setTimeout(150_000);
+  // Eight real OAuth users plus both roles at four widths share this budget.
+  // Keep individual action/assertion timeouts unchanged.
+  test.setTimeout(240_000);
   await login(page, 'Саша');
   const fixture = await meetingRoster(browser, page);
   const attending = fixture.participants.filter(
