@@ -156,6 +156,10 @@ for (const viewport of [
     await page.screenshot({ path: test.info().outputPath('low-height-pizza.png') });
     await pizza.click();
     await expect(picker).toHaveCount(0);
+    expect(renderErrors).toEqual([]);
+    await expect(
+      page.getByRole('heading', { name: 'Не удалось открыть страницу' }),
+    ).toHaveCount(0);
     await expect(
       message.getByRole('button', { name: '🍕: 1', exact: true }),
     ).toBeVisible();

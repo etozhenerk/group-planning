@@ -10,7 +10,7 @@ import {
   size,
   useTransitionStyles,
 } from '@floating-ui/react';
-import { useCallback, useLayoutEffect } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import type { RefObject } from 'react';
 import { designTokens } from '@/shared/config/design-tokens';
 import { reactionGap } from '@/features/message-reactions/ui/ReactionPopover/lib/reactionGap';
@@ -59,6 +59,7 @@ export const useReactionPopover = (
 
   const refs = floating.refs;
   const update = floating.update;
+  const registeredAnchor = useRef<HTMLElement | null>(null);
   const setFloating = useCallback(
     (element: HTMLDivElement | null) => refs.setFloating(element),
     [refs],
@@ -71,8 +72,11 @@ export const useReactionPopover = (
   }, [refs, update]);
 
   useLayoutEffect(() => {
-    if (refs.domReference.current !== anchor.current) {
-      refs.setReference(anchor.current);
+    const element = anchor.current;
+
+    if (registeredAnchor.current !== element) {
+      registeredAnchor.current = element;
+      refs.setReference(element);
     }
   });
 
