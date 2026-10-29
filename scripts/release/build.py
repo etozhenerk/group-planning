@@ -11,6 +11,7 @@ import package_cloud
 import check_web
 import web_rc13_exception
 import web_rc14_exception
+import web_rc15_exception
 from common import ROOT, finalize, metadata, run
 
 
@@ -37,7 +38,8 @@ def build(tag, number, destination):
 
     if component in ('web', 'ios', 'android'):
         exception = (web_rc13_exception.for_candidate(meta)
-                     or web_rc14_exception.for_candidate(meta))
+                     or web_rc14_exception.for_candidate(meta)
+                     or web_rc15_exception.for_candidate(meta))
         if exception is None:
             check('design-acceptance', 'npm', 'run', 'design:ready', '--', '--platform', component)
         else:

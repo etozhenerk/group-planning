@@ -52,7 +52,7 @@ class WebRC13ExceptionTests(unittest.TestCase):
             identity.assert_called_once()
 
     def test_other_tags_keep_the_design_gate(self):
-        for tag in ('web/v0.1.0-rc.12', 'web/v0.1.0-rc.15', 'ios/v0.1.0-rc.13', 'android/v0.1.0-rc.13'):
+        for tag in ('web/v0.1.0-rc.12', 'web/v0.1.0-rc.16', 'ios/v0.1.0-rc.13', 'android/v0.1.0-rc.13'):
             with self.subTest(tag=tag), tempfile.TemporaryDirectory() as temporary:
                 meta = self.meta(tag)
                 with (patch.object(build, 'metadata', return_value=meta),
