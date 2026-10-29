@@ -1,0 +1,77 @@
+{
+  "component": "web",
+  "version": "0.1.0-rc.14",
+  "tag": "web/v0.1.0-rc.14",
+  "commit": "a799fe59a9cc8651a0c4033d2d4e7540064278b6",
+  "build_number": 12,
+  "native_version": "0.1.0",
+  "prerelease": true,
+  "release_plan": {
+    "schema_version": 1,
+    "component": "web",
+    "version": "0.1.0-rc.14",
+    "tag": "web/v0.1.0-rc.14",
+    "commit": "a799fe59a9cc8651a0c4033d2d4e7540064278b6",
+    "previous_version": null,
+    "bump": "initial",
+    "reason": "Исправление переноса кнопок альбома: обе кнопки остаются в одной строке на desktop и телефонах.",
+    "changes": [
+      "«Добавить фото» и «Скачать все» больше не разделяются на разные строки при длинном названии встречи",
+      "При нехватке места шапка переносит группу действий целиком; на телефоне сохраняются две равные колонки",
+      "Уточнён эталон 4.1.1 и добавлена регрессия на шести ширинах окна"
+    ],
+    "checks": [
+      "Typecheck, ESLint, CSS/FSD, Prettier и 211 unit tests PASS",
+      "Точечный E2E Chromium и WebKit: 2 PASS, ширины 1440/1280/1024/800/740/320, подготовка/отмена/ошибка/повтор",
+      "Независимый живой Chrome: desktop1024 с длинным названием и mobile320, открытие добавления; preparing сохраняет ряд и фото",
+      "Component releases выполняет обязательные проверки точного тега перед публикацией"
+    ],
+    "compatibility": "API и SQL не меняются; установленный backend/v0.1.0-rc.6 совместим. Миграции не нужны.",
+    "limitations": "Пользователь отдельно разрешил только исключение rc.14 и выкладку. Общий design-review 4.1.1 и полный ручной проход остаются незавершёнными; manifest сохраняет incomplete. Автопроверки обязательны. Исключение связано с неизменными продуктовыми деревьями b072fc0e; workflow и автодеплой этим выпуском не меняются.",
+    "action": "Опубликовать точный комплект через новый тег и Component releases, установить исходные файлы GitHub Release на smwhere.ru и проверить публичную версию и доступность"
+  },
+  "owner_exception": {
+    "kind": "single-release-owner-exception",
+    "status": "incomplete",
+    "tag": "web/v0.1.0-rc.14",
+    "scope": [
+      "design:ready",
+      "full-manual-acceptance"
+    ],
+    "authorization": {
+      "question": "call_a44a9b66cf6541fd80108e62530a3742",
+      "answer": "Да, только исключение rc.14 и выкладка",
+      "recordedAt": "2026-10-29T12:32:18Z"
+    },
+    "product_source": {
+      "baseline": "b072fc0e8685b82655bcc7a3e29b59f92c2fc2be",
+      "trees": {
+        "frontend/web": "18c353640d37f3342f05f397141d90c6591e899d",
+        "backend": "3101230e49c9403f312a5ee1287f87619f4e0056",
+        "contracts": "23946d2bd632af4a3983528348add7323ed36acb",
+        "design-system": "0e197874cb56d176cc599db59559a96739feb94f",
+        "docs/design": "6a9af7bc142e49570e81a65451bb4337923b9a4c"
+      }
+    },
+    "note": "Приёмка design 4.1.1 и полный ручной проход не завершены. Обязательные автопроверки и идентичность артефакта сохраняются; это не passed acceptance receipt."
+  },
+  "schema_version": 2,
+  "checks": [
+    "release-tooling-tests",
+    "web-static-and-unit",
+    "web-browser",
+    "artifact-build",
+    "web-release-browser-identity"
+  ],
+  "details": {
+    "api_origin": "same-origin",
+    "serving": "static web directory; API released separately"
+  },
+  "artifacts": [
+    {
+      "name": "web.tar.gz",
+      "size": 863745,
+      "sha256": "c79e7a49db0bf934d342e452b3ae1a8fda50c5f3735e90cb84d31c7961ea3b62"
+    }
+  ]
+}
