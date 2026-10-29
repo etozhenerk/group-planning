@@ -24,7 +24,7 @@ export default defineConfig({
     screenshot: "on",
   },
   projects: [
-    { name: "baseline" },
+    { name: "baseline", metadata: { touchGesture: "raw" } },
     { name: "browser-driver", metadata: { touchGesture: "browser" } },
   ],
   webServer: {

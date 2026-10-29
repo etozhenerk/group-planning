@@ -114,7 +114,7 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
       target,
       dx,
       dy,
-      test.info().project.metadata['touchGesture'] === 'browser',
+      test.info().project.metadata['touchGesture'] !== 'raw',
     );
 
   const swipe = async (dx: number, dy = 0) => {
