@@ -1,0 +1,33 @@
+{
+  "scope": "iOS album foundation only; UI and real Photos excluded",
+  "baseCommit": "ff0a20aa130711eb2a94a6bf0ce941d55c8a8230",
+  "sourceManifestSHA256": "b8e1e73c52feb6201693d23cdf94f3fd16033a0d62e6c34713b11fad70adba35",
+  "bundleManifestSHA256": "e8d06ac4824b19566e24d0b3498baf307a4205499d822b785a059a681e100900",
+  "checks": {
+    "restoredPausedPatchHashes": "22/22 match",
+    "cleanBuildAndInitialTests": "PASS 16/16",
+    "finalTests": "PASS 20/20 in 5 suites",
+    "xcodeAnalyze": "PASS",
+    "swiftFormatScoped": "PASS",
+    "gitDiffCheckScoped": "PASS",
+    "agentCheck": "PASS",
+    "xcresultSummary": "Passed:20, failed:0, skipped:0, runtimeWarnings:0"
+  },
+  "derivedData": "frontend/ios/.build/AlbumFoundationBuild",
+  "xcresult": "frontend/ios/.build/AlbumFoundationTests-20261029-final.xcresult",
+  "simulator": "31262733-50DC-46A5-938E-4C462D70F109",
+  "bundleID": "dev.groupplanning.ios.unittesthost",
+  "physicalDeviceUsed": false,
+  "realPhotosUsed": false,
+  "uiChanged": false,
+  "simulatorSettingsChanged": false,
+  "simulatorLockExists": false,
+  "independentReview": "pending",
+  "task3.2": "open",
+  "validationCommands": {
+    "format": "xcrun swift-format lint --strict --recursive Somewhere/Data/Album SomewhereTests/AlbumDownload; xcrun swift-format lint --strict Somewhere/Data/API/AlbumFileBuffer.swift Somewhere/Data/API/APIClient+Download.swift Somewhere/Data/API/HTTPFileTransport.swift Somewhere/Data/API/URLSessionFileTransport.swift Somewhere/Data/API/Models/MemorySnapshot.swift Somewhere/State/SessionStore.swift",
+    "cleanBuildAnd16Tests": "xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme Somewhere -configuration Debug -sdk iphonesimulator27.1 -destination platform=iOS\\ Simulator,id=31262733-50DC-46A5-938E-4C462D70F109 -derivedDataPath .build/AlbumFoundationBuild -resultBundlePath .build/AlbumFoundationTests-20261029-resume1.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never -only-testing:SomewhereTests/AlbumDownloadTests -only-testing:SomewhereTests/AlbumFileBufferTests -only-testing:SomewhereTests/SessionAlbumSourceTests -only-testing:SomewhereTests/AlbumTemporaryFilesTests -only-testing:SomewhereTests/URLSessionTransportTests SOMEWHERE_APP_BUNDLE_IDENTIFIER=dev.groupplanning.ios.unittesthost ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual clean test",
+    "final20TestsAndAnalyze": "Same isolated xcodebuild configuration and five only-testing suites; resultBundlePath .build/AlbumFoundationTests-20261029-final.xcresult; actions test analyze. Exact command also recorded in /tmp/somewhere-album-foundation-final.log.",
+    "documentation": "npm run agent:check"
+  }
+}

@@ -157,6 +157,18 @@ final class SessionStore {
         }
     }
 
+    func download(
+        _ request: APIRequest, to fileURL: URL, expectedBytes: Int, contentType: String,
+        using transport: any HTTPFileTransport
+    ) async throws {
+        let api = self.api
+        try await perform(request) { credential in
+            try await api.download(
+                request, to: fileURL, expectedBytes: expectedBytes, contentType: contentType,
+                credential: credential, using: transport)
+        }
+    }
+
     private func perform<Value: Sendable>(
         _ request: APIRequest,
         operation: @escaping @Sendable (StoredSession) async throws -> Value
