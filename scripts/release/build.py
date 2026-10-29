@@ -9,6 +9,7 @@ import android
 import ios
 import package_cloud
 import check_web
+import web_rc13_exception
 from common import ROOT, finalize, metadata, run
 
 
@@ -34,7 +35,12 @@ def build(tag, number, destination):
         checks.append(name)
 
     if component in ('web', 'ios', 'android'):
-        check('design-acceptance', 'npm', 'run', 'design:ready', '--', '--platform', component)
+        exception = web_rc13_exception.for_candidate(meta)
+        if exception is None:
+            check('design-acceptance', 'npm', 'run', 'design:ready', '--', '--platform', component)
+        else:
+            meta['owner_exception'] = exception
+            print('Owner-approved web rc13 exception: design/full manual acceptance INCOMPLETE')
 
     check('release-tooling-tests', 'python3', '-m', 'unittest', 'discover', '-s', 'scripts/release', '-p', 'test_*.py')
     if component in ('backend', 'monitoring'):
