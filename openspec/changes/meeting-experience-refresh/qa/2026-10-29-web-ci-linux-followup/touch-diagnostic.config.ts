@@ -23,7 +23,7 @@ export default defineConfig({
     trace: "on",
     screenshot: "on",
   },
-  projects: [{ name: "baseline" }, { name: "counterfactual-photo-no-pan" }],
+  projects: [{ name: "baseline" }, { name: "counterfactual-all-no-pan" }],
   webServer: {
     cwd: web,
     command: "npx --no-install tsx scripts/browser-server.ts",

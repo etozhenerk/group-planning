@@ -3,20 +3,23 @@ import "../../../../../frontend/web/tests/52-album-touch.spec";
 
 // The original test and every assertion run unchanged in both projects.
 test.beforeEach(async ({ page }, info) => {
-  if (info.project.name === "counterfactual-photo-no-pan") {
-    await page.addInitScript(() => {
+  if (info.project.name !== "baseline") {
+    await page.addInitScript((allSurfaces: boolean) => {
       document.addEventListener(
         "DOMContentLoaded",
         () => {
           const style = document.createElement("style");
-          style.dataset["touchDiagnostic"] = "photo-no-pan";
-          style.textContent =
-            'dialog[aria-label="Фото встречи"] > div { touch-action: none !important; }';
+          style.dataset["touchDiagnostic"] = allSurfaces
+            ? "all-no-pan"
+            : "photo-no-pan";
+          style.textContent = allSurfaces
+            ? "* { touch-action: none !important; }"
+            : 'dialog[aria-label="Фото встречи"] > div { touch-action: none !important; }';
           document.head.append(style);
         },
         { once: true },
       );
-    });
+    }, info.project.name === "counterfactual-all-no-pan");
   }
 
   await page.addInitScript(() => {

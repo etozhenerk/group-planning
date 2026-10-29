@@ -27,3 +27,15 @@ Linux window scenario сохранил ID якоря, но его offset изм�
 Локальные команды из корня: `npx --no-install playwright test --config <путь config> --list`; для запуска задать SOMEWHERE_BROWSER_DIST на immutable demo. Discovery: 6 touch и 3 window теста. agent:check прошёл для обоих jobs. Доказательства сохраняются в отдельных labelled artifacts 7 дней. Релизной приёмкой эти диагностические jobs не являются.
 
 Root: диагностика39 с точным frozen dist `somewhere-web-ci-resume-final-20261029` прошла 1/1 на macOS WebKit; lint и TypeScript PASS. Первый запуск с устаревшим `.cache/web-demo` не содержал виртуальную ленту и не является проверкой текущего кандидата. Диагностика сохраняет прежние assertions и записывает setters/scroll events с координатами, без сообщений или сессий.
+
+## Второй контроль touch-action
+
+Run40849320736: исходный tap и photo-only touch-action:none дали6/6 FAIL на
+том же close.tap; Window39 с записью якорей3/3 PASS, без runtime-исправления.
+В обеих touch-трассах кнопка получает trusted pointerdown/up и touchstart/end,
+но click не создаётся; defaultPrevented=false, scrollY=0. Следующий отдельный
+контроль отключает browser pan на всей тестовой странице, включая ранний
+вертикальный жест стопки, чтобы проверить влияние накопленного fling.
+Это только диагностическое вмешательство; отключение вертикальной прокрутки
+не является разрешённым исправлением продукта. Исходный52 и assertions неизменны.
+Архив исходного контроля: SHA256 afa257b8f6e54d33afd541e8f9aa293e23caeb072edcef79f07227594ad6ac4c.
