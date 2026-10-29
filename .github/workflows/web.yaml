@@ -141,19 +141,27 @@ jobs:
       - name: Browser scenarios with Go API
         id: e2e
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py e2e npm exec --workspace @somewhere/web -- playwright test --reporter=github,line
+        run: python3 scripts/ci/run.py e2e npm exec --workspace @somewhere/web -- playwright test --reporter=github,line --output=test-results/base
       - name: Realtime chat and pending messages
         id: chat
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py chat npm exec --workspace @somewhere/web -- playwright test --config playwright.chat.config.ts --reporter=github,line
+        run: python3 scripts/ci/run.py chat npm exec --workspace @somewhere/web -- playwright test --config playwright.chat.config.ts --reporter=github,line --output=test-results/chat
       - name: Read state and readers sheets
         id: read
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py read npm exec --workspace @somewhere/web -- playwright test --config playwright.read.config.ts --reporter=github,line
+        run: python3 scripts/ci/run.py read npm exec --workspace @somewhere/web -- playwright test --config playwright.read.config.ts --reporter=github,line --output=test-results/read
       - name: Chat history window
         id: window
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
-        run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts --reporter=github,line
+        run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts --reporter=github,line --output=test-results/window
+      - name: Preserve browser failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-evidence-web-${{ github.run_attempt }}
+          path: frontend/web/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Stage report and logs
         id: report
         if: always()

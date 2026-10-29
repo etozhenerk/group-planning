@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
 
+test.use({ hasTouch: true });
+
 for (const width of [390, 1440]) {
   test(`pointer focus preserves editable fields and selected support options at ${width}`, async ({
     page,
@@ -25,14 +27,22 @@ for (const width of [390, 1440]) {
     const ideaSurface = ideaLabel.locator('span');
     await ideaLabel.click();
     await expect(idea).toBeChecked();
+    // WebKit on macOS may leave a clicked radio blurred; Linux focuses it.
+    await idea.focus();
+    await expect(idea).toBeFocused();
     await expect(ideaSurface).toHaveCSS('outline-style', 'none');
     const selected = await ideaSurface.evaluate(
       (element) => getComputedStyle(element).backgroundColor,
     );
 
+    await ideaLabel.tap();
+    await idea.focus();
+    await expect(ideaSurface).toHaveCSS('outline-style', 'none');
     await idea.press('ArrowLeft');
     await page.keyboard.press('ArrowRight');
     await expect(idea).toBeFocused();
+    await expect(ideaSurface).toHaveCSS('outline-style', 'solid');
+    await idea.press('Space');
     await expect(ideaSurface).toHaveCSS('outline-style', 'solid');
     await ideaLabel.click();
     await expect(ideaSurface).toHaveCSS('outline-style', 'none');

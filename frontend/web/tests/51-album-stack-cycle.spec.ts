@@ -103,16 +103,31 @@ test('both stack swipe directions advance and the last photo reassembles without
       throw new Error('Missing front card');
     }
 
-    while (element.getAttribute('data-resetting') === 'true') {
-      const style = getComputedStyle(front);
-      const matrix = new DOMMatrixReadOnly(style.transform);
-      frames.push({
-        opacity: Number(style.opacity),
-        scale: Math.hypot(matrix.a, matrix.b),
-        width: front.offsetWidth,
-        height: front.offsetHeight,
-      });
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    const animation = front.getAnimations().find((item) => item instanceof CSSAnimation);
+    const duration = Number(animation?.effect?.getTiming().duration);
+
+    if (!animation || !Number.isFinite(duration) || duration <= 0) {
+      throw new Error('The real CSS reset animation must have a positive duration');
+    }
+
+    // Inspect the actual animation timeline; loaded CI can paint fewer than 3 frames.
+    animation.pause();
+
+    try {
+      for (const progress of [0, 0.5, 0.99]) {
+        animation.currentTime = duration * progress;
+        const style = getComputedStyle(front);
+        const matrix = new DOMMatrixReadOnly(style.transform);
+        frames.push({
+          opacity: Number(style.opacity),
+          scale: Math.hypot(matrix.a, matrix.b),
+          width: front.offsetWidth,
+          height: front.offsetHeight,
+        });
+      }
+    } finally {
+      animation.currentTime = 0;
+      animation.play();
     }
 
     return frames;
@@ -126,6 +141,7 @@ test('both stack swipe directions advance and the last photo reassembles without
   expect(new Set(motion.map((frame) => `${frame.width}:${frame.height}`)).size).toBe(1);
   await expect(page.getByText('1 / 3', { exact: true })).toBeVisible();
   await expect(viewer).not.toBeVisible();
+  await expect(stack).toHaveAttribute('data-resetting', 'false');
   await stack.focus();
   await stack.press('ArrowLeft');
   await expect(page.getByText('3 / 3', { exact: true })).toBeVisible();

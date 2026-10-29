@@ -62,6 +62,11 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
       pointer: string;
       trusted: boolean;
       target: string;
+      pointerId: number;
+      x: number;
+      y: number;
+      time: number;
+      action: string | null | undefined;
     }[] = [];
 
     for (const type of [
@@ -71,6 +76,7 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
       'pointercancel',
       'gotpointercapture',
       'lostpointercapture',
+      'click',
     ]) {
       document.addEventListener(
         type,
@@ -81,6 +87,14 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
               pointer: event.pointerType,
               trusted: event.isTrusted,
               target: event.target instanceof Element ? event.target.tagName : '',
+              pointerId: event.pointerId,
+              x: event.clientX,
+              y: event.clientY,
+              time: performance.now(),
+              action:
+                event.target instanceof Element
+                  ? event.target.closest('button')?.getAttribute('aria-label')
+                  : null,
             });
             document.documentElement.setAttribute(
               'data-touch-events',

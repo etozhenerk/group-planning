@@ -3,6 +3,9 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
 import type { Centrifuge } from 'centrifuge';
+import { chatChangesSchema } from '@/entities/meeting/model/chatSchema';
+import { postMessage } from '@tests/helpers/readChat';
+import { realtimeFault } from '@tests/helpers/realtimeFault';
 
 test.beforeEach(async ({ page }) => {
   await login(page, 'Саша');
@@ -159,37 +162,108 @@ test('pinned JS 5.8.0 accepts cookie auth with both undefined and empty connect 
   });
 });
 
-test('reconnect performs HTTP catch-up and terminal auth stops SDK retry loops', async ({
+test('transport reconnect performs cursor catch-up and terminal auth stops SDK retries', async ({
+  page,
+}) => {
+  const { meeting } = await apiCreate(page, 'Возвращение транспорта');
+  const headers = await writeHeaders(page);
+  const fault = await realtimeFault(page);
+  const cursorResponse = () =>
+    page.waitForResponse((response) => {
+      const url = new URL(response.url());
+
+      return (
+        url.pathname === `/api/v1/meetings/${meeting.id}/sync` &&
+        url.searchParams.has('cursor') &&
+        response.request().method() === 'GET'
+      );
+    });
+
+  const initialCatchUp = cursorResponse();
+  await page.goto(`/meetings/${meeting.id}`);
+  await expect.poll(() => fault.connections[0]?.subscribed).toBe(true);
+  expect((await initialCatchUp).status()).toBe(200);
+  fault.hold();
+  await fault.disconnect(fault.connections[0]!);
+  const text = 'Пришло во время отключения';
+  const entry = await postMessage(page, meeting.id, headers, text);
+  const message = page.getByTestId('feed-message').filter({ hasText: text });
+  await expect(message).toHaveCount(0);
+  const recovered = cursorResponse();
+  fault.resume();
+  await expect.poll(() => fault.connections.length).toBeGreaterThan(1);
+  await expect
+    .poll(() => fault.connections.slice(1).some((connection) => connection.subscribed))
+    .toBe(true);
+  const response = await recovered;
+  expect(response.status()).toBe(200);
+  const changes = chatChangesSchema.parse(await response.json());
+  expect(
+    changes.changes.some(
+      (change) => change.kind === 'entry_upsert' && change.entry_id === entry.id,
+    ),
+  ).toBe(true);
+  await expect(message).toHaveAttribute('data-delivery', 'accepted');
+  await expect(message).toHaveCount(1);
+  await page.route('**/api/v1/me', (route) =>
+    route.fulfill({
+      status: 401,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: { code: 'unauthorized' } }),
+    }),
+  );
+  const before = fault.connections.length;
+  await fault.disconnect(fault.connections.at(-1)!);
+  await expect(page.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
+  await page.waitForTimeout(3_500);
+  expect(fault.connections.length).toBe(before);
+  await test.info().attach('transport-catch-up', {
+    body: JSON.stringify({ connections: before, recoveredEntry: entry.id, changes }),
+    contentType: 'application/json',
+  });
+});
+
+test('online recovery catches up over HTTP and revalidates terminal authentication', async ({
   page,
   context,
 }) => {
   const { meeting } = await apiCreate(page, 'Возвращение сети');
   const headers = await writeHeaders(page);
-  let subscriptions = 0;
-  let connections = 0;
-  page.on('websocket', (socket) => {
-    connections += 1;
-    socket.on('framereceived', ({ payload }) => {
-      if (String(payload).includes('subscribe')) {
-        subscriptions += 1;
-      }
+  await page.addInitScript(() => {
+    const events: string[] = [];
+    Reflect.set(window, '__testNetworkEvents', events);
+    window.addEventListener('offline', () => events.push('offline'));
+    window.addEventListener('online', () => events.push('online'));
+  });
+  const events = () =>
+    page.evaluate(() => {
+      const value: unknown = Reflect.get(window, '__testNetworkEvents');
+
+      return value;
     });
+
+  let connections = 0;
+  page.on('websocket', () => {
+    connections += 1;
   });
   await page.goto(`/meetings/${meeting.id}`);
-  await expect.poll(() => subscriptions).toBeGreaterThan(0);
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   await context.setOffline(true);
-  const key = randomUUID();
-  const response = await page.request.post(`/api/v1/meetings/${meeting.id}/messages`, {
-    headers: { ...headers, 'Idempotency-Key': key },
-    data: { text: 'Пришло во время отключения', client_request_id: key },
+  await expect.poll(events).toEqual(['offline']);
+  const text = 'Получено после online';
+  await postMessage(page, meeting.id, headers, text);
+  const catchUp = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+
+    return url.pathname === `/api/v1/meetings/${meeting.id}/sync`;
   });
 
-  expect(response.status()).toBe(201);
   await context.setOffline(false);
+  await expect.poll(events).toEqual(['offline', 'online']);
+  expect((await catchUp).status()).toBe(200);
   await expect(
-    page.getByTestId('feed-message').filter({ hasText: 'Пришло во время отключения' }),
+    page.getByTestId('feed-message').filter({ hasText: text }),
   ).toHaveAttribute('data-delivery', 'accepted');
-  await expect.poll(() => connections).toBeGreaterThan(1);
   await page.route('**/api/v1/me', (route) =>
     route.fulfill({
       status: 401,
@@ -198,8 +272,10 @@ test('reconnect performs HTTP catch-up and terminal auth stops SDK retry loops',
     }),
   );
   await context.setOffline(true);
+  await expect.poll(events).toEqual(['offline', 'online', 'offline']);
   const before = connections;
   await context.setOffline(false);
+  await expect.poll(events).toEqual(['offline', 'online', 'offline', 'online']);
   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
   await page.waitForTimeout(3_500);
   expect(connections).toBe(before);
