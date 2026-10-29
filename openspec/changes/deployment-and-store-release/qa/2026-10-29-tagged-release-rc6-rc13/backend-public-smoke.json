@@ -1,0 +1,35 @@
+{
+  "source": "direct public HTTPS after backend activation",
+  "backend": "backend/v0.1.0-rc.6",
+  "responses": [
+    {
+      "path": "/healthz",
+      "status": 200
+    },
+    {
+      "path": "/readyz",
+      "status": 200
+    },
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/me",
+      "authenticated": false,
+      "status": 401
+    }
+  ],
+  "databaseSchemaUnchanged": true,
+  "schemaVersions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "fullAcceptance": "incomplete"
+}

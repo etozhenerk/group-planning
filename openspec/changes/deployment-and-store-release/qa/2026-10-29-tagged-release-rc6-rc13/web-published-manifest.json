@@ -1,0 +1,78 @@
+{
+  "component": "web",
+  "version": "0.1.0-rc.13",
+  "tag": "web/v0.1.0-rc.13",
+  "commit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
+  "build_number": 11,
+  "native_version": "0.1.0",
+  "prerelease": true,
+  "release_plan": {
+    "schema_version": 1,
+    "component": "web",
+    "version": "0.1.0-rc.13",
+    "tag": "web/v0.1.0-rc.13",
+    "commit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
+    "previous_version": null,
+    "bump": "initial",
+    "reason": "Выпуск полного скачивания альбома и исправлений чата; разовый допуск владельца для незавершённой приёмки design 4.1.",
+    "changes": [
+      "Скачать все фотографии встречи одним ZIP: соседняя кнопка, подготовка, отмена, ошибка и повтор",
+      "Стабильное положение истории при обновлении окна и повторная проверка дозагрузки после коррекции",
+      "Однократный допуск только rc.13 при неизменных продуктовых деревьях e813f45e; другие релизы сохраняют прежние gates"
+    ],
+    "checks": [
+      "Полный Web CI 40861415575 на e813f45e: сборка, checkers, базовые браузерные, realtime, read и history window PASS",
+      "Album UI: 211 unit и 12 авторских E2E PASS; независимый Chrome подтвердил ZIP из 103 оригиналов с SHA256",
+      "Независимый проход сохраняет 7 passed и 5 WebKit timeout; отдельный повтор 320 px прошёл, полного ручного PASS нет",
+      "Четыре теста границ разового допуска PASS: соседние теги, изменение продукта и сбои автопроверок не обходятся",
+      "Component releases повторяет обязательные автоматические проверки точного тега и проверяет идентичность browser artifact"
+    ],
+    "compatibility": "Требуется backend/v0.1.0-rc.6, установленный на smwhere.ru 29.10.2026. SQL остаётся версии 8; дополнительные миграции не нужны.",
+    "limitations": "Владелец ответом «Да, выпустить web с этим исключением» разрешил этот rc.13 без завершения дизайн-приёмки 4.1 и полного ручного релизного прохода. В manifest явно записано incomplete; passed receipt не создаётся. Автоматические проверки обязательны. Действует только для неизменных продуктовых деревьев e813f45e. Ошибочная попытка rc.12 и старые отчёты сохранены.",
+    "action": "Опубликовать неизменяемый комплект через Component releases, затем установить именно опубликованные файлы на smwhere.ru по разовому допуску владельца и проверить доступность"
+  },
+  "owner_exception": {
+    "kind": "single-release-owner-exception",
+    "status": "incomplete",
+    "tag": "web/v0.1.0-rc.13",
+    "scope": [
+      "design:ready",
+      "full-manual-acceptance"
+    ],
+    "authorization": {
+      "question": "call_2a2f63af01c644578b31221353c38006",
+      "answer": "Да, выпустить web с этим исключением",
+      "recordedAt": "2026-10-29T11:24:07Z"
+    },
+    "product_source": {
+      "baseline": "e813f45e5c126b062b528e51fb1e826e33c873aa",
+      "trees": {
+        "frontend/web": "645d9e5da46077dbfb0e064c5f7732ef0218ec20",
+        "backend": "3101230e49c9403f312a5ee1287f87619f4e0056",
+        "contracts": "23946d2bd632af4a3983528348add7323ed36acb",
+        "design-system": "b543a2c008bac558dd9fa0eb1e4b4192c05daba6",
+        "docs/design": "dcf191331784d29c61d400dc69cd73475679ca69"
+      }
+    },
+    "note": "Приёмка design 4.1 и полный ручной проход не завершены. Обязательные автопроверки и идентичность артефакта сохраняются; это не passed acceptance receipt."
+  },
+  "schema_version": 2,
+  "checks": [
+    "release-tooling-tests",
+    "web-static-and-unit",
+    "web-browser",
+    "artifact-build",
+    "web-release-browser-identity"
+  ],
+  "details": {
+    "api_origin": "same-origin",
+    "serving": "static web directory; API released separately"
+  },
+  "artifacts": [
+    {
+      "name": "web.tar.gz",
+      "size": 863014,
+      "sha256": "2c89332f882122a8d81bcdae64b17bee20bceab54c23c207a1643fd4bb655baf"
+    }
+  ]
+}
