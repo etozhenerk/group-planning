@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/tmp/somewhere-web-rc15-owner-deploy/install-web-rc15.py", line 244, in <module>
+    manifest, _ = verify_inputs(args.directory.absolute(), args.owner_exception.absolute())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/somewhere-web-rc15-owner-deploy/install-web-rc15.py", line 102, in verify_inputs
+    require({p.name for p in directory.iterdir()} == FILES, 'Expected exactly three published files')
+  File "/tmp/somewhere-web-rc15-owner-deploy/install-web-rc15.py", line 46, in require
+    raise ValueError(message)
+ValueError: Expected exactly three published files
