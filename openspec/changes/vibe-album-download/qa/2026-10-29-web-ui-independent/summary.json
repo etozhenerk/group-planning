@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "verdict": "partial evidence; full acceptance incomplete",
+  "reviewedAt": "2026-10-29T10:57:31.387487+00:00",
+  "confirmedProductDefects": [],
+  "bundle253Unchanged": true,
+  "sourceDifferences": [
+    "frontend/web/src/widgets/conversation/ui/FeedTimeline/hooks/useViewport.ts"
+  ],
+  "nativeZip": {
+    "at": "2026-10-29T10:44:42.082106+00:00",
+    "downloadUI": "somewhere-photos.zip 27.9KB done",
+    "sha256": "bf12a3532e8ca8b4a5342b084a4798b71c8413bf516eafc1f46a20072fd2f2a7",
+    "count": 103,
+    "crcValid": true,
+    "safeUniqueNames": true,
+    "exactOriginalHashes": true
+  },
+  "isolatedE2E": {
+    "passed": 7,
+    "timedOut": 5,
+    "chromiumPassed": 6,
+    "webkitPassed": 1
+  },
+  "minimalRepeat": {
+    "passed": 1,
+    "durationSeconds": 8.7,
+    "timeoutChanged": false,
+    "scope": "WebKit320 preparing/cancel/error/retry"
+  },
+  "diagnosis": {
+    "classification": "environment/time-budget failure; underlying machine cause unproven",
+    "failureMechanisms": [
+      {
+        "case": "WebKit103 ZIP",
+        "mechanism": "Истёк общий90s budget. Trace содержит успешный seed, переход в album, ArrowRight, download wait и финальныеstatus/index assertions; не даёт завершённогоtestPASS."
+      },
+      {
+        "case": "WebKit320",
+        "mechanism": "Исчерпан общий30s budget около первого click после замедленногоlogin/seed. Один isolated исходныйcase прошёл8.7s без сменыtimeout."
+      },
+      {
+        "case": "WebKit empty/leave-before",
+        "mechanism": "Timeout в QA seed POST/api/v1/meetings helpers.ts:162; teardown context тоже>30s; traceZIP не завершён. ОшибкаZIP относится кtrace, не albumdownload."
+      },
+      {
+        "case": "WebKit leave-after",
+        "mechanism": "Initial page.goto(/meetings) timeout; browser launch64.5s, pending document response−1; feature не началась."
+      },
+      {
+        "case": "WebKit revoke",
+        "mechanism": "Initial page.goto(/meetings) timeout; browser launch15.7s/pagecreation5.6s, pending assets status−1; feature не началась."
+      }
+    ],
+    "console": "В двух прошедших setup traces лишь401 до входа и намеренный503 следующей страницы. На initial-goto failures console пуст.",
+    "interpretation": "Непосредственный механизм — общий тестовый бюджет и деградация startup/page/fixture phases. Доказательств конкретного CPU/memory/network источника нет; нельзя объявить все5false-positive. Нет воспроизводимого productUI/API mismatch; unresolved acceptance остаётся."
+  },
+  "designInputHash": "d732edef46139781e4611e66151404b55f7a6e41c51f02f74678dea3ce5f4701",
+  "designCheckFinal": "passed",
+  "fullFeaturePass": false,
+  "fullDesignPass": false,
+  "limitations": [
+    "Нет полного PASS задач3.1/4.1 или release-ready.",
+    "Исходный WebKit run не green; один минимальный повтор подтвердил только320-case. Точная причина задержек хоста/процессов не установлена.",
+    "True device Safari/mobile Chrome,320и390 полного manual matrix, AT, increased text, reduced motion не приняты.",
+    "Native manual cancel/error-retry/access/leave не завершены; эти ветви проверены E2E Chromium и частично WebKit.",
+    "Fixture103 малых PNG без EXIF; ориентация EXIF, добавление фото после снимка,1GiB/memory-limit, диск full, TTL expiry и чужой export не покрыты этим live проходом.",
+    "Actual и reference используют разные фото/title/date; fonts/textScale не измерены. Композиция buttons проверена, pixel regression/full design gate не заявлены.",
+    "Frozen source отличается от текущего MAIN только указанным useViewport.ts; candidate не пересобирался. Кандидат demo, не release."
+  ]
+}
