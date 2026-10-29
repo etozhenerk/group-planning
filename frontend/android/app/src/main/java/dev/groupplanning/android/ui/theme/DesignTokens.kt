@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 4.1.0. Do not edit.
+// Generated from design-system/tokens.json · 4.1.1. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color

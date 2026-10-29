@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "vibe-album-download",
-  "designVersion": "4.1.0",
+  "designVersion": "4.1.1",
   "phase": "checkpoint",
-  "approval": "29.10.2026: пользователь уточнил «рядом с добавить фото»; ZIP/native gallery ранее подтверждены.",
+  "approval": "29.10.2026: пользователь уточнил «рядом с добавить фото»; ZIP/native gallery ранее подтверждены. Повторное указание 29.10.2026: обе кнопки в одной строке, web-группа переносится целиком.",
   "implementer": "implementation-team:/root",
-  "report": "openspec/changes/vibe-album-download/design-review-4.1.0.json",
+  "report": "openspec/changes/vibe-album-download/design-review-4.1.1.json",
   "screens": [
     {
       "id": "vibe-save-web-desktop",
@@ -20,7 +20,9 @@
         "error",
         "success",
         "access-revoked",
-        "browser-download"
+        "browser-download",
+        "ready-long-title",
+        "preparing-long-title"
       ],
       "inputs": [
         "frontend/web/src",
@@ -54,16 +56,17 @@
         "scripts/test-cross-platform.py"
       ],
       "references": [
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-ready.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-empty.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-preparing.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-cancelled.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-error.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-success.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-ready.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-empty.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-preparing.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-cancelled.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-success.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
         "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
         "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
-        "openspec/changes/vibe-album-download/ux.md"
+        "openspec/changes/vibe-album-download/ux.md",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css"
       ],
       "contracts": [
         "docs/design/components/memories.md",
@@ -122,16 +125,17 @@
         "scripts/test-cross-platform.py"
       ],
       "references": [
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-ready.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-empty.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-preparing.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-cancelled.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-error.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-success.html",
-        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-ready.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-empty.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-preparing.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-cancelled.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-success.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
         "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
         "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
-        "openspec/changes/vibe-album-download/ux.md"
+        "openspec/changes/vibe-album-download/ux.md",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css"
       ],
       "contracts": [
         "docs/design/components/memories.md",

@@ -48,7 +48,7 @@ test('downloads every original in one native ZIP while later album pages are una
   await download.delete();
 });
 
-test('keeps adjacent equal mobile actions and photo geometry during preparation, cancellation and retry', async ({
+test('keeps album actions on one row across widths and photo geometry during preparation, cancellation and retry', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 740 });
@@ -85,6 +85,28 @@ test('keeps adjacent equal mobile actions and photo geometry during preparation,
   const add = page.getByRole('button', { name: 'Добавить фото', exact: true });
   const start = page.getByRole('button', { name: 'Скачать все фото', exact: true });
   await expect(start).toBeVisible();
+  const actions = page.getByRole('group', { name: 'Действия с альбомом' });
+
+  for (const width of [1440, 1280, 1024, 800, 740, 320]) {
+    await page.setViewportSize({ width, height: 740 });
+    await expect(actions).toHaveAttribute('data-mobile', width < 740 ? 'true' : 'false');
+    await expect
+      .poll(async () => {
+        const upload = await add.boundingBox();
+        const download = await start.boundingBox();
+
+        return (
+          upload !== null &&
+          download !== null &&
+          Math.abs(upload.y - download.y) < 1 &&
+          Math.abs(upload.height - download.height) < 1 &&
+          upload.x + upload.width < download.x &&
+          download.x + download.width <= width
+        );
+      })
+      .toBe(true);
+  }
+
   const addBox = await add.boundingBox();
   const startBox = await start.boundingBox();
   expect(addBox).not.toBeNull();

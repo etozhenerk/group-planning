@@ -1,7 +1,7 @@
 {
-  "revision": "album-adjacent-actions-2026-10-29-4.1.0",
-  "sourceCommit": "4b7ca387",
-  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers. 29.10.2026: скачивание всего альбома «рядом с добавить фото» на всех клиентах; перенос под primary отклонён.",
+  "revision": "album-web-actions-row-2026-10-29-4.1.1",
+  "sourceCommit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
+  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers. 29.10.2026: скачивание всего альбома «рядом с добавить фото» на всех клиентах; перенос под primary отклонён. 29.10.2026: повторно подтверждена единая строка web-кнопок; исправление эталона без нового UX.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "4.1.1: новая web-ревизия запрещает разрыв группы действий; при нехватке места переносится вся группа под заголовок. Mobile две равные колонки; native и токены прежние.",
     "4.1.0: две соседние кнопки альбома на desktop/native/mobile web; общая подготовка с отменой в secondary, ZIP/native gallery. Прежние значения токенов и все chat/focus/sheets эталоны сохранены.",
     "4.0.0: sheet-controls raw и SVG заменяют close-X/pending текст; live render blocked, pass не переносится.",
     "3.0.1 iOS: последнее явное уточнение пользователя и два native raw-макета; старые шапка/полноширинные preview/цикл iOS отменены.",
@@ -425,7 +426,7 @@
     },
     {
       "path": "docs/design/components/memories.md",
-      "sha256": "b703ccb725248aba4ac877089f476cbfdc9491b161994095561ba820a039e0e3"
+      "sha256": "e832f68d54efe8c6b1b917c0620981eed2362559224307cb63ffc327d808b746"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
@@ -681,7 +682,71 @@
     },
     {
       "path": "openspec/changes/vibe-album-download/ux.md",
-      "sha256": "7aaaf4006c450bde8ceda4831606b9e41f5fd825142569135264798c02d62038"
+      "sha256": "c57d83d7313262ac9295ec564668b2ebc8d608545decb06498b890f3c0385fb2"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-preparing.html",
+      "sha256": "27fa6dcd840dc6e83c94bda828a45e0e47081994d0f877b4a279c47fc31d3081"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile.html",
+      "sha256": "78d440e95d98ed1e0e50905d75647869dfdaba4992850cd9af8dd24b6e523934"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/index.html",
+      "sha256": "eaff5e768c228e44bc837a1257d8d6153cbc10c411d75bbdefda288c7144ff43"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop.html",
+      "sha256": "fff9bff871cff6f8e595acfcd554c09fca6706e91fb68aea56ec2ce0aa1c7bb8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-preparing.html",
+      "sha256": "0724fde20019c756e85d42bb443acd6b1a78671626adea06af58d0188f2ac52b"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-empty.html",
+      "sha256": "ec00636e36740bfcca64b9ccbb7bf9a5bdff3121f9a8c81dbbe6848b00436130"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-error.html",
+      "sha256": "ef73912c651d29fbcbc5bb91ce0a8901244253fe9986d01328a04e9dcbbeebb2"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-empty.html",
+      "sha256": "f55aca12b6cb0b7c16b73b5656ea4e3fd65045ff7c42212a868fe832e754323d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-error.html",
+      "sha256": "ed8771dad4faa2528775a060d1e5d263c3eb939f0aa4227c374fe6734d689ac0"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-success.html",
+      "sha256": "d763a7957e2693310cd825325d19efa1b8e312d23c204d769a523d6fb2b665c7"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-ready.html",
+      "sha256": "78d440e95d98ed1e0e50905d75647869dfdaba4992850cd9af8dd24b6e523934"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-cancelled.html",
+      "sha256": "bfcf92643a390d87ab881352071a78917676fb8654f2d29228b993976885866f"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-ready.html",
+      "sha256": "fff9bff871cff6f8e595acfcd554c09fca6706e91fb68aea56ec2ce0aa1c7bb8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-cancelled.html",
+      "sha256": "7eec8e0db18181b3653dad6f81fa5415857b8d32720b4e2bf9825e8807cda87d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-success.html",
+      "sha256": "c52b489368ab4926d83049658b3474ab536869bb727e06ef2a4e3022bf4d2f5d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
+      "sha256": "01b301791a6c7d178f69d7d3b16b13e7ea20a5e4988cf5cfa24c7950fabd8c26"
     }
   ],
   "history": [
