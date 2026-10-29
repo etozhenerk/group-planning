@@ -86,25 +86,30 @@ test('bounded history preserves focus and visible anchor across prepend and late
   await scroll.evaluate((element) => {
     element.scrollTop = element.scrollHeight / 2;
   });
-  const capture = () =>
-    scroll.evaluate((element) => {
+  const capture = (entryId?: string) =>
+    scroll.evaluate((element, savedId) => {
       const top = element.getBoundingClientRect().top;
       const row = [...element.querySelectorAll<HTMLElement>('[data-entry-id]')].find(
         (row) =>
-          row.dataset.protected !== 'true' && row.getBoundingClientRect().bottom > top,
+          row.dataset.protected !== 'true' &&
+          (savedId
+            ? row.dataset.entryId === savedId
+            : row.getBoundingClientRect().bottom > top),
       );
 
       return {
         id: row?.dataset.entryId,
         offset: (row?.getBoundingClientRect().top ?? top) - top,
       };
-    });
+    }, entryId);
 
   await page.waitForTimeout(150);
   const beforeResize = await capture();
   await page.setViewportSize({ width: 500, height: 700 });
   await page.waitForTimeout(200);
-  const afterResize = await capture();
+  // A wrapped anchor can become shorter than its negative offset. Measure the
+  // saved row itself; choosing the first visible row again would select its neighbour.
+  const afterResize = await capture(beforeResize.id);
   expect(afterResize.id).toBe(beforeResize.id);
   expect(Math.abs(afterResize.offset - beforeResize.offset)).toBeLessThanOrEqual(2);
   const beforeReset = await capture();

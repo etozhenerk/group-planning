@@ -146,7 +146,13 @@ export const useViewport = (
     capture();
   }, [feed.focused, capture]);
   const scroll = () => {
-    if (restoring.current || correcting.current || !ref.current) {
+    if (!ref.current) {
+      return;
+    }
+
+    if (restoring.current || correcting.current) {
+      requestAnimationFrame(prefetch);
+
       return;
     }
 
