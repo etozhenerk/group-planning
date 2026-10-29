@@ -1,0 +1,72 @@
+name: Web touch diagnostic
+on:
+  push:
+    branches: [main]
+    paths:
+      - "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-ci-linux-followup/touch-*.ts"
+      - ".github/workflows/web-touch-diagnostic.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: web-touch-diagnostic-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  touch:
+    name: Original tap and CSS counterfactual
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run build:demo --workspace @somewhere/web
+      - name: Strict original scenario in both gesture configurations
+        run: npx --no-install playwright test --config openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-ci-linux-followup/touch-diagnostic.config.ts --reporter=github,line
+      - name: Preserve labelled diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-touch-counterfactual-${{ github.run_attempt }}
+          path: frontend/web/test-results/touch-diagnostic/
+          if-no-files-found: warn
+          retention-days: 7
+  window:
+    name: Window anchor diagnostic
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: backend/go.mod
+          cache: false
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps webkit
+      - run: npm run build:demo --workspace @somewhere/web
+      - name: Strict original anchor scenario
+        run: npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts 39-chat-window.spec.ts --project=mobile-webkit --repeat-each=3 --trace=on --output=test-results/window-diagnostic --reporter=github,line
+      - name: Preserve anchor diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-window-diagnostic-${{ github.run_attempt }}
+          path: frontend/web/test-results/window-diagnostic/
+          if-no-files-found: warn
+          retention-days: 7

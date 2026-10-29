@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { recordAnchorDiagnostics } from '@tests/helpers/anchorDiagnostics';
+
+test.afterEach(async ({ page }, info) => {
+  await info.attach('anchor-diagnostics', {
+    body: (await page.locator('html').getAttribute('data-anchor-diagnostics')) ?? '[]',
+    contentType: 'application/json',
+  });
+});
 
 test('bounded history preserves focus and visible anchor across prepend and late resize', async ({
   page,
@@ -8,6 +16,7 @@ test('bounded history preserves focus and visible anchor across prepend and late
   browser,
 }) => {
   test.setTimeout(100_000);
+  await recordAnchorDiagnostics(page);
   await login(page, 'Саша');
   const { meeting, invitation_url: invitation } = await apiCreate(
     page,
