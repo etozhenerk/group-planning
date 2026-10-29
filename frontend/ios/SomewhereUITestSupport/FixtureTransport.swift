@@ -3,7 +3,7 @@ import Security
 import os
 
 // Compiled only into SomewhereUITestHost; production keeps system TLS validation.
-final class FixtureTransport: HTTPTransport {
+final class FixtureTransport: HTTPTransport, HTTPFileTransport {
     private let session: URLSession
     private let requests = OSAllocatedUnfairLock(initialState: [String: Int]())
     private let scenario: String
@@ -43,6 +43,28 @@ final class FixtureTransport: HTTPTransport {
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw ClientFailure.invalidResponse }
         return try await FixtureResponseGate.apply((data, http), to: request)
+    }
+
+    func download(
+        _ request: URLRequest, to fileURL: URL, expectedBytes: Int, contentType: String
+    ) async throws {
+        try await FixtureResponseGate.before(request)
+        let (bytes, response) = try await session.bytes(for: request)
+        defer { bytes.task.cancel() }
+        guard let http = response as? HTTPURLResponse else { throw ClientFailure.invalidResponse }
+        guard http.statusCode == 200 else { throw ClientFailure.http(http.statusCode, nil) }
+        guard http.url == request.url, http.mimeType?.lowercased() == contentType,
+            http.expectedContentLength == -1 || http.expectedContentLength == Int64(expectedBytes)
+        else { throw ClientFailure.invalidResponse }
+        let writer = try AlbumFileBuffer(fileURL: fileURL, expectedBytes: expectedBytes)
+        do {
+            for try await byte in bytes { try writer.append(byte) }
+            try writer.finish()
+        } catch {
+            try writer.close()
+            throw error
+        }
+        try writer.close()
     }
 }
 

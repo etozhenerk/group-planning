@@ -183,7 +183,13 @@ internal class AppViewModel(
         savedHome["open-meeting"] = (target as? InvitationTarget.Meeting)?.id?.toString()
         mutableRoute.value =
             AppRoute.Invitation(
-                InvitationViewModel(target, repository, childScope(), runtime.feeds),
+                InvitationViewModel(
+                    target,
+                    repository,
+                    childScope(),
+                    runtime.feeds,
+                    runtime.albumDownloads,
+                ),
             )
     }
 

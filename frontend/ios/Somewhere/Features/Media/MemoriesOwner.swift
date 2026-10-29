@@ -6,6 +6,7 @@ final class MemoriesOwner: Identifiable {
     let id: UUID
     let session: SessionStore
     let transfer: MediaTransferOwner
+    let albumSave: AlbumSaveOwner
     private let lease: PrivateData.Lease?
     var photos: [MeetingMedia] = []
     var meeting: Meeting?
@@ -17,7 +18,18 @@ final class MemoriesOwner: Identifiable {
         self.id = id
         self.session = session
         transfer = MediaTransferOwner(id: id, session: session, purpose: "memory")
-        lease = try? session.privateData.lease(for: id)
+        let lease = try? session.privateData.lease(for: id)
+        self.lease = lease
+        albumSave = AlbumSaveOwner(
+            makeService: {
+                try AlbumDownloadService(
+                    source: SessionAlbumSource(meetingID: id, session: session),
+                    library: PhotoKitAlbumLibrary())
+            },
+            current: {
+                session.status == .authenticated
+                    && lease.map { session.privateData.isCurrent($0) } == true
+            }, permissionGranted: { PhotoKitAlbumLibrary.canAddPhotos })
     }
     var current: Bool {
         session.status == .authenticated && lease.map { session.privateData.isCurrent($0) } == true
@@ -64,6 +76,7 @@ final class MemoriesOwner: Identifiable {
     }
 
     func clear() {
+        albumSave.suspend()
         transfer.suspend()
         photos = []
         meeting = nil

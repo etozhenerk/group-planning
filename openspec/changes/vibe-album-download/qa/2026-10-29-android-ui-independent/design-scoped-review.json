@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/vibe-album-download/design-manifest.json",
+  "inputHash": "d732edef46139781e4611e66151404b55f7a6e41c51f02f74678dea3ce5f4701",
+  "reviewer": "independent:/root/ios_album_independent",
+  "reviewedAt": "2026-10-29T10:53:51.644740+00:00",
+  "mode": "live",
+  "environment": "Exact frozen QA APK; emulator-5554 Android16 API36 BE2A.250530.026.F3,720×1600px/360×800dp density2,Roboto,ru-RU/Europe-Moscow,fontScale1. Component320dp LocalDensity1.8 separately. Root IAB references390×844. AnimatorsEnabled=false.",
+  "summary": "7/7 independent instrumentation checks PASS including actual MediaStore originals. Scoped observations only; full design gate blocked by uncovered states/normal motion/fullscreen320/large text and reference paragraph-color conflict. Inputs unchanged.",
+  "checks": [
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "ready",
+      "status": "blocked",
+      "observations": "На работающем полном экране 360×800dp проверены две соседние равные кнопки, доступное имя, индекс 2/3. Actual/reference просмотрены. Полный экран320 и увеличенный текст не проверены; reference390 с другим fixture не является pixel regression.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-download-ready.png",
+          "sha256": "12120a49286515c665c58d0f721f44209471747dd43850dc1f667cd590e45e10",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-ready-390.png",
+          "sha256": "39bff9655c62dc1f1ee63589ebf4bfaf65c22cf50a06a70e0a82636f07d20435",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "empty",
+      "status": "blocked",
+      "observations": "Проверен только компонент: add присутствует, save отсутствует. Пустой альбом в работающем экране не воспроизведён.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "preparing",
+      "status": "blocked",
+      "observations": "Реально задержан ответ snapshot: spinner+Отменить, bounds кнопки и top фото неизменны, индекс2/3. Recorded animatorsEnabled=false; обычное движение не принято.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-download-preparing.png",
+          "sha256": "fc9b440b6c8c32dde458dd95ba473c3b1d79682594b4675edcd7f243616ff3a6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-preparing-390.png",
+          "sha256": "7d8de55eb219296445939ef3aa3a3b636b7edbae6940810dd107b2ea16aad610",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "cancelled",
+      "status": "blocked",
+      "observations": "Выполнены отмена и уход Back во время подготовки; поздний ответ не публикует MediaStore, индекс сохранён при отмене. Отдельный current reference состояния и normal-motion проход отсутствуют.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-download-preparing.png",
+          "sha256": "fc9b440b6c8c32dde458dd95ba473c3b1d79682594b4675edcd7f243616ff3a6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-ready-390.png",
+          "sha256": "39bff9655c62dc1f1ee63589ebf4bfaf65c22cf50a06a70e0a82636f07d20435",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "error",
+      "status": "blocked",
+      "observations": "Реальный QA сетевой сбой snapshot, ошибка и явный повтор до успешных трёх MediaStore фото. В raw reference цвет вложенного p muted конфликтует с published error token; точное визуальное соответствие не присвоено.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-download-error.png",
+          "sha256": "8367cd5d779dee858309fd4557f401e7bfd08997dc3c4475c47805b782cff86d",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-partial-390.png",
+          "sha256": "36e79b96c999f2f64600a76bdd76be3cf88021bca730d7ffa670c3baf4b8d574",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "success",
+      "status": "blocked",
+      "observations": "После фактической системной записи3 фото показан успех и сохранён2/3. IS_PENDING=0 и SHA256 оригиналов проверены через ContentResolver. Отдельный success reference и полная матрица не пройдены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-download-saved.png",
+          "sha256": "e6665c626bffc20b24be936b288d6d060d7ccb6205e0d04ce208d66af2f30b00",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-ready-390.png",
+          "sha256": "39bff9655c62dc1f1ee63589ebf4bfaf65c22cf50a06a70e0a82636f07d20435",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "permissions",
+      "status": "blocked",
+      "observations": "Только компонент: действие Настройки вызывает callback. API26–28 permission prompt/denial/Settings-return в этом API36 прогоне не проверены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "saving",
+      "status": "blocked",
+      "observations": "Только компонент: Сохраняем…, disabled, стабильная высота при fontScale1/1.8 в320dp контейнере. Задержанная реальная запись MediaStore на полном экране не воспроизведена.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/album-component-1.8-saving.png",
+          "sha256": "ead7aea31cee23e37d04a6381292ae50315ca8a4a4fecaa7e123d0fcd501c8ff",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/reference/android-preparing-390.png",
+          "sha256": "7d8de55eb219296445939ef3aa3a3b636b7edbae6940810dd107b2ea16aad610",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "save-error",
+      "status": "blocked",
+      "observations": "Только компонент: ошибка записи и callback Повторить. Реальная ошибка диска/MediaStore и повтор из неё не воспроизведены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "partial",
+      "status": "blocked",
+      "observations": "Только компонент: Понятно вызывает acknowledge, не повторное save. Реальная частичная публикация не воспроизведена; normal motion не подтверждён.",
+      "evidence": [
+        {
+          "path": "openspec/changes/vibe-album-download/qa/2026-10-29-android-ui-independent/run-album-download-65420/instrumentation.log",
+          "sha256": "2905ad84cfdf8fbfb77544317503c6327b556561bb21f475e418a2b0494731e7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "vibe-save-android",
+      "platform": "android",
+      "state": "access-revoked",
+      "status": "blocked",
+      "observations": "Отзыв членства/logout во время UI операции не воспроизведён.",
+      "evidence": []
+    }
+  ]
+}

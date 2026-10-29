@@ -9,11 +9,11 @@ final class SessionAlbumSource: AlbumPhotoSource {
 
     init(
         meetingID: UUID, session: SessionStore,
-        transport: any HTTPFileTransport = URLSessionFileTransport()
+        transport: (any HTTPFileTransport)? = nil
     ) throws {
         self.meetingID = meetingID
         self.session = session
-        self.transport = transport
+        self.transport = transport ?? session.albumFileTransport
         lease = try session.privateData.lease(for: meetingID)
         try checkAccess()
     }

@@ -22,13 +22,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -41,8 +41,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
+import dev.groupplanning.android.state.album.AlbumDownloadController
 import dev.groupplanning.android.state.media.MediaViewModel
-import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.PageBack
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
@@ -54,11 +54,16 @@ internal fun MemoriesGallery(
     add: () -> Unit,
     close: () -> Unit,
     subtitle: String = "",
+    download: AlbumDownloadController? = null,
 ) {
     val state by model.state.collectAsStateWithLifecycle()
     var index by rememberSaveable { mutableIntStateOf(0) }
     var grid by rememberSaveable { mutableStateOf(false) }
     var full by rememberSaveable { mutableStateOf(false) }
+    DisposableEffect(download) {
+        download?.enter()
+        onDispose { download?.leave() }
+    }
     LaunchedEffect(model) { model.loadMemories() }
     LaunchedEffect(state.photos.size) {
         index =
@@ -118,26 +123,12 @@ internal fun MemoriesGallery(
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(top = 8.dp),
                                 )
-                                Surface(
+                                AlbumDownloadControls(
+                                    download,
+                                    state.photos.isNotEmpty(),
                                     add,
-                                    Modifier.padding(top = 18.dp),
-                                    shape = RoundedCornerShape(13.dp),
-                                    color = Palette.action,
-                                    contentColor = Palette.actionText,
-                                ) {
-                                    Row(
-                                        Modifier.padding(horizontal = 13.dp, vertical = 10.dp),
-                                        horizontalArrangement = Arrangement.spacedBy(9.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        AppIcon(R.drawable.ic_plus, tint = Palette.actionText)
-                                        Text(
-                                            stringResource(R.string.memories_add),
-                                            fontSize = 13.sp,
-                                            fontWeight = FontWeight.SemiBold,
-                                        )
-                                    }
-                                }
+                                    Modifier.padding(top = DesignTokens.spaceS16),
+                                )
                             }
                         }
                         if (state.photos.isEmpty() &&

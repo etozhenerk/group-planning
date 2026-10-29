@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.FeedEntry
 import dev.groupplanning.android.data.api.models.Meeting
+import dev.groupplanning.android.data.repository.AlbumDownloadRepository
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.session.MeetingAccess
 import dev.groupplanning.android.data.session.SessionState
+import dev.groupplanning.android.state.album.AlbumDownloadController
 import dev.groupplanning.android.state.datepoll.DatePollViewModel
 import dev.groupplanning.android.state.media.MediaViewModel
 import dev.groupplanning.android.state.placepoll.PlacePollViewModel
@@ -26,12 +28,21 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonPrimitive
 
-internal class FeedViewModel(val id: UUID, val repository: FeedRepository, scope: CoroutineScope) :
-    ViewModel(scope) {
+internal class FeedViewModel(
+    val id: UUID,
+    val repository: FeedRepository,
+    scope: CoroutineScope,
+    albumDownloads: AlbumDownloadRepository? = null,
+) : ViewModel(scope) {
     private val mutable = MutableStateFlow(FeedState())
     val state = mutable.asStateFlow()
     val media = repository.media?.let {
         MediaViewModel(id, it, childScope())
+    }
+    val albumDownload = albumDownloads?.let { downloads ->
+        media?.let {
+            AlbumDownloadController(id, it.repository.sessions, childScope(), downloads::save)
+        }
     }
     val reactions = ReactionController(repository, viewModelScope)
     val reading = ChatReadController(repository.reading, viewModelScope)

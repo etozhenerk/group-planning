@@ -9,6 +9,7 @@ struct MemoriesScreen: View {
     @State private var fullscreen = false
     @State private var reloadID = UUID()
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
     var body: some View {
         GeometryReader { viewport in
             ScrollView {
@@ -27,19 +28,9 @@ struct MemoriesScreen: View {
                         )
                         .padding(.top, 8).accessibilityAddTraits(.isHeader)
                     }
-                    Button {
+                    AlbumActions(owner: owner.albumSave, hasPhotos: !owner.photos.isEmpty) {
                         picker = .photos
-                    } label: {
-                        HStack(spacing: 9) {
-                            ExperienceIcon(kind: .plus)
-                            Text("Добавить фото")
-                        }
-                        .designFont(13, weight: .semibold).padding(.horizontal, 13).frame(
-                            minHeight: 44
-                        )
-                        .foregroundStyle(AppPalette.actionText).background(
-                            AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-                    }.padding(.top, 18)
+                    }.padding(.top, DesignTokens.spaceS16)
                     if owner.current {
                         if owner.failed {
                             StatusView(
@@ -128,6 +119,10 @@ struct MemoriesScreen: View {
                 owner.clear()
                 dismiss()
             }
+        }
+        .onDisappear { owner.albumSave.suspend() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { owner.albumSave.permissionMayHaveChanged() }
         }
     }
 }

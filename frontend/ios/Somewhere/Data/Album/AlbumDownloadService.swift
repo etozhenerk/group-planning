@@ -17,7 +17,7 @@ final class AlbumDownloadService {
         self.files = files
     }
 
-    func save(operationID: UUID) async throws -> Int {
+    func save(operationID: UUID, onCommit: @MainActor () -> Void = {}) async throws -> Int {
         try checkPreparation()
         if let completed, completed.operationID == operationID { return completed.count }
         guard !Self.active else { throw AlbumSaveFailure.busy }
@@ -48,6 +48,7 @@ final class AlbumDownloadService {
             try checkPreparation()
             // The PhotoKit transaction owns the outcome from this point. Cancellation or
             // revocation cannot undo a submitted save; keep files until its completion.
+            onCommit()
             try await library.save(prepared)
             savedCount = prepared.count
             completed = (operationID, savedCount)

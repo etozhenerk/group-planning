@@ -5,6 +5,8 @@ import { UploadDraft } from '@/features/upload-media';
 import { Navigation } from '@/widgets/navigation';
 import { Workspace } from '@/shared/ui/Workspace';
 import { AlbumHeading } from '@/pages/memories/ui/AlbumHeading';
+import { AlbumActions } from '@/pages/memories/ui/AlbumActions';
+import { DownloadAlbumFeedback, useAlbumDownload } from '@/features/download-album';
 import { AlbumBody } from '@/pages/memories/ui/AlbumBody';
 import { useMemoriesView } from '@/pages/memories/model/useMemoriesView';
 import { PhotoViewer } from '@/features/view-media';
@@ -14,6 +16,7 @@ export type MemoriesViewProps = { id: string; session: Session };
 
 export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
   const view = useMemoriesView(id, session.user.id);
+  const download = useAlbumDownload(id, session);
 
   return (
     <Workspace navigation={<Navigation session={session} />}>
@@ -26,9 +29,16 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
         </Link>
         <AlbumHeading
           meeting={view.meeting.data}
-          upload={view.choose}
-          disabled={view.query.access.denied}
+          actions={
+            <AlbumActions
+              upload={view.choose}
+              disabled={view.query.access.denied}
+              canDownload={view.photos.length > 0 && !view.query.access.denied}
+              download={download}
+            />
+          }
         />
+        <DownloadAlbumFeedback state={download.state} />
         <AlbumBody
           photos={view.photos}
           user={session.user.id}

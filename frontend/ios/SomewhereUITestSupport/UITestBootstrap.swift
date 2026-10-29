@@ -50,6 +50,7 @@ enum UITestBootstrap {
             {
                 let session = SessionStore(
                     api: api, credentials: credentials, privateData: PrivateData(), chat: chat,
+                    albumFileTransport: transport,
                     realtimeFactory: {
                         FixtureRealtime.make(origin: config.origin, certificate: config.certificate)
                     })
@@ -71,6 +72,7 @@ enum UITestBootstrap {
             let session = SessionStore(
                 api: api, credentials: credentials,
                 privateData: PrivateData(), chat: chat,
+                albumFileTransport: transport,
                 realtimeFactory: {
                     FixtureRealtime.make(origin: config.origin, certificate: config.certificate)
                 })

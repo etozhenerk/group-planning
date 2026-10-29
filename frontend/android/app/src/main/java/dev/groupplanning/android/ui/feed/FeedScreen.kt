@@ -181,6 +181,7 @@ internal fun FeedScreen(
                     },
                     meeting?.place,
                 ).joinToString(" · "),
+                download = model.albumDownload,
             )
         }
     }

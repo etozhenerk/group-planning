@@ -13,6 +13,7 @@ final class SessionStore {
     private(set) var deletionFailure: ClientFailure?
     private(set) var accountDeleted = false
     let privateData: PrivateData
+    @ObservationIgnored let albumFileTransport: any HTTPFileTransport
     @ObservationIgnored let realtimeFactory: @MainActor () -> any ChatRealtimeTransport
     @ObservationIgnored private var chatOwnerID: UUID?
     @ObservationIgnored let chat: ChatRepository
@@ -32,9 +33,11 @@ final class SessionStore {
     init(
         api: APIClient, credentials: CredentialStore, privateData: PrivateData,
         chat: ChatRepository? = nil,
+        albumFileTransport: any HTTPFileTransport = URLSessionFileTransport(),
         realtimeFactory: @escaping @MainActor () -> any ChatRealtimeTransport = { ChatRealtime() }
     ) {
         self.realtimeFactory = realtimeFactory
+        self.albumFileTransport = albumFileTransport
         self.api = api
         self.credentials = credentials
         self.privateData = privateData

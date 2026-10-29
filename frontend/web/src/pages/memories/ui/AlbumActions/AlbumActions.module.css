@@ -1,0 +1,46 @@
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s12);
+  max-width: 100%;
+}
+
+.upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-component-button-icon-gap);
+  min-width: 0;
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  border: var(--ds-component-button-border-width) solid transparent;
+  border-radius: var(--ds-component-button-radius);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-semibold);
+  text-align: center;
+}
+
+.upload svg {
+  flex-shrink: 0;
+  width: var(--ds-component-button-icon-size);
+  height: var(--ds-component-button-icon-size);
+  stroke-width: var(--ds-component-icon-stroke-width);
+}
+
+.actions[data-mobile='true'] {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--ds-space-s8);
+  width: 100%;
+  margin-top: var(--ds-space-s16);
+}
+
+.actions[data-mobile='true'] .upload {
+  padding-inline: var(--ds-space-s12);
+  font-size: var(--ds-typography-size-small);
+}

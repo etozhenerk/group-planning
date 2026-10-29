@@ -19,6 +19,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/etozhenerk/group-planning/backend/internal/albumexport"
 	"github.com/etozhenerk/group-planning/backend/internal/identity"
 	"github.com/etozhenerk/group-planning/backend/internal/meetings"
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
@@ -127,7 +128,14 @@ func TestBrowserFixture(t *testing.T) {
 		}
 	}
 
-	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
+	exports, err := albumexport.New(t.Context(), app, time.Now)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer exports.Close()
+
+	api := NewWithExports(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, exports, testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
 	mux.Handle("/api/", api)
 	mux.Handle("/healthz", api)

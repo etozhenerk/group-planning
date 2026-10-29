@@ -3,6 +3,10 @@ import Photos
 
 @MainActor
 struct PhotoKitAlbumLibrary: AlbumPhotoLibrary {
+    static var canAddPhotos: Bool {
+        PHPhotoLibrary.authorizationStatus(for: .addOnly) == .authorized
+    }
+
     func requireAddPermission() async throws {
         var status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
         if status == .notDetermined {
@@ -16,6 +20,12 @@ struct PhotoKitAlbumLibrary: AlbumPhotoLibrary {
         guard PHPhotoLibrary.authorizationStatus(for: .addOnly) == .authorized else {
             throw AlbumSaveFailure.permissionRequired
         }
+        try await Self.commit(photos)
+    }
+
+    // PhotoKit runs both blocks on its own queues. Creating them outside the
+    // main actor avoids Swift 6's runtime isolation assertion in performChanges.
+    private nonisolated static func commit(_ photos: [AlbumPreparedPhoto]) async throws {
         // File resources preserve the bytes and EXIF; no UIImage/JPEG round trip.
         try await withCheckedThrowingContinuation {
             (continuation: CheckedContinuation<Void, any Error>) in

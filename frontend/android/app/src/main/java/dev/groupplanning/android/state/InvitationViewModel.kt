@@ -6,6 +6,7 @@ import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.RsvpRequest
 import dev.groupplanning.android.data.links.InvitationTarget
+import dev.groupplanning.android.data.repository.AlbumDownloadRepository
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.data.repository.InvitationDetails
 import dev.groupplanning.android.data.repository.InvitationRepository
@@ -29,6 +30,7 @@ internal class InvitationViewModel(
     private val repository: InvitationRepository,
     scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
     private val feeds: FeedRepository? = null,
+    private val albumDownloads: AlbumDownloadRepository? = null,
 ) : ViewModel(scope) {
     private val mutable = MutableStateFlow(InvitationState())
     val state = mutable.asStateFlow()
@@ -67,6 +69,7 @@ internal class InvitationViewModel(
                         viewModelScope.coroutineContext +
                             SupervisorJob(viewModelScope.coroutineContext[Job]),
                     ),
+                    albumDownloads,
                 )
             }
         }

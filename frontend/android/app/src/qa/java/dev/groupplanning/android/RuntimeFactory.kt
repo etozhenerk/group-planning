@@ -79,6 +79,7 @@ internal object RuntimeFactory {
                     throw IOException("Offline authentication fixture")
                 }
                 QaResponseGate.before(chain.request())
+                QaAlbumDownloadProbe.before(chain.request())
                 val response = chain.proceed(
                     chain.request().newBuilder().header(
                         "X-Somewhere-Test-Scenario",
@@ -87,6 +88,7 @@ internal object RuntimeFactory {
                 )
                 try {
                     QaResponseGate.after(chain.request())
+                    QaAlbumDownloadProbe.after(response)
                     if (scenario ==
                         "memories-single"
                     ) {

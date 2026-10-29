@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
+import dev.groupplanning.android.data.album.AlbumGalleryOperation
 import dev.groupplanning.android.data.album.AlbumPhoto
 import dev.groupplanning.android.data.album.MediaStoreAlbumGallery
 import java.io.File
@@ -28,41 +29,48 @@ class AlbumGalleryDeviceTests {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val resolver = context.contentResolver
 
-    @Test fun pendingOriginalsPublishWithExifAndRollbackOnlyTouchesOwnedUris() =
+    @Test fun pendingOriginalsPublishWithExifAndCommittedCopiesSurviveDiscard() =
         runBlocking(Dispatchers.IO) {
             check(context.packageName == "dev.groupplanning.android.uitesthost")
             val file = orientedPhoto()
             val gallery = MediaStoreAlbumGallery(context)
             val previous = gallery.begin()
-            val operation = gallery.begin()
             val retained = AlbumPhoto(UUID.randomUUID(), "image/jpeg", file.length())
             val photos = List(2) { retained.copy(id = UUID.randomUUID()) }
+            val ownUris = mutableListOf<Uri>()
+            var operation: AlbumGalleryOperation? = null
             try {
                 gallery.requirePermission()
                 previous.stage(retained, file)
                 previous.publish()
                 val old = find(retained)
+                ownUris += old
                 assertEquals(0, pending(old))
-                for (photo in photos) operation.stage(photo, file)
+                val current = gallery.begin()
+                operation = current
+                for (photo in photos) current.stage(photo, file)
                 photos.forEach { assertEquals(0, count(it, includePending = false)) }
                 val created = photos.map(::find)
+                ownUris += created
                 for (uri in created) {
                     assertEquals(1, pending(uri))
                     assertOriginal(file, uri)
                 }
-                operation.publish()
+                current.publish()
                 for (uri in created) {
                     assertEquals(0, pending(uri))
                     assertOriginal(file, uri)
                 }
-                operation.discard()
-                assertEquals(0, count(photos.first()))
-                assertEquals(0, count(photos.last()))
+                current.discard()
+                assertEquals(1, count(photos.first()))
+                assertEquals(1, count(photos.last()))
                 assertEquals(1, count(retained))
                 assertOriginal(file, old)
             } finally {
-                operation.discard()
+                operation?.discard()
                 previous.discard()
+                ownUris.forEach { resolver.delete(it, null, null) }
+                gallery.recoverPending()
                 file.delete()
             }
         }
