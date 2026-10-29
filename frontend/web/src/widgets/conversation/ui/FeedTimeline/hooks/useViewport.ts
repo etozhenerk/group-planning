@@ -5,6 +5,7 @@ import type { useConversation } from '@/entities/meeting';
 import { useViewportResize } from '@/widgets/conversation/ui/FeedTimeline/hooks/useViewportResize';
 import { useEntryAnchor } from '@/widgets/conversation/ui/FeedTimeline/hooks/useEntryAnchor';
 import { useVirtualFeed } from '@/widgets/conversation/ui/FeedTimeline/hooks/useVirtualFeed';
+import { alignFeedPosition } from '@/widgets/conversation/lib/alignFeedPosition';
 
 export const useViewport = (
   entries: FeedEntry[],
@@ -98,11 +99,13 @@ export const useViewport = (
     restoring.current = true;
     const position = state.current.query.position() ?? initial.current;
     const index = entries.findIndex((entry) => entry.id === position?.entryId);
+    const alignPosition = () => index >= 0 && alignFeedPosition(ref.current, position);
+
     setFollowing(position?.following ?? true);
 
     if (!position || position.following || index < 0) {
       feed.virtual.scrollToEnd();
-    } else {
+    } else if (!alignPosition()) {
       feed.virtual.scrollToIndex(index, { align: 'start' });
     }
 
@@ -112,21 +115,7 @@ export const useViewport = (
           return;
         }
 
-        if (position && !position.following && index >= 0) {
-          const row = ref.current?.querySelector<HTMLElement>(
-            `[data-entry-id="${CSS.escape(position.entryId!)}"]`,
-          );
-
-          const view = ref.current;
-
-          if (row && view) {
-            view.scrollTop +=
-              row.getBoundingClientRect().top -
-              view.getBoundingClientRect().top -
-              position.offset;
-          }
-        }
-
+        alignPosition();
         restoring.current = false;
         capture();
         prefetch();

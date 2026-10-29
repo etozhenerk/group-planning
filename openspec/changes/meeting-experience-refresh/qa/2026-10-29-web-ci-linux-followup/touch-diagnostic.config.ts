@@ -23,7 +23,10 @@ export default defineConfig({
     trace: "on",
     screenshot: "on",
   },
-  projects: [{ name: "baseline" }, { name: "counterfactual-all-no-pan" }],
+  projects: [
+    { name: "baseline" },
+    { name: "browser-driver", metadata: { touchGesture: "browser" } },
+  ],
   webServer: {
     cwd: web,
     command: "npx --no-install tsx scripts/browser-server.ts",

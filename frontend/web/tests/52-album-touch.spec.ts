@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
 import type { Locator } from '@playwright/test';
+import { trustedTouchGesture } from '@tests/helpers/trustedTouchGesture';
 import { z } from 'zod';
 
 test.use({ hasTouch: true, isMobile: true, viewport: { width: 402, height: 874 } });
@@ -106,30 +107,15 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
       );
     }
   });
-  const gesture = async (target: Locator, dx: number, dy = 0) => {
-    const box = await target.boundingBox();
-
-    if (!box) {
-      throw new Error('Missing gesture target');
-    }
-
-    const x = box.x + box.width / 2;
-    const y = box.y + box.height / 2;
-    await touch.send('Input.dispatchTouchEvent', {
-      type: 'touchStart',
-      touchPoints: [{ x, y }],
-    });
-
-    for (let step = 1; step <= 8; step++) {
-      await touch.send('Input.dispatchTouchEvent', {
-        type: 'touchMove',
-        touchPoints: [{ x: x + (dx * step) / 8, y: y + (dy * step) / 8 }],
-      });
-      await page.waitForTimeout(16);
-    }
-
-    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-  };
+  const gesture = (target: Locator, dx: number, dy = 0) =>
+    trustedTouchGesture(
+      page,
+      touch,
+      target,
+      dx,
+      dy,
+      test.info().project.metadata['touchGesture'] === 'browser',
+    );
 
   const swipe = async (dx: number, dy = 0) => {
     await expect(stack).toHaveAttribute('data-moving', 'false');

@@ -1,26 +1,35 @@
 import { test } from "@playwright/test";
+import type { CDPSession } from "@playwright/test";
 import "../../../../../frontend/web/tests/52-album-touch.spec";
 
-// The original test and every assertion run unchanged in both projects.
+const traces = new Map<
+  string,
+  { session: CDPSession; nativeEvents: unknown[] }
+>();
+
+// Both projects keep the same assertions and taps; only the gesture driver differs.
 test.beforeEach(async ({ page }, info) => {
-  if (info.project.name !== "baseline") {
-    await page.addInitScript((allSurfaces: boolean) => {
-      document.addEventListener(
-        "DOMContentLoaded",
-        () => {
-          const style = document.createElement("style");
-          style.dataset["touchDiagnostic"] = allSurfaces
-            ? "all-no-pan"
-            : "photo-no-pan";
-          style.textContent = allSurfaces
-            ? "* { touch-action: none !important; }"
-            : 'dialog[aria-label="Фото встречи"] > div { touch-action: none !important; }';
-          document.head.append(style);
-        },
-        { once: true },
-      );
-    }, info.project.name === "counterfactual-all-no-pan");
-  }
+  const session = await page.context().newCDPSession(page);
+  const nativeEvents: unknown[] = [];
+  session.on("Tracing.dataCollected", ({ value }: { value: unknown[] }) => {
+    for (const event of value) {
+      if (
+        typeof event === "object" &&
+        event !== null &&
+        "name" in event &&
+        typeof event.name === "string" &&
+        /Fling|Tap|Gesture|Touch/i.test(event.name)
+      ) {
+        nativeEvents.push(event);
+        if (nativeEvents.length > 5000) nativeEvents.shift();
+      }
+    }
+  });
+  await session.send("Tracing.start", {
+    categories: "input,latencyInfo",
+    transferMode: "ReportEvents",
+  });
+  traces.set(info.testId, { session, nativeEvents });
 
   await page.addInitScript(() => {
     const events: unknown[] = [];
@@ -63,6 +72,24 @@ test.beforeEach(async ({ page }, info) => {
 });
 
 test.afterEach(async ({ page }, info) => {
+  const trace = traces.get(info.testId);
+  if (trace) {
+    try {
+      const complete = new Promise<void>((resolve) =>
+        trace.session.once("Tracing.tracingComplete", () => resolve()),
+      );
+      await trace.session.send("Tracing.end");
+      await complete;
+      await info.attach(`${info.project.name}-native-gesture-events`, {
+        body: JSON.stringify(trace.nativeEvents),
+        contentType: "application/json",
+      });
+    } finally {
+      traces.delete(info.testId);
+      await trace.session.detach();
+    }
+  }
+
   const events: unknown = await page.evaluate(() =>
     Reflect.get(window, "__touchDiagnostic"),
   );
