@@ -1,0 +1,150 @@
+
+Running 6 tests using 1 worker
+
+(node:85715) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/6] [chromium] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 1440
+[2/6] [chromium] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 390
+[3/6] [chromium] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 320
+(node:85986) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[4/6] [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 1440
+  1) [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 1440 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Выбрать эмодзи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+        14 × locator resolved to <button type="button" class="_icon_y6rve_6" aria-expanded="false" aria-label="Выбрать эмодзи" data-chat-surface-trigger="true">…</button>
+           - unexpected value "inactive"
+
+
+      120 |     });
+      121 |
+    > 122 |     await expect(emojiTrigger).toBeFocused();
+          |                                ^
+      123 |     await emojiTrigger.press('Enter');
+      124 |     await expect(emojis).toBeVisible();
+      125 |     await page.keyboard.press('Escape');
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/61-composer-outside-focus.spec.ts:122:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--0dc06-d-first-tap-actions-at-1440-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--0dc06-d-first-tap-actions-at-1440-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--0dc06-d-first-tap-actions-at-1440-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--0dc06-d-first-tap-actions-at-1440-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:86498) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/6] [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 390
+  2) [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 390 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Выбрать эмодзи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+        14 × locator resolved to <button type="button" class="_icon_y6rve_6" aria-expanded="false" aria-label="Выбрать эмодзи" data-chat-surface-trigger="true">…</button>
+           - unexpected value "inactive"
+
+
+      120 |     });
+      121 |
+    > 122 |     await expect(emojiTrigger).toBeFocused();
+          |                                ^
+      123 |     await emojiTrigger.press('Enter');
+      124 |     await expect(emojis).toBeVisible();
+      125 |     await page.keyboard.press('Escape');
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/61-composer-outside-focus.spec.ts:122:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--9a343-nd-first-tap-actions-at-390-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--9a343-nd-first-tap-actions-at-390-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--9a343-nd-first-tap-actions-at-390-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--9a343-nd-first-tap-actions-at-390-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:87011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[6/6] [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 320
+  3) [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 320 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Выбрать эмодзи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Выбрать эмодзи', exact: true })
+        14 × locator resolved to <button type="button" class="_icon_y6rve_6" aria-expanded="false" aria-label="Выбрать эмодзи" data-chat-surface-trigger="true">…</button>
+           - unexpected value "inactive"
+
+
+      120 |     });
+      121 |
+    > 122 |     await expect(emojiTrigger).toBeFocused();
+          |                                ^
+      123 |     await emojiTrigger.press('Enter');
+      124 |     await expect(emojis).toBeVisible();
+      125 |     await page.keyboard.press('Escape');
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/61-composer-outside-focus.spec.ts:122:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--d4e79-nd-first-tap-actions-at-320-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--d4e79-nd-first-tap-actions-at-320-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--d4e79-nd-first-tap-actions-at-320-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-web-composer-dismiss-results/61-composer-outside-focus--d4e79-nd-first-tap-actions-at-320-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 1440 
+    [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 390 
+    [mobile-webkit] › tests/61-composer-outside-focus.spec.ts:9:3 › outside composer click preserves draft and first-tap actions at 320 
+  3 passed (39.2s)

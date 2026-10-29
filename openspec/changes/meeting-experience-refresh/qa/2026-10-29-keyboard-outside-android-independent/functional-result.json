@@ -1,0 +1,73 @@
+{
+  "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+  "platform": "android",
+  "status": "passed",
+  "executor": {
+    "kind": "agent",
+    "id": "independent-agent:/root/android_keyboard_review"
+  },
+  "startedAt": "2026-10-29T15:31:14.017573+00:00",
+  "finishedAt": "2026-10-29T15:37:44.973385+00:00",
+  "environment": {
+    "id": "android-qa-emulator5554",
+    "profile": "android-phone",
+    "platform": "android",
+    "application": "product",
+    "url": "https://127.0.0.1:63944",
+    "build": "dev.groupplanning.android.uitesthost 0.1.0(1); installed APK SHA256 022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+    "os": "Android 16 API36",
+    "device": "sdk_gphone64_arm64 emulator-5554; 720x1600 physical, density320, logical360x800",
+    "locale": "OS en-US; product ru",
+    "timezone": "Europe/Moscow",
+    "data": "isolated design memory fixture; synthetic accounts/meetings",
+    "backend": "Go memory fixture root-owned session61417; local port63944; design scenario"
+  },
+  "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "actual": "Все четыре шага кейса пройдены самостоятельно на установленном QA APK: IME dismiss фон/история/шапка; сохранение многострочного текста и XX selection, замена XX на 😀; first Send/+ /emoji; возврат формы без IME; явное редактирование; живой ввод формы/поиска; scroll/longpress. Уникальное сообщение QA-OUTSIDE-1837\\nsingle send найдено ровно один раз в серверном feed.",
+  "defect": "",
+  "evidence": [
+    {
+      "path": "interactions.json",
+      "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+      "kind": "interaction"
+    },
+    {
+      "path": "actions.jsonl",
+      "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+      "kind": "interaction"
+    },
+    {
+      "path": "actual/09-background-stable.png",
+      "sha256": "0e485f32475c64af10fc3d9506b8010602d135dafad2e371e9b66878cd36baf7",
+      "kind": "screenshot"
+    },
+    {
+      "path": "actual/24-search-input.png",
+      "sha256": "8ab2f19e2ce32e8318d92c704f55561a2aa7ba5bdb7fce5b81f6e7f004f3f641",
+      "kind": "screenshot"
+    },
+    {
+      "path": "actual/28-longpress.png",
+      "sha256": "adb284b3d6941194fcfe14f3fb52bf6b04ae80c9eaf0875817734631608a8147",
+      "kind": "screenshot"
+    },
+    {
+      "path": "actual/32-send-confirmed.png",
+      "sha256": "2026561541f1c55b02f41c74efae5accdf84de51145f1e6a9732e3d87c3c6537",
+      "kind": "screenshot"
+    },
+    {
+      "path": "send-api-confirmation.json",
+      "sha256": "7ce3e2bd5a38c54ab23e7ddf1d95660eff021a66dc5b4ac522580ea139701376",
+      "kind": "raw"
+    }
+  ],
+  "planNote": "Preparation functional/plan.json remains unchanged and unaccepted because fixture62916 expired before case start. Parent approved recovery to63944 before live steps. environments-live.json records actual environment; this independent result is for integration into parent acceptance. No suites rerun or copied as new runs.",
+  "limits": [
+    "Android emulator5554 only, portrait360x800dp, textScale1.0; no physical device claim.",
+    "FontScale/reduced motion/TalkBack were not changed or exercised; parent explicitly limited settings.",
+    "No full suites repeated; author results are supporting evidence, independent actions above are this review.",
+    "Raw fixture text/date differs from Android synthetic fixture; compare focus behavior/composition/roles, not pixel identity.",
+    "Raw inherited task sheet visible close-X is superseded by chat-actions4.0.0; Android sheet has no close-X."
+  ]
+}

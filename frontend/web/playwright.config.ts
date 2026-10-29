@@ -51,6 +51,7 @@ export default defineConfig({
         '58-reaction-range-error.spec.ts',
         '59-album-download.spec.ts',
         '60-album-download-access.spec.ts',
+        '61-composer-outside-focus.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

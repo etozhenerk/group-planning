@@ -29,6 +29,7 @@ import dev.groupplanning.android.state.feed.FeedViewModel
 import dev.groupplanning.android.ui.feed.ChatPresentation
 import dev.groupplanning.android.ui.feed.FeedScreen
 import dev.groupplanning.android.ui.feed.LocalChatPresentation
+import dev.groupplanning.android.ui.feed.dismissComposerOnOutsideTap
 import dev.groupplanning.android.ui.settings.MeetingSettingsSheet
 import dev.groupplanning.android.ui.theme.DesignTokens
 
@@ -86,7 +87,10 @@ internal fun InvitationConversation(
         wasOpen = open
     }
     CompositionLocalProvider(LocalChatPresentation provides presentation) {
-        Column(Modifier.fillMaxSize().testTag("invitation-conversation")) {
+        Column(
+            Modifier.fillMaxSize().dismissComposerOnOutsideTap(presentation)
+                .testTag("invitation-conversation"),
+        ) {
             MeetingChatHeader(
                 details.preview,
                 details.meeting?.participantCount ?: 0,

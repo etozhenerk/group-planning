@@ -1384,3 +1384,70 @@
       status: planned
       health: unknown
       tests: []
+- id: TC-CHAT-OUTSIDE-KEYBOARD
+  title: Внешний tap скрывает клавиатуру сообщения и сохраняет действие
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md
+    requirement: Скрытие клавиатуры вне поля сообщения
+    scenario: Нажатие вне сообщения и продолжение действия
+    sha256: d5b43da206f9580f5fb218ed56b7b7406987c08992211108e9b23932e8c55f08
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированный fixture с синтетическим аккаунтом, встречей и историей;
+      production не используется.
+    - Точный клиент собран; native показывает настоящую экранную клавиатуру. На
+      web проверить desktop и mobile 320/390; viewport не считать
+      доказательством OS-клавиатуры.
+    - Введён многострочный черновик с выделением в середине; действия
+      Send/плюс/emoji доступны.
+  steps:
+    - action: Сфокусировать composer и коротко нажать свободную область, затем
+        повторить на истории сообщения и шапке.
+      expected: Фокус composer снимается; на native клавиатура скрывается. Черновик и
+        сохранённое выделение не теряются, непреднамеренной отправки нет.
+    - action: Снова войти в поле; отдельно первым tap нажать Send, плюс и emoji.
+      expected: Send отправляет одну копию, плюс открывает меню, emoji открывает док.
+        Нет поглощения первого tap или сдвига цели до его регистрации.
+    - action: Открыть форму из плюса, закрыть; открыть emoji, вставить символ в
+        сохранённую позицию; явно вернуться к клавиатуре.
+      expected: Закрытие формы не возвращает IME composer само. Вставка использует
+        сохранённое выделение; явное возвращение открывает редактирование.
+    - action: Нажать внутри composer, прокрутить историю и выполнить long press
+        сообщения; отдельно сфокусировать поиск emoji и поле формы. На web
+        пройти Tab и активировать кнопку клавиатурой.
+      expected: Ввод и другие поля работают штатно; scroll/long press не заменяются
+        внешним tap; реакции и клавиатурная доступность сохраняются.
+  cleanup:
+    - Сохранить evidence и очистить только собственный fixture; вернуть
+      временные настройки клавиатуры тестового симулятора.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/61-composer-outside-focus.spec.ts
+          selector: outside composer click preserves draft and first-tap actions at
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatKeyboardDismissalUITests.swift
+          selector: testOutsideTapPreservesSelectionAndEmojiSearchFocus
+          runner: ios-ui
+          level: e2e
+    android:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ComposerOutsideTapUiTests.kt
+          selector: backgroundMessageAndHeadingDismissImeAndKeepDraftSelection
+          runner: android-ui
+          level: e2e

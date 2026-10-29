@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "reviewer": "root-web-keyboard-independent-reviewer",
+  "reviewedAt": "2026-10-29T15:38:38.198585+00:00",
+  "mode": "live",
+  "environment": "{\"runtime\": \"CUA ChatGPT in-app browser; exact engine/version not exposed\", \"os\": \"macOS 27.0.1 (26A434)\", \"device\": \"Desktop Mac; responsive viewport overrides, no touch emulation or OS IME\", \"viewports\": [\"1280x720\", \"390x844\", \"320x740\"], \"locale\": \"ru (document.lang and rendered UI)\", \"timezone\": \"Europe/Moscow (host); browser Intl not exposed by read-only wrapper\", \"textScale\": 1, \"fonts\": [\"-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)\"], \"build\": \"frozen Vite demo /tmp/somewhere-web-composer-dismiss-20261029; author bundle inventory SHA256 119733f98f5ce7ae5ed8c7d0465f3f55b61bc801b8c4e45822669e6b2474056e\", \"url\": \"https://127.0.0.1:8492/meetings/7857d0ed-fff2-415a-ac5d-91d167225731\", \"fixture\": \"Own UI-created synthetic meeting, Sasha fake-provider, 8 history messages and 3 unique Send checks; isolated memory Go API. No production data.\"}",
+  "summary": "Scoped live review:6pass,3needs-fixes,1blocked. Outside-focus browser paths pass; existing composer growth discrepancy remains, touch long press and mobile OS IME unverified. Other118screens not reviewed; globaldesigngate not passed.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "focused",
+      "status": "needs-fixes",
+      "observations": "Focus и многострочный текст доступны, но существующее поле не растёт: desktop height46.5 при scrollHeight69; raw reference65. P2-WEB-COMPOSER-GROW: часть draft скрыта. Это не новый diff outside-focus; см. defect.md.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-focused.png",
+          "sha256": "844403425178235b715e1e5d8d672eddf4bbe994f6277812265e1b9d3fb7a250",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-multiline-typed.png",
+          "sha256": "99fa5e1e28d621ee002fe0c3f974c678cb1d778bf6805c90137d90cc3f3edaf5",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-focused.png",
+          "sha256": "9324a3c64d4a56752885822ec2f1ca53b25529d55682eae39ee3771190632088",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "На1280/390/320 короткий click фона снимает только focus composer; value сохраняется, selection9..20 остаётся. Click истории и шапки продолжает действие. OS IME не проверялась.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-outside.png",
+          "sha256": "1c563ae7f48eaa1384c519a640c6c960ec31cf4cd3e8e8530474a4356bbf480c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-outside.png",
+          "sha256": "76857bce8e50d3eab4939935991b05e86c1e118ead8667542175d998ded480d9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-outside.png",
+          "sha256": "3f25cd2895c91041e4b5e47ad795373df6c580ac44075b6c653e2b69469a5773",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-outside.png",
+          "sha256": "abd67b661d7d1344692bb29fa9a214ce23b63d1447db183e4a951b032750bf7a",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720;390x844;320x740",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:27:49.417Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Send по одному click отправляет ровно одну видимую копию на каждой ширине; плюс и emoji открываются с первого click; mobile header открывает сведения. Геометрия desktop/mobile viewport не помешала первому click, но сдвиг при настоящей IME не проверен.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/final-sent-messages.png",
+          "sha256": "5061425bfdd5ecc2120435ebb53c338a716de357503f8381cba6ebf28c3bb107",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-plus.png",
+          "sha256": "df860b35c5cef73991a24ec383ba3d93b430c949cc323697e79064a2d98e1648",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-plus.png",
+          "sha256": "cdd4927d120afcfadc18cc1658b75e66a65b27b4a324daee59ddcf0483fc18e1",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-plus.png",
+          "sha256": "a484a27e872c6475996522f89b2daa235500549dac4db107e8e4f03c11195d5b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-header.png",
+          "sha256": "3eb29845d5900a9faa7e1bb5cd0124ee3d28ca607c7fd7673b7375d58f46fb66",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-plus.png",
+          "sha256": "d6aad729e2c95835acb9e7bb3d6e542155560f58cee842f273ac2787125e7140",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-emoji.png",
+          "sha256": "3d0bb3ad1b624f7c11de38342ff3116576ec9e39a64c5b0ba43686e968960b20",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720;390x844;320x740",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:35:57.575Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "sheet-return-no-ime",
+      "status": "pass",
+      "observations": "Закрытие task формы возвращает focus к плюс, mobile info — к header. Composer не получает focus сам; draft сохранён. Это проверка browser focus, не OS IME.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-form-return.png",
+          "sha256": "f9f728e2b5ed6e980b552aa25c2860d6f16203251b6e5e6422e986e6b7856c08",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-form-close-attempt.png",
+          "sha256": "3f25cd2895c91041e4b5e47ad795373df6c580ac44075b6c653e2b69469a5773",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-outside.png",
+          "sha256": "abd67b661d7d1344692bb29fa9a214ce23b63d1447db183e4a951b032750bf7a",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720;390x844;320x740",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:28:38.773Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Явный click composer позволяет редактировать; emoji заменяет selection9..20 на🍕; keyboard toggle возвращает textarea focus и caret11 на всех ширинах.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-explicit-return.png",
+          "sha256": "922cafbc369d2db0359fe83c1ce03903af64632fd79be54c28aff929cd7f5fa8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-explicit-return.png",
+          "sha256": "5536079145ed139aea1e80c496fa138c6b0413f38cb36995854573dd820c4dbf",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-return.png",
+          "sha256": "c4ffebc818cdae947afa066cbe007282affc3e10bfe2322fba2f4c24ee5d9513",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-focused.png",
+          "sha256": "9324a3c64d4a56752885822ec2f1ca53b25529d55682eae39ee3771190632088",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720;390x844;320x740",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:29:06.418Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Поля task формы и emoji search получают/удерживают собственный focus; ввод и поиск пицца работают на каждой ширине.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-other-input.png",
+          "sha256": "3c57f3ee91d52e1b6548e99023f713b7558472146cee867cdbabe9a7d2b8e100",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-emoji-search.png",
+          "sha256": "51c97a2f2454d8fd31a39e0f936583a907a1c7daab7a7fe66c5f4eb3bced7381",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-form.png",
+          "sha256": "bcefdc3a73a4bae989c04a58233cada156e35d274eb91b9077d020c899ca40e4",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-emoji.png",
+          "sha256": "4e3fe56772ec0adcaf978b79993282e85b0e87623781ac11a157b66153ae86b9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-form.png",
+          "sha256": "8c4c8ad7e70852205a887521600c9f3d5ba70d853be3bd3571ee8d0a4b15ceaa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-emoji.png",
+          "sha256": "3d0bb3ad1b624f7c11de38342ff3116576ec9e39a64c5b0ba43686e968960b20",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720;390x844;320x740",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:28:38.261Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "scroll-long-press",
+      "status": "blocked",
+      "observations": "Wheel scroll работает на1280/390/320 и не имитирует outside click. Desktop right-click открывает reactions. Mouse press700ms не открывает touch menu; CUA не предоставляет документированный touch press в этом runtime. Настоящий touch long press не проверен, поэтому объединённое состояние blocked. Source useHoldGesture подтверждает отдельную non-mouse ветку, но не заменяет live proof.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-scroll.png",
+          "sha256": "d2b6dd0b24226ab352c7a8329bee7e24f39637d9670ccc0efa6860a6a4d98ad0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-contextmenu.png",
+          "sha256": "d8dad29f17450006ad0cdb8630c84e22fb815b9addcaa3182144a25d03647a3d",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-scroll.png",
+          "sha256": "2182c88b4a3325e7aa800ecb2678855948d68d553a6f972f0c8ec9daa9a61604",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-scroll.png",
+          "sha256": "ae4c87e0e429e51c36f9136625dc35a24cd90216b40add499223bd66dd253e18",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-mouse-longpress.png",
+          "sha256": "0de257316f324588c16736241caf9e3b01823943402f19c0faf53adb9e6ded2c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-outside.png",
+          "sha256": "abd67b661d7d1344692bb29fa9a214ce23b63d1447db183e4a951b032750bf7a",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "desktop-keyboard-navigation",
+      "status": "pass",
+      "observations": "Tab из composer переводит focus на emoji toggle; Enter открывает, Escape закрывает с focus на toggle, не composer. Ввод Shift+Enter и выделение остаются штатными.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-keyboard.png",
+          "sha256": "9bfbea4fb8f680d68344cc1ab75e88e3791cf29379356d105b320041e52dbcd0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/desktop-multiline-typed.png",
+          "sha256": "99fa5e1e28d621ee002fe0c3f974c678cb1d778bf6805c90137d90cc3f3edaf5",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/desktop-focused.png",
+          "sha256": "9324a3c64d4a56752885822ec2f1ca53b25529d55682eae39ee3771190632088",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "a69437cf6461f09ec127f2bf45decbabded2df0faf4baa5a92ff8a12e4468cdf",
+        "runtime": "CUA ChatGPT in-app browser; exact engine/version not exposed",
+        "os": "macOS 27.0.1 (26A434)",
+        "viewport": "1280x720",
+        "fonts": [
+          "-apple-system, system-ui, Segoe UI, sans-serif (computed CSS family)"
+        ],
+        "locale": "ru (document.lang and rendered UI)",
+        "timezone": "Europe/Moscow (host); browser Intl not exposed by read-only wrapper",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:29:07.097Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-320",
+      "status": "needs-fixes",
+      "observations": "Focus behavior пройден; P2-WEB-COMPOSER-GROW: при320px textarea44px, scrollHeight109px, часть многострочного draft скрыта относительно raw. Это viewport на desktop, mobile OS IME и touch не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-focused.png",
+          "sha256": "db271617aea4f498325caaf86570cdf0c05f60a2887394b090b61af79026a50d",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-emoji.png",
+          "sha256": "4e3fe56772ec0adcaf978b79993282e85b0e87623781ac11a157b66153ae86b9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-320-return.png",
+          "sha256": "c4ffebc818cdae947afa066cbe007282affc3e10bfe2322fba2f4c24ee5d9513",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/mobile-320.png",
+          "sha256": "d77738f0746cbaa8e278bbe8f9d0f33334ef4c226c20bc22c32f49620ed989f9",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-390",
+      "status": "needs-fixes",
+      "observations": "Focus behavior пройден; P2-WEB-COMPOSER-GROW: при390px textarea44px, scrollHeight87px, часть многострочного draft скрыта относительно raw. Это viewport на desktop, mobile OS IME и touch не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-focused.png",
+          "sha256": "659ef86ec0f4e0a9d16dcea5f8c740b3e2eae8411f34b5d38ace4f8f3fbd5cf2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-emoji.png",
+          "sha256": "8021a812c98887a2deac3eb385814cd4fc06be2d47358427238744ac5fee99b2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/mobile-390-explicit-return.png",
+          "sha256": "5536079145ed139aea1e80c496fa138c6b0413f38cb36995854573dd820c4dbf",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/reference/mobile-390.png",
+          "sha256": "845e9abc736513ca320d5f98fe030c34c37fd8c2ce15f120160b6ddd530d29dc",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+          "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

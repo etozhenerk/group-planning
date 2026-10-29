@@ -1,0 +1,26 @@
+# Независимые действия · iOS outside composer · 29.10.2026
+
+Исполнитель: /root/ios_keyboard_review. Это самостоятельный запуск заранее скомпилированных XCUITest на замороженном артефакте, с независимым просмотром свежих actual/reference. Это не отдельный ad-hoc ручной проход iPhone.
+
+## Предусловия
+
+Сравнены все 508 исходных файлов и 66 файлов Products/fixture: mismatch 0 до и после. design:context до/после 70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449. design:check ok. Runner заменяет только resultBundlePath; приложение/fixtures не пересобраны. Меняется только QA test host dev.groupplanning.ios.uitesthost. Изолированный fixture запускается на случайном loopback-порту и завершается trap.
+
+## Реально исполненные XCUITest
+
+1. testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus (pass): открыть синтетический чат; набрать «Одно нажатие …»; убедиться в видимой IME (более 10 клавиш, высота >200 pt, внутри app bounds); одним tap Send отправить ровно одну копию; input очистился, IME исчезла. Ввести многострочный черновик; первым tap открыть плюс; открыть «Предложить задачу»; дважды сфокусировать поле, набрать «Забрать пиццу!», IME остаётся у поля формы. Нажать её Done и закрыть sheet свайпом; IME composer не вернулась, черновик сохранён. Явно вернуться в composer, затем первым tap по шапке открыть сведения; закрыть свайпом; IME снова не возвращается. Видеозапись этого первого теста не велась; состояние sheet-return подтверждено raw assertion log, отдельного actual screenshot после закрытия нет.
+2. testMessageTapScrollAndLongPressKeepTheirBehavior (pass): ввести многострочный черновик при видимой IME; tap по сообщению скрывает IME, текст сохраняется, reactions не открываются. Refocus; long press 0.7 s открывает anchored reactions и скрывает IME. Tap фона закрывает reactions; refocus; swipeDown истории не создаёт popup и не теряет черновик; outside tap скрывает IME, явный tap возвращает её. Снимки long-press и scroll-return просмотрены.
+3. testOutsideTapPreservesSelectionAndEmojiSearchFocus (pass): набрать «first line\nbefore XX after»; стрелками выделить XX в середине. Короткий tap свободного края timeline скрывает IME и сохраняет точный текст. Открыть emoji, дважды сфокусировать search, набрать «пицца»; видимая IME остаётся у search. Нажать 🍕: «first line\nbefore 🍕 after» доказывает сохранение range. Явный toggle к клавиатуре, вставить ! после 🍕. Outside tap; явный tap в начало поля и A дают «Afirst line\nbefore 🍕! after».
+4. Дополнительный testEmojiDockRepeatedInsertionAndKeyboardReturn (pass): выбран потому, что основной suite открывал emoji уже после outside-dismiss. В новом fixture набрать «До » при IME, первым tap открыть emoji; IME исчезает, док и Send видимы. Поиск «пицца», два tap 🍕, одно удаление оставляют «До 🍕»; явный toggle к IME и « после» дают «До 🍕 после». Повторное открытие дока и landscape сохраняют доступность Send/toggle; teardown возвращает portrait. На independent-emoji.mp4 кадр19.000 показывает настоящую IME перед открытием, 20.000–21.000 — док после первого tap; 22.000–25.000 — search с собственной видимой IME. Видео просмотрено по извлечённым кадрам, не как непрерывное воспроизведение.
+
+## Визуальное сравнение
+
+Raw UX5.0.0 открыт в IAB по предоставленному localhost URL, размер402×874. Самостоятельно введён тот же multiline draft; outside click убрал фокус и сохранил текст; первое нажатие emoji открыло док; search получил фокус и запрос «пицца». Сохранены focused/outside/dock/search screenshots. Actual использует другую синтетическую историю/название/дату сообщений, поэтому pixel regression и точное совпадение fixture не заявлены. Сравнивались композиция composer и дока, иерархия, роли цветов, читаемость, сохранение текста, IME, доступность действий. Системные SF, safe area, keyboard, sheet/drag indicator и native emoji допустимы по docs/design/platforms.md.
+
+Просмотрены все 9 current actual screenshots; actual-contact.jpg; late-run-contact.jpg (кадры0–40 с шагом5 с); emoji-contact.jpg (0–25 с шагом1 с) и реальные кадры IME→док. Нет наблюдаемого дефекта в выбранных переходах. В xcresult имеется Runtime Warning «Invalid frame dimension (negative or non-finite).»; assertion failure и видимое нарушение с ним не связаны, warning сохранён без объявления его исправленным.
+
+## Ограничения и восстановление
+
+Отдельное ручное native управление не выполнялось: текущая авторизация ограничена XCUITest, CUA inventory не содержал Simulator. Physical iPhone, release/store artifact, VoiceOver, крупный accessibility text и Reduce Motion=true не проверены. Native text category — UICTContentSizeCategoryL (номинальный 1.0), reducedMotion=false. Не проверена неизменность точных animation timings: кадры с шагом1/5 с пригодны для последовательности состояний, не для миллисекундной плавности.
+
+AutomaticMinimizationEnabled был временно false до передачи от автора. После обоих прогонов восстановлен командой defaults write … -bool true; обратное чтение keyboard-restored.txt=1. ReduceMotion не изменялся; reduce-motion-after.txt=0. Пользовательский somewhere/физический телефон не запускались. Временный reference tab закрыт, viewport reset. Оба fixture процесса завершены runner cleanup; тестовый app data остаётся только в QA host.

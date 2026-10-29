@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "id": "keyboard-outside-cross-client-followup-20261029",
+  "purpose": "feature",
+  "component": "web",
+  "createdAt": "2026-10-29T15:34:05.690Z",
+  "implementer": "implementation-team:/root",
+  "catalogHash": "f0a3b23929371dfd70884c1b531974c89636bdb73303d9edb402eedff8479dfa",
+  "sourceHash": "45c5ec6561a12e11eaa00afdf0333c71d1f3f917d9835ca41d4452abd93bba09",
+  "selectedCases": [
+    "TC-CHAT-OUTSIDE-KEYBOARD"
+  ],
+  "expected": [
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/web-desktop/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "web-desktop",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/web-390/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "web-390",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/web-320/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "web-320",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/ios-keyboard/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "ios-keyboard",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/android-keyboard/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "android-keyboard",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "android-ui",
+    "android-unit",
+    "ios-ui",
+    "ios-unit",
+    "web-chat-e2e",
+    "web-check",
+    "web-e2e",
+    "web-read-e2e",
+    "web-window-e2e"
+  ],
+  "environments": [
+    {
+      "application": "product",
+      "locale": "ru_RU",
+      "timezone": "Europe/Moscow",
+      "id": "web-desktop",
+      "profile": "web-desktop",
+      "platform": "web",
+      "url": "https://127.0.0.1:8492/meetings/7857d0ed-fff2-415a-ac5d-91d167225731",
+      "build": "bundle inventory sha256:119733f98f5ce7ae5ed8c7d0465f3f55b61bc801b8c4e45822669e6b2474056e",
+      "os": "macOS host; exact version and browser UA not exposed to reviewer",
+      "device": "Codex in-app browser 1280x720; desktop runtime, no mobile OS IME",
+      "data": "Independent synthetic Sasha account and QA keyboard meeting; local memory reset between fixture sessions",
+      "backend": "isolated browser-server.ts memory API at 127.0.0.1:8492"
+    },
+    {
+      "application": "product",
+      "locale": "ru_RU",
+      "timezone": "Europe/Moscow",
+      "id": "web-390",
+      "profile": "web-responsive",
+      "platform": "web",
+      "url": "https://127.0.0.1:8492/meetings/7857d0ed-fff2-415a-ac5d-91d167225731",
+      "build": "bundle inventory sha256:119733f98f5ce7ae5ed8c7d0465f3f55b61bc801b8c4e45822669e6b2474056e",
+      "os": "macOS host; exact version and browser UA not exposed to reviewer",
+      "device": "Codex in-app browser 390x844; desktop runtime, no mobile OS IME",
+      "data": "Independent synthetic Sasha account and QA keyboard meeting; local memory reset between fixture sessions",
+      "backend": "isolated browser-server.ts memory API at 127.0.0.1:8492"
+    },
+    {
+      "application": "product",
+      "locale": "ru_RU",
+      "timezone": "Europe/Moscow",
+      "id": "web-320",
+      "profile": "web-responsive",
+      "platform": "web",
+      "url": "https://127.0.0.1:8492/meetings/7857d0ed-fff2-415a-ac5d-91d167225731",
+      "build": "bundle inventory sha256:119733f98f5ce7ae5ed8c7d0465f3f55b61bc801b8c4e45822669e6b2474056e",
+      "os": "macOS host; exact version and browser UA not exposed to reviewer",
+      "device": "Codex in-app browser 320x740; desktop runtime, no mobile OS IME",
+      "data": "Independent synthetic Sasha account and QA keyboard meeting; local memory reset between fixture sessions",
+      "backend": "isolated browser-server.ts memory API at 127.0.0.1:8492"
+    },
+    {
+      "application": "product",
+      "locale": "ru_RU",
+      "timezone": "Europe/Moscow",
+      "id": "ios-keyboard",
+      "profile": "ios-phone",
+      "platform": "ios",
+      "url": "ios-app://dev.groupplanning.ios.uitesthost",
+      "build": "artifact inventory sha256:87170619899ba61a857af5b18292a6730b6a69074004c55b91acf30ead5fe03e",
+      "os": "iOS27.0 24A434",
+      "device": "iPhone18Pro simulator 31262733-50DC-46A5-938E-4C462D70F109, 402x874@3, textScale large",
+      "data": "Synthetic design/accessibility fixture; dev test host only; real visible IME; temporary minimization setting restored after tests",
+      "backend": "memory fixture.test sha256:c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1; isolated per-run random loopback port"
+    },
+    {
+      "application": "product",
+      "locale": "ru_RU",
+      "timezone": "Europe/Moscow",
+      "id": "android-keyboard",
+      "profile": "android-phone",
+      "platform": "android",
+      "url": "android-app://dev.groupplanning.android.uitesthost",
+      "build": "apk sha256:022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+      "os": "Android16 API36",
+      "device": "emulator-5554, 720x1600@320dpi / 360x800dp, textScale1.0",
+      "data": "Synthetic chat/design fixture; somewhere QA only; root-owned fixture via ADB reverse",
+      "backend": "isolated https://127.0.0.1:63944; httpapi.test sha256:c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1"
+    }
+  ],
+  "artifact": null
+}

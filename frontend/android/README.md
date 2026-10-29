@@ -64,6 +64,7 @@ sh scripts/test-ui.sh calendar
 sh scripts/test-ui.sh auth
 sh scripts/test-ui.sh experience
 ANDROID_SERIAL=emulator-5554 SOMEWHERE_GRADLE_WORKERS=1 sh scripts/test-ui.sh sheet-controls
+ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh composer-focus
 ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh
 ```
 
@@ -78,7 +79,10 @@ Lint, JVM-тесты и сборку instrumentation APK. `test-album-gallery.sh
 запускает Compose UI-тесты и затем останавливает только свой сервер. Живое demo
 не перезапускается. `sheet-controls` запускает семь проверок закрытия панелей,
 сохранения черновиков без refresh, стабильного списка прочитавших и индикатора
-отправки; системные настройки устройства этот набор не меняет. Переменная
+отправки; системные настройки устройства этот набор не меняет.
+`composer-focus` проверяет внешние нажатия, настоящую IME, выделение сообщения,
+первое нажатие действий и фокус полей панели/поиска эмодзи в отдельном QA-приложении.
+Временно изменённые настройки IME и анимаций восстанавливаются. Переменная
 `SOMEWHERE_GRADLE_WORKERS` ограничивает workers runner (по умолчанию два). Аргумент `calendar` запускает только сценарии календаря:
 периоды, месяц, Back, создание из выбранной даты, закреплённую шапку и крупный
 шрифт. Без аргумента (или с `all`) выполняется полный UI-набор, включая все

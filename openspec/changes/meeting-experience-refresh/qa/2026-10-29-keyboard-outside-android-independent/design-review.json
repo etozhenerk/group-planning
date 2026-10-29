@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "reviewer": "independent-agent:/root/android_keyboard_review",
+  "reviewedAt": "2026-10-29T15:39:45.208961+00:00",
+  "mode": "live",
+  "environment": "QA emulator5554 only, Android16 API36, 360x800dp portrait @320dpi, system sans-serif, textScale1.0, OS en-US/app ru/Gboard Russian, Europe/Moscow; root-owned isolated memory fixture63944. Exact installed APK hash verified. No physical device, large text, reduced motion or TalkBack claim. Raw reference360x800 viewed separately; native system insets/font/48dp targets retained.",
+  "summary": "7 targeted focus states passed in independent live pass. No focus/action defect observed. Complete app/release/design manifest not accepted by this scoped report. Source hash stable before/after.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Real Gboard visible. Composer focused. Text alpha XX omega\\nsecond line and middle XX selection visible.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:32:49.633657+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/06-controlled-draft.png",
+          "sha256": "373659b526458460b4a3f2669e36e9b1a5c5069f4db41fa81be66003fef29cc2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/07-selection-before-outside.png",
+          "sha256": "9e0eae46e6a0c62b1e07d65925014dc9a263c01cd1fd4f04f61d156118f01265",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/01-mobile-chat.png",
+          "sha256": "e881a20224913d82ad556fdba0842d07619aa6c506d261440fc704af981085d6",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Background/history dismiss IME, composer focused=false, exact multiline text retained. XX remained selected after background and was replaced by 😀 (alpha 😀 omega\\nsecond line). Header first tap opened information sheet and hid IME. No unintended send.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:34:02.295865+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/09-background-stable.png",
+          "sha256": "0e485f32475c64af10fc3d9506b8010602d135dafad2e371e9b66878cd36baf7",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/10-emoji-after-outside.png",
+          "sha256": "4ad466a1f588c8485e2628ff07575361ef460cb51b915535f8ffab7d5adf6360",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/11-selection-restored-ime.png",
+          "sha256": "9070c87a57bfde2deb21a8203a926989790ca030d0a84804c2cc3c5eaae570de",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/12-history-dismiss.png",
+          "sha256": "a5dc66e58bcee2e1541bc4c768393208bb18406f089c7304c11f981d43e80fc4",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/14-heading-dismiss.png",
+          "sha256": "324035fa7f007747e355376a9da2d9edc34e5f497f2db71d38e70e03224de422",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/02-outside.png",
+          "sha256": "d7fdde8f6e9b65995adb2effcda0cdba824a9ecf4855e7e135a9e59795b9ca01",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Plus menu and emoji dock each opened on their first tap; Send cleared composer, hid IME and produced exactly one server feed message (API confirmation count1). No target loss during resize.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:37:44.803059+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/17-first-plus.png",
+          "sha256": "8a80b8a7e6b85ee98126b601be044aa25639f0d8f1827ede5118bee38ccff13e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/22-first-emoji.png",
+          "sha256": "ee9eedd6bf5b066708a5213ba07de287bb0b0f35b0bdc0d38c75dfd9afb8bafb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/30-before-first-send.png",
+          "sha256": "7e04dfb5cf639c7bbc85db2a33b7e3b92ccd049e96905e91b70cd550a196a26c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/32-send-confirmed.png",
+          "sha256": "2026561541f1c55b02f41c74efae5accdf84de51145f1e6a9732e3d87c3c6537",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/04-first-plus.png",
+          "sha256": "72adfe4215743bc82a86a928fd537ea58fa9458f88729b11570e8ca10b100977",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "sheet-return-no-ime",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Both returns kept composer draft unchanged and mInputShown=false; IME did not reopen by itself. No task submitted.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:35:03.077381+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/15-info-return-no-ime.png",
+          "sha256": "c2569f1a67686b537a329009264dd3472207478c3f9b00543ebc4d2d0cb86bff",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/20-form-return-no-ime.png",
+          "sha256": "7af173f332054dbac928b0c5503e14dc7d5f2d92fb4dddb220e3460d5fe1a0c3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/05-task-form.png",
+          "sha256": "30095c9a7dbc296362c970a360a9d3c3b99398e7fe606ca6f7f6e4b79f1c345a",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Composer focused=true and real Gboard visible after each explicit editing action.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:36:19.478509+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/11-selection-restored-ime.png",
+          "sha256": "9070c87a57bfde2deb21a8203a926989790ca030d0a84804c2cc3c5eaae570de",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/13-refocus.png",
+          "sha256": "4ac6500148c90af3808c12d58d3ae3acc87527c76bbb7af82c5cfdc712b61944",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/26-explicit-from-search.png",
+          "sha256": "528c8c30810624e31a83c9fe313d86fb408174a730fd4d998e5418321ed47c2a",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/03-emoji.png",
+          "sha256": "781ac06a3fdf77517a1da14b8b8c8d3c35d14d763dfcc25beed2e6e9a8efadd1",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: Form input kept text/IME. Search retained пицца and returned 🍕; outside history tap did not clear search focus or hide its IME. Composer draft unchanged.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:36:17.012042+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/19-other-form-input.png",
+          "sha256": "acd41a09d43e77bfee5df5383807e40d292430447e5fe7e0daec41acc4fa10d9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/24-search-input.png",
+          "sha256": "8ab2f19e2ce32e8318d92c704f55561a2aa7ba5bdb7fce5b81f6e7f004f3f641",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/25-search-keeps-focus.png",
+          "sha256": "8bfa67d4ec7010175b3d6b63dedf13b186448c370c9f2bc2a66662e31edf8f1c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/03-emoji.png",
+          "sha256": "781ac06a3fdf77517a1da14b8b8c8d3c35d14d763dfcc25beed2e6e9a8efadd1",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "scroll-long-press",
+      "status": "pass",
+      "observations": "Контракт chat-actions5.0.0: History scrolled and showed jump-to-latest affordance, composer and IME remained focused. Long press opened anchored quick reactions/readers popup; it was not converted to short tap. Back closed popup.",
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "fa7c1a2a55073a4c3227aa5bf0eff16d038ff7545584a4123b5ead80de2b591c",
+        "runtime": "dev.groupplanning.android.uitesthost 0.1.0(1), installed APK SHA256022f82a9673e06f6f72f038d81796c9fe2542ccc085ff156ffd534adc6b8c901",
+        "os": "Android16 API36 sdk_gphone64_arm64",
+        "viewport": "720x1600 physical @320dpi; 360x800dp portrait",
+        "fonts": [
+          "Android system sans-serif",
+          "Gboard system emoji"
+        ],
+        "locale": "OS en-US; app ru; Gboard Russian",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-10-29T15:36:51.134396+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/27-scroll-ime.png",
+          "sha256": "5abcb0654b91f08d03ebfb08dfdfccec9ef0aad522cfadbb39af5d2b5dbe5d61",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/28-longpress.png",
+          "sha256": "adb284b3d6941194fcfe14f3fb52bf6b04ae80c9eaf0875817734631608a8147",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actual/29-after-longpress.png",
+          "sha256": "04117e6f45024469c24d00db1d4c6039092afd40cb7a4bf223b74fd79adf6ef6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/01-mobile-chat.png",
+          "sha256": "e881a20224913d82ad556fdba0842d07619aa6c506d261440fc704af981085d6",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/interactions.json",
+          "sha256": "f16eb11a126cf8443893cb66b5940d4288397f31e2258938f570557cf643f349",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/actions.jsonl",
+          "sha256": "0dfd93480fd87bffecc93537337c8276fe4c12695ceb13a08e0906eb53c1304c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-android-independent/reference/actions.json",
+          "sha256": "5c3f2a018ae68c5a32dfa0b2ebe57255e58883f6ed0750cf28e35ff55e607d11",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "case": "TC-CHAT-OUTSIDE-KEYBOARD",
+  "reviewer": "root-web-keyboard-independent-reviewer",
+  "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "status": "blocked",
+  "scope": "independent browser UI; not aggregate qa run",
+  "browserFocusPaths": "passed",
+  "profiles": [
+    {
+      "viewport": "1280x720",
+      "outsideDraftSelection": "passed",
+      "firstClickSendPlusEmojiHeader": "passed",
+      "formReturnNoRefocus": "passed",
+      "otherInput": "passed",
+      "emojiSelectionExplicitReturn": "passed",
+      "wheelScroll": "passed"
+    },
+    {
+      "viewport": "390x844",
+      "outsideDraftSelection": "passed",
+      "firstClickSendPlusEmojiHeader": "passed",
+      "formReturnNoRefocus": "passed",
+      "otherInput": "passed",
+      "emojiSelectionExplicitReturn": "passed",
+      "wheelScroll": "passed"
+    },
+    {
+      "viewport": "320x740",
+      "outsideDraftSelection": "passed",
+      "firstClickSendPlusEmojiHeader": "passed",
+      "formReturnNoRefocus": "passed",
+      "otherInput": "passed",
+      "emojiSelectionExplicitReturn": "passed",
+      "wheelScroll": "passed"
+    }
+  ],
+  "desktopTabEnterEscape": "passed",
+  "desktopContextMenu": "passed",
+  "touchLongPress": "blocked: desktop IAB has no documented touch-press control",
+  "mobileOSIME": "not_verified: viewport is not OS keyboard",
+  "visualDefects": [
+    "P2-WEB-COMPOSER-GROW"
+  ],
+  "automaticEvidence": {
+    "origin": "author supplied; read after live review",
+    "webCheck": "211 unit tests,48files; checks.json notes test-only Tab correction afterward",
+    "targetedE2E": "6passed, Chromium+WebKit at1440/390/320",
+    "independentlyRerun": false
+  },
+  "evidence": [
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/interactions.json",
+      "sha256": "aa4c46f942f1aae2a8e5c3f58ffee8119150ab0b8a815070dc0707ec4ba759b7",
+      "kind": "interaction"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-web-independent/actual/final-sent-messages.png",
+      "sha256": "5061425bfdd5ecc2120435ebb53c338a716de357503f8381cba6ebf28c3bb107",
+      "kind": "actual"
+    }
+  ]
+}

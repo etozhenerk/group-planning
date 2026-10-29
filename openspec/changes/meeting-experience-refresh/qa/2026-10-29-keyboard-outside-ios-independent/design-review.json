@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "reviewer": "ios_keyboard_review-independent-20261029",
+  "reviewedAt": "2026-10-29T15:36:20.906504+00:00",
+  "mode": "live",
+  "environment": "{\"id\": \"ios-keyboard-independent-20261029\", \"profile\": \"ios-phone\", \"platform\": \"ios\", \"application\": \"product\", \"url\": \"ios-app://dev.groupplanning.ios.uitesthost\", \"build\": \"artifact-files SHA256 87170619899ba61a857af5b18292a6730b6a69074004c55b91acf30ead5fe03e; executable SHA256 2f7555a98a31b042bfee0a4d5eba9b406b072fd9daf41b4616e759007f0124eb\", \"os\": \"iOS Simulator 27.0 (24A434)\", \"device\": \"iPhone 18 Pro; 31262733-50DC-46A5-938E-4C462D70F109; 402x874 pt @3\", \"locale\": \"ru_RU\", \"timezone\": \"Europe/Moscow\", \"data\": \"Изолированный memory fixture, scope accessibility, scenario design; синтетическая встреча deb00000-0000-4000-8000-000000000002 и отдельный storage namespace каждого UI test\", \"backend\": \"Go fixture.test SHA256 c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1; отдельный случайный loopback-порт каждого запуска; оба процесса завершены cleanup\"}; UICTContentSizeCategoryL nominal scale1.0; SFUI-Regular/Bold; reducedMotion=false. Actual/reference fixture differs; no pixel-regression claim.",
+  "summary": "Адресный независимый XCUITest:3+1 passed; свежие actual/reference просмотрены. Шесть scoped состояний подтверждены, визуальный sheet-return-no-ime blocked из-за отсутствия отдельного кадра. Полный design gate, ручной native проход и физический iPhone не подтверждены.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Реальная экранная клавиатура видна; двухстрочный composer выше IME, XX выделен. Клавиши/высота/bounds подтверждены XCUITest; текст и действия не перекрыты. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-selected-draft.png",
+          "sha256": "fe079a03eeb50bc1c747c8e9d34a3eba2a4647b8f960e69e0630745e83fedae8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/focused.png",
+          "sha256": "cc5d62dad32d0b3bb26101cceebbbb88ead5ca0962c9ddc3eb527000148fa4e1",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:28:07Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Короткий tap фона скрывает IME; многострочный текст сохранён; последующая вставка 🍕 заменяет XX и подтверждает сохранение selection. Tap истории и шапки выполнены отдельно. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-outside-dismissed.png",
+          "sha256": "0e3147e00125233b78dd0b87f0a0b6633e1d134ddec358a1773c96f5e971e0b6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/outside-draft-preserved.png",
+          "sha256": "ce5c15d93aa4cb03d6cc386b99e6db17d0bcefab51d9a81001e6d0dccd48c485",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:28:09Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Send отправил одну копию; плюс открыл меню/форму. Дополнительный неизменный TelegramChatUITest и кадры19→20 с подтверждают открытие emoji с первого tap из видимой IME. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-send-first-tap.png",
+          "sha256": "cfaf4068cec99e8dd7b0f7702a2ec7277fd996520d775a607288cf90cae4f0dc",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/emoji-dock.png",
+          "sha256": "06d5c0124ffd0ccb0e742f36d68e63c1f26a7fac5fa5506f68a24d626496750b",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-emoji.log",
+          "sha256": "1eff597d450a109f7d329b3cf3865f0ded41564cedd2605dd3e35e6464dec374",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/frames-emoji/frame-0019.000.png",
+          "sha256": "d0b69ad60f3045dfd6a6d5bb4117f3afdad1a000ef5e7d02766a86cf0b30fb9d",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/frames-emoji/frame-0020.000.png",
+          "sha256": "139bf47d9ba03c8644c8eb92fc777b91949a96e924f8b5a5953121712d332b00",
+          "kind": "actual"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:26:51Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "sheet-return-no-ime",
+      "status": "blocked",
+      "observations": "Функционально XCUITest подтвердил закрытие task/info sheet и отсутствие IME с сохранением draft; отдельного actual снимка/видеокадра именно после возврата нет. Визуальный pass этого состояния не заявлен. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-sheet-field.png",
+          "sha256": "b5e066fb937124c735388a307235a6e9fbbc5a1d28b55340dce57b44260574bb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/raw-402x874.png",
+          "sha256": "5c751c3f58dd1612623a64439db27a9010f844b8b4e6cc3bdfec3adaec367bc3",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Явный tap в composer возвращает настоящую клавиатуру; ввод продолжается с выбранного места. Toggle «Вернуться к клавиатуре» вернул ввод после 🍕, последующий tap начала поля позволил вставить A. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-scroll-return.png",
+          "sha256": "dc98222361abbd3f0dfee28a0c5de7e9a4554bcfcc2c83f2010e764dd042dbc8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/focused.png",
+          "sha256": "cc5d62dad32d0b3bb26101cceebbbb88ead5ca0962c9ddc3eb527000148fa4e1",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:27:51Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Поиск emoji остаётся сфокусированным при повторном tap; запрос «пицца» и видимая IME сохранены. Поле task sheet принимает повторный ввод «!» со своей клавиатурой. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-selection-preserved.png",
+          "sha256": "43cd8c4f7aed31e4222e7ef1852b26ade752def3530e9a6a84051229aa9a5120",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/emoji-search.png",
+          "sha256": "778200efd96ffa7f292fbf6aafd703e4a4d2b735bdfad9da8eb6abb6a98ecad0",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:28:17Z"
+      }
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "scroll-long-press",
+      "status": "pass",
+      "observations": "Long press 0.7s открывает anchored reactions, короткий tap сообщения их не открывает. Swipe истории не создаёт reactions и сохраняет draft; повторный фокус и IME показаны actual. Набор ограничен конкретным simulator/обычным текстом; отдельный ручной проход, физический iPhone и полный design gate не подтверждены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/actual/chat-keyboard-long-press.png",
+          "sha256": "0eb321e0104cdadbaaa55d72aa34b1ee158f42ad6e145981e133cb30724bf5d9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/reference/raw-402x874.png",
+          "sha256": "5c751c3f58dd1612623a64439db27a9010f844b8b4e6cc3bdfec3adaec367bc3",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/interaction-review.md",
+          "sha256": "c08603491c0156ccb05f42bd132db82e7caa5dcb892852a0fd6b2f1ac6705bf2",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/independent-ui-escalated.log",
+          "sha256": "ed19628dced4c351ca1ce86025c9c2a74337bc921e98ff73aaa729d3f7e5a3ef",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+        "fixtureHash": "c8d56e207fd48f9cf286fefb7fd79d9563e9ac08c89a6ad9ef3800273ed0c8b1",
+        "runtime": "iOS Simulator 27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874 pt @3; portrait",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-10-29T15:27:42Z"
+      }
+    }
+  ]
+}

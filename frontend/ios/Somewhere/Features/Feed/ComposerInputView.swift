@@ -4,6 +4,7 @@ import UIKit
 /// Placeholder and editable text share TextKit's font, origin and baseline.
 final class ComposerInputView: UITextView {
     private let placeholder = UILabel()
+    private lazy var keyboardDismissal = ComposerKeyboardDismissal(input: self)
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -15,6 +16,11 @@ final class ComposerInputView: UITextView {
     }
 
     required init?(coder: NSCoder) { nil }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        keyboardDismissal.attach(to: window)
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()

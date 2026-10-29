@@ -1,0 +1,87 @@
+{
+  "reviewer": "independent-agent:/root/android_keyboard_review",
+  "case": "TC-CHAT-OUTSIDE-KEYBOARD",
+  "sourceHash": "70d23b247c66c02460ba6f6859b71d4df37013b28e59d1b1684ec01603905449",
+  "startedAt": "2026-10-29T15:31:14.017573+00:00",
+  "finishedAt": "2026-10-29T15:37:44.973385+00:00",
+  "steps": [
+    {
+      "id": "focused",
+      "action": "Tap composer; slow synthetic multiline input; long press XX",
+      "actual": "Real Gboard visible. Composer focused. Text alpha XX omega\\nsecond line and middle XX selection visible.",
+      "screens": [
+        "06-controlled-draft",
+        "07-selection-before-outside"
+      ]
+    },
+    {
+      "id": "outside-draft-preserved",
+      "action": "Tap free history background, reopen via emoji; insert first emoji; explicit keyboard return. Independently refocus and tap message history, then heading.",
+      "actual": "Background/history dismiss IME, composer focused=false, exact multiline text retained. XX remained selected after background and was replaced by 😀 (alpha 😀 omega\\nsecond line). Header first tap opened information sheet and hid IME. No unintended send.",
+      "screens": [
+        "09-background-stable",
+        "10-emoji-after-outside",
+        "11-selection-restored-ime",
+        "12-history-dismiss",
+        "14-heading-dismiss"
+      ]
+    },
+    {
+      "id": "first-tap-action",
+      "action": "From visible composer IME: one plus tap, separately one emoji tap, finally one Send tap on QA-OUTSIDE-1837\\nsingle send.",
+      "actual": "Plus menu and emoji dock each opened on their first tap; Send cleared composer, hid IME and produced exactly one server feed message (API confirmation count1). No target loss during resize.",
+      "screens": [
+        "17-first-plus",
+        "22-first-emoji",
+        "30-before-first-send",
+        "32-send-confirmed"
+      ]
+    },
+    {
+      "id": "sheet-return-no-ime",
+      "action": "Android Back from heading information; plus > task form, input synthetic draft, clear own draft, Back hides form IME, Back closes form.",
+      "actual": "Both returns kept composer draft unchanged and mInputShown=false; IME did not reopen by itself. No task submitted.",
+      "screens": [
+        "15-info-return-no-ime",
+        "20-form-return-no-ime"
+      ]
+    },
+    {
+      "id": "explicit-refocus",
+      "action": "Tap composer after dismiss; use keyboard button from emoji dock and from emoji search.",
+      "actual": "Composer focused=true and real Gboard visible after each explicit editing action.",
+      "screens": [
+        "11-selection-restored-ime",
+        "13-refocus",
+        "26-explicit-from-search"
+      ]
+    },
+    {
+      "id": "other-input",
+      "action": "Tap task input and type Independent task draft; separately tap emoji search and type пицца using Gboard keys; tap history background while search owns focus.",
+      "actual": "Form input kept text/IME. Search retained пицца and returned 🍕; outside history tap did not clear search focus or hide its IME. Composer draft unchanged.",
+      "screens": [
+        "19-other-form-input",
+        "24-search-input",
+        "25-search-keeps-focus"
+      ]
+    },
+    {
+      "id": "scroll-long-press",
+      "action": "With composer IME shown, swipe history down 390px over450ms; then long press own existing message750ms; Back.",
+      "actual": "History scrolled and showed jump-to-latest affordance, composer and IME remained focused. Long press opened anchored quick reactions/readers popup; it was not converted to short tap. Back closed popup.",
+      "screens": [
+        "27-scroll-ime",
+        "28-longpress",
+        "29-after-longpress"
+      ]
+    }
+  ],
+  "limits": [
+    "Android emulator5554 only, portrait360x800dp, textScale1.0; no physical device claim.",
+    "FontScale/reduced motion/TalkBack were not changed or exercised; parent explicitly limited settings.",
+    "No full suites repeated; author results are supporting evidence, independent actions above are this review.",
+    "Raw fixture text/date differs from Android synthetic fixture; compare focus behavior/composition/roles, not pixel identity.",
+    "Raw inherited task sheet visible close-X is superseded by chat-actions4.0.0; Android sheet has no close-X."
+  ]
+}

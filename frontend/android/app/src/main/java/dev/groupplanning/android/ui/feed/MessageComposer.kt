@@ -19,6 +19,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,12 +32,15 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -75,6 +79,12 @@ internal fun MessageComposer(
     val focus = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
     val emojiOpen = presentation.composerPanel == "emoji"
+    DisposableEffect(presentation) {
+        onDispose {
+            presentation.composerInputFocused = false
+            presentation.composerInputBounds = Rect.Zero
+        }
+    }
     val update: (TextFieldValue) -> Unit = {
         val length = it.text.codePointCount(0, it.text.length)
         val previous = state.draft.codePointCount(0, state.draft.length)
@@ -149,11 +159,21 @@ internal fun MessageComposer(
                 BasicTextField(
                     field,
                     { next ->
-                        // Focus loss collapses Compose selection; the dock keeps its insertion range.
-                        if (presentation.composerPanel != "emoji") update(next)
+                        // Compose collapses selection on blur; outside taps keep the insertion range.
+                        if (presentation.composerPanel != "emoji" &&
+                            (!presentation.preserveComposerSelection || next.text != field.text)
+                        ) {
+                            update(next)
+                        }
                     },
                     Modifier.weight(1f).focusRequester(inputFocus).onFocusChanged {
-                        if (it.isFocused) presentation.dismiss()
+                        presentation.composerInputFocused = it.isFocused
+                        if (it.isFocused) {
+                            presentation.preserveComposerSelection = false
+                            presentation.dismiss()
+                        }
+                    }.onGloballyPositioned {
+                        presentation.composerInputBounds = it.boundsInWindow()
                     }.heightIn(max = DesignTokens.componentChatComposerInputMaxHeight).padding(
                         start = DesignTokens.componentChatComposerInputInsetStart,
                         top = DesignTokens.componentChatComposerInputInsetTop,

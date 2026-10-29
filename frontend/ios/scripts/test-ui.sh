@@ -12,6 +12,7 @@ somewhere_scope=
 somewhere_chat=0
 somewhere_native_filters=0
 case "${1:-all}" in
+    chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
     album-download) somewhere_filter=-only-testing:SomewhereUITests/AlbumDownloadUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
     native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
     help) somewhere_filter=-only-testing:SomewhereUITests/HelpDisclosureUITests; somewhere_scope=accessibility ;;
@@ -49,7 +50,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|album-download|sheet-stability|sheet-pending|sheet-task|support|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|chat-keyboard|album-download|sheet-stability|sheet-pending|sheet-task|support|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

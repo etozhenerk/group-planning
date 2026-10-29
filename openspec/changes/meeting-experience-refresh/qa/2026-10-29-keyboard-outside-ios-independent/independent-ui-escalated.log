@@ -1,0 +1,762 @@
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -xctestrun /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/chat-keyboard-author/Products/SomewhereUI_iphonesimulator27.1-arm64.xctestrun -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -resultBundlePath /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/IndependentKeyboard.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests"
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/IndependentKeyboard.xcresult
+
+2026-10-29 18:26:33.249 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:26:34.500288+0300 SomewhereUITests-Runner[19093:9182011] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-29 18:26:37.572.
+Test Suite 'SomewhereUITests.xctest' started at 2026-10-29 18:26:37.572.
+Test Suite 'ChatKeyboardDismissalUITests' started at 2026-10-29 18:26:37.572.
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus]' started.
+    t =     0.00s Start Test at 2026-10-29 18:26:37.575
+    t =     0.02s Set Up
+    t =     0.02s     Setting device orientation to Portrait
+    t =     0.04s         Wait for com.apple.springboard to idle
+    t =     0.07s Open dev.groupplanning.ios.uitesthost
+    t =     0.07s     Launch dev.groupplanning.ios.uitesthost
+2026-10-29 18:26:37.700 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-29 18:26:37.700 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-29 18:26:37.713 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.54s         Setting up automation session
+objc[19093]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a27c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10ac28310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.09s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.50s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.54s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.54s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.63s Checking existence of `"home-tab-calendar" Button`
+    t =     5.66s Find the "home-tab-calendar" Button
+    t =     5.69s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.71s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.78s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.83s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.87s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.87s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.90s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.92s     Synthesize event
+    t =     6.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.64s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.68s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.68s         Checking existence of `"meeting-add" Button`
+    t =     7.72s Tap "message-input" TextView
+    t =     7.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.72s     Find the "message-input" TextView
+    t =     7.74s     Check for interrupting elements affecting "message-input" TextView
+    t =     7.77s     Synthesize event
+    t =     8.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.31s Type 'Одно нажатие C2F468' into "message-input" TextView
+    t =     8.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.67s     Find the "message-input" TextView
+    t =     8.73s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.77s     Synthesize event
+    t =     9.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.30s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    10.34s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    10.34s         Checking existence of `Keyboard (First Match)`
+    t =    10.36s Get number of matches for: Descendants matching type Key
+    t =    10.39s Find the Keyboard (First Match)
+    t =    10.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.44s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    10.45s Find the "message-input" TextView
+    t =    10.50s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    10.51s Tap "message-send" Button
+    t =    10.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.51s     Find the "message-send" Button
+    t =    10.55s     Check for interrupting elements affecting "message-send" Button
+    t =    10.59s     Synthesize event
+    t =    10.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.13s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    12.17s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    12.17s         Checking existence of `Keyboard (First Match)`
+    t =    12.24s Waiting 10.0s for StaticText (First Match) to exist
+    t =    13.27s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    13.28s         Checking existence of `StaticText (First Match)`
+    t =    13.33s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "chat-message-" AND label CONTAINS "Одно нажатие C2F468"'
+    t =    13.36s Find the "message-input" TextView
+    t =    13.91s Added attachment named 'chat-keyboard-send-first-tap'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-send-first-tap.png
+    t =    13.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.96s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-send-first-tap.json
+    t =    14.08s Tap "message-input" TextView
+    t =    14.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.08s     Find the "message-input" TextView
+    t =    14.10s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.13s     Synthesize event
+    t =    14.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.74s Type 'Вернусь
+к сообщению' into "message-input" TextView
+    t =    14.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.75s     Find the "message-input" TextView
+    t =    14.80s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.84s     Synthesize event
+    t =    15.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.38s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    16.42s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    16.42s         Checking existence of `Keyboard (First Match)`
+    t =    16.44s Get number of matches for: Descendants matching type Key
+    t =    16.47s Find the Keyboard (First Match)
+    t =    16.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.52s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.53s Find the "message-input" TextView
+    t =    16.58s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.59s Tap "meeting-add" Button
+    t =    16.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.60s     Find the "meeting-add" Button
+    t =    16.64s     Check for interrupting elements affecting "meeting-add" Button
+    t =    16.67s     Synthesize event
+    t =    16.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.22s Waiting 5.0s for "new-preparation-task" Button to exist
+    t =    18.26s     Checking `Expect predicate `existsNoRetry == 1` for object "new-preparation-task" Button`
+    t =    18.26s         Checking existence of `"new-preparation-task" Button`
+    t =    18.30s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    19.34s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    19.34s         Checking existence of `Keyboard (First Match)`
+    t =    19.41s Tap "new-preparation-task" Button
+    t =    19.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.41s     Find the "new-preparation-task" Button
+    t =    19.45s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =    19.48s     Synthesize event
+    t =    19.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.25s Waiting 5.0s for "preparation-title" TextField to exist
+    t =    21.29s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-title" TextField`
+    t =    21.29s         Checking existence of `"preparation-title" TextField`
+    t =    21.34s Tap "preparation-title" TextField
+    t =    21.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.34s     Find the "preparation-title" TextField
+    t =    21.37s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    21.40s     Synthesize event
+<unknown>:0: warning: -[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus] : Invalid frame dimension (negative or non-finite).
+    t =    21.70s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.10s Type 'Забрать пиццу' into "preparation-title" TextField
+    t =    22.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.10s     Find the "preparation-title" TextField
+    t =    22.16s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    22.20s     Synthesize event
+    t =    22.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.64s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    23.67s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    23.67s         Checking existence of `Keyboard (First Match)`
+    t =    23.69s Get number of matches for: Descendants matching type Key
+    t =    23.73s Find the Keyboard (First Match)
+    t =    23.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.78s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.80s Find the "preparation-title" TextField
+    t =    23.85s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.87s Tap "preparation-title" TextField
+    t =    23.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.87s     Find the "preparation-title" TextField
+    t =    23.91s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    23.95s     Synthesize event
+    t =    24.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.75s Type '!' into "preparation-title" TextField
+    t =    24.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.75s     Find the "preparation-title" TextField
+    t =    24.81s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    24.87s     Synthesize event
+    t =    25.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.37s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    26.40s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    26.40s         Checking existence of `Keyboard (First Match)`
+    t =    26.42s Get number of matches for: Descendants matching type Key
+    t =    26.45s Find the Keyboard (First Match)
+    t =    26.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.51s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    26.52s Find the "preparation-title" TextField
+    t =    26.57s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    26.59s Find the "preparation-title" TextField
+    t =    27.19s Added attachment named 'chat-keyboard-sheet-field'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-sheet-field.png
+    t =    27.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-sheet-field.json
+    t =    27.41s Find the "action-keyboard-done" Button
+    t =    27.47s Tap "action-keyboard-done" Button
+    t =    27.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.47s     Find the "action-keyboard-done" Button
+    t =    27.51s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    27.55s     Synthesize event
+    t =    27.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.15s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    29.18s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    29.18s         Checking existence of `"action-form-header" StaticText`
+    t =    29.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.25s Find the "action-form-header" StaticText
+    t =    29.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.32s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 552.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    29.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.33s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.35s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    29.38s     Synthesize event
+    t =    29.38s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.40s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.42s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.44s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.46s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    30.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.83s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    31.83s     Checking existence of `"action-form-header" StaticText`
+    t =    31.87s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    32.91s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    32.91s         Checking existence of `Keyboard (First Match)`
+    t =    32.98s Find the "message-input" TextView
+    t =    33.01s Tap "message-input" TextView
+    t =    33.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.01s     Find the "message-input" TextView
+    t =    33.04s     Check for interrupting elements affecting "message-input" TextView
+    t =    33.06s     Synthesize event
+    t =    33.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.69s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    34.72s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    34.72s         Checking existence of `Keyboard (First Match)`
+    t =    34.75s Get number of matches for: Descendants matching type Key
+    t =    34.78s Find the Keyboard (First Match)
+    t =    34.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.83s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    34.85s Find the "message-input" TextView
+    t =    34.89s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    34.90s Tap "meeting-heading" Button
+    t =    34.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.91s     Find the "meeting-heading" Button
+    t =    34.94s     Check for interrupting elements affecting "meeting-heading" Button
+    t =    34.98s     Synthesize event
+    t =    35.00s         Scroll element to visible
+    t =    35.00s         Find the "meeting-heading" Button
+    t =    35.06s         Computed hit point {-1, -1} after scrolling to visible
+    t =    35.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    35.81s Waiting 5.0s for "meeting-info-header" StaticText to exist
+    t =    36.82s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-header" StaticText`
+    t =    36.82s         Checking existence of `"meeting-info-header" StaticText`
+    t =    36.88s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    37.91s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    37.91s         Checking existence of `Keyboard (First Match)`
+    t =    37.99s Find the "action-keyboard-done" Button
+    t =    39.02s     Find the "action-keyboard-done" Button (retry 1)
+    t =    40.08s     Find the "action-keyboard-done" Button (retry 2)
+    t =    40.13s Waiting 5.0s for "meeting-info-header" StaticText to exist
+    t =    41.14s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-header" StaticText`
+    t =    41.15s         Checking existence of `"meeting-info-header" StaticText`
+    t =    41.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.21s Find the "meeting-info-header" StaticText
+    t =    41.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.28s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 503.7) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    41.28s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.29s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.31s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    41.33s     Synthesize event
+    t =    41.33s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.35s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.37s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.39s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.41s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    43.86s Checking `Expect predicate `exists == 0` for object "meeting-info-header" StaticText`
+    t =    43.86s     Checking existence of `"meeting-info-header" StaticText`
+    t =    43.92s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    44.93s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    44.93s         Checking existence of `Keyboard (First Match)`
+    t =    45.00s Find the "message-input" TextView
+    t =    45.03s Tear Down
+    t =    45.03s     Setting device orientation to Portrait
+    t =    45.03s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus]' passed (45.306 seconds).
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testMessageTapScrollAndLongPressKeepTheirBehavior]' started.
+    t =     0.00s Start Test at 2026-10-29 18:27:22.883
+    t =     0.04s Set Up
+    t =     0.04s     Setting device orientation to Portrait
+    t =     0.04s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.05s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.05s         Terminate dev.groupplanning.ios.uitesthost:19111
+2026-10-29 18:27:22.946 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:22.946 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:22.947 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:23.984 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-29 18:27:23.984 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-29 18:27:24.004 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.31s         Setting up automation session
+    t =     3.65s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.94s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.98s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.98s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.11s Checking existence of `"home-tab-calendar" Button`
+    t =     6.14s Find the "home-tab-calendar" Button
+    t =     6.17s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.19s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.26s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.31s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.33s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.34s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.36s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.39s     Synthesize event
+    t =     6.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.10s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.13s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.13s         Checking existence of `"meeting-add" Button`
+    t =     8.18s Tap "message-input" TextView
+    t =     8.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.19s     Find the "message-input" TextView
+    t =     8.22s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.24s     Synthesize event
+    t =     8.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.73s Type 'Черновик
+рядом с и...' into "message-input" TextView
+    t =     8.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.09s     Find the "message-input" TextView
+    t =     9.14s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.18s     Synthesize event
+    t =     9.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.81s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    10.84s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    10.84s         Checking existence of `Keyboard (First Match)`
+    t =    10.86s Get number of matches for: Descendants matching type Key
+    t =    10.89s Find the Keyboard (First Match)
+    t =    10.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.94s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    10.95s Find the "message-input" TextView
+    t =    11.00s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    11.01s Waiting 5.0s for "chat-message-ded00000-0000-4000-8000-000000000013" Any to exist
+    t =    12.04s     Checking `Expect predicate `existsNoRetry == 1` for object "chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =    12.04s         Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =    12.21s Tap "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =    12.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.22s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =    12.39s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.44s     Synthesize event
+    t =    12.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.98s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    14.02s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    14.02s         Checking existence of `Keyboard (First Match)`
+    t =    14.08s Find the "message-input" TextView
+    t =    14.11s Checking existence of `"reaction-expand" Button`
+    t =    14.13s Tap "message-input" TextView
+    t =    14.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.14s     Find the "message-input" TextView
+    t =    14.16s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.19s     Synthesize event
+    t =    14.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.86s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    15.88s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    15.88s         Checking existence of `Keyboard (First Match)`
+    t =    15.89s Get number of matches for: Descendants matching type Key
+    t =    15.92s Find the Keyboard (First Match)
+    t =    15.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.97s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    15.98s Find the "message-input" TextView
+    t =    16.03s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.05s Press "chat-message-ded00000-0000-4000-8000-000000000013" StaticText for 0.7 seconds
+    t =    16.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.05s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    16.24s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    16.29s     Synthesize event
+    t =    17.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.24s Waiting 5.0s for "reaction-expand" Button to exist
+    t =    18.26s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-expand" Button`
+    t =    18.26s         Checking existence of `"reaction-expand" Button`
+    t =    18.31s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    19.35s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    19.35s         Checking existence of `Keyboard (First Match)`
+    t =    19.40s Find the "message-input" TextView
+    t =    19.93s Added attachment named 'chat-keyboard-long-press'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-long-press.png
+    t =    19.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.96s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-long-press.json
+    t =    20.07s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    20.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.07s     Find the "feed-timeline" ScrollView
+    t =    20.09s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    20.12s     Synthesize event
+    t =    20.12s         Find the "feed-timeline" ScrollView
+    t =    20.15s         Find the "feed-timeline" ScrollView
+    t =    20.18s         Find the "feed-timeline" ScrollView
+    t =    20.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.50s Waiting 5.0s for "reaction-expand" Button to not exist
+    t =    21.53s     Checking `Expect predicate `existsNoRetry == 0` for object "reaction-expand" Button`
+    t =    21.53s         Checking existence of `"reaction-expand" Button`
+    t =    21.57s Tap "message-input" TextView
+    t =    21.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.58s     Find the "message-input" TextView
+    t =    21.61s     Check for interrupting elements affecting "message-input" TextView
+    t =    21.64s     Synthesize event
+    t =    21.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.23s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    23.25s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    23.25s         Checking existence of `Keyboard (First Match)`
+    t =    23.27s Get number of matches for: Descendants matching type Key
+    t =    23.29s Find the Keyboard (First Match)
+    t =    23.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.34s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.35s Find the "message-input" TextView
+    t =    23.40s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.41s Swipe down "feed-timeline" ScrollView
+    t =    23.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.42s     Find the "feed-timeline" ScrollView
+    t =    23.46s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    23.49s     Synthesize event
+    t =    23.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.42s Find the "message-input" TextView
+    t =    24.46s Checking existence of `"reaction-expand" Button`
+    t =    24.50s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    24.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.50s     Find the "feed-timeline" ScrollView
+    t =    24.55s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    24.58s     Synthesize event
+    t =    24.59s         Find the "feed-timeline" ScrollView
+    t =    24.63s         Find the "feed-timeline" ScrollView
+    t =    24.67s         Find the "feed-timeline" ScrollView
+    t =    25.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.23s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    26.26s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    26.26s         Checking existence of `Keyboard (First Match)`
+    t =    26.31s Tap "message-input" TextView
+    t =    26.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.31s     Find the "message-input" TextView
+    t =    26.34s     Check for interrupting elements affecting "message-input" TextView
+    t =    26.36s     Synthesize event
+    t =    26.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.96s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    27.97s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    27.97s         Checking existence of `Keyboard (First Match)`
+    t =    28.00s Get number of matches for: Descendants matching type Key
+    t =    28.04s Find the Keyboard (First Match)
+    t =    28.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.09s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    28.10s Find the "message-input" TextView
+    t =    28.15s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    28.71s Added attachment named 'chat-keyboard-scroll-return'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-scroll-return.png
+    t =    28.72s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-scroll-return.json
+    t =    28.92s Tear Down
+    t =    28.92s     Setting device orientation to Portrait
+    t =    28.92s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testMessageTapScrollAndLongPressKeepTheirBehavior]' passed (29.164 seconds).
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testOutsideTapPreservesSelectionAndEmojiSearchFocus]' started.
+    t =     0.00s Start Test at 2026-10-29 18:27:52.048
+    t =     0.03s Set Up
+    t =     0.04s     Setting device orientation to Portrait
+    t =     0.04s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.05s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.05s         Terminate dev.groupplanning.ios.uitesthost:20164
+2026-10-29 18:27:52.113 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:52.114 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:52.114 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:27:53.149 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-29 18:27:53.149 xcodebuild[19083:9181796] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-29 18:27:53.164 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.31s         Setting up automation session
+    t =     3.53s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.80s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.81s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.81s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.91s Checking existence of `"home-tab-calendar" Button`
+    t =     5.94s Find the "home-tab-calendar" Button
+    t =     5.97s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.99s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.06s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.11s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.14s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.14s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.17s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.19s     Synthesize event
+    t =     6.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.92s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.93s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.93s         Checking existence of `"meeting-add" Button`
+    t =     7.97s Tap "message-input" TextView
+    t =     7.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.98s     Find the "message-input" TextView
+    t =     8.00s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.03s     Synthesize event
+    t =     8.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.57s Type 'first line
+before ...' into "message-input" TextView
+    t =     8.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.95s     Find the "message-input" TextView
+    t =     9.02s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.07s     Synthesize event
+    t =     9.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.73s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =     9.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.73s     Find the "message-input" TextView
+    t =     9.77s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.81s     Synthesize event
+    t =    10.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.29s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    10.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.30s     Find the "message-input" TextView
+    t =    10.36s     Check for interrupting elements affecting "message-input" TextView
+    t =    10.40s     Synthesize event
+    t =    10.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.76s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    10.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.77s     Find the "message-input" TextView
+    t =    10.80s     Check for interrupting elements affecting "message-input" TextView
+    t =    10.84s     Synthesize event
+    t =    11.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.20s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    11.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.20s     Find the "message-input" TextView
+    t =    11.24s     Check for interrupting elements affecting "message-input" TextView
+    t =    11.28s     Synthesize event
+    t =    11.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.64s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    11.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.64s     Find the "message-input" TextView
+    t =    11.68s     Check for interrupting elements affecting "message-input" TextView
+    t =    11.72s     Synthesize event
+    t =    12.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.08s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    12.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.09s     Find the "message-input" TextView
+    t =    12.13s     Check for interrupting elements affecting "message-input" TextView
+    t =    12.17s     Synthesize event
+    t =    12.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.53s Type '←' key (XCUIKeyboardKeyLeftArrow) with modifiers '⇧' (0x02)
+    t =    12.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.54s     Find the "message-input" TextView
+    t =    12.58s     Check for interrupting elements affecting "message-input" TextView
+    t =    12.62s     Synthesize event
+    t =    12.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.98s Type '←' key (XCUIKeyboardKeyLeftArrow) with modifiers '⇧' (0x02)
+    t =    12.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.98s     Find the "message-input" TextView
+    t =    13.02s     Check for interrupting elements affecting "message-input" TextView
+    t =    13.06s     Synthesize event
+    t =    13.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.42s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    14.46s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    14.46s         Checking existence of `Keyboard (First Match)`
+    t =    14.49s Get number of matches for: Descendants matching type Key
+    t =    14.53s Find the Keyboard (First Match)
+    t =    14.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.57s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    14.59s Find the "message-input" TextView
+    t =    14.64s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    15.17s Added attachment named 'chat-keyboard-selected-draft'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-selected-draft.png
+    t =    15.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-selected-draft.json
+    t =    15.40s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    15.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.40s     Find the "feed-timeline" ScrollView
+    t =    15.44s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    15.48s     Synthesize event
+    t =    15.49s         Find the "feed-timeline" ScrollView
+    t =    15.53s         Find the "feed-timeline" ScrollView
+    t =    15.57s         Find the "feed-timeline" ScrollView
+    t =    15.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.14s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    17.17s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    17.17s         Checking existence of `Keyboard (First Match)`
+    t =    17.23s Find the "message-input" TextView
+    t =    17.79s Added attachment named 'chat-keyboard-outside-dismissed'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-outside-dismissed.png
+    t =    17.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-outside-dismissed.json
+    t =    17.94s Tap "composer-emoji-toggle" Button
+    t =    17.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.94s     Find the "composer-emoji-toggle" Button
+    t =    17.96s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    18.00s     Synthesize event
+    t =    18.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.30s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    19.32s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    19.32s         Checking existence of `"emoji-search" TextField`
+    t =    19.39s Tap "emoji-search" TextField
+    t =    19.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.39s     Find the "emoji-search" TextField
+    t =    19.44s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    19.48s     Synthesize event
+    t =    19.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.13s Type 'пицца' into "emoji-search" TextField
+    t =    20.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.14s     Find the "emoji-search" TextField
+    t =    20.21s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    20.26s     Synthesize event
+    t =    20.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.56s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    21.57s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    21.57s         Checking existence of `Keyboard (First Match)`
+    t =    21.59s Get number of matches for: Descendants matching type Key
+    t =    21.61s Find the Keyboard (First Match)
+    t =    21.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.67s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    21.68s Find the "emoji-search" TextField
+    t =    21.73s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    21.75s Tap "emoji-search" TextField
+    t =    21.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.75s     Find the "emoji-search" TextField
+    t =    21.79s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    21.84s     Synthesize event
+    t =    22.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.14s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    23.16s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    23.16s         Checking existence of `Keyboard (First Match)`
+    t =    23.18s Get number of matches for: Descendants matching type Key
+    t =    23.21s Find the Keyboard (First Match)
+    t =    23.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.26s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.28s Find the "emoji-search" TextField
+    t =    23.33s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.34s Waiting 5.0s for "emoji-🍕" Button to exist
+    t =    24.37s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-🍕" Button`
+    t =    24.37s         Checking existence of `"emoji-🍕" Button`
+    t =    24.43s Tap "emoji-🍕" Button
+    t =    24.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.43s     Find the "emoji-🍕" Button
+    t =    24.48s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    24.53s     Synthesize event
+    t =    24.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.83s Find the "message-input" TextView
+    t =    25.40s Added attachment named 'chat-keyboard-selection-preserved'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-selection-preserved.png
+    t =    25.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6785FE07-BBAE-4949-91A8-918FCB12A6F5/tmp/somewhere-design-verification/chat-keyboard-selection-preserved.json
+    t =    25.65s Tap "composer-emoji-toggle" Button
+    t =    25.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.65s     Find the "composer-emoji-toggle" Button
+    t =    25.70s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    25.74s     Synthesize event
+    t =    26.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.11s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    27.14s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    27.14s         Checking existence of `Keyboard (First Match)`
+    t =    27.16s Get number of matches for: Descendants matching type Key
+    t =    27.18s Find the Keyboard (First Match)
+    t =    27.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.23s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    27.25s Find the "message-input" TextView
+    t =    27.30s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    27.31s Type '!' into "message-input" TextView
+    t =    27.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.32s     Find the "message-input" TextView
+    t =    27.36s     Check for interrupting elements affecting "message-input" TextView
+    t =    27.40s     Synthesize event
+    t =    27.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.63s Find the "message-input" TextView
+    t =    27.67s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    27.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.68s     Find the "feed-timeline" ScrollView
+    t =    27.72s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    27.76s     Synthesize event
+    t =    27.76s         Find the "feed-timeline" ScrollView
+    t =    27.81s         Find the "feed-timeline" ScrollView
+    t =    27.86s         Find the "feed-timeline" ScrollView
+    t =    28.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.43s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    29.46s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    29.46s         Checking existence of `Keyboard (First Match)`
+    t =    29.51s Tap "message-input" TextView[0.03, 0.20]
+    t =    29.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.51s     Find the "message-input" TextView
+    t =    29.54s     Check for interrupting elements affecting "message-input" TextView
+    t =    29.56s     Synthesize event
+    t =    29.57s         Find the "message-input" TextView
+    t =    29.59s         Find the "message-input" TextView
+    t =    29.62s         Find the "message-input" TextView
+    t =    29.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.25s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    31.28s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    31.28s         Checking existence of `Keyboard (First Match)`
+    t =    31.29s Get number of matches for: Descendants matching type Key
+    t =    31.32s Find the Keyboard (First Match)
+    t =    31.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.36s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    31.38s Find the "message-input" TextView
+    t =    31.42s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    31.44s Type 'A' into "message-input" TextView
+    t =    31.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.44s     Find the "message-input" TextView
+    t =    31.48s     Check for interrupting elements affecting "message-input" TextView
+    t =    31.52s     Synthesize event
+    t =    31.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.75s Find the "message-input" TextView
+    t =    31.79s Tear Down
+    t =    31.79s     Setting device orientation to Portrait
+    t =    31.80s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testOutsideTapPreservesSelectionAndEmojiSearchFocus]' passed (32.080 seconds).
+Test Suite 'ChatKeyboardDismissalUITests' passed at 2026-10-29 18:28:24.128.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 106.550 (106.555) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-10-29 18:28:24.128.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 106.550 (106.556) seconds
+Test Suite 'Selected tests' passed at 2026-10-29 18:28:24.128.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 106.550 (106.557) seconds
+2026-10-29 18:28:24.158 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.159 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.159 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.170 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.171 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.171 xcodebuild[19083:9181796] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-10-29 18:28:24.429 xcodebuild[19083:9181796] [MT] IDETestOperationsObserverDebug: 111.223 elapsed -- Testing started completed.
+2026-10-29 18:28:24.429 xcodebuild[19083:9181796] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-29 18:28:24.429 xcodebuild[19083:9181796] [MT] IDETestOperationsObserverDebug: 111.223 sec, +111.223 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-10-29-keyboard-outside-ios-independent/IndependentKeyboard.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

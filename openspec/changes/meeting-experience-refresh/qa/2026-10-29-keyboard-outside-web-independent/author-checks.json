@@ -1,0 +1,44 @@
+{
+  "head": "678cff24a1d97833cc80ac2a8171f213ea695103",
+  "designVersion": "5.0.0",
+  "webCheck": {
+    "status": "passed",
+    "unitTests": 211,
+    "note": "Full check before final test-only Tab correction; scoped typecheck/eslint/prettier repeated after correction."
+  },
+  "build": {
+    "status": "passed",
+    "kind": "Vite demo",
+    "directory": "/tmp/somewhere-web-composer-dismiss-20261029"
+  },
+  "targetedE2E": {
+    "status": "passed",
+    "count": 6,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "projects": [
+      "chromium",
+      "mobile-webkit"
+    ],
+    "file": "frontend/web/tests/61-composer-outside-focus.spec.ts"
+  },
+  "initialRun": {
+    "passed": 3,
+    "failed": 3,
+    "reason": "WebKit Tab skips buttons by default; isolated DOM confirms Alt+Tab reaches button. Existing test53 already uses this platform key. Product bundle unchanged."
+  },
+  "limitations": [
+    "Physical mobile OS keyboard not verified",
+    "No independent acceptance claimed",
+    "No full browser suite run",
+    "Scroll/long press not exercised by new E2E; existing handlers unchanged"
+  ],
+  "fixture": {
+    "url": "https://127.0.0.1:8492",
+    "serverSession": 24941,
+    "mode": "Synthetic memory API, test-only OAuth"
+  }
+}

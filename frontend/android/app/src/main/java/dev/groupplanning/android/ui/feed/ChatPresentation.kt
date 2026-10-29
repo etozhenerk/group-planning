@@ -12,6 +12,9 @@ internal class ChatPresentation {
     var composerPanel by mutableStateOf<String?>(null)
     var reaction by mutableStateOf<UUID?>(null)
     var conversationBounds by mutableStateOf(Rect.Zero)
+    var composerInputBounds = Rect.Zero
+    var composerInputFocused = false
+    var preserveComposerSelection = false
 
     companion object {
         val Saver = listSaver<ChatPresentation, String>(

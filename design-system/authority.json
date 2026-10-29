@@ -1,7 +1,7 @@
 {
-  "revision": "album-web-actions-row-2026-10-29-4.1.1",
-  "sourceCommit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
-  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers. 29.10.2026: скачивание всего альбома «рядом с добавить фото» на всех клиентах; перенос под primary отклонён. 29.10.2026: повторно подтверждена единая строка web-кнопок; исправление эталона без нового UX.",
+  "revision": "chat-keyboard-dismiss-2026-10-29-5.0.0",
+  "sourceCommit": "678cff24a1d97833cc80ac2a8171f213ea695103",
+  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers. 29.10.2026: скачивание всего альбома «рядом с добавить фото» на всех клиентах; перенос под primary отклонён. 29.10.2026: повторно подтверждена единая строка web-кнопок; исправление эталона без нового UX. 29.10.2026: скрывать клавиатуру на всех фронтах по нажатию вне поля сообщения.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "5.0.0: внешний короткий tap снимает только фокус composer, не поглощает действие; черновик/selection и штатные жесты сохраняются.",
     "4.1.1: новая web-ревизия запрещает разрыв группы действий; при нехватке места переносится вся группа под заголовок. Mobile две равные колонки; native и токены прежние.",
     "4.1.0: две соседние кнопки альбома на desktop/native/mobile web; общая подготовка с отменой в secondary, ZIP/native gallery. Прежние значения токенов и все chat/focus/sheets эталоны сохранены.",
     "4.0.0: sheet-controls raw и SVG заменяют close-X/pending текст; live render blocked, pass не переносится.",
@@ -58,7 +59,7 @@
   "sources": [
     {
       "path": "openspec/changes/meeting-experience-refresh/ux.md",
-      "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
+      "sha256": "4f37ee8f924324f2d09a88e4c5706e2f7558d248712f30d4967ffe03eaecfcd5"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
@@ -326,7 +327,7 @@
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
-      "sha256": "6912dbf9742390116710bd468998e2da9958f25da4b362a2fe2cd76f3f7042fe"
+      "sha256": "69bda7f3401d1ad9da9a5d08875166da235c1e821b41240575203fa751c5b6cd"
     },
     {
       "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
@@ -422,7 +423,7 @@
     },
     {
       "path": "docs/design/components/chat-actions.md",
-      "sha256": "c16aa94dc19aa32295977c96c6e433fa9611883b3f19ccb2fd8f7875056984ae"
+      "sha256": "b70aee64db64286993495334df567a39a3c560c7bda1e11ee2e13365a90cf1f6"
     },
     {
       "path": "docs/design/components/memories.md",
@@ -747,6 +748,18 @@
     {
       "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
       "sha256": "01b301791a6c7d178f69d7d3b16b13e7ea20a5e4988cf5cfa24c7950fabd8c26"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/index.html",
+      "sha256": "4c3407adbd9032526fbf057eb61be4160c3b92840478b4a9fe0fcaf38eb46051"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/README.md",
+      "sha256": "5816ad5cbc119b62b99d66a96035b2f633847a9ddabfb09f9d256ed13f5f6bd4"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/outside-focus.js",
+      "sha256": "8d17ce843079922ae7abb38d6e5e2429b54a0c6683288e521e86251db27d7d96"
     }
   ],
   "history": [
@@ -1302,6 +1315,25 @@
         {
           "path": "docs/design/components/memories.md",
           "sha256": "89bfe69d300164ea4016258c3dd9b1a993835f609adca97302f7251f4bde788c"
+        }
+      ]
+    },
+    {
+      "revision": "album-web-actions-row-2026-10-29-4.1.1",
+      "sourceCommit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
+      "reason": "До изменения outside-tap keyboard 5.0.0; предыдущие источники и evidence сохранены.",
+      "sources": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/ux.md",
+          "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+          "sha256": "6912dbf9742390116710bd468998e2da9958f25da4b362a2fe2cd76f3f7042fe"
+        },
+        {
+          "path": "docs/design/components/chat-actions.md",
+          "sha256": "c16aa94dc19aa32295977c96c6e433fa9611883b3f19ccb2fd8f7875056984ae"
         }
       ]
     }

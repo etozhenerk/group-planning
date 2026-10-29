@@ -5,6 +5,7 @@ import { useSendMessage } from '@/features/send-message/model/useSendMessage';
 import { useEmojiPanel } from '@/features/send-message/ui/SendMessage/hooks/useEmojiPanel';
 import { useEmojiInsertion } from '@/features/send-message/ui/SendMessage/hooks/useEmojiInsertion';
 import { useEmojiPresence } from '@/features/send-message/ui/SendMessage/hooks/useEmojiPresence';
+import { useComposerOutsideFocus } from '@/features/send-message/ui/SendMessage/hooks/useComposerOutsideFocus';
 
 export const useComposer = (
   id: string,
@@ -24,6 +25,8 @@ export const useComposer = (
     action.selection,
     action.rememberSelection,
   );
+
+  useComposerOutsideFocus(emoji.input);
 
   const panel = useEmojiPanel(open, toggle, !mobile);
   const presence = useEmojiPresence(open, mobile, compact);
