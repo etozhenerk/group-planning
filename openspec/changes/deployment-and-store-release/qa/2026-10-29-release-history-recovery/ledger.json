@@ -1,0 +1,1941 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-29T08:01:38.338760+00:00",
+  "scope": "Read-only historical release recovery inventory. Only new audit outputs written. No deployment, publication, tag mutation or rebuild.",
+  "repositoryHead": "e7947f173c2c7b6418661a9e820ae41db8cf6acd",
+  "originMainAtAudit": "e7947f173c2c7b6418661a9e820ae41db8cf6acd",
+  "remoteTagsObservation": "origin-tags.json",
+  "archiveBytesAuthorization": "Parent explicitly authorized read-only hashing original tar.gz/zip and git cat-file tag objects during this audit.",
+  "counts": {
+    "uniqueReleaseTags": 19,
+    "uniqueBundles": 17,
+    "bundleLocations": 19,
+    "confirmedHistoricalDeployments": 10,
+    "confirmedUnpublishedWebBackendDeployments": 6
+  },
+  "latestRecordedProduction": {
+    "web": "web/v0.1.0-rc.11",
+    "backend": "backend/v0.1.0-rc.5",
+    "databaseSchema": 8,
+    "basis": "Historical activation receipts and unchanged-database statements, not a fresh VM inspection."
+  },
+  "entries": [
+    {
+      "id": "backend/v0.1.0-rc.1",
+      "component": "backend",
+      "version": "0.1.0-rc.1",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "dce19e116480c7dfbd72c62e73f5757db329a228",
+        "peeledCommit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "dce19e116480c7dfbd72c62e73f5757db329a228",
+      "localTagRefOID": "dce19e116480c7dfbd72c62e73f5757db329a228",
+      "localTagType": "tag",
+      "commit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": null,
+      "sourceArtifactCopies": [],
+      "archiveHash": null,
+      "manifestHash": null,
+      "sha256SumsHash": null,
+      "tagCommitMatchesManifest": null,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [],
+        "copiesIdentical": null,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "unknown",
+        "paths": [],
+        "notes": "Local bundle absent; tag existence does not prove deployment.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "backend/v0.1.0-rc.2",
+      "component": "backend",
+      "version": "0.1.0-rc.2",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "669e3c347dfbf553c964c93082e6601887e5d517",
+        "peeledCommit": "669e3c347dfbf553c964c93082e6601887e5d517",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": null,
+      "localTagRefOID": "669e3c347dfbf553c964c93082e6601887e5d517",
+      "localTagType": "commit",
+      "commit": "669e3c347dfbf553c964c93082e6601887e5d517",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/backend-v0.1.0-rc.2",
+      "sourceArtifactCopies": [],
+      "archiveHash": "1ed6ccc0e507a6f057a5c91b028d09e3e06ce0c603f61faf35442ae3bda6ef9c",
+      "manifestHash": "c5f5fd7049b5f57c1a09d6e9febc3875f65dcd2fb65cfe9e85e12da384039c80",
+      "sha256SumsHash": "0616524331f14bc5e607bdb2ca2e71afbe21648b55a02edf2c6f9f25e09d791f",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "lightweight_tag_no_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/backend-v0.1.0-rc.2",
+            "manifestPath": "infra/local/releases/backend-v0.1.0-rc.2/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/backend-v0.1.0-rc.2/manifest.json",
+                "size": 856,
+                "sha256": "c5f5fd7049b5f57c1a09d6e9febc3875f65dcd2fb65cfe9e85e12da384039c80"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/backend-v0.1.0-rc.2/SHA256SUMS",
+                "size": 173,
+                "sha256": "0616524331f14bc5e607bdb2ca2e71afbe21648b55a02edf2c6f9f25e09d791f"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/backend-v0.1.0-rc.2/backend-linux-amd64.tar.gz",
+                "size": 18655370,
+                "sha256": "1ed6ccc0e507a6f057a5c91b028d09e3e06ce0c603f61faf35442ae3bda6ef9c"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/deployment-and-store-release/postgres-verification.md"
+        ],
+        "notes": "Report: installation 2026-10-25 11:15 MSK, schema 1.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "backend/v0.1.0-rc.3",
+      "component": "backend",
+      "version": "0.1.0-rc.3",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "f6830fc03f34b66f299a59ff0bcac8af6ffb073c",
+        "peeledCommit": "4426243792d7bec273763518d039ae7405fd8dd3",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "f6830fc03f34b66f299a59ff0bcac8af6ffb073c",
+      "localTagRefOID": "f6830fc03f34b66f299a59ff0bcac8af6ffb073c",
+      "localTagType": "tag",
+      "commit": "4426243792d7bec273763518d039ae7405fd8dd3",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/backend-v0.1.0-rc.3",
+      "sourceArtifactCopies": [],
+      "archiveHash": "55e2022dbc613fd6a2b7e3d3a46946de0451605638c39e6326a1e390fc64a09a",
+      "manifestHash": "97c1781a2dfce9ba5e73ce26c50c488b87ca72f12a24393bb9bcdd9c99885d45",
+      "sha256SumsHash": "4767b12268d4bb5ec56a08333e250ceaebf08627e2d0c0325a8f78dac3a76804",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/backend-v0.1.0-rc.3",
+            "manifestPath": "infra/local/releases/backend-v0.1.0-rc.3/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/backend-v0.1.0-rc.3/manifest.json",
+                "size": 882,
+                "sha256": "97c1781a2dfce9ba5e73ce26c50c488b87ca72f12a24393bb9bcdd9c99885d45"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/backend-v0.1.0-rc.3/SHA256SUMS",
+                "size": 173,
+                "sha256": "4767b12268d4bb5ec56a08333e250ceaebf08627e2d0c0325a8f78dac3a76804"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/backend-v0.1.0-rc.3/backend-linux-amd64.tar.gz",
+                "size": 18686000,
+                "sha256": "55e2022dbc613fd6a2b7e3d3a46946de0451605638c39e6326a1e390fc64a09a"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/deployment-and-store-release/monitoring-live-verification.md"
+        ],
+        "notes": "Report: installation 2026-10-25 18:20 UTC, main schema remains 1.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "backend/v0.1.0-rc.4",
+      "component": "backend",
+      "version": "0.1.0-rc.4",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "7e031be63e75543cec008aefd0adf176465cd605",
+      "localTagRefOID": "7e031be63e75543cec008aefd0adf176465cd605",
+      "localTagType": "tag",
+      "commit": "5f8b2e37fee78b80cc9ec577aa096b2b10b2067b",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-5f8b2e37/backend",
+      "sourceArtifactCopies": [],
+      "archiveHash": "fa38bea42fc39e9c3e5607df0e0fe92e1c6e73e9a0ace75a6ebe18f94dcee7ac",
+      "manifestHash": "e0bb42275fe4b487437c406a578d1b6f7c63f9ad5422c01381f902ab815c1e87",
+      "sha256SumsHash": "0b0b09ac547a8a82e72e1d4829ab54561f2ee5fdde5474892abf1c4584c47c83",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-5f8b2e37/backend",
+            "manifestPath": "infra/local/releases/candidates-5f8b2e37/backend/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-5f8b2e37/backend/manifest.json",
+                "size": 1915,
+                "sha256": "e0bb42275fe4b487437c406a578d1b6f7c63f9ad5422c01381f902ab815c1e87"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-5f8b2e37/backend/SHA256SUMS",
+                "size": 173,
+                "sha256": "0b0b09ac547a8a82e72e1d4829ab54561f2ee5fdde5474892abf1c4584c47c83"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/candidates-5f8b2e37/backend/backend-linux-amd64.tar.gz",
+                "size": 23962422,
+                "sha256": "fa38bea42fc39e9c3e5607df0e0fe92e1c6e73e9a0ace75a6ebe18f94dcee7ac"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/remote-audit.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/provenance.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/report.md"
+        ],
+        "notes": "Recorded remote result deployed_with_owner_exception; migration 1 to 8.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-5f8b2e37/owner-exception.json",
+          "sha256": "0b14c5a9e5e0058bd6fb3b3586e5b13f4c703016e314f9adad126a5fe8e03cca",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T12:51:58.576580+00:00",
+          "authorizationRef": "User answer call_fcf0b96486594fa9838c792a9c08f421: Да, выпустить с этими ограничениями",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "backend/v0.1.0-rc.5",
+      "component": "backend",
+      "version": "0.1.0-rc.5",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "3a565f62e01e0dd744e50eef935f238ec8a47d8a",
+      "localTagRefOID": "3a565f62e01e0dd744e50eef935f238ec8a47d8a",
+      "localTagType": "tag",
+      "commit": "3ebbb60c7581e3eb9a9b2a72e30314f8b5653812",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-3ebbb60c/backend",
+      "sourceArtifactCopies": [
+        "infra/local/releases/candidates-52649f03/backend",
+        "infra/local/releases/candidates-bd4ed97c/backend"
+      ],
+      "archiveHash": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5",
+      "manifestHash": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd",
+      "sha256SumsHash": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-3ebbb60c/backend",
+            "manifestPath": "infra/local/releases/candidates-3ebbb60c/backend/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-3ebbb60c/backend/manifest.json",
+                "size": 2017,
+                "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-3ebbb60c/backend/SHA256SUMS",
+                "size": 173,
+                "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/candidates-3ebbb60c/backend/backend-linux-amd64.tar.gz",
+                "size": 23966594,
+                "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          },
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-52649f03/backend",
+            "manifestPath": "infra/local/releases/candidates-52649f03/backend/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-52649f03/backend/manifest.json",
+                "size": 2017,
+                "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-52649f03/backend/SHA256SUMS",
+                "size": 173,
+                "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/candidates-52649f03/backend/backend-linux-amd64.tar.gz",
+                "size": 23966594,
+                "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          },
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-bd4ed97c/backend",
+            "manifestPath": "infra/local/releases/candidates-bd4ed97c/backend/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-bd4ed97c/backend/manifest.json",
+                "size": 2017,
+                "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-bd4ed97c/backend/SHA256SUMS",
+                "size": 173,
+                "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+              },
+              {
+                "name": "backend-linux-amd64.tar.gz",
+                "path": "infra/local/releases/candidates-bd4ed97c/backend/backend-linux-amd64.tar.gz",
+                "size": 23966594,
+                "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "infra/local/releases/candidates-52649f03/production-result.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json"
+        ],
+        "notes": "Paired with web rc7; report gives archive hash. Recorded executable hash bf74555cbae9ca1ef90dfbe1890b05c19017ab05cd2588961253da7afb8ae18d is a different hash domain from tar.gz. rc11 receipt says backend/services unchanged.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-52649f03/owner-exception.json",
+          "sha256": "d68a5011edbfa17e59c066ec24cdf96f7fc553f14ec4ed90a0d4c241e5a18a0a",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": null,
+          "manifestHashMatches": null,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "monitoring/v0.1.0-rc.1",
+      "component": "monitoring",
+      "version": "0.1.0-rc.1",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "a1b353903dbf9443babbd501cf5d88f7f28a4405",
+        "peeledCommit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "a1b353903dbf9443babbd501cf5d88f7f28a4405",
+      "localTagRefOID": "a1b353903dbf9443babbd501cf5d88f7f28a4405",
+      "localTagType": "tag",
+      "commit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.1",
+      "sourceArtifactCopies": [],
+      "archiveHash": "443f2ccb8b1123b2da872f527427d5d2a6a999acbd906cac7cc02ad1daae2e1e",
+      "manifestHash": "1d5cd7feb73a8ee8f43cb91d5dac7b5b45eec491c60b1c9469e6a12f7f159e64",
+      "sha256SumsHash": "58c3fde0fc76d8c2c4dd4d928ccfc7b7b0d8588888e6402bc63de5166d5560ea",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.1",
+            "manifestPath": "infra/local/releases/monitoring-v0.1.0-rc.1/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.1/manifest.json",
+                "size": 774,
+                "sha256": "1d5cd7feb73a8ee8f43cb91d5dac7b5b45eec491c60b1c9469e6a12f7f159e64"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.1/SHA256SUMS",
+                "size": 171,
+                "sha256": "58c3fde0fc76d8c2c4dd4d928ccfc7b7b0d8588888e6402bc63de5166d5560ea"
+              },
+              {
+                "name": "monitoring-functions.zip",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.1/monitoring-functions.zip",
+                "size": 286824,
+                "sha256": "443f2ccb8b1123b2da872f527427d5d2a6a999acbd906cac7cc02ad1daae2e1e"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployment_failed",
+        "paths": [
+          "openspec/changes/telegram-monitoring-bot/live-verification.md"
+        ],
+        "notes": "Cloud Functions build failed on proxy.golang.org timeout; working deployment not claimed.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "monitoring/v0.1.0-rc.2",
+      "component": "monitoring",
+      "version": "0.1.0-rc.2",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "be86b9c6509ede6b8e779b418ab625f4e20122ae",
+        "peeledCommit": "e2a85dc082c1657c1f9289943121a9ce889e6498",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "be86b9c6509ede6b8e779b418ab625f4e20122ae",
+      "localTagRefOID": "be86b9c6509ede6b8e779b418ab625f4e20122ae",
+      "localTagType": "tag",
+      "commit": "e2a85dc082c1657c1f9289943121a9ce889e6498",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.2",
+      "sourceArtifactCopies": [],
+      "archiveHash": "51969732c55503a1e4692609d1da40f70aff190d753466022eceaa3f902bc73d",
+      "manifestHash": "f8bb74fb094bd8e7b6664cdb3dad728a6ab6ce0ab4e9bb9e7a1bd30fa8a0c24d",
+      "sha256SumsHash": "db45175ed293a8c0a8b2a2d992a4efc28985e24cf46527e76802d74d849ceaa5",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.2",
+            "manifestPath": "infra/local/releases/monitoring-v0.1.0-rc.2/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.2/manifest.json",
+                "size": 774,
+                "sha256": "f8bb74fb094bd8e7b6664cdb3dad728a6ab6ce0ab4e9bb9e7a1bd30fa8a0c24d"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.2/SHA256SUMS",
+                "size": 171,
+                "sha256": "db45175ed293a8c0a8b2a2d992a4efc28985e24cf46527e76802d74d849ceaa5"
+              },
+              {
+                "name": "monitoring-functions.zip",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.2/monitoring-functions.zip",
+                "size": 286980,
+                "sha256": "51969732c55503a1e4692609d1da40f70aff190d753466022eceaa3f902bc73d"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployment_failed",
+        "paths": [
+          "openspec/changes/telegram-monitoring-bot/live-verification.md"
+        ],
+        "notes": "Cloud build required package main for buildmode=plugin; not an active deployment.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "monitoring/v0.1.0-rc.3",
+      "component": "monitoring",
+      "version": "0.1.0-rc.3",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "6944c4f7949462f73b697eb371a0bab366078e6e",
+        "peeledCommit": "23c51c99822093bbc58bd5ead6e74705010e0746",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "6944c4f7949462f73b697eb371a0bab366078e6e",
+      "localTagRefOID": "6944c4f7949462f73b697eb371a0bab366078e6e",
+      "localTagType": "tag",
+      "commit": "23c51c99822093bbc58bd5ead6e74705010e0746",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.3",
+      "sourceArtifactCopies": [],
+      "archiveHash": "f70c031b8ddeaba82354cfc1e6d8f6e415dc5c53cac0a591544a68c5c74e0dc3",
+      "manifestHash": "73e3580ec1257c13689f9174570ad17323f7e8d0cec5180dd02729c4dffdc23f",
+      "sha256SumsHash": "ada85be9074bed124dc2b652e57074210bcdc41d8338f83d06a0d3288f49afaf",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/monitoring-v0.1.0-rc.3",
+            "manifestPath": "infra/local/releases/monitoring-v0.1.0-rc.3/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.3/manifest.json",
+                "size": 774,
+                "sha256": "73e3580ec1257c13689f9174570ad17323f7e8d0cec5180dd02729c4dffdc23f"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.3/SHA256SUMS",
+                "size": 171,
+                "sha256": "ada85be9074bed124dc2b652e57074210bcdc41d8338f83d06a0d3288f49afaf"
+              },
+              {
+                "name": "monitoring-functions.zip",
+                "path": "infra/local/releases/monitoring-v0.1.0-rc.3/monitoring-functions.zip",
+                "size": 287176,
+                "sha256": "f70c031b8ddeaba82354cfc1e6d8f6e415dc5c53cac0a591544a68c5c74e0dc3"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/telegram-monitoring-bot/live-verification.md",
+          "openspec/changes/deployment-and-store-release/monitoring-live-verification.md",
+          "openspec/changes/deployment-and-store-release/monitoring-followup-verification.md"
+        ],
+        "notes": "Active Telegram function and later active HTTPS probe are recorded. Earlier probe apply failed at provider TLS handshake before resources; later report supersedes it. Active function is not proof of Telegram delivery.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.1",
+      "component": "web",
+      "version": "0.1.0-rc.1",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "b1fa0e7e3a2102de0cf1e70343288bbb1b76f639",
+        "peeledCommit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "b1fa0e7e3a2102de0cf1e70343288bbb1b76f639",
+      "localTagRefOID": "b1fa0e7e3a2102de0cf1e70343288bbb1b76f639",
+      "localTagType": "tag",
+      "commit": "ae96212d514b27c3f2cc4b18ef04f1b667dd657c",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": null,
+      "sourceArtifactCopies": [],
+      "archiveHash": null,
+      "manifestHash": null,
+      "sha256SumsHash": null,
+      "tagCommitMatchesManifest": null,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "legacy_non_json_annotation",
+      "bundleVerification": {
+        "locations": [],
+        "copiesIdentical": null,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "unknown",
+        "paths": [],
+        "notes": "Local bundle absent; tag existence does not prove deployment.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.2",
+      "component": "web",
+      "version": "0.1.0-rc.2",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": true,
+        "refOID": "669e3c347dfbf553c964c93082e6601887e5d517",
+        "peeledCommit": "669e3c347dfbf553c964c93082e6601887e5d517",
+        "matchesLocalRef": true,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": null,
+      "localTagRefOID": "669e3c347dfbf553c964c93082e6601887e5d517",
+      "localTagType": "commit",
+      "commit": "669e3c347dfbf553c964c93082e6601887e5d517",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/web-v0.1.0-rc.2",
+      "sourceArtifactCopies": [],
+      "archiveHash": "daba07ce6346c872d601317eb974bea7d8b4a333ae339101aada294f8a6802c1",
+      "manifestHash": "4d7da6cbcbf5e9e62c78fe02a6ebb03dad81f50bf37326af902b3e7a490a8be2",
+      "sha256SumsHash": "5092bde42924200bfd9e48c28acc4744ed6cdbaba81ce9dea7b28a12d5b367c8",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": null,
+      "tagCardStatus": "lightweight_tag_no_annotation",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/web-v0.1.0-rc.2",
+            "manifestPath": "infra/local/releases/web-v0.1.0-rc.2/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/web-v0.1.0-rc.2/manifest.json",
+                "size": 629,
+                "sha256": "4d7da6cbcbf5e9e62c78fe02a6ebb03dad81f50bf37326af902b3e7a490a8be2"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/web-v0.1.0-rc.2/SHA256SUMS",
+                "size": 157,
+                "sha256": "5092bde42924200bfd9e48c28acc4744ed6cdbaba81ce9dea7b28a12d5b367c8"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/web-v0.1.0-rc.2/web.tar.gz",
+                "size": 625229,
+                "sha256": "daba07ce6346c872d601317eb974bea7d8b4a333ae339101aada294f8a6802c1"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/deployment-and-store-release/postgres-verification.md"
+        ],
+        "notes": "Report: installation 2026-10-25 11:15 MSK.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.3",
+      "component": "web",
+      "version": "0.1.0-rc.3",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "c29f5ac9b37fbb8ee280a42c37d97cd11f960bd0",
+      "localTagRefOID": "c29f5ac9b37fbb8ee280a42c37d97cd11f960bd0",
+      "localTagType": "tag",
+      "commit": "5f8b2e37fee78b80cc9ec577aa096b2b10b2067b",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-5f8b2e37/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "c5cacc3daaaa7d91cb053b87c123df8cafb73d4e853d9ae7e45cd143de00efc1",
+      "manifestHash": "5fceca2a9f589f32363059ed4a3b2aaa7b7731e7883b116abb7272512f400186",
+      "sha256SumsHash": "cbffec44b2bc2aadfba14f6801ab32281d3781dba03e26d3caf068a64d55195b",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-5f8b2e37/web",
+            "manifestPath": "infra/local/releases/candidates-5f8b2e37/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-5f8b2e37/web/manifest.json",
+                "size": 1766,
+                "sha256": "5fceca2a9f589f32363059ed4a3b2aaa7b7731e7883b116abb7272512f400186"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-5f8b2e37/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "cbffec44b2bc2aadfba14f6801ab32281d3781dba03e26d3caf068a64d55195b"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-5f8b2e37/web/web.tar.gz",
+                "size": 855659,
+                "sha256": "c5cacc3daaaa7d91cb053b87c123df8cafb73d4e853d9ae7e45cd143de00efc1"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/remote-audit.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/provenance.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/report.md"
+        ],
+        "notes": "Recorded remote result deployed_with_owner_exception; both artifacts from 5f8b2e37.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-5f8b2e37/owner-exception.json",
+          "sha256": "0b14c5a9e5e0058bd6fb3b3586e5b13f4c703016e314f9adad126a5fe8e03cca",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T12:51:58.576580+00:00",
+          "authorizationRef": "User answer call_fcf0b96486594fa9838c792a9c08f421: Да, выпустить с этими ограничениями",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.4",
+      "component": "web",
+      "version": "0.1.0-rc.4",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "6b32681acd8c7079dad57223f108619e0a49ce89",
+      "localTagRefOID": "6b32681acd8c7079dad57223f108619e0a49ce89",
+      "localTagType": "tag",
+      "commit": "9ff1397ac71d7aa408bc53c2f6cf703961097e38",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-9ff1397a/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "daa69177fd35dfc44f0900be5c1994412261a69fb7da2bc3e0b366e2d287d4e7",
+      "manifestHash": "2e3e473592ab78fdd8cb33bbd44ca6ebb8ddf9f1bb57f3f43ad8a38c0c2dc987",
+      "sha256SumsHash": "79f87853cd7b4f84ddcc8a4dea0f059949e309286a1f9ee854af20ef8a9c9bc0",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-9ff1397a/web",
+            "manifestPath": "infra/local/releases/candidates-9ff1397a/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-9ff1397a/web/manifest.json",
+                "size": 2465,
+                "sha256": "2e3e473592ab78fdd8cb33bbd44ca6ebb8ddf9f1bb57f3f43ad8a38c0c2dc987"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-9ff1397a/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "79f87853cd7b4f84ddcc8a4dea0f059949e309286a1f9ee854af20ef8a9c9bc0"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-9ff1397a/web/web.tar.gz",
+                "size": 859088,
+                "sha256": "daa69177fd35dfc44f0900be5c1994412261a69fb7da2bc3e0b366e2d287d4e7"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "unknown",
+        "paths": [],
+        "notes": "Candidate exists, no qualified activation receipt found. Do not infer activation or never-activation.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.5",
+      "component": "web",
+      "version": "0.1.0-rc.5",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "9c1c153f2977023ebaf901e48709cea2450173a5",
+      "localTagRefOID": "9c1c153f2977023ebaf901e48709cea2450173a5",
+      "localTagType": "tag",
+      "commit": "3ebbb60c7581e3eb9a9b2a72e30314f8b5653812",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-3ebbb60c/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "333675e29f0cd04265a387268113b75e0bb212b763fd9aa81f945fc0890901df",
+      "manifestHash": "220db5d9aeebf7b81d61a6aea437774cc1ba7804f991999f0ec41e05fb19bba9",
+      "sha256SumsHash": "5630809fe4fb475ebf6ac71444c515585a62350f6a71e613d6fe3a1c2b6c31ab",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-3ebbb60c/web",
+            "manifestPath": "infra/local/releases/candidates-3ebbb60c/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-3ebbb60c/web/manifest.json",
+                "size": 2157,
+                "sha256": "220db5d9aeebf7b81d61a6aea437774cc1ba7804f991999f0ec41e05fb19bba9"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-3ebbb60c/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "5630809fe4fb475ebf6ac71444c515585a62350f6a71e613d6fe3a1c2b6c31ab"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-3ebbb60c/web/web.tar.gz",
+                "size": 859292,
+                "sha256": "333675e29f0cd04265a387268113b75e0bb212b763fd9aa81f945fc0890901df"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "rejected_no_activation_evidence",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md"
+        ],
+        "notes": "Report explicitly rejects rc5 and rc6 due to React185; no activation receipt found.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.6",
+      "component": "web",
+      "version": "0.1.0-rc.6",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "1439c3e473db5d85fcd513d1e4750f3b026c6c0c",
+      "localTagRefOID": "1439c3e473db5d85fcd513d1e4750f3b026c6c0c",
+      "localTagType": "tag",
+      "commit": "bd4ed97c02ae175bcceb8a92524882a76a36604f",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-bd4ed97c/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "aa1c64865187d79642d530e04bfaf997d35bca1134658dc1f039bb6d2ae2511a",
+      "manifestHash": "f6fde2b2a21af05bc6a42b7450dee6262cccdf693d3f7496e9be99b475d0c895",
+      "sha256SumsHash": "b74e98c951f749a882c24866c53f12514d20c6fb7bd305c8dc1bc88648f31622",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-bd4ed97c/web",
+            "manifestPath": "infra/local/releases/candidates-bd4ed97c/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-bd4ed97c/web/manifest.json",
+                "size": 2221,
+                "sha256": "f6fde2b2a21af05bc6a42b7450dee6262cccdf693d3f7496e9be99b475d0c895"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-bd4ed97c/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "b74e98c951f749a882c24866c53f12514d20c6fb7bd305c8dc1bc88648f31622"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-bd4ed97c/web/web.tar.gz",
+                "size": 858958,
+                "sha256": "aa1c64865187d79642d530e04bfaf997d35bca1134658dc1f039bb6d2ae2511a"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "rejected_no_activation_evidence",
+        "paths": [
+          "infra/local/releases/candidates-bd4ed97c/receipt.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md"
+        ],
+        "notes": "Receipt status rejected_react185; candidate receipt is not an activation receipt.",
+        "freshVMRead": false
+      },
+      "manualException": [],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "not_reassessed",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.7",
+      "component": "web",
+      "version": "0.1.0-rc.7",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "bc40778d20cd7ef08e1b6a6801bca48b78cee202",
+      "localTagRefOID": "bc40778d20cd7ef08e1b6a6801bca48b78cee202",
+      "localTagType": "tag",
+      "commit": "52649f034a78cee101e5a1e28412aefdfdc00b47",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-52649f03/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "636abad2357dcd5afdcecfb6fbeee3a5c2a7c21bb18b87a8ed6efb1d779c4527",
+      "manifestHash": "b6a6b8a5761c7a6529901c7a02a1ddf63e515056f92a121733de83942be164c9",
+      "sha256SumsHash": "bb6add36c0b014efdeb376b737f6427496113b87fc03cfb223da3ae87be623ed",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-52649f03/web",
+            "manifestPath": "infra/local/releases/candidates-52649f03/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-52649f03/web/manifest.json",
+                "size": 2069,
+                "sha256": "b6a6b8a5761c7a6529901c7a02a1ddf63e515056f92a121733de83942be164c9"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-52649f03/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "bb6add36c0b014efdeb376b737f6427496113b87fc03cfb223da3ae87be623ed"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-52649f03/web/web.tar.gz",
+                "size": 859334,
+                "sha256": "636abad2357dcd5afdcecfb6fbeee3a5c2a7c21bb18b87a8ed6efb1d779c4527"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "infra/local/releases/candidates-52649f03/production-result.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md"
+        ],
+        "notes": "Recorded deployed_with_new_owner_exception; replaced web rc3 and paired backend rc5.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-52649f03/owner-exception.json",
+          "sha256": "d68a5011edbfa17e59c066ec24cdf96f7fc553f14ec4ed90a0d4c241e5a18a0a",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": null,
+          "manifestHashMatches": null,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.8",
+      "component": "web",
+      "version": "0.1.0-rc.8",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "0b8b80e1bec5933e6d80ec4425953c66ddfe9e97",
+      "localTagRefOID": "0b8b80e1bec5933e6d80ec4425953c66ddfe9e97",
+      "localTagType": "tag",
+      "commit": "3b39b1c8008a918797239cf3be2b344b186bafa5",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-3b39b1c8/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "46636493411e4e650b01b2ab726b3bf81c77cd29b0ec7519168de20752cec035",
+      "manifestHash": "00bb403520d73809d3bc35d78711187e709b2a887cb31d0077ccb4486394a483",
+      "sha256SumsHash": "7fe0f87cbca650c9a30843c2fc2e259da3d64c028f55af2b11c4417f44c9e89e",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-3b39b1c8/web",
+            "manifestPath": "infra/local/releases/candidates-3b39b1c8/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-3b39b1c8/web/manifest.json",
+                "size": 2323,
+                "sha256": "00bb403520d73809d3bc35d78711187e709b2a887cb31d0077ccb4486394a483"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-3b39b1c8/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "7fe0f87cbca650c9a30843c2fc2e259da3d64c028f55af2b11c4417f44c9e89e"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-3b39b1c8/web/web.tar.gz",
+                "size": 858650,
+                "sha256": "46636493411e4e650b01b2ab726b3bf81c77cd29b0ec7519168de20752cec035"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "infra/local/releases/candidates-3b39b1c8/production-result.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc8-summary.md"
+        ],
+        "notes": "Recorded deployed_with_new_owner_exception; previous web rc7; backend/services unchanged.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-3b39b1c8/owner-exception.json",
+          "sha256": "eef2212e51ef111d4d9b9869205758bc0f412dcea52232b6f13a34522f2e829c",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.9",
+      "component": "web",
+      "version": "0.1.0-rc.9",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "37a062863985354b5eeece029bac25e8f1a48faf",
+      "localTagRefOID": "37a062863985354b5eeece029bac25e8f1a48faf",
+      "localTagType": "tag",
+      "commit": "f0900572e150c45278e8979f015760676494a0f0",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-f0900572/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "995600b527c5771cc1131ee2dda934abebb2ba0ae54ae04da7636afc637519fe",
+      "manifestHash": "f1b3fcbbcb03c42d9d494b3cfc557051ae471ac6930efdfe97cabccd66fdf5e6",
+      "sha256SumsHash": "0ba9f3ca422985ccc7551df22e484ec97a925ab6d94e1daeff88bfbaa5fa0bcb",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-f0900572/web",
+            "manifestPath": "infra/local/releases/candidates-f0900572/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-f0900572/web/manifest.json",
+                "size": 2288,
+                "sha256": "f1b3fcbbcb03c42d9d494b3cfc557051ae471ac6930efdfe97cabccd66fdf5e6"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-f0900572/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "0ba9f3ca422985ccc7551df22e484ec97a925ab6d94e1daeff88bfbaa5fa0bcb"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-f0900572/web/web.tar.gz",
+                "size": 859255,
+                "sha256": "995600b527c5771cc1131ee2dda934abebb2ba0ae54ae04da7636afc637519fe"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "never_activated_recorded",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-sheet-controls-author/report.md",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json"
+        ],
+        "notes": "Root audit brief explicitly identifies rc9/rc10 never activated; repository records rejection and next confirmed activation directly from rc8 to rc11. Owner exception is not deployment evidence.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-f0900572/owner-exception.json",
+          "sha256": "fe0b6fc06f1b30e3b3583ed186140dbb793c54f20d2c7978162c31d4aa06c45d",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.10",
+      "component": "web",
+      "version": "0.1.0-rc.10",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "369ec21c36b4c6e5752ab862f2ab963ba707ccec",
+      "localTagRefOID": "369ec21c36b4c6e5752ab862f2ab963ba707ccec",
+      "localTagType": "tag",
+      "commit": "bcd0778a74c9aebcdb994d707588a581f9f3cffb",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-bcd0778a/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "5ecd8a576f8b28ec82883a5eda8b52a74678b3aef22359cf1def38c5e43981b0",
+      "manifestHash": "0bb74a06a4618ad3b49954609de7f66149d40da75007f6077ae1e646ce361630",
+      "sha256SumsHash": "76a70d7c6f2991f5024a0c31eeaf9cb42ed82db979eeccec5078d71863cc849e",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-bcd0778a/web",
+            "manifestPath": "infra/local/releases/candidates-bcd0778a/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-bcd0778a/web/manifest.json",
+                "size": 2581,
+                "sha256": "0bb74a06a4618ad3b49954609de7f66149d40da75007f6077ae1e646ce361630"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-bcd0778a/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "76a70d7c6f2991f5024a0c31eeaf9cb42ed82db979eeccec5078d71863cc849e"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-bcd0778a/web/web.tar.gz",
+                "size": 860007,
+                "sha256": "5ecd8a576f8b28ec82883a5eda8b52a74678b3aef22359cf1def38c5e43981b0"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "never_activated_recorded",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-28-web-react185-independent-diagnosis/report.md",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-sheet-controls-author/report.md",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json"
+        ],
+        "notes": "Root audit brief explicitly identifies rc9/rc10 never activated; independent rc10 diagnostic rejects candidate. Owner exception is not deployment evidence.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-bcd0778a/owner-exception.json",
+          "sha256": "4fc490699277da720e105bf7a93337abbe5cda20ee29ed792c991ea88a7044bc",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": false,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    },
+    {
+      "id": "web/v0.1.0-rc.11",
+      "component": "web",
+      "version": "0.1.0-rc.11",
+      "tagLocal": true,
+      "tagRemote": {
+        "present": false,
+        "refOID": null,
+        "peeledCommit": null,
+        "matchesLocalRef": null,
+        "evidencePath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json"
+      },
+      "localTagObjectOID": "210825b8c939bef49b5092b6209a24e8c0151f8b",
+      "localTagRefOID": "210825b8c939bef49b5092b6209a24e8c0151f8b",
+      "localTagType": "tag",
+      "commit": "823d93d36f1b4a223a4b43d28d46654fcfa96f28",
+      "commitInOriginMain": true,
+      "sourceArtifactPath": "infra/local/releases/candidates-823d93d3/web",
+      "sourceArtifactCopies": [],
+      "archiveHash": "ed0edec79515470ea76550b22b26ff8510e4925d603f94fc2f1b82939f374767",
+      "manifestHash": "fbc160226e591077dd8596f18f70c72bdb511da023cf14c144367ac752cae091",
+      "sha256SumsHash": "d00592f8f90ae95a48e4e18f1e780c4d42c9d2ba10fd5bab01c2cbb86b8e80d8",
+      "tagCommitMatchesManifest": true,
+      "tagCardMatchesManifest": true,
+      "tagCardStatus": "json_release_card",
+      "bundleVerification": {
+        "locations": [
+          {
+            "sourceArtifactPath": "infra/local/releases/candidates-823d93d3/web",
+            "manifestPath": "infra/local/releases/candidates-823d93d3/web/manifest.json",
+            "files": [
+              {
+                "name": "manifest.json",
+                "path": "infra/local/releases/candidates-823d93d3/web/manifest.json",
+                "size": 2615,
+                "sha256": "fbc160226e591077dd8596f18f70c72bdb511da023cf14c144367ac752cae091"
+              },
+              {
+                "name": "SHA256SUMS",
+                "path": "infra/local/releases/candidates-823d93d3/web/SHA256SUMS",
+                "size": 157,
+                "sha256": "d00592f8f90ae95a48e4e18f1e780c4d42c9d2ba10fd5bab01c2cbb86b8e80d8"
+              },
+              {
+                "name": "web.tar.gz",
+                "path": "infra/local/releases/candidates-823d93d3/web/web.tar.gz",
+                "size": 860046,
+                "sha256": "ed0edec79515470ea76550b22b26ff8510e4925d603f94fc2f1b82939f374767"
+              }
+            ],
+            "exactThreeFileSet": true,
+            "manifestMatchesSHA256SUMS": true,
+            "allChecksumsMatch": true,
+            "artifactsMatchManifest": true,
+            "extraFiles": []
+          }
+        ],
+        "copiesIdentical": true,
+        "method": "SHA-256 read of original archive, manifest and SHA256SUMS bytes; no extraction or rebuild"
+      },
+      "actualDeployEvidence": {
+        "status": "deployed",
+        "paths": [
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json",
+          "infra/local/releases/candidates-823d93d3/qa/activation-result.json",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/report.md",
+          "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/public-http.json"
+        ],
+        "notes": "Recorded deployed_with_new_owner_exception; previous web rc8; full acceptance incomplete and no release-ready receipt.",
+        "freshVMRead": false
+      },
+      "manualException": [
+        {
+          "path": "infra/local/releases/candidates-823d93d3/owner-exception.json",
+          "sha256": "9187d61f7a90d343080fd6e1c773cacac4a41391c654a38042abb480a6e79013",
+          "status": "owner_authorized_exception",
+          "authorizationRecordedAt": "2026-10-28T18:59:06.629942+00:00",
+          "authorizationRef": "direct-user-message: Релизь, я в проде сам чекну",
+          "fullAcceptance": "incomplete",
+          "archiveHashMatches": true,
+          "manifestHashMatches": true,
+          "note": "Recorded authorization; does not prove activation or full acceptance. The authorization timestamp is not the deployment timestamp."
+        }
+      ],
+      "confirmedUnpublishedDeploymentForRecovery": true,
+      "fullAcceptance": "incomplete",
+      "githubCI": "not_rechecked_or_inferred"
+    }
+  ],
+  "nonReleaseReceipts": [
+    {
+      "sourceArtifactPath": "infra/local/releases/ios-device-6d6c496e/receipt.json",
+      "component": "ios",
+      "version": "0.1.0",
+      "build": "1",
+      "tagLocal": null,
+      "tagRemote": null,
+      "commit": "6d6c496ea56b5f33c6e855fce4c1fa4c8590e8e2",
+      "archiveHash": null,
+      "classification": "device_install_receipt_not_tagged_release_bundle",
+      "actualDeployEvidence": {
+        "status": "device_install_recorded",
+        "report": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-ios-device-update/report.md"
+      },
+      "manualException": null,
+      "recoverAsGitHubRelease": false,
+      "receiptSHA256": "f24042f615b289e0cb402b5597c3687eab5a58fa52f2a41cb028d2f1758d7997"
+    },
+    {
+      "sourceArtifactPath": "infra/local/releases/android-polish-20261028-candidate04/qa-candidate-receipt.json",
+      "component": "android",
+      "version": null,
+      "tagLocal": null,
+      "tagRemote": null,
+      "commit": "52649f034a78cee101e5a1e28412aefdfdc00b47",
+      "dirtySource": true,
+      "archiveHash": null,
+      "classification": "qa_fixture_apks_not_tagged_release_bundle",
+      "actualDeployEvidence": {
+        "status": "production_unknown"
+      },
+      "manualException": null,
+      "recoverAsGitHubRelease": false,
+      "receiptSHA256": "52b2af832cae6c0e96364b11c00c2889e509945206a12a467c738a567c2a19aa"
+    },
+    {
+      "sourceArtifactPath": "infra/local/releases/web-stack-20261028-qa/receipt.json",
+      "component": "web",
+      "commit": "9ff1397ac71d7aa408bc53c2f6cf703961097e38",
+      "classification": "qa_working_tree_bundle_not_release_activation",
+      "recoverAsGitHubRelease": false,
+      "receiptSHA256": "28ce7e6f5ad004abc73dee93ec4618de9d9dfb2d6466a8172662ce0f4e1ae2c1"
+    },
+    {
+      "sourceArtifactPath": "infra/local/releases/web-stack02-20261028-qa/receipt.json",
+      "component": "web",
+      "commit": "f5b299cc26df8bf3893aed450e20286dfe090a0b",
+      "classification": "qa_working_tree_bundle_not_release_activation",
+      "recoverAsGitHubRelease": false,
+      "receiptSHA256": "04de6cbd64604070f9e5dbd3d7ff5e63731ca46fb832d8261751076d10115b60"
+    }
+  ],
+  "rollbackSummary": {
+    "executedProductionRollback": "unknown; none found in reviewed qualified receipts",
+    "recordedNoRollbackNeeded": [
+      "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md",
+      "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc8-summary.md"
+    ],
+    "lastRecordedRollbackTarget": "web/v0.1.0-rc.8",
+    "lastRecordedRollbackTargetEvidence": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json",
+    "preparedSchema8CompatibleRuntimeSHA256": "c1e028d590629e2245cccafb3f3c004a17a4795767168b5f689a68526d084eff",
+    "preparedRuntimeEvidence": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/report.md",
+    "warning": "Installer unit tests mentioning rollback are not evidence that production rollback occurred."
+  },
+  "sourceMetadataHashes": [
+    {
+      "path": "infra/local/releases/backend-v0.1.0-rc.2/SHA256SUMS",
+      "sha256": "0616524331f14bc5e607bdb2ca2e71afbe21648b55a02edf2c6f9f25e09d791f"
+    },
+    {
+      "path": "infra/local/releases/backend-v0.1.0-rc.2/manifest.json",
+      "sha256": "c5f5fd7049b5f57c1a09d6e9febc3875f65dcd2fb65cfe9e85e12da384039c80"
+    },
+    {
+      "path": "infra/local/releases/backend-v0.1.0-rc.3/SHA256SUMS",
+      "sha256": "4767b12268d4bb5ec56a08333e250ceaebf08627e2d0c0325a8f78dac3a76804"
+    },
+    {
+      "path": "infra/local/releases/backend-v0.1.0-rc.3/manifest.json",
+      "sha256": "97c1781a2dfce9ba5e73ce26c50c488b87ca72f12a24393bb9bcdd9c99885d45"
+    },
+    {
+      "path": "infra/local/releases/candidates-3b39b1c8/owner-exception.json",
+      "sha256": "eef2212e51ef111d4d9b9869205758bc0f412dcea52232b6f13a34522f2e829c"
+    },
+    {
+      "path": "infra/local/releases/candidates-3b39b1c8/production-result.json",
+      "sha256": "380b9a5dd1e367682ef087916631636114b5b620776a380c65b12448a35a226a"
+    },
+    {
+      "path": "infra/local/releases/candidates-3b39b1c8/web/SHA256SUMS",
+      "sha256": "7fe0f87cbca650c9a30843c2fc2e259da3d64c028f55af2b11c4417f44c9e89e"
+    },
+    {
+      "path": "infra/local/releases/candidates-3b39b1c8/web/manifest.json",
+      "sha256": "00bb403520d73809d3bc35d78711187e709b2a887cb31d0077ccb4486394a483"
+    },
+    {
+      "path": "infra/local/releases/candidates-3ebbb60c/backend/SHA256SUMS",
+      "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+    },
+    {
+      "path": "infra/local/releases/candidates-3ebbb60c/backend/manifest.json",
+      "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+    },
+    {
+      "path": "infra/local/releases/candidates-3ebbb60c/web/SHA256SUMS",
+      "sha256": "5630809fe4fb475ebf6ac71444c515585a62350f6a71e613d6fe3a1c2b6c31ab"
+    },
+    {
+      "path": "infra/local/releases/candidates-3ebbb60c/web/manifest.json",
+      "sha256": "220db5d9aeebf7b81d61a6aea437774cc1ba7804f991999f0ec41e05fb19bba9"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/backend/SHA256SUMS",
+      "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/backend/manifest.json",
+      "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/owner-exception.json",
+      "sha256": "d68a5011edbfa17e59c066ec24cdf96f7fc553f14ec4ed90a0d4c241e5a18a0a"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/production-result.json",
+      "sha256": "4a7fa52f2b0382f202445ae47e6f92424de0785ad5cce126208ff397df0fe5dd"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/web/SHA256SUMS",
+      "sha256": "bb6add36c0b014efdeb376b737f6427496113b87fc03cfb223da3ae87be623ed"
+    },
+    {
+      "path": "infra/local/releases/candidates-52649f03/web/manifest.json",
+      "sha256": "b6a6b8a5761c7a6529901c7a02a1ddf63e515056f92a121733de83942be164c9"
+    },
+    {
+      "path": "infra/local/releases/candidates-5f8b2e37/backend/SHA256SUMS",
+      "sha256": "0b0b09ac547a8a82e72e1d4829ab54561f2ee5fdde5474892abf1c4584c47c83"
+    },
+    {
+      "path": "infra/local/releases/candidates-5f8b2e37/backend/manifest.json",
+      "sha256": "e0bb42275fe4b487437c406a578d1b6f7c63f9ad5422c01381f902ab815c1e87"
+    },
+    {
+      "path": "infra/local/releases/candidates-5f8b2e37/owner-exception.json",
+      "sha256": "0b14c5a9e5e0058bd6fb3b3586e5b13f4c703016e314f9adad126a5fe8e03cca"
+    },
+    {
+      "path": "infra/local/releases/candidates-5f8b2e37/web/SHA256SUMS",
+      "sha256": "cbffec44b2bc2aadfba14f6801ab32281d3781dba03e26d3caf068a64d55195b"
+    },
+    {
+      "path": "infra/local/releases/candidates-5f8b2e37/web/manifest.json",
+      "sha256": "5fceca2a9f589f32363059ed4a3b2aaa7b7731e7883b116abb7272512f400186"
+    },
+    {
+      "path": "infra/local/releases/candidates-823d93d3/owner-exception.json",
+      "sha256": "9187d61f7a90d343080fd6e1c773cacac4a41391c654a38042abb480a6e79013"
+    },
+    {
+      "path": "infra/local/releases/candidates-823d93d3/qa/activation-result.json",
+      "sha256": "35ea102cba5e3711995353ea7e241572ace24f0493c611cbe16b80efd83e3d95"
+    },
+    {
+      "path": "infra/local/releases/candidates-823d93d3/web/SHA256SUMS",
+      "sha256": "d00592f8f90ae95a48e4e18f1e780c4d42c9d2ba10fd5bab01c2cbb86b8e80d8"
+    },
+    {
+      "path": "infra/local/releases/candidates-823d93d3/web/manifest.json",
+      "sha256": "fbc160226e591077dd8596f18f70c72bdb511da023cf14c144367ac752cae091"
+    },
+    {
+      "path": "infra/local/releases/candidates-9ff1397a/web/SHA256SUMS",
+      "sha256": "79f87853cd7b4f84ddcc8a4dea0f059949e309286a1f9ee854af20ef8a9c9bc0"
+    },
+    {
+      "path": "infra/local/releases/candidates-9ff1397a/web/manifest.json",
+      "sha256": "2e3e473592ab78fdd8cb33bbd44ca6ebb8ddf9f1bb57f3f43ad8a38c0c2dc987"
+    },
+    {
+      "path": "infra/local/releases/candidates-bcd0778a/owner-exception.json",
+      "sha256": "4fc490699277da720e105bf7a93337abbe5cda20ee29ed792c991ea88a7044bc"
+    },
+    {
+      "path": "infra/local/releases/candidates-bcd0778a/web/SHA256SUMS",
+      "sha256": "76a70d7c6f2991f5024a0c31eeaf9cb42ed82db979eeccec5078d71863cc849e"
+    },
+    {
+      "path": "infra/local/releases/candidates-bcd0778a/web/manifest.json",
+      "sha256": "0bb74a06a4618ad3b49954609de7f66149d40da75007f6077ae1e646ce361630"
+    },
+    {
+      "path": "infra/local/releases/candidates-bd4ed97c/backend/SHA256SUMS",
+      "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+    },
+    {
+      "path": "infra/local/releases/candidates-bd4ed97c/backend/manifest.json",
+      "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+    },
+    {
+      "path": "infra/local/releases/candidates-bd4ed97c/receipt.json",
+      "sha256": "322bdfe0903e0324d75ebc1cf518198efa4a12a2a7c4d9d27803198dc62e0b08"
+    },
+    {
+      "path": "infra/local/releases/candidates-bd4ed97c/web/SHA256SUMS",
+      "sha256": "b74e98c951f749a882c24866c53f12514d20c6fb7bd305c8dc1bc88648f31622"
+    },
+    {
+      "path": "infra/local/releases/candidates-bd4ed97c/web/manifest.json",
+      "sha256": "f6fde2b2a21af05bc6a42b7450dee6262cccdf693d3f7496e9be99b475d0c895"
+    },
+    {
+      "path": "infra/local/releases/candidates-f0900572/owner-exception.json",
+      "sha256": "fe0b6fc06f1b30e3b3583ed186140dbb793c54f20d2c7978162c31d4aa06c45d"
+    },
+    {
+      "path": "infra/local/releases/candidates-f0900572/web/SHA256SUMS",
+      "sha256": "0ba9f3ca422985ccc7551df22e484ec97a925ab6d94e1daeff88bfbaa5fa0bcb"
+    },
+    {
+      "path": "infra/local/releases/candidates-f0900572/web/manifest.json",
+      "sha256": "f1b3fcbbcb03c42d9d494b3cfc557051ae471ac6930efdfe97cabccd66fdf5e6"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.1/SHA256SUMS",
+      "sha256": "58c3fde0fc76d8c2c4dd4d928ccfc7b7b0d8588888e6402bc63de5166d5560ea"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.1/manifest.json",
+      "sha256": "1d5cd7feb73a8ee8f43cb91d5dac7b5b45eec491c60b1c9469e6a12f7f159e64"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.2/SHA256SUMS",
+      "sha256": "db45175ed293a8c0a8b2a2d992a4efc28985e24cf46527e76802d74d849ceaa5"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.2/manifest.json",
+      "sha256": "f8bb74fb094bd8e7b6664cdb3dad728a6ab6ce0ab4e9bb9e7a1bd30fa8a0c24d"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.3/SHA256SUMS",
+      "sha256": "ada85be9074bed124dc2b652e57074210bcdc41d8338f83d06a0d3288f49afaf"
+    },
+    {
+      "path": "infra/local/releases/monitoring-v0.1.0-rc.3/manifest.json",
+      "sha256": "73e3580ec1257c13689f9174570ad17323f7e8d0cec5180dd02729c4dffdc23f"
+    },
+    {
+      "path": "infra/local/releases/web-v0.1.0-rc.2/SHA256SUMS",
+      "sha256": "5092bde42924200bfd9e48c28acc4744ed6cdbaba81ce9dea7b28a12d5b367c8"
+    },
+    {
+      "path": "infra/local/releases/web-v0.1.0-rc.2/manifest.json",
+      "sha256": "4d7da6cbcbf5e9e62c78fe02a6ebb03dad81f50bf37326af902b3e7a490a8be2"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/monitoring-followup-verification.md",
+      "sha256": "12766b764e627d5d8c724e1039581ba1ff11b56225c20918084875b03abb9916"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/monitoring-live-verification.md",
+      "sha256": "8cc7d12e5683be54ef3f3fd0d064ac6d503f2dcd6a5fc43bf83527a14d818cdb"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/postgres-verification.md",
+      "sha256": "3d6e080a01a903eddbb15837c3776be22c7d21e8dddd9a358accfb1ff4a635ad"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/provenance.json",
+      "sha256": "52218543be684d70ac350dc932c9efdd536057b6dbd4d1ee131ef57e26dfa906"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc7-summary.md",
+      "sha256": "8ae0c7f5a917ba234f205aaeb8674fd5c3bd3db21d7fb6b1047d3d781f0a74bb"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/rc8-summary.md",
+      "sha256": "dc3c69fd82e67cfdf4f89f00896e726d0b97b42e79504ebcdf67da282a6e0c89"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/remote-audit.json",
+      "sha256": "ec6044a3842022b33a60489e501106eff089d521a8d8838bbbfd251b60b3f29f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-production-owner-release/report.md",
+      "sha256": "d97303adf0d9815cf3a25261796491891aa5ed26308ebcc689dc28b8084081ef"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-28-web-react185-independent-diagnosis/report.md",
+      "sha256": "f20bd49d66937169f98581e2a3f3059a162e36b7537d3276eb2008453b9963ae"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/activation-result.json",
+      "sha256": "35ea102cba5e3711995353ea7e241572ace24f0493c611cbe16b80efd83e3d95"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/public-http.json",
+      "sha256": "416e3f588f9377720d4b4248e97aa26c3b0b444c4e8997bba4df9697451de5e1"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-rc11-release/report.md",
+      "sha256": "7f9f8bea5fafbdf4d0fcedafdd549d8ca07e558de20e57490c7a4cf3bfa79222"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/qa/2026-10-29-web-sheet-controls-author/report.md",
+      "sha256": "b707a85d6cdddd47c26268716a74b4538778c9ce23776555f1a7acb1bb28f9c0"
+    },
+    {
+      "path": "openspec/changes/telegram-monitoring-bot/live-verification.md",
+      "sha256": "0cc4adf895f95b412872ae5ade08e1e442411b7a2d878becf3484e3028838f4d"
+    }
+  ],
+  "limitations": [
+    "No reproduction or fresh CI success claimed.",
+    "An owner exception is authorization, not activation proof or acceptance.",
+    "Tag-only rc1 bundle bytes and activation remain unknown.",
+    "web rc4 activation unknown.",
+    "Source manifests/receipts unchanged.",
+    "No application.env, credentials or private keys read.",
+    "No independent review yet."
+  ],
+  "productionObservation": {
+    "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/production-observation.json",
+    "sha256": "6e71b1460fa26fb1c28afdb02f7f23d818edae5eb319a15e494f68610af2d0dc",
+    "observedAt": "2026-10-29T08:02:05.424568+00:00",
+    "providedBy": "root",
+    "readOnly": true,
+    "matches": [
+      {
+        "tag": "backend/v0.1.0-rc.2",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "backend/v0.1.0-rc.3",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "backend/v0.1.0-rc.4",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "backend/v0.1.0-rc.5",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": true
+      },
+      {
+        "tag": "web/v0.1.0-rc.2",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "web/v0.1.0-rc.3",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "web/v0.1.0-rc.7",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "web/v0.1.0-rc.8",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": false
+      },
+      {
+        "tag": "web/v0.1.0-rc.11",
+        "commitMatches": true,
+        "manifestHashMatches": true,
+        "archiveHashMatchesManifestOnVM": true,
+        "currentAtObservation": true
+      }
+    ],
+    "limitations": [
+      "Remote archive bytes were not hashed by this snapshot; retained manifest hashes and declared artifact hashes were compared.",
+      "This later observation supplements historical receipts; history entries are not rewritten.",
+      "Database schema not queried in this snapshot."
+    ]
+  },
+  "additionalRootVerification": {
+    "check": "scripts.release.common.verify",
+    "result": "passed for all six confirmed recovery bundles, reported by root",
+    "independentlyRepeatedHere": false
+  },
+  "plannedRecovery": {
+    "status": "plan_only_no_remote_changes_by_this_audit",
+    "scope": [
+      "backend/v0.1.0-rc.4",
+      "backend/v0.1.0-rc.5",
+      "web/v0.1.0-rc.3",
+      "web/v0.1.0-rc.7",
+      "web/v0.1.0-rc.8",
+      "web/v0.1.0-rc.11"
+    ],
+    "procedure": "Root plans one atomic push of six original tag objects, then six GitHub Release records through UI with original three-file bundles and explicit historical manual recovery notes; no rebuild.",
+    "triggerBasis": "GitHub documents no push/create events when more than three tags are pushed/created at once.",
+    "documentation": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push",
+    "newReleases": "Each future tag is pushed separately through the normal release workflow.",
+    "independentReview": "required before root executes recovery"
+  }
+}

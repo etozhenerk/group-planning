@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "independent release_history_review subagent",
+  "reviewedAt": "2026-10-29T08:10:22.990288+00:00",
+  "verdict": "pass_for_exact_historical_recovery_scope",
+  "scope": [
+    "backend/v0.1.0-rc.4",
+    "backend/v0.1.0-rc.5",
+    "web/v0.1.0-rc.3",
+    "web/v0.1.0-rc.7",
+    "web/v0.1.0-rc.8",
+    "web/v0.1.0-rc.11"
+  ],
+  "inputFiles": [
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/ledger.json",
+      "sha256": "c9a07100f829c57f0ece2eb8b46073113101fc320681efd46fc6ac1385694ad1"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/report.md",
+      "sha256": "c74678f0742fd95caddf62ec4632d541223050b8f6535c3afaf57babef2e9c23"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/handoff.md",
+      "sha256": "bb5578fe7f75cfe0fc7d8294fc9fa2d19b454f3edfb3f3042e47a60083461830"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/origin-tags.json",
+      "sha256": "32253de9434a634d52e12f79681bb68b567cb950042c6eba95379d14fda7dcbb"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/production-observation.json",
+      "sha256": "6e71b1460fa26fb1c28afdb02f7f23d818edae5eb319a15e494f68610af2d0dc"
+    },
+    {
+      "path": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/recovery-publication-plan.json",
+      "sha256": "46f578e7a4ea22233617556260e4bc0222fcfef20badae0b05b959d765e80710"
+    }
+  ],
+  "originMainVerified": "e7947f173c2c7b6418661a9e820ae41db8cf6acd",
+  "remoteRead": {
+    "command": "git ls-remote --heads --tags origin",
+    "result": "success after read-only network escalation",
+    "sixRecoveryRefsAbsent": true,
+    "remoteMainMatchesLocalOriginMain": true,
+    "existingRemoteRefsMatchAuthorSnapshot": true
+  },
+  "entries": [
+    {
+      "tag": "backend/v0.1.0-rc.4",
+      "tagObjectOID": "7e031be63e75543cec008aefd0adf176465cd605",
+      "commit": "5f8b2e37fee78b80cc9ec577aa096b2b10b2067b",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-5f8b2e37/backend",
+          "files": {
+            "backend-linux-amd64.tar.gz": {
+              "size": 23962422,
+              "sha256": "fa38bea42fc39e9c3e5607df0e0fe92e1c6e73e9a0ace75a6ebe18f94dcee7ac"
+            },
+            "manifest.json": {
+              "size": 1915,
+              "sha256": "e0bb42275fe4b487437c406a578d1b6f7c63f9ad5422c01381f902ab815c1e87"
+            },
+            "SHA256SUMS": {
+              "size": 173,
+              "sha256": "0b0b09ac547a8a82e72e1d4829ab54561f2ee5fdde5474892abf1c4584c47c83"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/backend-v0.1.0-rc.4.md",
+      "publicationNotesSHA256": "0355ca604252a5fdf47c25d4c0eda97d0d5dcbe6bd26a3ace8ae37bb0c6287b8",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    },
+    {
+      "tag": "backend/v0.1.0-rc.5",
+      "tagObjectOID": "3a565f62e01e0dd744e50eef935f238ec8a47d8a",
+      "commit": "3ebbb60c7581e3eb9a9b2a72e30314f8b5653812",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-3ebbb60c/backend",
+          "files": {
+            "backend-linux-amd64.tar.gz": {
+              "size": 23966594,
+              "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+            },
+            "manifest.json": {
+              "size": 2017,
+              "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+            },
+            "SHA256SUMS": {
+              "size": 173,
+              "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        },
+        {
+          "path": "infra/local/releases/candidates-52649f03/backend",
+          "files": {
+            "backend-linux-amd64.tar.gz": {
+              "size": 23966594,
+              "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+            },
+            "manifest.json": {
+              "size": 2017,
+              "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+            },
+            "SHA256SUMS": {
+              "size": 173,
+              "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        },
+        {
+          "path": "infra/local/releases/candidates-bd4ed97c/backend",
+          "files": {
+            "backend-linux-amd64.tar.gz": {
+              "size": 23966594,
+              "sha256": "f79040c3f83c5b8bb9c1da608e9eef1bcc9d7ade2f8b233604109044659ae7d5"
+            },
+            "manifest.json": {
+              "size": 2017,
+              "sha256": "e870d84d45b33267f80ede7d45029f1e7dc19034beb6fe90f631bf428ed36abd"
+            },
+            "SHA256SUMS": {
+              "size": 173,
+              "sha256": "030770f255f3da100cf69536c27a7b6a5fb0914c37a9ad67b508745b243946e9"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/backend-v0.1.0-rc.5.md",
+      "publicationNotesSHA256": "052f26ef59ebaa1019571dc139b0cd35f9d2831cd87b2dea2d5dd1125b0d7aa7",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    },
+    {
+      "tag": "web/v0.1.0-rc.3",
+      "tagObjectOID": "c29f5ac9b37fbb8ee280a42c37d97cd11f960bd0",
+      "commit": "5f8b2e37fee78b80cc9ec577aa096b2b10b2067b",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-5f8b2e37/web",
+          "files": {
+            "web.tar.gz": {
+              "size": 855659,
+              "sha256": "c5cacc3daaaa7d91cb053b87c123df8cafb73d4e853d9ae7e45cd143de00efc1"
+            },
+            "manifest.json": {
+              "size": 1766,
+              "sha256": "5fceca2a9f589f32363059ed4a3b2aaa7b7731e7883b116abb7272512f400186"
+            },
+            "SHA256SUMS": {
+              "size": 157,
+              "sha256": "cbffec44b2bc2aadfba14f6801ab32281d3781dba03e26d3caf068a64d55195b"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/web-v0.1.0-rc.3.md",
+      "publicationNotesSHA256": "41fa4c37f93548c62ad6b27dd33662fbe4b5df0c3699a0be510c5c031b9b204c",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    },
+    {
+      "tag": "web/v0.1.0-rc.7",
+      "tagObjectOID": "bc40778d20cd7ef08e1b6a6801bca48b78cee202",
+      "commit": "52649f034a78cee101e5a1e28412aefdfdc00b47",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-52649f03/web",
+          "files": {
+            "web.tar.gz": {
+              "size": 859334,
+              "sha256": "636abad2357dcd5afdcecfb6fbeee3a5c2a7c21bb18b87a8ed6efb1d779c4527"
+            },
+            "manifest.json": {
+              "size": 2069,
+              "sha256": "b6a6b8a5761c7a6529901c7a02a1ddf63e515056f92a121733de83942be164c9"
+            },
+            "SHA256SUMS": {
+              "size": 157,
+              "sha256": "bb6add36c0b014efdeb376b737f6427496113b87fc03cfb223da3ae87be623ed"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/web-v0.1.0-rc.7.md",
+      "publicationNotesSHA256": "835367ecc9cd7279ae2eae926ddf04e0f6514df04ab13d78b2757fbffb933e5e",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    },
+    {
+      "tag": "web/v0.1.0-rc.8",
+      "tagObjectOID": "0b8b80e1bec5933e6d80ec4425953c66ddfe9e97",
+      "commit": "3b39b1c8008a918797239cf3be2b344b186bafa5",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-3b39b1c8/web",
+          "files": {
+            "web.tar.gz": {
+              "size": 858650,
+              "sha256": "46636493411e4e650b01b2ab726b3bf81c77cd29b0ec7519168de20752cec035"
+            },
+            "manifest.json": {
+              "size": 2323,
+              "sha256": "00bb403520d73809d3bc35d78711187e709b2a887cb31d0077ccb4486394a483"
+            },
+            "SHA256SUMS": {
+              "size": 157,
+              "sha256": "7fe0f87cbca650c9a30843c2fc2e259da3d64c028f55af2b11c4417f44c9e89e"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/web-v0.1.0-rc.8.md",
+      "publicationNotesSHA256": "f5cbef7b4b186a07c59eb40b36bfb81c46ab1e0117679f1a680cd3dcccbdcf0e",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    },
+    {
+      "tag": "web/v0.1.0-rc.11",
+      "tagObjectOID": "210825b8c939bef49b5092b6209a24e8c0151f8b",
+      "commit": "823d93d36f1b4a223a4b43d28d46654fcfa96f28",
+      "cardEqualsManifestReleasePlan": true,
+      "ancestorOfOriginMain": true,
+      "locations": [
+        {
+          "path": "infra/local/releases/candidates-823d93d3/web",
+          "files": {
+            "web.tar.gz": {
+              "size": 860046,
+              "sha256": "ed0edec79515470ea76550b22b26ff8510e4925d603f94fc2f1b82939f374767"
+            },
+            "manifest.json": {
+              "size": 2615,
+              "sha256": "fbc160226e591077dd8596f18f70c72bdb511da023cf14c144367ac752cae091"
+            },
+            "SHA256SUMS": {
+              "size": 157,
+              "sha256": "d00592f8f90ae95a48e4e18f1e780c4d42c9d2ba10fd5bab01c2cbb86b8e80d8"
+            }
+          },
+          "exactRegularThreeFiles": true,
+          "sha256SumsMatches": true,
+          "manifestArtifactMatches": true,
+          "strictVerify": "pass"
+        }
+      ],
+      "freshRootObservationMetadataMatches": true,
+      "publicationNotesPath": "openspec/changes/deployment-and-store-release/qa/2026-10-29-release-history-recovery/release-notes/web-v0.1.0-rc.11.md",
+      "publicationNotesSHA256": "c46f86fa184e9d48ae7c1f693452dc9eec3b28ed9df7a6161f723edba2ac27f6",
+      "publicationAssetsMatch": true,
+      "fullAcceptance": "incomplete"
+    }
+  ],
+  "metadataHashesCompared": 62,
+  "metadataHashesAllMatch": true,
+  "strictVerifyIndependentRuns": 8,
+  "archiveExtractionToDisk": false,
+  "rootProductionSnapshot": {
+    "observedAt": "2026-10-29T08:02:05.424568+00:00",
+    "matchesAllSix": true,
+    "activeWeb": "web/v0.1.0-rc.11",
+    "activeBackend": "backend/v0.1.0-rc.5",
+    "independentVMRead": false,
+    "remoteArchiveBytesRehashed": false
+  },
+  "blockingFindings": [],
+  "publicationConditions": [
+    "Publish only these six original tag objects and the exact original three assets per Release; no rebuild, tag rewriting or redeploy.",
+    "Recheck absent existing/draft Releases before creating; stop on conflicts rather than replacing.",
+    "Set prerelease=true and do not label recovered RCs latest.",
+    "Publish reviewed report/ledger so release-note audit link resolves; preserve historical input hashes.",
+    "Read back resulting tag OIDs, release identity, assets count/sizes/digests and notes; do not claim completion before this."
+  ],
+  "excludedCandidates": {
+    "web/v0.1.0-rc.4": "unknown activation; excluded",
+    "web/v0.1.0-rc.5": "rejected, no activation evidence; excluded",
+    "web/v0.1.0-rc.6": "rejected_react185 receipt; excluded",
+    "web/v0.1.0-rc.9": "rejected, no recovered deployment; never-activated statement attributed to root",
+    "web/v0.1.0-rc.10": "rejected, no recovered deployment; never-activated statement attributed to root"
+  },
+  "githubEventDocumentation": {
+    "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+    "checked": "push and create do not produce tag events for more than three tags at once",
+    "trackedReleaseEventHandlersFound": false,
+    "newReleasePolicy": "one tag per normal release workflow"
+  },
+  "limitations": [
+    "No new functional/design acceptance or CI success certified.",
+    "No direct VM access by reviewer; root read-only observation compared to original local bytes and historical activation receipts.",
+    "Absence of GitHub Releases/drafts must be confirmed by publishing agent, independently of tag absence.",
+    "This is pre-publication review, not proof of remote publication."
+  ],
+  "documentValidation": {
+    "agentCheck": "pass",
+    "gitDiffCheck": "pass",
+    "summaryJsonParse": "pass"
+  }
+}
