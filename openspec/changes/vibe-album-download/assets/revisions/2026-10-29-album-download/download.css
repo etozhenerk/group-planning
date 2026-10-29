@@ -1,5 +1,5 @@
 /* Draft composition only. Existing button, typography and album stay in styles.css. */
-@import url("../../../../../../frontend/web/src/app/styles/design-tokens.css");
+@import url("../../../../../../frontend/web/src/app/styles/design-tokens.css?v=4.1.0");
 @import url("../../../../../../frontend/web/src/shared/ui/ButtonSpinner/ButtonSpinner.module.css");
 
 .album-actions {
@@ -14,6 +14,10 @@
   white-space: normal;
   min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
   text-align: center;
+}
+
+.album-actions .button.primary {
+  border: var(--ds-component-button-border-width) solid transparent;
 }
 
 .album-actions .button:disabled {
@@ -57,9 +61,17 @@ body[data-platform="ios"] .download-feedback .button {
 @media (max-width: 739px) {
   .album-actions {
     margin-top: var(--ds-space-s16);
+    display: grid;
+    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    width: 100%;
+    gap: var(--ds-space-s8);
   }
 
   .vibes-heading .album-actions .button {
     margin-top: 0;
+    min-width: 0;
+    padding-inline: var(--ds-space-s12);
+    font-size: var(--ds-typography-size-small);
   }
 }

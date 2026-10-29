@@ -1,4 +1,4 @@
-# Токены somewhere · 4.0.0
+# Токены somewhere · 4.1.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -70,6 +70,7 @@
 | component.action.panelInset | dimension | 26px | Внутренний отступ панели действия на desktop из .panel |
 | component.action.tabletInset | dimension | 30px | Отступ планшетной формы из styles.css:1276 |
 | component.action.topInset | dimension | 44px | Верхний отступ desktop-формы из styles.css:189 |
+| component.button.borderWidth | dimension | 1px | 4.1.0: граница существующей .button.subtle из styles.css:224–227. В соседней primary резервируется прозрачная граница той же ширины, чтобы перенос текста и смена состояния не меняли высоту ряда. |
 | component.button.iconGap | dimension | 9px | Интервал между иконкой и подписью .button из styles.css:216 |
 | component.button.iconSize | dimension | 21px | Иконка .button из общего svg.icon утверждённого styles.css:81–89 |
 | component.button.minimumHeight | dimension | 46px | Минимальная высота .button из styles.css:218; область нажатия не меньше target платформы |

@@ -18,7 +18,7 @@ const setupDownloadPrototype = () => {
         }
         changing = true;
         try {
-            const response = await fetch(link.href);
+            const response = await fetch(link.href, { cache: "no-store" });
             if (!response.ok) {
                 throw new Error("Prototype state unavailable");
             }

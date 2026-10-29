@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 4.0.0. Do not edit.
+// Generated from design-system/tokens.json · 4.1.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -370,6 +370,7 @@ enum DesignTokens {
     static let componentActionPanelInset = CGFloat(26)
     static let componentActionTabletInset = CGFloat(30)
     static let componentActionTopInset = CGFloat(44)
+    static let componentButtonBorderWidth = CGFloat(1)
     static let componentButtonIconGap = CGFloat(9)
     static let componentButtonIconSize = CGFloat(21)
     static let componentButtonMinimumHeight = CGFloat(46)

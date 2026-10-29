@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 4.0.0. Do not edit.
+// Generated from design-system/tokens.json · 4.1.0. Do not edit.
 export const componentTokens = {
   componentActionColumnWidth: '700px',
   componentActionFieldGap: '18px',
@@ -9,6 +9,7 @@ export const componentTokens = {
   componentActionPanelInset: '26px',
   componentActionTabletInset: '30px',
   componentActionTopInset: '44px',
+  componentButtonBorderWidth: '1px',
   componentButtonIconGap: '9px',
   componentButtonIconSize: '21px',
   componentButtonMinimumHeight: '46px',

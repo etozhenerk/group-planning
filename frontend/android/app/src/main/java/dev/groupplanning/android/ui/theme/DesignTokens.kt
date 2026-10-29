@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 4.0.0. Do not edit.
+// Generated from design-system/tokens.json · 4.1.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -68,6 +68,7 @@ internal object DesignTokens {
     val componentActionPanelInset = 26.dp
     val componentActionTabletInset = 30.dp
     val componentActionTopInset = 44.dp
+    val componentButtonBorderWidth = 1.dp
     val componentButtonIconGap = 9.dp
     val componentButtonIconSize = 21.dp
     val componentButtonMinimumHeight = 46.dp
