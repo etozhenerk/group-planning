@@ -72,8 +72,15 @@ OAuth-реквизитов проверены реальный Яндекс ID, 
 
 Зависимости: группа 3, готовый реальный вход из основного изменения.
 
-- [ ] 4.1 Настроить production dist на общем origin API/web; проверить deep-link reload, новый и старый путь приглашения, Open Graph без JavaScript, 404 и отсутствие приватных данных в публичном HTML.
+- [x] 4.1 Настроить production dist на общем origin API/web; проверить deep-link reload, новый и старый путь приглашения, Open Graph без JavaScript, 404 и отсутствие приватных данных в публичном HTML.
 - [ ] 4.2 Проверить реальные web-cookie, CSRF, вход/отмену/возврат в приглашение и обмен сообщениями на целевом HTTPS; выполнить `npm run web:check`, `npm run web:build`, `npm run web:test:e2e` и сохранить отчёт внешнего smoke-test отдельно от тестов с fake-provider.
+
+Результат 4.1 на действующем rc15: [независимый проход](qa/2026-11-01-public-web-path/report.md)
+и [сверка точного scope](qa/2026-11-01-public-web-path/scope-review.md).
+Подтверждены публичные маршруты/reload, оба приглашения, same-origin assets/API,
+OG в HTTP HTML, HTTP404 invalid invite/assets и UI404 неизвестного SPA-пути.
+Авторизованные операции, cookie/CSRF и реальный OAuth остаются в 4.2;
+отсутствие их проверки не скрывается и не выдаётся за общий release PASS.
 
 ## 5. iOS: TestFlight и App Store
 
