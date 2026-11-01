@@ -1,0 +1,395 @@
+{
+  "database": "somewhere_restore_sdd_1101_53dd4525",
+  "marker": "somewhere_sdd_restore_20261101_b586720c9ee02977",
+  "backup": {
+    "object": "database/20261101T030801Z.dump.age",
+    "sha256": "9e69ba7d52131e5d89b80903df148469a8bfb139feb741ac1ac2cff574a9f753",
+    "completed_at": 1793502481
+  },
+  "encrypted_bytes": 18778459,
+  "started_at": "2026-11-01T14:37:07.943964+00:00",
+  "steps": [
+    {
+      "id": "create",
+      "exit": 0
+    },
+    {
+      "id": "guard-before-restore",
+      "exit": 0
+    },
+    {
+      "id": "decrypt-pipe-restore",
+      "decrypt_exit": 0,
+      "restore_exit": 0,
+      "plaintext_file_created": false,
+      "key_transferred": false
+    },
+    {
+      "id": "guard-after-restore",
+      "exit": 0
+    },
+    {
+      "id": "inventory",
+      "exit": 0
+    },
+    {
+      "id": "cleanup",
+      "exit": 0
+    }
+  ],
+  "verification": {
+    "restored": {
+      "migration_checksums": [
+        "1|809f8ae09d173ee636c10db5e3bafa8cb0be8583a567ce4765b954b28f06af0e",
+        "2|8e17fc821729556a84df58d743417f04120869a23a364a4a54b54baa836527a2",
+        "3|6a670a2eea9a0aa87af1b6ccd40bba4ab007de13e18ab4d020633b6467df61da",
+        "4|7c5cdad7964c45a5c00861c6032ece5031baf120b9e5e8a8f9f478677cde2971",
+        "5|12494054bbcc22cb9a65b9448d0845e712e1ac79a38874a877c2a8eee7284a5c",
+        "6|4c5ccdc392c4ee93eef7eec050fa1809f1fb81f9a4d9631435cb7027fd1c3777",
+        "7|6b1160c824930a4116d1ee7da6b74b0546b8e63a586be15714c1b5141bae6855",
+        "8|7ee5425d0606c94f97a9a1365d325392aeab3b840fb0de1401d534be1c605216"
+      ],
+      "role_flags": "somewhere|false|false\nsomewhere_migrator|false|false",
+      "runtime_migration_write": "f",
+      "runtime_table_acl": [
+        "observability.installations|somewhere_migrator|false",
+        "observability.login_daily|somewhere_migrator|false",
+        "public.date_polls|somewhere_migrator|true",
+        "public.feed_entries|somewhere_migrator|true",
+        "public.identity_attempts|somewhere_migrator|true",
+        "public.identity_deletion_receipts|somewhere_migrator|true",
+        "public.identity_sessions|somewhere_migrator|true",
+        "public.identity_subject_fences|somewhere_migrator|true",
+        "public.identity_users|somewhere_migrator|true",
+        "public.invitations|somewhere_migrator|true",
+        "public.media_blobs|somewhere_migrator|true",
+        "public.meeting_changes|somewhere_migrator|true",
+        "public.meeting_covers|somewhere_migrator|true",
+        "public.meeting_media|somewhere_migrator|true",
+        "public.meeting_read_markers|somewhere_migrator|true",
+        "public.meeting_streams|somewhere_migrator|true",
+        "public.meetings|somewhere_migrator|true",
+        "public.message_reactions|somewhere_migrator|true",
+        "public.place_polls|somewhere_migrator|true",
+        "public.preparation_tasks|somewhere_migrator|true",
+        "public.realtime_outbox|somewhere_migrator|true",
+        "public.removed_meeting_users|somewhere_migrator|true",
+        "public.request_receipts|somewhere_migrator|true",
+        "public.rsvps|somewhere_migrator|true",
+        "public.schema_migrations|somewhere_migrator|true",
+        "public.support_feedback|somewhere_migrator|true",
+        "public.support_rate_windows|somewhere_migrator|true",
+        "public.transition_jobs|somewhere_migrator|true"
+      ],
+      "tables": {
+        "observability.installations": {
+          "digest": "3ec0d7f1e36c700caaa031de8a579da8",
+          "rows": 1
+        },
+        "observability.login_daily": {
+          "digest": "ebed750035c1000df56ec6c5dde6ea83",
+          "rows": 4
+        },
+        "public.date_polls": {
+          "digest": "c359d4de628c1db110566bcb155f8c8c",
+          "rows": 1
+        },
+        "public.feed_entries": {
+          "digest": "bacb140f48df6ece116e9dd18f2daa0b",
+          "rows": 42
+        },
+        "public.identity_attempts": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_deletion_receipts": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_sessions": {
+          "digest": "845480f2340aa9be3c0f6a0a2928a8da",
+          "rows": 8
+        },
+        "public.identity_subject_fences": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_users": {
+          "digest": "7418912555cd8a05bfff9aa21fd58940",
+          "rows": 3
+        },
+        "public.invitations": {
+          "digest": "05995ed5a40b9c14a9326f268a7d7f0b",
+          "rows": 7
+        },
+        "public.media_blobs": {
+          "digest": "82d45c468e3f846578fc21dcc22ed06f",
+          "rows": 13
+        },
+        "public.meeting_changes": {
+          "digest": "3ae7607f8134448f4386124582ee6bce",
+          "rows": 124
+        },
+        "public.meeting_covers": {
+          "digest": "172c0bedc7eeebe45f76b24e96d11c7d",
+          "rows": 3
+        },
+        "public.meeting_media": {
+          "digest": "7fef60e537865dfcce1e78412cef299b",
+          "rows": 13
+        },
+        "public.meeting_read_markers": {
+          "digest": "732d30401be70a752a44fa6c917e59d8",
+          "rows": 9
+        },
+        "public.meeting_streams": {
+          "digest": "5537da3f6f1aab3da3f615097170b984",
+          "rows": 7
+        },
+        "public.meetings": {
+          "digest": "835c33e627ecf9603554b018e0127162",
+          "rows": 7
+        },
+        "public.message_reactions": {
+          "digest": "f9d2c25a95bb76c2df3612e7a3a4ddaa",
+          "rows": 5
+        },
+        "public.place_polls": {
+          "digest": "f40a331388243280561690aefe4eacb4",
+          "rows": 1
+        },
+        "public.preparation_tasks": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.realtime_outbox": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.removed_meeting_users": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.request_receipts": {
+          "digest": "5ae9fc2cf6395e60c8fd359bb3b74670",
+          "rows": 79
+        },
+        "public.rsvps": {
+          "digest": "82a956e14887c74e40316615719c0864",
+          "rows": 2
+        },
+        "public.schema_migrations": {
+          "digest": "cc7e5d9e734af2da058c3f83dfc8c52b",
+          "rows": 8
+        },
+        "public.support_feedback": {
+          "digest": "9af5b6dc24797c217a713793eded562f",
+          "rows": 3
+        },
+        "public.support_rate_windows": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.transition_jobs": {
+          "digest": "185863800329f8e2eb08d0efcbb9aa70",
+          "rows": 7
+        }
+      },
+      "unvalidated_foreign_keys": 0
+    },
+    "live": {
+      "migration_checksums": [
+        "1|809f8ae09d173ee636c10db5e3bafa8cb0be8583a567ce4765b954b28f06af0e",
+        "2|8e17fc821729556a84df58d743417f04120869a23a364a4a54b54baa836527a2",
+        "3|6a670a2eea9a0aa87af1b6ccd40bba4ab007de13e18ab4d020633b6467df61da",
+        "4|7c5cdad7964c45a5c00861c6032ece5031baf120b9e5e8a8f9f478677cde2971",
+        "5|12494054bbcc22cb9a65b9448d0845e712e1ac79a38874a877c2a8eee7284a5c",
+        "6|4c5ccdc392c4ee93eef7eec050fa1809f1fb81f9a4d9631435cb7027fd1c3777",
+        "7|6b1160c824930a4116d1ee7da6b74b0546b8e63a586be15714c1b5141bae6855",
+        "8|7ee5425d0606c94f97a9a1365d325392aeab3b840fb0de1401d534be1c605216"
+      ],
+      "role_flags": "somewhere|false|false\nsomewhere_migrator|false|false",
+      "runtime_migration_write": "f",
+      "runtime_table_acl": [
+        "observability.installations|somewhere_migrator|false",
+        "observability.login_daily|somewhere_migrator|false",
+        "public.date_polls|somewhere_migrator|true",
+        "public.feed_entries|somewhere_migrator|true",
+        "public.identity_attempts|somewhere_migrator|true",
+        "public.identity_deletion_receipts|somewhere_migrator|true",
+        "public.identity_sessions|somewhere_migrator|true",
+        "public.identity_subject_fences|somewhere_migrator|true",
+        "public.identity_users|somewhere_migrator|true",
+        "public.invitations|somewhere_migrator|true",
+        "public.media_blobs|somewhere_migrator|true",
+        "public.meeting_changes|somewhere_migrator|true",
+        "public.meeting_covers|somewhere_migrator|true",
+        "public.meeting_media|somewhere_migrator|true",
+        "public.meeting_read_markers|somewhere_migrator|true",
+        "public.meeting_streams|somewhere_migrator|true",
+        "public.meetings|somewhere_migrator|true",
+        "public.message_reactions|somewhere_migrator|true",
+        "public.place_polls|somewhere_migrator|true",
+        "public.preparation_tasks|somewhere_migrator|true",
+        "public.realtime_outbox|somewhere_migrator|true",
+        "public.removed_meeting_users|somewhere_migrator|true",
+        "public.request_receipts|somewhere_migrator|true",
+        "public.rsvps|somewhere_migrator|true",
+        "public.schema_migrations|somewhere_migrator|true",
+        "public.support_feedback|somewhere_migrator|true",
+        "public.support_rate_windows|somewhere_migrator|true",
+        "public.transition_jobs|somewhere_migrator|true"
+      ],
+      "tables": {
+        "observability.installations": {
+          "digest": "3ec0d7f1e36c700caaa031de8a579da8",
+          "rows": 1
+        },
+        "observability.login_daily": {
+          "digest": "ebed750035c1000df56ec6c5dde6ea83",
+          "rows": 4
+        },
+        "public.date_polls": {
+          "digest": "c359d4de628c1db110566bcb155f8c8c",
+          "rows": 1
+        },
+        "public.feed_entries": {
+          "digest": "bacb140f48df6ece116e9dd18f2daa0b",
+          "rows": 42
+        },
+        "public.identity_attempts": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_deletion_receipts": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_sessions": {
+          "digest": "845480f2340aa9be3c0f6a0a2928a8da",
+          "rows": 8
+        },
+        "public.identity_subject_fences": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.identity_users": {
+          "digest": "7418912555cd8a05bfff9aa21fd58940",
+          "rows": 3
+        },
+        "public.invitations": {
+          "digest": "05995ed5a40b9c14a9326f268a7d7f0b",
+          "rows": 7
+        },
+        "public.media_blobs": {
+          "digest": "82d45c468e3f846578fc21dcc22ed06f",
+          "rows": 13
+        },
+        "public.meeting_changes": {
+          "digest": "3ae7607f8134448f4386124582ee6bce",
+          "rows": 124
+        },
+        "public.meeting_covers": {
+          "digest": "172c0bedc7eeebe45f76b24e96d11c7d",
+          "rows": 3
+        },
+        "public.meeting_media": {
+          "digest": "7fef60e537865dfcce1e78412cef299b",
+          "rows": 13
+        },
+        "public.meeting_read_markers": {
+          "digest": "732d30401be70a752a44fa6c917e59d8",
+          "rows": 9
+        },
+        "public.meeting_streams": {
+          "digest": "5537da3f6f1aab3da3f615097170b984",
+          "rows": 7
+        },
+        "public.meetings": {
+          "digest": "835c33e627ecf9603554b018e0127162",
+          "rows": 7
+        },
+        "public.message_reactions": {
+          "digest": "f9d2c25a95bb76c2df3612e7a3a4ddaa",
+          "rows": 5
+        },
+        "public.place_polls": {
+          "digest": "f40a331388243280561690aefe4eacb4",
+          "rows": 1
+        },
+        "public.preparation_tasks": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.realtime_outbox": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.removed_meeting_users": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.request_receipts": {
+          "digest": "5ae9fc2cf6395e60c8fd359bb3b74670",
+          "rows": 79
+        },
+        "public.rsvps": {
+          "digest": "82a956e14887c74e40316615719c0864",
+          "rows": 2
+        },
+        "public.schema_migrations": {
+          "digest": "cc7e5d9e734af2da058c3f83dfc8c52b",
+          "rows": 8
+        },
+        "public.support_feedback": {
+          "digest": "9af5b6dc24797c217a713793eded562f",
+          "rows": 3
+        },
+        "public.support_rate_windows": {
+          "digest": "d41d8cd98f00b204e9800998ecf8427e",
+          "rows": 0
+        },
+        "public.transition_jobs": {
+          "digest": "185863800329f8e2eb08d0efcbb9aa70",
+          "rows": 7
+        }
+      },
+      "unvalidated_foreign_keys": 0
+    },
+    "equal_table_hashes": [
+      "observability.installations",
+      "observability.login_daily",
+      "public.date_polls",
+      "public.feed_entries",
+      "public.identity_attempts",
+      "public.identity_deletion_receipts",
+      "public.identity_sessions",
+      "public.identity_subject_fences",
+      "public.identity_users",
+      "public.invitations",
+      "public.media_blobs",
+      "public.meeting_changes",
+      "public.meeting_covers",
+      "public.meeting_media",
+      "public.meeting_read_markers",
+      "public.meeting_streams",
+      "public.meetings",
+      "public.message_reactions",
+      "public.place_polls",
+      "public.preparation_tasks",
+      "public.realtime_outbox",
+      "public.removed_meeting_users",
+      "public.request_receipts",
+      "public.rsvps",
+      "public.schema_migrations",
+      "public.support_feedback",
+      "public.support_rate_windows",
+      "public.transition_jobs"
+    ],
+    "changed_since_backup": []
+  },
+  "restore_verified_at": "2026-11-01T14:37:16.402193+00:00",
+  "restore_and_verify_seconds": 8.458,
+  "backup_age_seconds_at_start": 41346.944,
+  "cleanup": "passed"
+}

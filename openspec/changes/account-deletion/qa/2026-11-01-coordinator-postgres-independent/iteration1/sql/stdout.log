@@ -1,0 +1,101 @@
+PG_ISOLATED_RETRY_PRECHECK 2026-11-01T14:51:44Z
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+COMMENT
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_account_20261101_9042c1e141dcbe67
+initial_user_tables=0
+role=somewhere_migrator super=false createdb=false
+PG_BINARY_SHA_OK f620b1399e70716cc029b57571eef2420b2040df979faeecfbc4edbab13c09e3
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_account_20261101_9042c1e141dcbe67
+PG_PHASE_BEGIN phase=coordinator-second-meeting at=2026-11-01T14:51:44Z
+=== RUN   TestIndependentCoordinatorSecondMeetingSQLRollback
+    coordinator_second_meeting_test.go:200: meeting not restored 3df85d9b-3d5f-445c-9b77-6548e11c71c7 actor required
+--- FAIL: TestIndependentCoordinatorSecondMeetingSQLRollback (1.25s)
+FAIL
+PG_PHASE_END phase=coordinator-second-meeting exit=1 elapsed_ns=1281767537 at=2026-11-01T14:51:46Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_account_20261101_9042c1e141dcbe67
+migration=1|809f8ae09d173ee636c10db5e3bafa8cb0be8583a567ce4765b954b28f06af0e
+migration=2|8e17fc821729556a84df58d743417f04120869a23a364a4a54b54baa836527a2
+migration=3|6a670a2eea9a0aa87af1b6ccd40bba4ab007de13e18ab4d020633b6467df61da
+migration=4|7c5cdad7964c45a5c00861c6032ece5031baf120b9e5e8a8f9f478677cde2971
+migration=5|12494054bbcc22cb9a65b9448d0845e712e1ac79a38874a877c2a8eee7284a5c
+migration=6|4c5ccdc392c4ee93eef7eec050fa1809f1fb81f9a4d9631435cb7027fd1c3777
+migration=7|6b1160c824930a4116d1ee7da6b74b0546b8e63a586be15714c1b5141bae6855
+migration=8|7ee5425d0606c94f97a9a1365d325392aeab3b840fb0de1401d534be1c605216
+database_size_bytes=9411607
+table=public.date_polls
+table=public.feed_entries
+table=public.identity_attempts
+table=public.identity_deletion_receipts
+table=public.identity_sessions
+table=public.identity_subject_fences
+table=public.identity_users
+table=public.invitations
+table=public.media_blobs
+table=public.meeting_changes
+table=public.meeting_covers
+table=public.meeting_media
+table=public.meeting_read_markers
+table=public.meeting_streams
+table=public.meetings
+table=public.message_reactions
+table=public.place_polls
+table=public.preparation_tasks
+table=public.realtime_outbox
+table=public.removed_meeting_users
+table=public.request_receipts
+table=public.rsvps
+table=public.schema_migrations
+table=public.support_feedback
+table=public.support_rate_windows
+table=public.transition_jobs
+PG_CLEANUP_BEGIN 2026-11-01T14:51:46Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_account_20261101_9042c1e141dcbe67
+PG_DROP_OWN_DATABASE_OK
+remaining_test_databases=0
+Filesystem      1B-blocks       Used  Available Use% Mounted on
+/dev/vda1      9703890944 4058447872 5628665856  42% /
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+PG_REMOVED_OWN_BINARY_SHA_OK f620b1399e70716cc029b57571eef2420b2040df979faeecfbc4edbab13c09e3
+PG_CLEANUP_END exit=1 at=2026-11-01T14:51:46Z

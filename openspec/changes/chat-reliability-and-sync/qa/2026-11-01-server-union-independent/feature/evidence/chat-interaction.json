@@ -1,0 +1,386 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "methodProvenance": "Historical selector names only; current execution/assertion observations and current raw case steps. Old PASS/timestamps not copied.",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-READ-STATE-068DA926",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Общая монотонная позиция прочтения",
+        "scenario": "Запоздалое устройство",
+        "sha256": "186b905dd9998423c443a7204c2d4da6934d3ae800a96b62ec9948054f6b6449"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadLateHintRollbackAndNoop"
+      ],
+      "steps": [
+        {
+          "action": "PUT 150, затем запоздалый PUT 140 и повтор PUT 150.",
+          "expected": "Фактический marker остаётся 150 во всех ответах; повторы не создают новую запись change/outbox.",
+          "actual": "HTTPS PUT150→140→150 retained150 and identical projection_version; late second-hint storage fault rolled back marker/journal/outbox, retry+60s no-op unchanged."
+        },
+        {
+          "action": "Прочитать sync/list и receipt aggregates другим клиентом A и автором B.",
+          "expected": "Личный unread и публичный receipt обновлены разрешёнными projections; read→sync→read не образует цикл.",
+          "actual": "Fresh following sync empty, list unread0; author canonical uppercase receipt count1; batch and scope checks reject mixed duplicate/non-author/outsider."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTP150UUIDAndScope",
+          "at": "2026-11-01T22:04:27.181944+03:00",
+          "output": "final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker"
+        },
+        {
+          "test": "TestIndependentReadLateHintRollbackAndNoop",
+          "at": "2026-11-01T22:04:30.376344+03:00",
+          "output": "independent_read_review_test.go:120: second-hint failure rolled back marker/journal/outbox; successful marker=4; +60s noop unchanged"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Общая монотонная позиция прочтения",
+        "scenario": "Некорректная позиция",
+        "sha256": "34bc94e61ec0367e54721791f8266d15be7366ee4484c0919c3fc4f695f351cc"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "steps": [
+        {
+          "action": "Отправить marker за tail, несуществующий, overflow uint64 и для недоступной встречи.",
+          "expected": "Запрос отклонён без изменения marker/unread и без раскрытия чужой позиции.",
+          "actual": "HTTPS marker0/01/+1/-1/decimal/overflow/max-beyond-tail422; memory sparse gap/system/max-uint64 validates actual message identity; no state mutation."
+        },
+        {
+          "action": "Повторить допустимую позицию после отзыва RSVP.",
+          "expected": "Отказ по текущим правам предшествует выдаче read state.",
+          "actual": "HTTPS NotGoing and request delayed until after revoke403; permitted earlier marker does not restore read access or private state."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        },
+        {
+          "test": "TestIndependentReadSparseUint64MessageBoundary",
+          "at": "2026-11-01T22:04:33.052104+03:00",
+          "output": "independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-284DD6EE",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Личные непрочитанные",
+        "scenario": "Смешанные обновления",
+        "sha256": "b791c06b349768012a7296ed786610e6e1f110a28a01948db3be9fbf42be02ba"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "steps": [
+        {
+          "action": "Запросить list/snapshot read state A.",
+          "expected": "Unread равен 2, first_unread указывает первое сообщение B; своё/системное/опрос/реакция не считаются.",
+          "actual": "Guest hidden vote absent; closed old poll updated permitted result; own/system/poll/reaction excluded; exactly2 foreign messages unread."
+        },
+        {
+          "action": "Продвинуть actual marker к первому, затем второму B.",
+          "expected": "Unread последовательно 1 и 0; first_unread согласован с тем же состоянием.",
+          "actual": "MarkRead(first foreign) returns unread1/firstUnread second; MarkRead(second) returns unread0/empty firstUnread."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "at": "2026-11-01T22:04:30.206048+03:00",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-8A47BDBD",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Предсказуемая инициализация",
+        "scenario": "Существующая большая история",
+        "sha256": "109a7d9972d85727e5bd38d80142d4e53f71abf10a6894cad287e4dfa70abee7"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentFinal10kActivationCommitRace",
+        "TestIndependentReadActivationLegacyReceipts",
+        "TestIndependentLegacyReadInitAuthorizationAndNoEffects",
+        "TestIndependentLegacyReadInitRechecksAccessAcrossTransactions"
+      ],
+      "steps": [
+        {
+          "action": "Инициализировать baseline текущего tail атомарно с новым сообщением B.",
+          "expected": "Старая история не объявлена новой; конкурентное сообщение учитывается согласно порядку commit и не теряется между baseline/snapshot.",
+          "actual": "Two fresh10k-history activation/commit races: unread compared with actual baseline<new sequence, no message lost across initialization/snapshot."
+        },
+        {
+          "action": "Проверить actual marker и receipt автора B.",
+          "expected": "Actual marker остаётся 0; миграция базы не создаёт прочтение.",
+          "actual": "Both races require actual=0 and author receipt count0; baseline does not fabricate receipt."
+        },
+        {
+          "action": "Для старой встречи без chat stream запросить batch receipts и первую страницу readers до первого Sync.",
+          "expected": "Оба endpoint доступны после активации; baseline не превращается в прочтение, epoch создаётся один раз без journal/outbox. Посторонний не создаёт stream; continuation без существующего epoch требует reset.",
+          "actual": "Fresh independent legacy receipts/readers-before-Sync authorized, one epoch, no new journal/outbox; unauthorized initialization denied and authorization rechecked across transactions."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinal10kActivationCommitRace",
+          "at": "2026-11-01T22:04:30.26177+03:00",
+          "output": "final_read_service_test.go:46: 10k activation race trial0 tail=10003 baseline=10002 actual=0 unread=1 expected=1 receipt0"
+        },
+        {
+          "test": "TestIndependentFinal10kActivationCommitRace",
+          "at": "2026-11-01T22:04:30.319216+03:00",
+          "output": "final_read_service_test.go:46: 10k activation race trial1 tail=10003 baseline=10002 actual=0 unread=1 expected=1 receipt0"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "at": "2026-11-01T22:04:30.374631+03:00",
+          "output": "independent_read_review_test.go:44: after activation before any sync: receipts={Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0} error=<nil>"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "at": "2026-11-01T22:04:30.374673+03:00",
+          "output": "independent_read_review_test.go:51: after activation before any sync: readers={UserIDs:[] ReaderCount:0 ProjectionVersion:0 NextCursor:} error=<nil>"
+        },
+        {
+          "test": "TestIndependentReadActivationLegacyReceipts",
+          "at": "2026-11-01T22:04:30.374869+03:00",
+          "output": "independent_read_review_test.go:59: same receipt query after unrelated sync: {Receipts:[{EntryID:d3c50000-0000-4000-8000-000000015999 ReaderCount:0}] ProjectionVersion:0}"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-5869F951",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Предсказуемая инициализация",
+        "scenario": "База не является подтверждением чтения",
+        "sha256": "e03daccc64684eccd8379fd4653abeae40d531053a6b6b781a4fa3da1a5d1a03"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "steps": [
+        {
+          "action": "Выполнить RSVP и запросить baseline/read marker/author readers.",
+          "expected": "Baseline равен согласованному хвосту, actual=0; C отсутствует в readers старых сообщений.",
+          "actual": "Fresh lifecycle baseline equals agreed historical tail with actual0; author receives no readers from baseline."
+        },
+        {
+          "action": "Подтвердить допустимую видимую позицию C отдельным PUT.",
+          "expected": "Только фактический marker создаёт соответствующий receipt.",
+          "actual": "Separate actual PUT makes receipt visible; baseline+actual distinction checked by HTTP and service assertions."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-51E51F41",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Предсказуемая инициализация",
+        "scenario": "Повторное вступление",
+        "sha256": "9dc6bb9eef4f6d8e70898103f317026d1d097fd41e11516de46a9ddae182f29e"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle",
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "steps": [
+        {
+          "action": "Выйти из M, добавить чужие сообщения, снова ответить Приду.",
+          "expected": "Прежние baseline/actual сохранены; доступные чужие сообщения после них считаются unread.",
+          "actual": "Fresh lifecycle NotGoing→messages→Going preserves baseline/actual, counts eligible messages since preserved marker."
+        },
+        {
+          "action": "Повторить RSVP и проверить прежние read значения.",
+          "expected": "Повтор не обнуляет marker и не создаёт ложные receipts.",
+          "actual": "Repeated RSVP/read no-op retains read values and receipts; disabled/re-enabled cycles preserve baseline."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        },
+        {
+          "test": "TestIndependentReadDisableReenablePreservesBaseline",
+          "at": "2026-11-01T22:04:30.379959+03:00",
+          "output": "independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-EC05E2CA",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Кто прочитал собственное сообщение",
+        "scenario": "Участник вышел",
+        "sha256": "394fe8040eaea1112d50542ee4ac6b94e22084a3a3b669964862ada7ff381be6"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentReadersPaginationRevokeAndScopedCursor",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "steps": [
+        {
+          "action": "Отозвать доступ B, удалить аккаунт C; запросить новый count/pages.",
+          "expected": "Оба исключены, автор не считается, старый snapshot требует refresh и не возвращает удалённый профиль.",
+          "actual": "Fresh103-reader pagination; revoked/deleted excluded leaving current101; old revision demands refresh, stale profile denied; scoped cursor rejected."
+        },
+        {
+          "action": "Повторить receipt batch для видимых собственных сообщений.",
+          "expected": "Агрегаты согласованы с текущим составом без загрузки полного JSON feed.",
+          "actual": "Fresh receipt aggregates and own100-ID batch agree with actual membership; full Feed prohibited by bounded reader in readFixture."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        },
+        {
+          "test": "TestIndependentReadersPaginationRevokeAndScopedCursor",
+          "at": "2026-11-01T22:04:30.379084+03:00",
+          "output": "independent_read_review_test.go:173: 103 readers -> current101 after revoke/delete; pages 50/50/1; nonauthor/outsider denied; exact 7d expiry reset"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+        "requirement": "Кто прочитал собственное сообщение",
+        "scenario": "Нет прочитавших или запрошено чужое сообщение",
+        "sha256": "ac5a9ca747cd6016af0f0b821a09a70756d33f18f997ea572f90798b9893428d"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "steps": [
+        {
+          "action": "Запросить readers как A, B и X, включая cursor следующей страницы.",
+          "expected": "A получает пустое состояние, неавтор/посторонний — отказ без чужих markers.",
+          "actual": "Empty author readers before actual read; nonauthor/outsider403 including scoped cursors."
+        },
+        {
+          "action": "Отправить receipt query со своими 100 ID, затем 101 и чужим ID.",
+          "expected": "Допустимый batch ограничен; превышение/чужое сообщение отклонены, персональные данные не раскрыты.",
+          "actual": "Actual own100/101/foreign-ID batch boundary; invalid batch rejected without private partial output."
+        },
+        {
+          "action": "Повторить свой receipt query с uppercase UUID и с дубликатом того же UUID в другом регистре.",
+          "expected": "Валидный uppercase UUID возвращает тот же canonical ID и count; mixed-case дубликат отклоняется без частичного ответа.",
+          "actual": "Actual uppercase UUID canonical count1; same UUID mixed-case duplicate422."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTP150UUIDAndScope",
+          "at": "2026-11-01T22:04:27.181944+03:00",
+          "output": "final_read_http_test.go:45: HTTPS actions: PUT150→140→150 retained150; same projection_version; follow-up sync empty; list unread0; uppercase UUID canonical count1; mixed-case duplicate422; nonauthor/outsider403; beyondtail422; empty readers before actual marker"
+        },
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-5EFD24A6",
+      "scope": "backend HTTP/service; no client UI acceptance",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Подтверждённая последовательность обновлений",
+        "scenario": "Изменение уже показанной карточки",
+        "sha256": "bc5e55b53874b8d5d6f13d15192b462ade5db6a77b694ac42d5c4151bba7a78b"
+      },
+      "startedAt": "2026-11-01T19:04:22.190928+00:00",
+      "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+      "freshSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll",
+        "TestChatSyncAccountReplayHasCurrentNames",
+        "TestChatSyncAccountReplayHasCurrentNames"
+      ],
+      "steps": [
+        {
+          "action": "Закрыть опрос штатной операцией/worker без нового сообщения и выполнить sync.",
+          "expected": "Проекция старой карточки обновлена; нет polling отдельной карточки и зависимости от нового хвоста.",
+          "actual": "Actual CloseDatePoll worker/service and following sync update old card and expose only permitted closed result without new tail."
+        },
+        {
+          "action": "Обезличить C, получить history_invalidated; повторить старую страницу с меньшей projection_version.",
+          "expected": "Выдана актуальная разрешённая проекция без прежнего имени; старая версия не возвращает удалённые данные.",
+          "actual": "Fresh TestChatSyncAccountReplayHasCurrentNames removes account and replays current anonymized projection; mixed journal/hints omit text/name/invitation token."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "at": "2026-11-01T22:04:30.206048+03:00",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token"
+        }
+      ],
+      "cleanup": "own httptest closed/memory discarded; no external resource"
+    }
+  ]
+}

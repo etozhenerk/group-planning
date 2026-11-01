@@ -8,11 +8,12 @@ import { makePlan, hashPlan } from './plan.mjs';
 import { inspectRun, executeSuite, loadRun, writeNewJson } from './results.mjs';
 import { exportReport } from './report.mjs';
 import { checkManifests } from './manifests.mjs';
+import { inspectTasks, taskGroups } from './task-scope.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const [command, ...args] = process.argv.slice(2);
 const { values } = parseArgs({ args, options: Object.fromEntries(
-  ['purpose', 'component', 'environments', 'cases', 'implementer', 'id', 'out', 'plan', 'run', 'suite', 'artifact-dir', 'receipt']
+  ['purpose', 'component', 'environments', 'cases', 'implementer', 'id', 'out', 'plan', 'run', 'suite', 'artifact-dir', 'receipt', 'manifest', 'tasks']
     .map((key) => [key, { type: 'string' }])) });
 const required = (name) => { if (!values[name]) throw new Error(`Missing --${name}`); return values[name]; };
 try {
@@ -29,6 +30,18 @@ try {
     await writeNewJson(resolve(output, 'plan.json'), plan);
     await writeNewJson(resolve(output, 'run.json'), { schemaVersion: 1, planHash: hashPlan(plan), checks: [], suites: [] });
     console.log(JSON.stringify({ output, cases: plan.expected.length, suites: plan.suites }, null, 2));
+  } else if (command === 'ready' && (values.manifest || values.tasks)) {
+    if (!values.manifest || !values.tasks) throw new Error('Task scope requires --manifest and --tasks');
+    if (values.receipt) throw new Error('Task readiness cannot issue release receipt');
+    const manifest = await readJson(required('manifest'));
+    const ids = values.tasks.split(',');
+    const groups = await taskGroups(root, manifest, ids);
+    if (values.plan || values.run) {
+      if (!values.plan || !values.run || groups.length !== 1 ||
+          resolve(groups[0].planPath) !== resolve(values.plan) || resolve(groups[0].runPath) !== resolve(values.run))
+        throw new Error('Task manifest belongs to another plan/run');
+    }
+    console.log(JSON.stringify(await inspectTasks(root, manifest, ids), null, 2));
   } else {
     const planPath = resolve(required('plan'));
     const runPath = resolve(required('run'));
@@ -46,6 +59,8 @@ try {
       await writeFile(runPath, `${JSON.stringify(run, null, 2)}\n`);
       if (result.status !== 'passed') process.exitCode = 1;
     } else if (command === 'ready' || command === 'release-ready') {
+      if (values.manifest || values.tasks)
+        throw new Error('Task scope requires ready --manifest and --tasks; releases require full acceptance');
       if (command === 'release-ready' && plan.purpose !== 'release') throw new Error('Feature run cannot release an artifact');
       const status = await inspectRun(root, plan, run, directory, { ...options, ready: true });
       if (values.receipt) {

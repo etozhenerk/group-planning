@@ -145,7 +145,7 @@ internal fun FeedViewportEffect(
     }
     LaunchedEffect(rows.lastOrNull()?.key) {
         if (position.ready && position.following && !state.hasNewer && rows.isNotEmpty()) {
-            list.scrollToItem(0)
+            list.requestScrollToItem(0)
         }
     }
 }

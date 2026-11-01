@@ -55,6 +55,36 @@ enum ChatSheetTestSupport {
         XCTAssertTrue(element.isHittable)
     }
 
+    static func revealInConversation(_ element: XCUIElement, app: XCUIApplication) {
+        let timeline = app.scrollViews["feed-timeline"]
+        let header = app.buttons["meeting-heading"]
+        let composer = app.textViews["message-input"]
+        for _ in 0..<12 {
+            let top = max(timeline.frame.minY, header.frame.maxY)
+            let bottom = min(timeline.frame.maxY, composer.frame.minY)
+            if element.exists, element.isHittable,
+                element.frame.minY >= top, element.frame.maxY <= bottom
+            {
+                return
+            }
+            XCTAssertGreaterThan(bottom - top, 80)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let older = !element.exists || element.frame.minY < top
+            let upper = origin.withOffset(CGVector(dx: app.frame.midX, dy: top + 20))
+            let lower = origin.withOffset(CGVector(dx: app.frame.midX, dy: bottom - 20))
+            if older {
+                upper.press(forDuration: 0.1, thenDragTo: lower)
+            } else {
+                lower.press(forDuration: 0.1, thenDragTo: upper)
+            }
+        }
+        print("SOMEWHERE_CONVERSATION_REVEAL_FAILURE_TREE=" + app.debugDescription)
+        XCTAssertTrue(element.exists)
+        XCTAssertTrue(element.isHittable)
+        XCTAssertGreaterThanOrEqual(element.frame.minY, header.frame.maxY)
+        XCTAssertLessThanOrEqual(element.frame.maxY, composer.frame.minY)
+    }
+
     static func dismissBySwipe(
         _ app: XCUIApplication, headerIdentifier: String = "action-form-header"
     ) {

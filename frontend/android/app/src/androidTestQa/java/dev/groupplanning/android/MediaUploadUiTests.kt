@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.provider.MediaStore
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -13,15 +12,18 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
 class MediaUploadUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()

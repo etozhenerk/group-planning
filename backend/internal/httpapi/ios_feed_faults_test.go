@@ -10,14 +10,15 @@ import (
 )
 
 type iosFeedFaults struct {
-	scenario string
-	mu       sync.Mutex
-	posts    int
-	keys     map[string]bool
-	ids      map[string]bool
-	changed  bool
-	patched  bool
-	history  bool
+	rejectFirstBeforeCommit bool
+	scenario                string
+	mu                      sync.Mutex
+	posts                   int
+	keys                    map[string]bool
+	ids                     map[string]bool
+	changed                 bool
+	patched                 bool
+	history                 bool
 }
 
 func (f *iosFeedFaults) handler(api http.Handler) http.Handler {
@@ -38,7 +39,7 @@ func (f *iosFeedFaults) handler(api http.Handler) http.Handler {
 				f.history = true
 			}
 
-			waiting := f.posts == 1
+			waiting := f.posts == 1 && !f.rejectFirstBeforeCommit
 			f.mu.Unlock()
 			if waiting {
 				http.Error(w, "fixture lost response awaiting explicit retry", http.StatusServiceUnavailable)
@@ -47,6 +48,19 @@ func (f *iosFeedFaults) handler(api http.Handler) http.Handler {
 		}
 
 		if r.Method == http.MethodPost && strings.HasSuffix(r.URL.Path, "/messages") {
+			f.mu.Lock()
+			reject := f.rejectFirstBeforeCommit && f.posts == 0
+			if reject {
+				f.posts++
+				f.keys[r.Header.Get("Idempotency-Key")] = true
+			}
+
+			f.mu.Unlock()
+			if reject {
+				http.Error(w, "fixture outage before message commit", http.StatusServiceUnavailable)
+				return
+			}
+
 			reply := httptest.NewRecorder()
 			api.ServeHTTP(reply, r)
 			f.mu.Lock()

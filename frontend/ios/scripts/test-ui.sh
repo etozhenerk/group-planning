@@ -11,7 +11,14 @@ somewhere_auth_filter=
 somewhere_scope=
 somewhere_chat=0
 somewhere_native_filters=0
+somewhere_baseline=0
+somewhere_followup=0
+somewhere_selectors=0
 case "${1:-all}" in
+    qa-selectors) somewhere_selectors=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
+    qa-followup) somewhere_followup=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
+    qa-baseline) somewhere_baseline=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
+    qa-isolation) somewhere_filter=-only-testing:SomewhereUITests/QAIsolationUITests; somewhere_scope=accessibility ;;
     chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
     album-download) somewhere_filter=-only-testing:SomewhereUITests/AlbumDownloadUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
     native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
@@ -46,14 +53,15 @@ case "${1:-all}" in
     places) somewhere_filter=-only-testing:SomewhereUITests/PlacePollUITests; somewhere_scope=places ;;
     polls) somewhere_filter=-only-testing:SomewhereUITests/DatePollUITests; somewhere_scope=polls ;;
     calendar) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests; somewhere_scope=calendar ;;
-    feed) somewhere_filter=-only-testing:SomewhereUITests/FeedUITests; somewhere_scope=feed ;;
+    feed) somewhere_filter=-only-testing:SomewhereUITests/FeedUITests; somewhere_scope=feed; somewhere_chat=1 ;;
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|chat-keyboard|album-download|sheet-stability|sheet-pending|sheet-task|support|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|album-download|sheet-stability|sheet-pending|sheet-task|support|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
+. ./scripts/software-keyboard.sh
 somewhere_fixture=
 somewhere_control_written=0
 cleanup() {
@@ -73,6 +81,7 @@ cleanup() {
             chmod 600 .build/chat-fixture-control.json
         fi
     fi
+    if ! somewhere_restore_software_keyboard; then somewhere_status=1; fi
     somewhere_release_simulator
     rm -rf "$somewhere_temporary"
     exit "$somewhere_status"
@@ -81,6 +90,7 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 somewhere_prepare_simulator
+somewhere_prepare_software_keyboard
 
 case "${1:-all}" in
     all|native-usability|sheet-media|media|media-native|covers|covers-large)
@@ -113,16 +123,14 @@ while [ ! -f "$somewhere_temporary/config.json" ]; do
     sleep 0.1
 done
 
-if [ "$somewhere_chat" = "1" ]; then
-    mkdir -p .build
-    if [ -f .build/chat-fixture-control.json ]; then
-        cp .build/chat-fixture-control.json "$somewhere_temporary/previous-chat-control.json"
-        chmod 600 "$somewhere_temporary/previous-chat-control.json"
-    fi
-    cp "$somewhere_temporary/config.json" .build/chat-fixture-control.json
-    chmod 600 .build/chat-fixture-control.json
-    somewhere_control_written=1
+mkdir -p .build
+if [ -f .build/chat-fixture-control.json ]; then
+    cp .build/chat-fixture-control.json "$somewhere_temporary/previous-chat-control.json"
+    chmod 600 "$somewhere_temporary/previous-chat-control.json"
 fi
+cp "$somewhere_temporary/config.json" .build/chat-fixture-control.json
+chmod 600 .build/chat-fixture-control.json
+somewhere_control_written=1
 
 xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug \
     -sdk "$SOMEWHERE_IOS_SIMULATOR_SDK" \
@@ -138,7 +146,28 @@ if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1
     python3 scripts/seed-ui-document.py "$somewhere_container/Documents"
 fi
 
-if [ "$somewhere_native_filters" = "1" ]; then
+if [ "$somewhere_selectors" = "1" ]; then
+    set -- -only-testing:SomewhereUITests/ExperienceUITests/testNavigationProfileDocumentsAndFeedbackDraft \
+        -only-testing:SomewhereUITests/FeedUITests/testConversationHistoryRetryBackgroundAndSettings \
+        -only-testing:SomewhereUITests/SupportFormUITests/testKeyboardDismissalValidationAndFeedbackSubmission
+elif [ "$somewhere_followup" = "1" ]; then
+    set -- -only-testing:SomewhereUITests/CalendarUITests/testDisplayToggleKeepsItsPosition \
+        -only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent \
+        -only-testing:SomewhereUITests/SavedInvitationsUITests/testEmptyTabKeepsCalendarSelection \
+        -only-testing:SomewhereUITests/ExperienceUITests/testNavigationProfileDocumentsAndFeedbackDraft \
+        -only-testing:SomewhereUITests/ExperienceUITests/testSupportSendsToFixtureAndShowsReceipt \
+        -only-testing:SomewhereUITests/FeedUITests/testConversationHistoryRetryBackgroundAndSettings
+elif [ "$somewhere_baseline" = "1" ]; then
+    set -- -only-testing:SomewhereUITests/QAIsolationUITests \
+        -only-testing:SomewhereUITests/ChatSyncUITests \
+        -only-testing:SomewhereUITests/ChatSheetGuardUITests/testOrdinaryRevokedPreviewKeepsPrivacyAndRejoin \
+        -only-testing:SomewhereUITests/DesignExperienceUITests/testHelpAndAboutMatchApprovedLayout \
+        -only-testing:SomewhereUITests/DesignExperienceUITests/testListProfileAndCreationMatchApprovedLayout \
+        -only-testing:SomewhereUITests/NativeNavigationUITests/testEdgeBackKeepsCalendarAndMessageDraft \
+        -only-testing:SomewhereUITests/ExperienceUITests/testEmojiSelectionAndAttachmentCancellationKeepDraft \
+        -only-testing:SomewhereUITests/ExperienceUITests/testNavigationProfileDocumentsAndFeedbackDraft \
+        -only-testing:SomewhereUITests/ExperienceUITests/testSupportSendsToFixtureAndShowsReceipt
+elif [ "$somewhere_native_filters" = "1" ]; then
     set -- -only-testing:SomewhereUITests/NativeMediaFlowUITests \
         -only-testing:SomewhereUITests/NativeNavigationUITests \
         -only-testing:SomewhereUITests/HelpDisclosureUITests \

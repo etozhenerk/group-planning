@@ -1,0 +1,90 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (../../../../../../../../private/tmp/somewhere-web-album-cleanup-old.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.0.5 /Users/misha/Documents/Codex/projects/group-planning/frontend/web
+
+ ❯ src/features/download-album/model/createAlbumDownload.test.ts (14 tests | 2 failed) 16ms
+   × cancels a delayed POST and deletes its late acknowledgement without resurrecting the operation 4ms
+   × retains a failed cancellation until retry succeeds before creating another export 1ms
+ ❯ src/features/download-album/model/albumDownload.integration.test.ts (4 tests | 2 failed) 27ms
+   × retains an abort-aware POST acknowledgement and removes its canceled job before a fresh snapshot 18ms
+   × recovers the same canceled intent after a lost acknowledgement before preparing a new album 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/download-album/model/albumDownload.integration.test.ts > retains an abort-aware POST acknowledgement and removes its canceled job before a fresh snapshot
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/features/download-album/model/albumDownload.integration.test.ts:63:17
+     61|   const next = controller.start();
+     62|   await vi.advanceTimersByTimeAsync(0);
+     63|   expect(posts).toBe(1);
+       |                 ^
+     64|   expect(firstSignal?.aborted).toBe(false);
+     65|   expect(navigate).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/features/download-album/model/albumDownload.integration.test.ts > recovers the same canceled intent after a lost acknowledgement before preparing a new album
+AssertionError: expected [ …(2) ] to have a length of 3 but got 2
+
+- Expected
++ Received
+
+- 3
++ 2
+
+ ❯ src/features/download-album/model/albumDownload.integration.test.ts:108:16
+    106|     .map(([, init]) => new Headers(init?.headers).get('Idempotency-Key…
+    107|
+    108|   expect(keys).toHaveLength(3);
+       |                ^
+    109|   expect(keys[0]).toBeTruthy();
+    110|   expect(keys[1]).toBe(keys[0]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/features/download-album/model/createAlbumDownload.test.ts > cancels a delayed POST and deletes its late acknowledgement without resurrecting the operation
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/features/download-album/model/createAlbumDownload.test.ts:39:27
+     37|   const signal = vi.mocked(f.api.prepare).mock.calls[0]?.[3];
+     38|   f.controller.cancel();
+     39|   expect(signal?.aborted).toBe(false);
+       |                           ^
+     40|   late.resolve(status('ready'));
+     41|   await running;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/features/download-album/model/createAlbumDownload.test.ts > retains a failed cancellation until retry succeeds before creating another export
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+ ❯ src/features/download-album/model/createAlbumDownload.test.ts:170:24
+    168|   vi.mocked(f.api.prepare).mockResolvedValueOnce(status('ready', 'arch…
+    169|   await f.controller.start();
+    170|   expect(f.api.cancel).toHaveBeenCalledTimes(2);
+       |                        ^
+    171|   expect(f.api.cancel).toHaveBeenNthCalledWith(2, meeting, 'archive-1'…
+    172|   expect(f.navigate).toHaveBeenCalledExactlyOnceWith(meeting, 'archive…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 14 passed (18)
+   Start at  21:24:52
+   Duration  249ms (transform 49%, import 36%, tests 13%, worker 2%)
+

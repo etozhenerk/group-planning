@@ -1,0 +1,209 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent/capabilities.playwright.config.ts"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent/capabilities.playwright.config.ts",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent/capabilities-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent",
+        "testIgnore": [],
+        "testMatch": [
+          "capabilities.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent/capabilities-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent",
+        "testIgnore": [],
+        "testMatch": "capabilities.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8492",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/chat-reliability-and-sync/qa/2026-11-01-backend-independent/capabilities-result.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "capabilities.spec.ts",
+      "file": "capabilities.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "current client capabilities 404 keeps one legacy path and no read UI",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5381,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T14:40:14.183Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "actual-actions",
+                      "contentType": "application/json",
+                      "body": "ewogICJtb2RlIjogIjQwNCIsCiAgIm1lZXRpbmciOiAiOTIzYzFjNTItNzJlOS00OTkyLTk3NTgtY2MyNjVjOTNjNzg5IiwKICAiY2FwYWJpbGl0eVJlc3BvbnNlcyI6IDMsCiAgIndyaXRlcyI6IFsKICAgIHsKICAgICAgImtleSI6ICJkZGZiNTM4MS1lMGEwLTQzNjktOTZlYS1jYTM4MDEyZGQ1YjciLAogICAgICAiaW50ZW50IjogImRkZmI1MzgxLWUwYTAtNDM2OS05NmVhLWNhMzgwMTJkZDViNyIsCiAgICAgICJpZCI6ICJlN2JlZmUyZi0yM2Y1LTQwMmEtYTdhYi00MWY3NDU4YjViNGUiLAogICAgICAic2VxdWVuY2UiOiAiMiIsCiAgICAgICJzdGF0dXMiOiAyMDEKICAgIH0sCiAgICB7CiAgICAgICJrZXkiOiAiZGRmYjUzODEtZTBhMC00MzY5LTk2ZWEtY2EzODAxMmRkNWI3IiwKICAgICAgImludGVudCI6ICJkZGZiNTM4MS1lMGEwLTQzNjktOTZlYS1jYTM4MDEyZGQ1YjciLAogICAgICAiaWQiOiAiZTdiZWZlMmYtMjNmNS00MDJhLWE3YWItNDFmNzQ1OGI1YjRlIiwKICAgICAgInNlcXVlbmNlIjogIjIiLAogICAgICAic3RhdHVzIjogMjAxCiAgICB9CiAgXSwKICAic29ja2V0cyI6IDAsCiAgIm5ldHdvcmsiOiBbCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiUE9TVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvYXV0aC95YW5kZXgvc3RhcnQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvYXV0aC95YW5kZXgvY2FsbGJhY2siCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWUiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvY2hhdC1jYXBhYmlsaXRpZXMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWUiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvOTIzYzFjNTItNzJlOS00OTkyLTk3NTgtY2MyNjVjOTNjNzg5IgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL2NoYXQtY2FwYWJpbGl0aWVzIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9wYXJ0aWNpcGFudHMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvOTIzYzFjNTItNzJlOS00OTkyLTk3NTgtY2MyNjVjOTNjNzg5L2ZlZWQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvOTIzYzFjNTItNzJlOS00OTkyLTk3NTgtY2MyNjVjOTNjNzg5IgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9mZWVkIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJQT1NUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy85MjNjMWM1Mi03MmU5LTQ5OTItOTc1OC1jYzI2NWM5M2M3ODkvbWVzc2FnZXMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIlBPU1QiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9tZXNzYWdlcyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy85MjNjMWM1Mi03MmU5LTQ5OTItOTc1OC1jYzI2NWM5M2M3ODkvcmVhY3Rpb25zIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9mZWVkIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9mZWVkIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9jaGF0LWNhcGFiaWxpdGllcyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy85MjNjMWM1Mi03MmU5LTQ5OTItOTc1OC1jYzI2NWM5M2M3ODkvcGFydGljaXBhbnRzIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9mZWVkIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy85MjNjMWM1Mi03MmU5LTQ5OTItOTc1OC1jYzI2NWM5M2M3ODkvcmVhY3Rpb25zIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzkyM2MxYzUyLTcyZTktNDk5Mi05NzU4LWNjMjY1YzkzYzc4OS9mZWVkIgogICAgfQogIF0sCiAgImNsZWFudXAiOiAib3duIGJyb3dzZXIgY29udGV4dCBjbG9zZWQgYnkgcnVubmVyOyBjb21wbGV0ZSBvd25lZCBtZW1vcnkgZml4dHVyZSBkZXN0cm95ZWQgb24gZXhpdCIKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6bcb5a9b4e27408c434c-d061cfe5bcad6b6d2f05",
+          "file": "capabilities.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "current client capabilities disabled keeps one legacy path and no read UI",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T14:40:19.927Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "actual-actions",
+                      "contentType": "application/json",
+                      "body": "ewogICJtb2RlIjogImRpc2FibGVkIiwKICAibWVldGluZyI6ICI2NjlkMDhkNS03MDRkLTQ3YjItYWI3Ny0zNTg1MTk3MzI1MzgiLAogICJjYXBhYmlsaXR5UmVzcG9uc2VzIjogMywKICAid3JpdGVzIjogWwogICAgewogICAgICAia2V5IjogIjk3MzdhZjViLTI5ODctNGM3ZC1hZTVlLWM4MDNkYjhlN2E0YSIsCiAgICAgICJpbnRlbnQiOiAiOTczN2FmNWItMjk4Ny00YzdkLWFlNWUtYzgwM2RiOGU3YTRhIiwKICAgICAgImlkIjogImNjYjg4MWNjLTYwYjYtNDhmYi04Y2IwLTQxNDg3N2I1ZDZjNiIsCiAgICAgICJzZXF1ZW5jZSI6ICIyIiwKICAgICAgInN0YXR1cyI6IDIwMQogICAgfSwKICAgIHsKICAgICAgImtleSI6ICI5NzM3YWY1Yi0yOTg3LTRjN2QtYWU1ZS1jODAzZGI4ZTdhNGEiLAogICAgICAiaW50ZW50IjogIjk3MzdhZjViLTI5ODctNGM3ZC1hZTVlLWM4MDNkYjhlN2E0YSIsCiAgICAgICJpZCI6ICJjY2I4ODFjYy02MGI2LTQ4ZmItOGNiMC00MTQ4NzdiNWQ2YzYiLAogICAgICAic2VxdWVuY2UiOiAiMiIsCiAgICAgICJzdGF0dXMiOiAyMDEKICAgIH0KICBdLAogICJzb2NrZXRzIjogMCwKICAibmV0d29yayI6IFsKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJQT1NUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9hdXRoL3lhbmRleC9zdGFydCIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9hdXRoL3lhbmRleC9jYWxsYmFjayIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9jaGF0LWNhcGFiaWxpdGllcyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZSIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy82NjlkMDhkNS03MDRkLTQ3YjItYWI3Ny0zNTg1MTk3MzI1MzgiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvY2hhdC1jYXBhYmlsaXRpZXMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L3BhcnRpY2lwYW50cyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy82NjlkMDhkNS03MDRkLTQ3YjItYWI3Ny0zNTg1MTk3MzI1MzgvZmVlZCIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhdGgiOiAiL2FwaS92MS9tZWV0aW5ncy82NjlkMDhkNS03MDRkLTQ3YjItYWI3Ny0zNTg1MTk3MzI1MzgiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWUiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L2ZlZWQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIlBPU1QiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzY2OWQwOGQ1LTcwNGQtNDdiMi1hYjc3LTM1ODUxOTczMjUzOC9tZXNzYWdlcyIKICAgIH0sCiAgICB7CiAgICAgICJtZXRob2QiOiAiUE9TVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L21lc3NhZ2VzIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzY2OWQwOGQ1LTcwNGQtNDdiMi1hYjc3LTM1ODUxOTczMjUzOC9yZWFjdGlvbnMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L2ZlZWQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L2ZlZWQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWUiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4IgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL2NoYXQtY2FwYWJpbGl0aWVzIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzY2OWQwOGQ1LTcwNGQtNDdiMi1hYjc3LTM1ODUxOTczMjUzOC9wYXJ0aWNpcGFudHMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L2ZlZWQiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4IgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lIgogICAgfSwKICAgIHsKICAgICAgIm1ldGhvZCI6ICJHRVQiLAogICAgICAicGF0aCI6ICIvYXBpL3YxL21lZXRpbmdzLzY2OWQwOGQ1LTcwNGQtNDdiMi1hYjc3LTM1ODUxOTczMjUzOC9yZWFjdGlvbnMiCiAgICB9LAogICAgewogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXRoIjogIi9hcGkvdjEvbWVldGluZ3MvNjY5ZDA4ZDUtNzA0ZC00N2IyLWFiNzctMzU4NTE5NzMyNTM4L2ZlZWQiCiAgICB9CiAgXSwKICAiY2xlYW51cCI6ICJvd24gYnJvd3NlciBjb250ZXh0IGNsb3NlZCBieSBydW5uZXI7IGNvbXBsZXRlIG93bmVkIG1lbW9yeSBmaXh0dXJlIGRlc3Ryb3llZCBvbiBleGl0Igp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6bcb5a9b4e27408c434c-d2d105fa01c9570e822d",
+          "file": "capabilities.spec.ts",
+          "line": 5,
+          "column": 7
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T14:40:13.876Z",
+    "duration": 10977.361,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

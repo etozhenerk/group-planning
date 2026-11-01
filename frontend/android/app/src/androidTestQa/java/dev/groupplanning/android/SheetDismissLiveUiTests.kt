@@ -1,7 +1,6 @@
 package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -10,6 +9,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeDown
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -18,9 +18,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class SheetDismissLiveUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()

@@ -20,6 +20,22 @@ final class ExperienceUITests: XCTestCase {
     private func capture(_ name: String) {
         ExperienceScreenshot.save(name, test: self)
     }
+    private func finishSupportEditing(_ app: XCUIApplication) {
+        let keyboard = app.keyboards.firstMatch
+        XCTAssertTrue(keyboard.exists)
+        app.buttons["support-keyboard-done"].tap()
+        XCTAssertTrue(keyboard.waitForNonExistence(timeout: 5))
+    }
+    private func returnFromPage(_ scroll: XCUIElement) {
+        let back = scroll.buttons["Назад"]
+        for _ in 0..<10 {
+            if back.isHittable { break }
+            scroll.swipeDown()
+        }
+        XCTAssertTrue(back.isHittable)
+        print("PAGE_BACK_FRAME=\(back.frame) HITTABLE=\(back.isHittable)")
+        back.tap()
+    }
     private func reveal(_ element: XCUIElement, app: XCUIApplication) {
         for _ in 0..<10 {
             if element.isHittable && element.frame.maxY < app.frame.maxY - 120 { return }
@@ -65,13 +81,22 @@ final class ExperienceUITests: XCTestCase {
         XCTAssertTrue(description.waitForExistence(timeout: 5))
         description.tap()
         description.typeText("Подскажите, как добавить фото встречи")
+        finishSupportEditing(app)
         let toggle = app.buttons["Приложить сведения об устройстве"]
         reveal(toggle, app: app)
         XCTAssertEqual(toggle.value as? String, "0")
         capture("refresh-support")
-        app.buttons["Назад"].tap()
+        let helpPage = app.scrollViews["service-information-scroll"]
+        let backgroundBack = helpPage.buttons["Назад"]
+        if backgroundBack.exists {
+            print(
+                "BACKGROUND_BACK_FRAME=\(backgroundBack.frame) HITTABLE=\(backgroundBack.isHittable)"
+            )
+            XCTAssertFalse(backgroundBack.isHittable, "The covered help page cannot receive input")
+        }
+        returnFromPage(app.scrollViews["support-scroll"])
         XCTAssertTrue(app.buttons["Где найти приглашения с ответом «Возможно»?"].exists)
-        app.buttons["Назад"].tap()
+        returnFromPage(helpPage)
         XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 5))
 
     }
@@ -95,7 +120,9 @@ final class ExperienceUITests: XCTestCase {
         capture("refresh-emoji-draft")
         app.buttons["meeting-add"].tap()
         app.buttons["Фото"].tap()
-        let cancelPicker = app.buttons["Cancel"]
+        let cancelPicker = app.buttons.matching(
+            NSPredicate(format: "label IN %@", ["Cancel", "Отмена", "Отменить"])
+        ).firstMatch
         XCTAssertTrue(cancelPicker.waitForExistence(timeout: 10))
         capture("refresh-system-photo-picker")
         cancelPicker.tap()
@@ -191,6 +218,7 @@ final class ExperienceUITests: XCTestCase {
         XCTAssertTrue(description.waitForExistence(timeout: 5))
         description.tap()
         description.typeText("Проверка обращения из приложения iOS")
+        finishSupportEditing(app)
         let send = app.buttons["Отправить"]
         reveal(send, app: app)
         send.tap()

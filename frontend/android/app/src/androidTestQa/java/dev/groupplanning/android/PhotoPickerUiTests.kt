@@ -10,7 +10,6 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.hasContentDescription
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -21,6 +20,7 @@ import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.unit.dp
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.util.regex.Pattern
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -29,9 +29,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class PhotoPickerUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()

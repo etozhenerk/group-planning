@@ -5,10 +5,10 @@ import android.os.PowerManager
 import android.provider.Settings
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
+import dev.groupplanning.android.qaCreateComposeRule as createComposeRule
 import dev.groupplanning.android.ui.motion.rememberMotionEnabled
 import org.junit.Assert.assertEquals
 import org.junit.Rule

@@ -117,14 +117,21 @@ extension FeedOwner {
         }
     }
 
-    func startFallback(delay: Double) {
+    func startFallback(
+        delay: Double,
+        sleep: @escaping @MainActor (Double) async throws -> Void = {
+            try await Task.sleep(for: .seconds($0))
+        },
+        random: @escaping @MainActor () -> Double = { Double.random(in: 0.9...1.1) }
+    ) {
         guard active, fallbackTask == nil else { return }
         let version = generation
         fallbackTask = Task {
             defer { if generation == version { fallbackTask = nil } }
             var wait = delay
+            var interval = delay == 10 ? 3.0 : 6.0
             while active, current, generation == version, !realtimeReady {
-                do { try await Task.sleep(for: .seconds(wait)) } catch { return }
+                do { try await sleep(wait) } catch { return }
                 guard active, current, generation == version, !realtimeReady else { return }
                 do {
                     if !capabilitiesLoaded { try await discoverCapabilities(version: version) }
@@ -132,7 +139,8 @@ extension FeedOwner {
                     guard active, current, generation == version else { return }
                     if loaded, problem == nil { try await prepareRuntime(version: version) }
                 } catch { failed(error, version: version) }
-                wait = min(30, max(3, wait == 10 ? 3 : wait * 2)) * Double.random(in: 0.9...1.1)
+                wait = interval * random()
+                interval = interval < 12 ? interval * 2 : 30
             }
         }
     }

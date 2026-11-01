@@ -63,17 +63,85 @@ it('coalesces hints and serializes a hint arriving during catch-up', async () =>
   test.owner.stop();
 });
 
+it.each([50, 150])(
+  'retains an inflight hint when catch-up finishes after %d milliseconds',
+  async (finishAfter) => {
+    const test = fixture();
+    const gate = { finish: (): void => undefined };
+    test.refresh.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          gate.finish = resolve;
+        }),
+    );
+    await vi.advanceTimersByTimeAsync(0);
+    test.events().ready();
+    test.events().hint();
+    await vi.advanceTimersByTimeAsync(finishAfter);
+    gate.finish();
+    await vi.advanceTimersByTimeAsync(100);
+    expect(test.refresh).toHaveBeenCalledTimes(2);
+    test.owner.stop();
+  },
+);
+
+it('cancels a queued hint when stopped before its coalesce deadline', async () => {
+  const test = fixture();
+  await vi.advanceTimersByTimeAsync(0);
+  test.events().ready();
+  await vi.advanceTimersByTimeAsync(0);
+  test.events().hint();
+  test.owner.stop();
+  await vi.advanceTimersByTimeAsync(1_000);
+  expect(test.refresh).toHaveBeenCalledTimes(1);
+  expect(test.disconnect).toHaveBeenCalledTimes(1);
+});
+
 it('uses one bounded fallback after ten seconds and cancels it after catch-up', async () => {
   const test = fixture();
   await vi.advanceTimersByTimeAsync(9_999);
   expect(test.refresh).not.toHaveBeenCalled();
   await vi.advanceTimersByTimeAsync(3_001);
   expect(test.refresh).toHaveBeenCalledTimes(1);
-  await vi.advanceTimersByTimeAsync(3_000);
-  expect(test.refresh).toHaveBeenCalledTimes(2);
+
+  for (const [index, delay] of [6_000, 12_000, 30_000, 30_000].entries()) {
+    await vi.advanceTimersByTimeAsync(delay - 1);
+    expect(test.refresh).toHaveBeenCalledTimes(index + 1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(test.refresh).toHaveBeenCalledTimes(index + 2);
+  }
+
   test.events().ready();
   await vi.advanceTimersByTimeAsync(60_000);
-  expect(test.refresh).toHaveBeenCalledTimes(3);
+  expect(test.refresh).toHaveBeenCalledTimes(6);
+  test.owner.stop();
+});
+
+it('uses the protocol backoff when fallback HTTP also fails', async () => {
+  const test = fixture();
+  test.refresh.mockRejectedValue('network');
+  await vi.advanceTimersByTimeAsync(10_000);
+
+  for (const [index, delay] of [3_000, 6_000, 12_000, 30_000, 30_000].entries()) {
+    await vi.advanceTimersByTimeAsync(delay - 1);
+    expect(test.refresh).toHaveBeenCalledTimes(index);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(test.refresh).toHaveBeenCalledTimes(index + 1);
+  }
+
+  test.owner.stop();
+});
+
+it('preserves the legacy HTTP cadence without realtime capability', async () => {
+  const test = fixture(false);
+  await vi.advanceTimersByTimeAsync(0);
+  expect(test.refresh).toHaveBeenCalledTimes(1);
+
+  for (let index = 0; index < 4; index += 1) {
+    await vi.advanceTimersByTimeAsync(3_000);
+    expect(test.refresh).toHaveBeenCalledTimes(index + 2);
+  }
+
   test.owner.stop();
 });
 

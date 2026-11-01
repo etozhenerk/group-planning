@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "planHash": "814c23d8d72ac6ec1309f70de5fb4c9dd9f7508d335b295c19ddc7a7ee732d2a",
+  "checks": [
+    {
+      "id": "TC-CHAT-READ-STATE-99A5AEEE/backend-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697850+00:00",
+      "actual": "HTTPS marker:0/01/+1/-1/decimal/overflow/max beyond actual tail422; outsider403. Memory sparse gap/system/uint64 cases проверяют допустимую max позицию без потери точности и отклоняют несуществующие позиции. Subsequent valid state/unread подтверждён. HTTPS после NotGoing и delayed request, завершённого после revoke, возвращает403; allowed marker не восстанавливает доступ. Private read state в отказе отсутствует.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-E32551D3/backend-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697857+00:00",
+      "actual": "Author empty readers до actual marker. Nonauthor/outsider403, включая сохранённый/forged cursor. Pagination проверяет current members после revoke/delete и scope/expiry cursors. HTTPS собственные100 ID200;101 ID422; batch с чужим403 без partial receipts. Counter/reader pages не раскрывают foreign markers. Uppercase UUID даёт canonical ID/count; mixed-case duplicate422. Все проверки идут через реальные HTTPS handlers.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/backend-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697860+00:00",
+      "actual": "Memory: свежая матрица1k/10k/100k × limit1/50/100 ×6 directions; точные последовательности/ASC/hasMore, anchor и alias guards. SQL: та же матрица с20samples/config и tail bounds; stock SQL отдельно проверяет gaps/hasMore/around. Stock memory sparse positions >2^53/uint64 max, invalid limits/incompatible cursors, overflow rollback и cancellation; HTTPS extra probe:400 для0/101/overflow/negative/incompatible,404 missing own around,403 foreign initial/after/around. Bounded Store spy требует access до private чтения. Stock memory clone/snapshot/rollback/transaction-close/cancel и SQL snapshot/rollback+index/LIMIT/EXPLAIN на1k/10k/100k. Свежая облачная матрица54config ×20samples: p95 0.253–2.246ms, бюджет100ms. Оценка включает transaction+SQL+JSON decode, не network E2E.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SECURITY-0E0CB54C/backend-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697862+00:00",
+      "actual": "Два отдельных живых WS сценария: explicit logout/revoke и TTL2s. Активный socket закрывается3503 за≤4s, expiry не продлевается. Stock adapter regression и documented45s periodic boundary включены required race suite. После close commit+dispatch late hint; capabilities/sync/realtime reconnect401. Логи/errors/hints не содержат synthetic private body/token/cursor. Client UI/cache этим не проверяются; это заявленный backend environment.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/backend-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697864+00:00",
+      "actual": "10k history; fullFeed deliberately errors. Photo legacy/no-caption→modern empty hash, file+caption и text повторены до/после31-day receipt expiry: тот же ID/sequence, attachments сохранены. Первый ACK игнорируется вызывающим тестом. Изменённый text конфликтует; stock media test изменяет caption и получает media_already_published. Wrong author/meeting и revoked RSVP запрещены. DeniedReader/Writer запрещают private lookup до access. Memory clone/rollback/snapshot guards пройдены required suite; direct text tuple и media entry lookup проверены stock SQL на sparse/max positions, rollback и индексном EXPLAIN при100k. Новая матрица memory/SQL не меняет эти данные.",
+      "defect": "Allowed scope uses synthetic media; реальные пользовательские вложения не читались.",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-SYNC-THROUGH/backend-isolated/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697866+00:00",
+      "actual": "Backend PASS:105changes→100/5, fixed through=T. CommitT+1 между страницами приходит только следующим циклом. Discard/retry последней страницы даёт тот же cursor и5changes. Projection versions проверены stock sync rules. Backend response replay PASS, но фактический сбой client merge/storage apply, порядок ответов в client owner и единственный sync in-flight этим Go HTTP harness не наблюдаются. Полный shared expected остаётся blocked.",
+      "defect": "Нужен свежий действующий клиентский owner с fault на storage apply последней страницы, reorder/retry и измерением one-sync; не подменять его stateless server cursor replay.",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-CAPABILITIES/backend-isolated/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697868+00:00",
+      "actual": "Backend PASS:disabled capabilities200(sync=false/read_state=false), old feed/send/retry сохраняют DTO/ID/sequence. Stock HTTP disabled sync404 и signed/read-state gating проверены. Новый клиент с capabilities404/disabled и отсутствующим read UI не запускался. Cloud PASS: test-only no-journal writer + own-meeting epoch replacement. Старый cursor410, fresh snapshot содержит сообщение rollback interval и прежнюю историю, disabled compatible binary всё ещё journalizes новые команды; reenable не теряет baseline. Production rollback не выполнялся.",
+      "defect": "Нужен точный текущий клиентский artifact: capabilities404/disabled, один legacy путь, readUI отсутствует; серверный harness не доказывает действия клиента.",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "0fd015e5bc9495478db1ee686cda0479ace6b7299cb4c3336a83e12a0f4bfdd3"
+        },
+        {
+          "path": "evidence/runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/stock-sql-current.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/source-after.json",
+          "kind": "log",
+          "sha256": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-11-01T14:12:56.594Z",
+      "finishedAt": "2026-11-01T14:13:38.299Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793542376595.txt",
+          "kind": "log",
+          "sha256": "0c23918c6beb99a65ed0617a841c46c188d4c3890dab1360f769e6d57088e0d3"
+        }
+      ]
+    }
+  ]
+}

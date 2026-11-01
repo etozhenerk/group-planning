@@ -1,0 +1,61 @@
+{
+  "uuid": "f17d7691f115de288b26c8341b1204d72e611d3f37676039bb719ad7f276ce00",
+  "historyId": "0d8e3400ff0d403a404d03b4efb8353a90010fc02e5c984e184dfb921feb227c",
+  "testCaseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+  "fullName": "TC-CHAT-IDEMPOTENCY-LOOKUP/backend-isolated/manual",
+  "name": "Устойчивое намерение отправить: Адресный повтор text и media после потерянного ответа",
+  "status": "passed",
+  "stage": "finished",
+  "statusDetails": {
+    "message": "10k history; fullFeed deliberately errors. Photo legacy/no-caption→modern empty hash, file+caption и text повторены до/после31-day receipt expiry: тот же ID/sequence, attachments сохранены. Первый ACK игнорируется вызывающим тестом. Изменённый text конфликтует; stock media test изменяет caption и получает media_already_published. Wrong author/meeting и revoked RSVP запрещены. DeniedReader/Writer запрещают private lookup до access. Memory clone/rollback/snapshot guards пройдены required suite; direct text tuple и media entry lookup проверены stock SQL на sparse/max positions, rollback и индексном EXPLAIN при100k. Новая матрица memory/SQL не меняет эти данные."
+  },
+  "start": 1793542370983,
+  "stop": 1793542789697,
+  "labels": [
+    {
+      "name": "suite",
+      "value": "backend-isolated"
+    },
+    {
+      "name": "tag",
+      "value": "manual"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "interaction",
+      "source": "682f6b5b64a3abfa2d013c801f9aff771d38598ca3172e11c64a9803efea0c49.json",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd.log",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212.log",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7.json",
+      "type": "text/plain"
+    }
+  ]
+}

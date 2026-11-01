@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct ActionFormSheet<Content: View, Footer: View>: View {
     let title: String
@@ -12,9 +13,12 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.dismiss) private var dismiss
     @Environment(\.chatSheetClose) private var chatClose
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var contentHeight = DesignTokens.targetIos
     @State private var headerHeight = DesignTokens.targetIos
     @State private var footerHeight = DesignTokens.spaceS0
+    @State private var keyboardVisible = false
+    @State private var keyboardAccessoryHeight = DesignTokens.targetIos
 
     var body: some View {
         NavigationStack {
@@ -25,8 +29,23 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
                         Spacer()
                         Button("Готово") { SystemKeyboard.dismiss() }
                             .accessibilityIdentifier("action-keyboard-done")
+                            .onGeometryChange(for: CGFloat.self) {
+                                $0.size.height
+                            } action: {
+                                keyboardAccessoryHeight = max(DesignTokens.targetIos, $0)
+                            }
                     }
                 }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+        ) {
+            updateKeyboard($0, visible: true)
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+        ) {
+            updateKeyboard($0, visible: false)
         }
         .interactiveDismissDisabled(dismissDisabled || chatClose?.hasParent == true)
         .presentationDetents(detents)
@@ -137,6 +156,18 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
                 } action: {
                     footerHeight = $0
                 }
+                // The system keyboard toolbar floats above its safe-area boundary.
+                // Keep the complete action above it without changing the resting detent.
+                .padding(.bottom, keyboardVisible ? keyboardAccessoryHeight : DesignTokens.spaceS0)
+        }
+    }
+
+    private func updateKeyboard(_ notification: Notification, visible: Bool) {
+        let duration =
+            notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+            ?? DesignTokens.motionDurationMobileSheet
+        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
+            keyboardVisible = visible
         }
     }
 

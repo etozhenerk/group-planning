@@ -1,16 +1,18 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -19,9 +21,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class CoverUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() {
@@ -45,25 +49,34 @@ class CoverUiTests {
             fixture.waitTag("meeting-cover")
             compose.onNodeWithTag("cover-select").performScrollTo().performClick()
             fixture.waitTag("cover-error")
+            fixture.waitTag("meeting-cover")
             compose.onNodeWithTag("meeting-cover").assertExists()
             fixture.screenshot("android-cover-read-error")
             compose.onNodeWithTag("cover-select").performScrollTo().performClick()
             compose.waitUntil(10_000) {
                 compose.onAllNodes(hasTestTag("cover-loading")).fetchSemanticsNodes().isEmpty()
             }
+            fixture.waitTag("meeting-cover")
             compose.onNodeWithTag("meeting-cover").assertExists()
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
-            fixture.waitText("Повторить сохранение")
+            fixture.waitText(fixture.context.getString(R.string.create_retry))
             compose.onNodeWithTag("cover-select").assertIsNotEnabled()
             fixture.screenshot("android-cover-create-retry")
             activity.recreate()
-            fixture.waitText("Повторить сохранение")
+            fixture.waitText(fixture.context.getString(R.string.create_retry))
             compose.onNodeWithContentDescription(
                 "Название",
             ).assertTextContains("Встреча с обложкой")
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
             fixture.waitTag("feed-timeline")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
+            fixture.waitTag("meeting-information")
+            compose.onAllNodes(
+                hasTestTag("meeting-cover") and hasAnyAncestor(hasTestTag("meeting-information")),
+                useUnmergedTree = true,
+            ).assertCountEquals(0)
+            compose.onNodeWithTag("open-settings").performScrollTo().performClick()
+            fixture.waitTag("meeting-settings")
             fixture.waitTag("meeting-cover")
             fixture.screenshot("android-cover-details")
         }

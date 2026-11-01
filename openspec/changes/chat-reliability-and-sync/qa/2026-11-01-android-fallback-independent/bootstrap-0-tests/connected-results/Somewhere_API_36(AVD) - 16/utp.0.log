@@ -1,0 +1,42 @@
+INFO: Constructing runner from config.
+INFO: Configuring Android Instrumentation driver: android_instrumentation_runtime {
+  instrumentation_info {
+    app_package: "dev.groupplanning.android.uitesthost"
+    test_package: "dev.groupplanning.android.uitesthost.test"
+    test_runner_class: "androidx.test.runner.AndroidJUnitRunner"
+  }
+  instrumentation_args {
+    args_map {
+      key: "additionalTestOutputDir"
+      value: "/data/user/0/dev.groupplanning.android.uitesthost/files/ui-67203"
+    }
+    args_map {
+      key: "class"
+      value: "dev.groupplanning.android.QaCompositionThreadUiTests,dev.groupplanning.android.AlbumDownloadUiTests,dev.groupplanning.android.AlbumActionLayoutTests,dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ComposerOutsideTapUiTests,dev.groupplanning.android.EmojiSearchUiTests,dev.groupplanning.android.ChatQueueUiTests,dev.groupplanning.android.ChatReadUiTests,dev.groupplanning.android.ChatReadLiveUiTests,dev.groupplanning.android.ProfileFieldsUiTests,dev.groupplanning.android.ComposerMenuLifecycleUiTests,dev.groupplanning.android.EmojiDockLifecycleUiTests,dev.groupplanning.android.ReactionFeedbackLifecycleUiTests,dev.groupplanning.android.ReactionPickerLifecycleUiTests,dev.groupplanning.android.ReactionPopupLifecycleUiTests,dev.groupplanning.android.MotionPreferenceUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests"
+    }
+    args_map {
+      key: "fixturePath"
+      value: "/data/local/tmp/somewhere-android-ui-67203.json"
+    }
+  }
+}
+am_instrument_timeout: 31536000
+
+INFO: Configuring AndroidTestApkInstallerPlugin: apks_to_install {
+  apk_paths: "/Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/apk/qa/app-qa.apk"
+  install_options {
+  }
+}
+apks_to_install {
+  apk_paths: "/Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/apk/androidTest/qa/app-qa-androidTest.apk"
+  install_options {
+  }
+}
+instrumentation_target_package_id: "dev.groupplanning.android.uitesthost"
+
+INFO: No installables found in test fixture. Nothing to install.
+INFO: Installing [/Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/apk/qa/app-qa.apk] on device emulator-5554.
+SEVERE: Test execution failed with fatal error!
+INFO: Copying files from device to host: /data/user/0/dev.groupplanning.android.uitesthost/files/ui-67203 to /Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/connected_android_test_additional_output/qaAndroidTest/connected/Somewhere_API_36(AVD) - 16
+INFO: /data/user/0/dev.groupplanning.android.uitesthost/files/ui-67203 is not a directory
+INFO: Stop logcat streaming.

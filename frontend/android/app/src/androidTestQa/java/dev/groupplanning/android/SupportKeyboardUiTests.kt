@@ -5,7 +5,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -15,6 +14,7 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.test.uiautomator.By
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.util.regex.Pattern
 import kotlin.math.abs
 import org.junit.Assert.assertTrue
@@ -24,9 +24,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class SupportKeyboardUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()

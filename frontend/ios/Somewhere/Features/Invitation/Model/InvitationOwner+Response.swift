@@ -29,7 +29,18 @@ extension InvitationOwner {
             self.pending = nil
             canAccess = false
             session.updateMeetingAccess(result.meetingID, allowed: result.canAccessFeed)
-            if result.canAccessFeed { await loadPrivate(version: version) }
+            if result.canAccessFeed {
+                await loadPrivate(version: version)
+            } else {
+                do {
+                    try await loadPublicPreview(version: version)
+                } catch {
+                    guard current, generation == version, !(error is CancellationError) else {
+                        return
+                    }
+                    responseProblem = "Не удалось обновить приглашение. Попробуйте ещё раз."
+                }
+            }
             guard current, generation == version else { return }
             await MeetingRepository(session: session).loadMeetings()
         } catch {

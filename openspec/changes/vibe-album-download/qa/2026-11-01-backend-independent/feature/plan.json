@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "vibe-backend-independent-current413-20261101",
+  "purpose": "feature",
+  "component": "backend",
+  "createdAt": "2026-11-01T19:24:05.092Z",
+  "implementer": "root",
+  "catalogHash": "84856bf42ba9493c4f47f9152522aa73cd69705d3e968815a9e12a45bcc11b2e",
+  "sourceHash": "7620253e80b933d319dae31af81fa07ab9e539a79f8997d4169249635f5e9b73",
+  "selectedCases": [
+    "TC-VIBE-EXPORT-ACCESS",
+    "TC-VIBE-EXPORT-ALL",
+    "TC-VIBE-EXPORT-ZIP"
+  ],
+  "expected": [
+    {
+      "id": "TC-VIBE-EXPORT-ALL/backend-export-current413/manual",
+      "caseId": "TC-VIBE-EXPORT-ALL",
+      "environment": "backend-export-current413",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-EXPORT-ZIP/backend-export-current413/manual",
+      "caseId": "TC-VIBE-EXPORT-ZIP",
+      "environment": "backend-export-current413",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-VIBE-EXPORT-ACCESS/backend-export-current413/manual",
+      "caseId": "TC-VIBE-EXPORT-ACCESS",
+      "environment": "backend-export-current413",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "backend-unit-integration"
+  ],
+  "environments": [
+    {
+      "id": "backend-export-current413",
+      "profile": "api",
+      "platform": "backend",
+      "application": "product",
+      "url": "https://127.0.0.1",
+      "build": "Go1.27.2 source413 frozen; TestAlbumExportReviewFixture ephemeral TLS",
+      "os": "macOS27.0.1 arm64",
+      "device": "own loopback API fixture; no UI",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "103 own synthetic PNG+own EXIFJPEG; 3synthetic actors; memory only",
+      "backend": "current413; no SQL/cloud/production/Telegram"
+    }
+  ],
+  "artifact": null
+}

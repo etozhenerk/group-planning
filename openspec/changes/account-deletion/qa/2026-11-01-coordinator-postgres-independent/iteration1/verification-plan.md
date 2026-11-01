@@ -1,0 +1,11 @@
+# Coordinator + PostgreSQL: план до исполнения
+
+01.11.2026, независимый sdd_server_audit. Проверяется неизменённый TC-ACCOUNT-1C58ABFB: ошибка при обработке второй встречи должна оставить профиль, сессии и все встречи в исходном состоянии. Runtime/catalog/case source не меняются; продуктового UI в этом блоке нет.
+
+Formal plan — byte-identical копия прежнего account-cloud-sql-independent, созданного до всех нынешних действий. Source/catalog те же; исходный required backend suite выполнен после него с count1. Сохраняем oldblockedrun/report; новый полный PG/Go suite не запускать. Его второй expected PAGE теперь уже фактически пройден текущим independent chat7 на том же backend source после даты исходного плана.
+
+QA-only Go overlay добавляет один test в storage/postgres. Он использует реальный httpapi DELETE/me → accounts.New → Identity.AccountUpdate → auth.WithStore + meetings.NewService на одном PostgreSQL UoW. Synthetic profile,две native sessions,attempt идве самостоятельные owned встречи с дочерними данными. Настоящий PostgreSQL trigger на DELETE второй встречи проверяет,что первая уже отсутствует внутри той же transaction,помечает достижение nontransactional sequence и бросает SQL exception. Product methods не подменяются.
+
+Снять fingerprints/counts всех business tables до запроса. После HTTP500 проверить из независимого pool:sequence доказывает достижение второй встречи после удаления первой;fingerprints всех таблиц исходные;обе встречи,профиль/provider mapping,обе sessions,attempt сохранены;нетreceipt/tombstone/revocationcallback. Ошибка не раскрываетSQL/secret. Затем убрать только свой fault и проверить штатный commit,отзыв sessions,receipt retry безsession,безопасность новогоаккаунта итокенанельзяиспользоватькакBearer,expiry24h. Это backend integration,не realOAuth/client lifecycle PASS.
+
+Собрать Linux binary из frozen source+overlay,сохранить hashes. Новая пустая somewhere_integration owner somewhere_migrator с уникальным database COMMENT marker,при existingDB остановиться. Producer nonsuperuser. ПинованныйSSH;production только health/ready GET и systemctl show before/after. Выполнить только один точный selector,count1,timeout3m. В любом исходе marker guard и DROP собственной DB,remainingDB0;удалить только загруженный собственный binary по SHA. Rawstdout/stderr/timing/exit/source-after сохранить.

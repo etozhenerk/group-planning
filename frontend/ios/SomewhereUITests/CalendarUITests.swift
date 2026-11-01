@@ -13,6 +13,7 @@ final class CalendarUITests: XCTestCase {
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
             ]
         }
+        ExperienceScreenshot.configure(app)
         app.launch()
         XCTAssertTrue(app.buttons["Календарь"].waitForExistence(timeout: 15))
         return app

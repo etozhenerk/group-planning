@@ -29,10 +29,13 @@ type iosFixtureCredential struct {
 }
 
 type iosFixtureConfig struct {
+	DesignDates map[string]string               `json:"designDates"`
 	Origin      string                          `json:"origin"`
 	Certificate string                          `json:"certificate"`
 	Cases       map[string]iosFixtureCredential `json:"cases"`
 }
+
+const iosFixtureSessionTTL = 8 * time.Hour
 
 type iosFixtureProvider struct{ origin string }
 
@@ -80,7 +83,9 @@ func TestIOSFixture(t *testing.T) {
 	origin := "https://" + listener.Addr().String()
 	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
-		PublicOrigin: origin, SessionTTL: time.Hour,
+		// Synthetic credentials cover the whole UI suite, including a paused host.
+		// Product expiry remains covered by the independent identity/session tests.
+		PublicOrigin: origin, SessionTTL: iosFixtureSessionTTL,
 		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback", "android": "group-planning-android://auth/callback"},
 	}, identities, iosFixtureProvider{origin: origin}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
 	if err != nil {
@@ -113,6 +118,7 @@ func TestIOSFixture(t *testing.T) {
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
+	config.DesignDates = nativeDesignFixtureDates(t, store)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}

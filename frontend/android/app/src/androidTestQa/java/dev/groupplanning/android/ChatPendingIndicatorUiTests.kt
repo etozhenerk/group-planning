@@ -7,7 +7,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import dev.groupplanning.android.data.api.models.ApiInstant
@@ -16,6 +15,7 @@ import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.data.outbox.DeliveryStatus
 import dev.groupplanning.android.data.outbox.PendingMessage
+import dev.groupplanning.android.qaCreateComposeRule as createComposeRule
 import dev.groupplanning.android.state.feed.FeedState
 import dev.groupplanning.android.state.feed.MessageState
 import dev.groupplanning.android.ui.feed.ChatPresentation

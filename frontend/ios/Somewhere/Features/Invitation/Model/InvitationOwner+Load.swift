@@ -31,7 +31,11 @@ extension InvitationOwner {
                 if authenticated { await loadPrivate(version: version) }
             case .meeting:
                 guard authenticated else { throw ClientFailure.http(401, nil) }
-                await loadPrivate(version: version)
+                if !organizer, answer == .maybe || answer == .notGoing {
+                    try await loadPublicPreview(version: version)
+                } else {
+                    await loadPrivate(version: version)
+                }
             }
         } catch {
             guard current, generation == version, !(error is CancellationError) else { return }

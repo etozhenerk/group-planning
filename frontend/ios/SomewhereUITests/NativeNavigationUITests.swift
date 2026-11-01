@@ -22,12 +22,12 @@ final class NativeNavigationUITests: XCTestCase {
         ExperienceScreenshot.save("native-tabs-stable", test: self)
     }
 
-    func testEdgeBackKeepsCalendarAndMessageDraft() {
+    func testEdgeBackKeepsCalendarAndMessageDraft() throws {
         let app = ChatSheetTestSupport.launch()
         app.buttons["Календарь"].tap()
         let month = app.staticTexts["calendar-month"]
         XCTAssertTrue(month.waitForExistence(timeout: 10))
-        app.buttons["calendar-day-2026-10-31"].tap()
+        _ = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
         let selectedMonth = month.label
         XCTAssertTrue(
             app.buttons["meeting-card-" + ChatSheetTestSupport.sharedMeeting].waitForExistence(

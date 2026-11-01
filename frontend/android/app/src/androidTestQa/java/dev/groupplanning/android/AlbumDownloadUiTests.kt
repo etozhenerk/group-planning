@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.compose.ui.test.assertContentDescriptionEquals
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -15,6 +14,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.security.MessageDigest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -26,9 +26,11 @@ import org.junit.rules.TestRule
 
 @SdkSuppress(minSdkVersion = 30)
 class AlbumDownloadUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
     private var before = emptySet<Uri>()
 

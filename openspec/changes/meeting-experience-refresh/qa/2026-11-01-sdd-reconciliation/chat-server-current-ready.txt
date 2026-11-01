@@ -1,0 +1,35 @@
+
+> group-planning@0.0.0 qa:ready
+> node scripts/testing/cli.mjs ready --manifest openspec/changes/chat-reliability-and-sync/testing-manifest.json --tasks 2.3,2.5,3.1,3.4,3.5,1.5,2.1,2.2,2.6,3.6
+
+{
+  "ready": true,
+  "scope": "tasks",
+  "tasks": [
+    "2.3",
+    "2.5",
+    "3.1",
+    "3.4",
+    "3.5",
+    "1.5",
+    "2.1",
+    "2.2",
+    "2.6",
+    "3.6"
+  ],
+  "wholeReady": false,
+  "runs": [
+    {
+      "plan": "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-server-union-independent/feature/plan.json",
+      "run": "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-server-union-independent/feature/run.json",
+      "ready": true,
+      "wholeReady": false,
+      "expected": 17,
+      "checked": 17,
+      "pending": [],
+      "outsideScope": [
+        "TC-CHAT-SYNC-F6CFB5E9/backend-union-current413/manual: blocked"
+      ]
+    }
+  ]
+}

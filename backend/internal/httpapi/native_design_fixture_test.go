@@ -45,11 +45,12 @@ func seedNativeDesignFixture(t *testing.T, store *memory.Store, identities *memo
 		organizer                       int
 		period                          meetings.Period
 	}
+	days := nativeDesignDates(today)
 	examples := []example{
-		{"Ужин в пятницу", "2026-10-30", "20:00", "Кафе «Соседи»", "dinner.png", 3, meetings.Upcoming},
-		{"Настолки у Саши", "2026-10-31", "19:00", "У Саши дома", "boardgame.png", 2, meetings.Upcoming},
-		{"Воскресенье без планов", "2026-11-08", "", "", "", 3, meetings.Upcoming},
-		{"Суббота без спешки", "2026-10-24", "", "Лофт «Квартал»", "", 2, meetings.Past},
+		{"Ужин в пятницу", days.friday, "20:00", "Кафе «Соседи»", "dinner.png", 3, meetings.Upcoming},
+		{"Настолки у Саши", days.saturday, "19:00", "У Саши дома", "boardgame.png", 2, meetings.Upcoming},
+		{"Воскресенье без планов", days.sunday, "", "", "", 3, meetings.Upcoming},
+		{"Суббота без спешки", days.pastSaturday, "", "Лофт «Квартал»", "", 2, meetings.Past},
 	}
 	for i, example := range examples {
 		id := fmt.Sprintf("deb00000-0000-4000-8000-%012d", i+1)

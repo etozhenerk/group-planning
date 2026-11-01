@@ -1,0 +1,48 @@
+{
+  "width": 1440,
+  "pendingKinds": [
+    "read",
+    "send",
+    "sync"
+  ],
+  "events": [
+    {
+      "kind": "read",
+      "phase": "committed-before-revoke",
+      "status": 200
+    },
+    {
+      "kind": "sync",
+      "phase": "committed-before-revoke",
+      "status": 200
+    },
+    {
+      "kind": "send",
+      "phase": "committed-before-revoke",
+      "status": 201
+    },
+    {
+      "kind": "read",
+      "phase": "released-after-revoke"
+    },
+    {
+      "kind": "sync",
+      "phase": "released-after-revoke"
+    },
+    {
+      "kind": "send",
+      "phase": "released-after-revoke"
+    }
+  ],
+  "lateStorage": {
+    "accepted": false,
+    "name": "AbortError",
+    "message": "Private scope expired"
+  },
+  "revokedFeedStatus": 403,
+  "revokedSyncStatus": 403,
+  "otherFeedStatus": 200,
+  "revokedPrivateRecordPresent": false,
+  "otherRecordByteEqual": true,
+  "otherDraftPreserved": true
+}

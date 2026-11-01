@@ -36,7 +36,7 @@ it('cancels a delayed POST and deletes its late acknowledgement without resurrec
   await vi.advanceTimersByTimeAsync(0);
   const signal = vi.mocked(f.api.prepare).mock.calls[0]?.[3];
   f.controller.cancel();
-  expect(signal?.aborted).toBe(true);
+  expect(signal?.aborted).toBe(false);
   late.resolve(status('ready'));
   await running;
   expect(f.navigate).not.toHaveBeenCalled();
@@ -155,6 +155,36 @@ it('retries an ambiguous lost POST using the same key instead of orphaning a sec
   const keys = vi.mocked(f.api.prepare).mock.calls.map((call) => call[2]);
   expect(keys[0]).toBe(keys[1]);
   expect(f.navigate).toHaveBeenCalledOnce();
+});
+
+it('retains a failed cancellation until retry succeeds before creating another export', async () => {
+  const f = setup();
+  const original = f.controller.start();
+  await vi.advanceTimersByTimeAsync(0);
+  vi.mocked(f.api.cancel).mockRejectedValueOnce(new TypeError('offline'));
+  f.controller.cancel();
+  await original;
+  await vi.advanceTimersByTimeAsync(0);
+  vi.mocked(f.api.prepare).mockResolvedValueOnce(status('ready', 'archive-2'));
+  await f.controller.start();
+  expect(f.api.cancel).toHaveBeenCalledTimes(2);
+  expect(f.api.cancel).toHaveBeenNthCalledWith(2, meeting, 'archive-1', 'test-csrf');
+  expect(f.navigate).toHaveBeenCalledExactlyOnceWith(meeting, 'archive-2');
+});
+
+it('does not recover an unknown canceled POST after logout or a changed access lease', async () => {
+  const f = setup();
+  const late = deferred<AlbumExport>();
+  vi.mocked(f.api.prepare).mockReturnValueOnce(late.promise);
+  const original = f.controller.start();
+  await vi.advanceTimersByTimeAsync(0);
+  f.controller.cancel();
+  f.lease.abort();
+  late.reject(new TypeError('offline'));
+  await original;
+  await f.controller.start();
+  expect(f.api.prepare).toHaveBeenCalledTimes(1);
+  expect(f.navigate).not.toHaveBeenCalled();
 });
 
 it.each([401, 403])(

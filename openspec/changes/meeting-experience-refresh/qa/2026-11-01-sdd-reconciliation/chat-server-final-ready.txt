@@ -1,0 +1,27 @@
+
+> group-planning@0.0.0 qa:ready
+> node scripts/testing/cli.mjs ready --manifest openspec/changes/chat-reliability-and-sync/testing-manifest.json --tasks 2.4,3.2,7.1,7.3
+
+{
+  "ready": true,
+  "scope": "tasks",
+  "tasks": [
+    "2.4",
+    "3.2",
+    "7.1",
+    "7.3"
+  ],
+  "wholeReady": false,
+  "runs": [
+    {
+      "plan": "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-server-union-independent/feature/plan.json",
+      "run": "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-server-union-independent/feature/run.json",
+      "ready": true,
+      "wholeReady": true,
+      "expected": 24,
+      "checked": 24,
+      "pending": [],
+      "outsideScope": []
+    }
+  ]
+}

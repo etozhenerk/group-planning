@@ -4,6 +4,14 @@ import XCTest
 final class ChatSyncUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testCounterpartRejoinsWithCurrentRevision() async throws {
+        let counterpart = try NativeChatCounterpart()
+        addTeardownBlock { @MainActor in try await counterpart.leave() }
+        try await counterpart.join()
+        try await counterpart.leave()
+        try await counterpart.join()
+    }
+
     func testSDKSendReadersKeyboardAndDraftRestart() async throws {
         let counterpart = try NativeChatCounterpart()
         addTeardownBlock { @MainActor in try await counterpart.leave() }

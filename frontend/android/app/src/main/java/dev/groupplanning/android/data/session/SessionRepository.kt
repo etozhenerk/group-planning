@@ -243,7 +243,10 @@ internal class SessionRepository(
             expectedLease = access.request,
         )
         if (current.user.id != access.profile.id || current.expiresAt.instant <= clock.instant()) {
-            gate.locked { invalidate(currentCoroutineContext().job) }
+            val owner = currentCoroutineContext().job
+            // Invalidation notifies collectors that may cancel this operation's parent.
+            // Once invalidity is known, mandatory local cleanup must still finish.
+            withContext(NonCancellable) { gate.locked { invalidate(owner) } }
             throw ClientFailure(FailureKind.Http, 401)
         }
     }

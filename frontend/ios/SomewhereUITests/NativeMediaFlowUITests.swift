@@ -63,7 +63,10 @@ final class NativeMediaFlowUITests: XCTestCase {
         XCTAssertLessThanOrEqual(presentationScale, 1)
         XCTAssertEqual(
             (secondPreview.minX - firstPreview.minX) / presentationScale - 12, 176, accuracy: 1)
-        XCTAssertEqual(firstPreview.height / presentationScale, 132, accuracy: 1)
+        // The published carousel reserves 16pt above/below the 132pt card for its remove target.
+        // Image AX height describes the uncropped aspect-fill image, not the painted clip.
+        let carousel = app.scrollViews["media-photo-carousel"].frame
+        XCTAssertEqual(carousel.height / presentationScale - 2 * 16, 132, accuracy: 1)
         XCTAssertGreaterThan(secondPreview.midX, firstPreview.midX)
         XCTAssertLessThan(secondPreview.minX, app.scrollViews["media-photo-carousel"].frame.maxX)
         let removes = app.buttons.matching(

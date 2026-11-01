@@ -31,7 +31,7 @@ func seedNativePlaceFixture(t *testing.T, store *memory.Store, identityService *
 	if err := store.Update(ctx, func(writer meetings.Writer) error {
 		if err := writer.SaveMeeting(meetings.Meeting{
 			ID: id, OrganizerID: actor.ID, Title: "Вечер с друзьями",
-			StartsOn: "2026-10-25", Timezone: "Europe/Moscow", Place: "У Саши",
+			StartsOn: now.AddDate(0, 0, 2).Format(time.DateOnly), Timezone: "Europe/Moscow", Place: "У Саши",
 			Revision: 1, CreatedAt: now, Status: meetings.Upcoming, ScheduleVersion: 1,
 		}); err != nil {
 			return err

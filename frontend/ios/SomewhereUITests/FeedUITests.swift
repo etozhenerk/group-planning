@@ -113,11 +113,13 @@ final class FeedUITests: XCTestCase {
             path: "/api/v1/meetings/88888888-8888-4888-8888-888888888888/messages",
             mode: "offline", method: "POST")
         app.buttons["message-send"].tap()
-        let retry = app.buttons.matching(
+        let retry = app.otherElements.matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "chat-row-")
+        ).containing(
             NSPredicate(
-                format: "label == %@ AND identifier BEGINSWITH %@", "Повторить", "outgoing-message-"
-            )
-        ).firstMatch
+                format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+                "outgoing-message-", "Пицца будет к семи")
+        ).buttons["retry-message"].firstMatch
         let latest = app.buttons["feed-new-messages"]
         XCTAssertTrue(latest.waitForExistence(timeout: 5))
         latest.tap()

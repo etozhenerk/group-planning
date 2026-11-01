@@ -8,7 +8,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -17,6 +16,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.lifecycle.ViewModelProvider
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
 import org.junit.Assert.assertEquals
@@ -26,9 +26,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class DesignVisualUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() {
@@ -45,7 +47,7 @@ class DesignVisualUiTests {
             compose.onNodeWithTag("home-navigation").assertExists()
             fixture.screenshot("design-list")
             compose.onNodeWithText("Календарь").performClick()
-            fixture.waitTag("day-2026-10-30")
+            fixture.waitTag("day-${fixture.designDate("dinner")}")
             fixture.screenshot("design-calendar")
             compose.onNodeWithText("Список").performClick()
             compose.onNodeWithTag("home-profile").performClick()
@@ -86,7 +88,7 @@ class DesignVisualUiTests {
             activity.onActivity {
                 val app = ViewModelProvider(it)[AppViewModel::class.java]
                 (app.route.value as AppRoute.Create).model.change { draft ->
-                    draft.copy(day = "2026-10-30", time = "20:00")
+                    draft.copy(day = fixture.designDate("dinner").toString(), time = "20:00")
                 }
             }
             compose.onNodeWithTag("home-navigation").assertDoesNotExist()

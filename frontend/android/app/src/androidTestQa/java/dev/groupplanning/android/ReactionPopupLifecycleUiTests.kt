@@ -21,10 +21,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.captureToImage
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
+import dev.groupplanning.android.qaCreateComposeRule as createComposeRule
 import dev.groupplanning.android.ui.feed.ReactionPopup
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import java.io.File

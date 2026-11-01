@@ -1,0 +1,1386 @@
+PG_ISOLATED_RETRY_PRECHECK 2026-11-01T17:57:05Z
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+COMMENT
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_retry_independent_20261101_63d4698eb0bb
+initial_user_tables=0
+role=somewhere_migrator super=false createdb=false
+PG_BINARY_SHA_OK /tmp/somewhere_sdd_retry_independent_20261101_63d4698eb0bb.test 54052818b390b3308d56d452b21dbe345025fdbbb3e1779c48af6671b70a5ac0
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_retry_independent_20261101_63d4698eb0bb
+PG_RETRY_BASELINE_BEGIN 2026-11-01T17:57:06Z
+=== RUN   TestFeedBoundedQueryPlansIntegration
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/initial
+    feed_plan_test.go:121: history=1000 query=initial planning_ms=0.299 execution_ms=0.068 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/after
+    feed_plan_test.go:121: history=1000 query=after planning_ms=0.150 execution_ms=0.075 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/before
+    feed_plan_test.go:121: history=1000 query=before planning_ms=0.096 execution_ms=0.051 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/empty-tail
+    feed_plan_test.go:121: history=1000 query=empty-tail planning_ms=0.050 execution_ms=0.021 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/tail
+    feed_plan_test.go:121: history=1000 query=tail planning_ms=0.082 execution_ms=0.035 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/entry
+    feed_plan_test.go:121: history=1000 query=entry planning_ms=0.074 execution_ms=0.028 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/1000/intent
+    feed_plan_test.go:121: history=1000 query=intent planning_ms=0.090 execution_ms=0.019 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/initial
+    feed_plan_test.go:121: history=10000 query=initial planning_ms=0.229 execution_ms=0.054 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/after
+    feed_plan_test.go:121: history=10000 query=after planning_ms=0.072 execution_ms=0.051 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/before
+    feed_plan_test.go:121: history=10000 query=before planning_ms=0.057 execution_ms=0.047 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/empty-tail
+    feed_plan_test.go:121: history=10000 query=empty-tail planning_ms=0.070 execution_ms=0.029 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/tail
+    feed_plan_test.go:121: history=10000 query=tail planning_ms=0.057 execution_ms=0.034 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/entry
+    feed_plan_test.go:121: history=10000 query=entry planning_ms=0.087 execution_ms=0.025 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/10000/intent
+    feed_plan_test.go:121: history=10000 query=intent planning_ms=0.085 execution_ms=0.025 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/initial
+    feed_plan_test.go:121: history=100000 query=initial planning_ms=0.263 execution_ms=0.059 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/after
+    feed_plan_test.go:121: history=100000 query=after planning_ms=0.102 execution_ms=0.064 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/before
+    feed_plan_test.go:121: history=100000 query=before planning_ms=0.082 execution_ms=0.053 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/empty-tail
+    feed_plan_test.go:121: history=100000 query=empty-tail planning_ms=0.064 execution_ms=0.023 feed_scans=1 budget_rows=51
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/tail
+    feed_plan_test.go:121: history=100000 query=tail planning_ms=0.078 execution_ms=0.062 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/entry
+    feed_plan_test.go:121: history=100000 query=entry planning_ms=0.076 execution_ms=0.026 feed_scans=1 budget_rows=1
+=== RUN   TestFeedBoundedQueryPlansIntegration/100000/intent
+    feed_plan_test.go:121: history=100000 query=intent planning_ms=0.087 execution_ms=0.021 feed_scans=1 budget_rows=1
+--- PASS: TestFeedBoundedQueryPlansIntegration (15.40s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/1000 (0.07s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/1000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/10000 (0.52s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/10000/intent (0.00s)
+    --- PASS: TestFeedBoundedQueryPlansIntegration/100000 (14.19s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/initial (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/after (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/before (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/empty-tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/tail (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/entry (0.00s)
+        --- PASS: TestFeedBoundedQueryPlansIntegration/100000/intent (0.00s)
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/1000
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=1 samples=20 p95_ms=0.642 max_ms=1.835 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=1 samples=20 p95_ms=0.608 max_ms=1.478 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=1 samples=20 p95_ms=0.361 max_ms=0.361 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=1 samples=20 p95_ms=0.440 max_ms=0.599 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=1 samples=20 p95_ms=0.463 max_ms=0.466 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=1 samples=20 p95_ms=0.861 max_ms=0.932 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=50 samples=20 p95_ms=0.730 max_ms=0.738 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=50 samples=20 p95_ms=1.029 max_ms=1.445 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=50 samples=20 p95_ms=0.424 max_ms=0.427 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=50 samples=20 p95_ms=0.366 max_ms=0.381 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=50 samples=20 p95_ms=0.763 max_ms=0.800 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=50 samples=20 p95_ms=1.709 max_ms=2.407 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=100 samples=20 p95_ms=1.044 max_ms=1.138 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=100 samples=20 p95_ms=1.060 max_ms=1.314 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=100 samples=20 p95_ms=0.402 max_ms=0.425 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=100 samples=20 p95_ms=0.426 max_ms=0.448 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=100 samples=20 p95_ms=1.018 max_ms=1.200 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=100 samples=20 p95_ms=1.954 max_ms=2.055 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/10000
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=1 samples=20 p95_ms=0.707 max_ms=1.207 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=1 samples=20 p95_ms=0.362 max_ms=0.557 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=1 samples=20 p95_ms=0.380 max_ms=0.398 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=1 samples=20 p95_ms=0.490 max_ms=0.491 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=1 samples=20 p95_ms=0.411 max_ms=0.412 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=1 samples=20 p95_ms=0.777 max_ms=0.990 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=50 samples=20 p95_ms=1.095 max_ms=1.604 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=50 samples=20 p95_ms=0.848 max_ms=0.853 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=50 samples=20 p95_ms=0.489 max_ms=0.491 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=50 samples=20 p95_ms=0.503 max_ms=0.504 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=50 samples=20 p95_ms=0.922 max_ms=1.636 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=50 samples=20 p95_ms=2.338 max_ms=2.715 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=100 samples=20 p95_ms=1.137 max_ms=1.823 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=100 samples=20 p95_ms=1.470 max_ms=1.501 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=100 samples=20 p95_ms=0.502 max_ms=0.616 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=100 samples=20 p95_ms=0.609 max_ms=0.719 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=100 samples=20 p95_ms=1.120 max_ms=1.965 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=100 samples=20 p95_ms=2.794 max_ms=2.836 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/100000
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=1 samples=20 p95_ms=0.533 max_ms=1.280 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=1 samples=20 p95_ms=0.416 max_ms=0.450 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=1 samples=20 p95_ms=0.390 max_ms=0.501 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=1 samples=20 p95_ms=0.439 max_ms=0.453 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=1 samples=20 p95_ms=0.411 max_ms=0.470 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=1 samples=20 p95_ms=0.939 max_ms=1.062 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=50 samples=20 p95_ms=0.607 max_ms=0.625 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=50 samples=20 p95_ms=0.967 max_ms=0.976 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=50 samples=20 p95_ms=0.359 max_ms=0.374 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=50 samples=20 p95_ms=0.409 max_ms=0.412 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=50 samples=20 p95_ms=0.799 max_ms=1.560 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=50 samples=20 p95_ms=1.321 max_ms=2.598 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=100 samples=20 p95_ms=1.034 max_ms=1.541 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=100 samples=20 p95_ms=1.030 max_ms=1.439 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=100 samples=20 p95_ms=0.304 max_ms=0.400 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=100 samples=20 p95_ms=0.428 max_ms=0.479 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=100 samples=20 p95_ms=1.139 max_ms=1.253 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=100 samples=20 p95_ms=2.009 max_ms=2.099 budget_ms=100 includes=transaction+SQL+JSONdecode
+--- PASS: TestIndependentRepeatFeedSQLLatencyIntegration (26.71s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/1000 (0.47s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/10000 (1.61s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/100000 (24.62s)
+=== RUN   TestSDDRetryQuantitativeSQL
+=== RUN   TestSDDRetryQuantitativeSQL/1000
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=text receipt_expired=false samples=20 p50_ms=0.867 p95_ms=1.255 max_ms=1.984 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=text receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.40,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.012,
+              "Actual Total Time": 0.013,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text) AND (actor_id = 'bba86e94-9971-42f0-858d-ba25a801cbc1'::text) AND (client_request_id = 'd1da632f-3ebc-4721-8d0b-89e55ad083f4'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.118,
+            "Triggers": [
+            ],
+            "Execution Time": 0.022
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=photo.png receipt_expired=false samples=20 p50_ms=0.971 p95_ms=1.153 max_ms=1.334 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=photo.png receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 16.41,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.012,
+              "Actual Total Time": 0.013,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = '3976081f-1303-4509-8480-c53e7912173d'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 16.41,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.007,
+                  "Actual Total Time": 0.008,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = '3976081f-1303-4509-8480-c53e7912173d'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.118,
+            "Triggers": [
+            ],
+            "Execution Time": 0.026
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=file.txt receipt_expired=false samples=20 p50_ms=0.983 p95_ms=1.216 max_ms=1.905 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=file.txt receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 16.41,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.011,
+              "Actual Total Time": 0.012,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = 'a3ddbf07-8074-4fb1-8e3f-3a94b4b56f7d'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 16.41,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.007,
+                  "Actual Total Time": 0.007,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = 'a3ddbf07-8074-4fb1-8e3f-3a94b4b56f7d'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.098,
+            "Triggers": [
+            ],
+            "Execution Time": 0.024
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=text receipt_expired=true samples=20 p50_ms=0.621 p95_ms=0.739 max_ms=2.101 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=text receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.40,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.010,
+              "Actual Total Time": 0.010,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text) AND (actor_id = 'bba86e94-9971-42f0-858d-ba25a801cbc1'::text) AND (client_request_id = 'd1da632f-3ebc-4721-8d0b-89e55ad083f4'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.106,
+            "Triggers": [
+            ],
+            "Execution Time": 0.018
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=photo.png receipt_expired=true samples=20 p50_ms=0.701 p95_ms=0.845 max_ms=2.066 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=photo.png receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 16.41,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.009,
+              "Actual Total Time": 0.010,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = '3976081f-1303-4509-8480-c53e7912173d'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 16.41,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.006,
+                  "Actual Total Time": 0.006,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = '3976081f-1303-4509-8480-c53e7912173d'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.075,
+            "Triggers": [
+            ],
+            "Execution Time": 0.019
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=1000 path=file.txt receipt_expired=true samples=20 p50_ms=0.653 p95_ms=0.916 max_ms=2.578 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=1000 path=file.txt receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 16.41,
+              "Total Cost": 20.42,
+              "Plan Rows": 1,
+              "Plan Width": 255,
+              "Actual Startup Time": 0.010,
+              "Actual Total Time": 0.011,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = 'a3ddbf07-8074-4fb1-8e3f-3a94b4b56f7d'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '3e142595-4256-4725-9a9c-72d93dd87c4f'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 16.41,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.007,
+                  "Actual Total Time": 0.007,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = 'a3ddbf07-8074-4fb1-8e3f-3a94b4b56f7d'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.077,
+            "Triggers": [
+            ],
+            "Execution Time": 0.021
+          }
+        ]
+=== RUN   TestSDDRetryQuantitativeSQL/10000
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=text receipt_expired=false samples=20 p50_ms=0.857 p95_ms=1.042 max_ms=1.740 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=text receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.41,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.012,
+              "Actual Total Time": 0.013,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text) AND (actor_id = 'dc4a3683-ef8d-48b0-a0c4-701958885bfd'::text) AND (client_request_id = 'b7de3ca4-2d92-4b20-bea9-1a69fc0c73d0'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.119,
+            "Triggers": [
+            ],
+            "Execution Time": 0.023
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=photo.png receipt_expired=false samples=20 p50_ms=0.949 p95_ms=1.024 max_ms=1.209 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=photo.png receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 4.42,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.013,
+              "Actual Total Time": 0.014,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = '2000214b-c892-49e3-b6d7-70d38552c0f6'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 4.42,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.009,
+                  "Actual Total Time": 0.009,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = '2000214b-c892-49e3-b6d7-70d38552c0f6'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.171,
+            "Triggers": [
+            ],
+            "Execution Time": 0.028
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=file.txt receipt_expired=false samples=20 p50_ms=1.034 p95_ms=2.617 max_ms=4.263 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=file.txt receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 4.42,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.011,
+              "Actual Total Time": 0.011,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = 'd4fc0c8f-f5df-49aa-8c09-693276e5cc21'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 4.42,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.007,
+                  "Actual Total Time": 0.007,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = 'd4fc0c8f-f5df-49aa-8c09-693276e5cc21'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.097,
+            "Triggers": [
+            ],
+            "Execution Time": 0.024
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=text receipt_expired=true samples=20 p50_ms=0.824 p95_ms=1.057 max_ms=9.435 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=text receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.41,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.013,
+              "Actual Total Time": 0.014,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text) AND (actor_id = 'dc4a3683-ef8d-48b0-a0c4-701958885bfd'::text) AND (client_request_id = 'b7de3ca4-2d92-4b20-bea9-1a69fc0c73d0'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.120,
+            "Triggers": [
+            ],
+            "Execution Time": 0.023
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=photo.png receipt_expired=true samples=20 p50_ms=0.898 p95_ms=1.113 max_ms=2.982 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=photo.png receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 4.42,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.011,
+              "Actual Total Time": 0.012,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = '2000214b-c892-49e3-b6d7-70d38552c0f6'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 4.42,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.007,
+                  "Actual Total Time": 0.007,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = '2000214b-c892-49e3-b6d7-70d38552c0f6'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.100,
+            "Triggers": [
+            ],
+            "Execution Time": 0.025
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=10000 path=file.txt receipt_expired=true samples=20 p50_ms=0.904 p95_ms=1.162 max_ms=2.353 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=10000 path=file.txt receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Bitmap Heap Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 4.42,
+              "Total Cost": 8.43,
+              "Plan Rows": 1,
+              "Plan Width": 259,
+              "Actual Startup Time": 0.009,
+              "Actual Total Time": 0.010,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Recheck Cond": "(id = 'd4fc0c8f-f5df-49aa-8c09-693276e5cc21'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '5b65c6f3-11e8-4f0a-823e-0f62624933e1'::text)",
+              "Rows Removed by Filter": 0,
+              "Exact Heap Blocks": 1,
+              "Lossy Heap Blocks": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Bitmap Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Index Name": "feed_entries_pkey",
+                  "Startup Cost": 0.00,
+                  "Total Cost": 4.42,
+                  "Plan Rows": 1,
+                  "Plan Width": 0,
+                  "Actual Startup Time": 0.006,
+                  "Actual Total Time": 0.006,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = 'd4fc0c8f-f5df-49aa-8c09-693276e5cc21'::text)",
+                  "Shared Hit Blocks": 3,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.090,
+            "Triggers": [
+            ],
+            "Execution Time": 0.021
+          }
+        ]
+=== RUN   TestSDDRetryQuantitativeSQL/100000
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=text receipt_expired=false samples=20 p50_ms=0.629 p95_ms=0.886 max_ms=1.687 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=text receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 6.19,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.009,
+              "Actual Total Time": 0.010,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text) AND (actor_id = '373c98ec-b4c3-49c8-9d11-64a4d7a7f3be'::text) AND (client_request_id = 'e550139c-743a-4018-9db0-0adad282ee11'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.090,
+            "Triggers": [
+            ],
+            "Execution Time": 0.017
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=photo.png receipt_expired=false samples=20 p50_ms=0.732 p95_ms=0.887 max_ms=1.074 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=photo.png receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_entries_pkey",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 8.44,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.009,
+              "Actual Total Time": 0.010,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "(id = '2b20110f-f7c5-4ae5-98c1-9e4297d0a965'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text)",
+              "Rows Removed by Filter": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.092,
+            "Triggers": [
+            ],
+            "Execution Time": 0.035
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=file.txt receipt_expired=false samples=20 p50_ms=0.762 p95_ms=1.020 max_ms=1.675 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=file.txt receipt_expired=false plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_entries_pkey",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 8.44,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.009,
+              "Actual Total Time": 0.009,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "(id = 'da3b978b-5830-49b7-9394-1c8432acf8aa'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text)",
+              "Rows Removed by Filter": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.076,
+            "Triggers": [
+            ],
+            "Execution Time": 0.017
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=text receipt_expired=true samples=20 p50_ms=0.649 p95_ms=0.821 max_ms=2.700 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=text receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_request",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 6.19,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.010,
+              "Actual Total Time": 0.011,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "((meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text) AND (actor_id = '373c98ec-b4c3-49c8-9d11-64a4d7a7f3be'::text) AND (client_request_id = 'e550139c-743a-4018-9db0-0adad282ee11'::text))",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.099,
+            "Triggers": [
+            ],
+            "Execution Time": 0.019
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=photo.png receipt_expired=true samples=20 p50_ms=0.754 p95_ms=1.012 max_ms=2.797 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=photo.png receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_entries_pkey",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 8.44,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.008,
+              "Actual Total Time": 0.008,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "(id = '2b20110f-f7c5-4ae5-98c1-9e4297d0a965'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text)",
+              "Rows Removed by Filter": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.115,
+            "Triggers": [
+            ],
+            "Execution Time": 0.017
+          }
+        ]
+    sdd_retry_baseline_test.go:69: RETRY_BASELINE adapter=postgres history=100000 path=file.txt receipt_expired=true samples=20 p50_ms=0.689 p95_ms=0.958 max_ms=2.238 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:69: RETRY_SQL_PLAN history=100000 path=file.txt receipt_expired=true plan=[
+          {
+            "Plan": {
+              "Node Type": "Index Scan",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "feed_entries_pkey",
+              "Relation Name": "feed_entries",
+              "Alias": "feed_entries",
+              "Startup Cost": 0.42,
+              "Total Cost": 8.44,
+              "Plan Rows": 1,
+              "Plan Width": 262,
+              "Actual Startup Time": 0.010,
+              "Actual Total Time": 0.011,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Index Cond": "(id = 'da3b978b-5830-49b7-9394-1c8432acf8aa'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Filter": "(meeting_id = '66969ef6-5c38-488c-b19c-1b64a81dbf9f'::text)",
+              "Rows Removed by Filter": 0,
+              "Shared Hit Blocks": 4,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.078,
+            "Triggers": [
+            ],
+            "Execution Time": 0.021
+          }
+        ]
+--- PASS: TestSDDRetryQuantitativeSQL (30.08s)
+    --- PASS: TestSDDRetryQuantitativeSQL/1000 (1.10s)
+    --- PASS: TestSDDRetryQuantitativeSQL/10000 (1.69s)
+    --- PASS: TestSDDRetryQuantitativeSQL/100000 (27.28s)
+PASS
+PG_RETRY_BASELINE_END exit=0 at=2026-11-01T17:58:18Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_retry_independent_20261101_63d4698eb0bb
+migration=1|809f8ae09d173ee636c10db5e3bafa8cb0be8583a567ce4765b954b28f06af0e
+migration=2|8e17fc821729556a84df58d743417f04120869a23a364a4a54b54baa836527a2
+migration=3|6a670a2eea9a0aa87af1b6ccd40bba4ab007de13e18ab4d020633b6467df61da
+migration=4|7c5cdad7964c45a5c00861c6032ece5031baf120b9e5e8a8f9f478677cde2971
+migration=5|12494054bbcc22cb9a65b9448d0845e712e1ac79a38874a877c2a8eee7284a5c
+migration=6|4c5ccdc392c4ee93eef7eec050fa1809f1fb81f9a4d9631435cb7027fd1c3777
+migration=7|6b1160c824930a4116d1ee7da6b74b0546b8e63a586be15714c1b5141bae6855
+migration=8|7ee5425d0606c94f97a9a1365d325392aeab3b840fb0de1401d534be1c605216
+database_size_bytes=342268951
+table=public.date_polls
+table=public.feed_entries
+table=public.identity_attempts
+table=public.identity_deletion_receipts
+table=public.identity_sessions
+table=public.identity_subject_fences
+table=public.identity_users
+table=public.invitations
+table=public.media_blobs
+table=public.meeting_changes
+table=public.meeting_covers
+table=public.meeting_media
+table=public.meeting_read_markers
+table=public.meeting_streams
+table=public.meetings
+table=public.message_reactions
+table=public.place_polls
+table=public.preparation_tasks
+table=public.realtime_outbox
+table=public.removed_meeting_users
+table=public.request_receipts
+table=public.rsvps
+table=public.schema_migrations
+table=public.support_feedback
+table=public.support_rate_windows
+table=public.transition_jobs
+PG_CLEANUP_BEGIN 2026-11-01T17:58:18Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_retry_independent_20261101_63d4698eb0bb
+PG_DROP_OWN_DATABASE_OK
+remaining_test_databases=0
+Filesystem      1B-blocks       Used  Available Use% Mounted on
+/dev/vda1      9703890944 4056084480 5631029248  42% /
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+PG_CLEANUP_END exit=0 at=2026-11-01T17:58:19Z

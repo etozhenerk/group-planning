@@ -2,11 +2,25 @@
 
 ## 1. Контракт и дизайн
 
-- [ ] 1.1 Подготовить UX-прототип, опубликовать состояния действия в design-system и testing-manifest; проверить design:check, qa:check и agent:check.
+- [x] 1.1 Подготовить UX-прототип, опубликовать состояния действия в design-system и testing-manifest; проверить design:check, qa:check и agent:check.
+
+Сверка подготовки 01.11.2026: актуальные UX/реальные HTML-эталоны доступны из
+`ux.md`, контракт — `docs/design/components/memories.md`; публикация DS5.0.0
+и три платформенных manifest зарегистрированы. `design:check` проверил 31 manifest,
+`qa:check` — 415 кейсов без gaps, `agent:check` прошёл. Задача 1.1 классифицирована
+как подготовка; это не функциональный или визуальный PASS реализации 3.1–4.1.
 
 ## 2. Backend
 
-- [ ] 2.1 Добавить атомарный снимок альбома, приватную подготовку/состояние/скачивание/отмену ZIP с bounded temp и cleanup; integration проверяет полный набор, совпадающие имена, отзыв, чужой ID, отмену и срок. Обновить OpenAPI и документацию, выполнить Go race/vet/build/format/dependencies и api:test.
+- [x] 2.1 Добавить атомарный снимок альбома, приватную подготовку/состояние/скачивание/отмену ZIP с bounded temp и cleanup; integration проверяет полный набор, совпадающие имена, отзыв, чужой ID, отмену и срок. Обновить OpenAPI и документацию, выполнить Go race/vet/build/format/dependencies и api:test.
+
+Закрыто 01.11.2026 по [независимому backend-проходу](qa/2026-11-01-backend-independent/report.md)
+и [qa:ready 3/3](../meeting-experience-refresh/qa/2026-11-01-sdd-reconciliation/vibe-backend-ready.txt).
+Проверены снимок/ZIP из 103 фотографий и следующий из 104, EXIF/CRC/bytes,
+частичная передача с отзывом/отменой/TTL, cleanup и ограничения ресурсов.
+Новых миграций нет. Клиентские интерфейсы и сохранение в галерею этим пунктом
+не принимаются. Первоначальный отказ gate из-за пустого stdout форматтера
+сохранён отдельно; повторены только статические команды с честным exit envelope.
 
 Backend реализован и прошёл независимый feature-test/qa:ready по трём кейсам.
 [Проверенный объём](qa/backend-checkpoint-20261028.md). Детальный план/evidence

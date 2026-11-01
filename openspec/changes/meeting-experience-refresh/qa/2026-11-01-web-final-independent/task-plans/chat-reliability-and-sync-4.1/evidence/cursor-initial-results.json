@@ -1,0 +1,213 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "/tmp/somewhere-web-sdd-independent/final/cursor.config.mjs"
+    ],
+    "configFile": "/tmp/somewhere-web-sdd-independent/final/cursor.config.mjs",
+    "rootDir": "/tmp/somewhere-web-sdd-independent/final/cursor-tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/somewhere-web-sdd-independent/final/cursor-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/tmp/somewhere-web-sdd-independent/final/cursor-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/somewhere-web-sdd-independent/final/cursor-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/tmp/somewhere-web-sdd-independent/final/cursor-tests",
+        "snapshotDir": "/tmp/somewhere-web-sdd-independent/final/cursor-tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8537",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/somewhere-web-sdd-independent/final/cursor-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "cursor.spec.mjs",
+      "file": "cursor.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "controlled HTTP 100 foreign101 ownACK102 width1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6470,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('feed-message').filter({ hasText: 'own102' })\nExpected: \u001b[32m\"accepted\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'own102' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'own102' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('feed-message').filter({ hasText: 'own102' })\nExpected: \u001b[32m\"accepted\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'own102' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'own102' })\u001b[22m\n\n    at /private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:13:949",
+                    "location": {
+                      "file": "/private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs",
+                      "column": 949,
+                      "line": 13
+                    },
+                    "snippet": "  11 |  const network=[],gates=[];let release;const ready=new Promise(r=>release=r);let stage=0,armed=false,bootstrapAfterComplete=0;\n  12 |  await page.route(`**/api/v1/meetings/${id}/feed?*`,async(route)=>{const query=new URL(route.request().url()).searchParams,after=query.get('after_sequence');network.push({method:'GET',after,before:query.get('before_sequence'),stage});if(after&&!armed){const r=await route.fetch();await route.fulfill({response:r});bootstrapAfterComplete++;return;}if(after){gates.push(after);await ready;const response=await route.fetch(),body=await response.json();if(stage===1&&after==='100'){body.entries=body.entries.filter(e=>e.sequence==='101');body.has_more=true;stage=2;}await route.fulfill({response,json:body});}else await route.continue();});\n> 13 |  try{await page.clock.install({time:new Date()});await page.goto(`/meetings/${id}`);await expect(page.getByTestId('feed-message').filter({hasText:'baseline100'})).toBeVisible();await expect.poll(()=>bootstrapAfterComplete).toBeGreaterThan(0);await page.clock.runFor(100);await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));armed=true;expect(gates).toEqual([]);const foreign=await post(friendContext.request,id,friendHeaders,'foreign101');expect(foreign.sequence).toBe('101');await page.getByLabel('Сообщение',{exact:true}).fill('own102');const ack=page.waitForResponse(r=>r.url().endsWith(`/meetings/${id}/messages`)&&r.request().method()==='POST');await page.clock.runFor(50);await page.getByLabel('Сообщение',{exact:true}).press('Enter');await page.clock.runFor(250);const ackEntry=await(await ack).json();expect(ackEntry.sequence).toBe('102');const own=page.getByTestId('feed-message').filter({hasText:'own102'});await expect(own).toHaveAttribute('data-delivery','accepted');await expect(own).toHaveCount(1);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toHaveCount(0);await page.clock.runFor(13000);await expect.poll(()=>gates.length).toBeGreaterThan(0);expect(gates.every(x=>x==='100')).toBe(true);await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-ack-before-get.png`});const beforeRelease=[...gates];stage=1;release();await expect.poll(()=>network.some(x=>x.after==='102')).toBe(true);await page.clock.runFor(250);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toBeVisible();await expect(own).toHaveCount(1);await expect.poll(()=>network.some(x=>x.after==='101')).toBe(true);const text=await page.getByTestId('feed-message').allTextContents();expect(text.findIndex(x=>x.includes('foreign101'))).toBeLessThan(text.findIndex(x=>x.includes('own102')));await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-merged.png`});await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network.json`,JSON.stringify({width,meetingId:id,bootstrapAfterComplete,realServerSequences:{initial:'100',foreign:foreign.sequence,ack:ackEntry.sequence},delivery:'accepted once',nextRequestBeforeRelease:beforeRelease,network},null,2));}\n     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ^\n  14 |  finally{await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network-partial.json`,JSON.stringify({width,meetingId:id,gates,network,stage,bootstrapAfterComplete},null,2));release();await page.unrouteAll({behavior:'ignoreErrors'}).catch(()=>{});await friendContext.close();}\n  15 | });\n  16 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs",
+                        "column": 949,
+                        "line": 13
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('feed-message').filter({ hasText: 'own102' })\nExpected: \u001b[32m\"accepted\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('feed-message').filter({ hasText: 'own102' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feed-message').filter({ hasText: 'own102' })\u001b[22m\n\n\n  11 |  const network=[],gates=[];let release;const ready=new Promise(r=>release=r);let stage=0,armed=false,bootstrapAfterComplete=0;\n  12 |  await page.route(`**/api/v1/meetings/${id}/feed?*`,async(route)=>{const query=new URL(route.request().url()).searchParams,after=query.get('after_sequence');network.push({method:'GET',after,before:query.get('before_sequence'),stage});if(after&&!armed){const r=await route.fetch();await route.fulfill({response:r});bootstrapAfterComplete++;return;}if(after){gates.push(after);await ready;const response=await route.fetch(),body=await response.json();if(stage===1&&after==='100'){body.entries=body.entries.filter(e=>e.sequence==='101');body.has_more=true;stage=2;}await route.fulfill({response,json:body});}else await route.continue();});\n> 13 |  try{await page.clock.install({time:new Date()});await page.goto(`/meetings/${id}`);await expect(page.getByTestId('feed-message').filter({hasText:'baseline100'})).toBeVisible();await expect.poll(()=>bootstrapAfterComplete).toBeGreaterThan(0);await page.clock.runFor(100);await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));armed=true;expect(gates).toEqual([]);const foreign=await post(friendContext.request,id,friendHeaders,'foreign101');expect(foreign.sequence).toBe('101');await page.getByLabel('Сообщение',{exact:true}).fill('own102');const ack=page.waitForResponse(r=>r.url().endsWith(`/meetings/${id}/messages`)&&r.request().method()==='POST');await page.clock.runFor(50);await page.getByLabel('Сообщение',{exact:true}).press('Enter');await page.clock.runFor(250);const ackEntry=await(await ack).json();expect(ackEntry.sequence).toBe('102');const own=page.getByTestId('feed-message').filter({hasText:'own102'});await expect(own).toHaveAttribute('data-delivery','accepted');await expect(own).toHaveCount(1);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toHaveCount(0);await page.clock.runFor(13000);await expect.poll(()=>gates.length).toBeGreaterThan(0);expect(gates.every(x=>x==='100')).toBe(true);await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-ack-before-get.png`});const beforeRelease=[...gates];stage=1;release();await expect.poll(()=>network.some(x=>x.after==='102')).toBe(true);await page.clock.runFor(250);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toBeVisible();await expect(own).toHaveCount(1);await expect.poll(()=>network.some(x=>x.after==='101')).toBe(true);const text=await page.getByTestId('feed-message').allTextContents();expect(text.findIndex(x=>x.includes('foreign101'))).toBeLessThan(text.findIndex(x=>x.includes('own102')));await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-merged.png`});await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network.json`,JSON.stringify({width,meetingId:id,bootstrapAfterComplete,realServerSequences:{initial:'100',foreign:foreign.sequence,ack:ackEntry.sequence},delivery:'accepted once',nextRequestBeforeRelease:beforeRelease,network},null,2));}\n     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ^\n  14 |  finally{await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network-partial.json`,JSON.stringify({width,meetingId:id,gates,network,stage,bootstrapAfterComplete},null,2));release();await page.unrouteAll({behavior:'ignoreErrors'}).catch(()=>{});await friendContext.close();}\n  15 | });\n  16 |\n    at /private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:13:949"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T18:49:03.005Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/somewhere-web-sdd-independent/final/cursor-output/cursor-controlled-HTTP-100-foreign101-ownACK102-width1440-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs",
+                    "column": 949,
+                    "line": 13
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7b47064e6a0f88f290c6-79f6ded347bec1529742",
+          "file": "../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs",
+          "line": 6,
+          "column": 31
+        },
+        {
+          "title": "controlled HTTP 100 foreign101 ownACK102 width390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T18:49:09.874Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7b47064e6a0f88f290c6-e7169f2672f80c64a602",
+          "file": "../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs",
+          "line": 6,
+          "column": 31
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T18:49:02.693Z",
+    "duration": 10611.814,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

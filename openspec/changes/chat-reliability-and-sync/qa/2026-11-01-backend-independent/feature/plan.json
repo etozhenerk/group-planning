@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "chat-backend-independent-20261101",
+  "purpose": "feature",
+  "component": "backend",
+  "createdAt": "2026-11-01T14:12:07.503Z",
+  "implementer": "chat-runtime-implementation",
+  "catalogHash": "84856bf42ba9493c4f47f9152522aa73cd69705d3e968815a9e12a45bcc11b2e",
+  "sourceHash": "eff7cb20a91b9baf51e8b9fade927e3cc4442b40f446b3fe2ae6b0f283c9143e",
+  "selectedCases": [
+    "TC-CHAT-CAPABILITIES",
+    "TC-CHAT-IDEMPOTENCY-LOOKUP",
+    "TC-CHAT-PAGE-BOUNDS",
+    "TC-CHAT-READ-STATE-99A5AEEE",
+    "TC-CHAT-READ-STATE-E32551D3",
+    "TC-CHAT-SECURITY-0E0CB54C",
+    "TC-CHAT-SYNC-THROUGH"
+  ],
+  "expected": [
+    {
+      "id": "TC-CHAT-READ-STATE-99A5AEEE/backend-isolated/manual",
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-READ-STATE-E32551D3/backend-isolated/manual",
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/backend-isolated/manual",
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SECURITY-0E0CB54C/backend-isolated/manual",
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/backend-isolated/manual",
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-SYNC-THROUGH/backend-isolated/manual",
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-CAPABILITIES/backend-isolated/manual",
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "environment": "backend-isolated",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "backend-unit-integration"
+  ],
+  "environments": [
+    {
+      "id": "backend-isolated",
+      "profile": "api",
+      "platform": "backend",
+      "application": "product",
+      "url": "https://127.0.0.1:55114",
+      "build": "httpapi-test-sha256:fff9b4f15c8da24e9f7a1397cbb5f0c70670e21e90b049cb831120af703ac9a3",
+      "os": "macOS-27.0.1-arm64-arm-64bit",
+      "device": "Mac isolated httptest; cloud PostgreSQL16.15 own marker guarded DB",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "synthetic A/B/C/X; memory fixtures and own disposable SQL history; no production data",
+      "backend": "frozen MAIN plus immutable external QA test overlay; Go1.27.2"
+    }
+  ],
+  "artifact": null
+}

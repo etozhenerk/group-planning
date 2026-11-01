@@ -3,6 +3,8 @@ import XCTest
 @MainActor
 final class DesignExperienceUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
+
     private func launch(large: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "design"
@@ -28,14 +30,12 @@ final class DesignExperienceUITests: XCTestCase {
         }
         XCTAssertTrue(element.isHittable)
     }
-    func testListProfileAndCreationMatchApprovedLayout() {
+    func testListProfileAndCreationMatchApprovedLayout() throws {
         let app = launch()
         XCTAssertTrue(app.images["meeting-cover"].firstMatch.waitForExistence(timeout: 10))
         capture("list")
         app.buttons["Календарь"].tap()
-        let day = app.buttons["calendar-day-2026-10-31"]
-        XCTAssertTrue(day.waitForExistence(timeout: 5))
-        day.tap()
+        _ = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
         capture("calendar")
         app.buttons["Список"].tap()
 
@@ -61,9 +61,11 @@ final class DesignExperienceUITests: XCTestCase {
         card.tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["feed-title"].exists)
-        XCTAssertTrue(
-            app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "❤️, 2")).firstMatch
-                .waitForExistence(timeout: 3))
+        let reaction = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "❤️, 2")
+        ).firstMatch
+        ChatSheetTestSupport.revealInConversation(reaction, app: app)
+        XCTAssertTrue(reaction.waitForExistence(timeout: 3))
         capture("chat")
         app.buttons["meeting-add"].tap()
         XCTAssertTrue(app.buttons["Предложить место"].waitForExistence(timeout: 5))
@@ -203,7 +205,12 @@ final class DesignExperienceUITests: XCTestCase {
         let about = app.buttons["О приложении"]
         reveal(about, app: app)
         about.tap()
-        XCTAssertTrue(app.staticTexts["О somewhere"].waitForExistence(timeout: 5))
+        // The approved profile follow-up keeps one brand in About, without a
+        // second "О somewhere" heading above it.
+        XCTAssertTrue(app.staticTexts["somewhere"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts.matching(identifier: "somewhere").count, 1)
+        XCTAssertFalse(app.staticTexts["О somewhere"].exists)
+        XCTAssertTrue(app.staticTexts["Версия"].exists)
         capture("about")
     }
     func testSupportMatchesApprovedLayout() {

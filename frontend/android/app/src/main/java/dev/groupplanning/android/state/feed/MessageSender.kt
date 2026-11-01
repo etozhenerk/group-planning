@@ -31,9 +31,9 @@ internal class MessageSender(
     private var active = false
     private var draftRevision = 0L
 
-    suspend fun open(value: MeetingAccess) {
+    suspend fun open(value: MeetingAccess, sendingEnabled: Boolean = true) {
         access = value
-        active = true
+        active = sendingEnabled
         try {
             val saved = repository.update(value) { record ->
                 record.copy(

@@ -186,7 +186,7 @@ struct FeedTimeline: View {
                         let nearBottom = bottom <= geometry.size.height + 64 && bottom >= 0
                         if userScrolling || !followsLatest {
                             if followsLatest != nearBottom { followsLatest = nearBottom }
-                        } else if bottom > geometry.size.height + 64 {
+                        } else if bottom > geometry.size.height {
                             Task { @MainActor in
                                 await Task.yield()
                                 guard followsLatest, !userScrolling else { return }

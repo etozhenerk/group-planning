@@ -1,0 +1,12 @@
+{
+  "createdAt": "2026-11-01T14:53:41.954733+00:00",
+  "database": "somewhere_integration",
+  "owner": "somewhere_migrator",
+  "marker": "somewhere_sdd_account_20261101_017015456203011d",
+  "binary": "/tmp/somewhere-sdd-account-coordinator-20261101.test",
+  "binarySHA256": "e3e155d484f1359a32bb797bd160795df04133206713faacf085871a56304be2",
+  "selector": "^TestIndependentCoordinatorSecondMeetingSQLRollback$",
+  "producer": "same non-superuser OS+PG role",
+  "production": "health/ready GET + systemctl show only",
+  "cleanup": "guard name/owner/marker DROP; verify remaining0; remove own binary after exact SHA"
+}

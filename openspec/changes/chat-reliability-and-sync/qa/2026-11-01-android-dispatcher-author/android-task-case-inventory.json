@@ -1,0 +1,665 @@
+[
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "1.2",
+    "taskText": "- [ ] 1.2 Проверить встроенную Centrifuge и JS/Swift/Java SDK: pin версий, лицензии, auth, reconnect/recovery, совместимость Go/OkHttp/SwiftPM; приложить минимальные успешные проверки на трёх клиентах и перечень зависимостей.",
+    "cases": [
+      "TC-CHAT-SYNC-BC07BEB1",
+      "TC-CHAT-SYNC-F6CFB5E9",
+      "TC-CHAT-CAPABILITIES",
+      "TC-CHAT-SECURITY-0E0CB54C"
+    ],
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "1.4",
+    "taskText": "- [ ] 1.4 Сравнить react-virtuoso с выбранным после spike @tanstack/react-virtual и проверить native lazy-контейнеры на текущих карточках/длинных строках: prepend, resize, focus, keyboard и anchor ≤ 2 единиц; сохранить замеры и выбранные параметры/контейнеры рядом с UX v1.",
+    "cases": [
+      "TC-EVENT-FEED-9FADE3B3",
+      "TC-EVENT-FEED-A697B69A",
+      "TC-EVENT-FEED-84D3BA20"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "1.6",
+    "taskText": "- [ ] 1.6 Снять baseline scroll/frame/памяти на web/iOS/Android с текущими опубликованными карточками; записать устройство, сборку, якорь и динамические высоты, отдельно от UI-приёмки 2.1.0 соседнего изменения.",
+    "cases": [
+      "TC-EVENT-FEED-9FADE3B3",
+      "TC-EVENT-FEED-A697B69A"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "6.1",
+    "taskText": "- [ ] 6.1 Расширить Repository/ViewModel и MessageOutbox до очереди с устойчивыми ID и системной защитой хранения; проверить process death, lost ACK, draft, no-op/retry и изоляцию аккаунтов тестами.",
+    "cases": [
+      "TC-CHAT-SYNC-2D68FE69",
+      "TC-CHAT-SYNC-E77C7AE6",
+      "TC-CHAT-SYNC-6EF9F915",
+      "TC-CHAT-SYNC-DC61BB4A",
+      "TC-CHAT-SYNC-14D92D7D",
+      "TC-CHAT-SYNC-EB93F8D1",
+      "TC-CHAT-SECURITY-92CE8303",
+      "TC-CHAT-SECURITY-6A1C1A1A",
+      "TC-CHAT-SECURITY-BDBF283F"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "6.2",
+    "taskText": "- [ ] 6.2 Подключить SDK adapter через Flow и lifecycle, recovery/fallback; проверить auth, reconnect/reset, один запрос, background и revoke через fake transport и эмулятор.",
+    "cases": [
+      "TC-CHAT-SYNC-BC07BEB1",
+      "TC-CHAT-SYNC-F6CFB5E9",
+      "TC-CHAT-SYNC-THROUGH",
+      "TC-CHAT-SYNC-65C6F806",
+      "TC-CHAT-SYNC-60FCAA1D",
+      "TC-CHAT-SYNC-6F728A92",
+      "TC-CHAT-SECURITY-0E0CB54C",
+      "TC-CHAT-SECURITY-1DC708F2",
+      "TC-CHAT-CAPABILITIES"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "6.3",
+    "taskText": "- [ ] 6.3 Реализовать bounded store и LazyColumn anchor/around/автодогрузку; проверить reverse layout, IME/Back, resize карточки, собственный ACK и отсутствие прыжка при новых сообщениях.",
+    "cases": [
+      "TC-EVENT-FEED-304D49BA",
+      "TC-EVENT-FEED-A697B69A",
+      "TC-EVENT-FEED-025A8CA5",
+      "TC-EVENT-FEED-9FADE3B3",
+      "TC-EVENT-FEED-E81D170C",
+      "TC-EVENT-FEED-D0C7E8FB",
+      "TC-EVENT-FEED-84D3BA20"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "6.4",
+    "taskText": "- [ ] 6.4 Добавить visibility/read-through, счётчики и readers sheet; проверить два устройства, TalkBack/font scale, ошибки и возврат к исходной строке.",
+    "cases": [
+      "TC-CHAT-READ-STATE-55EC5376",
+      "TC-CHAT-READ-STATE-850EBE76",
+      "TC-CHAT-READ-STATE-34B98D4D",
+      "TC-CHAT-READ-STATE-299278E4",
+      "TC-CHAT-READ-STATE-B0815A4A",
+      "TC-CHAT-READ-STATE-D6A20C5D",
+      "TC-EVENT-FEED-722B1526"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "6.5",
+    "taskText": "- [ ] 6.5 Сопоставить UI с UX v1, обновить документацию repository/outbox и выполнить wrapper/ktlint, unit/UI, Debug/Release и Android Lint по frontend/android/AGENTS.md; записать отдельно эмулятор и физическое устройство.",
+    "cases": [
+      "TC-EVENT-FEED-304D49BA",
+      "TC-EVENT-FEED-A697B69A",
+      "TC-EVENT-FEED-025A8CA5",
+      "TC-EVENT-FEED-9FADE3B3",
+      "TC-EVENT-FEED-E81D170C",
+      "TC-EVENT-FEED-D0C7E8FB",
+      "TC-EVENT-FEED-84D3BA20",
+      "TC-CHAT-READ-STATE-55EC5376",
+      "TC-CHAT-READ-STATE-850EBE76",
+      "TC-CHAT-READ-STATE-34B98D4D",
+      "TC-CHAT-READ-STATE-299278E4",
+      "TC-CHAT-READ-STATE-B0815A4A",
+      "TC-CHAT-READ-STATE-D6A20C5D",
+      "TC-EVENT-FEED-722B1526",
+      "TC-CHAT-SECURITY-0830EED9"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "7.8",
+    "taskText": "- [ ] 7.8 Выполнить весь применимый Android-набор из testing.md: repository/storage/transport и независимый живой проход; зафиксировать emulator/физическое устройство отдельно, raw/evidence и qa:ready.",
+    "cases": [
+      "TC-CHAT-SYNC-2D68FE69",
+      "TC-CHAT-SYNC-5EFD24A6",
+      "TC-CHAT-SYNC-BC07BEB1",
+      "TC-CHAT-SYNC-F6CFB5E9",
+      "TC-CHAT-SYNC-E77C7AE6",
+      "TC-CHAT-SYNC-6EF9F915",
+      "TC-CHAT-SYNC-DC61BB4A",
+      "TC-CHAT-SYNC-14D92D7D",
+      "TC-CHAT-SYNC-EB93F8D1",
+      "TC-CHAT-SYNC-65C6F806",
+      "TC-CHAT-SYNC-60FCAA1D",
+      "TC-CHAT-SYNC-6F728A92",
+      "TC-CHAT-READ-STATE-55EC5376",
+      "TC-CHAT-READ-STATE-850EBE76",
+      "TC-CHAT-READ-STATE-34B98D4D",
+      "TC-CHAT-READ-STATE-299278E4",
+      "TC-CHAT-READ-STATE-B0815A4A",
+      "TC-CHAT-READ-STATE-D6A20C5D",
+      "TC-CHAT-SECURITY-0E0CB54C",
+      "TC-CHAT-SECURITY-1DC708F2",
+      "TC-CHAT-SECURITY-92CE8303",
+      "TC-CHAT-SECURITY-6A1C1A1A",
+      "TC-CHAT-SECURITY-0830EED9",
+      "TC-CHAT-SECURITY-BDBF283F",
+      "TC-EVENT-FEED-304D49BA",
+      "TC-EVENT-FEED-A697B69A",
+      "TC-EVENT-FEED-025A8CA5",
+      "TC-EVENT-FEED-9FADE3B3",
+      "TC-EVENT-FEED-E81D170C",
+      "TC-EVENT-FEED-D0C7E8FB",
+      "TC-EVENT-FEED-722B1526",
+      "TC-EVENT-FEED-84D3BA20",
+      "TC-CHAT-SYNC-THROUGH",
+      "TC-CHAT-CAPABILITIES"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "chat-reliability-and-sync",
+    "task": "7.9",
+    "taskText": "- [ ] 7.9 Проверить полный commit→visible, offline recovery, bounded memory/frame и anchor бюджеты на web/iOS/Android по validation-plan; сохранить трассу каждого этапа и сравнение с 1.6, без измерений на production.",
+    "cases": [
+      "TC-CHAT-SYNC-BC07BEB1",
+      "TC-EVENT-FEED-A697B69A",
+      "TC-EVENT-FEED-9FADE3B3"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "0.1",
+    "taskText": "- [ ] 0.1 По последнему уточнению пользователя от 26.10.2026 заменить все мобильные действия из чата (голосования, задачи и остальные операции) на bottom sheets в web/iOS/Android вместо отдельных экранов с «Назад»; сохранить данные формы/ключ повтора, проверить закрытие и возвращение в чат, обновить визуальные пары. Применить компактные info/settings/task/date/place/task формы одобренной ревизии 1.3.0, одну панель и возврат фокуса; все пять настроек даты и прежние права/черновики/повторы сохраняются. Полностраничная оболочка для mobile отменена; desktop-действия в 2.0.0 открываются модалками поверх чата.",
+    "cases": [
+      "TC-CHAT-03C1F855",
+      "TC-CHAT-13212426",
+      "TC-CHAT-1F396228",
+      "TC-CHAT-44FA05AC",
+      "TC-CHAT-F00844F6",
+      "TC-CHAT-8FCD1231",
+      "TC-CHAT-87982DEF",
+      "TC-CHAT-1064C7F5",
+      "TC-CHAT-7DDB3260",
+      "TC-CHAT-C60E942D",
+      "TC-CHAT-INFO-EXPAND",
+      "TC-MEDIA-82F4AC83",
+      "TC-MEDIA-2BD057D2",
+      "TC-MEDIA-D7DEA204",
+      "TC-MEDIA-7640A673",
+      "TC-MEDIA-A8006656",
+      "TC-MEDIA-BC197682",
+      "TC-MEDIA-F3CC5A3E",
+      "TC-FEED-5C22B221",
+      "TC-FEED-1BFACA40",
+      "TC-CHAT-EMOJI-SELECTION",
+      "TC-CHAT-EMOJI-GRAPHEME",
+      "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "TC-CHAT-SHEET-RETURN",
+      "TC-CHAT-DATE-FORM",
+      "TC-CHAT-TASK-ROLES",
+      "TC-REACT-FULL-PICKER",
+      "TC-REACT-PEOPLE-FILTER",
+      "TC-TASK-1DAB5DF2",
+      "TC-TASK-B8D2770E",
+      "TC-TASK-A7464DF9",
+      "TC-TASK-0D640ABE",
+      "TC-TASK-148F3348",
+      "TC-TASK-00CF9F67",
+      "TC-CHAT-SETTINGS-FORM",
+      "TC-REACT-HOLD-MOTION",
+      "TC-CHAT-COMPOSER-CARET"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "0.2",
+    "taskText": "- [ ] 0.2 Убрать из bottom sheet сведений о встрече все пункты сервиса/футера; помощь, обратную связь, сведения о приложении, версию и документы оставить в профиле. Проверить состав панели на всех клиентах.",
+    "cases": [
+      "TC-INFO-4D0E6354",
+      "TC-CHAT-INFO-EXPAND"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "0.4",
+    "taskText": "- [ ] 0.4 Убрать незапланированные входы в помощь/документы с мобильного онбординга iOS и Android, проверить весь экран с общей оболочкой приложения, пропуск/последний слайд и крупный текст; провести независимое ревью по манифесту.",
+    "cases": [
+      "TC-INFO-ONBOARDING-NO-SERVICE"
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "6.1",
+    "taskText": "- [ ] 6.1 Реализовать Compose-навигацию, прямой вход в чат, системный Back, карточки/календарь и «Сегодня»; проверить нижнюю панель только на списке/календаре, списке приглашений и основном профиле, отсутствие резерва под неё на вложенных экранах, состояние после пересоздания экрана и сравнить с UX.",
+    "cases": [
+      "TC-LIST-170C9AF2",
+      "TC-LIST-74A5E939",
+      "TC-LIST-57D734C1",
+      "TC-LIST-155758C7",
+      "TC-LIST-17F34870",
+      "TC-LIST-D671C5B8",
+      "TC-LIST-697C602C",
+      "TC-LIST-5B54DA87",
+      "TC-LIST-AA6FA112",
+      "TC-LIST-6BAF1838",
+      "TC-LIST-53C0DC15",
+      "TC-LIST-40EE551B",
+      "TC-LIST-AB3EFA81",
+      "TC-CREATE-9138348C",
+      "TC-CREATE-2066E79A",
+      "TC-CREATE-2A0E9F3E",
+      "TC-CREATE-9724DED7",
+      "TC-CREATE-932B50E6",
+      "TC-CHAT-INFO-EXPAND"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "6.2",
+    "taskText": "- [ ] 6.2 Реализовать часовую отсечку приглашения при foreground/изменении времени; проверить границу, возврат после отказа и серверный отказ.",
+    "cases": [
+      "TC-INV-84CC3D0C",
+      "TC-INV-F8EEC653",
+      "TC-INV-235E4D53",
+      "TC-INV-F00F3753",
+      "TC-INV-82AE12A5",
+      "TC-INV-13F9DCAB",
+      "TC-INV-DEC030F5"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "6.3",
+    "taskText": "- [ ] 6.3 Перенести мобильные меню, emoji-док, anchored реакции/людей и панели 2.0.0, сохранив Photo Picker/Documents; проверить черновик, отмену, частичный успех и восстановление результатов системного выбора.",
+    "cases": [
+      "TC-CHAT-03C1F855",
+      "TC-CHAT-13212426",
+      "TC-CHAT-1F396228",
+      "TC-CHAT-44FA05AC",
+      "TC-CHAT-F00844F6",
+      "TC-CHAT-8FCD1231",
+      "TC-CHAT-87982DEF",
+      "TC-CHAT-1064C7F5",
+      "TC-CHAT-7DDB3260",
+      "TC-CHAT-C60E942D",
+      "TC-CHAT-INFO-EXPAND",
+      "TC-REACT-1AAA13AA",
+      "TC-REACT-7E7A775E",
+      "TC-REACT-EFCCD7B0",
+      "TC-REACT-18CAB411",
+      "TC-REACT-126AB1CF",
+      "TC-MEDIA-82F4AC83",
+      "TC-MEDIA-2BD057D2",
+      "TC-MEDIA-D7DEA204",
+      "TC-MEDIA-7640A673",
+      "TC-MEDIA-A8006656",
+      "TC-MEDIA-BC197682",
+      "TC-MEDIA-F3CC5A3E",
+      "TC-CHAT-EMOJI-SELECTION",
+      "TC-CHAT-EMOJI-GRAPHEME",
+      "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "TC-CHAT-SHEET-RETURN",
+      "TC-CHAT-DATE-FORM",
+      "TC-CHAT-TASK-ROLES",
+      "TC-REACT-FULL-PICKER",
+      "TC-REACT-PEOPLE-FILTER",
+      "TC-TASK-1DAB5DF2",
+      "TC-TASK-B8D2770E",
+      "TC-TASK-A7464DF9",
+      "TC-TASK-0D640ABE",
+      "TC-TASK-148F3348",
+      "TC-TASK-00CF9F67",
+      "TC-FEED-5C22B221",
+      "TC-FEED-1BFACA40",
+      "TC-CHAT-SETTINGS-FORM",
+      "TC-REACT-HOLD-MOTION",
+      "TC-CHAT-COMPOSER-CARET",
+      "TC-MEDIA-NATIVE-PICKER-FIRST",
+      "TC-MEDIA-NATIVE-SUCCESS-DISMISS",
+      "TC-MEDIA-NATIVE-PHOTO-BATCH",
+      "TC-CHAT-NATIVE-DIRECT-SHARE",
+      "TC-CHAT-NATIVE-EMPTY-INVITE",
+      "TC-CHAT-NATIVE-AVATAR-ACK"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "6.4",
+    "taskText": "- [ ] 6.4 Добавить профиль и вайбы с жестами, сеткой и полным экраном; проверить TalkBack, масштаб текста, системные отступы, ориентацию и потерю доступа.",
+    "cases": [
+      "TC-PROFILE-CC2372B4",
+      "TC-PROFILE-EBBA2EA5",
+      "TC-PROFILE-842701DD",
+      "TC-PROFILE-C6FA6B4C",
+      "TC-PROFILE-YANDEX-FIELDS",
+      "TC-VIBE-75A8C069",
+      "TC-VIBE-3C98DE12",
+      "TC-VIBE-F5929004",
+      "TC-VIBE-3E0FC811",
+      "TC-VIBE-03EF9D2B",
+      "TC-VIBE-D2414F1E",
+      "TC-VIBE-C82FDBE2",
+      "TC-VIBE-DAC4D8E1",
+      "TC-VIBE-5A39D7F0",
+      "TC-VIBE-B5FF73B4",
+      "TC-VIBE-NATIVE-SWIPE-TAP",
+      "TC-VIBE-NATIVE-PRELOAD"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "6.5",
+    "taskText": "- [ ] 6.5 Обновить документацию; выполнить Gradle wrapper, ktlint, Debug/Release-сборки и Android Lint по frontend/android/AGENTS.md, приложить визуальный отчёт.",
+    "cases": [
+      "TC-CHAT-03C1F855",
+      "TC-CHAT-13212426",
+      "TC-CHAT-1F396228",
+      "TC-CHAT-44FA05AC",
+      "TC-CHAT-F00844F6",
+      "TC-CHAT-8FCD1231",
+      "TC-CHAT-87982DEF",
+      "TC-CHAT-1064C7F5",
+      "TC-CHAT-7DDB3260",
+      "TC-CHAT-C60E942D",
+      "TC-CHAT-INFO-EXPAND",
+      "TC-INFO-ONBOARDING-NO-SERVICE",
+      "TC-CHAT-EMOJI-SELECTION",
+      "TC-CHAT-EMOJI-GRAPHEME",
+      "TC-CHAT-EMOJI-LOW-HEIGHT",
+      "TC-CHAT-EMOJI-DISMISS-FOCUS",
+      "TC-CHAT-SHEET-RETURN",
+      "TC-CHAT-DATE-FORM",
+      "TC-CHAT-TASK-ROLES",
+      "TC-TASK-1DAB5DF2",
+      "TC-TASK-B8D2770E",
+      "TC-TASK-A7464DF9",
+      "TC-TASK-0D640ABE",
+      "TC-TASK-148F3348",
+      "TC-TASK-00CF9F67",
+      "TC-FEED-5C22B221",
+      "TC-FEED-1BFACA40",
+      "TC-CHAT-SETTINGS-FORM",
+      "TC-REACT-HOLD-MOTION",
+      "TC-CHAT-COMPOSER-CARET"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "7.1",
+    "taskText": "- [ ] 7.1 Пройти сценарии создания, RSVP, вложений, реакций и вайбов между web/iOS/Android и поддерживаемыми прежними сборками; подтвердить безопасное игнорирование новых полей/событий.",
+    "cases": [
+      "TC-CREATE-9138348C",
+      "TC-CREATE-2066E79A",
+      "TC-CREATE-2A0E9F3E",
+      "TC-CREATE-9724DED7",
+      "TC-CREATE-932B50E6",
+      "TC-INV-84CC3D0C",
+      "TC-INV-F8EEC653",
+      "TC-INV-235E4D53",
+      "TC-INV-F00F3753",
+      "TC-INV-82AE12A5",
+      "TC-INV-13F9DCAB",
+      "TC-INV-DEC030F5",
+      "TC-MEDIA-82F4AC83",
+      "TC-MEDIA-2BD057D2",
+      "TC-MEDIA-D7DEA204",
+      "TC-MEDIA-7640A673",
+      "TC-MEDIA-A8006656",
+      "TC-MEDIA-BC197682",
+      "TC-MEDIA-F3CC5A3E",
+      "TC-REACT-1AAA13AA",
+      "TC-REACT-7E7A775E",
+      "TC-REACT-EFCCD7B0",
+      "TC-REACT-18CAB411",
+      "TC-REACT-126AB1CF",
+      "TC-VIBE-75A8C069",
+      "TC-VIBE-3C98DE12",
+      "TC-VIBE-F5929004",
+      "TC-VIBE-3E0FC811",
+      "TC-VIBE-03EF9D2B",
+      "TC-VIBE-D2414F1E",
+      "TC-VIBE-C82FDBE2",
+      "TC-VIBE-DAC4D8E1",
+      "TC-VIBE-5A39D7F0",
+      "TC-VIBE-B5FF73B4",
+      "TC-CHAT-C60E942D",
+      "TC-REACT-FULL-PICKER",
+      "TC-REACT-PEOPLE-FILTER",
+      "TC-TASK-1DAB5DF2",
+      "TC-TASK-B8D2770E",
+      "TC-TASK-A7464DF9",
+      "TC-TASK-0D640ABE",
+      "TC-TASK-148F3348",
+      "TC-TASK-00CF9F67",
+      "TC-CHAT-DATE-FORM",
+      "TC-CHAT-TASK-ROLES"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "8.7",
+    "taskText": "- [ ] 8.7 Реализовать Android-форму, системный выбор скриншота, помощь/документы и фактическую версию; проверить TalkBack, клавиатуру, восстановление при пересоздании и повтор; выполнить проверки frontend/android/AGENTS.md.",
+    "cases": [
+      "TC-SUPPORT-C47A0ACC",
+      "TC-SUPPORT-B8F9FF7E",
+      "TC-SUPPORT-689C3B5F",
+      "TC-SUPPORT-703D40F6",
+      "TC-SUPPORT-E6C8467F",
+      "TC-SUPPORT-751A99A9",
+      "TC-INFO-C4EDD04F",
+      "TC-INFO-4D0E6354",
+      "TC-INFO-87665C8F",
+      "TC-INFO-D5C31112",
+      "TC-INFO-5AF98147",
+      "TC-INFO-91E4ECFC",
+      "TC-INFO-ONBOARDING-NO-SERVICE"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "10.2",
+    "taskText": "- [ ] 10.2 Реализовать те же принятые нативные правила на Android, кроме специфичных iOS PDF/edge-back регрессий; сохранить системные Photo Picker/Documents, Share и Back, права, черновики и идемпотентность.",
+    "cases": [
+      "TC-MEDIA-NATIVE-PICKER-FIRST",
+      "TC-MEDIA-NATIVE-SUCCESS-DISMISS",
+      "TC-MEDIA-NATIVE-PHOTO-BATCH",
+      "TC-VIBE-NATIVE-SWIPE-TAP",
+      "TC-VIBE-NATIVE-PRELOAD",
+      "TC-CHAT-NATIVE-DIRECT-SHARE",
+      "TC-CHAT-NATIVE-EMPTY-INVITE",
+      "TC-CHAT-NATIVE-AVATAR-ACK"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "10.3",
+    "taskText": "- [ ] 10.3 Независимо пройти восемь общих native-кейсов на точных iOS/Android сборках: реальные системные picker/Share, карусель/remove, batch loading/partial retry/success dismiss, swipe против tap, preload, empty invite и промежуточные кадры avatar ACK. Выполнить обязательные suites, feature-test/design-review и актуальные gates; web-pass не переносить.",
+    "cases": [
+      "TC-MEDIA-NATIVE-PICKER-FIRST",
+      "TC-MEDIA-NATIVE-SUCCESS-DISMISS",
+      "TC-MEDIA-NATIVE-PHOTO-BATCH",
+      "TC-VIBE-NATIVE-SWIPE-TAP",
+      "TC-VIBE-NATIVE-PRELOAD",
+      "TC-CHAT-NATIVE-DIRECT-SHARE",
+      "TC-CHAT-NATIVE-EMPTY-INVITE",
+      "TC-CHAT-NATIVE-AVATAR-ACK"
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "11.3",
+    "taskText": "- [ ] 11.3 Исправить и независимо принять Android: стабильные загрузки/календарь без вспышек, нижнее выделение с движением и reduced motion, выход внизу профиля/скрытие удаления и версии, один бренд на About, возврат сервисных страниц в предыдущий экран и заметная обложка в начале создания.",
+    "cases": [
+      "TC-UI-LOADING-STABILITY",
+      "TC-UI-BOTTOM-TAB-MOTION",
+      "TC-PROFILE-ACTIONS-ORDER",
+      "TC-SERVICE-RETURN-CONTEXT",
+      "TC-CREATE-COVER-FIRST",
+      "TC-ACCOUNT-FB303DFB",
+      "TC-HELP-DISCLOSURE-MOTION"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "14.1",
+    "taskText": "- [ ] 14.1 Исправить и независимо принять Android: единый Назад/контекст возврата, стабильный EXIF/размер и циклические жесты фото, компактные превью и закрываемую клавиатуру формы поддержки. Проверить точный APK в emulator-5554; iOS/web pass не переносить.",
+    "cases": [
+      "TC-VIBE-IOS-BACK-ONLY",
+      "TC-VIBE-IOS-STABLE-SWIPE",
+      "TC-MEDIA-IOS-COMPACT-PREVIEW",
+      "TC-SUPPORT-IOS-KEYBOARD"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "16.3",
+    "taskText": "- [ ] 16.3 Android: панели/readers/pending по4.0.0; обязательные сборки и независимая QA-приёмка на emulator-5554.",
+    "cases": [
+      "TC-SHEET-CONTROLS-NO-CLOSE",
+      "TC-SHEET-NO-REFRESH",
+      "TC-READERS-STABLE-VIEWPORT",
+      "TC-CHAT-PENDING-INDICATOR"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "17.3",
+    "taskText": "- [ ] 17.3 Android: внешний tap скрывает IME и фокус composer; сохранены действия, scroll/long press и другие поля. Debug/Release/Lint/unit и адресный QA; независимая приёмка.",
+    "cases": [
+      "TC-CHAT-OUTSIDE-KEYBOARD"
+    ],
+    "platforms": [
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  },
+  {
+    "change": "meeting-experience-refresh",
+    "task": "17.4",
+    "taskText": "- [ ] 17.4 Независимо проверить TC-CHAT-OUTSIDE-KEYBOARD и дизайн-состояния на трёх клиентах, сохранить evidence актуальных сборок, выполнить qa:ready/design:ready. Недоступное остаётся blocked.",
+    "cases": [
+      "TC-CHAT-OUTSIDE-KEYBOARD"
+    ],
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "gate": "independent feature-test/qa:ready pending; design-review/design:ready required for UI; author instrumentation not sufficient for entire case expectations"
+  }
+]

@@ -4,10 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -26,9 +27,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class InvitationUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() {
@@ -70,8 +73,12 @@ class InvitationUiTests {
             compose.onNodeWithTag("invitation-people").performScrollTo()
             compose.onNodeWithContentDescription("Все участники встречи: 2")
                 .assertIsDisplayed().performClick()
-            compose.onNodeWithText("Участники").assertIsDisplayed()
-            compose.onNodeWithText("Лена").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithText(fixture.context.getString(R.string.participants_heading))
+                .performScrollTo().assertIsDisplayed()
+            compose.onNode(
+                hasText("Лена") and hasAnyAncestor(hasTestTag("participant-roster-row")),
+                useUnmergedTree = true,
+            ).performScrollTo().assertIsDisplayed()
             fixture.screenshot("invitation-people")
             respond("Не смогу")
             fixture.waitText("Вы не сможете прийти")

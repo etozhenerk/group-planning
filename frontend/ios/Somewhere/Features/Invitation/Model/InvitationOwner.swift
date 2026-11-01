@@ -32,6 +32,7 @@ final class InvitationOwner {
     @ObservationIgnored var generation = UUID()
     @ObservationIgnored var operation: Task<Void, Never>?
     @ObservationIgnored let sessionLease: PrivateData.Lease?
+    @ObservationIgnored var publicToken: String?
 
     struct Submission: Sendable {
         let input: RSVPRequest
@@ -42,6 +43,7 @@ final class InvitationOwner {
         self.target = target
         self.api = api
         self.session = session
+        if case .token(let token) = target { publicToken = token }
         userID = session?.profile?.id
         sessionLease = try? session?.privateData.lease()
     }

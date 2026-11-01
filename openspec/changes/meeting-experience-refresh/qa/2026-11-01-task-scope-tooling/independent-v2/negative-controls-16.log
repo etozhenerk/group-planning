@@ -1,0 +1,117 @@
+TAP version 13
+# Subtest: independent negative: review and complete manifests cannot use task-only ready
+ok 1 - independent negative: review and complete manifests cannot use task-only ready
+  ---
+  duration_ms: 61.916625
+  type: 'test'
+  ...
+# Subtest: independent negative: duplicate mapping cannot select the first narrower task
+ok 2 - independent negative: duplicate mapping cannot select the first narrower task
+  ---
+  duration_ms: 37.133625
+  type: 'test'
+  ...
+# Subtest: independent negative: task classified both mapped and exempt is rejected
+ok 3 - independent negative: task classified both mapped and exempt is rejected
+  ---
+  duration_ms: 16.981458
+  type: 'test'
+  ...
+# Subtest: independent negative: required-suite failure cannot collide with unrelated check label
+ok 4 - independent negative: required-suite failure cannot collide with unrelated check label
+  ---
+  duration_ms: 30.046708
+  type: 'test'
+  ...
+# Subtest: independent control: genuine unrelated failed check does not make whole run ready
+ok 5 - independent control: genuine unrelated failed check does not make whole run ready
+  ---
+  duration_ms: 22.670584
+  type: 'test'
+  ...
+# Subtest: independent platform binding: both own plans pass while unrelated whole scope stays pending
+ok 6 - independent platform binding: both own plans pass while unrelated whole scope stays pending
+  ---
+  duration_ms: 68.312125
+  type: 'test'
+  ...
+# Subtest: independent platform binding: duplicate or undeclared platform cannot hide another binding
+ok 7 - independent platform binding: duplicate or undeclared platform cannot hide another binding
+  ---
+  duration_ms: 26.512458
+  type: 'test'
+  ...
+# Subtest: independent platform binding: wrong-platform plan and missing mapped case reject
+ok 8 - independent platform binding: wrong-platform plan and missing mapped case reject
+  ---
+  duration_ms: 25.018
+  type: 'test'
+  ...
+# Subtest: independent platform binding: failed suite and mismatched run hash reject
+ok 9 - independent platform binding: failed suite and mismatched run hash reject
+  ---
+  duration_ms: 48.649917
+  type: 'test'
+  ...
+# Subtest: independent platform binding: fallback preserved and missing platform fallback rejects
+ok 10 - independent platform binding: fallback preserved and missing platform fallback rejects
+  ---
+  duration_ms: 46.650542
+  type: 'test'
+  ...
+# Subtest: independent platform binding: two required environments must both pass
+ok 11 - independent platform binding: two required environments must both pass
+  ---
+  duration_ms: 39.09375
+  type: 'test'
+  ...
+# Subtest: independent platform binding: full phase still requires original whole plans
+ok 12 - independent platform binding: full phase still requires original whole plans
+  ---
+  duration_ms: 31.043583
+  type: 'test'
+  ...
+# Subtest: independent CLI: multi-plan task scope works, explicit foreign/grouped plans and receipt reject
+ok 13 - independent CLI: multi-plan task scope works, explicit foreign/grouped plans and receipt reject
+  ---
+  duration_ms: 563.065917
+  type: 'test'
+  ...
+# Subtest: independent CLI: single-plan explicit binding accepted only when exact, global ready unchanged
+ok 14 - independent CLI: single-plan explicit binding accepted only when exact, global ready unchanged
+  ---
+  duration_ms: 423.0465
+  type: 'test'
+  ...
+# Subtest: independent scope: unrelated passed evidence/executor still validated
+ok 15 - independent scope: unrelated passed evidence/executor still validated
+  ---
+  duration_ms: 26.430542
+  type: 'test'
+  ...
+# Subtest: independent structural check: invalid platform disposition rejects before any checkbox closes
+not ok 16 - independent structural check: invalid platform disposition rejects before any checkbox closes
+  ---
+  duration_ms: 29.737916
+  type: 'test'
+  location: '/private/tmp/somewhere-task-scope-independent-v2/negative-controls.mjs:227:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///private/tmp/somewhere-task-scope-independent-v2/negative-controls.mjs:231:2)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 15
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1739.426875

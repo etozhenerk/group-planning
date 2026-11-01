@@ -5,11 +5,12 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -17,9 +18,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class PreparationTaskUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() {
@@ -28,6 +31,8 @@ class PreparationTaskUiTests {
 
     private fun open(suffix: String) {
         val tag = "meeting-d3c70000-0000-4000-8000-000000000$suffix"
+        fixture.waitTag("meetings-list")
+        compose.onNodeWithTag("meetings-list").performScrollToNode(hasTestTag(tag))
         fixture.waitTag(tag)
         compose.onNodeWithTag(tag).performClick()
         fixture.waitTag("meeting-add")

@@ -13,7 +13,7 @@ import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -21,6 +21,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextRange
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import dev.groupplanning.android.ui.theme.DesignTokens
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -38,9 +40,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class TelegramChatUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()
@@ -48,10 +52,16 @@ class TelegramChatUiTests {
     @Test fun cardsKeepTheDateAndExplainUnspecifiedTimeWithoutClipping() {
         fixture.launch("design").use {
             fixture.waitText("Настолки у Саши")
-            compose.onNodeWithText("Сб, 31 октября · 19:00", useUnmergedTree = true)
+            compose.onNodeWithText(
+                fixture.designDateLabel("boardgame", "EEE, d MMMM") + " · 19:00",
+                useUnmergedTree = true,
+            )
                 .performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("meetings-list").performScrollToNode(
+                hasText(fixture.designDateLabel("untimed", "EEE, d MMMM") + " · время уточняем"),
+            )
             val label = compose.onNodeWithText(
-                "Вс, 8 ноября · время уточняем",
+                fixture.designDateLabel("untimed", "EEE, d MMMM") + " · время уточняем",
                 useUnmergedTree = true,
             )
             label.performScrollTo().assertIsDisplayed()
@@ -193,7 +203,9 @@ class TelegramChatUiTests {
         fixture.launch("design").use {
             openChat()
             compose.onNodeWithTag("meeting-header-subtitle", useUnmergedTree = true)
-                .assertTextContains("Суббота, 31 октября · 6 участников")
+                .assertTextContains(
+                    fixture.designDateLabel("boardgame", "EEEE, d MMMM") + " · 6 участников",
+                )
             val heading = compose.onNodeWithTag("meeting-heading")
             heading.assertHeightIsAtLeast(DesignTokens.targetAndroid).performClick()
             fixture.waitTag("meeting-information")

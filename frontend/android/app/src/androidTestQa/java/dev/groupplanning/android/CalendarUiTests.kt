@@ -10,7 +10,6 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -25,6 +24,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.test.platform.app.InstrumentationRegistry
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -37,9 +37,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class CalendarUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() {
@@ -87,7 +89,16 @@ class CalendarUiTests {
             assertTrue(undated.fetchSemanticsNode().boundsInRoot.bottom < navigation.top)
             undated.performClick()
             fixture.waitText("Поход")
-            compose.onNodeWithText("Поход").assertIsDisplayed()
+            try {
+                compose.onNodeWithText("Поход").performScrollTo().assertIsDisplayed()
+            } catch (failure: AssertionError) {
+                screenshot("calendar-android-undated-failure")
+                val bounds = compose.onNodeWithText("Поход").fetchSemanticsNode().boundsInRoot
+                val viewport = compose.onNodeWithTag("meetings-list")
+                    .fetchSemanticsNode().boundsInRoot
+                println("SOMEWHERE_UNDATED_BOUNDS=$bounds VIEWPORT=$viewport")
+                throw failure
+            }
             screenshot("calendar-android-undated")
         }
     }

@@ -1,0 +1,39 @@
+
+Running 2 tests using 1 worker
+
+(node:43086) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › ../../../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:6:31 › controlled HTTP 100 foreign101 ownACK102 width1440 (6.5s)
+(node:43128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › ../../../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:6:31 › controlled HTTP 100 foreign101 ownACK102 width390 (3.3s)
+
+
+  1) [chromium] › ../../../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:6:31 › controlled HTTP 100 foreign101 ownACK102 width1440 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('feed-message').filter({ hasText: 'own102' })
+    Expected: "accepted"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('feed-message').filter({ hasText: 'own102' }) with timeout 5000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'own102' })
+
+
+      11 |  const network=[],gates=[];let release;const ready=new Promise(r=>release=r);let stage=0,armed=false,bootstrapAfterComplete=0;
+      12 |  await page.route(`**/api/v1/meetings/${id}/feed?*`,async(route)=>{const query=new URL(route.request().url()).searchParams,after=query.get('after_sequence');network.push({method:'GET',after,before:query.get('before_sequence'),stage});if(after&&!armed){const r=await route.fetch();await route.fulfill({response:r});bootstrapAfterComplete++;return;}if(after){gates.push(after);await ready;const response=await route.fetch(),body=await response.json();if(stage===1&&after==='100'){body.entries=body.entries.filter(e=>e.sequence==='101');body.has_more=true;stage=2;}await route.fulfill({response,json:body});}else await route.continue();});
+    > 13 |  try{await page.clock.install({time:new Date()});await page.goto(`/meetings/${id}`);await expect(page.getByTestId('feed-message').filter({hasText:'baseline100'})).toBeVisible();await expect.poll(()=>bootstrapAfterComplete).toBeGreaterThan(0);await page.clock.runFor(100);await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));armed=true;expect(gates).toEqual([]);const foreign=await post(friendContext.request,id,friendHeaders,'foreign101');expect(foreign.sequence).toBe('101');await page.getByLabel('Сообщение',{exact:true}).fill('own102');const ack=page.waitForResponse(r=>r.url().endsWith(`/meetings/${id}/messages`)&&r.request().method()==='POST');await page.clock.runFor(50);await page.getByLabel('Сообщение',{exact:true}).press('Enter');await page.clock.runFor(250);const ackEntry=await(await ack).json();expect(ackEntry.sequence).toBe('102');const own=page.getByTestId('feed-message').filter({hasText:'own102'});await expect(own).toHaveAttribute('data-delivery','accepted');await expect(own).toHaveCount(1);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toHaveCount(0);await page.clock.runFor(13000);await expect.poll(()=>gates.length).toBeGreaterThan(0);expect(gates.every(x=>x==='100')).toBe(true);await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-ack-before-get.png`});const beforeRelease=[...gates];stage=1;release();await expect.poll(()=>network.some(x=>x.after==='102')).toBe(true);await page.clock.runFor(250);await expect(page.getByTestId('feed-message').filter({hasText:'foreign101'})).toBeVisible();await expect(own).toHaveCount(1);await expect.poll(()=>network.some(x=>x.after==='101')).toBe(true);const text=await page.getByTestId('feed-message').allTextContents();expect(text.findIndex(x=>x.includes('foreign101'))).toBeLessThan(text.findIndex(x=>x.includes('own102')));await page.screenshot({path:`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-merged.png`});await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network.json`,JSON.stringify({width,meetingId:id,bootstrapAfterComplete,realServerSequences:{initial:'100',foreign:foreign.sequence,ack:ackEntry.sequence},delivery:'accepted once',nextRequestBeforeRelease:beforeRelease,network},null,2));}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ^
+      14 |  finally{await fs.writeFile(`/tmp/somewhere-web-sdd-independent/final/cursor-evidence/${width}-network-partial.json`,JSON.stringify({width,meetingId:id,gates,network,stage,bootstrapAfterComplete},null,2));release();await page.unrouteAll({behavior:'ignoreErrors'}).catch(()=>{});await friendContext.close();}
+      15 | });
+      16 |
+        at /private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:13:949
+
+    Error Context: ../../../../../../tmp/somewhere-web-sdd-independent/final/cursor-output/cursor-controlled-HTTP-100-foreign101-ownACK102-width1440-chromium/error-context.md
+
+  1 failed
+    [chromium] › ../../../../../../private/tmp/somewhere-web-sdd-independent/final/cursor-tests/cursor.spec.mjs:6:31 › controlled HTTP 100 foreign101 ownACK102 width1440 
+  1 passed (10.6s)

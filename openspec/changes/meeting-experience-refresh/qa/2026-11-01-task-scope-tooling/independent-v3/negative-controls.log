@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: independent negative: review and complete manifests cannot use task-only ready
+ok 1 - independent negative: review and complete manifests cannot use task-only ready
+  ---
+  duration_ms: 36.856917
+  type: 'test'
+  ...
+# Subtest: independent negative: duplicate mapping cannot select the first narrower task
+ok 2 - independent negative: duplicate mapping cannot select the first narrower task
+  ---
+  duration_ms: 15.843333
+  type: 'test'
+  ...
+# Subtest: independent negative: task classified both mapped and exempt is rejected
+ok 3 - independent negative: task classified both mapped and exempt is rejected
+  ---
+  duration_ms: 14.378375
+  type: 'test'
+  ...
+# Subtest: independent negative: required-suite failure cannot collide with unrelated check label
+ok 4 - independent negative: required-suite failure cannot collide with unrelated check label
+  ---
+  duration_ms: 32.191208
+  type: 'test'
+  ...
+# Subtest: independent control: genuine unrelated failed check does not make whole run ready
+ok 5 - independent control: genuine unrelated failed check does not make whole run ready
+  ---
+  duration_ms: 21.402083
+  type: 'test'
+  ...
+# Subtest: independent platform binding: both own plans pass while unrelated whole scope stays pending
+ok 6 - independent platform binding: both own plans pass while unrelated whole scope stays pending
+  ---
+  duration_ms: 52.381458
+  type: 'test'
+  ...
+# Subtest: independent platform binding: duplicate or undeclared platform cannot hide another binding
+ok 7 - independent platform binding: duplicate or undeclared platform cannot hide another binding
+  ---
+  duration_ms: 25.749041
+  type: 'test'
+  ...
+# Subtest: independent platform binding: wrong-platform plan and missing mapped case reject
+ok 8 - independent platform binding: wrong-platform plan and missing mapped case reject
+  ---
+  duration_ms: 22.360167
+  type: 'test'
+  ...
+# Subtest: independent platform binding: failed suite and mismatched run hash reject
+ok 9 - independent platform binding: failed suite and mismatched run hash reject
+  ---
+  duration_ms: 47.047458
+  type: 'test'
+  ...
+# Subtest: independent platform binding: fallback preserved and missing platform fallback rejects
+ok 10 - independent platform binding: fallback preserved and missing platform fallback rejects
+  ---
+  duration_ms: 46.377167
+  type: 'test'
+  ...
+# Subtest: independent platform binding: two required environments must both pass
+ok 11 - independent platform binding: two required environments must both pass
+  ---
+  duration_ms: 40.078083
+  type: 'test'
+  ...
+# Subtest: independent platform binding: full phase still requires original whole plans
+ok 12 - independent platform binding: full phase still requires original whole plans
+  ---
+  duration_ms: 33.061792
+  type: 'test'
+  ...
+# Subtest: independent CLI: multi-plan task scope works, explicit foreign/grouped plans and receipt reject
+ok 13 - independent CLI: multi-plan task scope works, explicit foreign/grouped plans and receipt reject
+  ---
+  duration_ms: 562.600542
+  type: 'test'
+  ...
+# Subtest: independent CLI: single-plan explicit binding accepted only when exact, global ready unchanged
+ok 14 - independent CLI: single-plan explicit binding accepted only when exact, global ready unchanged
+  ---
+  duration_ms: 506.173125
+  type: 'test'
+  ...
+# Subtest: independent scope: unrelated passed evidence/executor still validated
+ok 15 - independent scope: unrelated passed evidence/executor still validated
+  ---
+  duration_ms: 55.739208
+  type: 'test'
+  ...
+# Subtest: independent structural check: invalid platform disposition rejects before any checkbox closes
+ok 16 - independent structural check: invalid platform disposition rejects before any checkbox closes
+  ---
+  duration_ms: 68.575083
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1737.924708

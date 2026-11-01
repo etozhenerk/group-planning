@@ -1,0 +1,25 @@
+# Исправление web ZIP cancel-before-ACK · авторский checkpoint
+
+Подтверждён независимый defect: AbortController отменял POSTдоACK; browser не
+получалexportID, fakeunitpromise игнорировалAbortSignal, поэтому lateACKcleanup
+в тесте не отражал настоящий fetch. Серверныйreadyjob оставалсябезDELETE и
+следующая попытка получала429album_export_busy.
+
+Начатый POSTmetadata теперь ограничен15секундами отдельноотUIcancel. Поллинг,
+UIиnavigation прекращаютсясразу; ACKиспользуетсятолькодляDELETE. Новыйstart
+сериализованпослеcleanup. ЕслиACKпотерянсетевымотказом, явныйповторприcurrent
+lease восстанавливаеттолькостарыйkey, удаляетстарыйjob иначинаетfreshsnapshot
+сновымkey. FailedDELETEсохраняетсядляповтора. Послеlogout/leasechange новый
+prepareнеотправляется; latecleanupнепубликуетUIи не вызываетglobal401. Уже
+переданное браузерускачивание неотменяетсяпривыходеизэкрана.
+
+UI/макеты, API/backend, лимиты, источникиiOS/Android не менялись.
+Новые meaningful abort-aware/cleanup/recovery регрессии включенывштатныйVitest.
+ПриподменеТОЛЬКОcontrollerнастарыйsource теже18testsдают4FAIL/14PASS;
+новыйcandidate18/18PASS. Независимыйreviewerдобавилещё2сценариясменывладельца
+во времяcleanup/recovery, онипрошли отдельноивключенывregularsuite.
+Авторскийwebcheckдоихдобавления215/215PASS (type/lint/styles/architecture/format).
+
+Обязательнаяследующаяграница: freshindependentcontrolledHTTPиnativebrowser
+cancel/retry/ZIP, новыйformal5suiteназамороженных6files, task-scopedqa/design.
+Старыйlive429/rawи всеintermediateauthorchecksсохранены; productcheckboxневыставлен.

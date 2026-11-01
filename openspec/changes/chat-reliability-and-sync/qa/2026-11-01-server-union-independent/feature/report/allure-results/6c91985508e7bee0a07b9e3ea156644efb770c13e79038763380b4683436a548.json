@@ -1,0 +1,482 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "scope": "fresh current413 actual TLSHTTP handlers+service12cases;noUI/realOAuth/Telegram",
+  "startedAt": "2026-11-01T19:04:22.190928+00:00",
+  "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+  "checks": [
+    {
+      "caseId": "TC-API-PROFILE-PRIVACY",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Приватность контактов",
+        "scenario": "Просмотр участника",
+        "sha256": "cc16a90e6b4646d09b2dafab877193b680c053cc5a634dced038e4407e3e143d"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentPrivacy",
+          "TestIndependentProfileSynchronization/full_and_repeated_login"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Запросить /api/v1/me/profile от A с Cookie и Bearer; повторить анонимно.",
+          "expected": "A получает собственные данные по контракту, анонимный запрос отвергнут. Необязательные отсутствующие поля не дополняются демонстрационными значениями.",
+          "actual": "Собственный профиль прочитан по Cookie и после native PKCE/handoff exchange по Bearer: тела совпали; анонимно 401. Отдельный новый p9 возвращает null для всех отсутствующих необязательных полей.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "От B запросить встречу, список встреч, участников, ленту и реакции; от C — публичное приглашение.",
+          "expected": "Публичные пользователи содержат только ID, имя и аватар. login/first_name/last_name/birthday/sex/email/phone отсутствуют во всех чужих ответах. Публичное приглашение не раскрывает закрытый состав и медиа.",
+          "actual": "Второй текущий участник прочитал meeting/list/participants/feed/reactions. Рекурсивная проверка запретила login/first_name/last_name/birthday/sex/email/phone; чужое приглашение не содержит состав/медиа, приватная лента постороннему 403.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Проверить фактические ответы по OpenAPI и чтение прежним контрактным потребителем, игнорирующим новые необязательные поля.",
+          "expected": "Новые profile/summary/media поля совместимы; старые обязательные поля и версии существующих сообщений сохранены. Это не утверждение о запуске старого мобильного бинарника.",
+          "actual": "Фактические JSON-ответы прошли OpenAPI. Минимальный прежний потребитель прочитал ID/kind=message/payload_version=1/payload.text, игнорируя новые свойства; прежний мобильный бинарник не запускался.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-RSVP-CUTOFF",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md",
+        "requirement": "Отсечка присоединения за час",
+        "scenario": "Ровно за час",
+        "sha256": "0f14625a3e518ca18328a8e68a1cdc685f879184dc936f997bfc2e33fbb4f285"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentLegacyAndCutoff",
+          "TestIndependentUTCExactCutoff",
+          "TestIndependentConcurrentCutoffReschedule"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "На независимых встречах отправить новое «Приду» за 1 секунду до starts_at − 1h, ровно на границе и на секунду после неё.",
+          "expected": "До границы участие подтверждается, на/после границы отклоняется; расчёт по абсолютному времени одинаков для разных timezone.",
+          "actual": "На независимых TLS HTTP fixtures в UTC и Europe/Moscow запрос за секунду до starts_at−1h получил 200, ровно и после — 409; отвергнутый профиль не читает feed (403).",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "После границы повторить подтверждённый запрос текущего участника и попытаться вернуться ранее отказавшемуся.",
+          "expected": "Повтор не отнимает действующий доступ; возвращение считается новым вступлением и отклоняется.",
+          "actual": "Исходный подтверждённый ключ после границы снова дал CanAccessFeed=true; после not_going новая going-попытка вернула 409.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Отправить RSVP на встречу с датой без точного времени; перенести точное начало другой встречи и повторить попытку относительно нового начала.",
+          "expected": "Дата без времени не вводит часовой запрет; перенос пересчитывает границу, сохраняя прочие ограничения участия.",
+          "actual": "Встреча starts_on без времени допускает going вечером той же даты. PATCH точного начала пересчитал границу: прежний формат going принят после допустимого переноса.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Запустить конкурирующие RSVP/изменение времени с синхронизированными fixture-барьерами, затем прочитать сохранённый состав и закрытую ленту.",
+          "expected": "Нет подтверждённого вступления, нарушающего атомарную проверку; отвергнутому пользователю не раскрываются чат и закрытые фотографии.",
+          "actual": "Шесть пар RSVP/PATCH синхронно отпущены на HTTP-барьере. Сохранённые count/starts_at/revision и доступ feed проверены для обеих допустимых сериализаций; отвергнутому профилю также недоступен существующий photo URL в сценарии границы.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-RSVP-LEGACY",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/invitation-rsvp/spec.md",
+        "requirement": "Актуальность состояния приглашения",
+        "scenario": "Старый мобильный клиент",
+        "sha256": "bee3f0ba3c2b9a32aa003d489998633e0a0735233648c6e8cf0a4e605e743293"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentLegacyAndCutoff/legacy_retry_move_date_only"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Отправить прежний формат запроса после отсечки, используя ранее загруженное разрешение.",
+          "expected": "Сервер заново проверяет состояние и возвращает совместимую ошибку запрета, а не принимает устаревшее разрешение.",
+          "actual": "До границы GET invitation дал can_join=true. После смены управляемых часов прежний PUT {answer,expected_revision} получил 409, без новых UI-полей.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Прочитать приглашение и попробовать получить закрытую ленту/фотографии отвергнутой сессией.",
+          "expected": "Приглашение объясняет закрытие с причиной/временем по контракту; закрытые данные недоступны.",
+          "actual": "Повторный preview вернул can_join=false, join_disabled_reason=join_closed и точное join_closes_at; feed и photo/content отвергнутому профилю вернули 403.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Повторить прежний запрос после допустимого переноса начала.",
+          "expected": "Решение принимается по новой границе и текущим правам, без зависимости от наличия нового экрана клиента.",
+          "actual": "После PATCH starts_at тот же прежний формат запроса принят (200/CanAccessFeed=true), решение основано на текущем начале.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-PARTICIPANT-SUMMARY",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/personal-meetings/spec.md",
+        "requirement": "Содержательная карточка встречи",
+        "scenario": "Встреча с шестью участниками",
+        "sha256": "601f58619cceb25e939ab9505e306fd65c57177666b360f77ddb4608da5e47f0"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentParticipantSummary"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Получить список/календарь и представление встречи.",
+          "expected": "Ответ сразу содержит согласованное краткое публичное представление и точное количество текущих участников; для каждой карточки не требуется отдельный запрос состава.",
+          "actual": "Созданы шесть текущих (включая организатора), maybe и not_going. GET meeting/list/calendar-filter сразу содержит participant_count=6 и публичное participant_preview.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Снять «Приду» у участника из превью и снова запросить список/встречу.",
+          "expected": "Превью и количество отражают текущий состав, отказавшийся не остаётся в числе текущих.",
+          "actual": "Участник выбран именно из preview; его not_going принят. Повторные meeting/list/calendar-filter содержат count=5 и исключают этот ID из preview.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Проверить поля участника без аватара и публичное приглашение.",
+          "expected": "Аватар честно отсутствует; контакты не появились в превью. Публичный ответ не раскрывает закрытый состав.",
+          "actual": "Профиль p2 действительно имеет avatar_url=null; приватные поля отсутствуют. Public invitation не раскрывает participants/participant_preview/media/memory_preview.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-REACTION-IDEMPOTENCY",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+        "requirement": "Выбор и снятие своей реакции",
+        "scenario": "Повтор запроса",
+        "sha256": "e5923df1614169ea3c699e5b02e886ded95f9ecb3376fec47af2bda66ef03732"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentReactions"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Установить реакцию, потерять ответ после сохранения и повторить исходный запрос; затем параллельно повторить установку того же эмодзи тем же пользователем.",
+          "expected": "Пара пользователь/эмодзи учитывается один раз, подтверждённый счётчик не растёт от повторов.",
+          "actual": "После успешного HTTP commit тело первого ответа отброшено; исходный запрос повторён, затем восемь параллельных одинаковых PUT. Второй профиль прочитал heart count=1.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Добавить другой эмодзи тем же пользователем и тот же эмодзи вторым; снять первую собственную реакцию.",
+          "expected": "Разные эмодзи и пользователи учитываются отдельно; снятие уменьшает соответствующий счётчик на один.",
+          "actual": "Тот же участник добавил fire, организатор heart: counts 2/1. Удаление собственного heart дало 1/1, чужая реакция сохранена.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Проверить обычное сообщение с вложением и попытку использовать реакцию как голос/изменение системного события.",
+          "expected": "Вложение допускает реакцию; реакция не подменяет голоса и системные события.",
+          "actual": "Реакция на message с фото принята; попытка реакции на системное событие получила 404, событие не превращено в голос/сообщение.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Отозвать доступ и запросить/изменить реакции; проверить представление имён другим текущим участником.",
+          "expected": "Отозванная сессия не читает/не меняет реакции; контакты не возвращаются.",
+          "actual": "После not_going GET/PUT reactions вернули 403; представление реакций другому участнику не содержит контактов.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-MEDIA-LIMITS",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Надёжность загрузки",
+        "scenario": "Формат или размер недопустим",
+        "sha256": "0c9bb70e887743c6982df3c840fa0a1c3a42523872c82101f4ded4ba59c65598"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentMediaLimitsAndCleanup"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Получить media/limits и подготовить загрузки на допустимой границе и за ограничением размера/формата; повторить резервирование с тем же ключом.",
+          "expected": "Допустимый резерв один; несовместимый тип/размер отклонён согласно контракту, повтор не создаёт второй объект.",
+          "actual": "GET limits: фото 10 MiB, файл 20 MiB, выбор 10. Резерв на допустимой границе принят и тот же ключ возвращает идентичное тело; граница+1, GIF и нулевой размер отвергнуты 422.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Передать bytes, не соответствующие заявленному типу/размеру, и попробовать опубликовать объект без подтверждённой загрузки.",
+          "expected": "Сервер проверяет фактическое содержимое и не публикует неподтверждённый объект.",
+          "actual": "Publish без bytes вернул 409; фиктивный PNG и несовпадающий фактический размер вернули 422. Корректные bytes затем приняты.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Управляемыми часами сделать незавершённый резерв и неподтверждённые bytes просроченными, выполнить штатную очистку; сохранить другой завершённый файл.",
+          "expected": "Просроченные временные объекты удалены, подтверждённый файл доступен. Сроки и порядок берутся из утверждённого backend/docs/media.md, а не из ожидания реальных суток.",
+          "actual": "У собственных orphan bytes выставлена контролируемая давность >1h; PruneMedia удалил их. Через 24h удалены все незавершённые резервы и pending bytes; единственный опубликованный файл и его HTTP чтение сохранены.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Остановить только fixture временного файлового режима и проверить его каталог; запустить новый memory fixture.",
+          "expected": "Каталог штатно очищен; прежние memory-данные не обещаются после рестарта. Эта проверка не доказывает постоянное хранение PostgreSQL.",
+          "actual": "Close временного файлового адаптера удалил исключительно его каталог. Новый независимый memory fixture имеет пустой список встреч. Сохранность после рестарта PostgreSQL этим не заявляется.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-MEDIA-PUBLICATION",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Выбор и отправка вложений",
+        "scenario": "Потерян ответ публикации документа с подписью",
+        "sha256": "092a1970f8c3c3253086993150e310b65d965691277f372f5e2058b298635eba"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentMediaPublicationAndAlbum",
+          "TestIndependentPublicationReplayAndAccessMatrix"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Опубликовать документ с подписью, потерять ответ и повторить те же ключ/данные; прочитать ленту вторым участником.",
+          "expected": "Создано одно сообщение с тем же вложением и подписью; повтор возвращает прежний результат.",
+          "actual": "PDF опубликован с trim-подписью; ответ отброшен после commit. Исходный ключ/тело возвращают прежний результат; feed второму участнику содержит ровно одно сообщение с подписью.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Повторить с изменённой подписью при прежнем ключе, затем попытаться изменить подпись уже опубликованного документа новым ключом.",
+          "expected": "Изменение отклонено, опубликованные подпись и сообщение не переписаны.",
+          "actual": "Изменённая подпись со старым и с новым ключом получила 409. Перечитанный опубликованный payload сохранил исходную подпись.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Опубликовать фото сообщения и фото альбома; повторить успешные операции после частичного сбоя соседнего файла.",
+          "expected": "Ни сообщение, ни альбом не получают дубликатов; фото из чата не попадает в альбом автоматически. Фото не получает пользовательскую подпись.",
+          "actual": "Отдельные фото чата и альбома опубликованы, соседняя неверная загрузка получила 422/409. Повторы успешных публикаций сохраняют ID/entry, в альбоме ровно одно явно выбранное фото. Caption для фото получил 422.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Прочитать сообщение потребителем прежней схемы и текущим клиентом.",
+          "expected": "Сохраняются совместимые kind/version/текст и необязательное вложение; текущий ответ соответствует OpenAPI.",
+          "actual": "Прежний потребитель прочитал kind=message/version=1/text; PDF имеет текст подписи, фото — Фото. Все записанные актуальные JSON-ответы провалидированы OpenAPI.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-MEDIA-ACCESS",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-media/spec.md",
+        "requirement": "Закрытые медиа встречи",
+        "scenario": "Отказ от участия во время загрузки",
+        "sha256": "a80e6031b917a5e718cfceda456f6f69e14fd89616658d979ba740b7caa0fd73"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentPublicationReplayAndAccessMatrix",
+          "TestIndependentMediaRevocationBarrier"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Проверить оригинал, превью, metadata и альбом текущим участником, посторонним и анонимно; открыть публичное приглашение/обложку.",
+          "expected": "Данные доступны только текущему участнику. Публичные маршруты и пересланные URL не раскрывают bytes или metadata приватных файлов.",
+          "actual": "Текущие owner/guest прочитали file/photo originals, thumbnail URL, metadata в meeting/feed/album. Постороннему 403, анонимно 401. Публичная обложка и приглашение доступны, приватных ID в preview нет; перенос private URL под invitation route вернул 404. Thumbnail в текущем контракте использует защищённый original route.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Начать загрузку, отозвать участие на контролируемом барьере и завершить запись/публикацию.",
+          "expected": "Права повторно проверены; публикация отклонена, ложного успешного сообщения/элемента альбома нет.",
+          "actual": "Фактическая HTTP-загрузка остановлена на барьере MediaContent.Put. Через HTTP отозвано участие; после продолжения upload и publish вернули 403, metadata осталась pending.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Отозванной сессией повторить чтение ранее известного URL и публикацию с сохранённым ключом.",
+          "expected": "Прежний URL/ключ не обходит отзыв доступа. Лента и альбом текущего участника не содержат отвергнутую публикацию.",
+          "actual": "Отозванному профилю прежние read URL и сохранённые publish keys вернули 403. Текущий owner перечитал feed и past album: отвергнутого media ID нет.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-API-ALBUM-PAGINATION",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/meeting-memories/spec.md",
+        "requirement": "Общий альбом участников",
+        "scenario": "Фото добавляет обычный участник",
+        "sha256": "5642674b2ba76cf95d3cd0ac7330216f5f259cc1f01f8fd13acaff4ce25ea544"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentMediaPublicationAndAlbum",
+          "TestIndependentPublicationReplayAndAccessMatrix"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Перевести встречу в past существующим календарным правилом и прочитать альбом/представление встречи.",
+          "expected": "Фото не требуется для перехода в past; чат остаётся доступен, пустой альбом имеет честные count/preview.",
+          "actual": "Три независимые встречи переведены в past через ClaimTransition/CompleteTransition по управляемым календарным часам. Для пустой count=0/preview=[], chat доступен; наличие фото для перехода не требуется.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Обычным участником явно добавить фотографии в альбом и прочитать все страницы до конца.",
+          "expected": "Подтверждённые фото доступны всем текущим участникам; порядок устойчив, ни пропусков, ни повторов между страницами нет.",
+          "actual": "Обычный участник добавил четыре фото. Две страницы limit=2 дают четыре разных ID, конец без next_cursor; повтор страницы сохраняет порядок. Текущие owner/guest читают подтверждённые originals.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Проверить одно фото, полный альбом и курсор от другой встречи; прочитать summary списка.",
+          "expected": "Количество/превью соответствуют альбому; курсор не раскрывает чужую встречу. Фото чата не добавлено без явного действия.",
+          "actual": "Отдельная встреча с одним фото имеет count=1/preview=1; полный альбом count=4/preview=3 и summary списка согласованы. Cursor другой встречи получил 422. Фото чата не появилось в альбоме автоматически.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-PROFILE-4F3DAAFE",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Все права и полные данные",
+        "sha256": "0a877b0c47ed148b6d4653c54c6c116569dd8ff96235cd0588dcd8237cd13f50"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentProfileSynchronization/full_and_repeated_login"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Пройти тестовый OAuth/SDK обмен с полными выбранными полями provider; запросить собственный профиль по HTTP.",
+          "expected": "API возвращает ровно проверенные сервером значения, не доверяет полям клиента; отсутствующее не подменяет демонстрационным. Отображение всех клиентов принимается отдельно в TC-PROFILE-YANDEX-FIELDS.",
+          "actual": "Тестовый OAuth callback использовал настоящий Yandex JSON decoder с закрытым transport. Собственный HTTP профиль точно совпал с полным provider document; client first_name во входном запросе отвергнут 400, новый минимальный профиль не получил демонстрационных полей.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Повторить вход того же subject и проверить прежнюю сессию.",
+          "expected": "Идентификатор профиля тот же, известные данные обновлены; прежняя действующая сессия не отозвана только из-за нового входа.",
+          "actual": "Второй вход того же subject с новым именем сохранил ID; новый и прежний Cookie client читают обновлённое имя/first_name. Прежняя действующая сессия не отозвана.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-PROFILE-3E5EFE8D",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Неполная дата и неизвестный пол",
+        "sha256": "f35b77710a0124d7bc09ad0d68b50d698ab6c6c5e968c78b8aa13fecf359d5c3"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentProfileSynchronization/partial_birthday_unknown_sex"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Тестовым provider вернуть birthday=0000-12-23 и sex=null, выполнить обмен и GET собственного профиля.",
+          "expected": "API сохраняет неполноту даты и отсутствие пола без придуманного года, возраста или вывода пола по имени/аватару. Клиентские подписи проверяются TC-PROFILE-YANDEX-FIELDS.",
+          "actual": "Тестовый provider document содержит birthday=0000-12-23 и sex=null. После обмена HTTP profile сохранил строку 0000-12-23, sex/first_name=null, поля age нет. Год/пол/возраст не выведены из имени или аватара.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    },
+    {
+      "caseId": "TC-PROFILE-F319B092",
+      "currentSource": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Синхронизация данных Яндекс ID",
+        "scenario": "Явное очищение и частичные права",
+        "sha256": "da37fbbe2f238a0bd9a2fcceebc85b6f15967a6e025fe79cc4eb975ad2370fca"
+      },
+      "currentExecution": {
+        "startedAt": "2026-11-01T19:04:22.190928+00:00",
+        "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+        "selectors": [
+          "TestIndependentProfileSynchronization/explicit_clear_missing_permissions"
+        ],
+        "allFreshPassed": true
+      },
+      "methodReuse": "Only scenario/assertion text reused; current action/expected byte-equal, current selectors separately executed; old status/timestamps not copied",
+      "steps": [
+        {
+          "action": "Создать профиль с именем и датой, повторно войти с birthday=null при отсутствующем first_name.",
+          "expected": "Дата явно очищена, известное имя сохранено; отсутствующие необязательные поля не блокируют вход.",
+          "actual": "После полного входа повторный provider document содержит birthday:null, first_name пропущено. HTTP profile имеет тот же ID, birthday=null и сохранённое first_name.",
+          "currentAssertionResult": "verified in current selected PASS"
+        },
+        {
+          "action": "Повторить вход с полями контактов, отсутствующими из-за прав нового токена.",
+          "expected": "Известные контакты не затёрты; новые непредоставленные права не объявлены полученными.",
+          "actual": "Следующий вход с отсутствующими контактами сохраняет прежние email/phone и уже очищенную дату. Документ provider не объявляет новые scopes, API также не добавляет утверждений о полученных правах; старая сессия действует.",
+          "currentAssertionResult": "verified in current selected PASS"
+        }
+      ],
+      "cleanup": "httptest closed; own memory discarded; temporary file adapter cleanup assertions PASS"
+    }
+  ]
+}

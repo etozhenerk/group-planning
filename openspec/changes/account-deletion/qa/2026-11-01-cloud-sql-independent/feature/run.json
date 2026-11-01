@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "planHash": "00c0bfea1614970426eddd60c638f1fe02b378ba72ed47db116bdcffce2df1e0",
+  "checks": [
+    {
+      "id": "TC-ACCOUNT-1C58ABFB/cloud-sql-isolated/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "sdd-server-independent-sql"
+      },
+      "startedAt": "2026-11-01T13:48:53Z",
+      "finishedAt": "2026-11-01T13:58:24.906652Z",
+      "actual": "SQL rollback/commit и independent-pool persistence PASS в TestAccountDeletionAtomicityAndPersistence; stock fixture не выполняет ошибку во второй встрече полного coordinator и не проверяет все исходные состояния этого полного catalog expected. Task2.5 SQL criterion принят отдельно; full lifecycle case не объявлен passed.",
+      "defect": "Неполное покрытие полного catalog case данным узким SQL qualification; runtime defect не заявлен.",
+      "evidence": [
+        {
+          "path": "evidence/cloud-full.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        }
+      ]
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/cloud-sql-isolated/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "sdd-server-independent-sql"
+      },
+      "startedAt": "2026-11-01T13:48:53Z",
+      "finishedAt": "2026-11-01T13:58:24.906652Z",
+      "actual": "SQL page/around/highuint64/clone/rollback/cancel и bounded EXPLAIN1k/10k/100k PASS. Не выполнен отдельный полный HTTP/access/limit0/101/cursor sweep и p95 страницы по всем expected; read-state p95 не подменяет p95 этого case.",
+      "defect": "Неполное покрытие полного catalog case данным узким SQL qualification; runtime defect не заявлен.",
+      "evidence": [
+        {
+          "path": "evidence/cloud-full.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-11-01T13:49:53.097Z",
+      "finishedAt": "2026-11-01T13:50:06.352Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793540993098.txt",
+          "kind": "log",
+          "sha256": "e4fb740a8ce0b5db314fa037bc299016f19810efc81318fff4a502e7d7b256ff"
+        }
+      ]
+    }
+  ]
+}

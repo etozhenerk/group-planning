@@ -1,8 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
-import { dirname } from 'node:path';
 import { safePath, readJson } from '../design/files.mjs';
 import { validate } from './schema.mjs';
-import { inspectRun } from './results.mjs';
+import { inspectTasks, validateTaskMappings } from './task-scope.mjs';
 
 export const checkManifests = async (root, config) => {
   const declared = new Set([...config.legacyChanges, ...config.nonProductChanges]);
@@ -16,22 +15,12 @@ export const checkManifests = async (root, config) => {
     const mapped = [...manifest.tasks, ...manifest.exemptTasks].map((t) => t.id);
     if (new Set(mapped).size !== mapped.length || mapped.some((id) => !states.has(id))) throw new Error(`Unknown/duplicate task in ${path}`);
     if ([...states.keys()].some((id) => !mapped.includes(id))) throw new Error(`Unclassified task in ${path}`);
+    await validateTaskMappings(root, manifest, manifest.tasks.map((t) => t.id));
     const complete = manifest.phase === 'complete' || manifest.tasks.some((t) => states.get(t.id));
     if (complete || manifest.phase === 'review') {
-      const planPath = await safePath(root, manifest.plan);
-      const runPath = await safePath(root, manifest.run);
-      const plan = await readJson(planPath);
-      if (plan.purpose !== 'feature') throw new Error('Task acceptance requires feature plan');
-      for (const task of manifest.tasks.filter((t) => states.get(t.id) || ['review', 'complete'].includes(manifest.phase))) {
-        if (task.cases.some((id) => !plan.selectedCases.includes(id)) || task.platforms.some((p) => !plan.environments.some((e) => e.platform === p)))
-          throw new Error(`Incomplete task acceptance scope: ${task.id}`);
-        for (const id of task.cases) for (const platform of task.platforms) {
-          const envs = plan.environments.filter((e) => e.platform === platform);
-          if (!envs.some((env) => plan.expected.some((e) => e.caseId === id && e.environment === env.id)))
-            throw new Error(`Missing task case/platform: ${task.id}/${id}/${platform}`);
-        }
-      }
-      await inspectRun(root, plan, await readJson(runPath), dirname(runPath), { ready: true });
+      const full = ['review', 'complete'].includes(manifest.phase);
+      const ids = manifest.tasks.filter((t) => full || states.get(t.id)).map((t) => t.id);
+      await inspectTasks(root, manifest, ids, { full });
     }
   }
   const changes = await readdir(await safePath(root, 'openspec/changes'), { withFileTypes: true });

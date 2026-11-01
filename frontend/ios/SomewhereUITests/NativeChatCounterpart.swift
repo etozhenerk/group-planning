@@ -41,9 +41,11 @@ final class NativeChatCounterpart {
     func join() async throws {
         let invitation = Data("0000000000009501".utf8).base64EncodedString()
             .replacingOccurrences(of: "=", with: "")
+        let preview = try await request("invitations/" + invitation)
+        let revision = try XCTUnwrap(preview["my_rsvp_revision"] as? String)
         let result = try await request(
             "invitations/" + invitation + "/rsvp", method: "PUT",
-            body: ["answer": "going", "expected_revision": "0"])
+            body: ["answer": "going", "expected_revision": revision])
         joinedRevision = try XCTUnwrap(result["rsvp_revision"] as? String)
     }
 

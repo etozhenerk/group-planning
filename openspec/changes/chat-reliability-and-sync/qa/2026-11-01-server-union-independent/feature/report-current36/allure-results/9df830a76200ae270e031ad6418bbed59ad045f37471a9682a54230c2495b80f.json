@@ -1,0 +1,552 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "startedAt": "2026-11-01T19:04:22.190928+00:00",
+  "finishedAt": "2026-11-01T19:26:41.134192+00:00",
+  "scope": "Fresh current413 backend actions + explicit differential SQL/client legacy qualification, not all-platform",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md",
+        "requirement": "Ограниченная загрузка и отображение истории",
+        "scenario": "Границы страницы и пустой хвост",
+        "sha256": "7a283a8e0b6066f72508b56c7cf3a9d598191a7e8a76cf1ea8b135ccbde966e8"
+      },
+      "freshSelectors": [
+        "TestFeedWindowBoundsLookupsAndCopies",
+        "TestFeedAroundBoundsAndCopies",
+        "TestIndependentReadSparseUint64MessageBoundary"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestFeedWindowIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration",
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestIndependentRepeatFeedSQLLatencyIntegration",
+        "TestMeetingDeletionLargeHistoryIntegration"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Запросить initial, after=0/tail, before first/tail и around существующей записи; проверить limit+1 и order.",
+          "expected": "Ближайшие страницы без дыр/дублей, ASC результат, правильные направления has_more; пустой after пуст, tail согласован с snapshot.",
+          "actual": "Fresh current memory1k/10k/100k×limits1/50/100×6directions; exactsequence/order/hasMore/tail/around/copy controls; currentHTTP boundary supplement PASS."
+        },
+        {
+          "action": "Проверить значения выше 2^53, uint64 max/overflow, limit 0/101, несовместимые cursors, missing around, cancel и чужой доступ.",
+          "expected": "Точность decimal сохранена; некорректное отклонено, cancellation завершает чтение, права проверены до приватных данных.",
+          "actual": "Fresh HTTP/memoryuint64/max/overflow/missingaround/limit/combinedcursor/cancel/access-before-data assertions PASS."
+        },
+        {
+          "action": "Изменить возвращённую memory-копию, сделать rollback; выполнить SQL EXPLAIN и trace ограниченного чтения.",
+          "expected": "Store не изменён копией/rollback. Нет полного чтения/декодирования JSON ради страницы, есть индекс/LIMIT; p95 страницы≤100мс в записанном окружении.",
+          "actual": "DifferentialSQL: byte-identical stock384028 and retry540528 compile from413. Original ownDB21EXPLAIN boundedfeed/index and54×20pages p95 .304–2.794ms, copy/snapshot/rollbackPASS. These are earlier Nov1 measurements, not after-plan SQL reruns."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadSparseUint64MessageBoundary",
+          "at": "2026-11-01T22:04:33.052104+03:00",
+          "output": "independent_read_boundary_test.go:74: service actual=18446744073709551615 preserved; >2^53 valid lower retry no-op; gaps/system/zero denied; baseline alone not used for receipts"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-791FF479",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Аутентифицированные защищённые соединения",
+        "scenario": "Подписка с чужого сайта или на чужую встречу",
+        "sha256": "3ec58333d9d6fc9b5a14437d27a04df2ae6cb84ac5b8be269ed2ad3b697934c4"
+      },
+      "freshSelectors": [
+        "TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing",
+        "TestRealtimeHTTPAuthenticationBoundary",
+        "TestRealtimeSocketAuthorizationPrivacyRecoveryAndLogout",
+        "TestChatReadHTTP"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Подключиться с чужого Origin, подставленным user_id или подписаться X на M.",
+          "expected": "Соединение/подписка отклонены без payload; session identity определяется сервером.",
+          "actual": "Fresh malicious Origin/ambiguous auth/forged user and unauthorized meeting subscriptions rejected; actual identity comes from server session."
+        },
+        {
+          "action": "Выполнить допустимые web cookie/native credentials connect и HTTP CSRF mutation.",
+          "expected": "Разрешённая аутентификация работает; WS не отменяет CSRF HTTP-команд, credentials отсутствуют в URL/логах.",
+          "actual": "Fresh cookie+native connect and socket security assertions pass; HTTP CSRF remains enforced, query credential rejected400 and safe logs contain no tokens/text."
+        }
+      ],
+      "observedAssertions": [],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Аутентифицированные защищённые соединения",
+        "scenario": "Истечение сессии",
+        "sha256": "f2f339ebe5de07640bbbd2062e29dd9596db382a9da215ad0d544584238ca795"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatSessionExpiryRevokeAndLateRequests"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Отозвать сессию, затем отдельно довести её до expiry.",
+          "expected": "Подписки/соединение закрыты; переаутентификация нужна, периодическая проверка не реже минуты и expiry не продлеваются автоматически.",
+          "actual": "Fresh realWS revoke and separately2second-session expiry close3503 within4s; lifetime not renewed."
+        },
+        {
+          "action": "Вернуть поздний hint/HTTP callback и попытаться переподключиться.",
+          "expected": "Авторизованные данные не выдаются и не восстанавливаются у клиента.",
+          "actual": "Late committed hint followed by sync/capabilities/reconnect401 cannot restore revoked session; body/log secret sentinel absent. Backend refusal is proved; no client-platform acceptance inferred."
+        }
+      ],
+      "observedAssertions": [],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-1DC708F2",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Актуальные права и минимальное уведомление",
+        "scenario": "Отзыв между уведомлением и загрузкой",
+        "sha256": "ee6b9177879a3af92533f8d2c5e1e8fc85079daff855edbb05c5b030c99ee255"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Отозвать доступ до выдачи HTTP payload; завершить ожидающий запрос.",
+          "expected": "Отказ по актуальным правам; hint не является разрешением. Клиент очищает приватное состояние M.",
+          "actual": "Fresh actual hint received, sync storage boundary paused, RSVP NotGoing committed, then delayed HTTP finishes403; WSunsubscribe2003."
+        },
+        {
+          "action": "Повторить read/history/send с прежним receipt и запоздалой callback.",
+          "expected": "Нет доступа, автоматической отправки или возврата удалённых данных.",
+          "actual": "Fresh subsequent feed/read/send403 and late recovery103 without private payload; server never treats prior hint/receipt as authority. Client cleanup is outside this backend-only task evidence."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatHintThenDelayedHTTPRevocation",
+          "at": "2026-11-01T22:04:40.170836+03:00",
+          "output": "repeat_transport_test.go:95: receivedhint→HTTP blocked before read snapshot→committed RSVP revoke→HTTP403; WSunsubscribe2003; read/feed/send403; late recovery103 without payload"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-6DD0CC09",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Актуальные права и минимальное уведомление",
+        "scenario": "Голосование в скрытом опросе",
+        "sha256": "6e884697c8e594f46bf81fd2d825221df360dd7a189ec051c469a7559834273d"
+      },
+      "freshSelectors": [
+        "TestIndependentFinalMixedUnreadHiddenPoll"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Проголосовать A и получить hints/journal projection/read state как B.",
+          "expected": "Чужой скрытый выбор не содержится в hint, sync или read state; payload выдаётся по существующим правилам.",
+          "actual": "Fresh hidden vote excluded from guest projection and reference-only journal/hints; exact unread2 from foreign messages, not vote/reaction/system."
+        },
+        {
+          "action": "Закрыть опрос и перечитать старую карточку.",
+          "expected": "После закрытия выдан только разрешённый итог; новые приватные данные не копируются в journal.",
+          "actual": "Actual poll-close operation updates existing card; only allowed closed result exposed, raw journal/hints omit private text/name/token."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalMixedUnreadHiddenPoll",
+          "at": "2026-11-01T22:04:30.206048+03:00",
+          "output": "final_read_service_test.go:33: mixed backend: hidden vote absent from guest projection; close updated existing card and released result; two foreign messages only unread2→1→0 despite own/system/poll/reaction; journal+hints contain no text/name/invitation token"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A91C53BB",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Честная модель шифрования",
+        "scenario": "Защита backup не проверена",
+        "sha256": "833886ee7695c85c9928169b389faea9d280b7dbcee4c5fd09c0c2c76ecf0fc5"
+      },
+      "freshSelectors": [],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Сопоставить заявленную защиту с доступными доказательствами, не выполняя production операций.",
+          "expected": "Неподтверждённая защита backup остаётся явно непроверенной; отсутствие evidence не превращается в pass.",
+          "actual": "Current security.md explicitly states server-readable text/no implementedE2EE, disk/key-lifecycle unconfirmed; unsupported historical backup claims remain historical, not converted to current proof. This is a negative honesty check, not acceptance of backup/encryption/restore."
+        }
+      ],
+      "observedAssertions": [],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-BDBF283F",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Минимизация сохранённых приватных данных",
+        "scenario": "Диагностика сбоя",
+        "sha256": "6267df21f29ef4880949cf5f540ca7d357348ce63c7d8c2eecf8c2c128c76c03"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatFaultDiagnosticsCapture",
+        "TestIndependentRepeatRejectedCredentialsNeverInURL"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Создать timeout/reconnect/reset и ошибку storage/sync; проверить diagnostics, URL, journal и outbox.",
+          "expected": "Содержимое сообщений и credentials отсутствуют; сохранены безопасные IDs/метрики для расследования.",
+          "actual": "Fresh actual timeout/reconnect/410reset/storage-read500/panic500/storage-write500; secret body/error/token/cursor absent from captured HTTP logs/error envelopes/journal/outbox. Safe request_id/status/duration retained; tokenURL400 not logged."
+        },
+        {
+          "action": "Для native проверить защищённое outbox/key storage; для web отказ quota и заявленные ограничения IndexedDB.",
+          "expected": "Используется системная защита native; web не обещает защиты от XSS и не отправляет несохранённый intent.",
+          "actual": "Backend environment does not implement native system keystore or browser quota; these conditional native/web actions require respective platform acceptance and are not claimed here. Server log/journal privacy criterion only."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatRejectedCredentialsNeverInURL",
+          "at": "2026-11-01T22:04:38.129525+03:00",
+          "output": "repeat_recovery_test.go:49: credential query rejected400; URL/query not logged"
+        },
+        {
+          "test": "TestIndependentRepeatFaultDiagnosticsCapture",
+          "at": "2026-11-01T22:04:40.217765+03:00",
+          "output": "repeat_transport_test.go:109: captured timeout/reconnect/reset/storage-read500/panic500/storage-write500; body/errors/tokens/cursor absent from HTTP logs and error envelopes; journal/outbox reference-only, request_id+status+duration retained; no credential URL used"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-A3B3BFE7",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Минимизация сохранённых приватных данных",
+        "scenario": "Удаление данных аккаунта",
+        "sha256": "3a7d431c78bae62951bf1364542bf633c4c191f73fab7a38f17374e38d1a7d89"
+      },
+      "freshSelectors": [
+        "TestIndependentReadHTTPBoundaryAndLifecycle"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatAccountOutboxIntegration"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Удалить C штатной операцией и выполнить replay/snapshot старого диапазона.",
+          "expected": "Markers/адресные outbox-данные C удалены, история обезличена; journal возвращает текущую projection без прежнего имени.",
+          "actual": "Fresh current memory account replay returns current anonymized names; byte-identical previously executed stock PostgreSQL account/read atomicity+outbox test and realHTTP SQL multi-process probe qualify storage without rerun."
+        },
+        {
+          "action": "Удалить M с активными подписками и перезапустить dispatcher.",
+          "expected": "History/markers/stream удалены; terminal личная invalidation не уничтожена FK cascade и доставляется без приватного текста.",
+          "actual": "Original14:14:42–14:15:01Z cloud process probe removes meeting under active subscription, restarts own dispatcher, observes durable terminal personal invalidation without private text; oldDBcleanup/produnchanged evidence retained. Current compiled realtim e binary SHA1a780 is identical."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadHTTPBoundaryAndLifecycle",
+          "at": "2026-11-01T22:04:27.729519+03:00",
+          "output": "independent_read_http_test.go:154: HTTPS: marker 5 max/noop; unread2->1->0; 100 IDs accepted,101/mixed/duplicate rejected; rejoin unread98; deleted reader excluded on saved cursor"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-BC07BEB1",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Восстановление после разрыва и перезапуска",
+        "scenario": "Разрыв между снимком и подпиской",
+        "sha256": "087d124d4640914d79821e3fc74a8e6be59f625c6d28169aadecc3f481c4147f"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Между snapshot и subscribe commit создать запись B; подтвердить подписку без доставки hint.",
+          "expected": "Обязательный HTTP catch-up от snapshot cursor получает запись ровно один раз.",
+          "actual": "Fresh actual snapshot→commit→subscribe with nohint is followed by HTTP catch-up recovering precisely1ID."
+        },
+        {
+          "action": "Разорвать связь на управляемые 5 минут, добавить 100 изменений и восстановить, включая успешный SDK recovery.",
+          "expected": "HTTP catch-up выполняется даже после SDK recovery; все изменения применены. В записанном профиле RTT 150 мс восстановление не дольше 2 с; недоступный замер не объявляется pass.",
+          "actual": "Fresh controlled+300s offline and100changes, exhausted broker recovery: all100IDs once; explicitRTT150ms timed recovery≤2s; separate recovered=true with publications still followed by HTTP catch-up. Raw duration in current runtime."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatGapOfflineRecoveryRTT150",
+          "at": "2026-11-01T22:04:38.117912+03:00",
+          "output": "repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=621.525875ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-AA76CADB",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Восстановление после разрыва и перезапуска",
+        "scenario": "Сбой после commit до уведомления",
+        "sha256": "0878f8c98471b8d19ae10bf2ecfd20b99956e6bb191eb453d87cc8c29f94c3c5"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatGapOfflineRecoveryRTT150"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch",
+        "TestChatJournalAtomicRangeIntegration",
+        "TestChatDispatchLeaseRollbackRecoveryIntegration",
+        "TestChatDispatchElapsedRetryIntegration"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Commit сообщения вместе с change/outbox; остановить dispatcher до publish, затем перезапустить API/dispatcher на SQL.",
+          "expected": "Сообщение, change и недоставленный outbox сохранены; drain публикует hint без нового сообщения.",
+          "actual": "Original realSQL parent/child processes crashbeforepublish and restart; message/change/outbox survive and drain withoutnewmessage. Current413 realtime binary SHA1a780 and production archives identical; original timestamps retained."
+        },
+        {
+          "action": "Повторить crash после publish до отметки и потерю NOTIFY; затем rollback предметной транзакции.",
+          "expected": "Повтор hint безопасен; периодический drain восстанавливает доставку, rollback не оставляет ни запись, ни change/outbox.",
+          "actual": "Same originalSQL executes crashafterpublish/claim expiry and noNOTIFY periodicdrain; stockSQL journal rollback/lease/retry assertions PASS. Fresh memory dispatcher crash/elapsedretry/stalelease assertions PASS."
+        },
+        {
+          "action": "Ограничить очередь медленного клиента и исчерпать recovery retention.",
+          "expected": "Потребитель отключается восстановимо; недоставленный outbox не теряется молча, HTTP catch-up/reset сохраняет доступные изменения.",
+          "actual": "Fresh actual recoveryretention expiry and bounded slowclient test; oldcurrentSQLoutbox survives failedpublish. Recovery uses HTTPsync/reset, not brokerhint as data authority."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatGapOfflineRecoveryRTT150",
+          "at": "2026-11-01T22:04:38.117912+03:00",
+          "output": "repeat_recovery_test.go:45: snapshot-subscribe gap recovered one ID; controlled offline300s + broker history expiration;100 IDs exactly once; RTT150ms recovery=621.525875ms≤2s; separate recovered=true publications=1 still followed by HTTP catch-up"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-F6CFB5E9",
+      "status": "blocked",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Восстановление после разрыва и перезапуска",
+        "scenario": "Курсор вышел за срок восстановления",
+        "sha256": "6b191ed122fcaea296b445f1e7d3ed95249be1ba1340b69d9ddcf65272a4f7eb"
+      },
+      "freshSelectors": [
+        "TestChatSyncHTTP",
+        "TestChatRetentionResetAndOutboxReplacement",
+        "TestChatSyncScopeExpiryAndHiddenProjection"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Обрезать journal или сменить epoch; запросить прежний cursor.",
+          "expected": "410 sync_reset_required, не пустая успешная страница. Некорректный cursor даёт 400; 401/403/404 не создают бесконечного retry.",
+          "actual": "Fresh current servercursor expiry/epoch/reset410 vs malformed400 and auth401/403; current20client rules handle authorized410snapshot and discard stale generations/projections."
+        },
+        {
+          "action": "Выполнить разрешённый новый snapshot и повторить запоздалый ответ прежнего epoch.",
+          "expected": "Окно пересверено, допустимые outbox/anchor сохранены; старый ответ отброшен.",
+          "actual": "GAP: current20owner rules do not exercise persisted pending outbox+viewport anchor together through epoch reset. Server window/snapshot and stale response controls PASS; whole step not yet accepted."
+        }
+      ],
+      "observedAssertions": [],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-14D92D7D",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Подтверждение сохранения и повтор",
+        "scenario": "Таймаут после сохранения",
+        "sha256": "83bb5057e8e243ba7db86ddf9cfaff0f34d8308ae3d272243ce5b3a08cb1d983"
+      },
+      "freshSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+        "TestFeedAndTextRetryNeverReadFullHistory"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Commit без выдачи ACK, затем повторить прежний запрос после expiry receipt.",
+          "expected": "Возвращаются прежние ID/sequence/тело; client state uncertain не утверждает отсутствия записи.",
+          "actual": "Fresh actualHTTP lostACK/retry and current memory directtuple media/text controls retain originalID/sequence/body after31day expiry; fullFeed-trap rejects unbounded read."
+        },
+        {
+          "action": "Подставить ACK другого автора/встречи/intent и повтор с изменённым телом.",
+          "expected": "Чужой ACK не завершает свой intent; сервер отклоняет конфликт, новая запись не создаётся.",
+          "actual": "Fresh actor/meeting/clientintent mismatch and changedtext/caption conflicts rejected; no duplicateentry or foreignACK completion. Backend task criterion only; no client uncertain-state UI claim."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+          "at": "2026-11-01T22:04:27.229639+03:00",
+          "output": "final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Устойчивое намерение отправить",
+        "scenario": "Адресный повтор text и media после потерянного ответа",
+        "sha256": "a3263260d8d438bdcbfbcfe7059984f49a2ecca4946ae1bf76476f89bd2c4399"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+        "TestFeedAndTextRetryNeverReadFullHistory",
+        "TestMediaRetryNeverReadsFullHistory"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestFeedBoundedQueryPlansIntegration",
+        "TestFeedWindowSnapshotRollbackIntegration"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Отправить text и publish media, потерять ACK, повторить до и после expiry receipt.",
+          "expected": "Один исходный entry ID/sequence; direct lookup text tuple и media entry_id, полный Feed не вызывается. Media attachments и legacy captionless hash сохранены.",
+          "actual": "Fresh current actualService text/photo/file before/after31dayreceipt expiry: originalID/sequence/attachments, legacycaptionlesshash, fullFeedtrap."
+        },
+        {
+          "action": "Изменить text/caption, использовать чужого автора/встречу и отозвать доступ перед повтором.",
+          "expected": "Конфликты и отказ прав сохраняются; receipt не обходит access check, чужая запись не раскрывается.",
+          "actual": "Fresh changedtext/caption conflict, foreignactor/meeting/revokedaccess denied; directlookup never bypasses authorization."
+        },
+        {
+          "action": "Проверить memory clone/rollback и SQL индексированный lookup при 100k истории.",
+          "expected": "Возвращённая копия не меняет store; rollback атомарен; стоимость lookup не зависит от полной десериализации истории.",
+          "actual": "Fresh memoryclone/rollback controls plus byte-identical previously executed stock/retrySQLbinary:100kEXPLAIN entry/tupleindex1row, transaction rollback preservesstate. Original720Service retry timings remain original measurements."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+          "at": "2026-11-01T22:04:30.50126+03:00",
+          "output": "repeat_media_lookup_test.go:30: 10k bounded Store that rejects fullFeed: photo legacy/no-caption↔empty modern hash, file+caption, text direct tuple retries before/after31d preserve ID/sequence+attachment; wrongactor/meeting and revokedaccess denied; changedtext conflict; returned attachment clone independent"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Восстановление после разрыва и перезапуска",
+        "scenario": "Фиксированная граница страниц синхронизации",
+        "sha256": "0d21a0dbdf1bdb203e8c547e80967c4ad2b7c20da0cccf26de9b793d6330ff6c"
+      },
+      "freshSelectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Начать sync с through=T; во время получения страниц добавить T+1, повторить и переставить ответы.",
+          "expected": "Текущий цикл заканчивается на T; T+1 приходит следующим циклом; projection versions защищают от отката.",
+          "actual": "Fresh HTTP105changes→100/5 fixedT, commitT+1 excluded untilnextcycle; identical retry page/cursor. Current20client rules reject movingbarrier/nonadvancingpage and older projection."
+        },
+        {
+          "action": "Прервать merge/storage apply последней страницы и продолжить после восстановления.",
+          "expected": "Cursor не продвинут впереди данных; повтор безопасен, has_more исчерпывается, один sync в работе.",
+          "actual": "Fresh actual production client cache apply throws on lastpage; cursor/data remain precedingcommittedpage; nextload resumes cursor101. createChatUpdates20hints whileactive causes one subsequentcatchup;20/20PASS. No browserIndexedDB/mobileUI claim."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+          "at": "2026-11-01T22:04:27.229639+03:00",
+          "output": "final_read_http_test.go:70: HTTPS actions:105 changes→pages100/5; T+1 excluded until next cycle; discarded page replay identical cursor; expired receipt31d repeated HTTP ID/sequence unchanged; changed body409"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Жизненный цикл и совместимость транспорта",
+        "scenario": "Совместимость старого HTTP и выключенных возможностей",
+        "sha256": "1ce80805147974f243adc91d31c81325cf798d7bdd1fcc8fa24e366efcf45b31"
+      },
+      "freshSelectors": [
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Пройти feed/send/retry прежним клиентом на новом сервере и новым при capabilities404/disabled.",
+          "expected": "Старые DTO/права/ID сохранены, новый клиент использует единственный legacy HTTP путь; read UI отсутствует без поддержки.",
+          "actual": "Differentially qualified earlier Nov1 actual2Chromium controls on preserved253bundle artifact:404/disabled200 use solelegacyfeed/send/lostACKretry,1canonicalentry,0readUI/sync/ws. Current production HTTP archive equals tested baseline; fresh source413 OpenAPI567responses + current20fallback owner rules. Not a new browser run/current-web-wide acceptance."
+        },
+        {
+          "action": "Имитировать rollback на writer без journal и последующее включение с новым epoch.",
+          "expected": "Нужен новый snapshot/reset; изменения периода rollback не пропущены, история не удалена.",
+          "actual": "Original ownSQL nojournalwriter/new epoch probe:oldcursor410,new snapshot retains rollback-intervalmessage andhistory; current exactrealtimebinary1a780 matches. Fresh disabled→reenabled readbaseline preserved. No productionrollback."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadDisableReenablePreservesBaseline",
+          "at": "2026-11-01T22:04:30.379959+03:00",
+          "output": "independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    }
+  ]
+}

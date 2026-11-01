@@ -1,0 +1,61 @@
+{
+  "uuid": "79d229008ce831d4b3e2dbf2c11479c83a44f67acbf8c1f52220238f254fa3c0",
+  "historyId": "5fb6b58173e85e8bc186fcb831e7d8e1075f158558d4a00bbbfa825c8a8e7bc4",
+  "testCaseId": "TC-CHAT-PAGE-BOUNDS",
+  "fullName": "TC-CHAT-PAGE-BOUNDS/backend-isolated/manual",
+  "name": "Ограниченная загрузка и отображение истории: Границы страницы и пустой хвост",
+  "status": "passed",
+  "stage": "finished",
+  "statusDetails": {
+    "message": "Memory: свежая матрица1k/10k/100k × limit1/50/100 ×6 directions; точные последовательности/ASC/hasMore, anchor и alias guards. SQL: та же матрица с20samples/config и tail bounds; stock SQL отдельно проверяет gaps/hasMore/around. Stock memory sparse positions >2^53/uint64 max, invalid limits/incompatible cursors, overflow rollback и cancellation; HTTPS extra probe:400 для0/101/overflow/negative/incompatible,404 missing own around,403 foreign initial/after/around. Bounded Store spy требует access до private чтения. Stock memory clone/snapshot/rollback/transaction-close/cancel и SQL snapshot/rollback+index/LIMIT/EXPLAIN на1k/10k/100k. Свежая облачная матрица54config ×20samples: p95 0.253–2.246ms, бюджет100ms. Оценка включает transaction+SQL+JSON decode, не network E2E."
+  },
+  "start": 1793542370983,
+  "stop": 1793542789697,
+  "labels": [
+    {
+      "name": "suite",
+      "value": "backend-isolated"
+    },
+    {
+      "name": "tag",
+      "value": "manual"
+    }
+  ],
+  "attachments": [
+    {
+      "name": "interaction",
+      "source": "a94c1f5f570e59dc15bf6f52b2f77c5fb2428492300cc6994a40b403075991d8.json",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4.jsonl",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd.log",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212.log",
+      "type": "text/plain"
+    },
+    {
+      "name": "log",
+      "source": "19f8cf62d3f11d2e7b63abcf9a234315326c3567338c4c6a75c0097b4aa294a7.json",
+      "type": "text/plain"
+    }
+  ]
+}

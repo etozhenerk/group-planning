@@ -1,0 +1,110 @@
+{
+  "sourcePath": "openspec/changes/chat-reliability-and-sync/qa/2026-11-01-server-union-independent/feature/evidence/chat-remaining-interaction.json",
+  "sourceSHA256": "9df830a76200ae270e031ad6418bbed59ad045f37471a9682a54230c2495b80f",
+  "executionDatesRetained": true,
+  "newBackendExecutionClaimed": false,
+  "purpose": "Independent backend-only current413 API half; only current web actions after fresh e856 plans supply client acceptance. Earlier SQL is explicitly differential exact-production archive qualification, not a fresh SQL run.",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Аутентифицированные защищённые соединения",
+        "scenario": "Истечение сессии",
+        "sha256": "f2f339ebe5de07640bbbd2062e29dd9596db382a9da215ad0d544584238ca795"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatSessionExpiryRevokeAndLateRequests"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Отозвать сессию, затем отдельно довести её до expiry.",
+          "expected": "Подписки/соединение закрыты; переаутентификация нужна, периодическая проверка не реже минуты и expiry не продлеваются автоматически.",
+          "actual": "Fresh realWS revoke and separately2second-session expiry close3503 within4s; lifetime not renewed."
+        },
+        {
+          "action": "Вернуть поздний hint/HTTP callback и попытаться переподключиться.",
+          "expected": "Авторизованные данные не выдаются и не восстанавливаются у клиента.",
+          "actual": "Late committed hint followed by sync/capabilities/reconnect401 cannot restore revoked session; body/log secret sentinel absent. Backend refusal is proved; no client-platform acceptance inferred."
+        }
+      ],
+      "observedAssertions": [],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-1DC708F2",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+        "requirement": "Актуальные права и минимальное уведомление",
+        "scenario": "Отзыв между уведомлением и загрузкой",
+        "sha256": "ee6b9177879a3af92533f8d2c5e1e8fc85079daff855edbb05c5b030c99ee255"
+      },
+      "freshSelectors": [
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "qualifiedOriginalSQLSelectors": [],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Отозвать доступ до выдачи HTTP payload; завершить ожидающий запрос.",
+          "expected": "Отказ по актуальным правам; hint не является разрешением. Клиент очищает приватное состояние M.",
+          "actual": "Fresh actual hint received, sync storage boundary paused, RSVP NotGoing committed, then delayed HTTP finishes403; WSunsubscribe2003."
+        },
+        {
+          "action": "Повторить read/history/send с прежним receipt и запоздалой callback.",
+          "expected": "Нет доступа, автоматической отправки или возврата удалённых данных.",
+          "actual": "Fresh subsequent feed/read/send403 and late recovery103 without private payload; server never treats prior hint/receipt as authority. Client cleanup is outside this backend-only task evidence."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentRepeatHintThenDelayedHTTPRevocation",
+          "at": "2026-11-01T22:04:40.170836+03:00",
+          "output": "repeat_transport_test.go:95: receivedhint→HTTP blocked before read snapshot→committed RSVP revoke→HTTP403; WSunsubscribe2003; read/feed/send403; late recovery103 without payload"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    },
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "passed",
+      "currentSource": {
+        "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+        "requirement": "Жизненный цикл и совместимость транспорта",
+        "scenario": "Совместимость старого HTTP и выключенных возможностей",
+        "sha256": "1ce80805147974f243adc91d31c81325cf798d7bdd1fcc8fa24e366efcf45b31"
+      },
+      "freshSelectors": [
+        "TestIndependentReadDisableReenablePreservesBaseline"
+      ],
+      "qualifiedOriginalSQLSelectors": [
+        "TestIndependentRepeatSQLProcessRestartDeletionAndEpoch"
+      ],
+      "qualifiedSQLProvenance": "sql-differential-qualification.json; original timestamps/raw retained; never relabel current skips PASS",
+      "steps": [
+        {
+          "action": "Пройти feed/send/retry прежним клиентом на новом сервере и новым при capabilities404/disabled.",
+          "expected": "Старые DTO/права/ID сохранены, новый клиент использует единственный legacy HTTP путь; read UI отсутствует без поддержки.",
+          "actual": "Differentially qualified earlier Nov1 actual2Chromium controls on preserved253bundle artifact:404/disabled200 use solelegacyfeed/send/lostACKretry,1canonicalentry,0readUI/sync/ws. Current production HTTP archive equals tested baseline; fresh source413 OpenAPI567responses + current20fallback owner rules. Not a new browser run/current-web-wide acceptance."
+        },
+        {
+          "action": "Имитировать rollback на writer без journal и последующее включение с новым epoch.",
+          "expected": "Нужен новый snapshot/reset; изменения периода rollback не пропущены, история не удалена.",
+          "actual": "Original ownSQL nojournalwriter/new epoch probe:oldcursor410,new snapshot retains rollback-intervalmessage andhistory; current exactrealtimebinary1a780 matches. Fresh disabled→reenabled readbaseline preserved. No productionrollback."
+        }
+      ],
+      "observedAssertions": [
+        {
+          "test": "TestIndependentReadDisableReenablePreservesBaseline",
+          "at": "2026-11-01T22:04:30.379959+03:00",
+          "output": "independent_read_review_test.go:201: disabled endpoint denied; two reactivations preserve baseline/actual and disabled-period message remains unread"
+        }
+      ],
+      "cleanup": "Fresh own httptest/memory t.Cleanup; qualified original ownDB already dropped/remaining0; no new cloud action"
+    }
+  ]
+}

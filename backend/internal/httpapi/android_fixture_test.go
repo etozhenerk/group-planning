@@ -47,7 +47,7 @@ func TestAndroidFixture(t *testing.T) {
 	origin := "https://" + listener.Addr().String()
 	identities := memory.NewIdentity()
 	service, err := identity.New(identity.Config{
-		PublicOrigin: origin, SessionTTL: time.Hour,
+		PublicOrigin: origin, SessionTTL: 8 * time.Hour,
 		NativeCallbacks: map[string]string{"ios": "group-planning-ios://auth/callback", "android": "group-planning-android://auth/callback"},
 	}, identities, iosFixtureProvider{origin: origin}, time.Now, func(context.Context, string) (bool, error) { return false, nil })
 	if err != nil {
@@ -68,7 +68,7 @@ func TestAndroidFixture(t *testing.T) {
 		"eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee", "RUVFRUVFRUVFRUVFRUVFRQ", "После перезапуска",
 		"ffffffff-ffff-4fff-8fff-ffffffffffff", "12121212-1212-4212-8212-121212121212")
 	feed := &iosFeedFaults{keys: map[string]bool{}, ids: map[string]bool{}}
-	persistence := &iosFeedFaults{scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
+	persistence := &iosFeedFaults{rejectFirstBeforeCommit: true, scenario: "feed-persistence", keys: map[string]bool{}, ids: map[string]bool{}}
 	app, stream := chatFixture(t, store, service, "ANDROID")
 	seedNativeMemoryFixture(t, store, service, app, owner)
 	api := NewWithRealtime(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, testAccounts(store, identities, service, time.Now))
@@ -82,6 +82,7 @@ func TestAndroidFixture(t *testing.T) {
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
+	config.DesignDates = nativeDesignFixtureDates(t, store)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
 	}

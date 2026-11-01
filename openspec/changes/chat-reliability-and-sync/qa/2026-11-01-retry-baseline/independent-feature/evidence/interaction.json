@@ -1,0 +1,77 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "observedAt": "2026-11-01T18:09:44.019756+00:00",
+  "scope": "actual Go Store/Service + isolated PostgreSQL operations; quantitative supplement, no simulated UI/HTTP",
+  "actions": [
+    {
+      "case": "TC-CHAT-PAGE-BOUNDS",
+      "command": "go test -overlay ... -run TestIndependentMemoryPageQuantitativeBaseline;remote TestIndependentRepeatFeedSQLLatencyIntegration + TestFeedBoundedQueryPlansIntegration",
+      "performed": "memory+SQL1k/10k/100k;limits1/50/100;initial/after-zero/empty-after-tail/before-first/before-tail/around;20samples/config;actualbounds/order/anchor/tail andSQLindex/LIMIT checked",
+      "samples": 2160,
+      "result": {
+        "memory": {
+          "retryConfigurations": 18,
+          "actualRetries": 360,
+          "retryP95MinMs": 0.26,
+          "retryP95MaxMs": 13.606,
+          "pageConfigurations": 54,
+          "actualPageSamples": 1080,
+          "pageP95MinMs": 0.0,
+          "pageP95MaxMs": 0.046
+        },
+        "sql": {
+          "retryConfigurations": 18,
+          "actualRetries": 360,
+          "retryP95MinMs": 0.739,
+          "retryP95MaxMs": 2.617,
+          "pageConfigurations": 54,
+          "actualPageSamples": 1080,
+          "pageP95MinMs": 0.304,
+          "pageP95MaxMs": 2.794
+        },
+        "sqlPagePlanChecks": 21
+      }
+    },
+    {
+      "case": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "command": "go test -overlay ... -run TestSDDRetryQuantitativeMemory;remote TestSDDRetryQuantitativeSQL",
+      "performed": "create committed text+uploaded/photo/file;repeat real SendMessage/PublishMediaWithCaption20timesbefore/after31d;checkonefeedrow/lookupandidentity;18realEXPLAINJSON",
+      "samples": 720,
+      "result": {
+        "memory": {
+          "retryConfigurations": 18,
+          "actualRetries": 360,
+          "retryP95MinMs": 0.26,
+          "retryP95MaxMs": 13.606,
+          "pageConfigurations": 54,
+          "actualPageSamples": 1080,
+          "pageP95MinMs": 0.0,
+          "pageP95MaxMs": 0.046
+        },
+        "sql": {
+          "retryConfigurations": 18,
+          "actualRetries": 360,
+          "retryP95MinMs": 0.739,
+          "retryP95MaxMs": 2.617,
+          "pageConfigurations": 54,
+          "actualPageSamples": 1080,
+          "pageP95MinMs": 0.304,
+          "pageP95MaxMs": 2.794
+        },
+        "sqlRetryPlans": 18
+      }
+    }
+  ],
+  "priorFunctionalBoundaryEvidence": "prior-functional-case-results.json retains original independent execution timestamps on same unchanged412inputs; fresh requiredsuite after this plan",
+  "cleanup": {
+    "dropOwnDatabase": true,
+    "remaining0": true,
+    "sqlExit": 0,
+    "binaryRemoved": true
+  },
+  "source": {
+    "matched": 412,
+    "expected": 412,
+    "changed": []
+  }
+}

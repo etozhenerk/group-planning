@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import dev.groupplanning.android.qaCreateComposeRule as createComposeRule
 import dev.groupplanning.android.state.album.AlbumDownloadState
 import dev.groupplanning.android.ui.media.AlbumActions
 import dev.groupplanning.android.ui.theme.Palette
@@ -28,9 +28,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class AlbumActionLayoutTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createComposeRule()
+    @get:Rule(order = 1)
+    val compose = createComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Test fun narrowAndLargeTextKeepAdjacentEqualTargetsAndLoadingHeight() {

@@ -30,9 +30,10 @@ somewhere_remote="/data/local/tmp/somewhere-android-ui-$$.json"
 somewhere_fixture=
 somewhere_port=
 somewhere_evidence_ready=0
+somewhere_process_output=
 somewhere_private_evidence=0
 somewhere_ui_output="/sdcard/Android/data/dev.groupplanning.android.uitesthost/files/ui-$$"
-if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ]; then
+if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ]; then
     somewhere_private_evidence=1
     somewhere_ui_output="/data/user/0/dev.groupplanning.android.uitesthost/files/ui-$$"
 fi
@@ -40,6 +41,14 @@ cleanup() {
     somewhere_status=$?
     trap - EXIT
     mkdir -p "app/build/outputs/ui/$somewhere_scope-$$"
+    for somewhere_log in "$somewhere_temporary"/*.log; do
+        if [ -f "$somewhere_log" ]; then cp "$somewhere_log" "app/build/outputs/ui/$somewhere_scope-$$/"; fi
+    done
+    if [ -n "$somewhere_process_output" ]; then
+        mkdir -p "app/build/outputs/ui/$somewhere_scope-$$/process-death"
+        "$somewhere_adb" -s "$ANDROID_SERIAL" pull "$somewhere_process_output/." "app/build/outputs/ui/$somewhere_scope-$$/process-death/" >/dev/null 2>&1 || true
+        "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -rf "$somewhere_process_output" >/dev/null 2>&1 || true
+    fi
     if [ "$somewhere_private_evidence" = 1 ] && [ "$somewhere_evidence_ready" = 1 ]; then
         if "$somewhere_adb" -s "$ANDROID_SERIAL" exec-out run-as dev.groupplanning.android.uitesthost \
             tar -C "$somewhere_ui_output" -cf - . > "$somewhere_temporary/evidence.tar" &&
@@ -54,6 +63,7 @@ cleanup() {
         "$somewhere_adb" -s "$ANDROID_SERIAL" pull "$somewhere_ui_output/." "app/build/outputs/ui/$somewhere_scope-$$/" >/dev/null 2>&1 || true
         "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -rf "$somewhere_ui_output" >/dev/null 2>&1 || true
     fi
+    "$somewhere_adb" -s "$ANDROID_SERIAL" shell am force-stop dev.groupplanning.android.uitesthost >/dev/null 2>&1 || true
     "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -f "$somewhere_remote" >/dev/null 2>&1 || true
     if [ -n "$somewhere_port" ]; then
         "$somewhere_adb" -s "$ANDROID_SERIAL" reverse --remove "tcp:$somewhere_port" >/dev/null 2>&1 || true
@@ -64,6 +74,9 @@ cleanup() {
             cat "$somewhere_temporary/fixture.log" >&2
             somewhere_status=1
         fi
+    fi
+    if [ -f "$somewhere_temporary/fixture.log" ]; then
+        cp "$somewhere_temporary/fixture.log" "app/build/outputs/ui/$somewhere_scope-$$/"
     fi
     rm -rf "$somewhere_temporary"
     exit "$somewhere_status"
@@ -133,10 +146,14 @@ if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$som
 fi
 
 if [ "$somewhere_scope" = all ]; then
+    # 85 product tests plus 2 internal composition-thread regressions.
+    # Process-death persistence stages still run separately below.
+    somewhere_evidence_ready=1
     ./gradlew --no-daemon "--max-workers=${SOMEWHERE_GRADLE_WORKERS:-2}" -PsomewhereTestBuildType=qa \
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
         "-Pandroid.testInstrumentationRunnerArguments.additionalTestOutputDir=$somewhere_ui_output" \
-        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.AlbumDownloadUiTests,dev.groupplanning.android.AlbumActionLayoutTests,dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ComposerOutsideTapUiTests,dev.groupplanning.android.EmojiSearchUiTests,dev.groupplanning.android.ChatQueueUiTests,dev.groupplanning.android.ChatReadUiTests,dev.groupplanning.android.ChatReadLiveUiTests,dev.groupplanning.android.ProfileFieldsUiTests,dev.groupplanning.android.ComposerMenuLifecycleUiTests,dev.groupplanning.android.EmojiDockLifecycleUiTests,dev.groupplanning.android.ReactionFeedbackLifecycleUiTests,dev.groupplanning.android.ReactionPickerLifecycleUiTests,dev.groupplanning.android.ReactionPopupLifecycleUiTests,dev.groupplanning.android.MotionPreferenceUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        -Pandroid.testInstrumentationRunnerArguments.class=dev.groupplanning.android.QaCompositionThreadUiTests,dev.groupplanning.android.AlbumDownloadUiTests,dev.groupplanning.android.AlbumActionLayoutTests,dev.groupplanning.android.TelegramChatUiTests,dev.groupplanning.android.ComposerOutsideTapUiTests,dev.groupplanning.android.EmojiSearchUiTests,dev.groupplanning.android.ChatQueueUiTests,dev.groupplanning.android.ChatReadUiTests,dev.groupplanning.android.ChatReadLiveUiTests,dev.groupplanning.android.ProfileFieldsUiTests,dev.groupplanning.android.ComposerMenuLifecycleUiTests,dev.groupplanning.android.EmojiDockLifecycleUiTests,dev.groupplanning.android.ReactionFeedbackLifecycleUiTests,dev.groupplanning.android.ReactionPickerLifecycleUiTests,dev.groupplanning.android.ReactionPopupLifecycleUiTests,dev.groupplanning.android.MotionPreferenceUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.EntryUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.InvitationUiTests,dev.groupplanning.android.DesignVisualUiTests,dev.groupplanning.android.ChatActionSheetUiTests,dev.groupplanning.android.ChatActionRevocationUiTests,dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.FeedUiTests,dev.groupplanning.android.CalendarUiTests,dev.groupplanning.android.PlacePollUiTests,dev.groupplanning.android.PreparationTaskUiTests,dev.groupplanning.android.DatePollUiTests,dev.groupplanning.android.SavedInvitationsUiTests,dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests \
+        -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true \
         :app:connectedQaAndroidTest
 fi
 
@@ -159,6 +176,7 @@ if [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = media ] || [ "$somewh
         "-Pandroid.testInstrumentationRunnerArguments.fixturePath=$somewhere_remote" \
         "-Pandroid.testInstrumentationRunnerArguments.additionalTestOutputDir=$somewhere_ui_output" \
         "-Pandroid.testInstrumentationRunnerArguments.class=$somewhere_classes" \
+        -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true \
         :app:connectedQaAndroidTest
     exit 0
 fi
@@ -166,7 +184,8 @@ fi
 # Separate instrumentation processes prove disk restoration, not Activity recreation.
 ./gradlew --no-daemon "--max-workers=${SOMEWHERE_GRADLE_WORKERS:-2}" -PsomewhereTestBuildType=qa :app:installQa :app:installQaAndroidTest
 somewhere_package=dev.groupplanning.android.uitesthost
-somewhere_output=/sdcard/Android/data/$somewhere_package/files/process-death
+somewhere_output=/sdcard/Android/data/$somewhere_package/files/process-death-$$
+somewhere_process_output=$somewhere_output
 for somewhere_stage in prepareProcessDeath restoreAfterProcessDeath; do
     "$somewhere_adb" -s "$ANDROID_SERIAL" shell am instrument -w -r \
         -e fixturePath "$somewhere_remote" \
@@ -185,3 +204,4 @@ done
 mkdir -p app/build/outputs/process-death
 "$somewhere_adb" -s "$ANDROID_SERIAL" pull "$somewhere_output/." app/build/outputs/process-death/ >/dev/null
 "$somewhere_adb" -s "$ANDROID_SERIAL" shell rm -rf "$somewhere_output"
+somewhere_process_output=

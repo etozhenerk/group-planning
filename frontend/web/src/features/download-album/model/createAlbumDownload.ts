@@ -7,19 +7,13 @@ import {
 } from '@/features/download-album/api/albumExport';
 import { startAlbumNavigation } from '@/features/download-album/lib/startAlbumNavigation';
 import { waitForExportPoll } from '@/features/download-album/lib/waitForExportPoll';
+import type { AlbumOperation } from '@/features/download-album/model/albumOperation';
+import { createAlbumCleanup } from '@/features/download-album/model/createAlbumCleanup';
 import type {
   AlbumDownloadScope,
   AlbumDownloadState,
   AlbumExportAPI,
 } from '@/features/download-album/model/types';
-
-type Operation = {
-  key: string;
-  controller: AbortController;
-  id?: string;
-  handedOff?: boolean;
-  cleanup?: Promise<void>;
-};
 
 type Options = {
   api?: AlbumExportAPI;
@@ -37,28 +31,18 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
   const navigate = options.navigate ?? startAlbumNavigation;
   const listeners = new Set<() => void>();
   let state: AlbumDownloadState = { phase: 'idle' };
-  let operation: Operation | undefined;
+  let operation: AlbumOperation | undefined;
   let pending: Promise<void> | undefined;
   let stopped = false;
   const current = () => !stopped && !scope.signal.aborted && scope.current();
-  const owns = (value: Operation) =>
+  const owns = (value: AlbumOperation) =>
     current() && operation === value && !value.controller.signal.aborted;
+
+  const cleanup = createAlbumCleanup(scope, api, current);
 
   const publish = (value: AlbumDownloadState) => {
     state = value;
     listeners.forEach((listener) => listener());
-  };
-
-  const cleanup = async (value?: Operation) => {
-    if (!value?.id || value.handedOff) {
-      return;
-    }
-
-    // This request has its own timeout and never restores local state.
-    value.cleanup ??= api
-      .cancel(scope.meeting, value.id, scope.csrf)
-      .catch(() => undefined);
-    await value.cleanup;
   };
 
   const cancel = () => {
@@ -67,7 +51,7 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
     pending = undefined;
     previous?.controller.abort();
     publish({ phase: 'idle' });
-    void cleanup(previous);
+    cleanup.cancel(previous);
   };
 
   const dispose = () => {
@@ -94,16 +78,30 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
 
   scope.signal.addEventListener('abort', dispose, { once: true });
 
-  const run = async (value: Operation) => {
+  const fail = (value: AlbumOperation, cause: unknown) => {
+    if (owns(value)) {
+      publish({ phase: 'error', cause });
+
+      if (cause instanceof ApiError && [401, 403].includes(cause.status)) {
+        options.denied(cause);
+        dispose();
+      }
+    }
+  };
+
+  const run = async (value: AlbumOperation) => {
     try {
       const signal = value.controller.signal;
       const requestSignal = () => AbortSignal.any([signal, AbortSignal.timeout(15_000)]);
-      let result = await api.prepare(
+      // Keep the bounded POST acknowledgement for compensating DELETE, even
+      // after UI cancellation. Polls and browser hand-off still use owns().
+      value.preparation = api.prepare(
         scope.meeting,
         scope.csrf,
         value.key,
-        requestSignal(),
+        AbortSignal.timeout(15_000),
       );
+      let result = await value.preparation;
 
       value.id = result.id;
       const count = result.count;
@@ -146,18 +144,10 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
         dispose();
       }
 
-      void cleanup(value);
+      cleanup.discard(value);
     } catch (cause) {
-      if (owns(value)) {
-        publish({ phase: 'error', cause });
-
-        if (cause instanceof ApiError && [401, 403].includes(cause.status)) {
-          options.denied(cause);
-          dispose();
-        }
-      }
-
-      void cleanup(value);
+      fail(value, cause);
+      cleanup.discard(value);
     } finally {
       if (operation === value) {
         pending = undefined;
@@ -177,7 +167,7 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
     }
 
     const previous = operation;
-    const value: Operation = {
+    const value: AlbumOperation = {
       // Retry a lost POST with the same key; the server might already own its job.
       key:
         state.phase === 'error' && previous && !previous.id
@@ -189,10 +179,18 @@ export const createAlbumDownload = (scope: AlbumDownloadScope, options: Options)
     previous?.controller.abort();
     operation = value;
     const task = Promise.resolve().then(async () => {
-      await cleanup(previous);
+      try {
+        await cleanup.beforeStart(previous);
 
-      if (owns(value)) {
-        await run(value);
+        if (owns(value)) {
+          await run(value);
+        }
+      } catch (cause) {
+        fail(value, cause);
+      } finally {
+        if (operation === value) {
+          pending = undefined;
+        }
       }
     });
 

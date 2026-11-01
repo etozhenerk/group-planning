@@ -37,6 +37,8 @@ const check = object({ id: text, status: choices('not_run', 'running', 'passed',
 const suite = object({ id: text, status: choices('passed', 'failed', 'blocked'),
   commandHash: hash, startedAt: time, finishedAt: time, exitCode: { type: ['integer', 'null'] },
   evidence: list(evidence), actual: text });
+const task = object({ id: text, cases: list(text), platforms: list(platform),
+  acceptance: list(object({ platform, plan: text, run: text })) }, ['id', 'cases', 'platforms']);
 const schemas = {
   case: caseSchema, environment, plan,
   config: object({ schemaVersion: { const: 1 }, sources: list(text), excludedSources: list(object({ path: text, reason: text }), 0),
@@ -48,7 +50,7 @@ const schemas = {
   }),
   run: object({ schemaVersion: { const: 1 }, planHash: hash, checks: list(check, 0), suites: list(suite, 0) }),
   manifest: object({ schemaVersion: { const: 1 }, change: text, phase: choices('checkpoint', 'review', 'complete', 'paused'),
-    plan: text, run: text, tasks: list(object({ id: text, cases: list(text), platforms: list(platform) })),
+    plan: text, run: text, tasks: list(task),
     exemptTasks: list(object({ id: text, reason: text }), 0) }),
 };
 const ajv = new Ajv({ allErrors: true, strict: true, allowUnionTypes: true });

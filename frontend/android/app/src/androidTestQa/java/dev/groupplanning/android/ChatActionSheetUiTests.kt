@@ -11,17 +11,18 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeDown
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -30,9 +31,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class ChatActionSheetUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
     private val environment = ChatSheetEnvironment(fixture)
 
@@ -277,7 +280,8 @@ class ChatActionSheetUiTests {
     }
 
     private fun openChat() {
-        fixture.waitText("Настолки у Саши")
+        fixture.waitTag("meetings-list")
+        compose.onNodeWithTag("meetings-list").performScrollToNode(hasText("Настолки у Саши"))
         compose.onNodeWithText("Настолки у Саши").performScrollTo().performClick()
         fixture.waitTag("meeting-add")
     }

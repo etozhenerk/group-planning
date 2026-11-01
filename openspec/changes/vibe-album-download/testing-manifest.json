@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "change": "vibe-album-download",
-  "phase": "checkpoint",
+  "phase": "paused",
   "plan": "openspec/changes/vibe-album-download/qa/plan.json",
   "run": "openspec/changes/vibe-album-download/qa/run.json",
   "tasks": [
@@ -14,6 +14,13 @@
         "TC-VIBE-EXPORT-ALL",
         "TC-VIBE-EXPORT-ZIP",
         "TC-VIBE-EXPORT-ACCESS"
+      ],
+      "acceptance": [
+        {
+          "platform": "backend",
+          "plan": "openspec/changes/vibe-album-download/qa/2026-11-01-backend-independent/feature/plan.json",
+          "run": "openspec/changes/vibe-album-download/qa/2026-11-01-backend-independent/feature/run.json"
+        }
       ]
     },
     {

@@ -24,17 +24,18 @@ export const createChatUpdates = (options: Options) => {
   let grace: ReturnType<typeof setTimeout> | undefined;
   let coalesce: ReturnType<typeof setTimeout> | undefined;
   let disconnect: (() => void) | undefined;
-  const clearTimers = () => {
+  const clearFallbackTimers = () => {
     clearTimeout(poll);
     clearTimeout(grace);
-    clearTimeout(coalesce);
-    poll = grace = coalesce = undefined;
+    poll = grace = undefined;
   };
 
   const stop = () => {
     stopped = true;
     generation += 1;
-    clearTimers();
+    clearFallbackTimers();
+    clearTimeout(coalesce);
+    coalesce = undefined;
     disconnect?.();
     disconnect = undefined;
   };
@@ -44,7 +45,8 @@ export const createChatUpdates = (options: Options) => {
       return;
     }
 
-    const delay = Math.min(30_000, 3_000 * 2 ** Math.min(attempt++, 4));
+    const delay = attempt < 3 ? 3_000 * 2 ** attempt : 30_000;
+    attempt = Math.min(attempt + 1, 3);
     poll = setTimeout(
       () => {
         poll = undefined;
@@ -76,10 +78,13 @@ export const createChatUpdates = (options: Options) => {
 
       if (!stopped && generation === turn) {
         healthy = subscribed;
-        attempt = 0;
+
+        if (healthy || !options.realtime) {
+          attempt = 0;
+        }
 
         if (healthy) {
-          clearTimers();
+          clearFallbackTimers();
         }
       }
     } catch (error) {

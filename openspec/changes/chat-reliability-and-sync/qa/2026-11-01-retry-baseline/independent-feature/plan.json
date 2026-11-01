@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "chat-15-independent-20261101",
+  "purpose": "feature",
+  "component": "backend",
+  "createdAt": "2026-11-01T17:53:59.058Z",
+  "implementer": "root",
+  "catalogHash": "84856bf42ba9493c4f47f9152522aa73cd69705d3e968815a9e12a45bcc11b2e",
+  "sourceHash": "eff7cb20a91b9baf51e8b9fade927e3cc4442b40f446b3fe2ae6b0f283c9143e",
+  "selectedCases": [
+    "TC-CHAT-IDEMPOTENCY-LOOKUP",
+    "TC-CHAT-PAGE-BOUNDS"
+  ],
+  "expected": [
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/backend-page-retry-independent/manual",
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "environment": "backend-page-retry-independent",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-IDEMPOTENCY-LOOKUP/backend-page-retry-independent/manual",
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "environment": "backend-page-retry-independent",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "backend-unit-integration"
+  ],
+  "environments": [
+    {
+      "id": "backend-page-retry-independent",
+      "profile": "api",
+      "platform": "backend",
+      "application": "product",
+      "url": "postgresql://local-socket/somewhere_integration",
+      "build": "go-test-sha256:54052818b390b3308d56d452b21dbe345025fdbbb3e1779c48af6671b70a5ac0",
+      "os": "macOS27.0.1 arm64 / Linux PostgreSQL16 isolated VM",
+      "device": "in-process memory and marked disposable database; no HTTP/OAuth claim",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "synthetic1k/10k/100k;54page configs x20;18retry configs x20 peradapter",
+      "backend": "frozen MAIN backend/contracts412match; external test overlay"
+    }
+  ],
+  "artifact": null
+}

@@ -1,5 +1,29 @@
 # Тестирование chat-reliability-and-sync
 
+## iOS: изоляция полного QA прогона · 01.11.2026
+
+В source-suite `ios-ui` проверяется весь штатный набор на одном существующем
+симуляторе, после `ios-unit`. Нужны собственные UITestHost/fixture и сохранённые
+исходные failures; это не ручная приёмка всех cases и не проверка physical iPhone.
+Перед новым планом проверяется настоящая экранная IME: временный профиль
+`AutomaticMinimizationEnabled=false`, readback и actual keyboard frame внутри
+окна приложения. Исходная настройка восстанавливается после прогона.
+
+Нейтральные предусловия не зависят от прошлого теста: новый QA namespace
+очищает только прежние данные UITestHost, а повторный запуск того же сценария
+сохраняет draft/outbox/selection. Серверная fixture должна сохранять действующую
+сессию на весь source-suite, создавать будущие встречи для rejoin и брать
+текущую RSVP revision для второго участника. Это не изменение production TTL,
+часовой отсечки или ожиданий кейсов. Общие raw assertions и timeout budgets
+сохраняются. Основные связанные cases — TC-CHAT-OUTSIDE-KEYBOARD,
+TC-CHAT-SYNC-E77C7AE6, TC-CHAT-SYNC-6F728A92, TC-CHAT-CAPABILITIES,
+TC-SHEET-NO-REFRESH и TC-ACCOUNT-FB303DFB.
+
+Regression проверяет границы календаря и устаревшую RSVP revision; затем
+выполняются полный simulator unit/UI и независимый проход изменённого setup.
+Исторический full run 57/40/2 и успешный IME preflight3/3 не переписываются.
+
+
 Обновлено 27.10.2026 по разрешению продолжить технический этап после критичных
 UI-исправлений. Это спецификация и checkpoint, не результат проверки приложений.
 Ни один checkbox не закрыт, product tests/SDK/миграции этой подготовкой не запускались.
@@ -234,3 +258,29 @@ commit regression сохраняет свежий marker после delayed snap
 изолированном8458. Read/window/sync suites имеют свои обязательные runners,
 потому что им нужны соответствующие capabilities; legacy runner не запускает
 их на сервере с выключенными флагами.
+
+### Различимые отказы отправки в Android QA
+
+`FeedPersistenceUiTests` и scope `persistence` проверяют неотправленное намерение:
+первая попытка получает управляемый отказ **до commit**, при этом GET ленты
+доступен для обычной canonical-сверки. При восстановлении QA transport удерживает
+только POST-отказ до явного повтора; production-кнопка работает без обхода. После настоящего
+force-stop восстанавливаются тот же request key, строка повтора и новый черновик;
+явный повтор создаёт ровно один canonical ID. Это не проверка lost ACK.
+
+Потеря HTTP-ответа **после commit** остаётся отдельным предусловием
+`FeedUiTests.historySendRetryInformationAndSettingsFollowSharedDesign`: после
+управляемого transport-отказа и явного повтора fixture сохраняет сообщение,
+скрывает первый HTTP-ответ, а обычная realtime/sync сверка снимает pending.
+Наличие кнопки повтора после уже полученного canonical подтверждения не требуется.
+Серверный `feed.verify` полного scope `all` требует один ключ/ID; прикладные
+integration-тесты отдельно проверяют replay и lookup. Эти два сценария нельзя
+засчитать одним process-death PASS; исходный счётчик posts=1 при lost ACK и sync
+сам по себе не доказывает потерю данных.
+
+При временной недоступности canonical history локальный outbox/draft
+восстанавливается только после свежих auth и GET конкретной встречи
+(организатор или «Приду»). До успешной canonical-сверки POST запрещён, включая
+явный повтор. Отказ доступа к встрече не раскрывает локальные сообщения и
+очищает их обычным механизмом revocation. Это отдельно проверяется unit/integration;
+process-death сценарий выше не заменяет проверку privacy и частичного отказа.

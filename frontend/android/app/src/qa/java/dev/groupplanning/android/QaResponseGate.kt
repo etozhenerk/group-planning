@@ -3,6 +3,7 @@ package dev.groupplanning.android
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import okhttp3.Request
 
 /** Controlled delays/failures belong only to the loopback QA transport. */
@@ -11,6 +12,31 @@ internal object QaResponseGate {
         private set
 
     @Volatile var rejectMessage = false
+
+    private val persistenceMessageAttempts = AtomicInteger(-1)
+
+    fun allowOnePersistenceMessageAttempt() {
+        persistenceMessageAttempts.set(1)
+    }
+
+    fun releasePersistenceMessageAttempts() {
+        persistenceMessageAttempts.set(-1)
+    }
+
+    @Volatile private var listErrorHeld = false
+
+    fun observeListFailure(request: Request, status: Int) {
+        if (request.method == "GET" &&
+            request.url.encodedPath == "/api/v1/meetings" &&
+            status >= 500
+        ) {
+            listErrorHeld = true
+        }
+    }
+
+    fun releaseListError() {
+        listErrorHeld = false
+    }
 
     @Volatile private var history: CountDownLatch? = null
 
@@ -25,13 +51,23 @@ internal object QaResponseGate {
         history = null
     }
 
-    fun before(request: Request) {
+    fun before(request: Request, scenario: String) {
+        if (request.url.host == "127.0.0.1" &&
+            request.method == "GET" &&
+            request.url.encodedPath == "/api/v1/meetings" &&
+            listErrorHeld
+        ) {
+            throw IOException("Controlled QA list outage until explicit retry")
+        }
         if (request.url.host == "127.0.0.1" &&
             request.method == "POST" &&
-            request.url.encodedPath.endsWith("/messages") &&
-            rejectMessage
+            request.url.encodedPath.endsWith("/messages")
         ) {
-            throw IOException("Controlled QA message outage before commit")
+            val exhausted = scenario == "feed-persistence" &&
+                persistenceMessageAttempts.getAndUpdate { if (it > 0) it - 1 else it } == 0
+            if (rejectMessage || exhausted) {
+                throw IOException("Controlled QA message outage before commit")
+            }
         }
     }
 

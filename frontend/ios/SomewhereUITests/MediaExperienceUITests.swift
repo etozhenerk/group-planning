@@ -52,6 +52,7 @@ final class MediaExperienceUITests: XCTestCase {
             NSPredicate(
                 format: "label CONTAINS %@", "Я захвачу настолки. Пиццу закажем, когда соберёмся?")
         ).firstMatch
+        ChatSheetTestSupport.revealInConversation(message, app: app)
         XCTAssertTrue(message.waitForExistence(timeout: 10))
         message.press(forDuration: 1)
         XCTAssertTrue(app.buttons["❤️"].waitForExistence(timeout: 5))

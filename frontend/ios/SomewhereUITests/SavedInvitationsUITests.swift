@@ -14,6 +14,7 @@ final class SavedInvitationsUITests: XCTestCase {
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL",
             ]
         }
+        ExperienceScreenshot.configure(app)
         app.launch()
         XCTAssertTrue(app.buttons["Приглашения"].waitForExistence(timeout: 15))
         return app

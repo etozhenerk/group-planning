@@ -1,0 +1,33 @@
+{
+  "preparedAt": "2026-11-01T20:09:18.158818+00:00",
+  "executed": false,
+  "originalPlan": "../acceptance/plan.json",
+  "sourceHash": "a79b13593222248c186320cffceaf34e0ac82750856b24b0905afec38ecd1e0e",
+  "cases": [
+    "TC-ACCOUNT-FB303DFB",
+    "TC-SUPPORT-IOS-KEYBOARD",
+    "TC-CHAT-OUTSIDE-KEYBOARD"
+  ],
+  "scope": "one additiveprofile default+AXXXL return; one additivesupport9states; twoexistingkeyboardselectors capture-only additions; fullr10originalonboarding/longpressactual reused onlysamecurrenthash",
+  "selectors": [
+    "AccountDeletionUITests/testIndependentProfileReturnPreservesSessionAndMeetingList",
+    "SupportFormUITests/testIndependentSupportStatesAndReturn",
+    "ChatKeyboardDismissalUITests/testOutsideTapPreservesSelectionAndEmojiSearchFocus",
+    "ChatKeyboardDismissalUITests/testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus"
+  ],
+  "originalProfileSupportMethodBodiesByteUnchangedBeforeFormatting": true,
+  "gate": "DO NOT build/execute until final stock fullr10 is complete/teardown and raw/executables saved; require allcurrentunit/format/build/analyze/fullPASS",
+  "instrumentation": "/tmp VFS additiveQA only; current413Go observer counters, support reply recorder copies original status/headers/body; hold-before support before network for sending-state capture; no product responses injected",
+  "originalProfileSupportMethodBodiesByteUnchangedAfterPinnedFormatting": {
+    "AccountDeletionUITests.swift": {
+      "testProfileHasNoDeleteEntryAndLogoutRemainsReachable": true,
+      "testProfileHasNoDeleteEntryAtLargeText": true
+    },
+    "SupportFormUITests.swift": {
+      "testKeyboardDismissalValidationAndFeedbackSubmission": true
+    }
+  },
+  "preparedOnlyAsOf": "2026-11-01T20:13:47.406266+00:00",
+  "deferredByUserAt": "2026-11-01T20:30:24.594653+00:00",
+  "disposition": "User ending today: do not start new leaf/manual/design controls. Finish only already-running stock r10 full. Parent retains all task checkboxes/gates."
+}

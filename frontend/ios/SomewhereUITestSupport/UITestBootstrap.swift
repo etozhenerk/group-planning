@@ -26,6 +26,7 @@ enum UITestBootstrap {
                 config.origin.port != nil
             else { throw ClientFailure.invalidOrigin }
             let origin = try APIOrigin(config.origin)
+            try UITestIsolation.prepare(namespace: namespace, scenario: scenario, origin: origin)
             let chat = namespace.map { namespace in
                 ChatRepository(
                     storage: EncryptedChatStorage(

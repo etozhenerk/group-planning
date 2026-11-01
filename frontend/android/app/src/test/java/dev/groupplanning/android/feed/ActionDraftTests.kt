@@ -2,12 +2,14 @@
 
 package dev.groupplanning.android.feed
 
+import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.state.feed.FeedViewModel
 import dev.groupplanning.android.support.Fixtures
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.encodeToString
 import okio.Buffer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -20,6 +22,7 @@ class ActionDraftTests {
     @Test fun backReopensAllActionDraftsAndRevocationClearsHiddenForms() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page()
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         backgroundScope.launch { model.runActive() }
@@ -70,6 +73,7 @@ class ActionDraftTests {
     @Test fun uncertainDateAndPlaceCreationSurviveCloseWithTheirOriginalRequest() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page()
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         backgroundScope.launch { model.runActive() }
@@ -123,6 +127,7 @@ class ActionDraftTests {
     @Test fun uncertainTaskCreationSurvivesCloseAndRevocationClearsItsPendingRequest() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page()
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         backgroundScope.launch { model.runActive() }

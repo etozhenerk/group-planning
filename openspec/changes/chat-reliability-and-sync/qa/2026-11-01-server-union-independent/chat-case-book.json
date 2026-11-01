@@ -1,0 +1,1182 @@
+[
+  {
+    "id": "TC-CHAT-READ-STATE-068DA926",
+    "title": "Общая монотонная позиция прочтения: Запоздалое устройство",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Общая монотонная позиция прочтения",
+      "scenario": "Запоздалое устройство",
+      "sha256": "186b905dd9998423c443a7204c2d4da6934d3ae800a96b62ec9948054f6b6449"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "У A есть доступные sequence 140 и 150; два клиента используют одну личность, actual marker <140."
+    ],
+    "steps": [
+      {
+        "action": "PUT 150, затем запоздалый PUT 140 и повтор PUT 150.",
+        "expected": "Фактический marker остаётся 150 во всех ответах; повторы не создают новую запись change/outbox."
+      },
+      {
+        "action": "Прочитать sync/list и receipt aggregates другим клиентом A и автором B.",
+        "expected": "Личный unread и публичный receipt обновлены разрешёнными projections; read→sync→read не образует цикл."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-99A5AEEE",
+    "title": "Общая монотонная позиция прочтения: Некорректная позиция",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Общая монотонная позиция прочтения",
+      "scenario": "Некорректная позиция",
+      "sha256": "34bc94e61ec0367e54721791f8266d15be7366ee4484c0919c3fc4f695f351cc"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Tail M известен, X не участник; доступны валидные и несуществующие позиции."
+    ],
+    "steps": [
+      {
+        "action": "Отправить marker за tail, несуществующий, overflow uint64 и для недоступной встречи.",
+        "expected": "Запрос отклонён без изменения marker/unread и без раскрытия чужой позиции."
+      },
+      {
+        "action": "Повторить допустимую позицию после отзыва RSVP.",
+        "expected": "Отказ по текущим правам предшествует выдаче read state."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-284DD6EE",
+    "title": "Личные непрочитанные: Смешанные обновления",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Личные непрочитанные",
+      "scenario": "Смешанные обновления",
+      "sha256": "b791c06b349768012a7296ed786610e6e1f110a28a01948db3be9fbf42be02ba"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Baseline/read A известны. После них создать два сообщения B, одно A, системное событие, итог опроса и реакцию."
+    ],
+    "steps": [
+      {
+        "action": "Запросить list/snapshot read state A.",
+        "expected": "Unread равен 2, first_unread указывает первое сообщение B; своё/системное/опрос/реакция не считаются."
+      },
+      {
+        "action": "Продвинуть actual marker к первому, затем второму B.",
+        "expected": "Unread последовательно 1 и 0; first_unread согласован с тем же состоянием."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-8A47BDBD",
+    "title": "Предсказуемая инициализация: Существующая большая история",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Предсказуемая инициализация",
+      "scenario": "Существующая большая история",
+      "sha256": "109a7d9972d85727e5bd38d80142d4e53f71abf10a6894cad287e4dfa70abee7"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "История M содержит 10k записей, A уже участник; включение read state и конкурентная запись управляются барьером."
+    ],
+    "steps": [
+      {
+        "action": "Инициализировать baseline текущего tail атомарно с новым сообщением B.",
+        "expected": "Старая история не объявлена новой; конкурентное сообщение учитывается согласно порядку commit и не теряется между baseline/snapshot."
+      },
+      {
+        "action": "Проверить actual marker и receipt автора B.",
+        "expected": "Actual marker остаётся 0; миграция базы не создаёт прочтение."
+      },
+      {
+        "action": "Для старой встречи без chat stream запросить batch receipts и первую страницу readers до первого Sync.",
+        "expected": "Оба endpoint доступны после активации; baseline не превращается в прочтение, epoch создаётся один раз без journal/outbox. Посторонний не создаёт stream; continuation без существующего epoch требует reset."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-5869F951",
+    "title": "Предсказуемая инициализация: База не является подтверждением чтения",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Предсказуемая инициализация",
+      "scenario": "База не является подтверждением чтения",
+      "sha256": "e03daccc64684eccd8379fd4653abeae40d531053a6b6b781a4fa3da1a5d1a03"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Новый C впервые вступает в M с историей; конец сообщений ещё не показывался C."
+    ],
+    "steps": [
+      {
+        "action": "Выполнить RSVP и запросить baseline/read marker/author readers.",
+        "expected": "Baseline равен согласованному хвосту, actual=0; C отсутствует в readers старых сообщений."
+      },
+      {
+        "action": "Подтвердить допустимую видимую позицию C отдельным PUT.",
+        "expected": "Только фактический marker создаёт соответствующий receipt."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-51E51F41",
+    "title": "Предсказуемая инициализация: Повторное вступление",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Предсказуемая инициализация",
+      "scenario": "Повторное вступление",
+      "sha256": "9dc6bb9eef4f6d8e70898103f317026d1d097fd41e11516de46a9ddae182f29e"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "C имеет baseline и actual marker; аккаунт существует."
+    ],
+    "steps": [
+      {
+        "action": "Выйти из M, добавить чужие сообщения, снова ответить Приду.",
+        "expected": "Прежние baseline/actual сохранены; доступные чужие сообщения после них считаются unread."
+      },
+      {
+        "action": "Повторить RSVP и проверить прежние read значения.",
+        "expected": "Повтор не обнуляет marker и не создаёт ложные receipts."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-EC05E2CA",
+    "title": "Кто прочитал собственное сообщение: Участник вышел",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Кто прочитал собственное сообщение",
+      "scenario": "Участник вышел",
+      "sha256": "394fe8040eaea1112d50542ee4ac6b94e22084a3a3b669964862ada7ff381be6"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "B/C прочитали сообщение A; сохранена первая readers-page."
+    ],
+    "steps": [
+      {
+        "action": "Отозвать доступ B, удалить аккаунт C; запросить новый count/pages.",
+        "expected": "Оба исключены, автор не считается, старый snapshot требует refresh и не возвращает удалённый профиль."
+      },
+      {
+        "action": "Повторить receipt batch для видимых собственных сообщений.",
+        "expected": "Агрегаты согласованы с текущим составом без загрузки полного JSON feed."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-READ-STATE-E32551D3",
+    "title": "Кто прочитал собственное сообщение: Нет прочитавших или запрошено чужое сообщение",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-read-state/spec.md",
+      "requirement": "Кто прочитал собственное сообщение",
+      "scenario": "Нет прочитавших или запрошено чужое сообщение",
+      "sha256": "ac5a9ca747cd6016af0f0b821a09a70756d33f18f997ea572f90798b9893428d"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Сообщение A никто не прочитал; B запрашивает чужие readers, X не имеет доступа; для batch доступны 100/101 ID."
+    ],
+    "steps": [
+      {
+        "action": "Запросить readers как A, B и X, включая cursor следующей страницы.",
+        "expected": "A получает пустое состояние, неавтор/посторонний — отказ без чужих markers."
+      },
+      {
+        "action": "Отправить receipt query со своими 100 ID, затем 101 и чужим ID.",
+        "expected": "Допустимый batch ограничен; превышение/чужое сообщение отклонены, персональные данные не раскрыты."
+      },
+      {
+        "action": "Повторить свой receipt query с uppercase UUID и с дубликатом того же UUID в другом регистре.",
+        "expected": "Валидный uppercase UUID возвращает тот же canonical ID и count; mixed-case дубликат отклоняется без частичного ответа."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-PAGE-BOUNDS",
+    "title": "Ограниченная загрузка и отображение истории: Границы страницы и пустой хвост",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/event-feed/spec.md",
+      "requirement": "Ограниченная загрузка и отображение истории",
+      "scenario": "Границы страницы и пустой хвост",
+      "sha256": "7a283a8e0b6066f72508b56c7cf3a9d598191a7e8a76cf1ea8b135ccbde966e8"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Memory contract fixture и изолированный PostgreSQL: 1k/10k/100k записей, limit 1/50/100; seed высоких sequence без создания 2^64 строк."
+    ],
+    "steps": [
+      {
+        "action": "Запросить initial, after=0/tail, before first/tail и around существующей записи; проверить limit+1 и order.",
+        "expected": "Ближайшие страницы без дыр/дублей, ASC результат, правильные направления has_more; пустой after пуст, tail согласован с snapshot."
+      },
+      {
+        "action": "Проверить значения выше 2^53, uint64 max/overflow, limit 0/101, несовместимые cursors, missing around, cancel и чужой доступ.",
+        "expected": "Точность decimal сохранена; некорректное отклонено, cancellation завершает чтение, права проверены до приватных данных."
+      },
+      {
+        "action": "Изменить возвращённую memory-копию, сделать rollback; выполнить SQL EXPLAIN и trace ограниченного чтения.",
+        "expected": "Store не изменён копией/rollback. Нет полного чтения/декодирования JSON ради страницы, есть индекс/LIMIT; p95 страницы≤100мс в записанном окружении."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-791FF479",
+    "title": "Аутентифицированные защищённые соединения: Подписка с чужого сайта или на чужую встречу",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Аутентифицированные защищённые соединения",
+      "scenario": "Подписка с чужого сайта или на чужую встречу",
+      "sha256": "3ec58333d9d6fc9b5a14437d27a04df2ae6cb84ac5b8be269ed2ad3b697934c4"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Тестовый TLS endpoint, разрешённый web Origin и посторонний Origin; сессии A/X. Tokens только в разрешённых headers/connect credentials."
+    ],
+    "steps": [
+      {
+        "action": "Подключиться с чужого Origin, подставленным user_id или подписаться X на M.",
+        "expected": "Соединение/подписка отклонены без payload; session identity определяется сервером."
+      },
+      {
+        "action": "Выполнить допустимые web cookie/native credentials connect и HTTP CSRF mutation.",
+        "expected": "Разрешённая аутентификация работает; WS не отменяет CSRF HTTP-команд, credentials отсутствуют в URL/логах."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-0E0CB54C",
+    "title": "Аутентифицированные защищённые соединения: Истечение сессии",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Аутентифицированные защищённые соединения",
+      "scenario": "Истечение сессии",
+      "sha256": "f2f339ebe5de07640bbbd2062e29dd9596db382a9da215ad0d544584238ca795"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Активная сессия и подписки; TTL/revoke задаются тестовым сервисом, не production часами."
+    ],
+    "steps": [
+      {
+        "action": "Отозвать сессию, затем отдельно довести её до expiry.",
+        "expected": "Подписки/соединение закрыты; переаутентификация нужна, периодическая проверка не реже минуты и expiry не продлеваются автоматически."
+      },
+      {
+        "action": "Вернуть поздний hint/HTTP callback и попытаться переподключиться.",
+        "expected": "Авторизованные данные не выдаются и не восстанавливаются у клиента."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-1DC708F2",
+    "title": "Актуальные права и минимальное уведомление: Отзыв между уведомлением и загрузкой",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Актуальные права и минимальное уведомление",
+      "scenario": "Отзыв между уведомлением и загрузкой",
+      "sha256": "ee6b9177879a3af92533f8d2c5e1e8fc85079daff855edbb05c5b030c99ee255"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "A получил hint M, HTTP sync задержан; backend fixture контролирует commit отзыва RSVP."
+    ],
+    "steps": [
+      {
+        "action": "Отозвать доступ до выдачи HTTP payload; завершить ожидающий запрос.",
+        "expected": "Отказ по актуальным правам; hint не является разрешением. Клиент очищает приватное состояние M."
+      },
+      {
+        "action": "Повторить read/history/send с прежним receipt и запоздалой callback.",
+        "expected": "Нет доступа, автоматической отправки или возврата удалённых данных."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-6DD0CC09",
+    "title": "Актуальные права и минимальное уведомление: Голосование в скрытом опросе",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Актуальные права и минимальное уведомление",
+      "scenario": "Голосование в скрытом опросе",
+      "sha256": "6e884697c8e594f46bf81fd2d825221df360dd7a189ec051c469a7559834273d"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Скрытый опрос открыт; A голосует, B наблюдает поток и разрешённые sync/read endpoints."
+    ],
+    "steps": [
+      {
+        "action": "Проголосовать A и получить hints/journal projection/read state как B.",
+        "expected": "Чужой скрытый выбор не содержится в hint, sync или read state; payload выдаётся по существующим правилам."
+      },
+      {
+        "action": "Закрыть опрос и перечитать старую карточку.",
+        "expected": "После закрытия выдан только разрешённый итог; новые приватные данные не копируются в journal."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-A91C53BB",
+    "title": "Честная модель шифрования: Защита backup не проверена",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Честная модель шифрования",
+      "scenario": "Защита backup не проверена",
+      "sha256": "833886ee7695c85c9928169b389faea9d280b7dbcee4c5fd09c0c2c76ecf0fc5"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Есть отчёт проверки конфигурации хранения; свидетельство restore/encryption намеренно отсутствует или относится к другому артефакту."
+    ],
+    "steps": [
+      {
+        "action": "Сопоставить заявленную защиту с доступными доказательствами, не выполняя production операций.",
+        "expected": "Неподтверждённая защита backup остаётся явно непроверенной; отсутствие evidence не превращается в pass."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-BDBF283F",
+    "title": "Минимизация сохранённых приватных данных: Диагностика сбоя",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Минимизация сохранённых приватных данных",
+      "scenario": "Диагностика сбоя",
+      "sha256": "6267df21f29ef4880949cf5f540ca7d357348ce63c7d8c2eecf8c2c128c76c03"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Тестовые текст/credential-маркеры распознаваемы, но не являются настоящими секретами; сбор логов/URL/hints локальный."
+    ],
+    "steps": [
+      {
+        "action": "Создать timeout/reconnect/reset и ошибку storage/sync; проверить diagnostics, URL, journal и outbox.",
+        "expected": "Содержимое сообщений и credentials отсутствуют; сохранены безопасные IDs/метрики для расследования."
+      },
+      {
+        "action": "Для native проверить защищённое outbox/key storage; для web отказ quota и заявленные ограничения IndexedDB.",
+        "expected": "Используется системная защита native; web не обещает защиты от XSS и не отправляет несохранённый intent."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SECURITY-A3B3BFE7",
+    "title": "Минимизация сохранённых приватных данных: Удаление данных аккаунта",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "critical",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-security/spec.md",
+      "requirement": "Минимизация сохранённых приватных данных",
+      "scenario": "Удаление данных аккаунта",
+      "sha256": "3a7d431c78bae62951bf1364542bf633c4c191f73fab7a38f17374e38d1a7d89"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "У C есть сообщения в старом диапазоне, markers, недоставленные hints; клиенты A/B сохраняют старые cursor."
+    ],
+    "steps": [
+      {
+        "action": "Удалить C штатной операцией и выполнить replay/snapshot старого диапазона.",
+        "expected": "Markers/адресные outbox-данные C удалены, история обезличена; journal возвращает текущую projection без прежнего имени."
+      },
+      {
+        "action": "Удалить M с активными подписками и перезапустить dispatcher.",
+        "expected": "History/markers/stream удалены; terminal личная invalidation не уничтожена FK cascade и доставляется без приватного текста."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-5EFD24A6",
+    "title": "Подтверждённая последовательность обновлений: Изменение уже показанной карточки",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Подтверждённая последовательность обновлений",
+      "scenario": "Изменение уже показанной карточки",
+      "sha256": "bc5e55b53874b8d5d6f13d15192b462ade5db6a77b694ac42d5c4151bba7a78b"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Окно содержит старую карточку опроса; за его пределами есть запись автора C. Сохранены projection versions и cursor."
+    ],
+    "steps": [
+      {
+        "action": "Закрыть опрос штатной операцией/worker без нового сообщения и выполнить sync.",
+        "expected": "Проекция старой карточки обновлена; нет polling отдельной карточки и зависимости от нового хвоста."
+      },
+      {
+        "action": "Обезличить C, получить history_invalidated; повторить старую страницу с меньшей projection_version.",
+        "expected": "Выдана актуальная разрешённая проекция без прежнего имени; старая версия не возвращает удалённые данные."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/src/entities/meeting/model/applyChatProjections.test.ts",
+            "selector": "cancels an older card response and preserves a newer command revision",
+            "runner": "web-check",
+            "level": "integration"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-BC07BEB1",
+    "title": "Восстановление после разрыва и перезапуска: Разрыв между снимком и подпиской",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Восстановление после разрыва и перезапуска",
+      "scenario": "Разрыв между снимком и подпиской",
+      "sha256": "087d124d4640914d79821e3fc74a8e6be59f625c6d28169aadecc3f481c4147f"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Есть HTTP snapshot и управляемая задержка подтверждения подписки. Для backend используется protocol client fixture, для клиента — его настоящий adapter."
+    ],
+    "steps": [
+      {
+        "action": "Между snapshot и subscribe commit создать запись B; подтвердить подписку без доставки hint.",
+        "expected": "Обязательный HTTP catch-up от snapshot cursor получает запись ровно один раз."
+      },
+      {
+        "action": "Разорвать связь на управляемые 5 минут, добавить 100 изменений и восстановить, включая успешный SDK recovery.",
+        "expected": "HTTP catch-up выполняется даже после SDK recovery; все изменения применены. В записанном профиле RTT 150 мс восстановление не дольше 2 с; недоступный замер не объявляется pass."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/tests/38-chat-sync.spec.ts",
+            "selector": "real SDK snapshot-subscribe catch-up closes the gap and healthy idle has no HTTP polling",
+            "runner": "web-chat-e2e",
+            "level": "e2e"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-AA76CADB",
+    "title": "Восстановление после разрыва и перезапуска: Сбой после commit до уведомления",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Восстановление после разрыва и перезапуска",
+      "scenario": "Сбой после commit до уведомления",
+      "sha256": "0878f8c98471b8d19ae10bf2ecfd20b99956e6bb191eb453d87cc8c29f94c3c5"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Memory используется для rollback/dispatch fault; сохранность рестарта проверяется только на изолированной somewhere_integration. Есть управляемые точки до publish и после publish до отметки."
+    ],
+    "steps": [
+      {
+        "action": "Commit сообщения вместе с change/outbox; остановить dispatcher до publish, затем перезапустить API/dispatcher на SQL.",
+        "expected": "Сообщение, change и недоставленный outbox сохранены; drain публикует hint без нового сообщения."
+      },
+      {
+        "action": "Повторить crash после publish до отметки и потерю NOTIFY; затем rollback предметной транзакции.",
+        "expected": "Повтор hint безопасен; периодический drain восстанавливает доставку, rollback не оставляет ни запись, ни change/outbox."
+      },
+      {
+        "action": "Ограничить очередь медленного клиента и исчерпать recovery retention.",
+        "expected": "Потребитель отключается восстановимо; недоставленный outbox не теряется молча, HTTP catch-up/reset сохраняет доступные изменения."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-F6CFB5E9",
+    "title": "Восстановление после разрыва и перезапуска: Курсор вышел за срок восстановления",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Восстановление после разрыва и перезапуска",
+      "scenario": "Курсор вышел за срок восстановления",
+      "sha256": "6b191ed122fcaea296b445f1e7d3ed95249be1ba1340b69d9ddcf65272a4f7eb"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Сохранены cursor/epoch, допустимый outbox и viewport anchor. Retention управляется fixture, без смены системных часов."
+    ],
+    "steps": [
+      {
+        "action": "Обрезать journal или сменить epoch; запросить прежний cursor.",
+        "expected": "410 sync_reset_required, не пустая успешная страница. Некорректный cursor даёт 400; 401/403/404 не создают бесконечного retry."
+      },
+      {
+        "action": "Выполнить разрешённый новый snapshot и повторить запоздалый ответ прежнего epoch.",
+        "expected": "Окно пересверено, допустимые outbox/anchor сохранены; старый ответ отброшен."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/src/entities/meeting/model/loadChat.test.ts",
+            "selector": "replaces invalidated history and handles 410 with a fresh authorized snapshot",
+            "runner": "web-check",
+            "level": "integration"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-14D92D7D",
+    "title": "Подтверждение сохранения и повтор: Таймаут после сохранения",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Подтверждение сохранения и повтор",
+      "scenario": "Таймаут после сохранения",
+      "sha256": "83bb5057e8e243ba7db86ddf9cfaff0f34d8308ae3d272243ce5b3a08cb1d983"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Есть свой intent A; transport теряет ответ после commit. Для backend проверяется HTTP/idempotency, для клиентов также owner outbox."
+    ],
+    "steps": [
+      {
+        "action": "Commit без выдачи ACK, затем повторить прежний запрос после expiry receipt.",
+        "expected": "Возвращаются прежние ID/sequence/тело; client state uncertain не утверждает отсутствия записи."
+      },
+      {
+        "action": "Подставить ACK другого автора/встречи/intent и повтор с изменённым телом.",
+        "expected": "Чужой ACK не завершает свой intent; сервер отклоняет конфликт, новая запись не создаётся."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/tests/37-chat-persistence.spec.ts",
+            "selector": "reload after server commit and lost ACK reconciles one message without dropping a new draft",
+            "runner": "web-chat-e2e",
+            "level": "e2e"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+    "title": "Устойчивое намерение отправить: Адресный повтор text и media после потерянного ответа",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Устойчивое намерение отправить",
+      "scenario": "Адресный повтор text и media после потерянного ответа",
+      "sha256": "a3263260d8d438bdcbfbcfe7059984f49a2ecca4946ae1bf76476f89bd2c4399"
+    },
+    "platforms": [
+      "backend"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "В M есть большая история, message intent A и загруженные photo/file; fault после commit, управляемый receipt expiry."
+    ],
+    "steps": [
+      {
+        "action": "Отправить text и publish media, потерять ACK, повторить до и после expiry receipt.",
+        "expected": "Один исходный entry ID/sequence; direct lookup text tuple и media entry_id, полный Feed не вызывается. Media attachments и legacy captionless hash сохранены."
+      },
+      {
+        "action": "Изменить text/caption, использовать чужого автора/встречу и отозвать доступ перед повтором.",
+        "expected": "Конфликты и отказ прав сохраняются; receipt не обходит access check, чужая запись не раскрывается."
+      },
+      {
+        "action": "Проверить memory clone/rollback и SQL индексированный lookup при 100k истории.",
+        "expected": "Возвращённая копия не меняет store; rollback атомарен; стоимость lookup не зависит от полной десериализации истории."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-SYNC-THROUGH",
+    "title": "Восстановление после разрыва и перезапуска: Фиксированная граница страниц синхронизации",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Восстановление после разрыва и перезапуска",
+      "scenario": "Фиксированная граница страниц синхронизации",
+      "sha256": "0d21a0dbdf1bdb203e8c547e80967c4ad2b7c20da0cccf26de9b793d6330ff6c"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Есть >100 journal changes, snapshot cursor; контролируется commit между страницами и сбой применения."
+    ],
+    "steps": [
+      {
+        "action": "Начать sync с through=T; во время получения страниц добавить T+1, повторить и переставить ответы.",
+        "expected": "Текущий цикл заканчивается на T; T+1 приходит следующим циклом; projection versions защищают от отката."
+      },
+      {
+        "action": "Прервать merge/storage apply последней страницы и продолжить после восстановления.",
+        "expected": "Cursor не продвинут впереди данных; повтор безопасен, has_more исчерпывается, один sync в работе."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/src/entities/meeting/model/loadChat.test.ts",
+            "selector": "rejects changing through barriers and non-advancing pages without committing them",
+            "runner": "web-check",
+            "level": "integration"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  },
+  {
+    "id": "TC-CHAT-CAPABILITIES",
+    "title": "Жизненный цикл и совместимость транспорта: Совместимость старого HTTP и выключенных возможностей",
+    "lifecycle": "active",
+    "level": "integration",
+    "risk": "high",
+    "source": {
+      "path": "openspec/changes/chat-reliability-and-sync/specs/chat-sync/spec.md",
+      "requirement": "Жизненный цикл и совместимость транспорта",
+      "scenario": "Совместимость старого HTTP и выключенных возможностей",
+      "sha256": "1ce80805147974f243adc91d31c81325cf798d7bdd1fcc8fa24e366efcf45b31"
+    },
+    "platforms": [
+      "backend",
+      "web",
+      "ios",
+      "android"
+    ],
+    "preconditions": [
+      "Изолированное окружение из testing.md: участники A/B/C, посторонний X, встреча M; ru-RU/Europe/Moscow, собственные тестовые данные. Записать точную сборку и API. Новые endpoint проверяются только после их реализации; до этого результат not_run/blocked.",
+      "Зафиксированы прежний поддерживаемый HTTP client fixture и новый клиент; capabilities можно отключить/вернуть404."
+    ],
+    "steps": [
+      {
+        "action": "Пройти feed/send/retry прежним клиентом на новом сервере и новым при capabilities404/disabled.",
+        "expected": "Старые DTO/права/ID сохранены, новый клиент использует единственный legacy HTTP путь; read UI отсутствует без поддержки."
+      },
+      {
+        "action": "Имитировать rollback на writer без journal и последующее включение с новым epoch.",
+        "expected": "Нужен новый snapshot/reset; изменения периода rollback не пропущены, история не удалена."
+      }
+    ],
+    "cleanup": [
+      "Остановить только собственный fixture/transport fault, удалить созданную встречу и тестовые аккаунты. Вернуть сетевые ограничения и управляемые часы. Не удалять чужие данные и не перезапускать пользовательское демо."
+    ],
+    "automation": {
+      "backend": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "web": {
+        "status": "partial",
+        "health": "unknown",
+        "tests": [
+          {
+            "path": "frontend/web/src/entities/meeting/api/chat.test.ts",
+            "selector": "falls back on an old server 404 even when the router returns plain text",
+            "runner": "web-check",
+            "level": "integration"
+          }
+        ]
+      },
+      "ios": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      },
+      "android": {
+        "status": "planned",
+        "health": "unknown",
+        "tests": []
+      }
+    }
+  }
+]

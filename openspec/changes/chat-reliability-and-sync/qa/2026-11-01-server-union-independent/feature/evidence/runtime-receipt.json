@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/misha/.local/share/somewhere/go-1.27.2/bin/go",
+    "test",
+    "-race",
+    "-json",
+    "-count=1",
+    "-p=1",
+    "-timeout=8m",
+    "-overlay",
+    "/tmp/somewhere-sdd-server-union-independent/overlay.json",
+    "-run",
+    "^(TestIndependentConcurrentCutoffReschedule|TestIndependentCurrentFeedHTTPInvalidAndScope|TestIndependentCurrentMemoryHistoryMatrix|TestIndependentElapsedRetryPersistsAndDoesNotReplaySuccess|TestIndependentExpiredWorkerCannotAckNewLease|TestIndependentFinal10kActivationCommitRace|TestIndependentFinalHTTP150UUIDAndScope|TestIndependentFinalHTTPFixedThroughAndIdempotentACK|TestIndependentFinalMixedUnreadHiddenPoll|TestIndependentLegacyAndCutoff|TestIndependentLegacyReadInitAuthorizationAndNoEffects|TestIndependentLegacyReadInitRechecksAccessAcrossTransactions|TestIndependentMediaLimitsAndCleanup|TestIndependentMediaPublicationAndAlbum|TestIndependentMediaRevocationBarrier|TestIndependentParticipantSummary|TestIndependentPrivacy|TestIndependentProfileSynchronization|TestIndependentPublicationReplayAndAccessMatrix|TestIndependentReactions|TestIndependentReadActivationLegacyReceipts|TestIndependentReadDisableReenablePreservesBaseline|TestIndependentReadHTTPBoundaryAndLifecycle|TestIndependentReadLateHintRollbackAndNoop|TestIndependentReadSparseUint64MessageBoundary|TestIndependentReadersPaginationRevokeAndScopedCursor|TestIndependentRealtimeAmbiguousHeadersAndIdentitySpoofing|TestIndependentRealtimeRevokeBeforePublication|TestIndependentRepeatFaultDiagnosticsCapture|TestIndependentRepeatFeedSQLLatencyIntegration|TestIndependentRepeatGapOfflineRecoveryRTT150|TestIndependentRepeatHintThenDelayedHTTPRevocation|TestIndependentRepeatPhotoFileTextLookupAndLegacyHash|TestIndependentRepeatRejectedCredentialsNeverInURL|TestIndependentRepeatSQLChild|TestIndependentRepeatSQLProcessRestartDeletionAndEpoch|TestIndependentRepeatSessionExpiryRevokeAndLateRequests|TestIndependentUTCExactCutoff)$",
+    "./internal/httpapi",
+    "./internal/meetings",
+    "./internal/storage/memory",
+    "./internal/realtime",
+    "./internal/storage/postgres"
+  ],
+  "startedAt": "2026-11-01T19:04:22.190928+00:00",
+  "finishedAt": "2026-11-01T19:04:43.773693+00:00",
+  "exit": 0,
+  "logSha256": "eb5f96c7800f5fbf6d539eba7ce5fa5fc500bae76ce1ef3f53d6a0fcb02febf9"
+}

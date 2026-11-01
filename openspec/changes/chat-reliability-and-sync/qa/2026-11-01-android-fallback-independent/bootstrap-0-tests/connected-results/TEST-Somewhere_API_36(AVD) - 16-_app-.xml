@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite tests="0" failures="0" errors="0" skipped="0" time="0.026" timestamp="2026-11-01T20:13:54" hostname="localhost">
+  <properties>
+    <property name="device" value="Somewhere_API_36(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <system-err>ErrorName: INSTALL_FAILED_UPDATE_INCOMPATIBLE
+NameSpace: DdmlibAndroidDeviceController
+ErrorCode: 1
+ErrorType: TEST
+Message: Failed to install split APK(s): [/Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/apk/qa/app-qa.apk]
+Failed to install split APK(s): [/Users/misha/Documents/Codex/projects/group-planning/frontend/android/app/build/outputs/apk/qa/app-qa.apk]
+Failed to commit install session 1008228158 with command package install-commit 1008228158. Error: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package dev.groupplanning.android.uitesthost signatures do not match newer version; ignoring!
+com.android.ddmlib.InstallException: Failed to commit install session 1008228158 with command package install-commit 1008228158. Error: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package dev.groupplanning.android.uitesthost signatures do not match newer version; ignoring!
+	at com.android.ddmlib.SplitApkInstallerBase.installCommit(SplitApkInstallerBase.java:171)
+	at com.android.ddmlib.SplitApkInstaller.install(SplitApkInstaller.java:85)
+	at com.android.ddmlib.IDeviceSharedImpl.installPackages(IDeviceSharedImpl.java:395)
+	at com.android.ddmlib.internal.DeviceImpl.lambda$installPackages$34(DeviceImpl.java:1491)
+	at com.android.ddmlib.internal.DeviceImpl.logRun3(DeviceImpl.java:1833)
+	at com.android.ddmlib.internal.DeviceImpl.installPackages(DeviceImpl.java:1488)
+	at com.android.ddmlib.internal.DeviceImpl.lambda$installPackages$35(DeviceImpl.java:1503)
+	at com.android.ddmlib.internal.DeviceImpl.logRun3(DeviceImpl.java:1833)
+	at com.android.ddmlib.internal.DeviceImpl.installPackages(DeviceImpl.java:1499)
+	at com.android.tools.utp.plugins.deviceprovider.ddmlib.DdmlibAndroidDevice.installPackages(DdmlibAndroidDevice.kt:76)
+	at com.android.tools.utp.plugins.deviceprovider.ddmlib.DdmlibAndroidDeviceController$executeAsync$deferred$1.invokeSuspend(DdmlibAndroidDeviceController.kt:259)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:108)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:793)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:697)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:684)
+
+</system-err>
+</testsuite>

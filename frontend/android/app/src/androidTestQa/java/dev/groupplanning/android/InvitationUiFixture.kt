@@ -18,6 +18,9 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import java.io.File
 import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.TimeZone
 import java.util.regex.Pattern
 import org.json.JSONArray
@@ -36,6 +39,18 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         File(context.noBackupFilesDir, "ui-fixture.json").writeText(shell("cat $path"))
     }
 
+    fun designDate(key: String): LocalDate {
+        val config = JSONObject(File(context.noBackupFilesDir, "ui-fixture.json").readText())
+        return LocalDate.parse(config.getJSONObject("designDates").getString(key))
+    }
+
+    fun designDateLabel(key: String, pattern: String): String {
+        val day = designDate(key)
+        val locale = Locale.forLanguageTag("ru")
+        return day.format(DateTimeFormatter.ofPattern(pattern, locale))
+            .replaceFirstChar { it.titlecase(locale) }
+    }
+
     fun launch(scenario: String, token: String? = null): ActivityScenario<MainActivity> =
         ActivityScenario.launch(
             Intent(context, MainActivity::class.java).apply {
@@ -45,10 +60,16 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         )
 
     fun waitTag(tag: String) {
-        compose.waitUntil(15_000) {
-            compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isNotEmpty()
+        try {
+            compose.waitUntil(15_000) {
+                compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.waitForIdle()
+        } catch (failure: AssertionError) {
+            println("SOMEWHERE_WAIT_TAG_FAILURE=$tag\n" + compose.onRoot().printToString())
+            screenshot("wait-tag-failure-${System.currentTimeMillis()}")
+            throw failure
         }
-        compose.waitForIdle()
     }
 
     fun waitAbsent(tag: String) {

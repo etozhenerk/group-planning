@@ -1,0 +1,188 @@
+PG_ISOLATED_RETRY_PRECHECK 2026-11-01T14:14:42Z
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+COMMENT
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_chat_20261101_d47cdf4b667ff594
+initial_user_tables=0
+role=somewhere_migrator super=false createdb=false
+PG_BINARY_SHA_OK /tmp/somewhere-sdd-chat-postgres-20261101.test 6b7fc87b048a59d706ffd8078b6379d0f5ca04deb1be3fb7bb1273f2dd69dff4
+PG_BINARY_SHA_OK /tmp/somewhere-sdd-chat-realtime-20261101.test 1a780c90d820d98fd6f462632c395938fecc96e9d488ba0e60dee59cbcdafc66
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_chat_20261101_d47cdf4b667ff594
+PG_PHASE_BEGIN phase=page-p95 at=2026-11-01T14:14:43Z
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/1000
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=1 samples=20 p95_ms=0.491 max_ms=1.622 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=1 samples=20 p95_ms=0.485 max_ms=0.585 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=1 samples=20 p95_ms=0.401 max_ms=0.406 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=1 samples=20 p95_ms=0.345 max_ms=0.750 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=1 samples=20 p95_ms=0.375 max_ms=0.396 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=1 samples=20 p95_ms=1.059 max_ms=1.416 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=50 samples=20 p95_ms=1.082 max_ms=1.337 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=50 samples=20 p95_ms=0.770 max_ms=0.853 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=50 samples=20 p95_ms=0.379 max_ms=0.389 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=50 samples=20 p95_ms=0.305 max_ms=0.305 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=50 samples=20 p95_ms=0.800 max_ms=1.218 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=50 samples=20 p95_ms=1.374 max_ms=1.860 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=initial limit=100 samples=20 p95_ms=0.859 max_ms=1.483 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=after-zero limit=100 samples=20 p95_ms=0.856 max_ms=1.745 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=empty-after-tail limit=100 samples=20 p95_ms=0.280 max_ms=0.293 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-first limit=100 samples=20 p95_ms=0.253 max_ms=0.302 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=before-tail limit=100 samples=20 p95_ms=1.095 max_ms=1.176 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=1000 query=around limit=100 samples=20 p95_ms=2.001 max_ms=2.196 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/10000
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=1 samples=20 p95_ms=0.944 max_ms=1.206 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=1 samples=20 p95_ms=0.453 max_ms=0.469 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=1 samples=20 p95_ms=0.380 max_ms=0.445 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=1 samples=20 p95_ms=0.395 max_ms=0.456 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=1 samples=20 p95_ms=0.505 max_ms=0.602 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=1 samples=20 p95_ms=0.897 max_ms=0.913 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=50 samples=20 p95_ms=0.995 max_ms=1.114 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=50 samples=20 p95_ms=0.621 max_ms=0.638 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=50 samples=20 p95_ms=0.351 max_ms=0.355 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=50 samples=20 p95_ms=0.340 max_ms=0.359 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=50 samples=20 p95_ms=1.016 max_ms=1.025 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=50 samples=20 p95_ms=1.781 max_ms=2.010 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=initial limit=100 samples=20 p95_ms=0.977 max_ms=1.362 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=after-zero limit=100 samples=20 p95_ms=1.090 max_ms=1.471 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=empty-after-tail limit=100 samples=20 p95_ms=0.425 max_ms=0.513 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-first limit=100 samples=20 p95_ms=0.337 max_ms=0.377 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=before-tail limit=100 samples=20 p95_ms=1.065 max_ms=1.427 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=10000 query=around limit=100 samples=20 p95_ms=2.025 max_ms=2.028 budget_ms=100 includes=transaction+SQL+JSONdecode
+=== RUN   TestIndependentRepeatFeedSQLLatencyIntegration/100000
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=1 samples=20 p95_ms=0.580 max_ms=1.345 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=1 samples=20 p95_ms=0.521 max_ms=0.595 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=1 samples=20 p95_ms=0.501 max_ms=0.576 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=1 samples=20 p95_ms=0.656 max_ms=0.681 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=1 samples=20 p95_ms=0.924 max_ms=1.125 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=1 samples=20 p95_ms=0.993 max_ms=1.014 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=50 samples=20 p95_ms=1.057 max_ms=2.387 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=50 samples=20 p95_ms=0.826 max_ms=0.846 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=50 samples=20 p95_ms=0.494 max_ms=0.494 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=50 samples=20 p95_ms=0.488 max_ms=0.508 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=50 samples=20 p95_ms=1.127 max_ms=1.617 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=50 samples=20 p95_ms=1.292 max_ms=2.009 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=initial limit=100 samples=20 p95_ms=0.878 max_ms=1.237 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=after-zero limit=100 samples=20 p95_ms=0.936 max_ms=1.184 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=empty-after-tail limit=100 samples=20 p95_ms=0.416 max_ms=0.508 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-first limit=100 samples=20 p95_ms=0.440 max_ms=0.441 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=before-tail limit=100 samples=20 p95_ms=0.892 max_ms=1.474 budget_ms=100 includes=transaction+SQL+JSONdecode
+    repeat_feed_latency_test.go:26: history=100000 query=around limit=100 samples=20 p95_ms=2.246 max_ms=2.545 budget_ms=100 includes=transaction+SQL+JSONdecode
+--- PASS: TestIndependentRepeatFeedSQLLatencyIntegration (17.10s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/1000 (0.26s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/10000 (0.68s)
+    --- PASS: TestIndependentRepeatFeedSQLLatencyIntegration/100000 (15.57s)
+PASS
+PG_PHASE_END phase=page-p95 exit=0 elapsed_ns=17132792425 at=2026-11-01T14:15:00Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_chat_20261101_d47cdf4b667ff594
+PG_PHASE_BEGIN phase=process-recovery-epoch at=2026-11-01T14:15:00Z
+=== RUN   TestIndependentRepeatSQLProcessRestartDeletionAndEpoch
+    repeat_sql_process_test.go:73: child phase=commit-crash exit=73 output==== RUN   TestIndependentRepeatSQLChild
+        COMMITTED id=222c231c-789e-47aa-977a-d9ec1b4ac9ca sequence=5 pid=127965
+    repeat_sql_process_test.go:74: child phase=api-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        API_RESTART status=200 changes=1 pid=127971
+        --- PASS: TestIndependentRepeatSQLChild (0.02s)
+        PASS
+    repeat_sql_process_test.go:75: child phase=publish-crash exit=74 output==== RUN   TestIndependentRepeatSQLChild
+        PUBLISHED event=0e3b1cf4-223d-46ef-beb6-7987d696ef06 target=user pid=127977
+    repeat_sql_process_test.go:76: child phase=recover exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        RECOVERED event=0e3b1cf4-223d-46ef-beb6-7987d696ef06 target=user pid=127983
+        RECOVERED event=6e56c2a6-632d-4e49-b156-0b408b70f966 target=user pid=127983
+        RECOVERED event=797b7b3e-c310-4215-bb3d-8e7556825e20 target=user pid=127983
+        RECOVERED event=acdf0e32-37b2-4460-8b6c-4493637affdb target=meeting pid=127983
+        DRAIN acknowledged=4 deleted=4 pid=127983
+        --- PASS: TestIndependentRepeatSQLChild (0.02s)
+        PASS
+    repeat_sql_process_test.go:84: simulated no-journal writer + explicit epoch replacement: oldHTTP cursor410; fresh snapshot preserves interval message and preceding history; schema-compatible disabled capability still serves legacy feed. Production oldbinary rollback was not attempted
+    repeat_sql_process_test.go:99: child phase=terminal-restart exit=0 output==== RUN   TestIndependentRepeatSQLChild
+        TERMINAL_RESTART delivered=true acknowledged=3 pid=127991
+        --- PASS: TestIndependentRepeatSQLChild (0.03s)
+        PASS
+    repeat_sql_process_test.go:100: distinct process PIDs: committed crash73 before publish; API restart HTTP200 delta1; publish crash74 before ACK; periodic no-NOTIFY drain replayed same event; SQL rollback atomic; account DELETE with activeWS revoked sockets/cleared marker+recipient; deletedmeeting removedhistory/stream, newprocess delivered durable terminal hint
+--- PASS: TestIndependentRepeatSQLProcessRestartDeletionAndEpoch (0.43s)
+PASS
+PG_PHASE_END phase=process-recovery-epoch exit=0 elapsed_ns=463109364 at=2026-11-01T14:15:00Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_chat_20261101_d47cdf4b667ff594
+migration=1|809f8ae09d173ee636c10db5e3bafa8cb0be8583a567ce4765b954b28f06af0e
+migration=2|8e17fc821729556a84df58d743417f04120869a23a364a4a54b54baa836527a2
+migration=3|6a670a2eea9a0aa87af1b6ccd40bba4ab007de13e18ab4d020633b6467df61da
+migration=4|7c5cdad7964c45a5c00861c6032ece5031baf120b9e5e8a8f9f478677cde2971
+migration=5|12494054bbcc22cb9a65b9448d0845e712e1ac79a38874a877c2a8eee7284a5c
+migration=6|4c5ccdc392c4ee93eef7eec050fa1809f1fb81f9a4d9631435cb7027fd1c3777
+migration=7|6b1160c824930a4116d1ee7da6b74b0546b8e63a586be15714c1b5141bae6855
+migration=8|7ee5425d0606c94f97a9a1365d325392aeab3b840fb0de1401d534be1c605216
+database_size_bytes=103291927
+table=public.date_polls
+table=public.feed_entries
+table=public.identity_attempts
+table=public.identity_deletion_receipts
+table=public.identity_sessions
+table=public.identity_subject_fences
+table=public.identity_users
+table=public.invitations
+table=public.media_blobs
+table=public.meeting_changes
+table=public.meeting_covers
+table=public.meeting_media
+table=public.meeting_read_markers
+table=public.meeting_streams
+table=public.meetings
+table=public.message_reactions
+table=public.place_polls
+table=public.preparation_tasks
+table=public.realtime_outbox
+table=public.removed_meeting_users
+table=public.request_receipts
+table=public.rsvps
+table=public.schema_migrations
+table=public.support_feedback
+table=public.support_rate_windows
+table=public.transition_jobs
+PG_CLEANUP_BEGIN 2026-11-01T14:15:00Z
+PG_MARKER_GUARD_OK somewhere_integration|somewhere_migrator|somewhere_sdd_chat_20261101_d47cdf4b667ff594
+PG_DROP_OWN_DATABASE_OK
+remaining_test_databases=0
+Filesystem      1B-blocks       Used  Available Use% Mounted on
+/dev/vda1      9703890944 4092006400 5595107328  43% /
+MainPID=88760
+NRestarts=0
+Id=somewhere.service
+ActiveState=active
+SubState=running
+
+MainPID=0
+NRestarts=0
+Id=postgresql.service
+ActiveState=active
+SubState=exited
+
+MainPID=3465
+NRestarts=0
+Id=caddy.service
+ActiveState=active
+SubState=running
+{"status":"ok"}
+
+health_status=200
+
+ready_status=200
+PG_CLEANUP_END exit=0 at=2026-11-01T14:15:01Z

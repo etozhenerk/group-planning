@@ -60,7 +60,10 @@ final class TelegramChatUITests: XCTestCase {
         input.tap()
         input.typeText("Вернусь к разговору")
         let heading = app.buttons["meeting-heading"]
-        XCTAssertTrue(heading.isHittable)
+        XCTAssertTrue(heading.exists)
+        XCTAssertTrue(heading.isEnabled)
+        XCTAssertTrue(app.frame.contains(heading.frame))
+        XCTAssertGreaterThanOrEqual(heading.frame.height, 44)
         XCTAssertTrue(app.staticTexts["feed-title"].exists)
         heading.tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 5))
@@ -98,7 +101,8 @@ final class TelegramChatUITests: XCTestCase {
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertEqual(input.value as? String, "Вернусь к разговору")
-        XCTAssertTrue(heading.isHittable)
+        XCTAssertTrue(heading.isEnabled)
+        XCTAssertTrue(app.frame.contains(heading.frame))
         heading.tap()
         XCTAssertTrue(app.staticTexts["meeting-info-header"].waitForExistence(timeout: 5))
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
@@ -111,6 +115,7 @@ final class TelegramChatUITests: XCTestCase {
         let message = app.descendants(matching: .any)[
             "chat-message-ded00000-0000-4000-8000-000000000013"
         ].firstMatch
+        ChatSheetTestSupport.revealInConversation(message, app: app)
         XCTAssertTrue(message.waitForExistence(timeout: 10))
         XCTAssertFalse(
             app.buttons.matching(

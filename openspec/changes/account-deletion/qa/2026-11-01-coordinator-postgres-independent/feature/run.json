@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "planHash": "00c0bfea1614970426eddd60c638f1fe02b378ba72ed47db116bdcffce2df1e0",
+  "checks": [
+    {
+      "id": "TC-ACCOUNT-1C58ABFB/cloud-sql-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:53:50Z",
+      "finishedAt": "2026-11-01T14:53:52Z",
+      "actual": "Реальный HTTP DELETE /api/v1/me → accounts.New → PostgreSQL AccountUpdate. SQL trigger на второй встрече проверяет отсутствие первой внутри transaction, затем nextval и SQLexception; HTTP500 без privateSQLdetails. Новый независимый pool:25business tables byte fingerprints/counts исходные, обеmeetings/profile/provider/2sessions/handoff сохранены;нетreceipt/tombstone/revocation. Затем штатныйretrycommit204,старыеsessions401,anonymousreceipt204,new same-subject account/session survives,operationsecretBearer401,25hreceipt401.",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "62c4560b5269f6c820b4fcbd43c0699ee38a85147f4d35d78788027d2cc75b1d"
+        },
+        {
+          "path": "evidence/coordinator-cloud.log",
+          "kind": "log",
+          "sha256": "5549778a9e78bc545157a67f640a74c99600830fe2e8a0d7b15021d70deb526b"
+        },
+        {
+          "path": "evidence/coordinator-source-after.json",
+          "kind": "log",
+          "sha256": "92e7a4814af699cd740778024880ef0b853f214eca147ec1ea2a0c65a77a7d96"
+        },
+        {
+          "path": "evidence/coordinator-probe-inventory.json",
+          "kind": "log",
+          "sha256": "959db746352d7a4ae3a6d2bc90e19afdeeed714c2eebbccb7709d94abb4a7527"
+        },
+        {
+          "path": "evidence/coordinator-resource-plan.json",
+          "kind": "log",
+          "sha256": "8f5c07bc80a564291a36bd1d95db8e171710f20938798a439fd920b88d52d9da"
+        },
+        {
+          "path": "evidence/coordinator-second-meeting_test.go",
+          "kind": "log",
+          "sha256": "b00ee4305aefb83a1a4dbadfcea05fd2e31ca81484f5dcdaeb0ef9adc33531b8"
+        }
+      ],
+      "defect": ""
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/cloud-sql-isolated/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "/root/sdd_server_audit"
+      },
+      "startedAt": "2026-11-01T14:12:50.983531Z",
+      "finishedAt": "2026-11-01T14:19:49.697860+00:00",
+      "actual": "Memory: свежая матрица1k/10k/100k × limit1/50/100 ×6 directions; точные последовательности/ASC/hasMore, anchor и alias guards. SQL: та же матрица с20samples/config и tail bounds; stock SQL отдельно проверяет gaps/hasMore/around. Stock memory sparse positions >2^53/uint64 max, invalid limits/incompatible cursors, overflow rollback и cancellation; HTTPS extra probe:400 для0/101/overflow/negative/incompatible,404 missing own around,403 foreign initial/after/around. Bounded Store spy требует access до private чтения. Stock memory clone/snapshot/rollback/transaction-close/cancel и SQL snapshot/rollback+index/LIMIT/EXPLAIN на1k/10k/100k. Свежая облачная матрица54config ×20samples: p95 0.253–2.246ms, бюджет100ms. Оценка включает transaction+SQL+JSON decode, не network E2E.",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "62c4560b5269f6c820b4fcbd43c0699ee38a85147f4d35d78788027d2cc75b1d"
+        },
+        {
+          "path": "evidence/page-runtime.jsonl",
+          "kind": "log",
+          "sha256": "695abda5147263420e1601282f02cb4bbba07cad0f5def4ee4e7b573a2327c33"
+        },
+        {
+          "path": "evidence/page-supplement.jsonl",
+          "kind": "log",
+          "sha256": "81b39d8959af280bf8290e64715b7e906b058e9d1d8e222f9e8be48419d91aec"
+        },
+        {
+          "path": "evidence/page-current-matrix.jsonl",
+          "kind": "log",
+          "sha256": "5098ca5b08bc3c84c0cb3358eb896c5ad23a067068ea6c879e3d3d32a34581c4"
+        },
+        {
+          "path": "evidence/page-cloud-current.log",
+          "kind": "log",
+          "sha256": "67cf6a6f830e90c1ebddc41fb64063b3b4c8e9edac1b9f9c2453d0f70e2d1212"
+        },
+        {
+          "path": "evidence/page-stock-sql.log",
+          "kind": "log",
+          "sha256": "58113b3d8bb7767605acc146a3021dc64ff13bff5a46643d7caf809a6a9178cd"
+        },
+        {
+          "path": "evidence/chat-source-after.json",
+          "kind": "log",
+          "sha256": "218d2d50fc0d8028aeee8ad2b6b65637b09220daabe6a0fdf636062871567145"
+        }
+      ],
+      "defect": ""
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-11-01T13:49:53.097Z",
+      "finishedAt": "2026-11-01T13:50:06.352Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793540993098.txt",
+          "kind": "log",
+          "sha256": "e4fb740a8ce0b5db314fa037bc299016f19810efc81318fff4a502e7d7b256ff"
+        }
+      ]
+    }
+  ]
+}

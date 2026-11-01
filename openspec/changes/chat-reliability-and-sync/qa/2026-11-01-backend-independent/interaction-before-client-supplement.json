@@ -1,0 +1,191 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "createdAt": "2026-11-01T14:19:49.689164+00:00",
+  "sourceHash": "eff7cb20a91b9baf51e8b9fade927e3cc4442b40f446b3fe2ae6b0f283c9143e",
+  "catalogHash": "84856bf42ba9493c4f47f9152522aa73cd69705d3e968815a9e12a45bcc11b2e",
+  "method": "Исторические probes использованы только как неизменённые методы. Все описанные runtime/SQL результаты сгенерированы заново после текущего feature-plan. Дополнительные QA-only probes имеют отдельный overlay/source inventory.",
+  "checks": [
+    {
+      "caseId": "TC-CHAT-CAPABILITIES",
+      "status": "blocked",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Пройти feed/send/retry прежним клиентом на новом сервере и новым при capabilities404/disabled.",
+          "expected": "Старые DTO/права/ID сохранены, новый клиент использует единственный legacy HTTP путь; read UI отсутствует без поддержки.",
+          "actual": "Backend PASS:disabled capabilities200(sync=false/read_state=false), old feed/send/retry сохраняют DTO/ID/sequence. Stock HTTP disabled sync404 и signed/read-state gating проверены. Новый клиент с capabilities404/disabled и отсутствующим read UI не запускался."
+        },
+        {
+          "action": "Имитировать rollback на writer без journal и последующее включение с новым epoch.",
+          "expected": "Нужен новый snapshot/reset; изменения периода rollback не пропущены, история не удалена.",
+          "actual": "Cloud PASS: test-only no-journal writer + own-meeting epoch replacement. Старый cursor410, fresh snapshot содержит сообщение rollback interval и прежнюю историю, disabled compatible binary всё ещё journalizes новые команды; reenable не теряет baseline. Production rollback не выполнялся."
+        }
+      ],
+      "selectors": [
+        "TestIndependentReadDisableReenablePreservesBaseline",
+        "TestChatSyncHTTP"
+      ],
+      "gap": "Нужен точный текущий клиентский artifact: capabilities404/disabled, один legacy путь, readUI отсутствует; серверный harness не доказывает действия клиента.",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-IDEMPOTENCY-LOOKUP",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Отправить text и publish media, потерять ACK, повторить до и после expiry receipt.",
+          "expected": "Один исходный entry ID/sequence; direct lookup text tuple и media entry_id, полный Feed не вызывается. Media attachments и legacy captionless hash сохранены.",
+          "actual": "10k history; fullFeed deliberately errors. Photo legacy/no-caption→modern empty hash, file+caption и text повторены до/после31-day receipt expiry: тот же ID/sequence, attachments сохранены. Первый ACK игнорируется вызывающим тестом."
+        },
+        {
+          "action": "Изменить text/caption, использовать чужого автора/встречу и отозвать доступ перед повтором.",
+          "expected": "Конфликты и отказ прав сохраняются; receipt не обходит access check, чужая запись не раскрывается.",
+          "actual": "Изменённый text конфликтует; stock media test изменяет caption и получает media_already_published. Wrong author/meeting и revoked RSVP запрещены. DeniedReader/Writer запрещают private lookup до access."
+        },
+        {
+          "action": "Проверить memory clone/rollback и SQL индексированный lookup при 100k истории.",
+          "expected": "Возвращённая копия не меняет store; rollback атомарен; стоимость lookup не зависит от полной десериализации истории.",
+          "actual": "Memory clone/rollback/snapshot guards пройдены required suite; direct text tuple и media entry lookup проверены stock SQL на sparse/max positions, rollback и индексном EXPLAIN при100k. Новая матрица memory/SQL не меняет эти данные."
+        }
+      ],
+      "selectors": [
+        "TestIndependentRepeatPhotoFileTextLookupAndLegacyHash",
+        "TestFeedAndTextRetryNeverReadFullHistory",
+        "TestMediaRetryNeverReadsFullHistory"
+      ],
+      "gap": "Allowed scope uses synthetic media; реальные пользовательские вложения не читались.",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Запросить initial, after=0/tail, before first/tail и around существующей записи; проверить limit+1 и order.",
+          "expected": "Ближайшие страницы без дыр/дублей, ASC результат, правильные направления has_more; пустой after пуст, tail согласован с snapshot.",
+          "actual": "Memory: свежая матрица1k/10k/100k × limit1/50/100 ×6 directions; точные последовательности/ASC/hasMore, anchor и alias guards. SQL: та же матрица с20samples/config и tail bounds; stock SQL отдельно проверяет gaps/hasMore/around."
+        },
+        {
+          "action": "Проверить значения выше 2^53, uint64 max/overflow, limit 0/101, несовместимые cursors, missing around, cancel и чужой доступ.",
+          "expected": "Точность decimal сохранена; некорректное отклонено, cancellation завершает чтение, права проверены до приватных данных.",
+          "actual": "Stock memory sparse positions >2^53/uint64 max, invalid limits/incompatible cursors, overflow rollback и cancellation; HTTPS extra probe:400 для0/101/overflow/negative/incompatible,404 missing own around,403 foreign initial/after/around. Bounded Store spy требует access до private чтения."
+        },
+        {
+          "action": "Изменить возвращённую memory-копию, сделать rollback; выполнить SQL EXPLAIN и trace ограниченного чтения.",
+          "expected": "Store не изменён копией/rollback. Нет полного чтения/декодирования JSON ради страницы, есть индекс/LIMIT; p95 страницы≤100мс в записанном окружении.",
+          "actual": "Stock memory clone/snapshot/rollback/transaction-close/cancel и SQL snapshot/rollback+index/LIMIT/EXPLAIN на1k/10k/100k. Свежая облачная матрица54config ×20samples: p95 0.253–2.246ms, бюджет100ms. Оценка включает transaction+SQL+JSON decode, не network E2E."
+        }
+      ],
+      "selectors": [
+        "TestIndependentCurrentMemoryHistoryMatrix",
+        "TestIndependentCurrentFeedHTTPInvalidAndScope",
+        "TestFeedWindowBoundsLookupsAndCopies",
+        "TestFeedAroundBoundsAndCopies",
+        "TestFeedAndTextRetryNeverReadFullHistory"
+      ],
+      "gap": "",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-99A5AEEE",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Отправить marker за tail, несуществующий, overflow uint64 и для недоступной встречи.",
+          "expected": "Запрос отклонён без изменения marker/unread и без раскрытия чужой позиции.",
+          "actual": "HTTPS marker:0/01/+1/-1/decimal/overflow/max beyond actual tail422; outsider403. Memory sparse gap/system/uint64 cases проверяют допустимую max позицию без потери точности и отклоняют несуществующие позиции. Subsequent valid state/unread подтверждён."
+        },
+        {
+          "action": "Повторить допустимую позицию после отзыва RSVP.",
+          "expected": "Отказ по текущим правам предшествует выдаче read state.",
+          "actual": "HTTPS после NotGoing и delayed request, завершённого после revoke, возвращает403; allowed marker не восстанавливает доступ. Private read state в отказе отсутствует."
+        }
+      ],
+      "selectors": [
+        "TestIndependentReadSparseUint64MessageBoundary",
+        "TestIndependentReadHTTPBoundaryAndLifecycle",
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "gap": "",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-READ-STATE-E32551D3",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Запросить readers как A, B и X, включая cursor следующей страницы.",
+          "expected": "A получает пустое состояние, неавтор/посторонний — отказ без чужих markers.",
+          "actual": "Author empty readers до actual marker. Nonauthor/outsider403, включая сохранённый/forged cursor. Pagination проверяет current members после revoke/delete и scope/expiry cursors."
+        },
+        {
+          "action": "Отправить receipt query со своими 100 ID, затем 101 и чужим ID.",
+          "expected": "Допустимый batch ограничен; превышение/чужое сообщение отклонены, персональные данные не раскрыты.",
+          "actual": "HTTPS собственные100 ID200;101 ID422; batch с чужим403 без partial receipts. Counter/reader pages не раскрывают foreign markers."
+        },
+        {
+          "action": "Повторить свой receipt query с uppercase UUID и с дубликатом того же UUID в другом регистре.",
+          "expected": "Валидный uppercase UUID возвращает тот же canonical ID и count; mixed-case дубликат отклоняется без частичного ответа.",
+          "actual": "Uppercase UUID даёт canonical ID/count; mixed-case duplicate422. Все проверки идут через реальные HTTPS handlers."
+        }
+      ],
+      "selectors": [
+        "TestIndependentFinalHTTP150UUIDAndScope",
+        "TestIndependentReadHTTPBoundaryAndLifecycle",
+        "TestIndependentReadersPaginationRevokeAndScopedCursor"
+      ],
+      "gap": "",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-SECURITY-0E0CB54C",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Отозвать сессию, затем отдельно довести её до expiry.",
+          "expected": "Подписки/соединение закрыты; переаутентификация нужна, периодическая проверка не реже минуты и expiry не продлеваются автоматически.",
+          "actual": "Два отдельных живых WS сценария: explicit logout/revoke и TTL2s. Активный socket закрывается3503 за≤4s, expiry не продлевается. Stock adapter regression и documented45s periodic boundary включены required race suite."
+        },
+        {
+          "action": "Вернуть поздний hint/HTTP callback и попытаться переподключиться.",
+          "expected": "Авторизованные данные не выдаются и не восстанавливаются у клиента.",
+          "actual": "После close commit+dispatch late hint; capabilities/sync/realtime reconnect401. Логи/errors/hints не содержат synthetic private body/token/cursor. Client UI/cache этим не проверяются; это заявленный backend environment."
+        }
+      ],
+      "selectors": [
+        "TestIndependentRepeatSessionExpiryRevokeAndLateRequests",
+        "TestIndependentRepeatHintThenDelayedHTTPRevocation"
+      ],
+      "gap": "",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    },
+    {
+      "caseId": "TC-CHAT-SYNC-THROUGH",
+      "status": "blocked",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Начать sync с through=T; во время получения страниц добавить T+1, повторить и переставить ответы.",
+          "expected": "Текущий цикл заканчивается на T; T+1 приходит следующим циклом; projection versions защищают от отката.",
+          "actual": "Backend PASS:105changes→100/5, fixed through=T. CommitT+1 между страницами приходит только следующим циклом. Discard/retry последней страницы даёт тот же cursor и5changes. Projection versions проверены stock sync rules."
+        },
+        {
+          "action": "Прервать merge/storage apply последней страницы и продолжить после восстановления.",
+          "expected": "Cursor не продвинут впереди данных; повтор безопасен, has_more исчерпывается, один sync в работе.",
+          "actual": "Backend response replay PASS, но фактический сбой client merge/storage apply, порядок ответов в client owner и единственный sync in-flight этим Go HTTP harness не наблюдаются. Полный shared expected остаётся blocked."
+        }
+      ],
+      "selectors": [
+        "TestIndependentFinalHTTPFixedThroughAndIdempotentACK",
+        "TestChatSyncHTTP"
+      ],
+      "gap": "Нужен свежий действующий клиентский owner с fault на storage apply последней страницы, reorder/retry и измерением one-sync; не подменять его stateless server cursor replay.",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    }
+  ]
+}

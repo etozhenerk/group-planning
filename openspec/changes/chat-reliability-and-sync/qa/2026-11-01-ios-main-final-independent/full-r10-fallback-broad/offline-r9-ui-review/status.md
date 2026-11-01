@@ -1,0 +1,7 @@
+# Offline поиск по историческим r9 кадрам
+
+Рассмотрены12 original actual кадров8f49: sheet-controls-emoji-categories, design-emoji, telegram-emoji-landscape, refresh-reaction, telegram-reaction-people, design-menu, chat-keyboard-long-press, design-action-date, design-action-date-large-text, sheet-date-picker, sheet-date-after-picker, time-sheet. ИсходныеPNG не кадрировались/не изменялись. Сверены chat-actions.md и nativeSVG/categoryButton, ComposerMenu, ActionDateField; это поиск замечаний, НЕ новыйPASS.
+
+Подтверждённого realneedsfix пока не найдено. Категории используют23frame/44targets сoverlayunderline безизмененияframe; левыйкластер44targets не равен требованию растянуть всюстроку. Nativeкалендарь показываетполныйноябрь, одинаковыйфонпанели, selectedrowуwheel — nativeиндикация, не старыйвнешнийсерыйпрямоугольник. Окончаниеопроса вdate-form безднянедели; weekdayвариантов разрешёнraw. Quickreaction привязанкbubble, people отдельнаякомпактнаяsheet; fullreactionpicker отдельныйкадр среди204named не найден — unknown/evidencegap, неPASS. Движение нельзяпринятьпостатичномуPNG.
+
+Пробные rawreference снимки published-plus/published-date-form сняты сразу послеclick и попали вCSStransition. Они НЕ settled reference и НЕ должныиспользоватьсядляdesignPASS. Подготовленный leaf published-keyboard-emoji.png также transitional (dock ещёневиден). Ихprovenance/файлы сохраненыкакpreparation; передбудущейприёмкойнуженsettled capture по действующимraw+28.10controls correction. Пользовательзаканчиваетсегодня; дальнейшиепересъёмки/controlsНЕначинались.

@@ -42,6 +42,7 @@ class ChatLifecycleTests {
     @Test fun snapshotSubscribeCatchesUpWithoutIdlePollingAndStopsInBackground() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login(sync = true, realtime = true)
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         val transport = FakeRealtime()
         val repository = FeedRepository(h.session, h.outbox, realtime = transport)
         val state = MutableStateFlow(FeedState())
@@ -77,6 +78,7 @@ class ChatLifecycleTests {
     @Test fun offlineTransportUsesOneBoundedFallbackAndSubscribeStopsIt() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login(sync = true, realtime = true)
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         val realtime = FakeRealtime()
         val repository = FeedRepository(h.session, h.outbox, realtime = realtime)
         val state = MutableStateFlow(FeedState())
@@ -108,6 +110,19 @@ class ChatLifecycleTests {
         advanceTimeBy(1)
         runCurrent()
         assertEquals(count + 1, h.transport.requests.size)
+        listOf(3_000L, 6_000L, 12_000L, 30_000L, 30_000L)
+            .forEachIndexed { index, interval ->
+                h.transport.enqueue(
+                    "${h.path}/sync",
+                    apiJson.encodeToString(ChatFixtures.changes(cursor = "fallback-$index")),
+                )
+                advanceTimeBy(interval - 1)
+                runCurrent()
+                assertEquals(count + index + 1, h.transport.requests.size)
+                advanceTimeBy(1)
+                runCurrent()
+                assertEquals(count + index + 2, h.transport.requests.size)
+            }
         h.transport.enqueue(
             "${h.path}/sync",
             apiJson.encodeToString(ChatFixtures.changes(cursor = "c3")),
@@ -124,6 +139,7 @@ class ChatLifecycleTests {
     @Test fun expiredCursorReplacesWindowAndKeepsDraftThenRevocationClearsDisk() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login(sync = true, realtime = true)
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         val realtime = FakeRealtime()
         val repository = FeedRepository(h.session, h.outbox, realtime = realtime)
         val state = MutableStateFlow(FeedState())

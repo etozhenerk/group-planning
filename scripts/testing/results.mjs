@@ -58,13 +58,23 @@ export const inspectRun = async (root, plan, run, directory, options = {}) => {
   if (run.planHash !== hashPlan(plan)) throw new Error('Stale/tampered run plan');
   const seen = new Set();
   const pending = [];
+  const outside = [];
+  const required = options.requiredChecks;
+  if (required && (plan.purpose !== 'feature' || !required.length ||
+      new Set(required).size !== required.length || required.some((id) => !plan.expected.some((e) => e.id === id))))
+    throw new Error('Invalid feature task check scope');
   for (const result of run.checks) {
     const expected = plan.expected.find((e) => e.id === result.id);
     if (!expected || seen.has(result.id)) throw new Error(`Unknown/duplicate check: ${result.id}`);
     seen.add(result.id);
     checkTimes(result.startedAt, result.finishedAt, plan);
     const kinds = await checkEvidence(directory, result.evidence);
-    if (result.status !== 'passed') { pending.push(`${result.id}: ${result.status}`); continue; }
+    if (result.status !== 'passed') {
+      const reason = `${result.id}: ${result.status}`;
+      pending.push(reason);
+      if (required && !required.includes(result.id)) outside.push(reason);
+      continue;
+    }
     if (expected.mode === 'manual') {
       if (!['agent', 'human'].includes(result.executor.kind) || result.executor.id === plan.implementer)
         throw new Error(`Not independent manual verification: ${result.id}`);
@@ -77,7 +87,12 @@ export const inspectRun = async (root, plan, run, directory, options = {}) => {
       throw new Error(`Missing raw automated result: ${result.id}`);
     } else await checkAutomated(catalog, plan, expected, result, directory);
   }
-  for (const expected of plan.expected) if (!seen.has(expected.id)) pending.push(`${expected.id}: not_run`);
+  for (const expected of plan.expected) if (!seen.has(expected.id)) {
+    const reason = `${expected.id}: not_run`;
+    pending.push(reason);
+    if (required && !required.includes(expected.id)) outside.push(reason);
+  }
+  const pendingCheckCount = pending.length;
   const suites = new Set();
   for (const suite of run.suites) {
     if (!plan.suites.includes(suite.id) || suites.has(suite.id)) throw new Error(`Unknown/duplicate suite: ${suite.id}`);
@@ -90,6 +105,17 @@ export const inspectRun = async (root, plan, run, directory, options = {}) => {
     if (suite.status !== 'passed') pending.push(`${suite.id}: ${suite.status}`);
   }
   for (const id of plan.suites) if (!suites.has(id)) pending.push(`${id}: not_run`);
+  if (required) {
+    const ids = new Set(required);
+    const scoped = [
+      ...pending.slice(0, pendingCheckCount).filter((p) => !outside.includes(p)),
+      ...pending.slice(pendingCheckCount),
+    ];
+    if (options.ready && scoped.length) throw new Error(`Functional acceptance incomplete: ${scoped.join('; ')}`);
+    return { ready: scoped.length === 0, wholeReady: pending.length === 0,
+      expected: ids.size, checked: [...seen].filter((id) => ids.has(id)).length,
+      pending: scoped, outsideScope: outside };
+  }
   if (options.ready && pending.length) throw new Error(`Functional acceptance incomplete: ${pending.join('; ')}`);
   return { ready: pending.length === 0, expected: plan.expected.length, checked: seen.size, pending };
 };

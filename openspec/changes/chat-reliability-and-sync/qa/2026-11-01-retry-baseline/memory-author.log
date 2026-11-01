@@ -1,0 +1,28 @@
+=== RUN   TestSDDRetryQuantitativeMemory
+=== RUN   TestSDDRetryQuantitativeMemory/1000
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=text receipt_expired=false samples=20 p50_ms=0.056 p95_ms=0.213 max_ms=0.329 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=photo.png receipt_expired=false samples=20 p50_ms=0.049 p95_ms=0.224 max_ms=0.247 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=file.txt receipt_expired=false samples=20 p50_ms=0.041 p95_ms=0.239 max_ms=0.244 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=text receipt_expired=true samples=20 p50_ms=0.043 p95_ms=0.289 max_ms=0.296 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=photo.png receipt_expired=true samples=20 p50_ms=0.049 p95_ms=0.294 max_ms=0.339 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=1000 path=file.txt receipt_expired=true samples=20 p50_ms=0.047 p95_ms=0.257 max_ms=0.258 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+=== RUN   TestSDDRetryQuantitativeMemory/10000
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=text receipt_expired=false samples=20 p50_ms=0.619 p95_ms=1.205 max_ms=1.309 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=photo.png receipt_expired=false samples=20 p50_ms=0.648 p95_ms=1.134 max_ms=1.147 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=file.txt receipt_expired=false samples=20 p50_ms=0.638 p95_ms=1.163 max_ms=1.279 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=text receipt_expired=true samples=20 p50_ms=0.632 p95_ms=1.162 max_ms=1.221 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=photo.png receipt_expired=true samples=20 p50_ms=0.766 p95_ms=1.139 max_ms=1.206 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=10000 path=file.txt receipt_expired=true samples=20 p50_ms=0.704 p95_ms=1.181 max_ms=1.182 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+=== RUN   TestSDDRetryQuantitativeMemory/100000
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=text receipt_expired=false samples=20 p50_ms=4.402 p95_ms=9.544 max_ms=10.310 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=photo.png receipt_expired=false samples=20 p50_ms=3.949 p95_ms=8.948 max_ms=9.178 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=file.txt receipt_expired=false samples=20 p50_ms=3.737 p95_ms=9.203 max_ms=9.434 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=text receipt_expired=true samples=20 p50_ms=3.929 p95_ms=8.941 max_ms=9.306 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=photo.png receipt_expired=true samples=20 p50_ms=3.644 p95_ms=8.909 max_ms=8.998 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+    sdd_retry_baseline_test.go:63: RETRY_BASELINE adapter=memory history=100000 path=file.txt receipt_expired=true samples=20 p50_ms=3.475 p95_ms=8.886 max_ms=9.101 max_feed_lookup_calls=1 max_feed_rows_returned=1 includes=application+transaction+lookup+decode full_feed=forbidden
+--- PASS: TestSDDRetryQuantitativeMemory (1.49s)
+    --- PASS: TestSDDRetryQuantitativeMemory/1000 (0.02s)
+    --- PASS: TestSDDRetryQuantitativeMemory/10000 (0.11s)
+    --- PASS: TestSDDRetryQuantitativeMemory/100000 (1.37s)
+PASS
+ok  	github.com/etozhenerk/group-planning/backend/internal/storage/postgres	1.859s

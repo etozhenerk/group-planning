@@ -5,6 +5,7 @@ package dev.groupplanning.android.feed
 import dev.groupplanning.android.data.api.WireResponse
 import dev.groupplanning.android.data.api.apiJson
 import dev.groupplanning.android.state.feed.FeedViewModel
+import dev.groupplanning.android.support.Fixtures
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class FeedLoadingTests {
     @Test fun postAndLatestMetadataNeverSkipUnreadPagesAndHistoryKeepsCursor() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page(10, 11, more = true, latest = 99)
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         val active = backgroundScope.launch { model.runActive() }
@@ -69,6 +71,7 @@ class FeedLoadingTests {
     @Test fun lateHistoryCannotReturnAfterRevocationAndDiskIsCleared() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page(10, more = true)
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
         backgroundScope.launch { model.runActive() }
@@ -92,6 +95,7 @@ class FeedLoadingTests {
     @Test fun backgroundStopsPollingAndForegroundReadsImmediatelyWithBackoff() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.transport.enqueue("${h.path}/feed", "", 503)
         h.page(1)
         val model = FeedViewModel(h.id, h.repository, backgroundScope)
@@ -111,6 +115,7 @@ class FeedLoadingTests {
         advanceTimeBy(60_000)
         assertEquals(paused, h.transport.requests.size)
         h.foreground()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
         h.page(2)
         active = backgroundScope.launch { model.runActive() }
         runCurrent()

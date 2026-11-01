@@ -9,7 +9,6 @@ import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -24,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.brand.BrandMotion
 import java.io.File
@@ -35,9 +35,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class EntryUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
     private val device = UiDevice.getInstance(instrumentation)
@@ -103,6 +105,7 @@ class EntryUiTests {
             compose.onNodeWithText("Создать встречу").performClick()
             waitFor("create-form")
             compose.onNodeWithContentDescription("Название").performTextInput("Настолки")
+            compose.onNodeWithContentDescription("Название").assertTextContains("Настолки")
             device.pressBack()
             device.pressBack()
             compose.onNodeWithText("Сохранить и выйти").performClick()
@@ -121,7 +124,12 @@ class EntryUiTests {
         launch("list-error").use {
             waitText("Не удалось получить встречи")
             screenshot("list-error")
-            compose.onNodeWithText("Повторить").performClick()
+            compose.onNodeWithText("Повторить").performSemanticsAction(
+                SemanticsActions.OnClick,
+            ) { click ->
+                QaResponseGate.releaseListError()
+                check(click())
+            }
             waitText("С чего начнём?")
         }
     }
@@ -144,10 +152,10 @@ class EntryUiTests {
             compose.onNodeWithTag("time-confirm").performClick()
             screenshot("create")
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
-            waitText("Повторить сохранение")
+            waitText(context.getString(R.string.create_retry))
             screenshot("create-retry")
             activity.recreate()
-            waitText("Повторить сохранение")
+            waitText(context.getString(R.string.create_retry))
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
             waitText("Вечер настольных игр")
             compose.waitUntil(10_000) {

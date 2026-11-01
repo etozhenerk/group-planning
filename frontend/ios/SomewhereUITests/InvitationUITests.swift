@@ -14,6 +14,7 @@ final class InvitationUITests: XCTestCase {
             "-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU",
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryL",
         ]
+        ExperienceScreenshot.configure(app)
         app.launch()
         return app
     }

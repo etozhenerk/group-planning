@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "account-cloud-sql-independent-20261101",
+  "purpose": "feature",
+  "component": "backend",
+  "createdAt": "2026-11-01T13:46:58.472Z",
+  "implementer": "account-postgres-implementation",
+  "catalogHash": "84856bf42ba9493c4f47f9152522aa73cd69705d3e968815a9e12a45bcc11b2e",
+  "sourceHash": "eff7cb20a91b9baf51e8b9fade927e3cc4442b40f446b3fe2ae6b0f283c9143e",
+  "selectedCases": [
+    "TC-ACCOUNT-1C58ABFB",
+    "TC-CHAT-PAGE-BOUNDS"
+  ],
+  "expected": [
+    {
+      "id": "TC-ACCOUNT-1C58ABFB/cloud-sql-isolated/manual",
+      "caseId": "TC-ACCOUNT-1C58ABFB",
+      "environment": "cloud-sql-isolated",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-PAGE-BOUNDS/cloud-sql-isolated/manual",
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "environment": "cloud-sql-isolated",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "backend-unit-integration"
+  ],
+  "environments": [
+    {
+      "id": "cloud-sql-isolated",
+      "profile": "api",
+      "platform": "backend",
+      "application": "product",
+      "url": "postgresql+unix:///somewhere_integration",
+      "build": "postgres-test-sha256:384028fc984e2f8086922ee4898f7829acb996a7d9d7029dda93519e2bb411fd",
+      "os": "Ubuntu24.04/PostgreSQL16.15",
+      "device": "158.160.246.254 non-superuser somewhere_migrator",
+      "locale": "ru-RU",
+      "timezone": "UTC / fixture Europe/Moscow",
+      "data": "synthetic stock SQL fixtures; database marker somewhere_sdd_20261101_76a964f2f22e",
+      "backend": "MAIN 6100ea0af422a6647a3b48e98eaa403183e6c04b frozen backend/contracts; Go1.27.2"
+    }
+  ],
+  "artifact": null
+}

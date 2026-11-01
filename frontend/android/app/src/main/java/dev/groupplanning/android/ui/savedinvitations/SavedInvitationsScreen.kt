@@ -35,7 +35,7 @@ internal fun SavedInvitationsScreen(
     Column(Modifier.fillMaxSize()) {
         Text(
             stringResource(R.string.home_invitations),
-            Modifier.testTag("invitations-heading")
+            Modifier.fillMaxWidth().testTag("invitations-heading")
                 .padding(
                     start = DesignTokens.spaceS20,
                     end = DesignTokens.spaceS20,

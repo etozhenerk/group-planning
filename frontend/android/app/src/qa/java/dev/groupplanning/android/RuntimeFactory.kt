@@ -27,6 +27,7 @@ internal object RuntimeFactory {
         val origin: String,
         val certificate: String,
         val cases: Map<String, Credential>,
+        val designDates: Map<String, String> = emptyMap(),
     )
 
     fun create(context: Context, intent: Intent): ClientRuntime {
@@ -78,7 +79,7 @@ internal object RuntimeFactory {
                 ) {
                     throw IOException("Offline authentication fixture")
                 }
-                QaResponseGate.before(chain.request())
+                QaResponseGate.before(chain.request(), scenario)
                 QaAlbumDownloadProbe.before(chain.request())
                 val response = chain.proceed(
                     chain.request().newBuilder().header(
@@ -87,6 +88,9 @@ internal object RuntimeFactory {
                     ).build(),
                 )
                 try {
+                    if (scenario == "list-error") {
+                        QaResponseGate.observeListFailure(chain.request(), response.code)
+                    }
                     QaResponseGate.after(chain.request())
                     QaAlbumDownloadProbe.after(response)
                     if (scenario ==
@@ -116,7 +120,7 @@ internal object RuntimeFactory {
             realtime = QaChatProbe.observe(
                 dev.groupplanning.android.data.realtime.CentrifugeRealtime(origin, http),
             ),
-            namespace = if (scenario == "invite-rsvp-reentry") "invite-rsvp" else scenario,
+            namespace = QaClientTestState.namespace(context, scenario),
             coverSelection = if (scenario.startsWith("cover-") &&
                 scenario != "cover-system"
             ) {

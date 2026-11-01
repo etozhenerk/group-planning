@@ -1,9 +1,11 @@
 package dev.groupplanning.android.state.feed
 
 import dev.groupplanning.android.data.api.ClientFailure
+import dev.groupplanning.android.data.api.FailureKind
 import dev.groupplanning.android.data.api.models.ChatCapabilities
 import dev.groupplanning.android.data.api.models.ChatProjection
 import dev.groupplanning.android.data.api.models.FeedEntry
+import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.realtime.ChatSignal
 import dev.groupplanning.android.data.repository.FeedRepository
@@ -67,7 +69,6 @@ internal class FeedSync(
                 if (event == ChatSignal.Changed && state.value.ready) delay(100)
                 val success = refreshNow(access)
                 if (success) {
-                    if (!sender.state.value.ready) sender.open(access)
                     if (verified) sender.resume()
                 }
                 val supported = capabilities?.realtime == true
@@ -136,7 +137,7 @@ internal class FeedSync(
             while (isActive) {
                 signals.send(ChatSignal.Refresh)
                 delay(jitter(wait))
-                wait = (wait * 2).coerceAtMost(30_000L)
+                wait = if (wait < 12_000L) wait * 2 else 30_000L
             }
         }
     }
@@ -146,9 +147,18 @@ internal class FeedSync(
         try {
             if (verifyRequested) {
                 repository.chat.verify(access)
+                val meeting = repository.details(access)
+                if (meeting.organizerId != access.profile.id &&
+                    meeting.myRsvp != RsvpAnswer.Going
+                ) {
+                    throw ClientFailure(FailureKind.Http, 403)
+                }
                 verifyRequested = false
                 verified = true
             }
+            // Restore verified local intent while canonical history is unavailable.
+            // Sending remains suspended until a successful canonical reconciliation below.
+            if (!sender.state.value.ready) sender.open(access, sendingEnabled = false)
             if (capabilities == null) capabilities = repository.chat.capabilities(access)
             state.value = state.value.copy(readEnabled = capabilities?.readState == true)
             if (capabilities?.sync == true) sync(access) else legacy(access)

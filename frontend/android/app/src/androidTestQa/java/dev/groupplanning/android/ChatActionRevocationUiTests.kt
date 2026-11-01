@@ -1,7 +1,6 @@
 package dev.groupplanning.android
 
 import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -9,6 +8,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import dev.groupplanning.android.data.api.models.RsvpAnswer
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
@@ -17,9 +17,11 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 class ChatActionRevocationUiTests {
-    @get:Rule val appLocale: TestRule = QaAppLocaleRule()
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
 
-    @get:Rule val compose = createEmptyComposeRule()
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()
@@ -27,6 +29,8 @@ class ChatActionRevocationUiTests {
     @Test fun serverWithdrawalFromAnotherDeviceClosesOpenSheetAndClearsPrivateDraft() {
         val otherDevice = SecondDeviceRsvp(fixture, "invite-rsvp")
         try {
+            // Each test starts with its own required RSVP, even after a prior case failed.
+            otherDevice.respond(fixture.token, RsvpAnswer.NotGoing)
             fixture.launch("invite-rsvp", fixture.token).use {
                 join()
                 compose.onNodeWithContentDescription(

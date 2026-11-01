@@ -1,0 +1,47 @@
+{
+  "executor": "/root/sdd_server_audit",
+  "checkedAt": "2026-11-01T14:56:09.796552+00:00",
+  "checks": [
+    {
+      "caseId": "TC-ACCOUNT-1C58ABFB",
+      "platform": "backend",
+      "status": "passed",
+      "action": "операция завершилась ошибкой при обработке одной из встреч",
+      "expected": "профиль, сессии и все встречи остаются в исходном состоянии",
+      "actual": "Реальный HTTP DELETE /api/v1/me → accounts.New → PostgreSQL AccountUpdate. SQL trigger на второй встрече проверяет отсутствие первой внутри transaction, затем nextval и SQLexception; HTTP500 без privateSQLdetails. Новый независимый pool:25business tables byte fingerprints/counts исходные, обеmeetings/profile/provider/2sessions/handoff сохранены;нетreceipt/tombstone/revocation. Затем штатныйretrycommit204,старыеsessions401,anonymousreceipt204,new same-subject account/session survives,operationsecretBearer401,25hreceipt401.",
+      "evidence": "sql/stdout.log",
+      "scope": "Synthetic HTTP+PostgreSQL integration, not real OAuth or client lifecycle."
+    },
+    {
+      "caseId": "TC-CHAT-PAGE-BOUNDS",
+      "status": "passed",
+      "platform": "backend",
+      "steps": [
+        {
+          "action": "Запросить initial, after=0/tail, before first/tail и around существующей записи; проверить limit+1 и order.",
+          "expected": "Ближайшие страницы без дыр/дублей, ASC результат, правильные направления has_more; пустой after пуст, tail согласован с snapshot.",
+          "actual": "Memory: свежая матрица1k/10k/100k × limit1/50/100 ×6 directions; точные последовательности/ASC/hasMore, anchor и alias guards. SQL: та же матрица с20samples/config и tail bounds; stock SQL отдельно проверяет gaps/hasMore/around."
+        },
+        {
+          "action": "Проверить значения выше 2^53, uint64 max/overflow, limit 0/101, несовместимые cursors, missing around, cancel и чужой доступ.",
+          "expected": "Точность decimal сохранена; некорректное отклонено, cancellation завершает чтение, права проверены до приватных данных.",
+          "actual": "Stock memory sparse positions >2^53/uint64 max, invalid limits/incompatible cursors, overflow rollback и cancellation; HTTPS extra probe:400 для0/101/overflow/negative/incompatible,404 missing own around,403 foreign initial/after/around. Bounded Store spy требует access до private чтения."
+        },
+        {
+          "action": "Изменить возвращённую memory-копию, сделать rollback; выполнить SQL EXPLAIN и trace ограниченного чтения.",
+          "expected": "Store не изменён копией/rollback. Нет полного чтения/декодирования JSON ради страницы, есть индекс/LIMIT; p95 страницы≤100мс в записанном окружении.",
+          "actual": "Stock memory clone/snapshot/rollback/transaction-close/cancel и SQL snapshot/rollback+index/LIMIT/EXPLAIN на1k/10k/100k. Свежая облачная матрица54config ×20samples: p95 0.253–2.246ms, бюджет100ms. Оценка включает transaction+SQL+JSON decode, не network E2E."
+        }
+      ],
+      "selectors": [
+        "TestIndependentCurrentMemoryHistoryMatrix",
+        "TestIndependentCurrentFeedHTTPInvalidAndScope",
+        "TestFeedWindowBoundsLookupsAndCopies",
+        "TestFeedAroundBoundsAndCopies",
+        "TestFeedAndTextRetryNeverReadFullHistory"
+      ],
+      "gap": "",
+      "cleanup": "Собственные httptest servers остановлены t.Cleanup, отдельный anchorSIGTERM; guarded own DB DROP remaining0, production PID/restart не изменены."
+    }
+  ]
+}

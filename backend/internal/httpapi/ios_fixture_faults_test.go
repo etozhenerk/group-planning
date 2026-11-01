@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync"
 	"testing"
 )
@@ -21,7 +22,7 @@ type iosFixtureFaults struct {
 func (f *iosFixtureFaults) handler(api http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		scenario := r.Header.Get("X-Somewhere-Test-Scenario")
-		if scenario == "invite-error" && r.Method == http.MethodPut {
+		if scenario == "invite-error" && r.Method == http.MethodPut && iosFixtureRSVPPath(r.URL.Path) {
 			f.respondLost(w, r, api)
 			return
 		}
@@ -124,4 +125,11 @@ func (f *iosFixtureFaults) respondLost(w http.ResponseWriter, r *http.Request, a
 
 	w.WriteHeader(reply.Code)
 	_, _ = w.Write(reply.Body.Bytes())
+}
+
+func iosFixtureRSVPPath(path string) bool {
+	parts := strings.Split(path, "/")
+
+	return len(parts) == 6 && parts[1] == "api" && parts[2] == "v1" &&
+		(parts[3] == "invitations" || parts[3] == "meetings") && parts[4] != "" && parts[5] == "rsvp"
 }
