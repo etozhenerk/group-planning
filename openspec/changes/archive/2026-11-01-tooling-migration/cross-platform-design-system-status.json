@@ -1,0 +1,105 @@
+{
+  "changeName": "cross-platform-design-system",
+  "schemaName": "spec-driven",
+  "planningHome": {
+    "kind": "repo",
+    "root": "/Users/misha/Documents/Codex/projects/group-planning",
+    "changesDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes",
+    "defaultSchema": "spec-driven"
+  },
+  "changeRoot": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system",
+  "artifactPaths": {
+    "proposal": {
+      "outputPath": "proposal.md",
+      "resolvedOutputPath": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/proposal.md",
+      "existingOutputPaths": [
+        "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/proposal.md"
+      ]
+    },
+    "specs": {
+      "outputPath": "specs/**/*.md",
+      "resolvedOutputPath": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/specs/**/*.md",
+      "existingOutputPaths": [
+        "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/specs/design-review/spec.md",
+        "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/specs/design-system/spec.md"
+      ]
+    },
+    "design": {
+      "outputPath": "design.md",
+      "resolvedOutputPath": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/design.md",
+      "existingOutputPaths": [
+        "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/design.md"
+      ]
+    },
+    "tasks": {
+      "outputPath": "tasks.md",
+      "resolvedOutputPath": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/tasks.md",
+      "existingOutputPaths": [
+        "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/cross-platform-design-system/tasks.md"
+      ]
+    }
+  },
+  "isPlanningComplete": true,
+  "isComplete": true,
+  "applyRequires": [
+    "tasks"
+  ],
+  "nextSteps": [
+    "All planning artifacts are complete. Run openspec instructions apply --change \"cross-platform-design-system\" --json to inspect implementation progress."
+  ],
+  "actionContext": {
+    "mode": "repo-local",
+    "sourceOfTruth": "repo",
+    "planningArtifacts": [
+      "proposal",
+      "specs",
+      "design",
+      "tasks"
+    ],
+    "linkedContext": [],
+    "allowedEditRoots": [
+      "/Users/misha/Documents/Codex/projects/group-planning"
+    ],
+    "requiresAffectedAreaSelection": false,
+    "constraints": [
+      "Repo-local change artifacts and implementation edits are scoped to this project."
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "proposal",
+      "outputPath": "proposal.md",
+      "status": "done",
+      "requires": []
+    },
+    {
+      "id": "specs",
+      "outputPath": "specs/**/*.md",
+      "status": "done",
+      "requires": [
+        "proposal"
+      ]
+    },
+    {
+      "id": "design",
+      "outputPath": "design.md",
+      "status": "done",
+      "requires": [
+        "proposal"
+      ]
+    },
+    {
+      "id": "tasks",
+      "outputPath": "tasks.md",
+      "status": "done",
+      "requires": [
+        "specs",
+        "design"
+      ]
+    }
+  ],
+  "root": {
+    "path": "/Users/misha/Documents/Codex/projects/group-planning",
+    "source": "nearest"
+  }
+}
