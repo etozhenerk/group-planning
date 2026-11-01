@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "web-composer-grow-20261101-v2",
+  "purpose": "feature",
+  "component": "web",
+  "createdAt": "2026-11-01T08:49:21.348Z",
+  "implementer": "implementation-team-root",
+  "catalogHash": "f0a3b23929371dfd70884c1b531974c89636bdb73303d9edb402eedff8479dfa",
+  "sourceHash": "fe575f1b97f277c15c95a4d5856089553adb61c7e7864d835957c9ff018b33ca",
+  "selectedCases": [
+    "TC-CHAT-OUTSIDE-KEYBOARD"
+  ],
+  "expected": [
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/web-desktop/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "web-desktop",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-CHAT-OUTSIDE-KEYBOARD/web-mobile/manual",
+      "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+      "environment": "web-mobile",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "web-chat-e2e",
+    "web-check",
+    "web-e2e",
+    "web-read-e2e",
+    "web-window-e2e"
+  ],
+  "environments": [
+    {
+      "id": "web-desktop",
+      "profile": "web-desktop",
+      "platform": "web",
+      "application": "product",
+      "url": "https://127.0.0.1:8444",
+      "build": "frozen demo bundle inventory sha256:11b5f356f8fa6b262b3f381e10aa2b4528c377eeccd495f6b0b019a26890e9a9",
+      "os": "macOS27.0.1",
+      "device": "Chromium/WebKit desktop 1440x900",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "Synthetic memory API and fake OAuth; one private QA meeting per test",
+      "backend": "Go TestBrowserFixture via browser-server.ts; local test-only HTTPS"
+    },
+    {
+      "id": "web-mobile",
+      "profile": "web-mobile",
+      "platform": "web",
+      "application": "product",
+      "url": "https://127.0.0.1:8444",
+      "build": "frozen demo bundle inventory sha256:11b5f356f8fa6b262b3f381e10aa2b4528c377eeccd495f6b0b019a26890e9a9",
+      "os": "macOS27.0.1",
+      "device": "Chromium/WebKit emulation 320x760 and390x900; actual mobile OS IME not claimed",
+      "locale": "ru-RU",
+      "timezone": "Europe/Moscow",
+      "data": "Synthetic memory API and fake OAuth; one private QA meeting per test",
+      "backend": "Go TestBrowserFixture via browser-server.ts; local test-only HTTPS"
+    }
+  ],
+  "artifact": null
+}

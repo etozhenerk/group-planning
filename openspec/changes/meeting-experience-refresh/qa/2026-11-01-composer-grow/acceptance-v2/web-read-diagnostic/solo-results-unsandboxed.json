@@ -1,0 +1,205 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.read.config.ts",
+      "--project=mobile-webkit",
+      "tests/42-chat-first-unread.spec.ts",
+      "--reporter=line,json",
+      "--output=/tmp/somewhere-sdd-webkit42-diagnostic/solo-output-unsandboxed"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/playwright.read.config.ts",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output-unsandboxed",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output-unsandboxed",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output-unsandboxed",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "1"
+      },
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [
+    {
+      "title": "42-chat-first-unread.spec.ts",
+      "file": "42-chat-first-unread.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ten thousand messages open around first unread without walking history and jump to real tail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:01:27.983Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "first-unread-window",
+                      "contentType": "application/json",
+                      "body": "eyJjb3VudCI6MTAwMDAsIm1hcmtlciI6IjUwMDIiLCJmaXJzdFVucmVhZCI6IjljNzQyYmZkLTRkZmUtNDFmNi05Nzk0LTY4NGI0ZGY3ZDEwMSIsIm9wZW5pbmdSZXF1ZXN0cyI6WyJodHRwczovLzEyNy4wLjAuMTo4NDU4L2FwaS92MS9tZWV0aW5ncy8xMTkyNzA5YS1iOWMyLTQ5NDYtOGI2Mi00OWNkNTdiNThiNTMvc3luYz9saW1pdD01MCIsImh0dHBzOi8vMTI3LjAuMC4xOjg0NTgvYXBpL3YxL21lZXRpbmdzLzExOTI3MDlhLWI5YzItNDk0Ni04YjYyLTQ5Y2Q1N2I1OGI1My9zeW5jP2N1cnNvcj1leUoySWpveExDSjFJam9pWXprME0yUXpPRE10WXpGaU9TMDBOamc1TFdGaU56VXRPVGRpWTJJeU1qSXpNMkpsSWl3aWJTSTZJakV4T1RJM01EbGhMV0k1WXpJdE5EazBOaTA0WWpZeUxUUTVZMlExTjJJMU9HSTFNeUlzSW1VaU9pSTJOMkkzTWpReU5DMDFOV0k0TFRRek1ESXRZV1JqTmkweE16UXhNV1U1WmpCa1pqa2lMQ0poSWpvaU1UQXdNRGNpTENKMElqb2lNQ0lzSW5naU9qRTNPVFF4TXprek1UTjkucmd5SlZkTDZBU28zTkY4X3NFNDZtTDNQM1FsVnlNOXBuTTMwOHBBd0ttdyZsaW1pdD0xMDAiLCJodHRwczovLzEyNy4wLjAuMTo4NDU4L2FwaS92MS9tZWV0aW5ncy8xMTkyNzA5YS1iOWMyLTQ5NDYtOGI2Mi00OWNkNTdiNThiNTMvc3luYz9jdXJzb3I9ZXlKMklqb3hMQ0oxSWpvaVl6azBNMlF6T0RNdFl6RmlPUzAwTmpnNUxXRmlOelV0T1RkaVkySXlNakl6TTJKbElpd2liU0k2SWpFeE9USTNNRGxoTFdJNVl6SXRORGswTmkwNFlqWXlMVFE1WTJRMU4ySTFPR0kxTXlJc0ltVWlPaUkyTjJJM01qUXlOQzAxTldJNExUUXpNREl0WVdSak5pMHhNelF4TVdVNVpqQmtaamtpTENKaElqb2lNVEF3TURjaUxDSjBJam9pTUNJc0luZ2lPakUzT1RReE16a3pNVE45LnJneUpWZEw2QVNvM05GOF9zRTQ2bUwzUDNRbFZ5TTlwbk0zMDhwQXdLbXcmbGltaXQ9MTAwIl0sImFsbFJlcXVlc3RzIjpbImh0dHBzOi8vMTI3LjAuMC4xOjg0NTgvYXBpL3YxL21lZXRpbmdzLzExOTI3MDlhLWI5YzItNDk0Ni04YjYyLTQ5Y2Q1N2I1OGI1My9zeW5jP2xpbWl0PTUwIiwiaHR0cHM6Ly8xMjcuMC4wLjE6ODQ1OC9hcGkvdjEvbWVldGluZ3MvMTE5MjcwOWEtYjljMi00OTQ2LThiNjItNDljZDU3YjU4YjUzL3N5bmM/Y3Vyc29yPWV5SjJJam94TENKMUlqb2lZemswTTJRek9ETXRZekZpT1MwME5qZzVMV0ZpTnpVdE9UZGlZMkl5TWpJek0ySmxJaXdpYlNJNklqRXhPVEkzTURsaExXSTVZekl0TkRrME5pMDRZall5TFRRNVkyUTFOMkkxT0dJMU15SXNJbVVpT2lJMk4ySTNNalF5TkMwMU5XSTRMVFF6TURJdFlXUmpOaTB4TXpReE1XVTVaakJrWmpraUxDSmhJam9pTVRBd01EY2lMQ0owSWpvaU1DSXNJbmdpT2pFM09UUXhNemt6TVROOS5yZ3lKVmRMNkFTbzNORjhfc0U0Nm1MM1AzUWxWeU05cG5NMzA4cEF3S213JmxpbWl0PTEwMCIsImh0dHBzOi8vMTI3LjAuMC4xOjg0NTgvYXBpL3YxL21lZXRpbmdzLzExOTI3MDlhLWI5YzItNDk0Ni04YjYyLTQ5Y2Q1N2I1OGI1My9zeW5jP2N1cnNvcj1leUoySWpveExDSjFJam9pWXprME0yUXpPRE10WXpGaU9TMDBOamc1TFdGaU56VXRPVGRpWTJJeU1qSXpNMkpsSWl3aWJTSTZJakV4T1RJM01EbGhMV0k1WXpJdE5EazBOaTA0WWpZeUxUUTVZMlExTjJJMU9HSTFNeUlzSW1VaU9pSTJOMkkzTWpReU5DMDFOV0k0TFRRek1ESXRZV1JqTmkweE16UXhNV1U1WmpCa1pqa2lMQ0poSWpvaU1UQXdNRGNpTENKMElqb2lNQ0lzSW5naU9qRTNPVFF4TXprek1UTjkucmd5SlZkTDZBU28zTkY4X3NFNDZtTDNQM1FsVnlNOXBuTTMwOHBBd0ttdyZsaW1pdD0xMDAiLCJodHRwczovLzEyNy4wLjAuMTo4NDU4L2FwaS92MS9tZWV0aW5ncy8xMTkyNzA5YS1iOWMyLTQ5NDYtOGI2Mi00OWNkNTdiNThiNTMvZmVlZD9saW1pdD01MCIsImh0dHBzOi8vMTI3LjAuMC4xOjg0NTgvYXBpL3YxL21lZXRpbmdzLzExOTI3MDlhLWI5YzItNDk0Ni04YjYyLTQ5Y2Q1N2I1OGI1My9zeW5jP2xpbWl0PTUwJmFyb3VuZF9lbnRyeV9pZD0wYTgwM2E0Yi1iZDVhLTQzNGEtYmMyZi04NzI2ODMyNTQzY2MiLCJodHRwczovLzEyNy4wLjAuMTo4NDU4L2FwaS92MS9tZWV0aW5ncy8xMTkyNzA5YS1iOWMyLTQ5NDYtOGI2Mi00OWNkNTdiNThiNTMvc3luYz9jdXJzb3I9ZXlKMklqb3hMQ0oxSWpvaVl6azBNMlF6T0RNdFl6RmlPUzAwTmpnNUxXRmlOelV0T1RkaVkySXlNakl6TTJKbElpd2liU0k2SWpFeE9USTNNRGxoTFdJNVl6SXRORGswTmkwNFlqWXlMVFE1WTJRMU4ySTFPR0kxTXlJc0ltVWlPaUkyTjJJM01qUXlOQzAxTldJNExUUXpNREl0WVdSak5pMHhNelF4TVdVNVpqQmtaamtpTENKaElqb2lNVEF3TURnaUxDSjBJam9pTUNJc0luZ2lPakUzT1RReE16a3pNVFI5Lnc5cVdIS3NvMTdaRGl0ci16dU5zRkMxSUtLY1JEay0ySGdiQmpXc1ppQVEmbGltaXQ9MTAwIl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d87847e11c55877dbca3-37c9dd0215d03bd8bdef",
+          "file": "42-chat-first-unread.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T12:01:24.775Z",
+    "duration": 31124.251,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

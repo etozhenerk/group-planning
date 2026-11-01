@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest.json",
+  "inputHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+  "reviewer": "independent-agent:/root/sdd_chat_audit",
+  "reviewedAt": "2026-11-01T08:59:12.578008+00:00",
+  "mode": "live",
+  "environment": "Native Chrome156.0.8078.74/macOS27.0.1;1440x900,390x900,320x900 responsive mouse+keyboard; https://127.0.0.1:8492; immutable v2 bundle; synthetic own meeting ac01d74d-9cf5-468c-892a-36ebc86934ef. No actual mobile OS IME/touch. Exact computed CSS/font metrics unavailable.",
+  "summary": "Scoped composer-grow correction: fresh v2 grow/shrink/max/inner scroll/reflow/selection/blur/critical actions observed successfully; no full manifest or release verdict. Other unlisted states are unreviewed, combined touch state blocked.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Fresh v2 desktop multiline visibly grows; 20-line bound and shrink checked separately. Scoped composer appearance only.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "1440x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:51:24.452281+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-desktop-two-lines.png",
+          "sha256": "09b96e5fc744de355cf10bf8af5365c76b6c798550d319321cb64cd6ed992967",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw1440-two-lines.png",
+          "sha256": "3c3c8f5a760ff63def68a0590645f7f92d3a89a64910bf508fb9981a98dac52d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-320",
+      "status": "pass",
+      "observations": "Fresh v2 short multiline is fully visible; long field stays bounded and inner scroll reveals beginning/end. Responsive Chrome only, no OS IME/touch claim.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "320x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:53:06.343810+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-mobile320-shrink.png",
+          "sha256": "809b742fb4fc6349c44ddb3e45b9eab1a01cad9d395a0aa8438e8f3bcfb3873b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw320-after-input.png",
+          "sha256": "aae3ea5a9e762fe5b1cbae5f60bec1fcf422040746c907dc4fe0729c7e05f6a3",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-390",
+      "status": "pass",
+      "observations": "Fresh v2 three visual lines are visible; width recalculation and first Send/plus form return observed. Responsive Chrome only.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "390x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:53:59.302669+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-mobile390-two-lines.png",
+          "sha256": "e647f1ef0907526c4cf27fa593bf7cd391ad03fb6819ab4423bbce09a7dcbeac",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw390-after-input.png",
+          "sha256": "b98a6703a469d85091a6135db28f925ad46981e78de9e938e34e597b4ee39f8c",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Outside history click blurs composer; saved selection is then proven by replacing only the selected word with pizza.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "320x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:53:20.511007+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-mobile320-outside.png",
+          "sha256": "540a47461c649860e837bdb381566d82d6d7f822dec491c0f752888c6fb5ce9d",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw320-after-input.png",
+          "sha256": "aae3ea5a9e762fe5b1cbae5f60bec1fcf422040746c907dc4fe0729c7e05f6a3",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Keyboard toggle explicitly focuses composer; subsequent input and one Send succeed.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "320x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:53:43.386907+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-mobile320-explicit-refocus.png",
+          "sha256": "f80736efd1257cccd19d365891794e218d46386bbfa59c61881fe922112870f4",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw320-after-input.png",
+          "sha256": "aae3ea5a9e762fe5b1cbae5f60bec1fcf422040746c907dc4fe0729c7e05f6a3",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "desktop-keyboard-navigation",
+      "status": "pass",
+      "observations": "Fresh v2 Tab from composer selects emoji; Enter opens popup, Escape returns to emoji button. No pointer-blur suppression of keyboard activation.",
+      "capture": {
+        "sourceHash": "35408bcbb74d4331b6f4f07fa9afe633aa847556ccfb1e8ae8e1926af6c58ce6",
+        "fixtureHash": "9c97b6ded5d0ba496d1a8dc2a27ba756028344e30eca4023cf41c73717db2af4",
+        "runtime": "Native Chrome 156.0.8078.74 via CUA; DevTools Responsive Fit to window",
+        "os": "macOS27.0.1 (26A434)",
+        "viewport": "1440x900",
+        "fonts": [
+          "System sans-serif stack; resolved font is not exposed by native AX (no typography metric claim)"
+        ],
+        "locale": "ru UI",
+        "timezone": "Europe/Moscow host",
+        "textScale": 1,
+        "capturedAt": "2026-11-01T08:55:08.849034+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-desktop-keyboard-return.png",
+          "sha256": "0368a1772fa678c65d8ac63dd74734291532b7f7147c654a96b7ecea0bbd8d6b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/reference/raw1440-two-lines.png",
+          "sha256": "3c3c8f5a760ff63def68a0590645f7f92d3a89a64910bf508fb9981a98dac52d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/interactions-iteration2.json",
+          "sha256": "4b8559c469ef7f85a729a5b536fbe2e036a8a512b7d9fb1d66dcfcc37f197ce5",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "scroll-long-press",
+      "status": "blocked",
+      "observations": "Fresh v2 internal textarea wheel scroll passed; physical mobile touch long press is unavailable in native Chrome responsive mouse control. Old iteration1 result is not copied. This combined state remains blocked.",
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/report.md",
+          "sha256": "d48d4a88b28f38341a6f1d71b19277c2a016f89200109a3133b5d7f949828a63",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow-independent/actual/v2-mobile320-internal-top.png",
+          "sha256": "917d834be75d125dbd96fdbca004eabdfaa1f0d3a5f37d8d1d4ea1c2c3c33da6",
+          "kind": "actual"
+        }
+      ]
+    }
+  ]
+}

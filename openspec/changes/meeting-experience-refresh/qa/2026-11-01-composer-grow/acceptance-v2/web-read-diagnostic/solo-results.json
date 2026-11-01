@@ -1,0 +1,153 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.read.config.ts",
+      "--project=mobile-webkit",
+      "tests/42-chat-first-unread.spec.ts",
+      "--reporter=line,json",
+      "--output=/tmp/somewhere-sdd-webkit42-diagnostic/solo-output"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/playwright.read.config.ts",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/somewhere-sdd-webkit42-diagnostic/solo-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "41-chat-read-state.spec.ts",
+          "42-chat-first-unread.spec.ts",
+          "43-chat-read-visibility.spec.ts",
+          "56-readers-stability.spec.ts"
+        ],
+        "timeout": 45000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8458",
+          "ignoreHTTPSErrors": true,
+          "timezoneId": "Europe/Moscow",
+          "locale": "ru-RU",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "tsx scripts/chat-browser-server.ts",
+      "env": {
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "1"
+      },
+      "url": "https://127.0.0.1:8458/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false,
+      "timeout": 90000
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: Process from config.webServer was not able to start. Exit code: 1",
+      "stack": "Error: Process from config.webServer was not able to start. Exit code: 1"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-11-01T12:00:57.235Z",
+    "duration": 78.25899999999996,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

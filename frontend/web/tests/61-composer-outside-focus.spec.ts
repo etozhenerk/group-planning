@@ -24,7 +24,27 @@ for (const width of [1440, 390, 320]) {
     const composer = page.getByRole('textbox', { name: 'Сообщение', exact: true });
     const activate = (target: Locator) => (width < 740 ? target.tap() : target.click());
     const draft = 'Возьму чай\nзавтра';
+    const initialHeight = await composer.evaluate((element) => element.clientHeight);
+    await composer.fill(Array.from({ length: 40 }, () => 'Длинный черновик').join('\n'));
+    await expect
+      .poll(() =>
+        composer.evaluate((element) => element.scrollHeight > element.clientHeight),
+      )
+      .toBe(true);
+    const maximum = await composer.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).maxHeight),
+    );
+
+    expect((await composer.boundingBox())?.height).toBeLessThanOrEqual(maximum + 1);
     await composer.fill(draft);
+    await expect
+      .poll(() => composer.evaluate((element) => element.clientHeight))
+      .toBeGreaterThan(initialHeight);
+    await expect
+      .poll(() =>
+        composer.evaluate((element) => element.scrollHeight - element.clientHeight),
+      )
+      .toBeLessThanOrEqual(1);
     await activate(composer);
     await expect(composer).toBeFocused();
     const select = async () => {
@@ -149,5 +169,45 @@ for (const width of [1440, 390, 320]) {
     expect(requests).toHaveLength(1);
     await expect(composer).toHaveValue('');
     await expect(composer).not.toBeFocused();
+    await expect
+      .poll(() => composer.evaluate((element) => element.clientHeight))
+      .toBe(initialHeight);
   });
 }
+
+test('composer resizes with viewport without changing draft or selection', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await login(page, 'Саша');
+  const { meeting } = await apiCreate(page, 'Размер поля сообщения');
+  await page.goto(`/meetings/${meeting.id}`);
+  const composer = page.getByRole('textbox', { name: 'Сообщение', exact: true });
+  const draft = 'Сохраняем текст и выделение при изменении ширины окна';
+  await composer.fill(draft);
+  await composer.evaluate((element) => {
+    if (element instanceof HTMLTextAreaElement) {
+      element.setSelectionRange(3, 12);
+      element.dispatchEvent(new Event('select', { bubbles: true }));
+    }
+  });
+  await page.setViewportSize({ width: 320, height: 760 });
+  await expect
+    .poll(() =>
+      composer.evaluate((element) => element.scrollHeight - element.clientHeight),
+    )
+    .toBeLessThanOrEqual(1);
+  const narrowHeight = await composer.evaluate((element) => element.clientHeight);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect
+    .poll(() => composer.evaluate((element) => element.clientHeight))
+    .toBeLessThan(narrowHeight);
+  await expect(composer).toHaveValue(draft);
+  expect(
+    await composer.evaluate((element) =>
+      element instanceof HTMLTextAreaElement
+        ? [element.selectionStart, element.selectionEnd]
+        : [],
+    ),
+  ).toEqual([3, 12]);
+});

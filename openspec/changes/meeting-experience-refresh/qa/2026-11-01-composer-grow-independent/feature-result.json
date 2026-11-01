@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "caseId": "TC-CHAT-OUTSIDE-KEYBOARD",
+  "platform": "web",
+  "sourceHash": "fe575f1b97f277c15c95a4d5856089553adb61c7e7864d835957c9ff018b33ca",
+  "catalogHash": "f0a3b23929371dfd70884c1b531974c89636bdb73303d9edb402eedff8479dfa",
+  "plan": "openspec/changes/meeting-experience-refresh/qa/2026-11-01-composer-grow/acceptance-v2/plan.json",
+  "executor": "independent-agent:/root/sdd_chat_audit",
+  "status": "blocked",
+  "scopeVerdict": "passed for requested current composer grow/reflow/focus/critical actions",
+  "fullCaseAccepted": false,
+  "environmentOverride": {
+    "url": "https://127.0.0.1:8492",
+    "runtime": "Native Chrome156.0.8078.74 via CUA",
+    "viewports": [
+      "1440x900",
+      "390x900",
+      "320x900"
+    ],
+    "reason": "Root formal plan environments use8444 Chromium/WebKit suites. These are independent native Chrome live observations, not replacement of original plan/suite environments."
+  },
+  "steps": [
+    {
+      "id": "grow-shrink-max-scroll-resize",
+      "status": "passed",
+      "actual": "Fresh v2 actual captures on all3 widths, long bound/internal scroll and shrink; see report.md."
+    },
+    {
+      "id": "selection-blur-replacement",
+      "status": "passed",
+      "actual": "Resize savedXX selection; separate word replacement by pizza after outside blur preserved remaining multiline text."
+    },
+    {
+      "id": "first-actions",
+      "status": "passed",
+      "actual": "First Send at each width produced one visible unique canonical row; first plus390 opened Task; emoji320 opened and explicit refocus worked."
+    },
+    {
+      "id": "desktop-keyboard",
+      "status": "passed",
+      "actual": "Tab/Enter/Escape emoji route preserved draft and focus."
+    },
+    {
+      "id": "remaining-full-case",
+      "status": "blocked",
+      "actual": "Physical mobile OS IME/touch long press unavailable; other-input and all outside targets not fully repeated after sourcechange. No full case PASS copied from iteration1."
+    }
+  ],
+  "evidence": [
+    "report.md",
+    "design-scoped-review.json",
+    "interactions-iteration2.json",
+    "freeze-verification.json"
+  ],
+  "note": "Parent owns suite results and qa:ready; this file does not modify parent run or mark tasks complete."
+}
