@@ -14,6 +14,7 @@ import (
 // Config includes deployment settings and server-only OAuth credentials.
 // Do not log or serialize the configuration.
 type Config struct {
+	MetricsAddress   string
 	ChatReadState    bool
 	ChatSyncKey      []byte
 	Support          SupportConfig
@@ -31,6 +32,11 @@ type Config struct {
 // LoadConfig reads configuration without mutating the process environment.
 func LoadConfig(getenv func(string) string) (Config, error) {
 	config := Config{Address: "127.0.0.1:8080", ShutdownTimeout: 5 * time.Second}
+	config.MetricsAddress = getenv("SOMEWHERE_METRICS_ADDR")
+	if err := validateMetricsAddress(config.MetricsAddress); err != nil {
+		return Config{}, err
+	}
+
 	config.Storage = getenv("SOMEWHERE_STORAGE")
 	if config.Storage == "" {
 		config.Storage = "memory"

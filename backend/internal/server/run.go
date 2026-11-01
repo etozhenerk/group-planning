@@ -135,7 +135,18 @@ func ServeWithSupportStorage(ctx context.Context, listener net.Listener, store m
 
 		w.WriteHeader(http.StatusOK)
 	})
+	// The application origin never exposes the private scrape listener.
+	root.HandleFunc("/metrics", http.NotFound)
 	handler = root
+	if config.MetricsAddress != "" {
+		metrics := &httpMetrics{}
+		stopMetrics, err := startHTTPMetrics(config.MetricsAddress, metrics, logger)
+		if err != nil {
+			return err
+		}
+		defer stopMetrics()
+		handler = metrics.wrap(handler)
+	}
 
 	options := config.Transitions
 	if options == (meetings.TransitionOptions{}) {

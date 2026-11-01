@@ -1,0 +1,247 @@
+package server
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"log/slog"
+	"net"
+	"net/http"
+	"time"
+
+	"github.com/etozhenerk/group-planning/backend/internal/albumexport"
+	"github.com/etozhenerk/group-planning/backend/internal/httpapi"
+	"github.com/etozhenerk/group-planning/backend/internal/identity"
+	"github.com/etozhenerk/group-planning/backend/internal/meetings"
+	"github.com/etozhenerk/group-planning/backend/internal/realtime"
+	"github.com/etozhenerk/group-planning/backend/internal/storage/files"
+	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
+	"github.com/etozhenerk/group-planning/backend/internal/support"
+	"github.com/etozhenerk/group-planning/backend/internal/webui"
+)
+
+// Serve binds the supplied store to HTTP and drains requests on cancellation.
+// The caller owns the listener; Serve closes it on return.
+func Serve(ctx context.Context, listener net.Listener, store meetings.Store, config Config, logger *slog.Logger) error {
+	content, err := files.NewMedia()
+	if err != nil {
+		return err
+	}
+	defer content.Close()
+
+	return ServeWithStorage(ctx, listener, store, memory.NewIdentity(), nil, config, logger, meetings.WithMediaContent(content))
+}
+
+// ServeWithStorage binds both persistent stores and a dependency readiness check.
+func ServeWithStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, ready func(context.Context) error, config Config, logger *slog.Logger, appOptions ...meetings.Option) error {
+	return ServeWithSupportStorage(ctx, listener, store, identities, nil, ready, config, logger, appOptions...)
+}
+
+// ServeWithSupportStorage additionally binds the persistent feedback queue.
+func ServeWithSupportStorage(ctx context.Context, listener net.Listener, store meetings.Store, identities identity.Store, feedbackStore support.Store, ready func(context.Context) error, config Config, logger *slog.Logger, appOptions ...meetings.Option) error {
+	defer listener.Close()
+	if config.ShutdownTimeout < time.Second || config.ShutdownTimeout > 30*time.Second {
+		return fmt.Errorf("invalid shutdown timeout")
+	}
+
+	if err := ctx.Err(); err != nil {
+		return nil
+	}
+
+	appOptions = append(appOptions, meetings.WithChatSyncKey(config.ChatSyncKey), meetings.WithChatReadState(config.ChatReadState))
+	app := meetings.NewService(store, time.Now, appOptions...)
+	if err := app.InitializeChatReadState(ctx); err != nil {
+		return err
+	}
+
+	service, err := newIdentity(config.Auth, identities, app.InvitationExists)
+	if err != nil {
+		return err
+	}
+
+	deletion, err := NewAccounts(store, identities, service, time.Now)
+	if err != nil {
+		return err
+	}
+
+	feedback, err := newSupport(config, feedbackStore)
+	if err != nil {
+		return err
+	}
+
+	var stream httpapi.RealtimeHandler
+	if app.ChatSyncEnabled() && service != nil {
+		adapter, err := realtime.New(app, service)
+		if err != nil {
+			return err
+		}
+
+		defer func() {
+			shutdown, cancel := context.WithTimeout(context.Background(), config.ShutdownTimeout)
+			defer cancel()
+			if err := adapter.Close(shutdown); err != nil {
+				logger.Error("chat shutdown failed", "error_code", "shutdown_timeout")
+			}
+		}()
+		stream = adapter.ServeAuthenticatedHTTP
+		dispatchCtx, stopDispatch := context.WithCancel(ctx)
+		dispatchDone := make(chan struct{})
+		go func() { defer close(dispatchDone); dispatchChat(dispatchCtx, app, adapter, logger) }()
+		defer func() { stopDispatch(); <-dispatchDone }()
+	}
+
+	publicFeedback := feedback
+	if config.Storage == "postgres" && config.Support.BotToken == "" {
+		// Keep retention running even while an operator disables external delivery.
+		publicFeedback = nil
+	}
+
+	exports, err := albumexport.New(ctx, app, time.Now)
+	if err != nil {
+		return err
+	}
+	defer exports.Close()
+
+	var handler http.Handler = httpapi.NewWithExports(app, service, publicFeedback, logger, stream, exports, deletion)
+	if config.WebDirectory != "" {
+		site, err := webui.New(app, config.WebDirectory, config.WebOrigin)
+		if err != nil {
+			return err
+		}
+
+		mux := http.NewServeMux()
+		mux.Handle("/api/", handler)
+		mux.Handle("/healthz", handler)
+		mux.Handle("/", site)
+		handler = mux
+	}
+
+	associations, err := webui.NewAssociations(config.LinkAssociations)
+	if err != nil {
+		return err
+	}
+
+	root := http.NewServeMux()
+	root.Handle("/.well-known/", associations)
+	root.Handle("/", handler)
+	root.HandleFunc("GET /readyz", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		checkCtx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		defer cancel()
+		if ready != nil && ready(checkCtx) != nil {
+			http.Error(w, "not ready", http.StatusServiceUnavailable)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	})
+	// The application origin never exposes the private scrape listener.
+	root.HandleFunc("/metrics", http.NotFound)
+	handler = root
+	if config.MetricsAddress != "" {
+		metrics := &httpMetrics{}
+		stopMetrics, err := startHTTPMetrics(config.MetricsAddress, metrics, logger)
+		if err != nil {
+			return err
+		}
+		defer stopMetrics()
+		handler = metrics.wrap(handler)
+	}
+
+	options := config.Transitions
+	if options == (meetings.TransitionOptions{}) {
+		options = meetings.DefaultTransitionOptions()
+	}
+
+	worker, err := meetings.NewTransitionWorker(app, options, transitionLogger(logger))
+	if err != nil {
+		return err
+	}
+
+	workerCtx, stopWorker := context.WithCancel(ctx)
+	workerDone := make(chan struct{})
+	go func() { defer close(workerDone); worker.Run(workerCtx) }()
+	defer func() { stopWorker(); <-workerDone }()
+
+	pollWorker, err := meetings.NewDatePollWorker(app, options, func(event meetings.PollObservation) {
+		logger.Error("date poll jobs", "event", event.Event, "poll_id", event.PollID, "error_code", event.ErrorCode, "failed", event.Failed, "oldest_overdue_seconds", event.OldestOverdue.Seconds())
+	})
+	if err != nil {
+		return err
+	}
+
+	pollCtx, stopPollWorker := context.WithCancel(ctx)
+	pollDone := make(chan struct{})
+	go func() { defer close(pollDone); pollWorker.Run(pollCtx) }()
+	defer func() { stopPollWorker(); <-pollDone }()
+
+	placeWorker, err := meetings.NewPlacePollWorker(app, options, func(event meetings.PollObservation) {
+		logger.Error("place poll jobs", "event", event.Event, "poll_id", event.PollID, "error_code", event.ErrorCode, "failed", event.Failed, "oldest_overdue_seconds", event.OldestOverdue.Seconds())
+	})
+	if err != nil {
+		return err
+	}
+
+	placeCtx, stopPlaceWorker := context.WithCancel(ctx)
+	placeDone := make(chan struct{})
+	go func() { defer close(placeDone); placeWorker.Run(placeCtx) }()
+	defer func() { stopPlaceWorker(); <-placeDone }()
+
+	chatCtx, stopChat := context.WithCancel(ctx)
+	chatDone := make(chan struct{})
+	go func() { defer close(chatDone); maintainChat(chatCtx, app, logger) }()
+	defer func() { stopChat(); <-chatDone }()
+
+	mediaCtx, stopMediaCleanup := context.WithCancel(ctx)
+	supportCtx, stopSupport := context.WithCancel(ctx)
+	supportDone := make(chan struct{})
+	go func() { defer close(supportDone); deliverSupport(supportCtx, feedback, logger) }()
+	defer func() { stopSupport(); <-supportDone }()
+	mediaDone := make(chan struct{})
+	go func() { defer close(mediaDone); cleanupMedia(mediaCtx, app, logger) }()
+	defer func() { stopMediaCleanup(); <-mediaDone }()
+	cleanupCtx, stopCleanup := context.WithCancel(ctx)
+	cleanupDone := make(chan struct{})
+	go func() { defer close(cleanupDone); cleanupIdentity(cleanupCtx, service, logger) }()
+	defer func() { stopCleanup(); <-cleanupDone }()
+	server := &http.Server{
+		Handler: handler, ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout: 10 * time.Second, WriteTimeout: 15 * time.Second,
+		IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10,
+		// net/http's default panic logger can include raw panic values. The middleware
+		// handles application panics and suppresses secrets; connection errors are silent.
+		ErrorLog: slog.NewLogLogger(slog.NewTextHandler(discardWriter{}, nil), slog.LevelError),
+	}
+	finished := make(chan error, 1)
+	go func() { finished <- server.Serve(listener) }()
+	select {
+	case err := <-finished:
+		if errors.Is(err, http.ErrServerClosed) {
+			return nil
+		}
+
+		return fmt.Errorf("serve HTTP: %w", err)
+	case <-ctx.Done():
+		deadline, cancel := context.WithTimeout(context.Background(), config.ShutdownTimeout)
+		defer cancel()
+		if err := server.Shutdown(deadline); err != nil {
+			_ = server.Close()
+			<-finished
+
+			return fmt.Errorf("shutdown HTTP: %w", err)
+		}
+
+		err := <-finished
+		if errors.Is(err, http.ErrServerClosed) {
+			return nil
+		}
+
+		return err
+	}
+}
+
+type discardWriter struct{}
+
+func (discardWriter) Write(data []byte) (int, error) {
+	return len(data), nil
+}
