@@ -14,9 +14,9 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun UnreadDivider() {
+internal fun UnreadDivider(modifier: Modifier = Modifier) {
     Row(
-        Modifier.padding(vertical = DesignTokens.spaceS12).testTag("chat-unread-divider"),
+        modifier.padding(vertical = DesignTokens.spaceS12).testTag("chat-unread-divider"),
         horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS16),
         verticalAlignment = Alignment.CenterVertically,
     ) {

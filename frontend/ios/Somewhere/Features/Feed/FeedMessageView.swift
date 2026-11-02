@@ -8,22 +8,26 @@ struct FeedMessageView: View {
     var entryID: UUID?
     var selected = false
     var pendingSince: Date?
+    var maximumWidth: CGFloat?
     @ScaledMetric(relativeTo: .body) private var bodySize = DesignTokens.typographySizeChatMessage
+    @ScaledMetric(relativeTo: .body) private var avatarSize =
+        DesignTokens.componentMobileChatMessageAvatar
     @ScaledMetric(relativeTo: .caption) private var authorSize = DesignTokens.typographySizeLabel
     @State private var availableWidth = DesignTokens.spaceS0
 
     private var authorName: String { own ? String(localized: "Вы") : user.displayName }
 
     private var textWidth: CGFloat? {
-        guard availableWidth > 0 else { return nil }
+        let width = maximumWidth ?? availableWidth
+        guard width > 0 else { return nil }
         let natural = (text as NSString).size(withAttributes: [
             .font: UIFont.systemFont(ofSize: bodySize)
         ]).width
         let reserved =
-            DesignTokens.componentMobileChatMessageAvatar
+            avatarSize
             + DesignTokens.componentMobileChatMessageGap
             + DesignTokens.componentMobileChatBubbleInsetInline * 2 + DesignTokens.spaceS12
-        return min(ceil(natural), max(0, availableWidth - reserved))
+        return min(ceil(natural), max(0, width - reserved))
     }
 
     var body: some View {

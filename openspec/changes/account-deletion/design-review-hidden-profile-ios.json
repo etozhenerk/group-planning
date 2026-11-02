@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/account-deletion/design-manifest-ios.json",
+  "inputHash": "470d4d66af1f16194081a767d16e65e156b1413b70b012a538864efbab7fe514",
+  "reviewer": "independent-agent:/root/ios_sdd_acceptance",
+  "reviewedAt": "2026-11-02T05:45:33.928409+00:00",
+  "mode": "live",
+  "environment": "iPhone18Pro31262733-50DC-46A5-938E-4C462D70F109;iOS27.0(24A434);Xcode27.1;nativeSwiftUI/realsoftwareIME;402x874pt;ru_RU;Europe/Moscow;syntheticloopbackTLSmemory;runtime source a79b13593222248c186320cffceaf34e0ac82750856b24b0905afec38ecd1e0e;explicit QA-only VFS capture/observer documented separately.",
+  "summary": "3/3 состояния узкого скрытого удаления профиля прошли независимое live-сравнение и адресные действия. API удаления не исполнялся. Отчёт не принимает остальные UI-функции.",
+  "checks": [
+    {
+      "screen": "account-profile-ios-phone",
+      "platform": "ios",
+      "state": "default",
+      "status": "pass",
+      "observations": "Проверены actual и published reference с актуальной корректировкой UX: удаление и версия скрыты, сервисные ссылки только в профиле; native DynamicType сохранён. Это узкая приёмка account4.2, не полный редизайн профиля/FAQ. Нет кнопки удаления в AX, выход достижим прокруткой, личные и контактные поля показывают отсутствие данных.",
+      "capture": {
+        "sourceHash": "470d4d66af1f16194081a767d16e65e156b1413b70b012a538864efbab7fe514",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:38:37Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-profile-top-default.png",
+          "sha256": "84cd3fa97e90502d69027de421c84dfe10bce30b2e2d0e0021d1a1aef5e87c11",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-profile-bottom-default.png",
+          "sha256": "0c43afc4a95d23579d8136a0678602b691d08ecef0902c76a2320c858cfe6446",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/profile-missing-full.png",
+          "sha256": "d1a927bcdf729d63e5274fc1e53f92ec138dae2df2cd27fb53245627b12eeb61",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-ios-phone",
+      "platform": "ios",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Проверены actual и published reference с актуальной корректировкой UX: удаление и версия скрыты, сервисные ссылки только в профиле; native DynamicType сохранён. Это узкая приёмка account4.2, не полный редизайн профиля/FAQ. Native accessibility5/AXXXL измерен приложением: heading56 против28,small37 против13. Строки переносятся, выход достижим, входа в удаление нет.",
+      "capture": {
+        "sourceHash": "470d4d66af1f16194081a767d16e65e156b1413b70b012a538864efbab7fe514",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2.0,
+        "capturedAt": "2026-11-02T05:38:52Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-profile-top-large.png",
+          "sha256": "5384db9988e62288c348cda12d9338dde17647c2eecb0bfd3a7304d68c65b3d8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-profile-bottom-large.png",
+          "sha256": "e6b2716f667f82f80ce4fd26b21948d3021167742efaaaf963335404d17bf5a8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/profile-missing-full.png",
+          "sha256": "d1a927bcdf729d63e5274fc1e53f92ec138dae2df2cd27fb53245627b12eeb61",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-ios-phone",
+      "platform": "ios",
+      "state": "return-from-profile",
+      "status": "pass",
+      "observations": "После просмотра и прокрутки обоих профилей вкладка Встречи возвращает исходную поверхность без входа/выхода. HTTP191>0, DELETE/me0; /me и /meetings status200 и канонические SHA до/после совпадают. Политика/FAQ отдельно не приняты.",
+      "capture": {
+        "sourceHash": "470d4d66af1f16194081a767d16e65e156b1413b70b012a538864efbab7fe514",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:38:43Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-return-meetings-default.png",
+          "sha256": "d509297b3b0824559baa69ccfa05ffec315b9f4b928d4ac7224469d6e60de1f0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/account-return-meetings-large.png",
+          "sha256": "f7e1be12ae37be3801db5d5ff844265cbbd84d11fd3c3fcff94fdf822507012c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/profile-top.png",
+          "sha256": "6bbe89110a5c63ca4c6f558dfcf5616e8a28d22b213716c52e0aa3424ed90164",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

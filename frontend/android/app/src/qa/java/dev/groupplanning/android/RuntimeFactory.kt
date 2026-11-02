@@ -37,6 +37,7 @@ internal object RuntimeFactory {
             scenario in
                 setOf(
                     "account", "account-large",
+                    "account-removal-survivor",
                     "empty", "draft", "list-error", "lost-create", "invite-anonymous",
                     "cover-create", "cover-edit", "cover-large", "cover-system",
                     "invite-rsvp", "invite-rsvp-reentry", "invite-error", "invite-owner",

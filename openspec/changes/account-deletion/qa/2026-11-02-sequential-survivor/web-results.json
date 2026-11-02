@@ -1,0 +1,253 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "testIgnore": [],
+        "testMatch": [
+          "survivor.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "testIgnore": [],
+        "testMatch": [
+          "survivor.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "testIgnore": [],
+        "testMatch": [
+          "survivor.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor",
+        "testIgnore": [],
+        "testMatch": [
+          "survivor.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/account-deletion/qa/2026-11-02-sequential-survivor/web-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/tmp/somewhere-sequential-browser-fixture.test -test.run=^TestBrowserFixture$ -test.timeout=0 > /tmp/somewhere-sequential-cutoff-web-fixture.log 2>&1",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8554",
+        "SOMEWHERE_BROWSER_DIST": "/tmp/somewhere-sequential-web-information-rsvp-fixed",
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "1",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8554/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "survivor.spec.ts",
+      "file": "survivor.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "survivor retains shared meeting, transferred organization and anonymous history after real deletion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T18:19:36.281Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ce42a411c4c53fb46e62-99196273d3c0d1ee9d72",
+          "file": "survivor.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "survivor retains shared meeting, transferred organization and anonymous history after real deletion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T18:19:38.159Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ce42a411c4c53fb46e62-ed1a4e7f541caa86f7d7",
+          "file": "survivor.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T18:19:35.807Z",
+    "duration": 5197.213000000001,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

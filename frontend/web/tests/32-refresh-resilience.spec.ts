@@ -3,7 +3,10 @@ import { create, login } from '@tests/helpers';
 
 test('public support receives a real reference and retries a lost response without duplication', async ({
   page,
-}) => {
+}, info) => {
+  await page.setExtraHTTPHeaders({
+    'X-Somewhere-Test-Feedback-Scope': `support-retry-${info.project.name}`,
+  });
   const keys: string[] = [];
   const references: string[] = [];
   await page.route('**/api/v1/support/feedback', async (route) => {

@@ -68,7 +68,7 @@ internal fun FeedTimeline(
     modifier: Modifier = Modifier,
     reaction: @Composable (FeedEntry, ReactionAnchor) -> Unit = { _, _ -> },
     openReaction: (FeedEntry) -> Unit = {},
-    attachment: @Composable (MeetingMedia) -> Unit = {},
+    attachment: @Composable (MeetingMedia, Boolean) -> Unit = { _, _ -> },
     visible: (List<UUID>) -> Unit = {},
     empty: @Composable () -> Unit = {},
     newer: () -> Unit = {},
@@ -88,8 +88,9 @@ internal fun FeedTimeline(
     var viewportBounds by remember { mutableStateOf(Rect.Zero) }
     val geometries = remember { mutableStateMapOf<UUID, Rect>() }
     var headingHeight by remember { mutableStateOf(0f) }
+    var unreadHeight by remember { mutableStateOf(0f) }
     val headingGap = with(LocalDensity.current) { DesignTokens.spaceS20.toPx() }
-    FeedViewportEffect(list, rows, state, position, headingHeight, viewport)
+    FeedViewportEffect(list, rows, state, position, headingHeight, unreadHeight, viewport)
     LaunchedEffect(
         list,
         rows,
@@ -182,7 +183,13 @@ internal fun FeedTimeline(
                             )
                         }
 
-                        if (entry?.id == state.divider && state.readEnabled) UnreadDivider()
+                        if (entry?.id == state.divider && state.readEnabled) {
+                            UnreadDivider(
+                                Modifier.onGloballyPositioned {
+                                    unreadHeight = it.size.height + headingGap
+                                },
+                            )
+                        }
                         if (row.text != null) {
                             FeedMessageRow(
                                 row,

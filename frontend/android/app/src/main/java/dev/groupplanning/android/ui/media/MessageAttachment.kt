@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -24,10 +26,11 @@ import androidx.compose.ui.window.DialogProperties
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingMedia
 import dev.groupplanning.android.state.media.MediaViewModel
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun MessageAttachment(media: MeetingMedia, model: MediaViewModel) {
+internal fun MessageAttachment(media: MeetingMedia, model: MediaViewModel, own: Boolean) {
     var full by rememberSaveable(media.id.toString()) { mutableStateOf(false) }
     val save =
         rememberLauncherForActivityResult(
@@ -48,11 +51,18 @@ internal fun MessageAttachment(media: MeetingMedia, model: MediaViewModel) {
                 Modifier.fillMaxWidth().height(220.dp).clickable { full = true },
             )
         } else {
-            Text(media.fileName)
-            Text("${media.contentType} · ${media.sizeBytes / 1024} КБ", color = Palette.muted)
-            TextButton({
-                save.launch(media.fileName)
-            }) { Text(stringResource(R.string.media_save)) }
+            Text(media.fileName, color = if (own) DesignTokens.colorOwnText else Palette.text)
+            Text(
+                "${media.contentType} · ${media.sizeBytes / 1024} КБ",
+                color = if (own) DesignTokens.colorOwnText else Palette.muted,
+            )
+            TextButton(
+                { save.launch(media.fileName) },
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor =
+                    if (own) DesignTokens.colorOwnText else MaterialTheme.colorScheme.primary,
+                ),
+            ) { Text(stringResource(R.string.media_save)) }
         }
     }
     if (full) {

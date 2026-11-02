@@ -32,6 +32,8 @@ final class DesignExperienceUITests: XCTestCase {
     }
     func testListProfileAndCreationMatchApprovedLayout() throws {
         let app = launch()
+        // Other UI cases may have created newer meetings without a cover in this shared fixture.
+        reveal(app.buttons["meeting-card-deb00000-0000-4000-8000-000000000001"], app: app)
         XCTAssertTrue(app.images["meeting-cover"].firstMatch.waitForExistence(timeout: 10))
         capture("list")
         app.buttons["Календарь"].tap()

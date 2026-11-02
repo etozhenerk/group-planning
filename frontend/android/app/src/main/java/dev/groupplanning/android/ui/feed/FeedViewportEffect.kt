@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalDensity
@@ -32,9 +33,13 @@ internal fun FeedViewportEffect(
     state: FeedState,
     position: TimelinePosition,
     headingHeight: Float,
+    unreadHeight: Float,
     save: (ChatViewport) -> Unit,
 ) {
     val density = LocalDensity.current.density
+    val latestInset by rememberUpdatedState { id: java.util.UUID ->
+        feedLeadingInset(rows, state, id, headingHeight, unreadHeight)
+    }
     val threshold = with(LocalDensity.current) { DesignTokens.spaceS64.toPx() }
     LaunchedEffect(list, state.ready, state.restoreRevision) {
         if (!state.ready) return@LaunchedEffect
@@ -43,6 +48,7 @@ internal fun FeedViewportEffect(
         val saved = state.viewport
         val restoredId = saved?.entry?.takeIf { id -> rows.any { it.entry?.id == id } }
         val offset = saved?.offsetDp?.takeIf { restoredId != null } ?: 0f
+        val rememberedInset = saved?.leadingInsetDp?.takeIf { restoredId != null }
         val target = restoredId
             ?: state.readInfo?.firstUnread.takeUnless { saved?.following == true }
                 ?.takeIf { id -> rows.any { it.entry?.id == id } }
@@ -50,14 +56,16 @@ internal fun FeedViewportEffect(
             if (state.newerLoading || state.newerError) 1 else 0
         position.following = target == null && !state.hasNewer
         position.anchor = target?.let { ChatViewport(it, offset, false) }
-        position.anchorHeadingInset = null
+        position.anchorHeadingInset = rememberedInset?.times(density)
         if (rows.isNotEmpty()) {
             list.scrollToItem(index)
             val item = snapshotFlow { list.layoutInfo.visibleItemsInfo.find { it.index == index } }
                 .first { it != null }
             if (target != null && item != null) {
-                val desired =
-                    offset * density
+                // Keep the first unread divider visible until its actual height is measured.
+                val currentInset = snapshotFlow { latestInset(target) }.first { it != null } ?: 0f
+                val desired = offset * density +
+                    (rememberedInset?.let { it * density - currentInset } ?: 0f)
                 val top = list.layoutInfo.viewportEndOffset - item.offset - item.size
                 list.scrollBy(-(top - desired))
             }
@@ -65,7 +73,16 @@ internal fun FeedViewportEffect(
         position.adjusting = false
         position.ready = true
     }
-    LaunchedEffect(list, rows, state.hasNewer, density, headingHeight) {
+    LaunchedEffect(
+        list,
+        rows,
+        state.hasNewer,
+        state.divider,
+        state.readEnabled,
+        density,
+        headingHeight,
+        unreadHeight,
+    ) {
         val reversed = rows.asReversed()
         snapshotFlow { list.layoutInfo to list.isScrollInProgress }.collect { (layout, scrolling) ->
             if (!position.ready || position.adjusting || reversed.isEmpty()) return@collect
@@ -86,7 +103,13 @@ internal fun FeedViewportEffect(
                 reversed.find { row -> row.key == it.key }?.entry?.id == saved?.entry
             }
             if (!scrolling && saved?.entry != null) {
-                val inset = feedHeadingInset(rows, saved.entry, headingHeight)
+                val inset = feedLeadingInset(
+                    rows,
+                    state,
+                    saved.entry,
+                    headingHeight,
+                    unreadHeight,
+                )
                 if (position.anchorHeadingInset == null) position.anchorHeadingInset = inset
                 val headingShift = (position.anchorHeadingInset ?: 0f) - (inset ?: 0f)
                 if (existing == null) {
@@ -137,9 +160,11 @@ internal fun FeedViewportEffect(
                     id,
                     (layout.viewportEndOffset - first.offset - first.size) / density,
                     false,
+                    feedLeadingInset(rows, state, id, headingHeight, unreadHeight)
+                        ?.div(density),
                 )
             position.anchor = value
-            position.anchorHeadingInset = feedHeadingInset(rows, id, headingHeight)
+            position.anchorHeadingInset = value.leadingInsetDp?.times(density)
             save(value)
         }
     }

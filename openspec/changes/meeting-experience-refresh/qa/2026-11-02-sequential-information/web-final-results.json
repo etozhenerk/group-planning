@@ -1,0 +1,253 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-final-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-final-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-final-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-final-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-final-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/tmp/somewhere-sequential-browser-fixture.test -test.run=^TestBrowserFixture$ -test.timeout=0 > /tmp/somewhere-sequential-information-web-fixture.log 2>&1",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8554",
+        "SOMEWHERE_BROWSER_DIST": "/tmp/somewhere-sequential-web-information-rsvp-fixed",
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "1",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8554/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "information.spec.ts",
+      "file": "information.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "mixed replies and a real second actor update the compact roster without service links",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:30:01.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08416b778366d7242234-3a467e3b9c483bc94ea5",
+          "file": "information.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "mixed replies and a real second actor update the compact roster without service links",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:30:07.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08416b778366d7242234-c7e264a6f546299111f6",
+          "file": "information.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T17:30:00.623Z",
+    "duration": 15161.981000000002,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

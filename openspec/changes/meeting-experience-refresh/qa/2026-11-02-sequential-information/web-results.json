@@ -1,0 +1,323 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information",
+        "testIgnore": [],
+        "testMatch": [
+          "information.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/tmp/somewhere-sequential-browser-fixture.test -test.run=^TestBrowserFixture$ -test.timeout=0 > /tmp/somewhere-sequential-information-web-fixture.log 2>&1",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8554",
+        "SOMEWHERE_BROWSER_DIST": "/tmp/somewhere-sequential-web-information-fixed",
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "1",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8554/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "information.spec.ts",
+      "file": "information.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "mixed replies and a real second actor update the compact roster without service links",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10394,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts:40:27",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                      "column": 27,
+                      "line": 40
+                    },
+                    "snippet": "  38 |     await open.click();\n  39 |     const updated = info.getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true });\n> 40 |     await expect(updated).toContainText('+2');\n     |                           ^\n  41 |     await updated.press('Enter');\n  42 |     await expect(collapse).toBeFocused();\n  43 |     await expect(roster.getByRole('listitem')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                        "column": 27,
+                        "line": 40
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n\n\n  38 |     await open.click();\n  39 |     const updated = info.getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true });\n> 40 |     await expect(updated).toContainText('+2');\n     |                           ^\n  41 |     await updated.press('Enter');\n  42 |     await expect(collapse).toBeFocused();\n  43 |     await expect(roster.getByRole('listitem')).toHaveCount(8);\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts:40:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:24:44.991Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output/information-mixed-replies--5a3e5-oster-without-service-links-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output/information-mixed-replies--5a3e5-oster-without-service-links-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                    "column": 27,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08416b778366d7242234-3a467e3b9c483bc94ea5",
+          "file": "information.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "mixed replies and a real second actor update the compact roster without service links",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13131,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts:40:27",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                      "column": 27,
+                      "line": 40
+                    },
+                    "snippet": "  38 |     await open.click();\n  39 |     const updated = info.getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true });\n> 40 |     await expect(updated).toContainText('+2');\n     |                           ^\n  41 |     await updated.press('Enter');\n  42 |     await expect(collapse).toBeFocused();\n  43 |     await expect(roster.getByRole('listitem')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                        "column": 27,
+                        "line": 40
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\nExpected substring: \u001b[32m\"+2\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Состав встречи', exact: true }).getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true })\u001b[22m\n\n\n  38 |     await open.click();\n  39 |     const updated = info.getByRole('button', { name: 'Все участники встречи. Придут: 5', exact: true });\n> 40 |     await expect(updated).toContainText('+2');\n     |                           ^\n  41 |     await updated.press('Enter');\n  42 |     await expect(collapse).toBeFocused();\n  43 |     await expect(roster.getByRole('listitem')).toHaveCount(8);\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts:40:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:24:56.128Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output/information-mixed-replies--5a3e5-oster-without-service-links-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/web-output/information-mixed-replies--5a3e5-oster-without-service-links-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-information/information.spec.ts",
+                    "column": 27,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08416b778366d7242234-c7e264a6f546299111f6",
+          "file": "information.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T17:24:44.589Z",
+    "duration": 25228.574,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -50,6 +50,7 @@ internal class InvitationViewModel(
 
     private var currentFeed: FeedViewModel? = null
     private var feedIdentity: Triple<UUID, Pair<UUID?, Long>, Long>? = null
+    private var deniedProbe: Triple<UUID, Pair<UUID?, Long>, Long>? = null
 
     fun conversation(id: UUID): FeedViewModel? {
         val snapshot = snapshot.value
@@ -77,6 +78,7 @@ internal class InvitationViewModel(
     }
 
     fun choose(answer: RsvpAnswer) {
+        refreshDeadline()
         if (state.value.editable) mutable.value = state.value.copy(choice = answer, issue = null)
     }
 
@@ -84,14 +86,36 @@ internal class InvitationViewModel(
         startReload(preserveChoice = false)
     }
 
-    private fun startReload(preserveChoice: Boolean) {
+    private fun startReload(preserveChoice: Boolean, recoverAccess: Boolean = true) {
         if (state.value.saving) return
         suspend()
         val version = epoch
-        operation = viewModelScope.launch { load(version, preserveChoice) }
+        operation = viewModelScope.launch { load(version, preserveChoice, recoverAccess) }
     }
 
-    fun refreshIfIdle() {
+    fun refreshIfIdle(foreground: Boolean = false) {
+        refreshDeadline()
+        val current = snapshot.value
+        val identity = feedIdentity
+        val owner =
+            (current.session as? SessionState.Authenticated)?.profile?.id to current.generation
+
+        // Reconcile the public RSVP once per denial, without restarting a denied chat.
+        // Explicit reload and a confirmed RSVP can still recover authorized access.
+        if (identity != null && identity.second == owner && identity.first in current.data.denied) {
+            val probe = Triple(identity.first, owner, current.data.accessVersion(identity.first))
+            if ((foreground || deniedProbe != probe) &&
+                operation?.isActive != true &&
+                !state.value.saving &&
+                state.value.pending == null
+            ) {
+                deniedProbe = probe
+                startReload(preserveChoice = true, recoverAccess = false)
+            }
+            return
+        }
+        deniedProbe = null
+
         // The synchronized conversation owns refresh and its bounded fallback.
         // Public invitations and legacy servers retain their existing refresh policy.
         if (state.value.details?.canAccess == true &&
@@ -104,20 +128,33 @@ internal class InvitationViewModel(
         }
     }
 
-    private suspend fun load(version: Long, preserveChoice: Boolean = false) {
+    fun refreshDeadline(now: java.time.Instant = java.time.Instant.now()) {
+        val before = state.value
+        val refreshed = before.copy(now = now)
+        if (before.joinClosed != refreshed.joinClosed) mutable.value = refreshed
+    }
+
+    private suspend fun load(
+        version: Long,
+        preserveChoice: Boolean = false,
+        recoverAccess: Boolean = true,
+    ) {
         val draft = state.value.choice.takeIf { preserveChoice && it != state.value.answer }
         mutable.value = state.value.copy(loading = true, issue = null)
         try {
-            val details = repository.load(target, state.value.details?.preview)
+            val details = repository.load(target, state.value.details?.preview, recoverAccess)
             if (epoch != version) return
+            val privateAccess = details.canAccess &&
+                details.preview.meetingId !in snapshot.value.data.denied
             mutable.value = InvitationState(
                 details = details,
                 choice = draft ?: details.preview.myRsvp,
                 loading = true,
                 profileId = (snapshot.value.session as? SessionState.Authenticated)?.profile?.id,
-                shareUrl = state.value.shareUrl.takeIf { details.organizer },
+                shareUrl = state.value.shareUrl.takeIf { details.organizer && privateAccess },
+                issue = InvitationIssue.Load.takeIf { details.canAccess && !privateAccess },
             )
-            if (details.canAccess) {
+            if (privateAccess) {
                 repository.loadPrivate(details.preview.meetingId, includeFeed = feeds == null)
                 if (details.organizer) loadShare(details)
             }
@@ -137,6 +174,7 @@ internal class InvitationViewModel(
     }
 
     fun save() {
+        refreshDeadline()
         val before = state.value
         if (before.loading || before.saving || (!before.canSave && before.pending == null)) return
         val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile ?: return
@@ -218,6 +256,7 @@ internal class InvitationViewModel(
 
     fun suspend() {
         epoch += 1
+        if (operation?.isActive == true) deniedProbe = null
         operation?.cancel()
         operation = null
         mutable.value = state.value.copy(loading = false, saving = false)

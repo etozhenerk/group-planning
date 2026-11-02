@@ -56,9 +56,7 @@ export const FeedbackForm = ({ kind, screen }: FeedbackFormProps) => {
       <button
         type="submit"
         className={styles.submit}
-        disabled={
-          form.mutation.isPending || form.reading || form.description.trim().length < 10
-        }
+        disabled={form.mutation.isPending || form.reading}
         aria-busy={form.mutation.isPending}
       >
         {form.mutation.isPending ? 'Отправка…' : 'Отправить сообщение ↗'}

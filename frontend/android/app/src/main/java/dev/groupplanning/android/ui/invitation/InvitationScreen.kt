@@ -49,7 +49,7 @@ internal fun InvitationScreen(
     LaunchedEffect(model, lifecycle) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             try {
-                model.refreshIfIdle()
+                model.refreshIfIdle(foreground = true)
                 while (true) {
                     delay(5_000)
                     model.refreshIfIdle()

@@ -25,7 +25,11 @@ internal class InvitationRepository(
     val snapshot = session.state
     private val meetings = MeetingRepository(session)
 
-    suspend fun load(target: InvitationTarget, previous: InvitationPreview?): InvitationDetails {
+    suspend fun load(
+        target: InvitationTarget,
+        previous: InvitationPreview?,
+        recoverAccess: Boolean = true,
+    ): InvitationDetails {
         val generation = session.beginData { it }
         val preview = when (target) {
             is InvitationTarget.Token -> {
@@ -57,7 +61,9 @@ internal class InvitationRepository(
             )
         } catch (error: ClientFailure) {
             if (error.status != 403) throw error
-            session.updateAccess(id, allowed = false, generation)
+            if (id !in snapshot.value.data.denied) {
+                session.updateAccess(id, allowed = false, generation)
+            }
             val current = error.problem?.currentResponse
             val public = preview ?: throw error
             return InvitationDetails(
@@ -68,7 +74,9 @@ internal class InvitationRepository(
             )
         }
         if (meeting.id != id) throw ClientFailure(FailureKind.InvalidResponse)
-        if (id in snapshot.value.data.denied) session.updateAccess(id, allowed = true, generation)
+        if (recoverAccess && id in snapshot.value.data.denied) {
+            session.updateAccess(id, allowed = true, generation)
+        }
         session.updateData(generation) {
             it.copy(details = it.details + (id to ResourceState(ResourcePhase.Ready, meeting)))
         }

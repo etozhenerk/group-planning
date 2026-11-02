@@ -90,8 +90,14 @@ final class NativeMediaFlowUITests: XCTestCase {
         ExperienceScreenshot.save("native-photo-published", test: self)
     }
 
-    func testSyntheticPDFPublishesThroughRealAPI() {
-        let app = ChatSheetTestSupport.launch()
+    func testSyntheticPDFPublishesThroughRealAPI() async throws {
+        let counterpart = try NativeChatCounterpart()
+        try await counterpart.join()
+        addTeardownBlock { @MainActor in try await counterpart.leave() }
+        let app = XCUIApplication()
+        let gate = try ResponseGate(app, path: "/unused-pdf-control", mode: "hold")
+        addTeardownBlock { @MainActor in try gate.cleanUp() }
+        _ = ChatSheetTestSupport.launch(application: app)
         ChatSheetTestSupport.openChat(app)
         app.buttons["meeting-add"].tap()
         app.buttons["Файл"].tap()
@@ -120,11 +126,28 @@ final class NativeMediaFlowUITests: XCTestCase {
         XCTAssertTrue(send.waitForExistence(timeout: 10))
         XCTAssertTrue(send.isEnabled)
         ExperienceScreenshot.save("native-pdf-selected", test: self)
+        try gate.failPublishedMediaResponse(
+            pathPrefix: "/api/v1/meetings/" + ChatSheetTestSupport.sharedMeeting + "/media/")
+        send.tap()
+        let failed = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Повторить"), object: send)
+        let failedResult = await XCTWaiter.fulfillment(of: [failed], timeout: 20)
+        XCTAssertEqual(failedResult, .completed)
+        XCTAssertEqual(try gate.receivedStatus(), "200", "The failed reply follows a real commit")
+        XCTAssertTrue(app.staticTexts["media-picker-header"].exists)
+        ExperienceScreenshot.save("native-pdf-committed-reply-lost", test: self)
+        try await counterpart.assertPublishedPDF(
+            fileName: "somewhere-qa-rules.pdf",
+            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306")
+        try gate.release()
         send.tap()
         XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
         XCTAssertTrue(
             app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "somewhere-qa-rules.pdf"))
                 .firstMatch.waitForExistence(timeout: 10))
         ExperienceScreenshot.save("native-pdf-published", test: self)
+        try await counterpart.assertPublishedPDF(
+            fileName: "somewhere-qa-rules.pdf",
+            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306")
     }
 }

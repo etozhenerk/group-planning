@@ -71,7 +71,5 @@ export const useSessionLifecycle = () => {
       main.tabIndex = -1;
       main.focus({ preventScroll: true });
     }
-
-    window.scrollTo(0, 0);
   }, [location.pathname]);
 };

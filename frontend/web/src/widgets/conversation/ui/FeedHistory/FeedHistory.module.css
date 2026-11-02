@@ -6,7 +6,21 @@
 }
 
 .error {
-  color: var(--ds-color-error);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-s8);
+  padding-block: var(--ds-space-s12);
+}
+
+.error button {
+  min-height: var(--ds-target-web);
+  padding: var(--ds-component-mobile-chat-inline-action-inset-block)
+    var(--ds-component-mobile-chat-inline-action-inset-inline);
+  border-radius: var(--ds-component-mobile-chat-inline-action-radius);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-semibold);
 }
 
 .loading {

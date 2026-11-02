@@ -265,8 +265,8 @@ internal fun FeedScreen(
                 bounds = presentation.conversationBounds,
                 focused = model::focused,
                 openReaction = { presentation.react(it.id) },
-                attachment = { item ->
-                    media?.let { MessageAttachment(item, it) }
+                attachment = { item, own ->
+                    media?.let { MessageAttachment(item, it, own) }
                 },
                 visible = model.reactions::visible,
                 viewport = model::viewport,

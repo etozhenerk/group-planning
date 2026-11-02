@@ -10,6 +10,7 @@ struct EmojiPicker: View {
     @State private var category = ""
     @State private var recent: [String] = []
     @FocusState private var searchFocused: Bool
+    @ScaledMetric(relativeTo: .body) private var choiceWidth = DesignTokens.targetIos
 
     private var results: [EmojiCatalogEntry] {
         if query.isEmpty, category.isEmpty {
@@ -82,7 +83,7 @@ struct EmojiPicker: View {
                     LazyVGrid(
                         columns: [
                             GridItem(
-                                .adaptive(minimum: DesignTokens.targetIos),
+                                .adaptive(minimum: choiceWidth),
                                 spacing: DesignTokens.spaceS0)
                         ], spacing: DesignTokens.spaceS0
                     ) {

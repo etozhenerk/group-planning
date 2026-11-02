@@ -591,9 +591,13 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativeMediaFlowUITests.swift
+          selector: testSyntheticPDFPublishesThroughRealAPI
+          runner: ios-ui
+          level: e2e
 - id: TC-MEDIA-NATIVE-PHOTO-BATCH
   title: "Нативный предпросмотр набора фотографий: Нативная карусель использует общую загрузку"
   lifecycle: active

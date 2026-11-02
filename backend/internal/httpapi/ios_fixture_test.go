@@ -49,6 +49,14 @@ func (p iosFixtureProvider) Verify(ctx context.Context, code, _ string) (identit
 	}
 
 	name := "Саша"
+	if canonical, ok := map[string]string{
+		"design-1": "Лена", "design-2": "Миша", "design-3": "Саша",
+		"design-4": "Сергей", "design-5": "Катя", "design-6": "Оля",
+		"account-removal-owner": "Организатор до удаления", "account-removal-survivor": "Участник после удаления",
+	}[code]; ok {
+		name = canonical
+	}
+
 	if strings.HasPrefix(code, "invite-guest") {
 		name = "Лена"
 	}
@@ -118,6 +126,10 @@ func TestIOSFixture(t *testing.T) {
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
+	for _, person := range []string{"1", "2", "4"} {
+		config.Cases["review-reader-"+person] = iosCredential(t, service, "design-"+person)
+	}
+
 	config.DesignDates = nativeDesignFixtureDates(t, store)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
@@ -155,6 +167,8 @@ func TestIOSFixture(t *testing.T) {
 	config.Cases["invite-owner"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")
 	config.Cases["invite-rsvp-reentry"] = iosCredential(t, service, "invite-guest-rsvp")
+	config.Cases["account-removal-owner"] = iosCredential(t, service, "account-removal-owner")
+	config.Cases["account-removal-survivor"] = iosCredential(t, service, "account-removal-survivor")
 	config.Cases["invite-error"] = iosCredential(t, service, "invite-guest-error")
 
 	if err := app.InitializeChatReadState(t.Context()); err != nil {

@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-android-g03.json",
+  "inputHash": "ac5a076c53844921f4d7adb8505bf301e8970d9bb7ca83ce2520e25d8db1d8b6",
+  "reviewer": "/root/android_current_acceptance",
+  "reviewedAt": "2026-11-02T13:01:23.251Z",
+  "mode": "live",
+  "environment": "Frozen Android15eb, exact QA APKaa11/test89ca; emulator-5554 Android16/API36,720x1600/320dpi; current stock memory HTTPS full fixture and isolated observer audit fixture; synthetic only; source-specific capture metadata and interaction records. Scope limited to listed states.",
+  "summary": "Свежая независимая приёмка перечисленных узких Android состояний. Source7a10 FAIL и предыдущие reports сохранены отдельно; TalkBack speech/прочие экраны этим отчётом не объявлены.",
+  "checks": [
+    {
+      "screen": "onboarding-service-correction-android",
+      "platform": "android",
+      "state": "first-slide-no-service-entry",
+      "status": "pass",
+      "observations": "Новый full реально открыл первый слайд и проверил отсутствие help/about/privacy/cookie/support по text и content description. Композиция, safe area, знак слева и иерархия сверены с native PNG. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "ac5a076c53844921f4d7adb8505bf301e8970d9bb7ca83ce2520e25d8db1d8b6",
+        "fixtureHash": "e99a0ba89d5d6458c2bff4e3d33048d5b88911f0b2d65ff4266c05d38248fa9c",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU,en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:33:46.675731Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/full-ui-evidence/all-65342/onboarding-1.png",
+          "kind": "actual",
+          "sha256": "82379e814abf59d3f04ba97e99e5d972fbaca028585df1ded8dacad4f3e1fd83"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/onboarding-1.png",
+          "kind": "reference",
+          "sha256": "b3c2c6a853852e82c8526fb0fa0e4430bef98eb481b43c80c7901faa83e2b8ef"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "onboarding-service-correction-android",
+      "platform": "android",
+      "state": "skip-to-last",
+      "status": "pass",
+      "observations": "Реальный tap пропуска перевёл к последнему слайду и явному CTA; лишнего сервиса нет. Возврат и остальные страницы проверены текущим EntryUiTests. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "ac5a076c53844921f4d7adb8505bf301e8970d9bb7ca83ce2520e25d8db1d8b6",
+        "fixtureHash": "e99a0ba89d5d6458c2bff4e3d33048d5b88911f0b2d65ff4266c05d38248fa9c",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU,en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:33:52.939328Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/full-ui-evidence/all-65342/onboarding-skip-last.png",
+          "kind": "actual",
+          "sha256": "b37ee251738f47456069c63728a7f88e5394462cba94db4d483f1523512b21ad"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/onboarding-1.png",
+          "kind": "reference",
+          "sha256": "b3c2c6a853852e82c8526fb0fa0e4430bef98eb481b43c80c7901faa83e2b8ef"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "onboarding-service-correction-android",
+      "platform": "android",
+      "state": "large-text-no-overlap",
+      "status": "pass",
+      "observations": "Реальный font1.8: первый и последний слайды прокручены до полного текста/подписи; крупный CTA реально нажат, показан ожидаемый synthetic auth-error. CTA/Back достижимы, service overlay отсутствует. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "ac5a076c53844921f4d7adb8505bf301e8970d9bb7ca83ce2520e25d8db1d8b6",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.8,
+        "capturedAt": "2026-11-02T13:00:11.949034+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/onboarding-direct-last-large-scrolled-final.png",
+          "kind": "actual",
+          "sha256": "cfaff79bd6043f5a038297856e0d8cb3f2f5e84c9f0cff127bd09125dca54f88"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/onboarding-1.png",
+          "kind": "reference",
+          "sha256": "b3c2c6a853852e82c8526fb0fa0e4430bef98eb481b43c80c7901faa83e2b8ef"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    }
+  ]
+}

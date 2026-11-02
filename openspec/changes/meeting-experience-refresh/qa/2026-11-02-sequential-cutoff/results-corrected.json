@@ -1,0 +1,529 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/web.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/web.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/results-corrected.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/tmp/somewhere-sequential-browser-fixture.test -test.run=^TestBrowserFixture$ -test.timeout=0 > /tmp/somewhere-sequential-cutoff-web-fixture.log 2>&1",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8554",
+        "SOMEWHERE_BROWSER_DIST": "/tmp/somewhere-sequential-web-information-rsvp-fixed",
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "1",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8554/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "cutoff.spec.ts",
+      "file": "cutoff.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "open tab crosses cutoff by timer and foreground clock refresh without hiding details",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5746,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:40:25",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 25,
+                      "line": 40
+                    },
+                    "snippet": "  38 |     await guest.goto(new URL(created.invitation_url).pathname);\n  39 |     const going = guest.getByRole('button', { name: 'Приду', exact: true });\n> 40 |     await expect(going).toBeEnabled();\n     |                         ^\n  41 |     await guest.clock.fastForward(6000);\n  42 |     await expect(going).toBeDisabled();\n  43 |     await expect(guest.getByRole('heading', { name: 'Открытая вкладка отсечки', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 25,
+                        "line": 40
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n\n\n  38 |     await guest.goto(new URL(created.invitation_url).pathname);\n  39 |     const going = guest.getByRole('button', { name: 'Приду', exact: true });\n> 40 |     await expect(going).toBeEnabled();\n     |                         ^\n  41 |     await guest.clock.fastForward(6000);\n  42 |     await expect(going).toBeDisabled();\n  43 |     await expect(guest.getByRole('heading', { name: 'Открытая вкладка отсечки', exact: true })).toBeVisible();\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:40:25"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:57.530Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 25,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-3379ec2967e874007259",
+          "file": "cutoff.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "stale invitation is rejected by real server, refreshed and remains readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 990,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:54:03.688Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-9b1b2e3814e0da91a6b9",
+          "file": "cutoff.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "date-only stays joinable; current member retains chat; returning after refusal is closed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5766,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:93:66",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 66,
+                      "line": 93
+                    },
+                    "snippet": "  91 |     await expect(guest.getByRole('button', { name: 'Приду', exact: true })).toBeEnabled();\n  92 |     await guest.getByRole('button', { name: 'Приду', exact: true }).click();\n> 93 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n     |                                                                  ^\n  94 |     await reschedule(page, created.meeting.id, true);\n  95 |     await guest.reload();\n  96 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 66,
+                        "line": 93
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n\n\n  91 |     await expect(guest.getByRole('button', { name: 'Приду', exact: true })).toBeEnabled();\n  92 |     await guest.getByRole('button', { name: 'Приду', exact: true }).click();\n> 93 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n     |                                                                  ^\n  94 |     await reschedule(page, created.meeting.id, true);\n  95 |     await guest.reload();\n  96 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:93:66"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:54:04.776Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 66,
+                    "line": 93
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-4123bc0aa6425123ce6a",
+          "file": "cutoff.spec.ts",
+          "line": 83,
+          "column": 5
+        },
+        {
+          "title": "open tab crosses cutoff by timer and foreground clock refresh without hiding details",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6484,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:40:25",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 25,
+                      "line": 40
+                    },
+                    "snippet": "  38 |     await guest.goto(new URL(created.invitation_url).pathname);\n  39 |     const going = guest.getByRole('button', { name: 'Приду', exact: true });\n> 40 |     await expect(going).toBeEnabled();\n     |                         ^\n  41 |     await guest.clock.fastForward(6000);\n  42 |     await expect(going).toBeDisabled();\n  43 |     await expect(guest.getByRole('heading', { name: 'Открытая вкладка отсечки', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 25,
+                        "line": 40
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Приду', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('button', { name: 'Приду', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Приду', exact: true })\u001b[22m\n\n\n  38 |     await guest.goto(new URL(created.invitation_url).pathname);\n  39 |     const going = guest.getByRole('button', { name: 'Приду', exact: true });\n> 40 |     await expect(going).toBeEnabled();\n     |                         ^\n  41 |     await guest.clock.fastForward(6000);\n  42 |     await expect(going).toBeDisabled();\n  43 |     await expect(guest.getByRole('heading', { name: 'Открытая вкладка отсечки', exact: true })).toBeVisible();\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:40:25"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:54:10.842Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 25,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-bc94d4a220cd81363bb0",
+          "file": "cutoff.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "stale invitation is rejected by real server, refreshed and remains readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1802,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:54:17.829Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-6966f9fd4f28dbed0599",
+          "file": "cutoff.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "date-only stays joinable; current member retains chat; returning after refusal is closed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6369,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:93:66",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 66,
+                      "line": 93
+                    },
+                    "snippet": "  91 |     await expect(guest.getByRole('button', { name: 'Приду', exact: true })).toBeEnabled();\n  92 |     await guest.getByRole('button', { name: 'Приду', exact: true }).click();\n> 93 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n     |                                                                  ^\n  94 |     await reschedule(page, created.meeting.id, true);\n  95 |     await guest.reload();\n  96 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 66,
+                        "line": 93
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel('Сообщение', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel('Сообщение', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel('Сообщение', { exact: true })\u001b[22m\n\n\n  91 |     await expect(guest.getByRole('button', { name: 'Приду', exact: true })).toBeEnabled();\n  92 |     await guest.getByRole('button', { name: 'Приду', exact: true }).click();\n> 93 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n     |                                                                  ^\n  94 |     await reschedule(page, created.meeting.id, true);\n  95 |     await guest.reload();\n  96 |     await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:93:66"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:54:19.839Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output-corrected/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 66,
+                    "line": 93
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-7addf69876a4dbd724e0",
+          "file": "cutoff.spec.ts",
+          "line": 83,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T17:53:57.075Z",
+    "duration": 29214.265,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

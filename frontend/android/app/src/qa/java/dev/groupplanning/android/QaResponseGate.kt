@@ -40,6 +40,26 @@ internal object QaResponseGate {
 
     @Volatile private var history: CountDownLatch? = null
 
+    @Volatile private var media: CountDownLatch? = null
+
+    @Volatile private var mediaPath: String? = null
+
+    @Volatile var mediaEntered = false
+        private set
+
+    fun holdMedia(path: String) {
+        releaseMedia()
+        mediaEntered = false
+        mediaPath = path
+        media = CountDownLatch(1)
+    }
+
+    fun releaseMedia() {
+        media?.countDown()
+        media = null
+        mediaPath = null
+    }
+
     fun holdHistory() {
         releaseHistory()
         historyEntered = false
@@ -72,6 +92,16 @@ internal object QaResponseGate {
     }
 
     fun after(request: Request) {
+        if (request.url.host == "127.0.0.1" &&
+            request.method == "GET" &&
+            request.url.encodedPath == mediaPath
+        ) {
+            val gate = media
+            if (gate != null) {
+                mediaEntered = true
+                if (!gate.await(45, TimeUnit.SECONDS)) throw IOException("QA media gate timed out")
+            }
+        }
         if (request.url.host != "127.0.0.1" ||
             request.method != "GET" ||
             request.url.queryParameter("before_sequence") == null

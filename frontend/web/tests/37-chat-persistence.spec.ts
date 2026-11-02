@@ -100,13 +100,19 @@ test('unavailable IndexedDB leaves the draft untouched and sends no POST', async
   page,
 }) => {
   await page.addInitScript(() => {
+    const nativeIndexedDB = window.indexedDB;
+    const unavailable = {
+      open: () => {
+        throw new DOMException('Quota exceeded', 'QuotaExceededError');
+      },
+    };
+
     Object.defineProperty(window, 'indexedDB', {
       configurable: true,
-      value: {
-        open: () => {
-          throw new DOMException('Quota exceeded', 'QuotaExceededError');
-        },
-      },
+      get: () =>
+        sessionStorage.getItem('qa-storage-ready') === 'true'
+          ? nativeIndexedDB
+          : unavailable,
     });
   });
   await login(page, 'Саша');
@@ -128,6 +134,23 @@ test('unavailable IndexedDB leaves the draft untouched and sends no POST', async
       .filter({ hasText: 'Не удалось сохранить сообщение на устройстве' }),
   ).toBeVisible();
   expect(posts).toEqual([]);
+  await page.evaluate(() => sessionStorage.setItem('qa-storage-ready', 'true'));
+  await page.getByRole('button', { name: 'Отправить сообщение' }).click();
+  await expect(input).toHaveValue('');
+  await expect(
+    page.getByTestId('feed-message').filter({ hasText: 'Этот текст нельзя потерять' }),
+  ).toHaveAttribute('data-delivery', 'accepted');
+  await expect(
+    page.getByRole('alert').filter({
+      hasText: 'Не удалось сохранить сообщение на устройстве',
+    }),
+  ).toHaveCount(0);
+  expect(posts).toHaveLength(1);
+  const feed = feedSchema.parse(
+    await (await page.request.get(`/api/v1/meetings/${meeting.id}/feed?limit=50`)).json(),
+  );
+
+  expect(feed.entries.filter((entry) => entry.kind === 'message')).toHaveLength(1);
 });
 
 test('logout purges IndexedDB and stops a second tab from sending the previous user queue', async ({

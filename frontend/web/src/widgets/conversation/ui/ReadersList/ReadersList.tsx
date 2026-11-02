@@ -69,10 +69,14 @@ export const ReadersList = ({
           ))}
         </ul>
       )}
-      {query.isSuccess && !people.length && <p role="status">Пока никто не прочитал</p>}
+      {query.isSuccess && !people.length && (
+        <p role="status" className={styles.empty}>
+          Пока никто не прочитал
+        </p>
+      )}
       {query.error && (
-        <p role="status">
-          Не удалось загрузить список{' '}
+        <div role="alert" className={styles.error}>
+          <p>Не удалось загрузить список</p>
           <button
             type="button"
             onClick={() =>
@@ -83,7 +87,7 @@ export const ReadersList = ({
           >
             Повторить
           </button>
-        </p>
+        </div>
       )}
       {query.hasNextPage && !query.error && (
         <button

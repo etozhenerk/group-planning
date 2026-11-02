@@ -37,6 +37,59 @@ beforeEach(() => {
 });
 afterEach(() => client.clear());
 
+it.each(['meeting_changed', 'participant_joined', 'rsvp_changed'])(
+  'refreshes the current roster for %s without refreshing it for ordinary messages',
+  async (kind) => {
+    await load();
+    const epoch = accessEpoch('user', 'meeting');
+    const roster = privateKey('user', 'meeting', epoch, 'participants');
+    const other = privateKey('user', 'another-meeting', epoch, 'participants');
+    client.setQueryData(roster, ['current roster']);
+    client.setQueryData(other, ['another roster']);
+    vi.mocked(getChatChanges).mockResolvedValueOnce(chatChanges('101'));
+    await load();
+    expect(client.getQueryState(roster)?.isInvalidated).toBe(false);
+
+    const changed = chatChanges('102');
+
+    if (kind === 'meeting_changed') {
+      changed.changes = [{ kind: 'meeting_changed', projection_version: '102' }];
+    } else {
+      const entry = changed.changes[0]?.projection?.entry;
+      expect(entry).toBeDefined();
+
+      if (entry) {
+        entry.kind = kind;
+      }
+    }
+
+    vi.mocked(getChatChanges).mockResolvedValueOnce(changed);
+    await load();
+    expect(client.getQueryState(roster)?.isInvalidated).toBe(true);
+    expect(client.getQueryState(other)?.isInvalidated).toBe(false);
+  },
+);
+
+it('refreshes the cached roster when invalidated history is replaced by a snapshot', async () => {
+  await load();
+  const roster = privateKey(
+    'user',
+    'meeting',
+    accessEpoch('user', 'meeting'),
+    'participants',
+  );
+
+  client.setQueryData(roster, ['obsolete participants']);
+  const invalidated = chatChanges('101');
+  invalidated.changes = [{ kind: 'history_invalidated', projection_version: '101' }];
+  vi.mocked(getChatChanges)
+    .mockResolvedValueOnce(invalidated)
+    .mockResolvedValueOnce(chatChanges('200'));
+  vi.mocked(getChatSnapshot).mockResolvedValueOnce(chatSnapshot('200'));
+  await load();
+  expect(client.getQueryState(roster)?.isInvalidated).toBe(true);
+});
+
 it('uses snapshot and then the confirmed cursor, committing each bounded page before the next', async () => {
   await load();
   vi.mocked(getChatChanges)

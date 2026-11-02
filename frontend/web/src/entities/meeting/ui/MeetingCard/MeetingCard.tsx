@@ -2,7 +2,7 @@ import { UnreadBadge } from '@/entities/meeting/ui/UnreadBadge';
 import { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';
 import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 import { ParticipantPreview } from '@/entities/meeting/ui/ParticipantPreview';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { Images, Crown, MapPin, Sparkle } from 'lucide-react';
 import type { MeetingSummary } from '@/entities/meeting/model/types';
 import { cardLabels } from '@/entities/meeting/lib/cardLabels';
@@ -11,6 +11,7 @@ import styles from '@/entities/meeting/ui/MeetingCard/MeetingCard.module.css';
 export type MeetingCardProps = { meeting: MeetingSummary; user: string; past?: boolean };
 
 export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) => {
+  const location = useLocation();
   const labels = cardLabels(meeting);
   const lastSpace = meeting.title.trimEnd().lastIndexOf(' ');
   const prefix = lastSpace < 0 ? '' : meeting.title.slice(0, lastSpace + 1);
@@ -72,6 +73,7 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
       {past && (
         <Link
           className={styles.album}
+          state={{ returnTo: location.pathname + location.search }}
           to={
             meeting.memoryPhotoCount
               ? `/meetings/${meeting.id}/memories`

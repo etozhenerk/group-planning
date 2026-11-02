@@ -8,11 +8,16 @@ final class ResponseGate {
         let queryName: String?
         let mode: String
         let method: String
+        let pathSuffix: String?
     }
     private let directory = FileManager.default.temporaryDirectory.appendingPathComponent(
         "somewhere-response-gate-" + UUID().uuidString, isDirectory: true)
     var requested: Bool {
         FileManager.default.fileExists(atPath: directory.appendingPathComponent("requested").path)
+    }
+
+    func receivedStatus() throws -> String {
+        try String(contentsOf: directory.appendingPathComponent("requested"), encoding: .utf8)
     }
 
     init(_ app: XCUIApplication, path: String, queryName: String? = nil, mode: String) throws {
@@ -28,7 +33,16 @@ final class ResponseGate {
         if FileManager.default.fileExists(atPath: marker.path) {
             try FileManager.default.removeItem(at: marker)
         }
-        let rule = Rule(path: path, queryName: queryName, mode: mode, method: method)
+        let rule = Rule(
+            path: path, queryName: queryName, mode: mode, method: method, pathSuffix: nil)
+        try JSONEncoder().encode(rule).write(
+            to: directory.appendingPathComponent("rule.json"), options: .atomic)
+    }
+
+    func failPublishedMediaResponse(pathPrefix: String) throws {
+        let rule = Rule(
+            path: pathPrefix, queryName: nil, mode: "unavailable", method: "POST",
+            pathSuffix: "/publish")
         try JSONEncoder().encode(rule).write(
             to: directory.appendingPathComponent("rule.json"), options: .atomic)
     }

@@ -1,8 +1,44 @@
+import CoreGraphics
 import XCTest
 
 @MainActor
 final class ChatSheetStabilityUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+
+    func testMessageRowsStayInsideViewportWithLargeTextAndEmojiDock() {
+        for large in [false, true] {
+            let app = ChatSheetTestSupport.launch(large: large)
+            ChatSheetTestSupport.openChat(app)
+            app.buttons["composer-emoji-toggle"].tap()
+            XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5))
+            let rows = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier BEGINSWITH %@", "chat-message-"))
+            XCTAssertGreaterThan(rows.count, 0)
+            for row in rows.allElementsBoundByIndex {
+                XCTAssertGreaterThanOrEqual(row.frame.minX + 0.5, app.frame.minX)
+                XCTAssertLessThanOrEqual(row.frame.maxX, app.frame.maxX + 0.5)
+            }
+            ExperienceScreenshot.save("message-width-" + (large ? "large" : "default"), test: self)
+        }
+    }
+
+    func testEmojiGlyphFitsCellAtDefaultAndAccessibilityTextSizes() {
+        for large in [false, true] {
+            let app = ChatSheetTestSupport.launch(large: large)
+            ChatSheetTestSupport.openChat(app)
+            app.buttons["composer-emoji-toggle"].tap()
+            let faces = app.buttons["emoji-category-faces"]
+            XCTAssertTrue(faces.waitForExistence(timeout: 5))
+            faces.tap()
+            let symbol = app.buttons["emoji-😀"]
+            XCTAssertTrue(symbol.waitForExistence(timeout: 5))
+            XCTAssertGreaterThanOrEqual(symbol.frame.width + 0.5, symbol.frame.height)
+            let suffix = large ? "large" : "default"
+            ExperienceScreenshot.save("emoji-glyph-cell-" + suffix, test: self)
+            symbol.tap()
+            XCTAssertEqual(app.textViews["message-input"].value as? String, "😀")
+        }
+    }
 
     func testCategoryTargetsRemainEqualWhenSelected() {
         let app = ChatSheetTestSupport.launch()
@@ -20,7 +56,7 @@ final class ChatSheetStabilityUITests: XCTestCase {
             XCTAssertEqual(before.midY, baseline.midY, accuracy: 0.5)
             button.tap()
             XCTAssertTrue(button.isSelected)
-            XCTAssertEqual(button.frame, before)
+            assertSameFrame(button.frame, before)
         }
         ExperienceScreenshot.save("sheet-controls-emoji-categories", test: self)
     }
@@ -117,11 +153,22 @@ final class ChatSheetStabilityUITests: XCTestCase {
         ExperienceScreenshot.save("sheet-controls-readers-loading", test: self)
         try gate.release()
         XCTAssertTrue(app.staticTexts["Пока никто не прочитал"].waitForExistence(timeout: 10))
-        XCTAssertEqual(header.frame, headerFrame)
-        XCTAssertEqual(app.scrollViews["chat-readers"].frame, viewport)
+        assertSameFrame(header.frame, headerFrame)
+        assertSameFrame(app.scrollViews["chat-readers"].frame, viewport)
         ExperienceScreenshot.save("sheet-controls-readers-empty", test: self)
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "chat-readers-header")
         XCTAssertTrue(message.exists)
+    }
+
+    private func assertSameFrame(
+        _ actual: CGRect, _ expected: CGRect,
+        file: StaticString = #filePath, line: UInt = #line
+    ) {
+        // Ignore numerical frame roundoff far below a pixel, while retaining strict geometry.
+        XCTAssertEqual(actual.minX, expected.minX, accuracy: 0.01, file: file, line: line)
+        XCTAssertEqual(actual.minY, expected.minY, accuracy: 0.01, file: file, line: line)
+        XCTAssertEqual(actual.width, expected.width, accuracy: 0.01, file: file, line: line)
+        XCTAssertEqual(actual.height, expected.height, accuracy: 0.01, file: file, line: line)
     }
 
     private func counts(_ file: URL) throws -> [String: Int] {

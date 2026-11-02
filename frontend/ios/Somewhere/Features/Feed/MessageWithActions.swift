@@ -5,6 +5,7 @@ struct MessageWithActions: View {
     let owner: FeedOwner
     let own: Bool
     var outgoing: OutgoingMessage?
+    let availableWidth: CGFloat
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AccessibilityFocusState private var messageFocused: Bool
     @AccessibilityFocusState private var focusedReaction: String?
@@ -126,7 +127,7 @@ struct MessageWithActions: View {
                 text: entry?.messageText ?? outgoing?.text ?? "",
                 date: entry?.occurredAt.date ?? outgoing?.createdAt ?? .distantPast,
                 own: own, entryID: entry?.id, selected: selected,
-                pendingSince: outgoing?.pendingSince)
+                pendingSince: outgoing?.pendingSince, maximumWidth: availableWidth)
         }
     }
 

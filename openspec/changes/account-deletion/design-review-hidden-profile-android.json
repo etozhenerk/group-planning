@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/account-deletion/design-manifest-android.json",
+  "inputHash": "0ca913752f425a5c632fb66e3054d5054c124dc32d146edb564e931941c791fd",
+  "reviewer": "/root/android_current_acceptance",
+  "reviewedAt": "2026-11-02T13:01:23.004Z",
+  "mode": "live",
+  "environment": "Frozen Android15eb, exact QA APKaa11/test89ca; emulator-5554 Android16/API36,720x1600/320dpi; current stock memory HTTPS full fixture and isolated observer audit fixture; synthetic only; source-specific capture metadata and interaction records. Scope limited to listed states.",
+  "summary": "Свежая независимая приёмка перечисленных узких Android состояний. Source7a10 FAIL и предыдущие reports сохранены отдельно; TalkBack speech/прочие экраны этим отчётом не объявлены.",
+  "checks": [
+    {
+      "screen": "account-profile-android-phone",
+      "platform": "android",
+      "state": "default",
+      "status": "pass",
+      "observations": "Просмотрен актуальный полный профиль: инициалы и личные/контактные группы по опубликованному raw. Удаления нет. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "0ca913752f425a5c632fb66e3054d5054c124dc32d146edb564e931941c791fd",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:40:54.691348+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/account-default.png",
+          "kind": "actual",
+          "sha256": "484731fe503c35d972711bed6fc364d2398615cd418802753d4669b9222c6f7c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/profile.png",
+          "kind": "reference",
+          "sha256": "de2dfc88516697a7577f33d557776782f01bdcc5bc9a2a6f42aec5e777e03e9b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-android-phone",
+      "platform": "android",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Реальный системный font_scale2.0, полный scroll до выхода; сервисные строки и выход достижимы над нижней навигацией, без удаления. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "0ca913752f425a5c632fb66e3054d5054c124dc32d146edb564e931941c791fd",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:41:23.686394+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/account-large-actions.png",
+          "kind": "actual",
+          "sha256": "87294810058fe444e1ed690b03005690b04f1a8f775642dc3d56c58ada54a133"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/profile.png",
+          "kind": "reference",
+          "sha256": "de2dfc88516697a7577f33d557776782f01bdcc5bc9a2a6f42aec5e777e03e9b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-android-phone",
+      "platform": "android",
+      "state": "return-from-profile",
+      "status": "pass",
+      "observations": "Реальный tap «Встречи» вернул исходный основной раздел; исходная synthetic сессия осталась200, DELETE /me отсутствует. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "0ca913752f425a5c632fb66e3054d5054c124dc32d146edb564e931941c791fd",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:42:09.070877+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/account-return.png",
+          "kind": "actual",
+          "sha256": "98ca2fdf772ee22c77eebae612f89f64a88cd66fb770a7aa1fc8a14ea7c5ea68"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/profile.png",
+          "kind": "reference",
+          "sha256": "de2dfc88516697a7577f33d557776782f01bdcc5bc9a2a6f42aec5e777e03e9b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    }
+  ]
+}

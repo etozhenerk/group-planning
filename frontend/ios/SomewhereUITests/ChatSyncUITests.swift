@@ -3,6 +3,120 @@ import XCTest
 @MainActor
 final class ChatSyncUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDownWithError() throws { XCUIDevice.shared.orientation = .portrait }
+
+    func testHistoryAnchorSurvivesKeyboardRotationSendAndReentry() async throws {
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let owner = try NativeChatCounterpart(actor: "design")
+        let reader = try NativeChatCounterpart(actor: "invite-rsvp")
+        let created = try await owner.request(
+            "meetings", method: "POST",
+            body: ["title": "Позиция iOS", "starts_on": "2099-11-10", "timezone": "UTC"])
+        let meeting = try XCTUnwrap(created["meeting"] as? [String: Any])
+        let id = try XCTUnwrap(meeting["id"] as? String)
+        let url = try XCTUnwrap(URL(string: try XCTUnwrap(created["invitation_url"] as? String)))
+        _ = try await reader.request(
+            "invitations/" + url.lastPathComponent + "/rsvp", method: "PUT",
+            body: ["answer": "going", "expected_revision": "0"])
+        var messages: [[String: Any]] = []
+        for number in 1...120 {
+            let key = UUID().uuidString.lowercased()
+            messages.append(
+                try await owner.request(
+                    "meetings/" + id + "/messages", method: "POST",
+                    body: [
+                        "text": "История iOS \(number)\nСтрока для контроля положения",
+                        "client_request_id": key,
+                    ], key: key))
+        }
+        _ = try await reader.request(
+            "meetings/" + id + "/read-marker", method: "PUT",
+            body: ["read_through_sequence": try XCTUnwrap(messages[59]["sequence"] as? String)])
+        let anchorID = try XCTUnwrap(messages[60]["id"] as? String)
+        let snapshot = try await reader.request("meetings/" + id + "/sync")
+        XCTAssertEqual(snapshot["first_unread"] as? String, anchorID)
+        let app = XCUIApplication()
+        app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "invite-rsvp"
+        app.launchEnvironment["SOMEWHERE_UI_CHAT_STORAGE_NAMESPACE"] = UUID().uuidString
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
+        app.launch()
+        defer { app.terminate() }
+        ChatSheetTestSupport.openChat(app, id: id)
+        let row = app.staticTexts["chat-message-" + anchorID]
+        let found = row.waitForExistence(timeout: 10)
+        ExperienceScreenshot.save("ios-history-opening", test: self)
+        XCTAssertTrue(found)
+        XCTAssertTrue(row.isHittable)
+        let timeline = app.scrollViews["feed-timeline"]
+        let header = app.otherElements["feed-header"]
+        XCTAssertTrue(header.waitForExistence(timeout: 5))
+        let offset = row.frame.minY - header.frame.maxY
+        func unchanged(_ stage: String) {
+            XCTAssertEqual(
+                row.frame.minY - header.frame.maxY, offset, accuracy: 2, stage)
+        }
+        ExperienceScreenshot.save("ios-history-first-unread", test: self)
+        let openingState = try await reader.request("meetings/" + id + "/sync")
+        let marker = try XCTUnwrap(UInt64(try XCTUnwrap(openingState["my_read_state"] as? String)))
+        let farUnread = try XCTUnwrap(UInt64(try XCTUnwrap(messages[79]["sequence"] as? String)))
+        XCTAssertLessThan(marker, farUnread, "The unseen tail must not become read during opening")
+        let input = app.textViews["message-input"]
+        input.tap()
+        let keyboard = app.keyboards.firstMatch
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 5))
+        XCTAssertGreaterThan(keyboard.frame.height, 200)
+        XCTAssertTrue(app.frame.contains(keyboard.frame))
+        input.typeText("Отправка из истории iOS")
+        unchanged("Opening real keyboard")
+        timeline.coordinate(withNormalizedOffset: CGVector(dx: 0.99, dy: 0.25)).tap()
+        XCTAssertTrue(keyboard.waitForNonExistence(timeout: 5))
+        unchanged("Dismissing real keyboard")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let landscape = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in
+                app.frame.width > app.frame.height
+                    && abs(row.frame.minY - header.frame.maxY - offset) <= 2
+            }, object: nil)
+        let landscapeResult = await XCTWaiter.fulfillment(of: [landscape], timeout: 5)
+        XCTAssertEqual(landscapeResult, .completed, "Settled landscape keeps the anchor")
+        unchanged("Landscape")
+        XCUIDevice.shared.orientation = .portrait
+        let portrait = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in
+                app.frame.width < app.frame.height
+                    && abs(row.frame.minY - header.frame.maxY - offset) <= 2
+            }, object: nil)
+        let portraitResult = await XCTWaiter.fulfillment(of: [portrait], timeout: 5)
+        XCTAssertEqual(portraitResult, .completed, "Settled portrait keeps the anchor")
+        unchanged("Portrait")
+        let counterpart = try NativeChatCounterpart(actor: "design", meeting: id)
+        _ = try await counterpart.send("Новый хвост при чтении истории iOS")
+        XCTAssertTrue(app.buttons["feed-new-messages"].waitForExistence(timeout: 10))
+        unchanged("New incoming tail")
+        app.buttons["message-send"].tap()
+        var accepted = false
+        for _ in 0..<30 {
+            let page = try await reader.request("meetings/" + id + "/feed")
+            let entries = try XCTUnwrap(page["entries"] as? [[String: Any]])
+            accepted = entries.contains {
+                ($0["payload"] as? [String: Any])?["text"] as? String
+                    == "Отправка из истории iOS"
+            }
+            if accepted { break }
+            try await Task.sleep(for: .milliseconds(100))
+        }
+        XCTAssertTrue(accepted, "The real server accepted the native send")
+        XCTAssertEqual(input.value as? String, "")
+        unchanged("Own accepted message")
+        ExperienceScreenshot.save("ios-history-own-ack", test: self)
+        app.buttons["feed-back"].tap()
+        ChatSheetTestSupport.openChat(app, id: id)
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        unchanged("Chat reentry")
+        ExperienceScreenshot.save("ios-history-reentry", test: self)
+    }
 
     func testCounterpartRejoinsWithCurrentRevision() async throws {
         let counterpart = try NativeChatCounterpart()

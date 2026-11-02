@@ -50,11 +50,20 @@ internal class ChatReadLiveApi(context: Context) {
                     ?.takeIf { it.isNotEmpty() } ?: UUID.randomUUID().toString(),
             )
             .header("X-Somewhere-Test-Scenario", "read-state-device")
-            .method(method, body).build()
+            .apply {
+                if (path == "me" && method == "DELETE") {
+                    val bytes = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+                    header(
+                        "X-Deletion-Token",
+                        Base64.getUrlEncoder().withoutPadding().encodeToString(bytes),
+                    )
+                }
+            }.method(method, body).build()
         return http.newCall(request).execute().use {
             check(it.isSuccessful) {
                 "Fixture HTTP ${it.code} $method ${path.substringBefore('/')}"
             }
+            if (it.code == 204) return@use JSONObject()
             JSONObject(checkNotNull(it.body).string())
         }
     }

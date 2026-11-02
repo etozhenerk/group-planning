@@ -70,6 +70,7 @@ struct MeetingFeedHeader: View {
                     ? DesignTokens.componentMobileChatCompactHeaderHeight
                     : DesignTokens.componentMobileChatHeaderHeight
             ).background(AppPalette.background)
+            .accessibilityElement(children: .contain).accessibilityIdentifier("feed-header")
             .overlay(alignment: .bottom) {
                 Rectangle().fill(AppPalette.border).frame(height: DesignTokens.spaceS1)
             }

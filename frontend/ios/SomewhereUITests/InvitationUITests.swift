@@ -7,6 +7,51 @@ final class InvitationUITests: XCTestCase {
     let meetingID = "22222222-2222-4222-8222-222222222222"
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testCutoffForegroundDateOnlyReturnAndStaleSubmission() async throws {
+        let control = try NativeChatCounterpart(actor: "invite-owner", meeting: meetingID)
+        try await control.reschedule(start: nil)
+        let app = launch("invite-rsvp")
+        try open(app)
+        let going = app.buttons["rsvp-going"]
+        XCTAssertTrue(going.isEnabled, "Date-only meetings must not invent an hourly cutoff")
+        choose("going", confirmation: "Вы придёте", app: app)
+        try await control.reschedule(start: Date().addingTimeInterval(1800))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
+        choose("not_going", confirmation: "Вы не сможете прийти", app: app)
+        waitForGoing(false, app: app)
+        XCTAssertTrue(app.staticTexts["Настолки у Саши"].exists)
+        capture("cutoff-returning-closed", app)
+
+        XCUIDevice.shared.press(.home)
+        try await control.reschedule(start: Date().addingTimeInterval(3615))
+        app.activate()
+        waitForGoing(true, app: app)
+        waitForGoing(false, app: app, timeout: 22)
+        capture("cutoff-timer-closed", app)
+
+        XCUIDevice.shared.press(.home)
+        try await control.reschedule(start: Date().addingTimeInterval(86400))
+        app.activate()
+        waitForGoing(true, app: app)
+        going.tap()
+        try await control.reschedule(start: Date().addingTimeInterval(1800))
+        app.buttons["rsvp-save"].tap()
+        waitForGoing(false, app: app)
+        XCTAssertFalse(app.buttons["meeting-info-open"].exists)
+        XCTAssertTrue(app.staticTexts["Настолки у Саши"].exists)
+        capture("cutoff-stale-server-closed", app)
+    }
+
+    private func waitForGoing(_ enabled: Bool, app: XCUIApplication, timeout: TimeInterval = 10) {
+        let expectation = XCTNSPredicateExpectation(
+            predicate: NSPredicate(
+                format: "exists == true AND enabled == %@", NSNumber(value: enabled)),
+            object: app.buttons["rsvp-going"])
+        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed)
+    }
+
     func launch(_ scenario: String) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = scenario

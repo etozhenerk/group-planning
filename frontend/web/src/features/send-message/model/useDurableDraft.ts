@@ -56,6 +56,7 @@ export const useDurableDraft = (user: string, id: string, epoch: number) => {
 
     return () => {
       disposed = true;
+      ready.current = null;
     };
   }, [user, id, epoch, publishPresence]);
 
@@ -125,7 +126,33 @@ export const useDurableDraft = (user: string, id: string, epoch: number) => {
     flush: async () => {
       await writing.current;
 
-      return ready.current;
+      let opening = ready.current;
+
+      if (!opening) {
+        return null;
+      }
+
+      let value: PrivateScope;
+
+      try {
+        value = await opening;
+      } catch {
+        if (ready.current !== opening || accessEpoch(user, id) !== epoch) {
+          return null;
+        }
+
+        opening = openPrivateScope(user, id);
+        ready.current = opening;
+        value = await opening;
+      }
+
+      if (ready.current !== opening || accessEpoch(user, id) !== epoch) {
+        return null;
+      }
+
+      setScope(value);
+
+      return value;
     },
     setText: (text: string) =>
       save({

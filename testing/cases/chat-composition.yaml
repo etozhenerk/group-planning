@@ -1381,9 +1381,17 @@
       настройки не менять.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativeNavigationUITests.swift
+          selector: testEdgeBackKeepsListPeriodAndMessageDraft
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/NativeNavigationUITests.swift
+          selector: testEdgeBackKeepsCalendarAndMessageDraft
+          runner: ios-ui
+          level: e2e
 - id: TC-CHAT-OUTSIDE-KEYBOARD
   title: Внешний tap скрывает клавиатуру сообщения и сохраняет действие
   lifecycle: active

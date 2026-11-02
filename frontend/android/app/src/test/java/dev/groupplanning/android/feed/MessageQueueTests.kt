@@ -83,11 +83,19 @@ class MessageQueueTests {
         runCurrent()
         first.send()
         runCurrent()
+        first.edit("Три")
+        runCurrent()
+        first.send()
+        runCurrent()
+        first.edit("Новый черновик")
+        runCurrent()
         assertEquals(1, h.transport.requests.count { it.method == "POST" })
         first.suspend()
         val restored = MessageSender(h.repository, backgroundScope) {}
         restored.open(access)
         val queue = restored.state.value.queue
+        assertEquals(listOf("Один", "Два", "Три"), queue.map { it.text })
+        assertEquals("Новый черновик", restored.state.value.draft)
         assertEquals(DeliveryStatus.Uncertain, queue.first().status)
         assertEquals(key, queue.first().key)
         queue.forEachIndexed { index, item ->
@@ -100,6 +108,8 @@ class MessageQueueTests {
         restored.resume()
         runCurrent()
         assertTrue(restored.state.value.queue.isEmpty())
+        assertEquals("Новый черновик", restored.state.value.draft)
+        assertEquals(4, h.transport.requests.count { it.method == "POST" })
         assertEquals(
             key.toString(),
             h.transport.requests.filter {
@@ -207,5 +217,13 @@ class MessageQueueTests {
         assertTrue(received.isEmpty())
         assertTrue(h.disk.load().isEmpty())
         assertTrue(sender.state.value.queue.isEmpty())
+        h.session.updateAccess(h.id, true)
+        val rejoined = MessageSender(h.repository, backgroundScope) { received += "unexpected" }
+        rejoined.open(h.repository.open(h.id))
+        rejoined.resume()
+        runCurrent()
+        assertTrue(rejoined.state.value.queue.isEmpty())
+        assertTrue(received.isEmpty())
+        assertEquals(1, h.transport.requests.count { it.method == "POST" })
     }
 }

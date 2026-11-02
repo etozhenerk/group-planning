@@ -1,0 +1,550 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/web.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/web.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff",
+        "testIgnore": [],
+        "testMatch": [
+          "cutoff.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8554",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "/tmp/somewhere-sequential-browser-fixture.test -test.run=^TestBrowserFixture$ -test.timeout=0 > /tmp/somewhere-sequential-cutoff-web-fixture.log 2>&1",
+      "env": {
+        "SOMEWHERE_BROWSER_FIXTURE": "1",
+        "SOMEWHERE_BROWSER_ADDR": "127.0.0.1:8554",
+        "SOMEWHERE_BROWSER_DIST": "/tmp/somewhere-sequential-web-information-rsvp-fixed",
+        "SOMEWHERE_BROWSER_CHAT_REALTIME": "1",
+        "SOMEWHERE_BROWSER_CHAT_READ_STATE": "0"
+      },
+      "url": "https://127.0.0.1:8554/healthz",
+      "ignoreHTTPSErrors": true,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "cutoff.spec.ts",
+      "file": "cutoff.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "open tab crosses cutoff by timer and foreground clock refresh without hiding details",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 405,
+                  "error": {
+                    "message": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]",
+                    "stack": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]\n    at apiCreate (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:169:24)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:34:19",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                      "column": 24,
+                      "line": 169
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../../../../frontend/web/tests/helpers.ts:169\n\n  167 |   const raw: unknown = await response.json();\n  168 |\n> 169 |   return createdSchema.parse(raw);\n      |                        ^\n  170 | };\n  171 |\n  172 | export const expectMessageSide = async ("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                        "column": 24,
+                        "line": 169
+                      },
+                      "message": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]\n\n   at ../../../../../frontend/web/tests/helpers.ts:169\n\n  167 |   const raw: unknown = await response.json();\n  168 |\n> 169 |   return createdSchema.parse(raw);\n      |                        ^\n  170 | };\n  171 |\n  172 | export const expectMessageSide = async (\n    at apiCreate (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:169:24)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:34:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:45.755Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                    "column": 24,
+                    "line": 169
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-3379ec2967e874007259",
+          "file": "cutoff.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "stale invitation is rejected by real server, refreshed and remains readable",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 768,
+                  "error": {
+                    "message": "TypeError: Cannot read properties of undefined (reading 'revision')",
+                    "stack": "TypeError: Cannot read properties of undefined (reading 'revision')\n    at reschedule (/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:22:42)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:65:5",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 42,
+                      "line": 22
+                    },
+                    "snippet": "  20 |     headers: await writeHeaders(page),\n  21 |     data: {\n> 22 |       expected_revision: current.meeting.revision,\n     |                                          ^\n  23 |       starts_at: timed ? new Date(Date.now() + 1800000).toISOString() : null,\n  24 |       starts_on: timed ? new Date().toISOString().slice(0, 10) : day,\n  25 |       timezone: 'UTC',"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 42,
+                        "line": 22
+                      },
+                      "message": "TypeError: Cannot read properties of undefined (reading 'revision')\n\n  20 |     headers: await writeHeaders(page),\n  21 |     data: {\n> 22 |       expected_revision: current.meeting.revision,\n     |                                          ^\n  23 |       starts_at: timed ? new Date(Date.now() + 1800000).toISOString() : null,\n  24 |       starts_on: timed ? new Date().toISOString().slice(0, 10) : day,\n  25 |       timezone: 'UTC',\n    at reschedule (/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:22:42)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:65:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:46.544Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-stale-invitation-is-8b9af-reshed-and-remains-readable-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-stale-invitation-is-8b9af-reshed-and-remains-readable-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 42,
+                    "line": 22
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-9b1b2e3814e0da91a6b9",
+          "file": "cutoff.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "date-only stays joinable; current member retains chat; returning after refusal is closed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 393,
+                  "error": {
+                    "message": "TypeError: Cannot read properties of undefined (reading 'revision')",
+                    "stack": "TypeError: Cannot read properties of undefined (reading 'revision')\n    at reschedule (/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:22:42)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:86:3",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                      "column": 42,
+                      "line": 22
+                    },
+                    "snippet": "  20 |     headers: await writeHeaders(page),\n  21 |     data: {\n> 22 |       expected_revision: current.meeting.revision,\n     |                                          ^\n  23 |       starts_at: timed ? new Date(Date.now() + 1800000).toISOString() : null,\n  24 |       starts_on: timed ? new Date().toISOString().slice(0, 10) : day,\n  25 |       timezone: 'UTC',"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                        "column": 42,
+                        "line": 22
+                      },
+                      "message": "TypeError: Cannot read properties of undefined (reading 'revision')\n\n  20 |     headers: await writeHeaders(page),\n  21 |     data: {\n> 22 |       expected_revision: current.meeting.revision,\n     |                                          ^\n  23 |       starts_at: timed ? new Date(Date.now() + 1800000).toISOString() : null,\n  24 |       starts_on: timed ? new Date().toISOString().slice(0, 10) : day,\n  25 |       timezone: 'UTC',\n    at reschedule (/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:22:42)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:86:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:47.696Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-date-only-stays-joi-3d490-ing-after-refusal-is-closed-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts",
+                    "column": 42,
+                    "line": 22
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-4123bc0aa6425123ce6a",
+          "file": "cutoff.spec.ts",
+          "line": 83,
+          "column": 5
+        },
+        {
+          "title": "open tab crosses cutoff by timer and foreground clock refresh without hiding details",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 776,
+                  "error": {
+                    "message": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]",
+                    "stack": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]\n    at apiCreate (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:169:24)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:34:19",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                      "column": 24,
+                      "line": 169
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../../../../frontend/web/tests/helpers.ts:169\n\n  167 |   const raw: unknown = await response.json();\n  168 |\n> 169 |   return createdSchema.parse(raw);\n      |                        ^\n  170 | };\n  171 |\n  172 | export const expectMessageSide = async ("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                        "column": 24,
+                        "line": 169
+                      },
+                      "message": "ZodError: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"meeting\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"organizer\"\n    ],\n    \"path\": [\n      \"role\"\n    ],\n    \"message\": \"Invalid input: expected \\\"organizer\\\"\"\n  },\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"invitation_url\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]\n\n   at ../../../../../frontend/web/tests/helpers.ts:169\n\n  167 |   const raw: unknown = await response.json();\n  168 |\n> 169 |   return createdSchema.parse(raw);\n      |                        ^\n  170 | };\n  171 |\n  172 | export const expectMessageSide = async (\n    at apiCreate (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:169:24)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:34:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:48.461Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-open-tab-crosses-cu-b51de-resh-without-hiding-details-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                    "column": 24,
+                    "line": 169
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-bc94d4a220cd81363bb0",
+          "file": "cutoff.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "stale invitation is rejected by real server, refreshed and remains readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "interrupted",
+                  "duration": 463,
+                  "error": {
+                    "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Войти через Яндекс ID' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-busy=\"false\" aria-label=\"Войти через Яндекс ID\" class=\"_button_151uc_6 _primary_151uc_1\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n",
+                    "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Войти через Яндекс ID' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-busy=\"false\" aria-label=\"Войти через Яндекс ID\" class=\"_button_151uc_6 _primary_151uc_1\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at login (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:8:69)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:58:3",
+                    "location": {
+                      "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                      "column": 69,
+                      "line": 8
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../../../../frontend/web/tests/helpers.ts:8\n\n   6 | export const login = async (page: Page, who: 'Саша' | 'Лена') => {\n   7 |   await page.goto('/meetings');\n>  8 |   await page.getByRole('button', { name: 'Войти через Яндекс ID' }).click();\n     |                                                                     ^\n   9 |   await page.getByRole('link', { name: `Войти как ${who}` }).click();\n  10 |   await expect(page).toHaveURL(/\\/meetings$/);\n  11 | };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                        "column": 69,
+                        "line": 8
+                      },
+                      "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Войти через Яндекс ID' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-busy=\"false\" aria-label=\"Войти через Яндекс ID\" class=\"_button_151uc_6 _primary_151uc_1\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n\n   at ../../../../../frontend/web/tests/helpers.ts:8\n\n   6 | export const login = async (page: Page, who: 'Саша' | 'Лена') => {\n   7 |   await page.goto('/meetings');\n>  8 |   await page.getByRole('button', { name: 'Войти через Яндекс ID' }).click();\n     |                                                                     ^\n   9 |   await page.getByRole('link', { name: `Войти как ${who}` }).click();\n  10 |   await expect(page).toHaveURL(/\\/meetings$/);\n  11 | };\n    at login (/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts:8:69)\n    at /Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/cutoff.spec.ts:58:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T17:53:49.728Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-stale-invitation-is-8b9af-reshed-and-remains-readable-mobile-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-cutoff/output/cutoff-stale-invitation-is-8b9af-reshed-and-remains-readable-mobile-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/helpers.ts",
+                    "column": 69,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-6966f9fd4f28dbed0599",
+          "file": "cutoff.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "date-only stays joinable; current member retains chat; returning after refusal is closed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "7980c4b8cc74b8a02d58-7addf69876a4dbd724e0",
+          "file": "cutoff.spec.ts",
+          "line": 83,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T17:53:45.336Z",
+    "duration": 5102.716,
+    "expected": 0,
+    "skipped": 2,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

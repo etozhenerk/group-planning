@@ -4,7 +4,76 @@ import XCTest
 @MainActor
 final class MeetingInfoUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
-    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
+    override func tearDown() async throws {
+        if !name.contains("testMixedResponsesAndSecondParticipantUpdateKeepMeetingOnlyContent") {
+            ChatSheetTestSupport.recordFailure(self)
+        }
+    }
+
+    func testMixedResponsesAndSecondParticipantUpdateKeepMeetingOnlyContent() async throws {
+        let first = try NativeChatCounterpart(actor: "review-reader-1")
+        let second = try NativeChatCounterpart(actor: "review-reader-2")
+        let changed = try NativeChatCounterpart(actor: "review-reader-4")
+        addTeardownBlock { @MainActor in
+            try await changed.answer("going")
+            try await second.answer("going")
+            try await first.answer("going")
+        }
+        for index in 1...20 {
+            _ = try await changed.send(
+                "История \(index)\nДля проверки положения при открытии состава")
+        }
+        try await first.answer("maybe")
+        try await second.answer("not_going")
+        let app = ChatSheetTestSupport.launch()
+        ChatSheetTestSupport.openChat(app)
+        let draft = app.textViews["message-input"]
+        draft.tap()
+        draft.typeText("Состав не меняет черновик")
+        app.buttons["meeting-add"].tap()
+        app.buttons["meeting-add"].tap()
+        let anchor = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Я принесу настолки.")
+        ).firstMatch
+        ChatSheetTestSupport.revealInConversation(anchor, app: app)
+        let anchorY = anchor.frame.minY
+        MeetingInfoTestSupport.open(app)
+        let summary = app.buttons["meeting-people-summary"]
+        XCTAssertEqual(summary.label, "Компания, 4 участника")
+        for label in [
+            "Помощь", "Сообщить о проблеме", "Предложить идею", "О приложении",
+            "Политика конфиденциальности", "Cookie и хранение",
+        ] {
+            XCTAssertFalse(app.buttons[label].exists)
+        }
+        ExperienceScreenshot.save("info-current-four-mixed-responses", test: self)
+        summary.tap()
+        for index in 1...6 {
+            let person = MeetingInfoTestSupport.person(index, app: app)
+            MeetingInfoTestSupport.reveal(person, app: app)
+            XCTAssertFalse(person.label.contains("sasha@example.com"))
+        }
+        XCTAssertTrue(MeetingInfoTestSupport.person(1, app: app).label.contains("Возможно"))
+        XCTAssertTrue(MeetingInfoTestSupport.person(2, app: app).label.contains("Не смогу"))
+        let collapse = app.buttons["meeting-people-collapse"]
+        MeetingInfoTestSupport.reveal(collapse, app: app)
+        collapse.tap()
+        XCTAssertEqual(summary.label, "Компания, 4 участника")
+        try await changed.answer("maybe")
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
+        MeetingInfoTestSupport.open(app)
+        let refreshed = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Компания, 3 участника"), object: summary)
+        let result = await XCTWaiter.fulfillment(of: [refreshed], timeout: 10)
+        XCTAssertEqual(result, .completed)
+        summary.tap()
+        XCTAssertTrue(MeetingInfoTestSupport.person(4, app: app).label.contains("Возможно"))
+        for index in 1...6 { XCTAssertTrue(MeetingInfoTestSupport.person(index, app: app).exists) }
+        ExperienceScreenshot.save("info-current-three-full-six", test: self)
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
+        XCTAssertEqual(draft.value as? String, "Состав не меняет черновик")
+        XCTAssertEqual(anchor.frame.minY, anchorY, accuracy: 2)
+    }
 
     func testOrganizerCompactExpandCollapseAndSharePreserveDraft() {
         let app = ChatSheetTestSupport.launch()

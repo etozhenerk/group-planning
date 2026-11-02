@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-ios-g03.json",
+  "inputHash": "6bc4394f1b394ed2578062cf7dafae1b8417432b945d9af059e06e7960521862",
+  "reviewer": "independent-agent:/root/ios_sdd_acceptance",
+  "reviewedAt": "2026-11-02T05:45:33.928409+00:00",
+  "mode": "live",
+  "environment": "iPhone18Pro31262733-50DC-46A5-938E-4C462D70F109;iOS27.0(24A434);Xcode27.1;nativeSwiftUI/realsoftwareIME;402x874pt;ru_RU;Europe/Moscow;syntheticloopbackTLSmemory;runtime source a79b13593222248c186320cffceaf34e0ac82750856b24b0905afec38ecd1e0e;explicit QA-only VFS capture/observer documented separately.",
+  "summary": "3/3 g03 состояния подтверждены двумя свежими адресными selectors: default и nativeAXXXL. Приёмка только коррекции сервисного входа, не реального OAuth/физического устройства.",
+  "checks": [
+    {
+      "screen": "onboarding-service-correction-ios",
+      "platform": "ios",
+      "state": "first-slide-no-service-entry",
+      "status": "pass",
+      "observations": "Нет помощи, вопросительного знака, документов или сервисной панели. Brand и Пропустить раздельны,44pt цель; actual сопоставлен с опубликованным первым слайдом и действующим navigation/mobile-onboarding контрактом.",
+      "capture": {
+        "sourceHash": "6bc4394f1b394ed2578062cf7dafae1b8417432b945d9af059e06e7960521862",
+        "fixtureHash": "bfb900689cca3ff19e795331cba5ec95265a866fc575c647849176004cb637b6",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:42:06Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/evidence/onboarding-actual/onboarding-1.png",
+          "sha256": "ed126bccdd63fa94cc988d25d4824c1135eeebf5c8d16c4335a9a8733f162aa2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/assets/ios-entry-onboarding-1.png",
+          "sha256": "ab3baa2e8aff1de851e7e35d204e6665823258dfda80942216f51b4e38b54fe6",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/onboarding-interaction.log",
+          "sha256": "88b9ff1c7fa3384db4a2ebafcbc7b7c1c6ebcc5504abeeb1edba1221ce9a7421",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "onboarding-service-correction-ios",
+      "platform": "ios",
+      "state": "skip-to-last",
+      "status": "pass",
+      "observations": "Живые свайпы обеих сторон, Далее через5слайдов, Назад и Пропустить приводят к5из5. Последний слайд показывает Попробовать, без доступного Пропустить и сервисного входа. Fake login ошибка/отмена возвращает доступную кнопку; реальный OAuth не принят.",
+      "capture": {
+        "sourceHash": "6bc4394f1b394ed2578062cf7dafae1b8417432b945d9af059e06e7960521862",
+        "fixtureHash": "bfb900689cca3ff19e795331cba5ec95265a866fc575c647849176004cb637b6",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:42:15Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/evidence/onboarding-actual/onboarding-5.png",
+          "sha256": "2c2a7b8f420822e58736c56057fdab86a9514aafe57ee8e7160c9a52c42b30cb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/assets/ios-entry-onboarding-1.png",
+          "sha256": "ab3baa2e8aff1de851e7e35d204e6665823258dfda80942216f51b4e38b54fe6",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/onboarding-interaction.log",
+          "sha256": "88b9ff1c7fa3384db4a2ebafcbc7b7c1c6ebcc5504abeeb1edba1221ce9a7421",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "onboarding-service-correction-ios",
+      "platform": "ios",
+      "state": "large-text-no-overlap",
+      "status": "pass",
+      "observations": "Native accessibility5/AXXXL: измеренныеheading56/small37, настоящая прокрутка длинного содержимого; верхние бренд/Пропустить не пересекаются, конечный CTA/Назад целиком доступны. Контент уходит под границу scroll viewport штатно, подписи доступны прокруткой, сервисных кнопок нет.",
+      "capture": {
+        "sourceHash": "6bc4394f1b394ed2578062cf7dafae1b8417432b945d9af059e06e7960521862",
+        "fixtureHash": "bfb900689cca3ff19e795331cba5ec95265a866fc575c647849176004cb637b6",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2.0,
+        "capturedAt": "2026-11-02T05:42:32Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/evidence/onboarding-actual/onboarding-large-first.png",
+          "sha256": "b53e651f17b41556df1de6abc6072e9834649968884886f6c6510ec164e52052",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/evidence/onboarding-actual/onboarding-large-last-end.png",
+          "sha256": "3edc9546f4a762cb010e203d1b21c310ee1ae2341debe0c5907a948be9e729a0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/assets/ios-entry-onboarding-1.png",
+          "sha256": "ab3baa2e8aff1de851e7e35d204e6665823258dfda80942216f51b4e38b54fe6",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/onboarding-interaction.log",
+          "sha256": "88b9ff1c7fa3384db4a2ebafcbc7b7c1c6ebcc5504abeeb1edba1221ce9a7421",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

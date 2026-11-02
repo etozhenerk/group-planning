@@ -7,7 +7,12 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -86,6 +91,29 @@ class PhotoPickerUiTests {
                     hasContentDescription(fixture.context.getString(R.string.photo_preview)),
                     useUnmergedTree = true,
                 )[0].assertWidthIsEqualTo(176.dp).assertHeightIsEqualTo(132.dp)
+                val removeMatcher = SemanticsMatcher("Remove selected photo") {
+                    it.config.getOrNull(SemanticsProperties.ContentDescription)
+                        ?.any { label -> label.startsWith("Убрать ") } == true
+                }
+                val remove = compose.onAllNodes(removeMatcher, useUnmergedTree = true)[0]
+                remove.assertIsDisplayed()
+                val removeNode = remove.fetchSemanticsNode()
+                val removedName = removeNode.config[SemanticsProperties.ContentDescription]
+                    .single().removePrefix("Убрать ")
+                val image = compose.onAllNodes(
+                    hasContentDescription(fixture.context.getString(R.string.photo_preview)),
+                    useUnmergedTree = true,
+                )[0].fetchSemanticsNode().boundsInRoot
+                val target = removeNode.boundsInRoot
+                assertTrue(target.width >= 48 * compose.density.density - 1)
+                assertTrue(target.height >= 48 * compose.density.density - 1)
+                assertTrue(target.top < image.top && target.right > image.right)
+                fixture.screenshot("design-upload-photo-remove-target")
+                remove.performClick()
+                compose.onAllNodes(
+                    hasContentDescription("Убрать $removedName"),
+                    useUnmergedTree = true,
+                ).assertCountEquals(0)
                 fixture.screenshot("design-upload-photo")
                 compose.onNodeWithTag("upload-photo-carousel").performTouchInput { swipeLeft() }
                 fixture.screenshot("design-upload-photo-scrolled")
@@ -103,6 +131,23 @@ class PhotoPickerUiTests {
                         hasContentDescription(fixture.context.getString(R.string.experience_photo)),
                     ).fetchSemanticsNodes().isNotEmpty()
                 }
+                val feed = ChatReadLiveApi(fixture.context).request(
+                    "design",
+                    "meetings/deb00000-0000-4000-8000-000000000002/feed",
+                ).getJSONArray("entries")
+                val sentNames = (0 until feed.length()).flatMap { index ->
+                    val attachments = feed.getJSONObject(index).getJSONObject("payload")
+                        .optJSONArray("attachments")
+                    if (attachments == null) {
+                        emptyList()
+                    } else {
+                        (0 until attachments.length()).map { item ->
+                            attachments.getJSONObject(item).getString("file_name")
+                        }
+                    }
+                }
+                assertTrue("Only the two remaining photos publish", sentNames.size == 2)
+                assertTrue(removedName !in sentNames)
             }
         } finally {
             photos.forEach { fixture.context.contentResolver.delete(it, null, null) }

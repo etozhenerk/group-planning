@@ -2,6 +2,7 @@ package dev.groupplanning.android
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasAnyAncestor
@@ -20,6 +21,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
+import java.time.Instant
+import org.json.JSONObject
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -36,6 +39,69 @@ class InvitationUiTests {
 
     @Before fun configure() {
         fixture.configure()
+    }
+
+    @Test fun cutoffForegroundDateOnlyReturnAndStaleSubmission() {
+        val api = ChatReadLiveApi(fixture.context)
+        val id = "22222222-2222-4222-8222-222222222222"
+        fun reschedule(seconds: Long?) {
+            val details = api.request("invite-owner", "meetings/$id")
+            val start = seconds?.let { Instant.now().plusSeconds(it) }
+            api.request(
+                "invite-owner",
+                "meetings/$id",
+                "PATCH",
+                JSONObject().put("expected_revision", details.getString("revision"))
+                    .put("starts_at", start?.toString() ?: JSONObject.NULL)
+                    .put(
+                        "starts_on",
+                        (start ?: Instant.now().plusSeconds(86400)).toString().take(10),
+                    )
+                    .put("timezone", "UTC"),
+            )
+        }
+        fun waitGoing(enabled: Boolean, timeout: Long = 15000) {
+            compose.waitUntil(timeout) {
+                compose.onAllNodes(hasText("Приду") and hasClickAction())
+                    .fetchSemanticsNodes().singleOrNull()?.config
+                    ?.contains(SemanticsProperties.Disabled) == !enabled
+            }
+        }
+        reschedule(null)
+        fixture.launch("invite-rsvp", fixture.token).use { activity ->
+            fixture.waitText("Сможете прийти?")
+            waitGoing(true)
+            respond("Приду")
+            fixture.waitTag("invitation-conversation")
+            activity.moveToState(Lifecycle.State.CREATED)
+            reschedule(1800)
+            activity.moveToState(Lifecycle.State.RESUMED)
+            fixture.waitTag("invitation-conversation")
+            openInformation()
+            respond("Не смогу")
+            fixture.waitText("Вы не сможете прийти")
+            waitGoing(false)
+            assertClosed()
+            fixture.screenshot("cutoff-returning-closed")
+
+            activity.moveToState(Lifecycle.State.CREATED)
+            reschedule(3615)
+            activity.moveToState(Lifecycle.State.RESUMED)
+            waitGoing(true)
+            waitGoing(false, 22000)
+            fixture.screenshot("cutoff-timer-closed")
+
+            activity.moveToState(Lifecycle.State.CREATED)
+            reschedule(86400)
+            activity.moveToState(Lifecycle.State.RESUMED)
+            waitGoing(true)
+            compose.onNode(hasText("Приду") and hasClickAction()).performScrollTo().performClick()
+            reschedule(1800)
+            compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+            waitGoing(false)
+            assertClosed()
+            fixture.screenshot("cutoff-stale-server-closed")
+        }
     }
 
     @Test fun publicInvitationPersistsWithoutLoginOrAutomaticResponse() {

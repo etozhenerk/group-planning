@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-ios-g06.json",
+  "inputHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+  "reviewer": "independent-agent:/root/ios_sdd_acceptance",
+  "reviewedAt": "2026-11-02T05:54:29.566756+00:00",
+  "mode": "live",
+  "environment": "iPhone18Pro31262733; iOS27.0(24A434); Xcode27.1; nativeSwiftUI402x874pt,ru_RU,Europe/Moscow; настоящаяsoftwareIME; isolatedTLSmemory/mockdelivery; runtime source a79b13593222248c186320cffceaf34e0ac82750856b24b0905afec38ecd1e0e",
+  "summary": "9/9 состояний формы поддержки проверены независимо. Первый FAIL нового QA-control и stale incremental rerun сохранены отдельно; третий фактически перекомпилированныйcontrol с явным положением каретки прошёл. Продукт/кейсы/ожидания не менялись; нет Telegram или release.",
+  "checks": [
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "empty-no-autofocus",
+      "status": "pass",
+      "observations": "Открытие из профиля: настоящей IME нет, поле не получает фокус само. Структура темы/описания/раздела/почты соответствует опубликованной форме; Back вместо исторического К встречам и отсутствие нижней панели следуют текущему navigation-контракту. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:10Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-empty-no-autofocus.png",
+          "sha256": "48e0bdd5f5d24eddec80f9fb08db6036de07c63d59c52a3fe9a9a106b2b1e339",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "message-keyboard",
+      "status": "pass",
+      "observations": "Tap и ввод Баг показывают настоящую IME. Поле ввода доступно, системное Готово видимо, других автоматических переносов фокуса нет. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:14Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-message-keyboard.png",
+          "sha256": "ed9f5f33f2c3783c25f66f43e328a081dc5557dfd250499cf2036d59c36dc3bb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "keyboard-done",
+      "status": "pass",
+      "observations": "Нажатие Готово скрывает клавиатуру, ввод сохраняется и можно достичь кнопки отправки прокруткой. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:16Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-keyboard-done.png",
+          "sha256": "89da8d18b8422b13f7808ff3dca1a9ee594cfeb08f49491d6e6a77f4b5c4404f",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "keyboard-drag-dismiss",
+      "status": "pass",
+      "observations": "Реальный drag от области над системной IME вниз скрывает её; новое автофокусирование не возникает. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:30Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-keyboard-drag-dismiss.png",
+          "sha256": "d297e31e61274e90c40e297aee27c5cb2fc0537174b1230c2125f86008b8beb3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "invalid-submit",
+      "status": "pass",
+      "observations": "Отправить для Баг показывает понятную ошибку минимум10символов. ResponseGate.requested=false доказывает отсутствие HTTP на этапе невалидного ввода. Ввод остаётся доступным. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:20Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-invalid-submit.png",
+          "sha256": "7b418243a02e2c6c183565bd430c46647172aedc031319493031260431336586",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "draft-retained",
+      "status": "pass",
+      "observations": "Явно поставленная в конец каретка и исправленный текст сохраняются полностью после drag-dismiss. Точное значение сравнивается, не только наличие части строки. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:31Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-draft-retained.png",
+          "sha256": "d297e31e61274e90c40e297aee27c5cb2fc0537174b1230c2125f86008b8beb3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "sending",
+      "status": "pass",
+      "observations": "Один валидный запрос остановлен перед transport через QA hold-before: виден нативный индикатор, нет ложного успеха; затем gate отпускает настоящий API. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:35Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-sending.png",
+          "sha256": "50283ea4dcaf991084880c9788e0b950d8fa899f0538c43ddf3169a7fca7ccc1",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "accepted",
+      "status": "pass",
+      "observations": "После настоящего ответа изолированного API показано Обращение принято. Наблюдатель зафиксировал ровно1POST и1успешный2xx; Telegram не используется. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:37Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-accepted.png",
+          "sha256": "87dd4b17d3d7276d3942f2bf3ffcae58b0d6d6cb0bb2eb1746be25e312eea9c2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "support-form-ios",
+      "platform": "ios",
+      "state": "return-profile",
+      "status": "pass",
+      "observations": "Назад из принятого обращения возвращает профиль с Яндекс ID. Нет перехода во встречи или повторной авторизации. Визуально проверены actual/ref, интервалы, графитовая форма, видимость действия и отсутствие перекрытия системной клавиатурой. Это узкая12.2, не полная приёмка скриншотов/всех полей8.6.",
+      "capture": {
+        "sourceHash": "0e2ae6141195db6179b2395b361b051db796209537468d514ea3a49d88ef2416",
+        "fixtureHash": "bd39582c3fdd085fdaed519537587cca01b18656fb34401786efa3ee6d701b72",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:53:39Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/actual/support-independent-return-profile.png",
+          "sha256": "5b591a27aed4d0fdc13755e6a13ca4a8c0a595382a0cb242df4fc2579c4de7a1",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/support-full.png",
+          "sha256": "e5c360a3fbb15251462b5f41785d55770aee2f68cf2116504c11ed003d1f7584",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-ios-independent/support/attempt-3-recompiled-control/interaction.log",
+          "sha256": "4f9a0cd0f298c8316d6a2134b8b830cba5f8a801d947902ef9e5a64c1016eb05",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

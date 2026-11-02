@@ -9,7 +9,7 @@ export const useEntryAnchor = (
   const position = useRef<FeedPosition | null>(null);
   const writer = useRef(save);
   writer.current = save;
-  const correcting = useRef(false);
+  const correctionTop = useRef<number | null>(null);
   const capture = useCallback(
     (following: boolean, focusedId: string | null) => {
       const view = ref.current;
@@ -64,15 +64,19 @@ export const useEntryAnchor = (
         row.getBoundingClientRect().top - view.getBoundingClientRect().top - saved.offset;
 
       if (Math.abs(delta) > 0.1) {
-        correcting.current = true;
         view.scrollTop += delta;
+
+        const target = view.scrollTop;
+        correctionTop.current = target;
         requestAnimationFrame(() => {
-          correcting.current = false;
+          if (correctionTop.current === target) {
+            correctionTop.current = null;
+          }
         });
       }
     },
     [ref],
   );
 
-  return { capture, restore, correcting };
+  return { capture, restore, correctionTop };
 };

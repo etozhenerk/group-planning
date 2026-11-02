@@ -139,6 +139,7 @@ class EntryUiTests {
             waitText("С чего начнём?")
             compose.onNodeWithText("Создать встречу").performClick()
             waitFor("create-form")
+            compose.onNodeWithTag("home-navigation").assertDoesNotExist()
             compose.onNodeWithTag("create-submit").performScrollTo().performClick()
             compose.onNodeWithTag("create-problem").assertIsDisplayed()
             compose.onNodeWithContentDescription("Название").performScrollTo()
@@ -164,8 +165,10 @@ class EntryUiTests {
                 ).fetchSemanticsNodes().isNotEmpty()
             }
             screenshot("created")
+            compose.onNodeWithTag("home-navigation").assertDoesNotExist()
             device.pressBack()
             waitFor("meetings-list")
+            compose.onNodeWithTag("home-navigation").assertIsDisplayed()
             waitText("Вечер настольных игр")
             compose.onAllNodesWithText("Вечер настольных игр").assertCountEquals(1)
             compose.onAllNodesWithContentDescription("Создать встречу").assertCountEquals(1)

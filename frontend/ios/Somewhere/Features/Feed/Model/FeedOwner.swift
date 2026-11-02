@@ -54,6 +54,7 @@ final class FeedOwner {
     var historyProblem: String?
     var infoPresented: Bool { sheets.contains(.information) }
     var cursor: ServerCounter?
+    var legacyRevision: ServerCounter?
     @ObservationIgnored var generation = UUID()
     @ObservationIgnored var historyTask: Task<Void, Never>?
     @ObservationIgnored var refreshTask: Task<Void, Never>?
@@ -159,6 +160,7 @@ final class FeedOwner {
         suspend()
         localLease = nil
         records.removeAll()
+        legacyRevision = nil
         outgoing.removeAll()
         draft = ""
         sheets = []

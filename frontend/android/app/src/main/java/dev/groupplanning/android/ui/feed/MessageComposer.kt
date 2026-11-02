@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,8 +70,12 @@ internal fun MessageComposer(
     openFile: () -> Unit = {},
 ) {
     val presentation = LocalChatPresentation.current
-    var field by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(state.draft))
+    var field by rememberSaveable(
+        state.ready,
+        state.draftResetKey,
+        stateSaver = TextFieldValue.Saver,
+    ) {
+        mutableStateOf(TextFieldValue(state.draft, TextRange(state.draft.length)))
     }
     val inputFocus = remember { FocusRequester() }
     val emojiFocus = remember { FocusRequester() }
@@ -87,7 +90,7 @@ internal fun MessageComposer(
     }
     val update: (TextFieldValue) -> Unit = {
         val length = it.text.codePointCount(0, it.text.length)
-        val previous = state.draft.codePointCount(0, state.draft.length)
+        val previous = field.text.codePointCount(0, field.text.length)
         if (state.ready && !state.recovering && (length <= 4000 || length < previous)) {
             field = it
             change(it.text)
@@ -98,11 +101,6 @@ internal fun MessageComposer(
         focus.clearFocus()
         emojiFocus.requestFocus()
         keyboard?.hide()
-    }
-    LaunchedEffect(state.draft, state.ready) {
-        if (state.ready && field.text != state.draft) {
-            field = TextFieldValue(state.draft, TextRange(state.draft.length))
-        }
     }
     BackHandler(emojiOpen) { dismiss() }
     val label = stringResource(R.string.message_label)
@@ -185,7 +183,7 @@ internal fun MessageComposer(
                     maxLines = 5,
                     decorationBox = { input ->
                         Box {
-                            if (state.draft.isEmpty()) {
+                            if (field.text.isEmpty()) {
                                 Text(
                                     stringResource(R.string.message_placeholder),
                                     color = DesignTokens.colorMuted,

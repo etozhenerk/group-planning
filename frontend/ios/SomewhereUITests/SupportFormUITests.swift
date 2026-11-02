@@ -43,6 +43,7 @@ final class SupportFormUITests: XCTestCase {
             XCTWaiter.wait(
                 for: [XCTNSPredicateExpectation(predicate: visibleKeyboard, object: nil)],
                 timeout: 5), .completed)
+        ExperienceScreenshot.save("support-keyboard-visible-before-drag", test: self)
         let toolbarTop = app.buttons["support-keyboard-done"].frame.minY
         print(
             "SUPPORT_KEYBOARD_BOUNDS app=\(app.frame) keyboard=\(keyboard.frame) toolbarTop=\(toolbarTop)"

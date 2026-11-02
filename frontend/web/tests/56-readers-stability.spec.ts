@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
-import { postMessage } from '@tests/helpers/readChat';
+import { postMessage, readChat } from '@tests/helpers/readChat';
 
 for (const width of [390, 1440]) {
   test(`readers keep one viewport through loading, empty, error, list and pagination at ${width}`, async ({
@@ -132,5 +132,91 @@ for (const width of [390, 1440]) {
     await expect(sheet.getByRole('listitem').last()).toBeInViewport({ ratio: 1 });
     await stable();
     expect(await viewport.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);
+  });
+
+  test(`readers preserve history after a composer resize and an incoming message at ${width}`, async ({
+    page,
+    browser,
+  }) => {
+    await page.setViewportSize({ width, height: 844 });
+    const { meeting, friend, context, friendHeaders, headers } = await readChat(
+      page,
+      browser,
+      'Возврат из прочитавших в историю',
+    );
+
+    try {
+      await postMessage(page, meeting.id, headers, 'Исходное сообщение в истории');
+
+      for (let index = 0; index < 40; index += 1) {
+        await postMessage(page, meeting.id, headers, `Последующее сообщение ${index}`);
+      }
+
+      await page.bringToFront();
+      await page.goto(`/meetings/${meeting.id}`);
+      const scroll = page.locator('[data-server-count]');
+      const input = page.getByLabel('Сообщение', { exact: true });
+      const initialHeight = await scroll.evaluate((element) => element.clientHeight);
+      await input.click();
+      await input.fill('Черновик, который сохраняется после просмотра прочитавших');
+      const resizedHeight = await scroll.evaluate((element) => {
+        const height = element.clientHeight;
+        element.scrollTop = 0;
+
+        return height;
+      });
+
+      if (width === 390) {
+        expect(resizedHeight).toBeLessThan(initialHeight);
+      }
+
+      const message = page
+        .getByTestId('feed-message')
+        .filter({ hasText: 'Исходное сообщение в истории' });
+
+      await expect(message).toBeInViewport();
+      const before = await message.boundingBox();
+      const action = message.getByTestId('message-actions');
+      let unavailable = true;
+      await page.route('**/messages/*/readers?*', async (route) => {
+        if (unavailable) {
+          unavailable = false;
+          await route.fulfill({
+            status: 503,
+            json: {
+              error: { code: 'unavailable', field_errors: {}, request_id: 'read-return' },
+            },
+          });
+        } else {
+          await route.continue();
+        }
+      });
+      await action.press('Enter');
+      await page.getByRole('button', { name: 'Кто прочитал', exact: true }).click();
+      const sheet = page.getByRole('dialog', { name: 'Прочитали', exact: true });
+      await expect(sheet.getByText('Не удалось загрузить список')).toBeVisible();
+      await sheet.getByRole('button', { name: 'Повторить', exact: true }).click();
+      await expect(sheet.getByText('Пока никто не прочитал')).toBeVisible();
+      const incoming = await postMessage(
+        friend,
+        meeting.id,
+        friendHeaders,
+        'Новое сообщение под открытым списком',
+      );
+
+      await expect(scroll).toHaveAttribute('data-window-last', incoming.sequence);
+      await sheet.getByRole('button', { name: 'Закрыть', exact: true }).click();
+      await expect(action).toBeFocused();
+      await expect(input).toHaveValue(
+        'Черновик, который сохраняется после просмотра прочитавших',
+      );
+      const after = await message.boundingBox();
+
+      expect(before).not.toBeNull();
+      expect(after).not.toBeNull();
+      expect(Math.abs(after!.y - before!.y)).toBeLessThanOrEqual(2);
+    } finally {
+      await context.close();
+    }
   });
 }

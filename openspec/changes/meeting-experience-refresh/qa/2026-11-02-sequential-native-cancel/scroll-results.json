@@ -1,0 +1,253 @@
+{
+  "config": {
+    "argv": [
+      "/Users/misha/.nvm/versions/node/v22.22.3/bin/node",
+      "/Users/misha/Documents/Codex/projects/group-planning/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll.config.mjs"
+    ],
+    "configFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll.config.mjs",
+    "rootDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "testIgnore": [],
+        "testMatch": [
+          "vibe-scroll.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "testIgnore": [],
+        "testMatch": [
+          "vibe-scroll.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "testIgnore": [],
+        "testMatch": [
+          "vibe-scroll.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8466",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-webkit",
+        "testDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "snapshotDir": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel",
+        "testIgnore": [],
+        "testMatch": [
+          "vibe-scroll.spec.ts"
+        ],
+        "timeout": 180000,
+        "use": {
+          "baseURL": "https://127.0.0.1:8466",
+          "ignoreHTTPSErrors": true,
+          "locale": "ru-RU",
+          "timezoneId": "Europe/Moscow",
+          "trace": "retain-on-failure",
+          "browserName": "webkit",
+          "viewport": {
+            "width": 402,
+            "height": 874
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/meeting-experience-refresh/qa/2026-11-02-sequential-native-cancel/scroll-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "vibe-scroll.spec.ts",
+      "file": "vibe-scroll.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "direct vibe upload returns to the same real scrolled history, draft and selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T19:02:03.624Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "scroll-before-after",
+                      "contentType": "application/json",
+                      "body": "eyJiZWZvcmUiOnsiaWQiOiI0OGY5Y2Q5ZS00OTY2LTQ2ODktYmQ4My02YWU4NWVmMWYwYTYiLCJvZmZzZXQiOi02Ny41OTM3NSwic2Nyb2xsVG9wIjoyMDgyfSwiYWZ0ZXIiOnsiaWQiOiI0OGY5Y2Q5ZS00OTY2LTQ2ODktYmQ4My02YWU4NWVmMWYwYTYiLCJvZmZzZXQiOi02Ny41OTM3NSwic2Nyb2xsVG9wIjoyMDgyfX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "97ae6a29d176051f5d51-97a5762056b3572b6e51",
+          "file": "vibe-scroll.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "direct vibe upload returns to the same real scrolled history, draft and selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T19:02:05.881Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "scroll-before-after",
+                      "contentType": "application/json",
+                      "body": "eyJiZWZvcmUiOnsiaWQiOiI4ZTVjMTI2OS1lMTZjLTQwMDAtYTJjMi1kZmUzNWYzYzhiNjMiLCJvZmZzZXQiOi01OCwic2Nyb2xsVG9wIjoxOTc4fSwiYWZ0ZXIiOnsiaWQiOiI4ZTVjMTI2OS1lMTZjLTQwMDAtYTJjMi1kZmUzNWYzYzhiNjMiLCJvZmZzZXQiOi01OCwic2Nyb2xsVG9wIjoxOTc4fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "97ae6a29d176051f5d51-766807e02c27a113851f",
+          "file": "vibe-scroll.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T19:02:03.256Z",
+    "duration": 5325.071,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

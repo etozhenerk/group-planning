@@ -18,8 +18,14 @@ UI также требует отдельного актуального design-
 
 ## 1. Baseline и проверка зависимостей
 
+02.11.2026 пользователь уточнил восстановление: до 2 с на догрузку после
+готовности авторизованного соединения/подписки; при недоступном сервере
+сохраняются повторы с паузами. Метрика и отдельные этапы записаны в
+validation-plan.md/testing.md. Это уточнение точки отсчёта не закрывает
+1.2/7.9 и не меняет исторические результаты; требуется новый адресный замер.
+
 - [x] 1.1 Воспроизвести гонку web 100/101/102 через управляемый порядок GET/POST и снять сетевой baseline; сохранить regression и реальные результаты, не выдавая статическое чтение кода за воспроизведение.
-- [ ] 1.2 Проверить встроенную Centrifuge и JS/Swift/Java SDK: pin версий, лицензии, auth, reconnect/recovery, совместимость Go/OkHttp/SwiftPM; приложить минимальные успешные проверки на трёх клиентах и перечень зависимостей.
+- [x] 1.2 Проверить встроенную Centrifuge и JS/Swift/Java SDK: pin версий, лицензии, auth, reconnect/recovery, совместимость Go/OkHttp/SwiftPM; приложить минимальные успешные проверки на трёх клиентах и перечень зависимостей. Минимальный технический baseline сверён последовательно: [результат и границы](qa/2026-11-02-sequential-sdk/baseline-1.2.md); полная клиентская матрица не объявляется завершённой.
 - [x] 1.3 Проверить топологию API и существующие свидетельства защиты дисков/backup/ключей; записать результаты в security review, не объявлять неизвестное выполненным и не добавлять новый сервис без обновления design.
 - [ ] 1.4 Сравнить react-virtuoso с выбранным после spike @tanstack/react-virtual и проверить native lazy-контейнеры на текущих карточках/длинных строках: prepend, resize, focus, keyboard и anchor ≤ 2 единиц; сохранить замеры и выбранные параметры/контейнеры рядом с UX v1.
 - [x] 1.5 Снять серверный baseline ограниченных страниц и text/media retry на memory и изолированной облачной PostgreSQL по validation-plan; записать число прочитанных строк, планы SQL, задержки и статусы недоступных окружений.
@@ -46,25 +52,25 @@ UI также требует отдельного актуального design-
 ## 4. Web
 
 - [x] 4.1 Ввести владельца chat state в допустимых слоях FSD и отдельный receive cursor; первым совместимым патчем сохранить его отдельно от display entries и двигать только после GET merge. Проверить regression 100/101/102, initial=0, empty/multipage/history, precision, lease и смену аккаунта; затем расширить upsert до актуальных projection versions при внедрении sync.
-- [ ] 4.2 Добавить IndexedDB draft/outbox с несколькими намерениями и stable UI keys; проверить reload после commit, две вкладки/logout, quota failure, одинаковый ID/чужой автор и возврат текста без перезаписи нового draft.
+- [x] 4.2 Добавить IndexedDB draft/outbox с несколькими намерениями и stable UI keys; проверить reload после commit, две вкладки/logout, quota failure, одинаковый ID/чужой автор и возврат текста без перезаписи нового draft.
 - [x] 4.3 Подключить SDK adapter, snapshot→subscribe→catch-up и управляемый fallback; проверить reconnect/reset/background, один цикл запросов, отсутствие idle polling и очистку после 401/403.
-- [ ] 4.4 Реализовать ограниченную ленту, around/автодогрузку и anchor из UX v1; проверить Playwright Chromium+WebKit длинную историю, resize карточки, ACK, новый хвост при чтении прошлого и фокус.
-- [ ] 4.5 Реализовать видимость/read-through, unread в списке, разделитель и readers sheet; проверить два устройства, 500 мс/модальное перекрытие, keyboard accessibility и ошибки списка/повтора.
+- [x] 4.4 Реализовать ограниченную ленту, around/автодогрузку и anchor из UX v1; проверить Playwright Chromium+WebKit длинную историю, resize карточки, ACK, новый хвост при чтении прошлого и фокус. Адресные4/4Chromium/WebKit плюс готовая проверка10000: [результат](qa/2026-11-02-sequential-web-window/result.md).
+- [x] 4.5 Реализовать видимость/read-through, unread в списке, разделитель и readers sheet; проверить два устройства, 500 мс/модальное перекрытие, keyboard accessibility и ошибки списка/повтора.
 - [ ] 4.6 Сопоставить UI с UX v1 и согласованным meeting-experience-refresh, включая мобильную клавиатуру и скелетоны; выполнить web check/tests/build/E2E, обновить описание владельцев/адаптеров и приложить реальные результаты отдельно от физического Safari.
 
 ## 5. iOS
 
-- [ ] 5.1 Расширить FeedOwner независимыми cursors/ranges/read state и устойчивой очередью; проверить owner tests, process restart/потерянный ACK, generation, несколько pending и protected-storage failure.
-- [ ] 5.2 Подключить SDK adapter и scene lifecycle с recovery/fallback; проверить snapshot race, фоновый режим, session expiry, logout и закрытие доступа через fake transport и simulator.
-- [ ] 5.3 Реализовать bounded store, загрузку вокруг unread и якорь нативной ленты; проверить prepend/карточки/клавиатуру/поворот/ACK и сохранение места по UX v1.
+- [x] 5.1 Расширить FeedOwner независимыми cursors/ranges/read state и устойчивой очередью; проверить owner tests, process restart/потерянный ACK, generation, несколько pending и protected-storage failure. Адресный реальный coldstart/aftercommit плюс текущие owner/storage-проверки: [отчёт](qa/2026-11-02-sequential-ios-outbox/result.md).
+- [x] 5.2 Подключить SDK adapter и scene lifecycle с recovery/fallback; проверить snapshot race, фоновый режим, session expiry, logout и закрытие доступа через fake transport и simulator. Сверены готовые адресные owner/transport/simulator-проверки: [отчёт](qa/2026-11-02-sdd-closeout/ios-5.2.md); полная7.7/performance7.9 остаются отдельными.
+- [x] 5.3 Реализовать bounded store, загрузку вокруг unread и якорь нативной ленты; проверить prepend/карточки/клавиатуру/поворот/ACK и сохранение места по UX v1.
 - [ ] 5.4 Добавить read visibility, счётчики и readers sheet; проверить два устройства, Dynamic Type/VoiceOver, нулевой список, ошибку и возврат фокуса без прокрутки.
 - [ ] 5.5 Сопоставить интерфейс с UX v1, обновить документацию владельца/хранилища и выполнить swift-format, unit/UI проверки и чистую simulator-сборку по frontend/ios/AGENTS.md; записать отдельно статус физического iPhone.
 
 ## 6. Android
 
-- [ ] 6.1 Расширить Repository/ViewModel и MessageOutbox до очереди с устойчивыми ID и системной защитой хранения; проверить process death, lost ACK, draft, no-op/retry и изоляцию аккаунтов тестами.
-- [ ] 6.2 Подключить SDK adapter через Flow и lifecycle, recovery/fallback; проверить auth, reconnect/reset, один запрос, background и revoke через fake transport и эмулятор.
-- [ ] 6.3 Реализовать bounded store и LazyColumn anchor/around/автодогрузку; проверить reverse layout, IME/Back, resize карточки, собственный ACK и отсутствие прыжка при новых сообщениях.
+- [x] 6.1 Расширить Repository/ViewModel и MessageOutbox до очереди с устойчивыми ID и системной защитой хранения; проверить process death, lost ACK, draft, no-op/retry и изоляцию аккаунтов тестами. Проверены настоящий aftercommit/coldstart и адресные условия очереди/ACK/rejoin: [отчёт](qa/2026-11-02-sequential-android-outbox/result.md).
+- [x] 6.2 Подключить SDK adapter через Flow и lifecycle, recovery/fallback; проверить auth, reconnect/reset, один запрос, background и revoke через fake transport и эмулятор. Последовательная проверка и исправленный переход после401: [результат](qa/2026-11-02-sequential-sdk/android-6.2.md); полный performance/source-wide допуск остаётся отдельным.
+- [x] 6.3 Реализовать bounded store и LazyColumn anchor/around/автодогрузку; проверить reverse layout, IME/Back, resize карточки, собственный ACK и отсутствие прыжка при новых сообщениях.
 - [ ] 6.4 Добавить visibility/read-through, счётчики и readers sheet; проверить два устройства, TalkBack/font scale, ошибки и возврат к исходной строке.
 - [ ] 6.5 Сопоставить UI с UX v1, обновить документацию repository/outbox и выполнить wrapper/ktlint, unit/UI, Debug/Release и Android Lint по frontend/android/AGENTS.md; записать отдельно эмулятор и физическое устройство.
 
@@ -73,7 +79,7 @@ UI также требует отдельного актуального design-
 - [x] 7.1 Выполнить серверную матрицу сбоев validation-plan на memory и изолированном SQL; приложить версии, логи без секретов и результаты, оставляя недоступные проверки открытыми. Полный клиентский проход разделён на 7.6–7.8.
 - [ ] 7.2 Проверить серверные latency/SQL бюджеты на записанном тестовом окружении; сравнить baseline, измерить горячую встречу и lock wait. Полный commit→visible/frame проверяется вместе с 7.9, серверные замеры его не заменяют.
 - [x] 7.3 Проверить серверную security и совместимость прежнего HTTP, feature flags и rollback epoch; приложить результаты. Клиентские security/совместимость входят в полные проходы 7.6–7.8.
-- [ ] 7.4 Подготовить независимые локальные артефакты backend/web/iOS/Android и инструкции включения/отката; проверить воспроизводимость и указать готовность каждой платформы отдельно, без production и store-операций.
+- [x] 7.4 Подготовить независимые локальные артефакты backend/web/iOS/Android и инструкции включения/отката; проверить воспроизводимость и указать готовность каждой платформы отдельно, без production и store-операций.
 - [ ] 7.5 Сверить реализацию с четырьмя specs и UX v1, согласовать дополнения event-feed с соседними изменениями перед sync; выполнить strict OpenSpec validation, agent:check и git diff --check, сохранить итоговый verification report.
 - [ ] 7.6 Выполнить весь применимый web-набор из testing.md: unit/integration и независимые живые Chromium/WebKit-пути; отдельно зафиксировать физический Safari, raw/evidence и qa:ready, не переносить pass от UI 2.1.0.
 - [ ] 7.7 Выполнить весь применимый iOS-набор из testing.md: owner/storage/transport и независимый живой проход; зафиксировать simulator/физический iPhone отдельно, raw/evidence и qa:ready.
@@ -228,3 +234,7 @@ hash. После изменения клиентского source пункты w
 квалификации; прежние факты не выдаются за выполнение нового кода. Три независимых
 проверяющих получили новый frozen-кандидат; сначала unit, затем обязательные
 платформенные проверки. Серверные принятые критерии на 413 inputs не затронуты.
+
+Android6.3: [адресная проверка и исправление позиции после прочтения](qa/2026-11-02-sequential-android-window/result.md); полный performance7.9 и общий приёмочный7.8 остаются открыты.
+
+iOS5.3: [реальное окно/первое непрочитанное и исправления](qa/2026-11-02-sequential-ios-window/result.md). Общие performance/независимая приёмка остаются в5.5/7.7/7.9.

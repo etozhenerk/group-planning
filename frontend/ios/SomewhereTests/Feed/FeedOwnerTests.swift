@@ -5,6 +5,48 @@ import Testing
 
 @MainActor
 struct FeedOwnerTests {
+    @Test func legacyRevisionRefreshesCachedAuthorsWithoutMovingCursorOrDraft() async throws {
+        let c = try await FeedTestContext()
+        let first = try c.entry("31", text: "История")
+        let second = try c.entry("32", text: "Сохранённый текст")
+        try await c.enqueue([first, second])
+        await c.owner.refresh()
+        c.owner.anchorID = first.id
+        c.owner.draft = "Не отправленный черновик"
+        let changed = try FeedPage(
+            entries: [], hasMore: false, meetingRevision: ServerCounter("1"),
+            participantCount: 1, myRSVP: .going, myRSVPRevision: .zero,
+            latestSequence: ServerCounter("32"))
+        await c.harness.transport.enqueue(c.path + "/feed", data: try APICoding.encode(changed))
+        let actor = UserProfile(id: first.actor.id, displayName: "Удалённый аккаунт")
+        let anonymized = [first, second].map {
+            FeedEntry(
+                id: $0.id, meetingID: $0.meetingID, sequence: $0.sequence, kind: $0.kind,
+                payloadVersion: $0.payloadVersion, actor: actor, occurredAt: $0.occurredAt,
+                payload: $0.payload, clientRequestID: $0.clientRequestID)
+        }
+        try await c.enqueue([anonymized[0]], more: true)
+        try await c.enqueue([anonymized[1]])
+        let details = try Meeting(
+            id: c.id, title: "Встреча", startsAt: nil, timezone: "UTC", place: nil,
+            coverURL: nil, participantCount: 1, revision: ServerCounter("1"), myRSVP: .going,
+            myRSVPRevision: .zero, organizerID: c.user.id, description: nil,
+            createdAt: APIInstant("2026-10-20T12:00:00Z"))
+        await c.harness.transport.enqueue(c.path, data: try APICoding.encode(details))
+        await c.owner.refresh()
+        #expect(c.owner.records == anonymized)
+        #expect(c.owner.cursor?.rawValue == "32")
+        #expect(c.owner.anchorID == first.id)
+        #expect(c.owner.draft == "Не отправленный черновик")
+        let reads = await c.harness.transport.requests.filter {
+            $0.url?.path.hasSuffix("/feed") == true
+        }
+        let cursors = reads.suffix(3).map {
+            $0.url.flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?
+                .queryItems?.first { $0.name == "after_sequence" }?.value
+        }
+        #expect(cursors == ["32", "30", "31"])
+    }
     @Test func cursorUsesReadEntriesNotMetadataOrPostAndHistoryDoesNotMoveIt() async throws {
         let context = try await FeedTestContext()
         let first = try context.entry("50")

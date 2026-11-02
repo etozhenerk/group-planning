@@ -62,8 +62,15 @@ class CalendarUiTests {
             screenshot("calendar-android-scrolled")
             compose.onNodeWithText("Киновечер").performScrollTo().performClick()
             fixture.waitTag("message-composer")
+            compose.onNodeWithTag("home-navigation").assertDoesNotExist()
+            val composer = compose.onNodeWithTag(
+                "message-composer",
+            ).fetchSemanticsNode().boundsInRoot
+            val chat = compose.onRoot().fetchSemanticsNode().boundsInRoot
+            assertTrue(chat.bottom - composer.bottom < 100 * compose.density.density)
             fixture.device.pressBack()
             fixture.waitTag("meetings-list")
+            compose.onNodeWithTag("home-navigation").assertIsDisplayed()
             compose.onNodeWithTag("meetings-list").performScrollToIndex(0)
             compose.onNodeWithTag("day-2026-10-31").assertIsSelected()
             compose.onNodeWithText("Прошедшие").performClick()

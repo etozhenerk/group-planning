@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-android-g08.json",
+  "inputHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+  "reviewer": "/root/android_current_acceptance",
+  "reviewedAt": "2026-11-02T13:01:23.534Z",
+  "mode": "live",
+  "environment": "Frozen Android15eb, exact QA APKaa11/test89ca; emulator-5554 Android16/API36,720x1600/320dpi; current stock memory HTTPS full fixture and isolated observer audit fixture; synthetic only; source-specific capture metadata and interaction records. Scope limited to listed states.",
+  "summary": "Свежая независимая приёмка перечисленных узких Android состояний. Source7a10 FAIL и предыдущие reports сохранены отдельно; TalkBack speech/прочие экраны этим отчётом не объявлены.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Реальная OSIME под многострочным composer; текст и выделение середины видимы, цели не перекрыты. Actual/reference сверены. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:47:50.333897+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-focused-xx.png",
+          "kind": "actual",
+          "sha256": "5ea27edbe2d50a0e4913802480c8201034bfeec300db9ff50ae9e4aafad0a8f6"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Реальный внешний tap скрыл IME; многострочный текст и выделение сохранены, последующая вставка заменяет именно выделенныйXX. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:48:30.633823+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-outside-xx.png",
+          "kind": "actual",
+          "sha256": "435682fedc7dba861e6df36512d5374b6b595fea4cae516725e539ee7d472856"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Первое нажатие шапки открыло сведения; текущие fullOutsideTap и direct audit отдельно проверяют первые Send/плюс/emoji. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:48:47.115705+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-first-header.png",
+          "kind": "actual",
+          "sha256": "df9e2f430f12982300276fde586855e71813479ae900b20aa128394d65d1e655"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "sheet-return-no-ime",
+      "status": "pass",
+      "observations": "Возврат из отдельной формы сохраняет многострочный composer и не открывает IME автоматически. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:50:04.303995+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-sheet-return.png",
+          "kind": "actual",
+          "sha256": "a1726636423eab641163bdb38e9b4659042e7b23cba896912aa220844e9b7843"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Явный возврат к keyboard восстановил IME и вставку! после emoji в сохранённой позиции. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:48:42.406087+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-refocus-xx.png",
+          "kind": "actual",
+          "sha256": "a5f4381794c9f56fbf079cbb3f3b4e6b892b4573c431fd669249c9d3ea524370"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Реальный ввод в отдельной форме независим от composer; текущий fullOutsideTap также проверил поиск пицца с OSIME. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:50:01.452369+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-other-input.png",
+          "kind": "actual",
+          "sha256": "c728ad0aba940d59de6a60c85376e9a7de247a6afc4dcce6fb4277baf7994692"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-android",
+      "platform": "android",
+      "state": "scroll-long-press",
+      "status": "pass",
+      "observations": "Реальные scroll/long press сохранили черновик и открыли anchored reactions, без непреднамеренной отправки. Самостоятельно просмотрены новые actual и неизменный опубликованный reference; прежний PASS/source hash не переносился.",
+      "capture": {
+        "sourceHash": "11ac31b4ee189b829e2a7abe4bea60044b7b3fa9f82245d4c7a0966b60ad5b39",
+        "fixtureHash": "f24580e81794fc62dfd6a3eee2cc3603281d110198e7c243df8bb9d1bb22acc7",
+        "runtime": "Exact QA APK aa11c160ed634d50fe944dd128783484cd07b2c16d78bcb7905cdd76ba9b6ff3; current full92+2 and direct ADB audit",
+        "os": "Android16/API36; emulator-5554; sdk_gphone64_arm64",
+        "viewport": "720x1600px/320dpi;360x800dp; actual native system insets",
+        "fonts": [
+          "/system/fonts/Roboto-Regular.ttf",
+          "/data/fonts/files/~~HH2_C-FFZMf_6Wzr5mBv8Q==/NotoColorEmoji.ttf"
+        ],
+        "locale": "ru-RU application override; en-US system",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:51:09.810977+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/multiline-long-press.png",
+          "kind": "actual",
+          "sha256": "e700492275f5f2bc35feebcd5b0f76e681199b1333e1a1a6461ac4dbd8139acf"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/reference/keyboard.png",
+          "kind": "reference",
+          "sha256": "491af2a00acfc391f9133e17a9a159e870b6c7fe4e2c75acb77802fff26a00a3"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/narrow-live-review.json",
+          "kind": "interaction",
+          "sha256": "8d761d2e7b705c3f749d73845e438e4e9e0bc68678bac8cef6344d61f8a2cfee"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-android-rsvp-independent/evidence/post-full-manual/interactions.jsonl",
+          "kind": "interaction",
+          "sha256": "289bfa58995398c4f4ce0eea41e20fa69052d9b15b601dc0a873e621fe1b112b"
+        }
+      ]
+    }
+  ]
+}

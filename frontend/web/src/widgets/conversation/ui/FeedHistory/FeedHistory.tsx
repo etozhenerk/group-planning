@@ -37,12 +37,12 @@ export const FeedHistory = ({
         </div>
       )}
       {error ? (
-        <p className={styles.error} role="alert">
-          Не удалось загрузить сообщения.{' '}
+        <div className={styles.error} role="alert">
+          <p>Не удалось загрузить сообщения</p>
           <button type="button" onClick={older}>
             Повторить
           </button>
-        </p>
+        </div>
       ) : (
         hasOlder &&
         !loading && (

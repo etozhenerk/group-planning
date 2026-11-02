@@ -137,7 +137,7 @@ func TestBrowserFixture(t *testing.T) {
 
 	api := NewWithExports(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, exports, testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
-	mux.Handle("/api/", api)
+	mux.Handle("/api/", browserFeedbackScope(api))
 	mux.Handle("/healthz", api)
 	mux.HandleFunc("/__test/provider", func(w http.ResponseWriter, r *http.Request) {
 		state := r.URL.Query().Get("state")

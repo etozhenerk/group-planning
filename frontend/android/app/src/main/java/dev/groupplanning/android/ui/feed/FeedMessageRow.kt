@@ -25,7 +25,7 @@ internal fun FeedMessageRow(
     recover: (UUID) -> Unit,
     reaction: @Composable (FeedEntry, ReactionAnchor) -> Unit,
     openReaction: (FeedEntry) -> Unit,
-    attachment: @Composable (MeetingMedia) -> Unit,
+    attachment: @Composable (MeetingMedia, Boolean) -> Unit,
     receipt: @Composable (FeedEntry, ReactionAnchor) -> Unit = { _, _ -> },
     focused: (UUID?) -> Unit = {},
     geometry: (UUID, Rect?) -> Unit = { _, _ -> },
@@ -61,7 +61,7 @@ internal fun FeedMessageRow(
             }
         },
         body = entry?.attachments?.takeIf { it.isNotEmpty() }?.let { media ->
-            { media.forEach { attachment(it) } }
+            { media.forEach { attachment(it, row.author.id == profileId) } }
         },
     )
 }

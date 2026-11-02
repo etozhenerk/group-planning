@@ -31,16 +31,18 @@ export const FeedbackFields = ({ form }: FeedbackFieldsProps) => (
       Ваше сообщение
       <textarea
         name="description"
-        required
-        minLength={10}
-        maxLength={3000}
+        aria-required="true"
+        aria-invalid={!!form.descriptionError}
+        aria-describedby={form.descriptionError ? 'support-description-error' : undefined}
         value={form.description}
         onChange={(event) => form.setDescription(event.target.value)}
         placeholder="Что вы делали и что пошло не так"
       />
     </label>
-    {form.fields.description && (
-      <p role="alert">Добавьте описание — хотя бы 10 символов.</p>
+    {form.descriptionError && (
+      <p role="alert" id="support-description-error">
+        {form.descriptionError}
+      </p>
     )}
     <div className={styles.pair}>
       <label className={styles.field}>

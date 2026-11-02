@@ -44,7 +44,7 @@ export const useViewport = (
   const {
     capture: captureAnchor,
     restore: restoreAnchor,
-    correcting,
+    correctionTop,
   } = useEntryAnchor(ref, query.savePosition);
 
   const capture = useCallback(
@@ -58,7 +58,7 @@ export const useViewport = (
     restoring,
     scrolling,
     state,
-    correcting,
+    correctionTop,
     virtual: feed.virtual,
     restoreAnchor,
   });
@@ -150,7 +150,13 @@ export const useViewport = (
       return;
     }
 
-    if (restoring.current || correcting.current) {
+    const correction = correctionTop.current;
+
+    // A user can scroll elsewhere before the correction's animation frame finishes.
+    const internalScroll =
+      correction !== null && Math.abs(ref.current.scrollTop - correction) <= 0.5;
+
+    if (restoring.current || internalScroll) {
       requestAnimationFrame(prefetch);
 
       return;

@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import Security
 import XCTest
@@ -14,17 +15,20 @@ final class NativeChatCounterpart {
     private let config: Config
     private let session: URLSession
     private let token: String
-    private let meeting = ChatSheetTestSupport.sharedMeeting
+    private let meeting: String
     private var joinedRevision: String?
+    private var answerRevision: String?
 
-    init() throws {
+    init(actor: String = "feed-owner", meeting: String = ChatSheetTestSupport.sharedMeeting) throws
+    {
         let path = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
             .deletingLastPathComponent().appendingPathComponent(".build/chat-fixture-control.json")
         config = try JSONDecoder().decode(Config.self, from: Data(contentsOf: path))
         guard config.origin.scheme == "https", config.origin.host == "127.0.0.1",
-            config.origin.port != nil, let token = config.cases["feed-owner"]?.token
+            config.origin.port != nil, let token = config.cases[actor]?.token
         else { throw URLError(.badURL) }
         self.token = token
+        self.meeting = meeting
         let settings = URLSessionConfiguration.ephemeral
         settings.httpShouldSetCookies = false
         settings.httpCookieStorage = nil
@@ -37,6 +41,35 @@ final class NativeChatCounterpart {
             delegateQueue: nil)
     }
     deinit { session.invalidateAndCancel() }
+
+    func reschedule(start: Date?) async throws {
+        let detail = try await request("meetings/" + meeting)
+        let revision = try XCTUnwrap(detail["revision"] as? String)
+        let formatter = ISO8601DateFormatter()
+        let timestamp: Any = start.map { formatter.string(from: $0) as Any } ?? NSNull()
+        let day = formatter.string(from: start ?? Date().addingTimeInterval(86400)).prefix(10)
+        _ = try await request(
+            "meetings/" + meeting, method: "PATCH",
+            body: [
+                "expected_revision": revision, "starts_at": timestamp,
+                "starts_on": String(day), "timezone": "UTC",
+            ])
+    }
+
+    func answer(_ value: String) async throws {
+        let revision: String
+        if let saved = answerRevision {
+            revision = saved
+        } else {
+            let detail = try await request("meetings/" + meeting)
+            revision = try XCTUnwrap(detail["my_rsvp_revision"] as? String)
+        }
+        let result = try await request(
+            "meetings/" + meeting + "/rsvp", method: "PUT",
+            body: ["answer": value, "expected_revision": revision])
+        XCTAssertEqual(result["rsvp"] as? String, value)
+        answerRevision = try XCTUnwrap(result["rsvp_revision"] as? String)
+    }
 
     func join() async throws {
         let invitation = Data("0000000000009501".utf8).base64EncodedString()
@@ -78,6 +111,30 @@ final class NativeChatCounterpart {
         return try XCTUnwrap(result["id"] as? String)
     }
 
+    func assertPublishedPDF(fileName: String, sha256: String) async throws {
+        let page = try await request("meetings/" + meeting + "/feed")
+        let entries = try XCTUnwrap(page["entries"] as? [[String: Any]])
+        let attachments = entries.flatMap { entry in
+            (entry["payload"] as? [String: Any])?["attachments"] as? [[String: Any]] ?? []
+        }.filter { $0["file_name"] as? String == fileName }
+        XCTAssertEqual(attachments.count, 1, "The recipient must receive exactly one document")
+        let media = try XCTUnwrap(attachments.first)
+        XCTAssertEqual(media["content_type"] as? String, "application/pdf")
+        XCTAssertEqual(media["status"] as? String, "published")
+        let id = try XCTUnwrap(media["id"] as? String)
+        var download = URLRequest(
+            url: config.origin.appendingPathComponent(
+                "api/v1/meetings/" + meeting + "/media/" + id + "/content"))
+        download.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        let (data, response) = try await session.data(for: download)
+        XCTAssertEqual(try XCTUnwrap(response as? HTTPURLResponse).statusCode, 200)
+        XCTAssertEqual(data.count, media["size_bytes"] as? Int)
+        XCTAssertTrue(data.starts(with: Data("%PDF-".utf8)))
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        XCTAssertEqual(digest, sha256, "The recipient must download the original PDF bytes")
+        print("SOMEWHERE_PDF_RECIPIENT bytes=\(data.count) sha256=\(digest)")
+    }
+
     func waitForReader(of entry: String) async throws {
         for _ in 0..<30 {
             let result = try await request(
@@ -90,7 +147,7 @@ final class NativeChatCounterpart {
         XCTFail("The native visible message end must advance its confirmed read marker")
     }
 
-    private func request(
+    func request(
         _ path: String, method: String = "GET", body: [String: Any]? = nil,
         key: String = UUID().uuidString.lowercased()
     ) async throws -> [String: Any] {
@@ -98,6 +155,15 @@ final class NativeChatCounterpart {
         request.httpMethod = method
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         request.setValue("chat-counterpart", forHTTPHeaderField: "X-Somewhere-Test-Scenario")
+        if path == "me", method == "DELETE" {
+            var bytes = [UInt8](repeating: 0, count: 32)
+            guard SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes) == errSecSuccess else {
+                throw URLError(.unknown)
+            }
+            let value = Data(bytes).base64EncodedString().replacingOccurrences(of: "=", with: "")
+                .replacingOccurrences(of: "+", with: "-").replacingOccurrences(of: "/", with: "_")
+            request.setValue(value, forHTTPHeaderField: "X-Deletion-Token")
+        }
         if let body {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue(key, forHTTPHeaderField: "Idempotency-Key")
@@ -108,6 +174,7 @@ final class NativeChatCounterpart {
         guard (200..<300).contains(status) else {
             throw NSError(domain: "ChatFixtureHTTP", code: status)
         }
+        if status == 204 { return [:] }
         return try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
     }
 }

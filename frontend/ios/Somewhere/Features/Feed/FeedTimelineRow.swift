@@ -4,6 +4,7 @@ struct FeedTimelineRow: View {
     let item: FeedTimelineItem
     let previousDate: Date?
     let owner: FeedOwner
+    let availableWidth: CGFloat
     var body: some View {
         VStack(spacing: DesignTokens.spaceS20) {
             if previousDate == nil
@@ -23,7 +24,7 @@ struct FeedTimelineRow: View {
                     MessageWithActions(
                         entry: item.entry, owner: owner,
                         own: item.entry.map { $0.actor.id == owner.session.profile?.id } ?? true,
-                        outgoing: item.outgoing)
+                        outgoing: item.outgoing, availableWidth: availableWidth)
                 } else if let entry = item.entry {
                     record(entry)
                 }
@@ -63,7 +64,7 @@ struct FeedTimelineRow: View {
             PlacePollCard(
                 pollID: id, meeting: meeting, entry: entry, own: own, session: owner.session)
         } else {
-            FeedRecordView(entry: entry, own: own)
+            FeedRecordView(entry: entry, own: own, availableWidth: availableWidth)
         }
     }
 }

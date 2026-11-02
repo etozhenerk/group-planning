@@ -6,6 +6,10 @@ import { ApiError, request, writeOptions } from '@/shared/api';
 import { buildVersion } from '@/shared/config';
 import { useIntent } from '@/shared/lib/intent';
 import { readScreenshot } from '@/features/support-feedback/lib/readScreenshot';
+import {
+  descriptionProblem,
+  trimDescription,
+} from '@/features/support-feedback/lib/descriptionValidation';
 import type {
   FeedbackKind,
   FeedbackScreen,
@@ -17,6 +21,7 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
   const [kind, setKind] = useState(initialKind);
   const [screen, setScreen] = useState(initialScreen);
   const [description, setDescription] = useState('');
+  const [attempted, setAttempted] = useState(false);
   const [email, setEmail] = useState('');
   const [diagnostics, setDiagnostics] = useState(false);
   const [screenshot, setScreenshot] = useState<Screenshot | null>(null);
@@ -28,7 +33,7 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
       const content = {
         kind,
         screen,
-        description: description.trim(),
+        description: trimDescription(description),
         email: email.trim() || null,
         screenshot,
         diagnostics: diagnostics
@@ -72,8 +77,15 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setAttempted(true);
 
-    if (!reading) {
+    if (descriptionProblem(description)) {
+      formRef.current?.querySelector<HTMLElement>('[name="description"]')?.focus();
+
+      return;
+    }
+
+    if (!reading && !mutation.isPending) {
       mutation.mutate();
     }
   };
@@ -99,6 +111,7 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
     screen,
     setScreen,
     description,
+    descriptionError: attempted ? descriptionProblem(description) : '',
     setDescription,
     email,
     setEmail,

@@ -27,6 +27,7 @@ internal data class InvitationState(
     val issue: InvitationIssue? = null,
     val pending: RsvpSubmission? = null,
     val shareUrl: String? = null,
+    val now: Instant = Instant.now(),
 ) {
     val answer: RsvpAnswer? get() = details?.preview?.myRsvp
     val editable: Boolean get() = !loading &&
@@ -35,7 +36,7 @@ internal data class InvitationState(
         details?.organizer != true
     val joinClosed: Boolean get() = details?.let {
         !it.organizer &&
-            (!it.preview.canJoinAt(java.time.Instant.now()) || issue == InvitationIssue.JoinClosed)
+            (!it.preview.canJoinAt(now) || issue == InvitationIssue.JoinClosed)
     } == true
     val canSave: Boolean get() = editable &&
         choice != null &&

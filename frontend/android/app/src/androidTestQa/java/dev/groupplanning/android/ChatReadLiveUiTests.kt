@@ -1,6 +1,12 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onNodeWithTag
@@ -9,6 +15,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.Lifecycle
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
@@ -33,6 +40,107 @@ class ChatReadLiveUiTests {
     private val fixture = InvitationUiFixture(compose)
 
     @Before fun configure() = fixture.configure()
+
+    @Test fun historyAnchorKeepsItsPlaceThroughRealImeSendAcknowledgementAndBack() {
+        val environment = ChatSheetEnvironment(fixture)
+        environment.prepare()
+        try {
+            val api = ChatReadLiveApi(fixture.context)
+            val created = api.request(
+                "design",
+                "meetings",
+                "POST",
+                JSONObject().put("title", "Якорь " + UUID.randomUUID().toString().take(8))
+                    .put("starts_on", "2099-11-10").put("timezone", "UTC"),
+            )
+            val id = created.getJSONObject("meeting").getString("id")
+            val token = created.getString("invitation_url").substringAfter("/i/")
+            api.request(
+                "invite-rsvp",
+                "invitations/$token/rsvp",
+                "PUT",
+                JSONObject().put("answer", "going").put("expected_revision", "0"),
+            )
+            val sent = (1..120).map {
+                api.message("design", id, "История $it\nСтрока для контроля положения")
+            }
+            api.request(
+                "invite-rsvp",
+                "meetings/$id/read-marker",
+                "PUT",
+                JSONObject().put("read_through_sequence", sent[59].getString("sequence")),
+            )
+            val sequence = sent[60].getString("sequence")
+            QaChatProbe.reset()
+            fixture.launch("invite-rsvp").use {
+                fixture.waitTag("meetings-list")
+                compose.onNodeWithTag("meetings-list")
+                    .performScrollToNode(hasTestTag("meeting-$id"))
+                compose.onNodeWithTag("meeting-$id").performClick()
+                fixture.waitTag("message-composer")
+                fixture.waitTag("feed-entry-$sequence")
+                val row = compose.onNodeWithTag("feed-entry-$sequence")
+                compose.onNodeWithTag("chat-unread-divider").assertIsDisplayed()
+                fixture.screenshot("history-first-unread-visible")
+                val top = row.fetchSemanticsNode().boundsInRoot.top
+                val tolerance = 2 * compose.density.density
+                fun unchanged(stage: String) {
+                    val actual = row.fetchSemanticsNode().boundsInRoot.top
+                    println("SOMEWHERE_ANCHOR $stage expected=$top actual=$actual")
+                    assertTrue("$stage moved the anchor", abs(actual - top) <= tolerance)
+                }
+                val input = compose.onNodeWithTag("message-composer")
+                input.performTouchInput { click() }
+                compose.waitUntil(5_000) { environment.keyboardBounds() != null }
+                input.performTextInput("Отправка из истории")
+                unchanged("IME opening")
+                fixture.device.pressBack()
+                compose.waitUntil(5_000) { environment.keyboardBounds() == null }
+                input.assertTextEquals("Отправка из истории")
+                unchanged("IME Back")
+                val syncBefore = QaChatProbe.requests.count { it.contains("/sync") }
+                api.message("design", id, "Новый хвост не уводит читателя")
+                compose.waitUntil(15_000) {
+                    QaChatProbe.requests.count { it.contains("/sync") } > syncBefore
+                }
+                fixture.waitTag("feed-end")
+                unchanged("new tail")
+                compose.onNodeWithTag("message-send").performClick()
+                compose.waitUntil(15_000) {
+                    api.request(
+                        "invite-rsvp",
+                        "meetings/$id/feed?after_sequence=${sent.last().getString(
+                            "sequence",
+                        )}&limit=50",
+                    )
+                        .getJSONArray("entries").let { entries ->
+                            (0 until entries.length()).any { index ->
+                                entries.getJSONObject(index).optJSONObject("payload")
+                                    ?.optString("text") == "Отправка из истории"
+                            }
+                        }
+                }
+                input.assert(
+                    SemanticsMatcher.expectValue(
+                        SemanticsProperties.EditableText,
+                        AnnotatedString(""),
+                    ),
+                )
+                unchanged("own accepted message")
+                fixture.screenshot("history-after-ime-and-own-ack")
+                fixture.device.pressBack()
+                fixture.waitTag("meetings-list")
+                compose.onNodeWithTag("meetings-list")
+                    .performScrollToNode(hasTestTag("meeting-$id"))
+                compose.onNodeWithTag("meeting-$id").performClick()
+                fixture.waitTag("feed-entry-$sequence")
+                unchanged("chat reentry")
+                fixture.screenshot("history-anchor-restored")
+            }
+        } finally {
+            environment.restore()
+        }
+    }
 
     @Test fun secondUserReceiptsSdkIdleLifecycleImeBackAndRevoke() {
         val api = ChatReadLiveApi(fixture.context)

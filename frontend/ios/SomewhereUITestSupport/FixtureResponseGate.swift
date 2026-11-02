@@ -8,6 +8,7 @@ enum FixtureResponseGate {
         let queryName: String?
         let mode: String
         let method: String?
+        let pathSuffix: String?
     }
 
     static func before(_ request: URLRequest) async throws {
@@ -62,7 +63,11 @@ enum FixtureResponseGate {
         let file = root.appendingPathComponent("rule.json")
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let rule = try JSONDecoder().decode(Rule.self, from: Data(contentsOf: file))
-        guard url.path == rule.path, request.httpMethod == (rule.method ?? "GET") else {
+        let matchingPath =
+            rule.pathSuffix.map {
+                url.path.hasPrefix(rule.path) && url.path.hasSuffix($0)
+            } ?? (url.path == rule.path)
+        guard matchingPath, request.httpMethod == (rule.method ?? "GET") else {
             return nil
         }
         if let name = rule.queryName,

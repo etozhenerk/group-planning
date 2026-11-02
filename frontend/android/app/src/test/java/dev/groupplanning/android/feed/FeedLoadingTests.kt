@@ -4,6 +4,10 @@ package dev.groupplanning.android.feed
 
 import dev.groupplanning.android.data.api.WireResponse
 import dev.groupplanning.android.data.api.apiJson
+import dev.groupplanning.android.data.api.models.FeedEntry
+import dev.groupplanning.android.data.api.models.FeedPage
+import dev.groupplanning.android.data.api.models.RsvpAnswer
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.state.feed.FeedViewModel
 import dev.groupplanning.android.support.Fixtures
 import kotlinx.coroutines.CompletableDeferred
@@ -21,6 +25,53 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class FeedLoadingTests {
+    @Test fun legacyRevisionRefreshesCachedAuthorsWithoutMovingCursorAnchorOrDraft() = runTest {
+        val h = FeedHarness(StandardTestDispatcher(testScheduler))
+        h.login()
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
+        h.page(31, 32)
+        val model = FeedViewModel(h.id, h.repository, backgroundScope)
+        backgroundScope.launch { model.runActive() }
+        runCurrent()
+        model.anchor(h.entry(31).id)
+        model.sender.edit("Не отправленный черновик")
+        runCurrent()
+        fun page(entries: List<FeedEntry>, more: Boolean = false) {
+            h.transport.enqueue(
+                "${h.path}/feed",
+                apiJson.encodeToString(
+                    FeedPage(
+                        entries,
+                        more,
+                        ServerCounter("1"),
+                        1,
+                        RsvpAnswer.Going,
+                        ServerCounter("1"),
+                        ServerCounter("32"),
+                    ),
+                ),
+            )
+        }
+        val entries = listOf(31, 32).map {
+            h.entry(it).copy(actor = Fixtures.user.copy(displayName = "Удалённый аккаунт"))
+        }
+        page(emptyList())
+        page(entries.take(1), more = true)
+        page(entries.drop(1))
+        h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
+        model.refresh()
+        runCurrent()
+        assertEquals(entries, model.state.value.entries)
+        assertEquals("32", model.state.value.cursor?.value)
+        assertEquals(h.entry(31).id, model.state.value.anchor)
+        assertEquals("Не отправленный черновик", model.sender.state.value.draft)
+        assertEquals(
+            listOf("32", "30", "31"),
+            h.transport.requests.filter { it.url.encodedPath.endsWith("/feed") }.takeLast(3)
+                .map { it.url.queryParameter("after_sequence") },
+        )
+    }
+
     @Test fun postAndLatestMetadataNeverSkipUnreadPagesAndHistoryKeepsCursor() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()

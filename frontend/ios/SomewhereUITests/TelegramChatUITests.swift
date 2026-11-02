@@ -128,7 +128,9 @@ final class TelegramChatUITests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.tap()
         search.typeText("пицца")
-        app.buttons["emoji-🍕"].tap()
+        let pizza = app.buttons["emoji-🍕"]
+        ChatSheetTestSupport.waitForEmojiChoice(pizza, app: app)
+        pizza.tap()
         let mine = app.buttons.matching(
             NSPredicate(format: "label CONTAINS %@", "🍕, 1, ваша реакция")
         ).firstMatch

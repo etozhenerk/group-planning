@@ -47,7 +47,12 @@ internal class MessageSender(
                 )
             }
             if (access == value) {
-                mutable.value = MessageState(saved.draft, saved.queue, ready = true)
+                mutable.value = MessageState(
+                    saved.draft,
+                    saved.queue,
+                    ready = true,
+                    draftResetKey = UUID.randomUUID(),
+                )
             }
         } catch (_: ClientFailure) {
             if (access == value) mutable.value = MessageState(storageError = true)
@@ -104,9 +109,15 @@ internal class MessageSender(
                     }
                 }
                 if (access != lease) return@launch
+                val clearDraft = revision == draftRevision
                 mutable.value = state.value.copy(
                     queue = saved.queue,
-                    draft = if (revision == draftRevision) "" else state.value.draft,
+                    draft = if (clearDraft) "" else state.value.draft,
+                    draftResetKey = if (clearDraft) {
+                        UUID.randomUUID()
+                    } else {
+                        state.value.draftResetKey
+                    },
                     storageError = false,
                 )
                 drain()
@@ -238,9 +249,15 @@ internal class MessageSender(
                     }
                 }
                 if (access == lease) {
+                    val replaceDraft = revision == draftRevision
                     mutable.value = state.value.copy(
                         queue = saved.queue,
-                        draft = if (revision == draftRevision) saved.draft else state.value.draft,
+                        draft = if (replaceDraft) saved.draft else state.value.draft,
+                        draftResetKey = if (replaceDraft) {
+                            UUID.randomUUID()
+                        } else {
+                            state.value.draftResetKey
+                        },
                     )
                 }
             } catch (_: ClientFailure) {

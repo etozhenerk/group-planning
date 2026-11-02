@@ -88,6 +88,13 @@ export const loadChat = async (
       applyChatProjections(client, user, id, epoch, page.projections);
       client.setQueryData(key, result);
 
+      if (previous?.sync) {
+        void client.invalidateQueries({
+          queryKey: privateKey(user, id, epoch, 'participants'),
+          refetchType: 'active',
+        });
+      }
+
       return result;
     };
 
@@ -155,6 +162,22 @@ export const loadChat = async (
           queryKey: privateKey(user, id, epoch, 'details'),
           refetchType: 'active',
         });
+
+        if (
+          page.changes.some(
+            (change) =>
+              change.kind === 'meeting_changed' ||
+              ['participant_joined', 'rsvp_changed'].includes(
+                change.projection?.entry?.kind ?? '',
+              ),
+          )
+        ) {
+          void client.invalidateQueries({
+            queryKey: privateKey(user, id, epoch, 'participants'),
+            refetchType: 'active',
+          });
+        }
+
         cursor = page.next_cursor;
 
         if (!page.has_more) {

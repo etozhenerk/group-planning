@@ -115,7 +115,9 @@ final class ExperienceUITests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.tap()
         search.typeText("алое сердце")
-        app.buttons["алое сердце"].tap()
+        let heart = app.buttons["алое сердце"]
+        ChatSheetTestSupport.waitForEmojiChoice(heart, app: app)
+        heart.tap()
         XCTAssertEqual(input.value as? String, "Жду встречи ❤️")
         capture("refresh-emoji-draft")
         app.buttons["meeting-add"].tap()

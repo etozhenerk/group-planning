@@ -6,7 +6,7 @@ type Options = {
   restoring: RefObject<boolean>;
   scrolling: RefObject<boolean>;
   state: RefObject<{ following: boolean }>;
-  correcting: RefObject<boolean>;
+  correctionTop: RefObject<number | null>;
   virtual: { scrollToEnd: () => void };
   restoreAnchor: (following: boolean) => void;
 };
@@ -42,7 +42,7 @@ export const useViewportResize = (
 
     let frame: number | undefined;
     const observer = new ResizeObserver(() => {
-      const { restoring, scrolling, state, correcting, virtual, restoreAnchor } =
+      const { restoring, scrolling, state, correctionTop, virtual, restoreAnchor } =
         latest.current;
 
       if (restoring.current || scrolling.current) {
@@ -50,10 +50,14 @@ export const useViewportResize = (
       }
 
       if (state.current.following) {
-        correcting.current = true;
         virtual.scrollToEnd();
+
+        const target = view.scrollTop;
+        correctionTop.current = target;
         frame = requestAnimationFrame(() => {
-          correcting.current = false;
+          if (correctionTop.current === target) {
+            correctionTop.current = null;
+          }
         });
       } else {
         restoreAnchor(false);

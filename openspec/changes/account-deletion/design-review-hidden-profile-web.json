@@ -1,0 +1,648 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/account-deletion/design-manifest-web.json",
+  "inputHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+  "reviewer": "/root/web_sdd_acceptance",
+  "reviewedAt": "2026-11-02T12:37:23.700609+00:00",
+  "mode": "live",
+  "environment": "Final immutable8544 bundle a7fae583; synthetic memoryfixture, ru-RU/EuropeMoscow; 320/390/768/1440 default, actual Tab and native Chromiumzoom2; no nativeChromeCUA/physicalIME claim.",
+  "summary": "12 свежих состояний профиля: PASS. Проверены изображения actual/reference, DOMгеометрия и выполненные переходы. Предыдущие результаты не переносились: все actual и действия выполнены заново.",
+  "checks": [
+    {
+      "screen": "account-profile-web-320",
+      "platform": "web",
+      "state": "default",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 320, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 500, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:33.712Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-default-actual-top.png",
+          "sha256": "ba2679bc26012d9f9bfcdb7f24f46e79f8e2b33a51ff3007784aa67c278b1470",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-default-actual-bottom.png",
+          "sha256": "b375431a1d8c98d91d46ae0cf00454decad504ee41aa42780c39d5c6a5b53adb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-default-reference-top.png",
+          "sha256": "07c9189c42f82eda252a920cb84628667517639df2f0b71355405a2aa8a725c9",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-default-reference-bottom.png",
+          "sha256": "7d8da15628f213d234f048925e442a516e44b5d019957199a8c41f41338cb011",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-default.json",
+          "sha256": "2dc271818d01ac360807dd8d7738df07d792f35f08698fdbb12282829d24ff9f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-320",
+      "platform": "web",
+      "state": "keyboard-focus",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 320, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 500, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:34.770Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-keyboard-focus-actual-top.png",
+          "sha256": "b375431a1d8c98d91d46ae0cf00454decad504ee41aa42780c39d5c6a5b53adb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-keyboard-focus-actual-bottom.png",
+          "sha256": "b375431a1d8c98d91d46ae0cf00454decad504ee41aa42780c39d5c6a5b53adb",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-keyboard-focus-reference-top.png",
+          "sha256": "7d8da15628f213d234f048925e442a516e44b5d019957199a8c41f41338cb011",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-keyboard-focus-reference-bottom.png",
+          "sha256": "7d8da15628f213d234f048925e442a516e44b5d019957199a8c41f41338cb011",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-keyboard-focus.json",
+          "sha256": "e1defc4988411cc679aa47c4f66069eabaf4c78e28791561cadf48a0eb0fda95",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-320",
+      "platform": "web",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 320, \"innerHeight\": 900, \"dpr\": 2, \"outerWidth\": 640, \"outerHeight\": 1800, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:36:07.574Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-large-text-actual-top.png",
+          "sha256": "408ca2a34a06bccd2b83cf5f9272d2c9fc708b1848aef18eb1d4dc13120dfc38",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-large-text-actual-bottom.png",
+          "sha256": "eac8e94966874efa2f73f92e2e6f4c9bc40711a5facbe6503f80e635c70aa5a9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-large-text-reference-top.png",
+          "sha256": "280fb5c51934e67707d8e5228185f403bffa0bd1b15e15a15dfc9203cf59f78f",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-large-text-reference-bottom.png",
+          "sha256": "31e04b93adc9c1d57fe4c57554bb8587efb1b91408fcfeaf48ec1fcd2e27de88",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/320-large-text.json",
+          "sha256": "7df6cf1bc7b850cef18500e9a3674c7053f8e5db011ffc036641eb6cab162582",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-390",
+      "platform": "web",
+      "state": "default",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 390, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 500, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:36.897Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-default-actual-top.png",
+          "sha256": "4a0a1798681662d6bc83e91433d069eb3727fb03c73d0dac3ef93e96e9d35b7b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-default-actual-bottom.png",
+          "sha256": "7fb3cd4956591190ed4a637158c588560ba198e15deebd728339d19b86534703",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-default-reference-top.png",
+          "sha256": "c48683917936dd6323a9057062612847da2c6c90b903a87ce08792ba05f50313",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-default-reference-bottom.png",
+          "sha256": "29508fad74e72b7c59b9817beadf765bc7b0d4e93ffca0a5e5b27b938bd8e348",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-default.json",
+          "sha256": "98d24ba15074d39d4527b0abacf857106927ccab7c8014c9d996dc3facb9a797",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-390",
+      "platform": "web",
+      "state": "keyboard-focus",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 390, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 500, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:37.950Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-keyboard-focus-actual-top.png",
+          "sha256": "7fb3cd4956591190ed4a637158c588560ba198e15deebd728339d19b86534703",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-keyboard-focus-actual-bottom.png",
+          "sha256": "7fb3cd4956591190ed4a637158c588560ba198e15deebd728339d19b86534703",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-keyboard-focus-reference-top.png",
+          "sha256": "29508fad74e72b7c59b9817beadf765bc7b0d4e93ffca0a5e5b27b938bd8e348",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-keyboard-focus-reference-bottom.png",
+          "sha256": "29508fad74e72b7c59b9817beadf765bc7b0d4e93ffca0a5e5b27b938bd8e348",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-keyboard-focus.json",
+          "sha256": "42bdd2a99a522a412f0997f9a86e90e0f4a268b56fe34c4c3e116073ab31dc5c",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-390",
+      "platform": "web",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 390, \"innerHeight\": 900, \"dpr\": 2, \"outerWidth\": 780, \"outerHeight\": 1800, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:36:08.673Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-large-text-actual-top.png",
+          "sha256": "0af108f5f0e0b82b0f042e47d17b8c3b7f07e032a2eb51c94b249c74ed4da5dd",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-large-text-actual-bottom.png",
+          "sha256": "84b28ca492324f3846f551d698a6eedad37916e7a98cc636bf3f6f5b158cec7a",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-large-text-reference-top.png",
+          "sha256": "7670bd5bfe83ceab83928a366662368d9fab918d072cbadd1b72e0e1a99df46c",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-large-text-reference-bottom.png",
+          "sha256": "22b3a6a0ab2a3385e0646cd93a205f2d37ff20370d12c0be5164edb84ffe96c2",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/390-large-text.json",
+          "sha256": "b5c49b2396aecfe167c6f8d02b4ba2f45d9bfeef563547053dbf69a2c9e63899",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-768",
+      "platform": "web",
+      "state": "default",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 768, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 768, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:40.134Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-default-actual-top.png",
+          "sha256": "459544350f2a62df3a95b6b99d9e5fff5756aa830cd42475aa70e61140ec0e1e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-default-actual-bottom.png",
+          "sha256": "db6cb87adbcf7366b462d4c55468710a2bde728353bd2fe9eabdc94c74521486",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-default-reference-top.png",
+          "sha256": "165175fee229d96bbbab909b49ab3e50a0e2471f8d82f99f6854ca3602e05996",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-default-reference-bottom.png",
+          "sha256": "00bdc3b384cbb5fd88e7b2936995023c944b294c48f5ef023f47148701160f7e",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-default.json",
+          "sha256": "17beb7826955bf33c581e6b4c4cb03ddd14c5059c2a9892e9051c84ddd749ce0",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-768",
+      "platform": "web",
+      "state": "keyboard-focus",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 768, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 768, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:41.179Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-keyboard-focus-actual-top.png",
+          "sha256": "db6cb87adbcf7366b462d4c55468710a2bde728353bd2fe9eabdc94c74521486",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-keyboard-focus-actual-bottom.png",
+          "sha256": "db6cb87adbcf7366b462d4c55468710a2bde728353bd2fe9eabdc94c74521486",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-keyboard-focus-reference-top.png",
+          "sha256": "00bdc3b384cbb5fd88e7b2936995023c944b294c48f5ef023f47148701160f7e",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-keyboard-focus-reference-bottom.png",
+          "sha256": "00bdc3b384cbb5fd88e7b2936995023c944b294c48f5ef023f47148701160f7e",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-keyboard-focus.json",
+          "sha256": "38dae869cbcba45c39fa950489e34ba89293366ff16595674f999baf49196304",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-768",
+      "platform": "web",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 768, \"innerHeight\": 900, \"dpr\": 2, \"outerWidth\": 1536, \"outerHeight\": 1800, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:36:09.871Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-large-text-actual-top.png",
+          "sha256": "cc7ac54a3979256c4e3ea383c47cd95bcf42560e1da5f9d91335137ec7540768",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-large-text-actual-bottom.png",
+          "sha256": "dbc9678bf7f1258d655ac459cad3706cc4f8f7b9382675db7835d6c78fb257ea",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-large-text-reference-top.png",
+          "sha256": "4ffb0f1380f6b007e15c90b69ca7a9bada6172185a814dbbc6b3a38dd8a8be6c",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-large-text-reference-bottom.png",
+          "sha256": "f16bcd86d854761577381ca04c8ebd6a3d4720f1727f780e957780183329ab02",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/768-large-text.json",
+          "sha256": "415b137283ec25c609a9e733a8a680424198cc27169940bbbeff5ef0d57ee025",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-1440",
+      "platform": "web",
+      "state": "default",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 1440, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 1440, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:43.396Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-default-actual-top.png",
+          "sha256": "94137ea3554399d0950e1c7b39bfe47bd1fc2a5b6950a28a8b5d03ba7adb4c2e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-default-actual-bottom.png",
+          "sha256": "c4509660e089fd13bb5d039adeb997cc8b5ac8323a65a271cd5d969ca82fa341",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-default-reference-top.png",
+          "sha256": "c153466bfa849cb53964597535e04044a9e4b630cb6007c5b97a5ff73194ca1d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-default-reference-bottom.png",
+          "sha256": "e616f554d17334121a7f6d95d81907057540e64b45a12fb061d07c9f134d5f00",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-default.json",
+          "sha256": "0a5ec8845cf9baca8ffec01f36fbbac61c4118bd1a5e8aaa93df39ff04b30f9e",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-1440",
+      "platform": "web",
+      "state": "keyboard-focus",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 1440, \"innerHeight\": 900, \"dpr\": 1, \"outerWidth\": 1440, \"outerHeight\": 900, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:34:44.414Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-keyboard-focus-actual-top.png",
+          "sha256": "c4509660e089fd13bb5d039adeb997cc8b5ac8323a65a271cd5d969ca82fa341",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-keyboard-focus-actual-bottom.png",
+          "sha256": "c4509660e089fd13bb5d039adeb997cc8b5ac8323a65a271cd5d969ca82fa341",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-keyboard-focus-reference-top.png",
+          "sha256": "e616f554d17334121a7f6d95d81907057540e64b45a12fb061d07c9f134d5f00",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-keyboard-focus-reference-bottom.png",
+          "sha256": "e616f554d17334121a7f6d95d81907057540e64b45a12fb061d07c9f134d5f00",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-keyboard-focus.json",
+          "sha256": "ac4d815c33de08b71e04f2b91f9cd1827da7ea2c36b1872fff465899d0b03af1",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "account-profile-web-1440",
+      "platform": "web",
+      "state": "large-text",
+      "status": "pass",
+      "observations": "Свежий проход current 17206ae8: actual/reference и текущая DOM-матрица проверены. Provider переносится на320 согласно raw, остальные ширины сохраняют композицию. Readonly/missing fields читаемы, горизонтального overflow нет, logout последний и доступен над нижней панелью, delete/version отсутствуют. Tab даёт видимый focus. About→Назад возвращает профиль; session и созданная встреча сохранены, DELETE не отправлялся. Демобаннер и синтетические отсутствующие поля объясняют отличие fixture от заполненного raw. Large-text использует настоящий browserzoom2/DPR2 с сохранённой опубликованной CSSlayoutwidth; не заявляется fixed-physical-width reflow.",
+      "capture": {
+        "sourceHash": "1a2aa3be6019a4b8c41d5cf81adce88a533972d47e5007e47eadc15c401a5dae",
+        "fixtureHash": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+        "runtime": "Bundled Chromium156 headless, independent Playwright; chrome.tabs.setZoom for textScale2, no CSS/font mutation",
+        "os": "macOS27.0.1",
+        "viewport": "{\"innerWidth\": 1440, \"innerHeight\": 900, \"dpr\": 2, \"outerWidth\": 2880, \"outerHeight\": 1800, \"visualViewportScale\": 1}",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 2,
+        "capturedAt": "2026-11-02T12:36:11.027Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-large-text-actual-top.png",
+          "sha256": "6cd58a7f011c70bb6070ce4bffaf83c34d35b6a9d045f9d27cfcf52c9ab435c6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-large-text-actual-bottom.png",
+          "sha256": "0f87439be2b779055de7c430b1d25249e533bd8a0ff1631da9bdf63ba8ca5f24",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-large-text-reference-top.png",
+          "sha256": "b06c853cb14f4d9cace85769a2bbecf00fbf92a0874d0490f8baf20efa02c5fd",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-large-text-reference-bottom.png",
+          "sha256": "51a062d60ad780e7d66abd7cab0780cb992d1f79268f81b8e6b15de68757539c",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/evidence/1440-large-text.json",
+          "sha256": "a1e405e0e417390d4eb2821f77858d8ed9d54f08ccc0f4bad595b2c96f44f172",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/profile-qualified/interactions.json",
+          "sha256": "752572d1abeceae82fcc612b883ff6b5f1f6d62d547cfb7eb3d99d73d4468f05",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

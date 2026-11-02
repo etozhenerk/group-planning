@@ -16,6 +16,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import dev.groupplanning.android.R
+import dev.groupplanning.android.data.links.InvitationTarget
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
@@ -134,7 +136,9 @@ internal fun SomewhereApp(model: AppViewModel) {
                             }
                         } else if (snapshot.session is SessionState.Authenticated) {
                             PrivateContent(model, route, snapshot)
-                        } else if (route is AppRoute.Invitation) {
+                        } else if (route is AppRoute.Invitation &&
+                            (route as AppRoute.Invitation).model.target is InvitationTarget.Token
+                        ) {
                             InvitationScreen(
                                 (route as AppRoute.Invitation).model,
                                 model::home,
@@ -150,10 +154,14 @@ internal fun SomewhereApp(model: AppViewModel) {
                                 )
                                 else -> Column {
                                     Box(Modifier.weight(1f)) {
-                                        OnboardingScreen(
-                                            authenticating = auth.busy,
-                                            signIn = model::startSignIn,
-                                        )
+                                        val returningToMeeting = route is AppRoute.Invitation
+                                        key(returningToMeeting) {
+                                            OnboardingScreen(
+                                                authenticating = auth.busy,
+                                                signIn = model::startSignIn,
+                                                startWithSignIn = returningToMeeting,
+                                            )
+                                        }
                                     }
                                     if (snapshot.session is SessionState.Deleted) {
                                         Surface(

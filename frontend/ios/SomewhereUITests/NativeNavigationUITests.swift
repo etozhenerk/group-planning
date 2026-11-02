@@ -19,6 +19,24 @@ final class NativeNavigationUITests: XCTestCase {
                 XCTAssertEqual(app.buttons[id].frame.minY, original[position].minY, accuracy: 1)
             }
         }
+        ChatSheetTestSupport.openChat(app)
+        for id in tabs { XCTAssertFalse(app.buttons[id].exists) }
+        let composer = app.textViews["message-input"]
+        XCTAssertTrue(composer.waitForExistence(timeout: 10))
+        XCTAssertLessThan(app.frame.maxY - composer.frame.maxY, 100)
+        app.buttons["feed-back"].tap()
+        for id in tabs { XCTAssertTrue(app.buttons[id].exists) }
+        app.buttons["Создать встречу"].tap()
+        XCTAssertTrue(
+            app.descendants(matching: .any)["meeting-title"].firstMatch.waitForExistence(timeout: 5)
+        )
+        for id in tabs {
+            XCTAssertFalse(app.buttons[id].isHittable)
+            XCTAssertFalse(app.scrollViews["create-form"].buttons[id].exists)
+        }
+        ExperienceScreenshot.save("native-create-without-tabs", test: self)
+        app.buttons["Закрыть"].tap()
+        for id in tabs { XCTAssertTrue(app.buttons[id].isHittable) }
         ExperienceScreenshot.save("native-tabs-stable", test: self)
     }
 
@@ -27,12 +45,15 @@ final class NativeNavigationUITests: XCTestCase {
         app.buttons["Календарь"].tap()
         let month = app.staticTexts["calendar-month"]
         XCTAssertTrue(month.waitForExistence(timeout: 10))
-        _ = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
+        let selectedDay = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
+        XCTAssertTrue(selectedDay.isSelected)
         let selectedMonth = month.label
-        XCTAssertTrue(
-            app.buttons["meeting-card-" + ChatSheetTestSupport.sharedMeeting].waitForExistence(
-                timeout: 10))
-        ChatSheetTestSupport.openChat(app)
+        let card = app.buttons["meeting-card-" + ChatSheetTestSupport.sharedMeeting]
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
+        ChatSheetTestSupport.reveal(card, in: app.scrollViews["meetings-list"], app: app)
+        let cardY = card.frame.minY
+        card.tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
         let input = app.textViews["message-input"]
         input.tap()
         input.typeText("Вернусь к этому сообщению")
@@ -46,10 +67,55 @@ final class NativeNavigationUITests: XCTestCase {
                     CGVector(dx: app.frame.width - 12, dy: app.frame.height / 2)))
         XCTAssertTrue(month.waitForExistence(timeout: 10))
         XCTAssertEqual(month.label, selectedMonth)
+        XCTAssertTrue(selectedDay.isSelected)
+        XCTAssertTrue(app.buttons["period-upcoming"].isSelected)
+        XCTAssertEqual(card.frame.minY, cardY, accuracy: 2)
         XCTAssertTrue(app.buttons["Список"].exists)
         ChatSheetTestSupport.openChat(app)
         XCTAssertEqual(input.value as? String, "Вернусь к этому сообщению")
         ExperienceScreenshot.save("native-edge-back-draft", test: self)
+    }
+
+    func testEdgeBackKeepsListPeriodAndMessageDraft() {
+        let app = ChatSheetTestSupport.launch()
+        XCTAssertTrue(app.buttons["period-upcoming"].isSelected)
+        let list = app.scrollViews["meetings-list"]
+        list.swipeUp()
+        let card = app.buttons["meeting-card-" + ChatSheetTestSupport.sharedMeeting]
+        ChatSheetTestSupport.reveal(card, in: list, app: app)
+        let cardY = card.frame.minY
+        card.tap()
+        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+        let input = app.textViews["message-input"]
+        input.tap()
+        input.typeText("Черновик из списка")
+        app.buttons["meeting-add"].tap()
+        app.buttons["meeting-add"].tap()
+        let origin = app.coordinate(withNormalizedOffset: .zero)
+        origin.withOffset(CGVector(dx: 2, dy: app.frame.height / 2))
+            .press(
+                forDuration: 0.1,
+                thenDragTo: origin.withOffset(CGVector(dx: 40, dy: app.frame.height / 2)),
+                withVelocity: .slow, thenHoldForDuration: 1)
+        XCTAssertTrue(app.buttons["meeting-add"].isHittable, "A short edge gesture must cancel")
+        XCTAssertEqual(input.value as? String, "Черновик из списка")
+        input.tap()
+        input.typeText("!")
+        let continuedDraft = input.value as? String
+        XCTAssertTrue(continuedDraft?.contains("!") == true)
+        app.buttons["meeting-add"].tap()
+        app.buttons["meeting-add"].tap()
+        origin.withOffset(CGVector(dx: 2, dy: app.frame.height / 2))
+            .press(
+                forDuration: 0.1,
+                thenDragTo: origin.withOffset(
+                    CGVector(dx: app.frame.width - 12, dy: app.frame.height / 2)))
+        XCTAssertTrue(app.scrollViews["meetings-list"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["period-upcoming"].isSelected)
+        XCTAssertEqual(card.frame.minY, cardY, accuracy: 2, "Restore the original list position")
+        ChatSheetTestSupport.openChat(app)
+        XCTAssertEqual(input.value as? String, continuedDraft)
+        ExperienceScreenshot.save("native-edge-back-list-draft", test: self)
     }
 
     func testProfileLinksReturnAndAccountActionsAreAtBottom() {

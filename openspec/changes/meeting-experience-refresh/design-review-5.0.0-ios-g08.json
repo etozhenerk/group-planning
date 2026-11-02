@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-ios-g08.json",
+  "inputHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+  "reviewer": "independent-agent:/root/ios_sdd_acceptance",
+  "reviewedAt": "2026-11-02T05:45:33.928409+00:00",
+  "mode": "live",
+  "environment": "iPhone18Pro31262733-50DC-46A5-938E-4C462D70F109;iOS27.0(24A434);Xcode27.1;nativeSwiftUI/realsoftwareIME;402x874pt;ru_RU;Europe/Moscow;syntheticloopbackTLSmemory;runtime source a79b13593222248c186320cffceaf34e0ac82750856b24b0905afec38ecd1e0e;explicit QA-only VFS capture/observer documented separately.",
+  "summary": "7/7 состояний внешнего скрытия клавиатуры проверены живыми XCUITest-действиями и визуально. Это g08/17.2, не весь чат.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Настоящая клавиатура имеет >10keys,height>200pt,field.maxY<=keyboard.minY; многострочный draft с выделенными XX остаётся видимым. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:40:34Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/chat-keyboard-selected-draft.png",
+          "sha256": "50aebb9c0b7c77d67e4d35a98574a7b4740f0d14c7d67295697041d12a50f392",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-focused.png",
+          "sha256": "4d828f732f1520538df15b12a5f6be3e13c8f4e41e54285e4aa4a6c12aab4d3d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Tap фона скрывает IME и снимает фокус без отправки; полный draft сохраняется, последующая замена XX на 🍕 доказывает сохранённое выделение. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:40:37Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/chat-keyboard-outside-dismissed.png",
+          "sha256": "6ae0403afd86e8609cf8981fbcdb6012a3d9b8aee9c1d9a9c589a80284401459",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-initial.png",
+          "sha256": "92637da8a617e002e31f4cb43c40aa2be284b3f56eeb0f31a2dedb3a888771ea",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Первый tap Send создаёт одну canonical строку и очищает draft; первый tap плюс показывает меню, IME закрыта. Действия не поглощены. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:39:21Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/outside-plus-proof.png",
+          "sha256": "47de1ba42b65dfc087a37e2bca922d6c7ff0d8c7376054e87415168b17446fac",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-initial.png",
+          "sha256": "92637da8a617e002e31f4cb43c40aa2be284b3f56eeb0f31a2dedb3a888771ea",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "sheet-return-no-ime",
+      "status": "pass",
+      "observations": "После формы задачи с собственным вводом swipe dismiss возвращает чат без IME composer, draft Вернусь/к сообщению сохранён. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:39:37Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/outside-sheet-return-proof.png",
+          "sha256": "0106b827f21fdf7641690e8b050564db09e1aee7d5d84b9adf69aace2d52846a",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-initial.png",
+          "sha256": "92637da8a617e002e31f4cb43c40aa2be284b3f56eeb0f31a2dedb3a888771ea",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Явная кнопка возврата к клавиатуре открывает IME, вставка ! идёт в сохранённую позицию. Новый явный tap в начале вводит A в начало, проверено точное значение. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:40:47Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/outside-refocus-proof.png",
+          "sha256": "90a26678d714d5852296775db9d5e59a6456dcb8868d52a3b4741497bed689e3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-focused.png",
+          "sha256": "4d828f732f1520538df15b12a5f6be3e13c8f4e41e54285e4aa4a6c12aab4d3d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Фокус поиска emoji и поля задачи не сбрасывается внешним обработчиком. Поиск пицца, 🍕 и повторный ввод ! работают, реальная IME не перекрывает активное поле. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:39:31Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/chat-keyboard-sheet-field.png",
+          "sha256": "9318cfc201bcceda390e4010d395f26b35a8db5e7ccbe6bd2b69b04726e4a99f",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-focused.png",
+          "sha256": "4d828f732f1520538df15b12a5f6be3e13c8f4e41e54285e4aa4a6c12aab4d3d",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-ios",
+      "platform": "ios",
+      "state": "scroll-long-press",
+      "status": "pass",
+      "observations": "Короткий tap сообщения скрывает IME без реакций; long press открывает reaction-expand, scroll не теряет draft и не запускает случайную реакцию; refocus работает. Сравнение raw+контракта5.0.0, nativeIME адаптация, геометрия и графит/акцент сохранены.",
+      "capture": {
+        "sourceHash": "ffc1667f41870938b65cca3699da83c8efda16c653596dd218587c20e4289a2c",
+        "fixtureHash": "db6c29c1ce691ee25275426e7b937b81beaa609b6b2785892e4c8dcda89fdb59",
+        "runtime": "27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402x874pt;1206x2622px;scale3",
+        "fonts": [
+          ".SFUI-Regular",
+          ".SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.0,
+        "capturedAt": "2026-11-02T05:40:09Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/evidence/leaf-actual/chat-keyboard-long-press.png",
+          "sha256": "2d78a79155a6fe8e338a2f8379f02cb16924dbcd3b5630ad92422f7454ac9fd4",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/reference/keyboard-initial.png",
+          "sha256": "92637da8a617e002e31f4cb43c40aa2be284b3f56eeb0f31a2dedb3a888771ea",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/account-deletion/qa/2026-11-02-ios-independent/profile-keyboard-interaction.log",
+          "sha256": "8d931fcfd724b5ccd2c9a9b716a7cd697b86876a7dda8c05fc4f9d6f4517d47e",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

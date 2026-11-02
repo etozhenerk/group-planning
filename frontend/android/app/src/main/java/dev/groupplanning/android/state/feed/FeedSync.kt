@@ -40,6 +40,7 @@ internal class FeedSync(
     private var verifyRequested = true
     private var revokeRequested = false
     private var personalRequested = false
+    private var legacyRevision: ServerCounter? = null
 
     fun refresh() {
         signals.trySend(ChatSignal.Refresh)
@@ -263,8 +264,34 @@ internal class FeedSync(
             sender.acknowledge(page.entries)
             apply(page.entries, emptyList(), false)
             val current = repository.snapshot.value.data.details[access.id]?.value
+            if (legacyRevision != null && legacyRevision != page.meetingRevision) {
+                refreshLegacyWindow(access)
+                if (lease != access) return
+            }
+            legacyRevision = page.meetingRevision
             if (current?.revision != page.meetingRevision) repository.details(access)
         } while (!first && page.hasMore)
+    }
+
+    private suspend fun refreshLegacyWindow(access: MeetingAccess) {
+        val entries = state.value.entries
+        val first = entries.firstOrNull()?.sequence ?: return
+        val last = entries.last().sequence
+        var after = ServerCounter(
+            first.value.toBigInteger().subtract(java.math.BigInteger.ONE)
+                .max(java.math.BigInteger.ZERO).toString(),
+        )
+        val refreshed = mutableListOf<FeedEntry>()
+        do {
+            val page = repository.page(access, after = after)
+            if (lease != access) return
+            refreshed += page.entries.filter { it.sequence <= last }
+            val next = page.entries.lastOrNull()?.sequence ?: break
+            if (next >= last || !page.hasMore) break
+            if (next <= after) throw ClientFailure(FailureKind.InvalidResponse)
+            after = next
+        } while (refreshed.size < 500)
+        state.value = state.value.merge(refreshed)
     }
 
     fun tail() {

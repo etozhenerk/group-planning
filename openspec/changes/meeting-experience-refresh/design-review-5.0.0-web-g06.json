@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/meeting-experience-refresh/design-manifest-web-g06.json",
+  "inputHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+  "reviewer": "/root/web_sdd_acceptance",
+  "reviewedAt": "2026-11-02T12:30:04.002858+00:00",
+  "mode": "live",
+  "environment": "Final immutable8544 bundle a7fae583; synthetic memoryfixture, Chromium1440/390/320, trustedCDP mobiletouch, ru-RU/EuropeMoscow; not physicalIME.",
+  "summary": "10 состояний g06: PASS. Выполнены 33 новых взаимодействия на текущем исходном коде.",
+  "checks": [
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "focused",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "1440x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:47.161Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/focused.png",
+          "sha256": "dd0ed0166117fb8c3f230820f2d730c790550d3ed2e06c47ea4b2f82d1b359e8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/1440/focused.png",
+          "sha256": "b93b5e2055be5067c83cfe079905237c406c4b1952e3f1c1c39f075125c43481",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/interactions.json",
+          "sha256": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "outside-draft-preserved",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "1440x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:47.311Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/outside-draft-preserved.png",
+          "sha256": "8828244b528d10a533a6a4fb444721e53d3af64b8a67e372cc383a3be1b859a4",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/1440/outside-draft-preserved.png",
+          "sha256": "9f9c1ad8219142178a3ef7be567c7516bd5c6bd7db37a698bcd6203b7ba2247f",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/interactions.json",
+          "sha256": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "first-tap-action",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:52.831Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/first-tap-action.png",
+          "sha256": "9c735bcc23be122b041eeb3af8419a596abc7652dbdd7a4fabc27d60db3da171",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/first-tap-action.png",
+          "sha256": "e488373e726f23ea7858f7ea1e5cdcd50a8262e66cf3013fe4e67c132aa8a431",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "sheet-return-no-ime",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:53.715Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/sheet-return-no-ime.png",
+          "sha256": "aa8f43bf7078255fbbfc47939fbf746f5cea731cc0779403fd4e7ed6aef68b51",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/sheet-return-no-ime.png",
+          "sha256": "b737f253843cb334b5d718f3196757a7cd2e3664a24a8bedee81aca9e2ca6772",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "explicit-refocus",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:54.532Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/explicit-refocus.png",
+          "sha256": "f75d0d09f999cba32ee72df5f0c5d761c4b770e6e8a24b14e7421e0b0bdc9486",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/explicit-refocus.png",
+          "sha256": "2b534ec909ceff9da2bd6304632173747eef90bc04e8607fd61207212663919f",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "other-input",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:53.265Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/other-input.png",
+          "sha256": "7edad6ffd96d50841d3accd0bf5bf40cdd9eca4f73bb822a3507d0e8049a63cd",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/other-input.png",
+          "sha256": "80a73778654a8707de70464dc541a3859d1a65392767d3128ae9a474b392f4ff",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "scroll-long-press",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:56.299Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/scroll-long-press.png",
+          "sha256": "9ae1b1e33f25042c0bea1aa01c839ccb469577a8724af71ae2b114d0209f23e6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/scroll-long-press.png",
+          "sha256": "56afe47b40c88309912638ec81a15c8d9c19770cb3efbc311134a45467babb0f",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "desktop-keyboard-navigation",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "1440x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:50.860Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/desktop-keyboard-navigation.png",
+          "sha256": "41b9e57a0067eac0d45de584929dbaa3989890f636569966fd1fd0d0ab2b79b3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/1440/desktop-keyboard-navigation.png",
+          "sha256": "362d35c6c91b696736de53b14daa6853825bfbcc511cbdcc85ea25049b285dfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/1440/interactions.json",
+          "sha256": "8389957ef16154552c8af2769c002c8992e9d424013de90a6ffd139403b1bcbe",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-320",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "c433776d765b2f232580b1e70936fcaeee4c08648465711950ae7256199d8dd8",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "320x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:57.392Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/320/focused.png",
+          "sha256": "e31e6c314cf853f5bebc2af4a47a76417550cf3a088f51092f93a4bbbffc7d8c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/320/focused.png",
+          "sha256": "fc75701ea830a3693e271b2911c7abbc5073ec5ad9e120168dc5a40cb1eb31d0",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/320/interactions.json",
+          "sha256": "c433776d765b2f232580b1e70936fcaeee4c08648465711950ae7256199d8dd8",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "chat-keyboard-outside-web",
+      "platform": "web",
+      "state": "mobile-390",
+      "status": "pass",
+      "observations": "Свежий current 17206ae8 проход: actual/reference и 11 взаимодействий на каждой ширине проверены. Внешний pointer/touch снимает focus без потери draft/selection; первый Send/+ /emoji работает, другие поля и поиск сохраняют focus, явный toggle возвращает caret. Настоящие CDPtouchscroll и hold650ms работают, desktop Tab/Enter/Escape сохраняются. На всех ширинах hold выполнен после устойчивого положения цели (6 RAF); 33 действия выполнены успешно. Никакого физического IME или телефонного Escape не заявлено. Raw имеет другой fixture и исторические вложенные меню; здесь принимается g06 outside-focus контракт, а не вся композиция чата.",
+      "capture": {
+        "sourceHash": "70d2e7d65d9872656d8917fe024f99ff1ffcf1549124abf04b665075dc8ce466",
+        "fixtureHash": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+        "runtime": "Bundled Chromium156 headless independent Playwright, trustedCDP touch; finite animations settled",
+        "os": "macOS27.0.1",
+        "viewport": "390x900 CSS,DPR1",
+        "fonts": [
+          "Inter, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif"
+        ],
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-02T12:16:51.648Z"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/focused.png",
+          "sha256": "2ff5e775a7c06bc970dc7d5f7edc36aca335a3897b95c4e847c46c5366f1635f",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-completion-independent/keyboard-reference-settled/390/focused.png",
+          "sha256": "93be0ea0ddf3c11cd2c291fb625496c01ba2fc01dd1e3e3e48f354acc6888f83",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/qa/2026-11-02-web-read-correction-independent/keyboard-live/390/interactions.json",
+          "sha256": "16f1c6b8796f049c4233273d91e5a4c97203a3b1ef4572d2f555fb389eacf6ad",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

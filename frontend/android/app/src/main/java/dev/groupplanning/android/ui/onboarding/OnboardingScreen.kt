@@ -27,8 +27,14 @@ import kotlin.math.abs
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun OnboardingScreen(authenticating: Boolean = false, signIn: () -> Unit = {}) {
-    val pager = rememberPagerState { OnboardingSlide.entries.size }
+internal fun OnboardingScreen(
+    authenticating: Boolean = false,
+    signIn: () -> Unit = {},
+    startWithSignIn: Boolean = false,
+) {
+    val pager = rememberPagerState(
+        initialPage = if (startWithSignIn) OnboardingSlide.entries.lastIndex else 0,
+    ) { OnboardingSlide.entries.size }
     val scope = rememberCoroutineScope()
     val motion = LocalMotionEnabled.current
     var requested by remember { mutableStateOf(false) }

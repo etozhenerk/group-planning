@@ -76,6 +76,10 @@ class MessageTests {
             ),
         )
         assertEquals(pending, sender.state.value.pending)
+        sender.acknowledge(
+            listOf(h.entry(2, pending.key, pending.text).copy(meetingId = UUID.randomUUID())),
+        )
+        assertEquals(pending, sender.state.value.pending)
         sender.acknowledge(listOf(h.entry(2, pending.key, pending.text)))
         assertNull(sender.state.value.pending)
         assertTrue(h.disk.load().isEmpty())

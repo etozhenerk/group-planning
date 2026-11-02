@@ -23,7 +23,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
       <main id="main" className={styles.page}>
         <Link
           className={styles.back}
-          to={view.fromChat ? `/meetings/${id}` : '/meetings?view=list&period=past'}
+          to={view.fromChat ? `/meetings/${id}` : view.returnPath}
         >
           {view.fromChat ? '← К встрече' : '‹ Прошедшие встречи'}
         </Link>

@@ -57,3 +57,36 @@
   color: var(--ds-color-accent);
   background: transparent;
 }
+
+.list li > span {
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-medium);
+}
+
+.empty {
+  margin: 0;
+  padding-block: var(--ds-space-s12);
+  color: var(--ds-color-muted);
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-space-s8);
+  padding-block: var(--ds-space-s12);
+}
+
+.error p {
+  margin: 0;
+}
+
+.error button {
+  padding: var(--ds-component-mobile-chat-inline-action-inset-block)
+    var(--ds-component-mobile-chat-inline-action-inset-inline);
+  border-radius: var(--ds-component-mobile-chat-inline-action-radius);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-semibold);
+}

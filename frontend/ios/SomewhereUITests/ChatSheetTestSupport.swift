@@ -133,6 +133,38 @@ enum ChatSheetTestSupport {
         XCTAssertLessThanOrEqual(close.frame.maxY, keyboard.frame.minY)
     }
 
+    static func waitForEmojiChoice(_ choice: XCUIElement, app: XCUIApplication) {
+        let keyboard = app.keyboards.firstMatch
+        var previousChoice: CGRect?
+        var previousKeyboard: CGRect?
+        var stableSince: TimeInterval?
+        let settled = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in
+                MainActor.assumeIsolated {
+                    guard choice.exists, choice.isHittable, keyboard.exists else { return false }
+                    let choiceFrame = choice.frame
+                    let keyboardFrame = keyboard.frame
+                    guard app.frame.contains(keyboardFrame), keyboardFrame.height > 200,
+                        choiceFrame.maxY <= keyboardFrame.minY
+                    else {
+                        stableSince = nil
+                        return false
+                    }
+                    let now = ProcessInfo.processInfo.systemUptime
+                    if previousChoice != choiceFrame || previousKeyboard != keyboardFrame {
+                        previousChoice = choiceFrame
+                        previousKeyboard = keyboardFrame
+                        stableSince = now
+                        return false
+                    }
+                    return stableSince.map { now - $0 >= 0.25 } ?? false
+                }
+            }, object: nil)
+        XCTAssertEqual(
+            XCTWaiter.wait(for: [settled], timeout: 5), .completed,
+            "Wait for the search keyboard and emoji target to finish moving before one tap")
+    }
+
     static func revealUnobstructedSubmit(_ identifier: String, app: XCUIApplication) {
         let submit = app.buttons[identifier]
         let scroll = app.scrollViews["action-form-scroll"]

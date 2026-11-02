@@ -32,6 +32,11 @@ extension FeedOwner {
                 try Task.checkCancellation()
                 guard current, generation == version else { return }
                 try merge(page.entries)
+                if let revision = legacyRevision, revision != page.meetingRevision {
+                    try await refreshLegacyWindow(version: version)
+                    guard current, generation == version else { return }
+                }
+                legacyRevision = page.meetingRevision
                 if !loaded { hasHistory = page.hasMore }
                 cursor = page.entries.last?.sequence ?? cursor ?? .zero
                 more = loaded && page.hasMore
@@ -49,6 +54,27 @@ extension FeedOwner {
             if infoPresented { await MeetingRepository(session: session).loadParticipants(id) }
             if !current { clear() }
         } catch { failed(error, version: version) }
+    }
+
+    private func refreshLegacyWindow(version: UUID) async throws {
+        guard let first = records.first?.sequence, let last = records.last?.sequence,
+            let sequence = UInt64(first.rawValue)
+        else { return }
+        var after = try ServerCounter(String(sequence > 0 ? sequence - 1 : 0))
+        var refreshed: [FeedEntry] = []
+        repeat {
+            let page = try await session.send(
+                FeedRequests.page(id, after: after), as: FeedPage.self)
+            try Task.checkCancellation()
+            guard current, generation == version else { return }
+            try validateEntries(page.entries)
+            refreshed.append(contentsOf: page.entries.filter { $0.sequence <= last })
+            guard let next = page.entries.last?.sequence else { break }
+            if next >= last || !page.hasMore { break }
+            guard next > after else { throw ClientFailure.invalidResponse }
+            after = next
+        } while refreshed.count < 500
+        try merge(refreshed)
     }
 
     func history() async {

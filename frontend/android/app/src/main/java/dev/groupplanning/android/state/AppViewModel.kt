@@ -102,7 +102,7 @@ internal class AppViewModel(
                     val meeting = savedHome.get<String>("open-meeting")?.let {
                         runCatching { UUID.fromString(it) }.getOrNull()
                     }
-                    if (meeting != null && snapshot.value.session is SessionState.Authenticated) {
+                    if (meeting != null) {
                         showInvitation(InvitationTarget.Meeting(meeting))
                     } else {
                         runtime.invitationContext.load()?.let(::showInvitation)

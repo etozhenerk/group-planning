@@ -82,6 +82,10 @@ func TestAndroidFixture(t *testing.T) {
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
+	for _, person := range []string{"1", "2", "4"} {
+		config.Cases["review-reader-"+person] = iosCredential(t, service, "design-"+person)
+	}
+
 	config.DesignDates = nativeDesignFixtureDates(t, store)
 	for _, name := range []string{"account", "account-large", "empty", "list-error", "draft", "lost-create", "cover-create", "cover-system", "cover-large"} {
 		config.Cases[name] = iosCredential(t, service, name)
@@ -116,6 +120,8 @@ func TestAndroidFixture(t *testing.T) {
 	config.Cases["feed-persistence"] = owner
 	config.Cases["invite-rsvp"] = iosCredential(t, service, "invite-guest-rsvp")
 	config.Cases["invite-rsvp-reentry"] = iosCredential(t, service, "invite-guest-rsvp")
+	config.Cases["account-removal-owner"] = iosCredential(t, service, "account-removal-owner")
+	config.Cases["account-removal-survivor"] = iosCredential(t, service, "account-removal-survivor")
 	config.Cases["invite-error"] = iosCredential(t, service, "invite-guest-error")
 
 	if err := app.InitializeChatReadState(t.Context()); err != nil {
