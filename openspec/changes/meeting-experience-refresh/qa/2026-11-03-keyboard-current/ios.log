@@ -1,0 +1,958 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_BEFORE=1
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_ACTIVE=0
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (10 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+    Target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 434c6e0a9a2d320d93b421111d4e7221
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/434c6e0a9a2d320d93b421111d4e7221.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+SwiftDriver SomewhereUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+SwiftCompile normal arm64 Compiling\ ChatReadersAccessibilityUITests.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift (in target 'SomewhereUITests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile ChatReadersAccessibilityUITests.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SomewhereUITests (in target 'SomewhereUITests' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling ChatReadersAccessibilityUITests.swift (in target 'SomewhereUITests' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SomewhereUITests (in target 'SomewhereUITests' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements SomewhereUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation SomewhereUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereUITests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftsourceinfo (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.abi.json (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests normal (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -filelist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SomewhereUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.uitests --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --dependency-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests_dependency_info.dat --stringsdata-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.SwiftFileList --metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.DependencyMetadataFileList --static-metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/Objects-normal/arm64/SomewhereUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-03 17:35:32.607 appintentsmetadataprocessor[36702:16150639] Starting appintentsmetadataprocessor export
+2026-11-03 17:35:32.609 appintentsmetadataprocessor[36702:16150639] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SomewhereUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app: replacing existing signature
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261103T163533-35826.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T163533-35826.xcresult
+
+2026-11-03 17:35:35.885 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:35:37.225467+0100 SomewhereUITests-Runner[36744:16151101] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-03 17:35:40.966.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-03 17:35:40.967.
+Test Suite 'ChatKeyboardDismissalUITests' started at 2026-11-03 17:35:40.967.
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus]' started.
+    t =     0.00s Start Test at 2026-11-03 17:35:40.969
+    t =     0.03s Set Up
+    t =     0.03s     Setting device orientation to Portrait
+    t =     0.04s         Wait for com.apple.springboard to idle
+    t =     0.06s Open dev.groupplanning.ios.uitesthost
+    t =     0.06s     Launch dev.groupplanning.ios.uitesthost
+2026-11-03 17:35:41.091 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 17:35:41.091 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 17:35:41.136 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.75s         Setting up automation session
+objc[36744]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1083d4398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10898c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.99s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.47s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.54s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.55s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.65s Checking existence of `"home-tab-calendar" Button`
+    t =     5.68s Find the "home-tab-calendar" Button
+    t =     5.71s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.73s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.80s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.85s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.89s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.89s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.92s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.95s     Synthesize event
+    t =     6.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.69s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.77s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.77s         Checking existence of `"meeting-add" Button`
+    t =     7.80s Tap "message-input" TextView
+    t =     7.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.81s     Find the "message-input" TextView
+    t =     7.83s     Check for interrupting elements affecting "message-input" TextView
+    t =     7.86s     Synthesize event
+    t =     8.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.47s Type 'Одно нажатие 7E7BCC' into "message-input" TextView
+    t =     8.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.82s     Find the "message-input" TextView
+    t =     8.88s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.91s     Synthesize event
+    t =     9.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.47s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    10.55s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    10.55s         Checking existence of `Keyboard (First Match)`
+    t =    10.57s Get number of matches for: Descendants matching type Key
+    t =    10.60s Find the Keyboard (First Match)
+    t =    10.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.64s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    10.65s Find the "message-input" TextView
+    t =    10.70s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    10.71s Tap "message-send" Button
+    t =    10.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.72s     Find the "message-send" Button
+    t =    10.75s     Check for interrupting elements affecting "message-send" Button
+    t =    10.79s     Synthesize event
+    t =    11.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.37s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    12.44s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    12.44s         Checking existence of `Keyboard (First Match)`
+    t =    12.49s Waiting 10.0s for StaticText (First Match) to exist
+    t =    13.56s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    13.57s         Checking existence of `StaticText (First Match)`
+    t =    13.60s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "chat-message-" AND label CONTAINS "Одно нажатие 7E7BCC"'
+    t =    13.63s Find the "message-input" TextView
+    t =    14.19s Added attachment named 'chat-keyboard-send-first-tap'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-send-first-tap.png
+    t =    14.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-send-first-tap.json
+    t =    14.37s Tap "message-input" TextView
+    t =    14.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.37s     Find the "message-input" TextView
+    t =    14.40s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.43s     Synthesize event
+    t =    14.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.06s Type 'Вернусь
+к сообщению' into "message-input" TextView
+    t =    15.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.07s     Find the "message-input" TextView
+    t =    15.11s     Check for interrupting elements affecting "message-input" TextView
+    t =    15.15s     Synthesize event
+    t =    15.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.69s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    16.76s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    16.76s         Checking existence of `Keyboard (First Match)`
+    t =    16.78s Get number of matches for: Descendants matching type Key
+    t =    16.81s Find the Keyboard (First Match)
+    t =    16.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.85s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.87s Find the "message-input" TextView
+    t =    16.91s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.93s Tap "meeting-add" Button
+    t =    16.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.93s     Find the "meeting-add" Button
+    t =    16.97s     Check for interrupting elements affecting "meeting-add" Button
+    t =    17.01s     Synthesize event
+    t =    17.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.58s Waiting 5.0s for "new-preparation-task" Button to exist
+    t =    18.66s     Checking `Expect predicate `existsNoRetry == 1` for object "new-preparation-task" Button`
+    t =    18.66s         Checking existence of `"new-preparation-task" Button`
+    t =    18.69s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    19.77s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    19.77s         Checking existence of `Keyboard (First Match)`
+    t =    19.85s Tap "new-preparation-task" Button
+    t =    19.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.85s     Find the "new-preparation-task" Button
+    t =    19.88s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =    19.91s     Synthesize event
+    t =    20.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.23s Waiting 5.0s for "preparation-title" TextField to exist
+    t =    21.30s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-title" TextField`
+    t =    21.30s         Checking existence of `"preparation-title" TextField`
+    t =    21.35s Tap "preparation-title" TextField
+    t =    21.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.36s     Find the "preparation-title" TextField
+    t =    21.39s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    21.42s     Synthesize event
+<unknown>:0: warning: -[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus] : Invalid frame dimension (negative or non-finite).
+    t =    21.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.76s Type 'Забрать пиццу' into "preparation-title" TextField
+    t =    21.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.14s     Find the "preparation-title" TextField
+    t =    22.20s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    22.24s     Synthesize event
+    t =    22.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.69s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    23.75s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    23.75s         Checking existence of `Keyboard (First Match)`
+    t =    23.77s Get number of matches for: Descendants matching type Key
+    t =    23.80s Find the Keyboard (First Match)
+    t =    23.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.86s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.88s Find the "preparation-title" TextField
+    t =    23.93s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.95s Tap "preparation-title" TextField
+    t =    23.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.96s     Find the "preparation-title" TextField
+    t =    24.00s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    24.05s     Synthesize event
+    t =    24.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.99s Type '!' into "preparation-title" TextField
+    t =    24.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.00s     Find the "preparation-title" TextField
+    t =    25.06s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    25.11s     Synthesize event
+    t =    25.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.61s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    26.68s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    26.68s         Checking existence of `Keyboard (First Match)`
+    t =    26.70s Get number of matches for: Descendants matching type Key
+    t =    26.74s Find the Keyboard (First Match)
+    t =    26.76s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.80s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    26.82s Find the "preparation-title" TextField
+    t =    26.87s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    26.89s Find the "preparation-title" TextField
+    t =    27.47s Added attachment named 'chat-keyboard-sheet-field'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-sheet-field.png
+    t =    27.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.65s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-sheet-field.json
+    t =    27.71s Find the "action-keyboard-done" Button
+    t =    27.77s Tap "action-keyboard-done" Button
+    t =    27.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.77s     Find the "action-keyboard-done" Button
+    t =    27.82s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    27.86s     Synthesize event
+    t =    28.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.52s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    29.59s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    29.60s         Checking existence of `"action-form-header" StaticText`
+    t =    29.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.65s Find the "action-form-header" StaticText
+    t =    29.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.72s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 552.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    29.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.72s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.74s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    29.77s     Synthesize event
+    t =    29.77s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.79s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.81s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.83s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.86s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    30.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.29s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    32.29s     Checking existence of `"action-form-header" StaticText`
+    t =    32.32s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    33.39s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    33.39s         Checking existence of `Keyboard (First Match)`
+    t =    33.46s Find the "message-input" TextView
+    t =    33.49s Tap "message-input" TextView
+    t =    33.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.50s     Find the "message-input" TextView
+    t =    33.52s     Check for interrupting elements affecting "message-input" TextView
+    t =    33.55s     Synthesize event
+    t =    33.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.24s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    35.32s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    35.32s         Checking existence of `Keyboard (First Match)`
+    t =    35.33s Get number of matches for: Descendants matching type Key
+    t =    35.37s Find the Keyboard (First Match)
+    t =    35.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.42s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    35.43s Find the "message-input" TextView
+    t =    35.48s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    35.50s Tap "meeting-heading" Button
+    t =    35.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    35.50s     Find the "meeting-heading" Button
+    t =    35.55s     Check for interrupting elements affecting "meeting-heading" Button
+    t =    35.59s     Synthesize event
+    t =    35.61s         Scroll element to visible
+    t =    35.62s         Find the "meeting-heading" Button
+    t =    35.68s         Computed hit point {-1, -1} after scrolling to visible
+    t =    35.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    36.50s Waiting 5.0s for "meeting-info-header" StaticText to exist
+    t =    37.56s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-header" StaticText`
+    t =    37.57s         Checking existence of `"meeting-info-header" StaticText`
+    t =    37.60s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    38.65s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    38.65s         Checking existence of `Keyboard (First Match)`
+    t =    38.71s Find the "action-keyboard-done" Button
+    t =    39.74s     Find the "action-keyboard-done" Button (retry 1)
+    t =    40.81s     Find the "action-keyboard-done" Button (retry 2)
+    t =    40.84s Waiting 5.0s for "meeting-info-header" StaticText to exist
+    t =    41.89s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-header" StaticText`
+    t =    41.89s         Checking existence of `"meeting-info-header" StaticText`
+    t =    41.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.94s Find the "meeting-info-header" StaticText
+    t =    41.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.01s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 503.7) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    42.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    42.01s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.03s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    42.06s     Synthesize event
+    t =    42.07s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.09s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.11s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.13s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.15s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    43.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    44.72s Checking `Expect predicate `exists == 0` for object "meeting-info-header" StaticText`
+    t =    44.72s     Checking existence of `"meeting-info-header" StaticText`
+    t =    44.76s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    45.81s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    45.81s         Checking existence of `Keyboard (First Match)`
+    t =    45.87s Find the "message-input" TextView
+    t =    45.90s Tear Down
+    t =    45.90s     Setting device orientation to Portrait
+    t =    45.90s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testFirstTapSendsAndOpensActionsWithoutStealingSheetFocus]' passed (46.214 seconds).
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testMessageTapScrollAndLongPressKeepTheirBehavior]' started.
+    t =     0.00s Start Test at 2026-11-03 17:36:27.184
+    t =     0.03s Set Up
+    t =     0.03s     Setting device orientation to Portrait
+    t =     0.04s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:36760
+2026-11-03 17:36:27.238 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:27.238 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:27.239 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:28.294 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 17:36:28.294 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 17:36:28.307 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.33s         Setting up automation session
+    t =     3.70s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.08s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.12s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.12s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.21s Checking existence of `"home-tab-calendar" Button`
+    t =     6.24s Find the "home-tab-calendar" Button
+    t =     6.26s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.29s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.37s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.42s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.46s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.46s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.46s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.49s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.52s     Synthesize event
+    t =     6.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.29s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.33s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.33s         Checking existence of `"meeting-add" Button`
+    t =     8.38s Tap "message-input" TextView
+    t =     8.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.38s     Find the "message-input" TextView
+    t =     8.41s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.44s     Synthesize event
+    t =     8.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.98s Type 'Черновик
+рядом с и...' into "message-input" TextView
+    t =     8.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.33s     Find the "message-input" TextView
+    t =     9.39s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.43s     Synthesize event
+    t =    10.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.07s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    11.12s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    11.12s         Checking existence of `Keyboard (First Match)`
+    t =    11.14s Get number of matches for: Descendants matching type Key
+    t =    11.17s Find the Keyboard (First Match)
+    t =    11.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.22s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    11.24s Find the "message-input" TextView
+    t =    11.29s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    11.30s Waiting 5.0s for "chat-message-ded00000-0000-4000-8000-000000000013" Any to exist
+    t =    12.32s     Checking `Expect predicate `existsNoRetry == 1` for object "chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =    12.32s         Checking existence of `"chat-message-ded00000-0000-4000-8000-000000000013" Any`
+    t =    12.49s Tap "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =    12.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.50s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" Any
+    t =    12.68s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    12.73s     Synthesize event
+    t =    13.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.31s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    14.34s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    14.34s         Checking existence of `Keyboard (First Match)`
+    t =    14.40s Find the "message-input" TextView
+    t =    14.42s Checking existence of `"reaction-expand" Button`
+    t =    14.45s Tap "message-input" TextView
+    t =    14.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.45s     Find the "message-input" TextView
+    t =    14.48s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.51s     Synthesize event
+    t =    14.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.94s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    16.01s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    16.01s         Checking existence of `Keyboard (First Match)`
+    t =    16.03s Get number of matches for: Descendants matching type Key
+    t =    16.06s Find the Keyboard (First Match)
+    t =    16.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.11s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.12s Find the "message-input" TextView
+    t =    16.17s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.18s Press "chat-message-ded00000-0000-4000-8000-000000000013" StaticText for 0.7 seconds
+    t =    16.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.18s     Find the "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    16.35s     Check for interrupting elements affecting "chat-message-ded00000-0000-4000-8000-000000000013" StaticText
+    t =    16.40s     Synthesize event
+    t =    17.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.36s Waiting 5.0s for "reaction-expand" Button to exist
+    t =    18.40s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-expand" Button`
+    t =    18.40s         Checking existence of `"reaction-expand" Button`
+    t =    18.43s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    19.48s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    19.48s         Checking existence of `Keyboard (First Match)`
+    t =    19.54s Find the "message-input" TextView
+    t =    20.07s Added attachment named 'chat-keyboard-long-press'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-long-press.png
+    t =    20.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-long-press.json
+    t =    20.24s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    20.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.24s     Find the "feed-timeline" ScrollView
+    t =    20.27s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    20.30s     Synthesize event
+    t =    20.30s         Find the "feed-timeline" ScrollView
+    t =    20.33s         Find the "feed-timeline" ScrollView
+    t =    20.37s         Find the "feed-timeline" ScrollView
+    t =    20.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.70s Waiting 5.0s for "reaction-expand" Button to not exist
+    t =    21.77s     Checking `Expect predicate `existsNoRetry == 0` for object "reaction-expand" Button`
+    t =    21.77s         Checking existence of `"reaction-expand" Button`
+    t =    21.81s Tap "message-input" TextView
+    t =    21.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.81s     Find the "message-input" TextView
+    t =    21.84s     Check for interrupting elements affecting "message-input" TextView
+    t =    21.87s     Synthesize event
+    t =    22.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.49s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    23.53s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    23.53s         Checking existence of `Keyboard (First Match)`
+    t =    23.55s Get number of matches for: Descendants matching type Key
+    t =    23.58s Find the Keyboard (First Match)
+    t =    23.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.63s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.64s Find the "message-input" TextView
+    t =    23.69s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.71s Swipe down "feed-timeline" ScrollView
+    t =    23.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.71s     Find the "feed-timeline" ScrollView
+    t =    23.75s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    23.79s     Synthesize event
+    t =    24.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.75s Find the "message-input" TextView
+    t =    24.79s Checking existence of `"reaction-expand" Button`
+    t =    24.83s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    24.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.83s     Find the "feed-timeline" ScrollView
+    t =    24.88s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    24.92s     Synthesize event
+    t =    24.92s         Find the "feed-timeline" ScrollView
+    t =    24.97s         Find the "feed-timeline" ScrollView
+    t =    25.01s         Find the "feed-timeline" ScrollView
+    t =    25.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.63s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    26.67s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    26.67s         Checking existence of `Keyboard (First Match)`
+    t =    26.73s Tap "message-input" TextView
+    t =    26.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.73s     Find the "message-input" TextView
+    t =    26.76s     Check for interrupting elements affecting "message-input" TextView
+    t =    26.79s     Synthesize event
+    t =    27.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.42s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    28.48s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    28.48s         Checking existence of `Keyboard (First Match)`
+    t =    28.50s Get number of matches for: Descendants matching type Key
+    t =    28.53s Find the Keyboard (First Match)
+    t =    28.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.57s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    28.59s Find the "message-input" TextView
+    t =    28.63s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    29.18s Added attachment named 'chat-keyboard-scroll-return'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-scroll-return.png
+    t =    29.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-scroll-return.json
+    t =    29.41s Tear Down
+    t =    29.41s     Setting device orientation to Portrait
+    t =    29.41s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testMessageTapScrollAndLongPressKeepTheirBehavior]' passed (29.684 seconds).
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testOutsideTapPreservesSelectionAndEmojiSearchFocus]' started.
+    t =     0.00s Start Test at 2026-11-03 17:36:56.868
+    t =     0.02s Set Up
+    t =     0.03s     Setting device orientation to Portrait
+    t =     0.03s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:38045
+2026-11-03 17:36:56.918 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:56.919 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:56.920 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:36:57.986 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 17:36:57.986 xcodebuild[36737:16150957] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 17:36:57.994 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.32s         Setting up automation session
+    t =     3.85s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.28s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.33s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.33s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.42s Checking existence of `"home-tab-calendar" Button`
+    t =     6.44s Find the "home-tab-calendar" Button
+    t =     6.47s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.50s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.58s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.63s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.67s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.67s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.70s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.73s     Synthesize event
+    t =     7.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.48s Waiting 10.0s for "meeting-add" Button to exist
+    t =     8.54s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     8.54s         Checking existence of `"meeting-add" Button`
+    t =     8.58s Tap "message-input" TextView
+    t =     8.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.58s     Find the "message-input" TextView
+    t =     8.60s     Check for interrupting elements affecting "message-input" TextView
+    t =     8.63s     Synthesize event
+    t =     8.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.17s Type 'first line
+before ...' into "message-input" TextView
+    t =     9.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.55s     Find the "message-input" TextView
+    t =     9.62s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.66s     Synthesize event
+    t =    10.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.32s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    10.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.33s     Find the "message-input" TextView
+    t =    10.37s     Check for interrupting elements affecting "message-input" TextView
+    t =    10.41s     Synthesize event
+    t =    10.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.26s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    11.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.27s     Find the "message-input" TextView
+    t =    11.31s     Check for interrupting elements affecting "message-input" TextView
+    t =    11.35s     Synthesize event
+    t =    11.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.72s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    11.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.72s     Find the "message-input" TextView
+    t =    11.76s     Check for interrupting elements affecting "message-input" TextView
+    t =    11.80s     Synthesize event
+    t =    12.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.17s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    12.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.17s     Find the "message-input" TextView
+    t =    12.21s     Check for interrupting elements affecting "message-input" TextView
+    t =    12.25s     Synthesize event
+    t =    12.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.62s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    12.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.62s     Find the "message-input" TextView
+    t =    12.66s     Check for interrupting elements affecting "message-input" TextView
+    t =    12.70s     Synthesize event
+    t =    13.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.07s Type '←' key (XCUIKeyboardKeyLeftArrow) with no modifiers
+    t =    13.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.08s     Find the "message-input" TextView
+    t =    13.12s     Check for interrupting elements affecting "message-input" TextView
+    t =    13.15s     Synthesize event
+    t =    13.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.52s Type '←' key (XCUIKeyboardKeyLeftArrow) with modifiers '⇧' (0x02)
+    t =    13.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.52s     Find the "message-input" TextView
+    t =    13.57s     Check for interrupting elements affecting "message-input" TextView
+    t =    13.60s     Synthesize event
+    t =    13.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.98s Type '←' key (XCUIKeyboardKeyLeftArrow) with modifiers '⇧' (0x02)
+    t =    13.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.99s     Find the "message-input" TextView
+    t =    14.03s     Check for interrupting elements affecting "message-input" TextView
+    t =    14.08s     Synthesize event
+    t =    14.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.46s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    15.51s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    15.51s         Checking existence of `Keyboard (First Match)`
+    t =    15.53s Get number of matches for: Descendants matching type Key
+    t =    15.56s Find the Keyboard (First Match)
+    t =    15.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.61s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    15.62s Find the "message-input" TextView
+    t =    15.67s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    16.22s Added attachment named 'chat-keyboard-selected-draft'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-selected-draft.png
+    t =    16.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-selected-draft.json
+    t =    16.45s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    16.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.45s     Find the "feed-timeline" ScrollView
+    t =    16.49s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    16.63s     Synthesize event
+    t =    16.64s         Find the "feed-timeline" ScrollView
+    t =    16.68s         Find the "feed-timeline" ScrollView
+    t =    16.73s         Find the "feed-timeline" ScrollView
+    t =    17.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.36s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    18.41s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    18.41s         Checking existence of `Keyboard (First Match)`
+    t =    18.46s Find the "message-input" TextView
+    t =    19.01s Added attachment named 'chat-keyboard-outside-dismissed'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-outside-dismissed.png
+    t =    19.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-outside-dismissed.json
+    t =    19.17s Tap "composer-emoji-toggle" Button
+    t =    19.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.17s     Find the "composer-emoji-toggle" Button
+    t =    19.20s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    19.23s     Synthesize event
+    t =    19.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.57s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    20.60s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    20.60s         Checking existence of `"emoji-search" TextField`
+    t =    20.66s Tap "emoji-search" TextField
+    t =    20.66s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.66s     Find the "emoji-search" TextField
+    t =    20.70s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    20.74s     Synthesize event
+    t =    21.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.07s Type 'пицца' into "emoji-search" TextField
+    t =    21.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.45s     Find the "emoji-search" TextField
+    t =    21.52s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    21.58s     Synthesize event
+    t =    21.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.89s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    22.94s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    22.94s         Checking existence of `Keyboard (First Match)`
+    t =    22.95s Get number of matches for: Descendants matching type Key
+    t =    22.98s Find the Keyboard (First Match)
+    t =    23.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.03s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.05s Find the "emoji-search" TextField
+    t =    23.11s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.12s Tap "emoji-search" TextField
+    t =    23.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.13s     Find the "emoji-search" TextField
+    t =    23.17s     Check for interrupting elements affecting "emoji-search" TextField
+    t =    23.22s     Synthesize event
+    t =    23.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.53s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    24.57s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    24.57s         Checking existence of `Keyboard (First Match)`
+    t =    24.59s Get number of matches for: Descendants matching type Key
+    t =    24.61s Find the Keyboard (First Match)
+    t =    24.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.67s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    24.68s Find the "emoji-search" TextField
+    t =    24.73s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    24.75s Waiting 5.0s for "emoji-🍕" Button to exist
+    t =    25.77s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-🍕" Button`
+    t =    25.77s         Checking existence of `"emoji-🍕" Button`
+    t =    25.82s Tap "emoji-🍕" Button
+    t =    25.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.82s     Find the "emoji-🍕" Button
+    t =    25.87s     Check for interrupting elements affecting "emoji-🍕" Button
+    t =    25.92s     Synthesize event
+    t =    26.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.23s Find the "message-input" TextView
+    t =    26.81s Added attachment named 'chat-keyboard-selection-preserved'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-selection-preserved.png
+    t =    26.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2CD7E12B-77FE-4D8C-80DE-F6F426BD0AAC/tmp/somewhere-design-verification/chat-keyboard-selection-preserved.json
+    t =    27.07s Tap "composer-emoji-toggle" Button
+    t =    27.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.07s     Find the "composer-emoji-toggle" Button
+    t =    27.12s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    27.17s     Synthesize event
+    t =    27.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.58s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    28.64s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    28.64s         Checking existence of `Keyboard (First Match)`
+    t =    28.66s Get number of matches for: Descendants matching type Key
+    t =    28.69s Find the Keyboard (First Match)
+    t =    28.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.73s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    28.75s Find the "message-input" TextView
+    t =    28.80s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    28.81s Type '!' into "message-input" TextView
+    t =    28.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.82s     Find the "message-input" TextView
+    t =    28.86s     Check for interrupting elements affecting "message-input" TextView
+    t =    28.90s     Synthesize event
+    t =    29.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.14s Find the "message-input" TextView
+    t =    29.18s Tap "feed-timeline" ScrollView[0.99, 0.25]
+    t =    29.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.19s     Find the "feed-timeline" ScrollView
+    t =    29.23s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    29.27s     Synthesize event
+    t =    29.27s         Find the "feed-timeline" ScrollView
+    t =    29.32s         Find the "feed-timeline" ScrollView
+    t =    29.37s         Find the "feed-timeline" ScrollView
+    t =    29.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.97s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    31.01s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    31.02s         Checking existence of `Keyboard (First Match)`
+    t =    31.08s Tap "message-input" TextView[0.03, 0.20]
+    t =    31.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.08s     Find the "message-input" TextView
+    t =    31.11s     Check for interrupting elements affecting "message-input" TextView
+    t =    31.14s     Synthesize event
+    t =    31.14s         Find the "message-input" TextView
+    t =    31.17s         Find the "message-input" TextView
+    t =    31.20s         Find the "message-input" TextView
+    t =    31.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.91s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    32.98s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    32.98s         Checking existence of `Keyboard (First Match)`
+    t =    33.00s Get number of matches for: Descendants matching type Key
+    t =    33.03s Find the Keyboard (First Match)
+    t =    33.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    33.08s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    33.09s Find the "message-input" TextView
+    t =    33.14s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    33.16s Type 'A' into "message-input" TextView
+    t =    33.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.16s     Find the "message-input" TextView
+    t =    33.20s     Check for interrupting elements affecting "message-input" TextView
+    t =    33.24s     Synthesize event
+    t =    33.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.48s Find the "message-input" TextView
+    t =    33.52s Tear Down
+    t =    33.52s     Setting device orientation to Portrait
+    t =    33.53s         Wait for dev.groupplanning.ios.uitesthost to idle
+Test Case '-[SomewhereUITests.ChatKeyboardDismissalUITests testOutsideTapPreservesSelectionAndEmojiSearchFocus]' passed (33.833 seconds).
+Test Suite 'ChatKeyboardDismissalUITests' passed at 2026-11-03 17:37:30.701.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 109.731 (109.735) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-03 17:37:30.702.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 109.731 (109.735) seconds
+Test Suite 'Selected tests' passed at 2026-11-03 17:37:30.702.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 109.731 (109.736) seconds
+2026-11-03 17:37:30.734 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:30.734 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:30.735 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:30.748 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:30.748 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:30.749 xcodebuild[36737:16150957] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 17:37:31.008 xcodebuild[36737:16150957] [MT] IDETestOperationsObserverDebug: 115.161 elapsed -- Testing started completed.
+2026-11-03 17:37:31.009 xcodebuild[36737:16150957] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-03 17:37:31.009 xcodebuild[36737:16150957] [MT] IDETestOperationsObserverDebug: 115.161 sec, +115.161 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T163533-35826.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_RESTORED=1

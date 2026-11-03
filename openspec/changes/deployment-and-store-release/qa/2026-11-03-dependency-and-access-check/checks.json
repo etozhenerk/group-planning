@@ -158,6 +158,19 @@
           "type": "serviceAccount"
         }
       }
-    ]
+    ],
+    "production_postgres": {
+      "cluster": "16/main",
+      "port": 5432,
+      "listen_addresses": "",
+      "external_tcp_result": "timeout"
+    },
+    "application_service": {
+      "name": "somewhere.service",
+      "user": "somewhere",
+      "group": "somewhere",
+      "active": true,
+      "environment_file": "/etc/somewhere/application.env"
+    }
   }
 }

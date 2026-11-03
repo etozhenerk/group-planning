@@ -32,7 +32,14 @@
 Runtime имеет folder-level monium.metrics.writer, ресурсный Lockbox payloadViewer;
 прав administrator/editor на folder нет. OAuth-binding перепроверен после записи.
 Входящие TCP80/443 публичны; SSH22 ограничен 95.24.33.238/32.
-Go8080 и PostgreSQL16241 слушают loopback, оба внешних подключения — timeout.
+Go8080 слушает loopback, внешний TCP — timeout. Дополнительная сверка
+`pg_lsclusters`/SHOW показала, что рабочий PostgreSQL16/main использует port5432
+с пустым listen_addresses, только Unix socket; внешний TCP5432 также timeout.
+Наблюдавшийся loopback PostgreSQL-listener16241 не является рабочим16/main.
+Первоначальная интерпретация этого listener как production-порта уточнена;
+ограничения SG и исходные результаты TCP-проб сохранены.
+somewhere.service active, User/Group=somewhere, EnvironmentFiles указывает
+на проверенный `/etc/somewhere/application.env`.
 
 Посторонний существующий probe-invoker `ajegu74pcdijevjl6g27` успешно получил
 собственный IAM-токен, но PayloadService/Get ответил PermissionDenied

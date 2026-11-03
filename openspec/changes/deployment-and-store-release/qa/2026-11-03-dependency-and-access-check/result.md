@@ -28,8 +28,10 @@
 - Действующая ВМ RUNNING, runtime service account имеет на folder только
   monium.metrics.writer. Для application-секрета — ресурсный lockbox.payloadViewer.
 - Входящие правила: TCP80/443 публичные, SSH22 только 95.24.33.238/32.
-  Go слушает loopback8080, PostgreSQL — loopback16241 (не5432).
-  Внешнее TCP-подключение к обоим реальным портам заканчивается timeout.
+  Go слушает loopback8080, также наблюдался PostgreSQL-listener loopback16241.
+  TCP-пробы обоих портов — timeout. Позднее `pg_lsclusters`/SHOW уточнили:
+  рабочий16/main использует5432 только через Unix socket;16241 не его порт.
+  Итоговая отдельная TCP5432-проба и фактическая служба — в access-complete.md.
 - В журнале первого CLI-запроса подтверждены успешный IAM
   CreateForServiceAccount для probe-invoker, затем PayloadService/Get и
   PermissionDenied. Это отказ Lockbox, а не невозможность создать IAM-токен.
