@@ -1,0 +1,147 @@
+{
+  "checked_at_utc": "2026-11-03T16:30:21.968421+00:00",
+  "runtime_secret_checks": [
+    {
+      "kind": "application",
+      "http_status": 200,
+      "entry_count": 0
+    },
+    {
+      "kind": "oauth",
+      "http_status": 200,
+      "entry_count": 0
+    },
+    {
+      "kind": "backup",
+      "http_status": 200,
+      "entry_count": 0
+    }
+  ],
+  "negative_check": {
+    "service_account": "ajegu74pcdijevjl6g27",
+    "iam_creation": "success",
+    "method": "/yandex.cloud.lockbox.v1.PayloadService/Get",
+    "result": "PermissionDenied",
+    "request_id": "dbabef86-3f8a-49d5-ab93-a65616663a90"
+  },
+  "folder-bindings": [
+    {
+      "role_id": "monium.metrics.reader",
+      "subject": {
+        "id": "ajeque8266taff9uhdqg",
+        "type": "serviceAccount"
+      }
+    },
+    {
+      "role_id": "monium.metrics.writer",
+      "subject": {
+        "id": "ajekecj792n92mm1qds7",
+        "type": "serviceAccount"
+      }
+    },
+    {
+      "role_id": "monium.metrics.writer",
+      "subject": {
+        "id": "aje43vlmhsbqbtusa3m9",
+        "type": "serviceAccount"
+      }
+    }
+  ],
+  "app-secret-bindings": [
+    {
+      "role_id": "lockbox.payloadViewer",
+      "subject": {
+        "id": "aje43vlmhsbqbtusa3m9",
+        "type": "serviceAccount"
+      }
+    }
+  ],
+  "security-group": {
+    "id": "enpik8v7jp3ns41i5d9p",
+    "folder_id": "b1g8siv8ve2si1qp04nm",
+    "created_at": "2026-10-24T20:16:13Z",
+    "name": "somewhere-mvp",
+    "description": "HTTP/HTTPS публично; SSH только администратору; PostgreSQL и Go закрыты.",
+    "labels": {
+      "environment": "mvp",
+      "managed_by": "terraform",
+      "project": "somewhere"
+    },
+    "network_id": "enpeeej3ge2i9lqn8cer",
+    "status": "ACTIVE",
+    "rules": [
+      {
+        "id": "enpt2qor324tv8pcvekm",
+        "description": "Исходящие подключения к DNS, обновлениям и облачным API",
+        "direction": "EGRESS",
+        "protocol_name": "ANY",
+        "protocol_number": "-1",
+        "cidr_blocks": {
+          "v4_cidr_blocks": [
+            "0.0.0.0/0"
+          ]
+        }
+      },
+      {
+        "id": "enp4if3j8bif7oi8j7at",
+        "description": "HTTP redirect и ACME",
+        "direction": "INGRESS",
+        "ports": {
+          "from_port": "80",
+          "to_port": "80"
+        },
+        "protocol_name": "TCP",
+        "protocol_number": "6",
+        "cidr_blocks": {
+          "v4_cidr_blocks": [
+            "0.0.0.0/0"
+          ]
+        }
+      },
+      {
+        "id": "enpo89qslud875i2jnpm",
+        "description": "HTTPS приложения",
+        "direction": "INGRESS",
+        "ports": {
+          "from_port": "443",
+          "to_port": "443"
+        },
+        "protocol_name": "TCP",
+        "protocol_number": "6",
+        "cidr_blocks": {
+          "v4_cidr_blocks": [
+            "0.0.0.0/0"
+          ]
+        }
+      },
+      {
+        "id": "enp840ddv81m8dsd96ns",
+        "description": "SSH администратора",
+        "direction": "INGRESS",
+        "ports": {
+          "from_port": "22",
+          "to_port": "22"
+        },
+        "protocol_name": "TCP",
+        "protocol_number": "6",
+        "cidr_blocks": {
+          "v4_cidr_blocks": [
+            "95.24.33.238/32"
+          ]
+        }
+      }
+    ]
+  },
+  "external-ports": [
+    {
+      "address": "158.160.246.254",
+      "port": 8080,
+      "result": "timeout"
+    },
+    {
+      "address": "158.160.246.254",
+      "port": 16241,
+      "result": "timeout"
+    }
+  ]
+}
