@@ -47,7 +47,7 @@ internal object RuntimeFactory {
                     "place-owner", "place-close", "place-rejected", "place-cancelled",
                     "poll-owner", "poll-tie", "poll-time", "poll-hidden",
                     "saved-invitations", "saved-error", "saved-empty",
-                    "profile-fields",
+                    "profile-fields", "vibe-revocation-owner",
                 ),
         )
         val config = apiJson.decodeFromString<Config>(

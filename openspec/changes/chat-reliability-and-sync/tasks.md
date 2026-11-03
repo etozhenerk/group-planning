@@ -63,8 +63,8 @@ validation-plan.md/testing.md. Это уточнение точки отсчёт
 - [x] 5.1 Расширить FeedOwner независимыми cursors/ranges/read state и устойчивой очередью; проверить owner tests, process restart/потерянный ACK, generation, несколько pending и protected-storage failure. Адресный реальный coldstart/aftercommit плюс текущие owner/storage-проверки: [отчёт](qa/2026-11-02-sequential-ios-outbox/result.md).
 - [x] 5.2 Подключить SDK adapter и scene lifecycle с recovery/fallback; проверить snapshot race, фоновый режим, session expiry, logout и закрытие доступа через fake transport и simulator. Сверены готовые адресные owner/transport/simulator-проверки: [отчёт](qa/2026-11-02-sdd-closeout/ios-5.2.md); полная7.7/performance7.9 остаются отдельными.
 - [x] 5.3 Реализовать bounded store, загрузку вокруг unread и якорь нативной ленты; проверить prepend/карточки/клавиатуру/поворот/ACK и сохранение места по UX v1.
-- [ ] 5.4 Добавить read visibility, счётчики и readers sheet; проверить два устройства, Dynamic Type/VoiceOver, нулевой список, ошибку и возврат фокуса без прокрутки.
-- [ ] 5.5 Сопоставить интерфейс с UX v1, обновить документацию владельца/хранилища и выполнить swift-format, unit/UI проверки и чистую simulator-сборку по frontend/ios/AGENTS.md; записать отдельно статус физического iPhone.
+- [ ] 5.4 Добавить read visibility, счётчики и readers sheet; проверить два устройства, Dynamic Type/VoiceOver, нулевой список, ошибку и возврат фокуса без прокрутки. [Пройденная часть и недоступный жест VoiceOver](qa/2026-11-03-ios-readers/result.md).
+- [x] 5.5 Сопоставить интерфейс с UX v1, обновить документацию владельца/хранилища и выполнить swift-format, unit/UI проверки и чистую simulator-сборку по frontend/ios/AGENTS.md; записать отдельно статус физического iPhone. [Проверки, документация и отдельный остаток 5.4](qa/2026-11-03-ios-readers/result.md).
 
 ## 6. Android
 
@@ -80,7 +80,7 @@ validation-plan.md/testing.md. Это уточнение точки отсчёт
 - [ ] 7.2 Проверить серверные latency/SQL бюджеты на записанном тестовом окружении; сравнить baseline, измерить горячую встречу и lock wait. Полный commit→visible/frame проверяется вместе с 7.9, серверные замеры его не заменяют.
 - [x] 7.3 Проверить серверную security и совместимость прежнего HTTP, feature flags и rollback epoch; приложить результаты. Клиентские security/совместимость входят в полные проходы 7.6–7.8.
 - [x] 7.4 Подготовить независимые локальные артефакты backend/web/iOS/Android и инструкции включения/отката; проверить воспроизводимость и указать готовность каждой платформы отдельно, без production и store-операций.
-- [ ] 7.5 Сверить реализацию с четырьмя specs и UX v1, согласовать дополнения event-feed с соседними изменениями перед sync; выполнить strict OpenSpec validation, agent:check и git diff --check, сохранить итоговый verification report.
+- [x] 7.5 Сверить реализацию с четырьмя specs и UX v1, согласовать дополнения event-feed с соседними изменениями перед sync; выполнить strict OpenSpec validation, agent:check и git diff --check, сохранить итоговый verification report. [Сверка и оставшиеся ограничения](qa/2026-11-03-spec-verification/report.md).
 - [ ] 7.6 Выполнить весь применимый web-набор из testing.md: unit/integration и независимые живые Chromium/WebKit-пути; отдельно зафиксировать физический Safari, raw/evidence и qa:ready, не переносить pass от UI 2.1.0.
 - [ ] 7.7 Выполнить весь применимый iOS-набор из testing.md: owner/storage/transport и независимый живой проход; зафиксировать simulator/физический iPhone отдельно, raw/evidence и qa:ready.
 - [ ] 7.8 Выполнить весь применимый Android-набор из testing.md: repository/storage/transport и независимый живой проход; зафиксировать emulator/физическое устройство отдельно, raw/evidence и qa:ready.

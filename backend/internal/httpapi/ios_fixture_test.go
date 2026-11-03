@@ -126,6 +126,7 @@ func TestIOSFixture(t *testing.T) {
 	defer server.Close()
 	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
+	config.Cases["vibe-revocation-owner"] = seedNativeVibeRevocationFixture(t, store, service, app)
 	for _, person := range []string{"1", "2", "4"} {
 		config.Cases["review-reader-"+person] = iosCredential(t, service, "design-"+person)
 	}

@@ -94,12 +94,16 @@ class ProfileVibeAccessibilityUiTests {
     }
 
     @Test fun zRevokedSessionCannotKeepCachedAlbumVisible() {
-        fixture.launch("memories").use {
+        fixture.launch("vibe-revocation-owner").use {
             openAlbum()
-            ChatReadLiveApi(fixture.context).request("feed-owner", "me", "DELETE")
+            val api = ChatReadLiveApi(fixture.context)
+            api.request("vibe-revocation-owner", "me", "DELETE")
             fixture.device.pressBack()
             fixture.waitTag("onboarding")
             compose.onNodeWithTag("photo-stack").assertDoesNotExist()
+            for (actor in listOf("design", "feed-owner")) {
+                assertTrue(api.request(actor, "me").has("user"))
+            }
             fixture.screenshot("vibe-revoked-session")
         }
     }

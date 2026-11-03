@@ -65,3 +65,8 @@ no-idle sync, background и сохранение draft после relaunch. QA-o
 sheet/emoji получают независимый путь encrypted storage через QA-only namespace;
 обычный target и сценарий restart используют стандартное хранилище без сброса.
 Лицензии обеих библиотек включены в `Resources/Chat-SDK-LICENSES.txt`.
+
+`readers-a11y` адресно проверяет ошибку/повтор, пустой список, два reader marker,
+крупный текст и настоящую речь VoiceOver. Обычный свайп проверяется после
+выключения службы; этот сценарий не доказывает жест VoiceOver Escape и возврат
+его фокуса. Они остаются отдельной ручной проверкой, а не заменяются hardware Escape.

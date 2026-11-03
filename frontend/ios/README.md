@@ -68,6 +68,7 @@ sh scripts/test-ui.sh support-voiceover # фокус и речь VoiceOver; iOS 
 sh scripts/test-ui.sh chat-controls # меню, реакции, emoji и системные picker/черновики
 sh scripts/test-ui.sh media-batch # три фото, partial/lost reply, фон и идемпотентный повтор
 sh scripts/test-ui.sh experience-a11y # профиль/вайбы, VoiceOver, XXXL, Reduce Motion и отзыв сессии
+sh scripts/test-ui.sh readers-a11y # два API-аккаунта, ошибка/empty, XXXL и речь VoiceOver; без проверки Escape
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет

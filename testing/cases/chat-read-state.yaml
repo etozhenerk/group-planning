@@ -411,9 +411,13 @@
           runner: web-read-e2e
           level: e2e
     ios:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift
+          selector: testReadersErrorEmptyTwoAccountsAndVoiceOverAtLargestText
+          runner: ios-ui
+          level: e2e
     android:
       status: manual
       health: unknown

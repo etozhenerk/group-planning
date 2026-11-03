@@ -19,6 +19,19 @@ const nativeMemoryMeeting = "dab00000-0000-4000-8000-000000000001"
 
 func seedNativeMemoryFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service, credential iosFixtureCredential) {
 	t.Helper()
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, nativeMemoryMeeting, "dab00000-0000-4000-8000-000000000002", "TUVNT1JJRVMtRklYVFVSRQ")
+}
+
+func seedNativeVibeRevocationFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service) iosFixtureCredential {
+	t.Helper()
+	credential := iosCredential(t, auth, "vibe-revocation-owner")
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, "daf30000-0000-4000-8000-000000000001", "daf30000-0000-4000-8000-000000000002", "VklCRS1SRVZPS0UtMDAwMQ")
+
+	return credential
+}
+
+func seedNativeMemoryFixtureAt(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service, credential iosFixtureCredential, meetingID, invitationID, token string) {
+	t.Helper()
 	ctx := context.Background()
 	principal, err := auth.Authenticate(ctx, credential.Token, false)
 	if err != nil {
@@ -28,11 +41,11 @@ func seedNativeMemoryFixture(t *testing.T, store *memory.Store, auth *identity.S
 	actor := meetings.Actor{ID: principal.User.ID, Name: principal.User.DisplayName}
 	now := time.Now().UTC()
 	if err := store.Update(ctx, func(w meetings.Writer) error {
-		if err := w.SaveMeeting(meetings.Meeting{ID: nativeMemoryMeeting, OrganizerID: actor.ID, Title: "Суббота у озера", StartsOn: now.AddDate(0, 0, -2).Format(time.DateOnly), Timezone: "Europe/Moscow", Revision: 1, CreatedAt: now, Status: meetings.Past, ScheduleVersion: 1}); err != nil {
+		if err := w.SaveMeeting(meetings.Meeting{ID: meetingID, OrganizerID: actor.ID, Title: "Суббота у озера", StartsOn: now.AddDate(0, 0, -2).Format(time.DateOnly), Timezone: "Europe/Moscow", Revision: 1, CreatedAt: now, Status: meetings.Past, ScheduleVersion: 1}); err != nil {
 			return err
 		}
 
-		return w.InsertInvitation(meetings.Invitation{ID: "dab00000-0000-4000-8000-000000000002", MeetingID: nativeMemoryMeeting, Token: "TUVNT1JJRVMtRklYVFVSRQ", CreatedAt: now})
+		return w.InsertInvitation(meetings.Invitation{ID: invitationID, MeetingID: meetingID, Token: token, CreatedAt: now})
 	}); err != nil {
 		t.Fatal(err)
 	}
@@ -51,16 +64,16 @@ func seedNativeMemoryFixture(t *testing.T, store *memory.Store, auth *identity.S
 		}
 
 		key := fmt.Sprintf("dab00000-0000-4000-8000-%012d", i+10)
-		media, err := app.PrepareMedia(ctx, actor, nativeMemoryMeeting, meetings.MediaInput{ClientRequestID: key, FileName: fmt.Sprintf("lake-%d.png", i), ContentType: "image/png", SizeBytes: content.Len(), Purpose: "memory"}, key)
+		media, err := app.PrepareMedia(ctx, actor, meetingID, meetings.MediaInput{ClientRequestID: key, FileName: fmt.Sprintf("lake-%d.png", i), ContentType: "image/png", SizeBytes: content.Len(), Purpose: "memory"}, key)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if _, err := app.UploadMedia(ctx, actor, nativeMemoryMeeting, media.ID, "image/png", content.Bytes()); err != nil {
+		if _, err := app.UploadMedia(ctx, actor, meetingID, media.ID, "image/png", content.Bytes()); err != nil {
 			t.Fatal(err)
 		}
 
-		if _, err := app.PublishMedia(ctx, actor, nativeMemoryMeeting, media.ID, key); err != nil {
+		if _, err := app.PublishMedia(ctx, actor, meetingID, media.ID, key); err != nil {
 			t.Fatal(err)
 		}
 	}

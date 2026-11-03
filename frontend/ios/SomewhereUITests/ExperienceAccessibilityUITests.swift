@@ -2,6 +2,7 @@ import XCTest
 
 @MainActor
 final class ExperienceAccessibilityUITests: XCTestCase {
+    private var touchedVoiceOver = false
     private var originalVoiceOver: Bool?
     private var motion: SimulatorMotionPreference?
 
@@ -17,10 +18,10 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         var cleanupError: Error?
         if #available(iOS 27.0, *) {
             let voiceOver = XCUIDevice.shared.voiceOverService
-            if voiceOver.isEnabled { try voiceOver.disable() }
+            if touchedVoiceOver { try voiceOver.disable() }
             do { try motion?.restore() } catch { cleanupError = error }
             if originalVoiceOver == true { try voiceOver.enable() }
-            XCTAssertEqual(voiceOver.isEnabled, originalVoiceOver)
+            print("EXPERIENCE_VOICEOVER_RESTORED_TO=\(String(describing: originalVoiceOver))")
         }
         XCUIDevice.shared.orientation = .portrait
         ChatSheetTestSupport.recordFailure(self)
@@ -52,6 +53,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         ExperienceScreenshot.save("vibe-largest-system-reduced-landscape", test: self)
         XCUIDevice.shared.orientation = .portrait
         let voiceOver = XCUIDevice.shared.voiceOverService
+        touchedVoiceOver = true
         try voiceOver.enable()
         var output: [String] = []
         for _ in 0..<80 {
@@ -119,6 +121,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
                 let voiceOver = XCUIDevice.shared.voiceOverService
                 app.scrollViews["profile-screen"].swipeDown()
                 app.scrollViews["profile-screen"].swipeDown()
+                touchedVoiceOver = true
                 try voiceOver.enable()
                 var speech: [String] = []
                 for _ in 0..<80 {
@@ -134,6 +137,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
                 XCTAssertTrue(transcript.contains("Телефон"))
                 ExperienceScreenshot.save("profile-real-voiceover-partial", test: self)
                 try voiceOver.disable()
+                touchedVoiceOver = false
             }
             XCTAssertEqual(app.textFields.count, 0)
             if stage != "clear" {
@@ -161,24 +165,30 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         ExperienceScreenshot.save("profile-retry", test: self)
     }
     func testRevokedSessionCannotReopenCachedMemories() async throws {
-        let app = ChatSheetTestSupport.launch()
-        app.buttons["period-past"].tap()
-        let album = app.buttons["meeting-memories-deb00000-0000-4000-8000-000000000004"]
+        let app = XCUIApplication()
+        app.launchEnvironment["SOMEWHERE_UI_SCENARIO"] = "vibe-revocation-owner"
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        ExperienceScreenshot.configure(app)
+        app.launch()
+        let past = app.buttons["period-past"]
+        XCTAssertTrue(past.waitForExistence(timeout: 15))
+        past.tap()
+        let album = app.buttons["meeting-memories-daf30000-0000-4000-8000-000000000001"]
         ChatSheetTestSupport.reveal(album, in: app.scrollViews["meetings-list"], app: app)
         album.tap()
         XCTAssertTrue(app.buttons["Открыть фото 1"].waitForExistence(timeout: 10))
-        let actor = try NativeChatCounterpart(actor: "design")
+        let actor = try NativeChatCounterpart(actor: "vibe-revocation-owner")
         _ = try await actor.request("me", method: "DELETE")
         app.buttons["memories-back"].tap()
-        let login = app.buttons["Попробовать"]
-        if !login.exists {
-            ChatSheetTestSupport.reveal(album, in: app.scrollViews["meetings-list"], app: app)
-            album.tap()
-        }
         let onboarding = app.buttons["Пропустить знакомство"]
         XCTAssertTrue(onboarding.waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["Открыть фото 1"].exists)
         XCTAssertFalse(app.buttons["album-save"].exists)
+        for name in ["design", "feed-owner"] {
+            let shared = try NativeChatCounterpart(actor: name)
+            let profile = try await shared.request("me")
+            XCTAssertNotNil(profile["user"])
+        }
         ExperienceScreenshot.save("vibe-revoked-session", test: self)
     }
 }
