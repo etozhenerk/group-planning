@@ -75,7 +75,8 @@ struct MeetingFeedHeader: View {
                 Rectangle().fill(AppPalette.border).frame(height: DesignTokens.spaceS1)
             }
             .onChange(of: sheetDismissal) { _, _ in
-                focusedAction = returnAction
+                guard let action = returnAction else { return }
+                focusedAction = action
                 returnAction = nil
             }
     }

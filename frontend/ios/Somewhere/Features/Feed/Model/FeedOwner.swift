@@ -16,6 +16,7 @@ final class FeedOwner {
     var sheets: [ChatSheetRoute] = [] { didSet { reads.cover(panel != nil || !sheets.isEmpty) } }
     var selectedTask: PreparationTaskOwner?
     var reactionExpanded = false
+    private var pendingMessageReturn: ChatSheetRoute?
     var returnedMessage: UUID?
     var returnedToPeople = false
     var reactionPeopleFilter: String?
@@ -170,6 +171,7 @@ final class FeedOwner {
         informationExpanded = false
         informationReturn = nil
         informationScrollOffset = 0
+        pendingMessageReturn = nil
         returnedMessage = nil
         returnedToPeople = false
         reactionPeopleFilter = nil
@@ -179,22 +181,36 @@ final class FeedOwner {
     func openSheet(_ route: ChatSheetRoute, child: Bool = false) {
         panel = nil
         composerFocused = false
+        returnedMessage = nil
+        pendingMessageReturn = nil
         if child { sheets.append(route) } else { sheets = [route] }
     }
 
     func closeSheet() {
         guard let closed = sheets.popLast() else { return }
-        if case .people(let id) = closed {
-            returnedToPeople = true
-            returnedMessage = id
+        switch closed {
+        case .people, .readers: pendingMessageReturn = closed
+        default: break
         }
-        if case .readers(let id) = closed {
-            returnedToPeople = false
-            returnedMessage = id
+        if case .readers = closed {
             readers?.suspend()
             readers = nil
         }
         if sheets.last == .information { informationReturn = closed }
+    }
+
+    func sheetDidDismiss() {
+        guard sheets.isEmpty, let destination = pendingMessageReturn else { return }
+        pendingMessageReturn = nil
+        switch destination {
+        case .people(let id):
+            returnedToPeople = true
+            returnedMessage = id
+        case .readers(let id):
+            returnedToPeople = false
+            returnedMessage = id
+        default: break
+        }
     }
 
     func openReactions(_ id: UUID) {

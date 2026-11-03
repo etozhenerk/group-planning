@@ -34,6 +34,30 @@ struct ChatSheetStateTests {
         #expect(await context.harness.transport.count(context.path + "/participants") == 0)
     }
 
+    @Test func messageFocusWaitsForNativeDismissAndRepeatsForTheSameMessage() async throws {
+        let context = try await FeedTestContext()
+        let owner = context.owner
+        let entry = try context.entry("1", key: UUID(), text: "Исходное сообщение")
+        for _ in 0..<2 {
+            owner.openSheet(.readers(entry.id))
+            #expect(owner.returnedMessage == nil)
+            owner.closeSheet()
+            #expect(owner.returnedMessage == nil)
+            owner.sheetDidDismiss()
+            #expect(owner.returnedMessage == entry.id && !owner.returnedToPeople)
+        }
+        owner.openSheet(.people(entry.id))
+        owner.closeSheet()
+        #expect(owner.returnedMessage == nil)
+        owner.sheetDidDismiss()
+        #expect(owner.returnedMessage == entry.id && owner.returnedToPeople)
+        owner.openSheet(.readers(entry.id))
+        owner.closeSheet()
+        owner.clear()
+        owner.sheetDidDismiss()
+        #expect(owner.returnedMessage == nil)
+    }
+
     @Test func pendingLifecycleKeepsStartAndTimelineIdentityThroughAcknowledgement() async throws {
         let context = try await FeedTestContext()
         let key = UUID()

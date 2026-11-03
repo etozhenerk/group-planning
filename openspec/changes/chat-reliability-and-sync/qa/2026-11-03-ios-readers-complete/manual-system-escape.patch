@@ -1,0 +1,27 @@
+diff --git a/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift b/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift
+index a34d401f..081558ba 100644
+--- a/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift
++++ b/frontend/ios/SomewhereUITests/ChatReadersAccessibilityUITests.swift
+@@ -100,9 +100,21 @@ final class ChatReadersAccessibilityUITests: XCTestCase {
+         try require(!populatedSpeech.contains("Написать сообщение"), "Underlying composer exposed")
+         try require(!populatedSpeech.contains("sasha@example.com"), "Private contact exposed")
+         ExperienceScreenshot.save("readers-largest-two-voiceover", test: self)
++        print("READERS_ESCAPE_READY text=\(text)")
++        try require(header.waitForNonExistence(timeout: 240), "System Escape did not close sheet")
++        var returnedSpeech = ""
++        for _ in 0..<30 {
++            returnedSpeech = try voiceOver.currentSpeech().utterance
++            if returnedSpeech.contains(text) { break }
++            try await Task.sleep(for: .milliseconds(100))
++        }
++        print("READERS_ESCAPE_RETURNED_SPEECH=\(returnedSpeech)")
++        try require(returnedSpeech.contains(text), "VoiceOver did not return to source message")
++        XCTAssertTrue(voiceOver.isEnabled)
++        XCTAssertEqual(message.frame.minY, populatedBefore, accuracy: 2)
++        ExperienceScreenshot.save("readers-system-escape-restored-focus", test: self)
+         try voiceOver.disable()
+         changedVoiceOver = false
+-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "chat-readers-header")
+         XCTAssertEqual(message.frame.minY, populatedBefore, accuracy: 2)
+     }
+ 

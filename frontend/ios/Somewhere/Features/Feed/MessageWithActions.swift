@@ -71,8 +71,16 @@ struct MessageWithActions: View {
             }
         }.accessibilityElement(children: .contain)
             .accessibilityIdentifier(rowIdentifier)
-            .onChange(of: owner.returnedMessage) { _, id in
-                guard let entry, id == entry.id else { return }
+            .task(id: owner.returnedMessage) {
+                guard let request = owner.returnedMessage else {
+                    messageFocused = false
+                    focusedReaction = nil
+                    return
+                }
+                guard let entry, request == entry.id else { return }
+                await Task.yield()
+                guard !Task.isCancelled, owner.returnedMessage == request, owner.sheets.isEmpty
+                else { return }
                 if let emoji = owner.reactionPeopleFilter,
                     owner.returnedToPeople && reactions.contains(where: { $0.emoji == emoji })
                 {
@@ -120,7 +128,9 @@ struct MessageWithActions: View {
     @ViewBuilder private var message: some View {
         if let entry, !entry.attachments.isEmpty {
             FeedAttachmentMessageView(
-                entry: entry, session: owner.session, own: own, selected: selected)
+                entry: entry, session: owner.session, own: own, selected: selected
+            )
+            .accessibilityFocused($messageFocused)
         } else {
             FeedMessageView(
                 user: own ? owner.session.profile ?? actor : actor,
