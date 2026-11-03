@@ -1,0 +1,78 @@
+[WebServer] (node:87256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:87257) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:87298) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion (770ms)
+(node:87305) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile-webkit] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion (1.3s)
+
+
+  1) [chromium] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.02
+    Received:   0.3057705096756611
+
+      82 |   });
+      83 |
+    > 84 |   expect(Math.abs(firstOffset - interrupted)).toBeLessThan(0.02);
+         |                                               ^
+      85 |   await page.emulateMedia({ reducedMotion: 'reduce' });
+      86 |   await nav.getByRole('link', { name: 'Встречи', exact: true }).click();
+      87 |   await expect(page).toHaveURL(/\/meetings$/);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/49-service-navigation.spec.ts:84:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-webkit] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.02
+    Received:   0.3057713295175797
+
+      82 |   });
+      83 |
+    > 84 |   expect(Math.abs(firstOffset - interrupted)).toBeLessThan(0.02);
+         |                                               ^
+      85 |   await page.emulateMedia({ reducedMotion: 'reduce' });
+      86 |   await nav.getByRole('link', { name: 'Встречи', exact: true }).click();
+      87 |   await expect(page).toHaveURL(/\/meetings$/);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/49-service-navigation.spec.ts:84:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-20261103-tabs-before/49-service-navigation-bott-be66d-and-respects-reduced-motion-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion 
+    [mobile-webkit] › tests/49-service-navigation.spec.ts:45:1 › bottom tab motion reverses from its rendered position and respects reduced motion 

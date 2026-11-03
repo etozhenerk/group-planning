@@ -31,3 +31,14 @@ read-through. Владелец viewport сохраняется при откры
 и [план измерений](../../../openspec/changes/chat-reliability-and-sync/validation-plan.md).
 Browser-наборы объявлены в `playwright*.config.ts`; физический Safari и измерения
 frame/memory фиксируются отдельно от эмуляции WebKit.
+
+Композиция сохраняет опубликованный chat-actions: desktop modal и mobile sheet
+открываются поверх той же ленты. Меню, emoji dock и реакции не создают второй
+экран чата. `useVisualViewport` привязывает composer и панели к видимой области,
+учитывает offsetTop и не вмешивается в pinch zoom. `DelayedSkeleton` откладывает
+показ заглушки; догрузка истории сохраняет строки, черновик и якорь вместо
+замены всей ленты. Pending занимает постоянный слот, индикатор виден после 2 с.
+
+Сверка 03.11.2026: [результат 4.6](../../../openspec/changes/chat-reliability-and-sync/qa/2026-11-03-web-ux/result.md).
+Эмуляция visualViewport, браузерная IME composition и responsive-проход отделены
+от настоящей экранной клавиатуры и Safari физического iPhone.

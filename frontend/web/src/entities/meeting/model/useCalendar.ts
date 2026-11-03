@@ -5,6 +5,7 @@ import { ApiError } from '@/shared/api';
 import { listCalendar } from '@/entities/meeting/api/calendar';
 import { calendarRefreshDelay } from '@/entities/meeting/lib/calendarRefresh';
 import type { CalendarFilter, CalendarPage } from '@/entities/meeting/model/calendar';
+import { useCalendarContent } from '@/entities/meeting/model/useCalendarContent';
 
 export const useCalendar = (user: string, filter: CalendarFilter, enabled = true) => {
   const client = useQueryClient();
@@ -54,5 +55,10 @@ export const useCalendar = (user: string, filter: CalendarFilter, enabled = true
     void client.invalidateQueries({ queryKey, exact: true });
   }, [changed, enabled, client, user, period, from, to, query.errorUpdatedAt]);
 
-  return query;
+  const denied =
+    query.error instanceof ApiError && [401, 403, 404].includes(query.error.status);
+
+  const data = useCalendarContent(user, period, query.data, enabled && !!user && !denied);
+
+  return { ...query, data, isPending: query.isPending && !data };
 };

@@ -1,5 +1,13 @@
 # Спецификация тестирования
 
+## Общие web-состояния, 03.11.2026
+
+49-service-navigation дополнен разворотом WAAPI/reduced motion, двухсекундным
+calendar refresh→503→retry и очисткой presentation snapshot при смене периода/403.
+Первичные skeleton и фильтры проверены адресно. [Результат 11.1](qa/2026-11-03-common-web/result.md).
+TC-UI-LOADING-STABILITY/TC-UI-BOTTOM-TAB-MOTION имеют partial web mapping;
+общий межплатформенный автоматический/независимый PASS не присваивается.
+
 ## Регрессия iOS: крупные эмодзи · 02.11.2026
 
 В текущем g07/16.2 проверить не только выравнивание SVG-категорий, но и

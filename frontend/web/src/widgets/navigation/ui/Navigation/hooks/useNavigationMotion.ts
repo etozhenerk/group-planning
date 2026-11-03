@@ -21,7 +21,8 @@ export const useNavigationMotion = (section: number, visible: boolean) => {
       return;
     }
 
-    const animation = indicator.current?.animate(
+    const node = indicator.current;
+    const animation = node?.animate(
       [
         { transform: `translateX(${previous * 100}%)` },
         { transform: `translateX(${section * 100}%)` },
@@ -32,7 +33,22 @@ export const useNavigationMotion = (section: number, visible: boolean) => {
       },
     );
 
-    return () => animation?.cancel();
+    return () => {
+      if (
+        node &&
+        animation &&
+        (animation.playState === 'running' || animation.playState === 'paused')
+      ) {
+        const width = node.getBoundingClientRect().width;
+
+        if (width > 0) {
+          const transform = new DOMMatrixReadOnly(getComputedStyle(node).transform);
+          position.current = transform.m41 / width;
+        }
+      }
+
+      animation?.cancel();
+    };
   }, [position, section, visible]);
 
   return indicator;

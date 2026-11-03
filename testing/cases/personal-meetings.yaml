@@ -2493,9 +2493,17 @@
     - Восстановить viewport, Reduce Motion и сеть; удалить собственные тестовые данные.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/49-service-navigation.spec.ts
+          selector: calendar day refresh keeps content through a slow error and retry without skeleton flashes
+          runner: web-e2e
+          level: e2e
+        - path: frontend/web/tests/49-service-navigation.spec.ts
+          selector: calendar continuity clears data across periods and after access denial
+          runner: web-e2e
+          level: e2e
     ios:
       status: planned
       health: unknown
@@ -2532,9 +2540,13 @@
     - Восстановить viewport, Reduce Motion и сеть; удалить собственные тестовые данные.
   automation:
     web:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/49-service-navigation.spec.ts
+          selector: bottom tab motion reverses from its rendered position and respects reduced motion
+          runner: web-e2e
+          level: e2e
     ios:
       status: planned
       health: unknown
