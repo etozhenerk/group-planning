@@ -5,6 +5,7 @@ import datetime
 import hashlib
 import http.client
 import json
+import itertools
 import math
 import secrets
 import subprocess
@@ -30,18 +31,22 @@ def hot_profile(context):
     owner = context['user_id']
     meeting = json.loads(request(port, 'GET', '/api/v1/meetings?limit=10')[1])['meetings'][0]['id']
     path = '/api/v1/meetings/' + meeting
+    distributed = globals().get('distributed_profile', False)
+    meeting_paths = [path]
+    send_sequence = itertools.count()
     sockets = []
     measurements = []
     resources = []
     monitor_stop = threading.Event()
     monitor = None
-    result = {'database': database, 'database_transport': 'unix-socket-peer-like-production', 'profile': {'connections': 100, 'users': 20, 'baseline_messages_per_second': 5,
+    result = {'topology': 'distributed-20-meetings' if distributed else 'hot-one-meeting', 'database': database, 'database_transport': 'unix-socket-peer-like-production', 'profile': {'connections': 100, 'users': 20, 'baseline_messages_per_second': 5,
               'baseline_seconds': 900, 'burst_messages_per_second': 20, 'burst_seconds': 60}, 'completed': False}
 
     def send(index):
         identifier = str(uuid.uuid4())
         started = time.perf_counter()
-        status, body = request(port, 'POST', path + '/messages',
+        target = meeting_paths[next(send_sequence) % len(meeting_paths)]
+        status, body = request(port, 'POST', target + '/messages',
             {'text': 'Synthetic hot profile ' + str(index), 'client_request_id': identifier}, identifier)
         duration = (time.perf_counter() - started) * 1000
         if status != 201:
@@ -81,11 +86,39 @@ def hot_profile(context):
         result['history_rows_before_profile'] = int(sql(database, 'SELECT count(*) FROM feed_entries WHERE meeting_id=' + literal(meeting)))
         assert result['history_rows_before_profile'] == 100000
 
+        meetings = [meeting]
+        if distributed:
+            for index in range(1, 20):
+                key = str(uuid.uuid4())
+                status, response = request(port, 'POST', '/api/v1/meetings',
+                    {'title': 'Synthetic distributed ' + str(index),
+                     'starts_on': (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)).date().isoformat(),
+                     'timezone': 'UTC'}, key)
+                assert status == 201, 'distributed fixture meeting create'
+                target = json.loads(response)['meeting']['id']
+                meetings.append(target)
+                meeting_paths.append('/api/v1/meetings/' + target)
+                size = 1000 if index == 1 else 10000 if index == 2 else 5000
+                target_entry = "overlay(overlay(md5(" + literal(target) + "||'-history-'||n) placing '4' from 13 for 1) placing 'a' from 17 for 1)::uuid::text"
+                target_request = "overlay(overlay(md5(" + literal(target) + "||'-request-'||n) placing '4' from 13 for 1) placing 'a' from 17 for 1)::uuid::text"
+                target_next = int(sql(database, 'SELECT max(sequence)+1 FROM feed_entries WHERE meeting_id=' + literal(target)))
+                for lower in range(target_next, size + 1, 1000):
+                    upper = min(lower + 999, size)
+                    sql(database, 'INSERT INTO feed_entries(id,meeting_id,sequence,actor_id,client_request_id,document) '
+                        'SELECT ' + target_entry + ',' + literal(target) + ',n,actor_id,' + target_request +
+                        ",document || jsonb_build_object('ID'," + target_entry + ",'MeetingID'," + literal(target) +
+                        ",'Sequence',n,'ClientRequestID'," + target_request + ') FROM feed_entries CROSS JOIN generate_series(' +
+                        str(lower) + ',' + str(upper) + ') n WHERE id=' + literal(first_message) + ';')
+            sql(database, 'ANALYZE feed_entries;')
+            result['meeting_histories_before_profile'] = json.loads(sql(database,
+                "SELECT json_agg(row_to_json(x)) FROM (SELECT meeting_id,count(*) AS rows FROM feed_entries GROUP BY meeting_id ORDER BY count(*)) x;"))
+
         now = datetime.datetime.now(datetime.timezone.utc)
         expires = (now + datetime.timedelta(hours=2)).isoformat()
         web_tokens = []
         for index in range(20):
             user_id = owner if index == 0 else str(uuid.uuid4())
+            target_meeting = meetings[index] if distributed else meeting
             token = base64.urlsafe_b64encode(secrets.token_bytes(32)).rstrip(b'=').decode()
             web_tokens.append(token)
             digest = hashlib.sha256(token.encode()).hexdigest()
@@ -93,16 +126,16 @@ def hot_profile(context):
             statements = 'BEGIN; '
             if index:
                 user = {'ID': user_id, 'DisplayName': 'Synthetic hot member ' + str(index), 'CreatedAt': now.isoformat()}
-                rsvp = {'MeetingID': meeting, 'UserID': user_id, 'Answer': 'going', 'Revision': 1, 'UpdatedAt': now.isoformat()}
+                rsvp = {'MeetingID': target_meeting, 'UserID': user_id, 'Answer': 'going', 'Revision': 1, 'UpdatedAt': now.isoformat()}
                 statements += 'INSERT INTO identity_users VALUES(' + literal(user_id) + ',' + literal('hot:' + user_id) + ',' + literal(json.dumps(user)) + '::jsonb); '
-                statements += 'INSERT INTO rsvps VALUES(' + literal(meeting) + ',' + literal(user_id) + ',' + literal(json.dumps(rsvp)) + '::jsonb); '
-                statements += 'INSERT INTO meeting_read_markers VALUES(' + literal(meeting) + ',' + literal(user_id) + ',100000,0,now()); '
+                statements += 'INSERT INTO rsvps VALUES(' + literal(target_meeting) + ',' + literal(user_id) + ',' + literal(json.dumps(rsvp)) + '::jsonb); '
+                statements += 'INSERT INTO meeting_read_markers VALUES(' + literal(target_meeting) + ',' + literal(user_id) + ',(SELECT max(sequence) FROM feed_entries WHERE meeting_id=' + literal(target_meeting) + '),0,now()); '
             session = {'ID': session_id, 'UserID': user_id, 'SecretHash': digest, 'ClientKind': 'web', 'ExpiresAt': expires}
             statements += 'INSERT INTO identity_sessions VALUES(' + ','.join(map(literal,[digest,session_id,user_id,expires])) + ',' + literal(json.dumps(session)) + '::jsonb); COMMIT;'
             sql(database, statements)
-        for token in web_tokens:
+        for index, token in enumerate(web_tokens):
             for _ in range(5):
-                sockets.append(HintSocket(port, token, meeting))
+                sockets.append(HintSocket(port, token, meetings[index] if distributed else meeting))
         assert len(sockets) == 100
         started_profile = time.monotonic()
         print(json.dumps({'stage': '100_websockets_subscribed', 'history_rows': result['history_rows_before_profile']}), flush=True)

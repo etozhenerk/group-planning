@@ -11,10 +11,11 @@ const bundle = {
   profile: await readFile(resolve(directory, 'profile.py'), 'utf8'),
   key: Buffer.from('k'.repeat(32)).toString('base64'),
   binary: process.argv[3] ?? null,
+  distributed: process.argv[4] === 'distributed',
 };
 const bootstrap = `import json,sys
 bundle=json.load(sys.stdin)
-scope={'__name__':'sdd_hot_profile'}
+scope={'__name__':'sdd_hot_profile','distributed_profile':bundle['distributed']}
 exec(compile(bundle['socket'],'socket_client.py','exec'),scope)
 exec(compile(bundle['profile'],'hot-profile-fixture.py','exec'),scope)
 source=bundle['base']

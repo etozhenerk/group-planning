@@ -1,0 +1,721 @@
+{
+  "task": "7.2",
+  "result": "passed-server-scope",
+  "verification": "main-agent-by-explicit-user-direction; no independent or release gate PASS",
+  "source_parent_commit": "2e0ab5f73acdfd8c19247a1d897dd4fba804deee",
+  "candidate_source_files": [
+    {
+      "path": "backend/internal/storage/postgres/transaction.go",
+      "sha256": "c2d0864657266baa0dc5ff2f3f2864cba5800aaa6dacf03141021e26e2c25699"
+    },
+    {
+      "path": "backend/internal/storage/postgres/transaction_context_test.go",
+      "sha256": "fbacef4defb315302e7d56947974a79cbf8cc50372eb32e7a69d7c4486e1c065"
+    },
+    {
+      "path": "backend/internal/storage/postgres/identity.go",
+      "sha256": "4dcbfc1e0499fa883d5dfe89d113a2431e4d7ba97ac425528ea2cdf640871801"
+    },
+    {
+      "path": "backend/internal/identity/read_store.go",
+      "sha256": "8f9c6c9c8fff22f7f9d9c6a8a72b1c130a5dc708b7fb5a627c4e7a8b0aa09bfe"
+    },
+    {
+      "path": "backend/internal/identity/read_store_test.go",
+      "sha256": "d29aa644eef94e22e5de66b4588213e0b4283fa1422d9e695440aafb814a8c9a"
+    },
+    {
+      "path": "backend/internal/identity/session.go",
+      "sha256": "73d0a41ab34b1afb0103987669d2c75303e22bf90d6496b8083b74a0a1e490ef"
+    }
+  ],
+  "profiles": {
+    "hot": {
+      "database": "somewhere_sdd_endpoint_0e9e8d36abcf",
+      "database_transport": "unix-socket-peer-like-production",
+      "profile": {
+        "connections": 100,
+        "users": 20,
+        "baseline_messages_per_second": 5,
+        "baseline_seconds": 900,
+        "burst_messages_per_second": 20,
+        "burst_seconds": 60
+      },
+      "completed": true,
+      "history_rows_before_profile": 100000,
+      "deliberate_contention": {
+        "hold_seconds": 1.0,
+        "writers": 20,
+        "wait_observations_ms": [
+          152.871,
+          214.439,
+          275.647,
+          343.373,
+          405.025,
+          464.309,
+          529.521,
+          586.964,
+          663.145,
+          725.889,
+          784.864,
+          843.855,
+          902.977,
+          960.491,
+          950.807,
+          1006.35,
+          159.777,
+          141.217,
+          123.574,
+          0.0
+        ],
+        "max_observed_wait_ms": 1006.35,
+        "http_samples": [
+          {
+            "operation": "send",
+            "sample": "contention-0",
+            "milliseconds": 947.8985610185191
+          },
+          {
+            "operation": "send",
+            "sample": "contention-2",
+            "milliseconds": 961.1748490715399
+          },
+          {
+            "operation": "send",
+            "sample": "contention-3",
+            "milliseconds": 980.1409119972959
+          },
+          {
+            "operation": "send",
+            "sample": "contention-1",
+            "milliseconds": 996.8666789354756
+          },
+          {
+            "operation": "send",
+            "sample": "contention-4",
+            "milliseconds": 1013.6526240967214
+          },
+          {
+            "operation": "send",
+            "sample": "contention-5",
+            "milliseconds": 1036.0071850009263
+          },
+          {
+            "operation": "send",
+            "sample": "contention-10",
+            "milliseconds": 1051.0196639224887
+          },
+          {
+            "operation": "send",
+            "sample": "contention-8",
+            "milliseconds": 1071.3856510119513
+          },
+          {
+            "operation": "send",
+            "sample": "contention-9",
+            "milliseconds": 1088.449320057407
+          },
+          {
+            "operation": "send",
+            "sample": "contention-7",
+            "milliseconds": 1108.556934981607
+          },
+          {
+            "operation": "send",
+            "sample": "contention-13",
+            "milliseconds": 1110.9619060298428
+          },
+          {
+            "operation": "send",
+            "sample": "contention-6",
+            "milliseconds": 1134.664886048995
+          },
+          {
+            "operation": "send",
+            "sample": "contention-11",
+            "milliseconds": 1138.1994920084253
+          },
+          {
+            "operation": "send",
+            "sample": "contention-14",
+            "milliseconds": 1146.6110430192202
+          },
+          {
+            "operation": "send",
+            "sample": "contention-12",
+            "milliseconds": 1163.0027799401432
+          },
+          {
+            "operation": "send",
+            "sample": "contention-17",
+            "milliseconds": 1179.5893469825387
+          },
+          {
+            "operation": "send",
+            "sample": "contention-15",
+            "milliseconds": 1199.2213620105758
+          },
+          {
+            "operation": "send",
+            "sample": "contention-18",
+            "milliseconds": 1213.3712760405615
+          },
+          {
+            "operation": "send",
+            "sample": "contention-16",
+            "milliseconds": 1229.2418649885803
+          },
+          {
+            "operation": "send",
+            "sample": "contention-19",
+            "milliseconds": 1238.892680965364
+          }
+        ]
+      },
+      "lock_samples": [],
+      "warmup_seconds": 60,
+      "baseline": {
+        "messages": 4500,
+        "elapsed_seconds": 900.0026795389131,
+        "p50_ms": 13.250345014967024,
+        "p95_ms": 21.61338203586638,
+        "p99_ms": 29.782437020912766,
+        "max_ms": 77.98572001047432
+      },
+      "burst": {
+        "messages": 1200,
+        "elapsed_seconds": 60.000676100025885,
+        "p50_ms": 18.21094600018114,
+        "p95_ms": 41.034332010895014,
+        "p99_ms": 54.22835994977504,
+        "max_ms": 84.48480791412294
+      },
+      "socket_errors": [],
+      "resources": {
+        "samples": 45,
+        "minimum_available_memory_kib": 3002536,
+        "maximum_test_db_connections": 12
+      },
+      "sockets": {
+        "count": 100,
+        "minimum_publications": 10115,
+        "maximum_publications": 10125
+      },
+      "cleanup": {
+        "own_database_removed": true,
+        "production_service_unchanged": true
+      },
+      "started_utc": "2026-11-03T18:28:53.568316+00:00",
+      "finished_utc": "2026-11-03T18:46:19.538241+00:00",
+      "qa_binary_sha256": "299da928ff5b63564c7d8d37fafa2e9e6d9c24ae2135e9922ec40a3e7e6d5440"
+    },
+    "distributed": {
+      "topology": "distributed-20-meetings",
+      "database": "somewhere_sdd_endpoint_7f4be4986452",
+      "database_transport": "unix-socket-peer-like-production",
+      "profile": {
+        "connections": 100,
+        "users": 20,
+        "baseline_messages_per_second": 5,
+        "baseline_seconds": 900,
+        "burst_messages_per_second": 20,
+        "burst_seconds": 60
+      },
+      "completed": true,
+      "history_rows_before_profile": 100000,
+      "meeting_histories_before_profile": [
+        {
+          "meeting_id": "dc5963e9-3cf8-4b21-b81f-2557a50ab3a3",
+          "rows": 1000
+        },
+        {
+          "meeting_id": "3614bc4d-7910-4bea-ae35-03142797f8ba",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "46d2e0e2-3e41-465c-99d7-90f0aacf5ac3",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "5397d5e8-7bea-4c72-ad6c-e86de170c5e6",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "5d72b371-2f07-4fcc-a7e1-e5d9dbdc5f2d",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "606a03a2-24cc-4af0-adcc-304949f2e88d",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "80c3369a-fcec-4a02-8bb3-c9124a2347dd",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "97742296-1ace-404d-86dc-09ea9eeb9e48",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "993053a6-f271-4ec3-acfa-b1e728dc6fb9",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "a301c0c3-2886-4a85-a4ed-2c2b769c7957",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "af25a3c1-0774-43f8-96ac-0d0ab7405b69",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "b28f090b-ea66-44a9-8b57-810e4a792987",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "b4af307a-b65f-4aa5-aa79-c88da1ee3528",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "ba27ec17-a60e-44f0-b52b-03e9da7e3fbc",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "d1b4c6d6-cde2-43d1-a8fe-004b53d9b023",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "dba60a2e-b924-40dd-965e-ecc872f3d87a",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "fa886c6e-6c4f-4d87-9e33-fe64c8b1deca",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "eee0fce2-c8ef-4c39-8371-f5013330bf09",
+          "rows": 5000
+        },
+        {
+          "meeting_id": "346ce033-6e16-4475-8935-66ce256e3815",
+          "rows": 10000
+        },
+        {
+          "meeting_id": "4d47461c-d5d6-4cc3-97da-c9bec8052fed",
+          "rows": 100000
+        }
+      ],
+      "deliberate_contention": {
+        "hold_seconds": 1.0,
+        "writers": 20,
+        "wait_observations_ms": [
+          66.242,
+          125.3,
+          184.336,
+          241.978,
+          300.536,
+          362.056,
+          421.447,
+          479.275,
+          537.652,
+          598.849,
+          658.587,
+          719.528,
+          779.441,
+          838.485,
+          896.901,
+          953.586,
+          1007.89,
+          1048.903,
+          91.825,
+          0.0
+        ],
+        "max_observed_wait_ms": 1048.903,
+        "http_samples": [
+          {
+            "operation": "send",
+            "sample": "contention-0",
+            "milliseconds": 1006.4597029704601
+          },
+          {
+            "operation": "send",
+            "sample": "contention-3",
+            "milliseconds": 1011.8400930659845
+          },
+          {
+            "operation": "send",
+            "sample": "contention-2",
+            "milliseconds": 1019.2433319753036
+          },
+          {
+            "operation": "send",
+            "sample": "contention-1",
+            "milliseconds": 1034.2785919783637
+          },
+          {
+            "operation": "send",
+            "sample": "contention-6",
+            "milliseconds": 1044.4109940435737
+          },
+          {
+            "operation": "send",
+            "sample": "contention-9",
+            "milliseconds": 1055.012046941556
+          },
+          {
+            "operation": "send",
+            "sample": "contention-5",
+            "milliseconds": 1071.4807349722832
+          },
+          {
+            "operation": "send",
+            "sample": "contention-10",
+            "milliseconds": 1080.1910540321842
+          },
+          {
+            "operation": "send",
+            "sample": "contention-14",
+            "milliseconds": 1096.3902219664305
+          },
+          {
+            "operation": "send",
+            "sample": "contention-7",
+            "milliseconds": 1109.2968949815258
+          },
+          {
+            "operation": "send",
+            "sample": "contention-8",
+            "milliseconds": 1122.545754071325
+          },
+          {
+            "operation": "send",
+            "sample": "contention-12",
+            "milliseconds": 1125.8523600408807
+          },
+          {
+            "operation": "send",
+            "sample": "contention-11",
+            "milliseconds": 1132.2054999182
+          },
+          {
+            "operation": "send",
+            "sample": "contention-13",
+            "milliseconds": 1138.9604889554903
+          },
+          {
+            "operation": "send",
+            "sample": "contention-4",
+            "milliseconds": 1155.0456619588658
+          },
+          {
+            "operation": "send",
+            "sample": "contention-16",
+            "milliseconds": 1153.8576179882511
+          },
+          {
+            "operation": "send",
+            "sample": "contention-15",
+            "milliseconds": 1162.7818529959768
+          },
+          {
+            "operation": "send",
+            "sample": "contention-19",
+            "milliseconds": 1169.9719879543409
+          },
+          {
+            "operation": "send",
+            "sample": "contention-18",
+            "milliseconds": 1178.2554340315983
+          },
+          {
+            "operation": "send",
+            "sample": "contention-17",
+            "milliseconds": 1184.6605110913515
+          }
+        ]
+      },
+      "lock_samples": [],
+      "warmup_seconds": 60,
+      "baseline": {
+        "messages": 4500,
+        "elapsed_seconds": 900.0015093910042,
+        "p50_ms": 8.385573048144579,
+        "p95_ms": 17.20783195924014,
+        "p99_ms": 26.591126923449337,
+        "max_ms": 60.2032330352813
+      },
+      "burst": {
+        "messages": 1200,
+        "elapsed_seconds": 60.000664063030854,
+        "p50_ms": 9.018570999614894,
+        "p95_ms": 19.633471965789795,
+        "p99_ms": 29.92185205221176,
+        "max_ms": 50.53065693937242
+      },
+      "socket_errors": [],
+      "resources": {
+        "samples": 45,
+        "minimum_available_memory_kib": 3013380,
+        "maximum_test_db_connections": 12
+      },
+      "sockets": {
+        "count": 100,
+        "minimum_publications": 572,
+        "maximum_publications": 6006
+      },
+      "cleanup": {
+        "own_database_removed": true,
+        "production_service_unchanged": true
+      },
+      "started_utc": "2026-11-03T18:48:17.562162+00:00",
+      "finished_utc": "2026-11-03T19:06:09.111372+00:00",
+      "qa_binary_sha256": "299da928ff5b63564c7d8d37fafa2e9e6d9c24ae2135e9922ec40a3e7e6d5440"
+    }
+  },
+  "sql": [
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedInitialSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.123,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedAfterSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.13899999999999998,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedBeforeSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.151,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedTailSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.126,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedEntrySQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.09699999999999999,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-plans.json",
+      "query": "feedRequestSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.09899999999999999,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "empty-plan.json",
+      "query": "feedAfterSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.127,
+      "maximum_feed_rows_examined": 0,
+      "row_budget": 0
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedInitialSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.571,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedAfterSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.14600000000000002,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedBeforeSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.203,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedTailSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.121,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedEntrySQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.193,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-under-baseline.json",
+      "query": "feedRequestSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.12,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "metadata",
+      "meeting": "dc5963e9-3cf8-4b21-b81f-2557a50ab3a3",
+      "history_rows": 1001,
+      "samples": 20,
+      "p95_planning_execution_ms": 0.09,
+      "maximum_feed_rows_examined": 0
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "unread",
+      "meeting": "dc5963e9-3cf8-4b21-b81f-2557a50ab3a3",
+      "history_rows": 1001,
+      "samples": 20,
+      "p95_planning_execution_ms": 0.73,
+      "maximum_feed_rows_examined": 999
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "receipts",
+      "meeting": "dc5963e9-3cf8-4b21-b81f-2557a50ab3a3",
+      "history_rows": 1001,
+      "samples": 20,
+      "p95_planning_execution_ms": 1.2530000000000001,
+      "maximum_feed_rows_examined": 100
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "metadata",
+      "meeting": "346ce033-6e16-4475-8935-66ce256e3815",
+      "history_rows": 10001,
+      "samples": 20,
+      "p95_planning_execution_ms": 0.099,
+      "maximum_feed_rows_examined": 0
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "unread",
+      "meeting": "346ce033-6e16-4475-8935-66ce256e3815",
+      "history_rows": 10001,
+      "samples": 20,
+      "p95_planning_execution_ms": 4.559,
+      "maximum_feed_rows_examined": 9999
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "receipts",
+      "meeting": "346ce033-6e16-4475-8935-66ce256e3815",
+      "history_rows": 10001,
+      "samples": 20,
+      "p95_planning_execution_ms": 2.149,
+      "maximum_feed_rows_examined": 100
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "metadata",
+      "meeting": "4d47461c-d5d6-4cc3-97da-c9bec8052fed",
+      "history_rows": 100001,
+      "samples": 20,
+      "p95_planning_execution_ms": 0.049,
+      "maximum_feed_rows_examined": 0
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "unread",
+      "meeting": "4d47461c-d5d6-4cc3-97da-c9bec8052fed",
+      "history_rows": 100001,
+      "samples": 20,
+      "p95_planning_execution_ms": 50.885,
+      "maximum_feed_rows_examined": 99999
+    },
+    {
+      "artifact": "metadata-read-sql.json",
+      "query": "receipts",
+      "meeting": "4d47461c-d5d6-4cc3-97da-c9bec8052fed",
+      "history_rows": 100001,
+      "samples": 20,
+      "p95_planning_execution_ms": 1.722,
+      "maximum_feed_rows_examined": 100
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedInitialSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.124,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedAfterSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.3,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedBeforeSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.17099999999999999,
+      "maximum_feed_rows_examined": 51,
+      "row_budget": 51
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedTailSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.166,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedEntrySQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.181,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    },
+    {
+      "artifact": "sql-under-burst.json",
+      "query": "feedRequestSQL",
+      "samples": 20,
+      "p95_planning_execution_ms": 0.10300000000000001,
+      "maximum_feed_rows_examined": 1,
+      "row_budget": 1
+    }
+  ],
+  "excluded_claims": [
+    "commit-to-visible, client frames and physical-device matrix remain task 7.9",
+    "production deployment or release readiness",
+    "cold bulk fixture import performance"
+  ],
+  "global_qa_check": "failed: Stale catalog or unresolved coverage; checker and foreign work unchanged",
+  "task_qa_ready": {
+    "exit_code": 1,
+    "reason": "Incomplete task acceptance scope: 7.2/TC-CHAT-SYNC-AA76CADB/backend",
+    "artifact": "task-ready-attempt.json"
+  }
+}

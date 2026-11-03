@@ -1,0 +1,179 @@
+{
+  "database": "somewhere_sdd_endpoint_0e9e8d36abcf",
+  "database_transport": "unix-socket-peer-like-production",
+  "profile": {
+    "connections": 100,
+    "users": 20,
+    "baseline_messages_per_second": 5,
+    "baseline_seconds": 900,
+    "burst_messages_per_second": 20,
+    "burst_seconds": 60
+  },
+  "completed": true,
+  "history_rows_before_profile": 100000,
+  "deliberate_contention": {
+    "hold_seconds": 1.0,
+    "writers": 20,
+    "wait_observations_ms": [
+      152.871,
+      214.439,
+      275.647,
+      343.373,
+      405.025,
+      464.309,
+      529.521,
+      586.964,
+      663.145,
+      725.889,
+      784.864,
+      843.855,
+      902.977,
+      960.491,
+      950.807,
+      1006.35,
+      159.777,
+      141.217,
+      123.574,
+      0.0
+    ],
+    "max_observed_wait_ms": 1006.35,
+    "http_samples": [
+      {
+        "operation": "send",
+        "sample": "contention-0",
+        "milliseconds": 947.8985610185191
+      },
+      {
+        "operation": "send",
+        "sample": "contention-2",
+        "milliseconds": 961.1748490715399
+      },
+      {
+        "operation": "send",
+        "sample": "contention-3",
+        "milliseconds": 980.1409119972959
+      },
+      {
+        "operation": "send",
+        "sample": "contention-1",
+        "milliseconds": 996.8666789354756
+      },
+      {
+        "operation": "send",
+        "sample": "contention-4",
+        "milliseconds": 1013.6526240967214
+      },
+      {
+        "operation": "send",
+        "sample": "contention-5",
+        "milliseconds": 1036.0071850009263
+      },
+      {
+        "operation": "send",
+        "sample": "contention-10",
+        "milliseconds": 1051.0196639224887
+      },
+      {
+        "operation": "send",
+        "sample": "contention-8",
+        "milliseconds": 1071.3856510119513
+      },
+      {
+        "operation": "send",
+        "sample": "contention-9",
+        "milliseconds": 1088.449320057407
+      },
+      {
+        "operation": "send",
+        "sample": "contention-7",
+        "milliseconds": 1108.556934981607
+      },
+      {
+        "operation": "send",
+        "sample": "contention-13",
+        "milliseconds": 1110.9619060298428
+      },
+      {
+        "operation": "send",
+        "sample": "contention-6",
+        "milliseconds": 1134.664886048995
+      },
+      {
+        "operation": "send",
+        "sample": "contention-11",
+        "milliseconds": 1138.1994920084253
+      },
+      {
+        "operation": "send",
+        "sample": "contention-14",
+        "milliseconds": 1146.6110430192202
+      },
+      {
+        "operation": "send",
+        "sample": "contention-12",
+        "milliseconds": 1163.0027799401432
+      },
+      {
+        "operation": "send",
+        "sample": "contention-17",
+        "milliseconds": 1179.5893469825387
+      },
+      {
+        "operation": "send",
+        "sample": "contention-15",
+        "milliseconds": 1199.2213620105758
+      },
+      {
+        "operation": "send",
+        "sample": "contention-18",
+        "milliseconds": 1213.3712760405615
+      },
+      {
+        "operation": "send",
+        "sample": "contention-16",
+        "milliseconds": 1229.2418649885803
+      },
+      {
+        "operation": "send",
+        "sample": "contention-19",
+        "milliseconds": 1238.892680965364
+      }
+    ]
+  },
+  "lock_samples": [],
+  "warmup_seconds": 60,
+  "baseline": {
+    "messages": 4500,
+    "elapsed_seconds": 900.0026795389131,
+    "p50_ms": 13.250345014967024,
+    "p95_ms": 21.61338203586638,
+    "p99_ms": 29.782437020912766,
+    "max_ms": 77.98572001047432
+  },
+  "burst": {
+    "messages": 1200,
+    "elapsed_seconds": 60.000676100025885,
+    "p50_ms": 18.21094600018114,
+    "p95_ms": 41.034332010895014,
+    "p99_ms": 54.22835994977504,
+    "max_ms": 84.48480791412294
+  },
+  "socket_errors": [],
+  "resources": {
+    "samples": 45,
+    "minimum_available_memory_kib": 3002536,
+    "maximum_test_db_connections": 12
+  },
+  "sockets": {
+    "count": 100,
+    "minimum_publications": 10115,
+    "maximum_publications": 10125
+  },
+  "cleanup": {
+    "own_database_removed": true,
+    "production_service_unchanged": true
+  },
+  "started_utc": "2026-11-03T18:28:53.568316+00:00",
+  "finished_utc": "2026-11-03T18:46:19.538241+00:00",
+  "qa_binary_sha256": "299da928ff5b63564c7d8d37fafa2e9e6d9c24ae2135e9922ec40a3e7e6d5440"
+}
