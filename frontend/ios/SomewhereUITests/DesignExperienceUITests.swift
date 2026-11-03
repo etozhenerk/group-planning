@@ -102,7 +102,18 @@ final class DesignExperienceUITests: XCTestCase {
                 app.buttons["action-keyboard-done"].tap()
                 XCTAssertTrue(app.buttons["preparation-recipient"].waitForExistence(timeout: 5))
             }
+            let submit = app.buttons[
+                name == "action-task"
+                    ? "Предложить задачу"
+                    : name == "action-place" ? "Предложить место" : "Создать опрос"
+            ]
+            XCTAssertTrue(submit.exists)
+            XCTAssertGreaterThanOrEqual(submit.frame.height, 44)
+            print("ACTION_FOOTER_GEOMETRY \(name) button=\(submit.frame) app=\(app.frame)")
+            // The published footer includes at least 16pt below its action.
+            XCTAssertLessThanOrEqual(submit.frame.maxY, app.frame.maxY - 16)
             capture(name)
+            capture(name + "-settled")
             ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
             XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         }

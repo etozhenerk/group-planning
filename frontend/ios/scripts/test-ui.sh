@@ -20,6 +20,7 @@ case "${1:-all}" in
     qa-baseline) somewhere_baseline=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
     qa-isolation) somewhere_filter=-only-testing:SomewhereUITests/QAIsolationUITests; somewhere_scope=accessibility ;;
     chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
+    chat-keyboard-geometry) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests/testOutsideTapPreservesSelectionAndEmojiSearchFocus; somewhere_scope=chat; somewhere_chat=1 ;;
     chat-controls) somewhere_scope=accessibility ;;
     experience-revocation) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testRevokedSessionCannotReopenCachedMemories; somewhere_scope=accessibility ;;
     experience-recovery) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testProfileFailureIsNotMissingDataAndRetryRestoresFields; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testRevokedSessionCannotReopenCachedMemories; somewhere_scope=accessibility ;;
@@ -49,6 +50,7 @@ case "${1:-all}" in
     sheet-navigation) somewhere_filter=-only-testing:SomewhereUITests/ChatShareListUITests; somewhere_scope=accessibility ;;
     meeting-info) somewhere_filter=-only-testing:SomewhereUITests/MeetingInfoUITests; somewhere_scope=accessibility ;;
     sheet-motion) somewhere_filter=-only-testing:SomewhereUITests/ChatSheetMotionUITests; somewhere_scope=accessibility ;;
+    design-forms) somewhere_filter=-only-testing:SomewhereUITests/DesignExperienceUITests/testActionFormsMatchApprovedLayout; somewhere_scope=accessibility ;;
     design) somewhere_filter=-only-testing:SomewhereUITests/DesignExperienceUITests; somewhere_scope=accessibility ;;
     media) somewhere_filter=-only-testing:SomewhereUITests/MediaExperienceUITests; somewhere_scope=accessibility ;;
     memories) somewhere_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
@@ -73,7 +75,7 @@ case "${1:-all}" in
     touch-targets) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testPeriodAndCancelExposeTheirWholeVisibleTouchTargets; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-keyboard-geometry|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

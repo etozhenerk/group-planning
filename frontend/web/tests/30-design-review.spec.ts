@@ -12,7 +12,13 @@ import {
 } from '@tests/helpers';
 
 const assets = path.resolve('../../openspec/changes/meeting-experience-refresh/assets');
-const output = '/tmp/somewhere-web-design';
+const output = process.env.SOMEWHERE_VISUAL_OUTPUT ?? '/tmp/somewhere-web-design';
+const requestedWidth = process.env.SOMEWHERE_VISUAL_WIDTH;
+const visualWidths = requestedWidth ? [Number(requestedWidth)] : [320, 390, 768, 1440];
+
+if (visualWidths.some((width) => ![320, 390, 768, 1440].includes(width))) {
+  throw new Error('Unsupported visual review viewport');
+}
 
 test('approved HTML and implemented screens at four widths', async ({
   page,
@@ -130,6 +136,15 @@ test('approved HTML and implemented screens at four widths', async ({
     ),
   );
   const reference = await context.newPage();
+  await reference.route(
+    '**/frontend/web/src/app/styles/design-tokens.css',
+    async (route) => {
+      await route.fulfill({
+        body: await readFile(path.resolve('src/app/styles/design-tokens.css')),
+        contentType: 'text/css',
+      });
+    },
+  );
   await reference.route('**/__design/**', async (route) => {
     const file = new URL(route.request().url()).pathname.split('/__design/')[1] ?? '';
     const contentType = file.endsWith('.css')
@@ -145,7 +160,7 @@ test('approved HTML and implemented screens at four widths', async ({
     await route.fulfill({ body: await readFile(path.join(assets, file)), contentType });
   });
 
-  for (const width of [320, 390, 768, 1440]) {
+  for (const width of visualWidths) {
     await page.setViewportSize({ width, height: 1000 });
     await reference.setViewportSize({ width, height: 1000 });
 
@@ -209,9 +224,9 @@ test('approved HTML and implemented screens at four widths', async ({
         .click();
     }
 
-    await page
+    const invitationSource = width < 740 ? page.getByRole('dialog') : page;
+    await invitationSource
       .getByRole('button', { name: 'Пригласить друзей', exact: true })
-      .first()
       .click();
     await expect(page.getByLabel('Ссылка приглашения')).toBeVisible();
     await page.screenshot({
@@ -274,7 +289,7 @@ test('approved HTML and implemented screens at four widths', async ({
         await action.getByLabel('Почему здесь').fill('Там тихо и есть большой стол.');
       }
 
-      await action.getByRole('heading').click();
+      await page.keyboard.press('Tab');
       await page.screenshot({
         path: `${output}/action-${kind}-${width}-actual.png`,
         fullPage: true,
@@ -288,9 +303,8 @@ test('approved HTML and implemented screens at four widths', async ({
         fullPage: true,
         animations: 'disabled',
       });
-      await action
-        .getByRole('button', { name: width < 740 ? 'Закрыть' : 'Назад', exact: true })
-        .click();
+      await page.keyboard.press('Escape');
+      await expect(action).not.toBeVisible();
       await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     }
 
@@ -301,6 +315,26 @@ test('approved HTML and implemented screens at four widths', async ({
           animations: 'disabled',
         });
         await reference.goto(`/__design/${expected}`);
+
+        if (name === 'upload') {
+          await reference
+            .locator('#files')
+            .setInputFiles([
+              path.join(assets, 'boardgame.png'),
+              path.join(assets, 'dinner.png'),
+            ]);
+          await expect(reference.locator('#previews img')).toHaveCount(2);
+        }
+
+        if (name === 'upload-file') {
+          await reference.locator('#files').setInputFiles({
+            name: 'Правила игры.pdf',
+            mimeType: 'application/pdf',
+            buffer: Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(2_516_573)]),
+          });
+          await expect(reference.locator('#previews')).toContainText('Правила игры.pdf');
+        }
+
         await reference.screenshot({
           path: `${output}/${name}-${width}-reference.png`,
           animations: 'disabled',
@@ -339,7 +373,7 @@ test('approved HTML and implemented screens at four widths', async ({
       await expect(
         page.getByText('Демостенд · данные хранятся до перезапуска', { exact: true }),
       ).toBeVisible();
-      await capture('upload', 'upload.html');
+      await capture('upload', 'revisions/2026-10-28-media-flow/index.html?kind=photo');
       await page.keyboard.press('Escape');
       await page.getByRole('button', { name: 'Добавить к встрече' }).click();
       const documentChooser = page.waitForEvent('filechooser');
@@ -353,7 +387,10 @@ test('approved HTML and implemented screens at four widths', async ({
         buffer: Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(2_516_573)]),
       });
       await expect(page.getByLabel('Подпись к Правила игры.pdf')).toBeVisible();
-      await capture('upload-file', 'upload-file.html');
+      await capture(
+        'upload-file',
+        'revisions/2026-10-28-media-flow/index.html?kind=file',
+      );
       await page.keyboard.press('Escape');
       await page.goto(`/meetings/${id}/memories`);
       await page.getByRole('button', { name: 'Показать сеткой' }).click();

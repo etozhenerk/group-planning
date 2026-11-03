@@ -91,7 +91,7 @@ internal fun CompactButton(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(9.dp),
             ) {
-                icon?.let { AppIcon(it, Modifier.size(22.dp)) }
+                icon?.let { AppIcon(it, Modifier.size(22.dp), tint = LocalContentColor.current) }
                 Text(
                     title,
                     fontSize = DesignTokens.typographySizeButton,

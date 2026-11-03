@@ -17,6 +17,8 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         ChatSheetTestSupport.openChat(app)
         let input = app.textViews["message-input"]
         let draft = "first line\nbefore XX after"
+        let heading = app.buttons["meeting-heading"]
+        let headingTop = heading.frame.minY
         input.tap()
         input.typeText(draft)
         for _ in 0..<6 { input.typeKey(.leftArrow, modifierFlags: []) }
@@ -26,6 +28,7 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
 
         tapTimelineBackground(app)
         assertDismissed(app)
+        XCTAssertEqual(heading.frame.minY, headingTop, accuracy: 2)
         XCTAssertEqual(input.value as? String, draft)
         ExperienceScreenshot.save("chat-keyboard-outside-dismissed", test: self)
         app.buttons["composer-emoji-toggle"].tap()
