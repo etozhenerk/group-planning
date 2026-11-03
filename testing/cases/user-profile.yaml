@@ -36,13 +36,21 @@
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ExperienceAccessibilityUITests.swift
+          selector: testProfileFieldsAtLargestTextAndRealVoiceOver
+          runner: ios-ui
+          level: e2e
     android:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileFieldsUiTests.kt
+          selector: profileFieldsAcrossThreeUiLogins
+          runner: android-ui
+          level: e2e
 - id: TC-PROFILE-EBBA2EA5
   title: "Просмотр собственного профиля: Не удалось загрузить профиль"
   lifecycle: active
@@ -81,9 +89,13 @@
       health: unknown
       tests: []
     ios:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ExperienceAccessibilityUITests.swift
+          selector: testProfileFailureIsNotMissingDataAndRetryRestoresFields
+          runner: ios-ui
+          level: e2e
     android:
       status: manual
       health: unknown

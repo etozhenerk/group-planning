@@ -67,6 +67,7 @@ sh scripts/test-ui.sh help             # вопросы помощи при об
 sh scripts/test-ui.sh support-voiceover # фокус и речь VoiceOver; iOS 27+, с возвратом настройки
 sh scripts/test-ui.sh chat-controls # меню, реакции, emoji и системные picker/черновики
 sh scripts/test-ui.sh media-batch # три фото, partial/lost reply, фон и идемпотентный повтор
+sh scripts/test-ui.sh experience-a11y # профиль/вайбы, VoiceOver, XXXL, Reduce Motion и отзыв сессии
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет

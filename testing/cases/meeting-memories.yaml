@@ -417,13 +417,21 @@
       health: unknown
       tests: []
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/ExperienceAccessibilityUITests.swift
+          selector: testMemoriesAtLargestTextWithSystemReducedMotionAndVoiceOver
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileVibeAccessibilityUiTests.kt
+          selector: bVibeTalkBackCustomNextWorksAtLargeTextWithoutMotion
+          runner: android-ui
+          level: e2e
 - id: TC-VIBE-B5FF73B4
   title: "Полноэкранные фото без подписей: Возврат из полноэкранного просмотра"
   lifecycle: active

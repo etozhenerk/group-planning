@@ -679,3 +679,16 @@ Chromium/WebKit одного общего fixture-процесса имеют о
 после исчерпания квоты. Незапрошенный scope и все остальные маршруты используют
 прежний адрес. Это изоляция предусловий QA; production-код/лимиты и CI workflow
 не изменяются. Первоначальный429 полного прогона сохраняется отдельно от retest.
+
+
+### Адресные профили и доступность вайбов, 03.11.2026
+
+Для 5.4/6.4 добавлены реальные системные проверки без изменения требований:
+`ExperienceAccessibilityUITests` (iOS: VoiceOver-речь, XXXL, системный Reduce Motion,
+ошибка/повтор профиля и отзыв сессии) и `ProfileVibeAccessibilityUiTests` (Android:
+TalkBack focus/custom next, font 1.8, landscape и отзыв). `experience-a11y` —
+scoped-команда обоих клиентов; Android также включает ProfileFieldsUiTests и
+ExperienceUiTests.albumSwipeGridAndRecreationKeepTheSelectedPhoto. Настройки
+возвращаются после выполнения. Speech и focus/action не приравниваются друг другу.
+Провайдерские ответы синтетические: TC-PROFILE-YANDEX-FIELDS с настоящим OAuth
+этими тестами не закрывается. Исторические отчёты и общий независимый gate не менялись.

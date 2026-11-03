@@ -637,16 +637,16 @@
       health: unknown
       tests:
         - path: frontend/ios/SomewhereUITests/NativeMediaBatchUITests.swift
-          selector: NativeMediaBatchUITests/testPartialBatchKeepsOnlyFailedPreviewAndRetryDoesNotRepublishSuccess
-          runner: sh scripts/test-ui.sh media-batch
+          selector: testPartialBatchKeepsOnlyFailedPreviewAndRetryDoesNotRepublishSuccess
+          runner: ios-ui
           level: e2e
     android:
       status: partial
       health: unknown
       tests:
         - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/PhotoBatchRetryUiTests.kt
-          selector: PhotoBatchRetryUiTests.partialCommitKeepsFailedPhotoAcrossRecreationAndDoesNotRepeatSuccess
-          runner: sh scripts/test-ui.sh media-batch
+          selector: partialCommitKeepsFailedPhotoAcrossRecreationAndDoesNotRepeatSuccess
+          runner: android-ui
           level: e2e
 - id: TC-MEDIA-WEB-PHOTO-BATCH
   title: Карусель и повтор частичного набора web

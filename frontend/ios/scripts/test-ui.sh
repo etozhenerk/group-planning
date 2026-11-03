@@ -21,6 +21,10 @@ case "${1:-all}" in
     qa-isolation) somewhere_filter=-only-testing:SomewhereUITests/QAIsolationUITests; somewhere_scope=accessibility ;;
     chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
     chat-controls) somewhere_scope=accessibility ;;
+    experience-revocation) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testRevokedSessionCannotReopenCachedMemories; somewhere_scope=accessibility ;;
+    experience-recovery) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testProfileFailureIsNotMissingDataAndRetryRestoresFields; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testRevokedSessionCannotReopenCachedMemories; somewhere_scope=accessibility ;;
+    profile-a11y) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testProfileFieldsAtLargestTextAndRealVoiceOver; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests/testProfileFailureIsNotMissingDataAndRetryRestoresFields; somewhere_scope=accessibility ;;
+    experience-a11y) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests; somewhere_scope=accessibility ;;
     media-batch) somewhere_filter=-only-testing:SomewhereUITests/NativeMediaBatchUITests; somewhere_scope=accessibility ;;
     album-download) somewhere_filter=-only-testing:SomewhereUITests/AlbumDownloadUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
     native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
@@ -60,7 +64,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|media-batch|album-download|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -96,7 +100,7 @@ somewhere_prepare_simulator
 somewhere_prepare_software_keyboard
 
 case "${1:-all}" in
-    all|native-usability|chat-controls|media-batch|sheet-media|media|media-native|covers|covers-large)
+    all|native-usability|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|sheet-media|media|media-native|covers|covers-large)
         somewhere_photo=../../openspec/changes/meeting-experience-refresh/assets/boardgame.png
         printf 'QA_PHOTO_SOURCE=%s\n' "$somewhere_photo"
         shasum -a 256 "$somewhere_photo"
