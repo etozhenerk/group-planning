@@ -33,6 +33,31 @@ Unified Agent закреплён на 26.10.50; SHA256 — проверенно�
 До допуска данных сохранить identity/SSH/state в отдельном защищённом хранилище;
 наличие этих файлов на одном компьютере не является такой резервной копией.
 
+## OAuth из Lockbox
+
+Значения OAuth не находятся в Terraform/state. Для переноса существующей
+версии Lockbox в закрытый `/etc/somewhere/application.env` применяется
+`sync-oauth-config.py`. Он получает краткоживущий IAM-токен runtime service account
+через metadata ВМ, проверяет полный набор двух OAuth-полей и атомарно обновляет
+только их, сохраняя остальные строки, владельца и режим файла. Значения не выводятся.
+Неполный/некорректный ответ не меняет конфигурацию; файл должен уже существовать.
+
+Из корня репозитория, с проверенным SSH host key:
+
+```sh
+ssh -i infra/local/somewhere-admin -o IdentitiesOnly=yes -o BatchMode=yes \
+  -o StrictHostKeyChecking=yes -o UserKnownHostsFile=infra/local/known_hosts \
+  somewhere-admin@SERVER_IP \
+  'sudo python3 - --secret-id OAUTH_SECRET_ID --environment /etc/somewhere/application.env --check' \
+  < infra/host/sync-oauth-config.py
+```
+
+`--check` только сверяет действующий файл и Lockbox. Для разрешённой смены
+конфигурации убрать этот флаг; перезапуск/выпуск выполняется отдельно по обычному
+процессу. Systemd читает закрытый файл от root и передаёт окружение приложению;
+давать пользователю приложения доступ к самому файлу не требуется. Проверки
+утилиты: `python3 -m unittest discover -s infra/host -p test_sync_oauth_config.py`.
+
 ## PostgreSQL
 
 - `listen_addresses=''`: только Unix socket, peer-аутентификация.
