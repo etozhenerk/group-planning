@@ -238,3 +238,5 @@ hash. После изменения клиентского source пункты w
 Android6.3: [адресная проверка и исправление позиции после прочтения](qa/2026-11-02-sequential-android-window/result.md); полный performance7.9 и общий приёмочный7.8 остаются открыты.
 
 iOS5.3: [реальное окно/первое непрочитанное и исправления](qa/2026-11-02-sequential-ios-window/result.md). Общие performance/независимая приёмка остаются в5.5/7.7/7.9.
+
+По7.2 03.11 устранены подтверждённая подмена context cancellation на terminal auth и лишний writer-lock в чтении identity. Go/race и560 HTTP-response checks пройдены; полный профиль100 соединений ещё не принят. [Текущий checkpoint](qa/2026-11-03-hot-meeting/checkpoint.md). Checkbox7.2 остаётся открытым.

@@ -13,7 +13,15 @@ type Identity struct{ db *Database }
 // Identity returns an authentication adapter backed by the shared pool.
 func (db *Database) Identity() *Identity { return &Identity{db: db} }
 
-var _ identity.Store = (*Identity)(nil)
+var (
+	_ identity.Store     = (*Identity)(nil)
+	_ identity.ReadStore = (*Identity)(nil)
+)
+
+// View reads one consistent snapshot without serializing session mutations.
+func (s *Identity) View(ctx context.Context, fn func(identity.ReadRecords) error) error {
+	return s.db.transact(ctx, false, 0, func(tx *transaction) error { return fn(&identityTransaction{tx}) })
+}
 
 // Update commits all records together, including methods without an error result.
 func (s *Identity) Update(ctx context.Context, fn func(identity.Records) error) error {

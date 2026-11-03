@@ -1,0 +1,23 @@
+{"test_database": "somewhere_sdd_endpoint_cf63de5a3d9d", "test_marker": "somewhere-sdd-endpoint:cf63de5a3d9d4e7fb7af2733a5419670"}
+{"check": "separate_migrations_nonprivileged_runtime", "result": "passed", "postgres_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)", "flags": {"superuser": false, "createdb": false, "createrole": false}, "extensions": ["plpgsql"], "migrations": "8"}
+{"check": "untrusted_ca_rejected", "result": "passed"}
+{"check": "verified_tls_authenticated_api", "result": "passed"}
+{"check": "committed_response_body_discarded", "result": "passed"}
+{"check": "pool_recovers_without_api_restart", "result": "passed", "failure_http_status": 500, "api_launcher_pid": 160046}
+{"check": "dsn_endpoint_switch_and_idempotent_retry", "result": "passed", "old_database_port": 43233, "new_database_port": 60311, "meetings": 1}
+{"stage": "100_websockets_subscribed", "history_rows": 100000}
+{"stage": "baseline", "messages": 1, "elapsed_seconds": 0.199, "publications": 15}
+{"stage": "baseline", "messages": 151, "elapsed_seconds": 30.231, "publications": 19070}
+{"stage": "baseline", "messages": 301, "elapsed_seconds": 60.214, "publications": 42000}
+{"stage": "baseline", "messages": 451, "elapsed_seconds": 90.135, "publications": 64105}
+{"stage": "baseline", "messages": 601, "elapsed_seconds": 120.134, "publications": 87050}
+{"stage": "baseline", "messages": 751, "elapsed_seconds": 150.136, "publications": 108930}
+{"hot_profile_result": {"database": "somewhere_sdd_endpoint_cf63de5a3d9d", "profile": {"connections": 100, "users": 20, "baseline_messages_per_second": 5, "baseline_seconds": 900, "burst_messages_per_second": 20, "burst_seconds": 60}, "completed": false, "history_rows_before_profile": 100000, "deliberate_contention": {"hold_seconds": 1.0, "writers": 20, "wait_observations_ms": [82.899, 141.799, 199.206, 258.028, 321.028, 380.051, 438.093, 496.169, 553.463, 610.907, 668.852, 728.112, 787.589, 845.309, 902.698, 958.61, 1011.916, 1039.412, 1078.709, 1131.274, 244.663, 218.542, 206.919, 181.616, 208.079], "max_observed_wait_ms": 1131.274}}}
+{"started_utc": "2026-11-03T17:15:25.795529+00:00", "binary": "/opt/somewhere/backend/releases/0.1.0-rc.6/somewhere-api", "binary_sha256": "49277a594c26cdcf8fcfce2722826d17b7f9b414df13d2c2aab693a7bb468a83", "database": "somewhere_sdd_endpoint_cf63de5a3d9d", "checks": [{"check": "separate_migrations_nonprivileged_runtime", "result": "passed", "postgres_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)", "flags": {"superuser": false, "createdb": false, "createrole": false}, "extensions": ["plpgsql"], "migrations": "8"}, {"check": "untrusted_ca_rejected", "result": "passed"}, {"check": "verified_tls_authenticated_api", "result": "passed"}, {"check": "committed_response_body_discarded", "result": "passed"}, {"check": "pool_recovers_without_api_restart", "result": "passed", "failure_http_status": 500, "api_launcher_pid": 160046}, {"check": "dsn_endpoint_switch_and_idempotent_retry", "result": "passed", "old_database_port": 43233, "new_database_port": 60311, "meetings": 1}], "cleanup": {"own_database_removed": true, "production_service_unchanged": true}, "finished_utc": "2026-11-03T17:18:49.314019+00:00"}
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<string>", line 16, in <module>
+  File "isolated_fixture.py", line 282, in main
+  File "hot-profile-fixture.py", line 141, in hot_profile
+  File "hot-profile-fixture.py", line 58, in guard
+AssertionError: test socket disconnected

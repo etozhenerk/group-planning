@@ -57,16 +57,8 @@ func (db *Database) transact(ctx context.Context, write bool, lock int64, fn fun
 
 	callbackErr := fn(tx)
 	tx.close()
-	if tx.err != nil {
-		return tx.err
-	}
-
-	if callbackErr != nil {
-		return callbackErr
-	}
-
-	if ctx.Err() != nil {
-		return ctx.Err()
+	if err := tx.callbackError(callbackErr); err != nil {
+		return err
 	}
 
 	if err = connection.Commit(ctx); err != nil {
@@ -74,6 +66,18 @@ func (db *Database) transact(ctx context.Context, write bool, lock int64, fn fun
 	}
 
 	return nil
+}
+
+func (tx *transaction) callbackError(callbackErr error) error {
+	if tx.err != nil {
+		return tx.err
+	}
+
+	if tx.ctx.Err() != nil {
+		return tx.ctx.Err()
+	}
+
+	return callbackErr
 }
 
 func (tx *transaction) close() { tx.mu.Lock(); defer tx.mu.Unlock(); tx.closed = true }

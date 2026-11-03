@@ -59,7 +59,7 @@ func (s *Service) Authenticate(ctx context.Context, token string, web bool) (Pri
 	}
 
 	var result Principal
-	err := s.store.Update(ctx, func(records Records) error {
+	err := s.readRecords(ctx, func(records ReadRecords) error {
 		session, ok := records.Session(digest(token))
 		if !ok || !s.now().Before(session.ExpiresAt) || (session.ClientKind == "web") != web {
 			return ErrUnauthenticated
@@ -112,7 +112,7 @@ func (s *Service) Cleanup(ctx context.Context) (CleanupCount, error) {
 // It never accepts provider subjects as proof of identity.
 func (s *Service) Users(ctx context.Context, ids []string) (map[string]User, error) {
 	result := make(map[string]User, len(ids))
-	err := s.store.Update(ctx, func(records Records) error {
+	err := s.readRecords(ctx, func(records ReadRecords) error {
 		for _, id := range ids {
 			user, ok := records.User(id)
 			if !ok {

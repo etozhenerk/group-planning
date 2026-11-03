@@ -1,0 +1,66 @@
+{
+  "phase": "checkpoint",
+  "task": "7.2",
+  "full_profile_result": "running-not-passed",
+  "verification": "main-agent-by-user-direction; not independent gate",
+  "source_parent_commit": "2e0ab5f73acdfd8c19247a1d897dd4fba804deee",
+  "source_workspace_modified": true,
+  "qa_binary_sha256": "299da928ff5b63564c7d8d37fafa2e9e6d9c24ae2135e9922ec40a3e7e6d5440",
+  "source_files": [
+    {
+      "path": "backend/internal/storage/postgres/transaction.go",
+      "sha256": "c2d0864657266baa0dc5ff2f3f2864cba5800aaa6dacf03141021e26e2c25699"
+    },
+    {
+      "path": "backend/internal/storage/postgres/transaction_context_test.go",
+      "sha256": "fbacef4defb315302e7d56947974a79cbf8cc50372eb32e7a69d7c4486e1c065"
+    },
+    {
+      "path": "backend/internal/storage/postgres/identity.go",
+      "sha256": "4dcbfc1e0499fa883d5dfe89d113a2431e4d7ba97ac425528ea2cdf640871801"
+    },
+    {
+      "path": "backend/internal/identity/read_store.go",
+      "sha256": "8f9c6c9c8fff22f7f9d9c6a8a72b1c130a5dc708b7fb5a627c4e7a8b0aa09bfe"
+    },
+    {
+      "path": "backend/internal/identity/read_store_test.go",
+      "sha256": "d29aa644eef94e22e5de66b4588213e0b4283fa1422d9e695440aafb814a8c9a"
+    },
+    {
+      "path": "backend/internal/identity/session.go",
+      "sha256": "73d0a41ab34b1afb0103987669d2c75303e22bf90d6496b8083b74a0a1e490ef"
+    }
+  ],
+  "required_commands": [
+    {
+      "command": "go test -race ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go build ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go run ./cmd/check-dependencies",
+      "exit_code": 0
+    },
+    {
+      "command": "sh scripts/format.sh --check",
+      "exit_code": 0
+    },
+    {
+      "command": "test -z \"$(gofmt -l .)\"",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run api:test",
+      "exit_code": 0
+    }
+  ],
+  "http_responses": 560
+}
