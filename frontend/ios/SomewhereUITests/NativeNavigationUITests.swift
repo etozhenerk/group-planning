@@ -34,10 +34,29 @@ final class NativeNavigationUITests: XCTestCase {
             XCTAssertFalse(app.buttons[id].isHittable)
             XCTAssertFalse(app.scrollViews["create-form"].buttons[id].exists)
         }
+        let cover = app.buttons["cover-select"]
+        let title = app.descendants(matching: .any)["meeting-title"].firstMatch
+        XCTAssertTrue(cover.isHittable)
+        XCTAssertLessThan(cover.frame.maxY, title.frame.minY)
         ExperienceScreenshot.save("native-create-without-tabs", test: self)
         app.buttons["Закрыть"].tap()
         for id in tabs { XCTAssertTrue(app.buttons[id].isHittable) }
         ExperienceScreenshot.save("native-tabs-stable", test: self)
+    }
+
+    func testTabsWithSystemReducedMotion() throws {
+        let motion = SimulatorMotionPreference()
+        addTeardownBlock { try motion.restore() }
+        try motion.enable()
+        let app = ChatSheetTestSupport.launch()
+        XCTAssertTrue(try ExperienceScreenshot.reducedMotionEnabled())
+        let tabs = ["home-tab-calendar", "home-tab-envelope", "home-tab-person.crop.circle"]
+        for index in [2, 1, 0, 1, 2, 0] {
+            app.buttons[tabs[index]].tap()
+            XCTAssertTrue(app.buttons[tabs[index]].isSelected)
+            for id in tabs { XCTAssertEqual(app.buttons.matching(identifier: id).count, 1) }
+        }
+        ExperienceScreenshot.save("native-tabs-system-reduced-motion", test: self)
     }
 
     func testEdgeBackKeepsCalendarAndMessageDraft() throws {
