@@ -1,0 +1,104 @@
+[WebServer] (node:18431) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:18468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted (16.3s)
+(node:19222) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile-webkit] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted (17.2s)
+
+
+  1) [chromium] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' })
+    Expected substring: "Удалённый аккаунт"
+    Received string:    "УУдаление: автор16:50История остаётся участникамКто отреагировалВсеРеакций пока нет"
+    Timeout: 15000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' }) with timeout 15000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' })
+        34 × locator resolved to <li data-mobile="false" data-delivery="accepted" data-testid="feed-message" class="_feed-message_p8bwd_1" data-ui-key="26fce707-94c5-4d83-abf4-b2edd2c8a110:c45ba139-0266-47f1-b5e9-8873ec04d24b">…</li>
+           - unexpected value "УУдаление: автор16:50История остаётся участникамКто отреагировалВсеРеакций пока нет"
+
+
+      69 |
+      70 |     expect(removed.status()).toBe(204);
+    > 71 |     await expect(row).toContainText('Удалённый аккаунт', { timeout: 15_000 });
+         |                       ^
+      72 |     const me = sessionSchema.parse(await (await other.request.get('/api/v1/me')).json());
+      73 |     const meeting = await apiMeeting(other, created.meeting.id);
+      74 |     expect(meeting.organizer_id).toBe(me.user.id);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/26-account-deletion.spec.ts:71:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-webkit] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' })
+    Expected substring: "Удалённый аккаунт"
+    Received string:    "УУдаление: автор16:51История остаётся участникамКто отреагировалВсеРеакций пока нет"
+    Timeout: 15000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' }) with timeout 15000ms
+      - waiting for getByTestId('feed-message').filter({ hasText: 'История остаётся участникам' })
+        34 × locator resolved to <li data-mobile="true" data-delivery="accepted" data-testid="feed-message" class="_feed-message_p8bwd_1" data-ui-key="ade80522-e547-4d65-af74-5449e1d6cd03:40dc523d-8abb-46ee-be75-be72902d6f4d">…</li>
+           - unexpected value "УУдаление: автор16:51История остаётся участникамКто отреагировалВсеРеакций пока нет"
+
+
+      69 |
+      70 |     expect(removed.status()).toBe(204);
+    > 71 |     await expect(row).toContainText('Удалённый аккаунт', { timeout: 15_000 });
+         |                       ^
+      72 |     const me = sessionSchema.parse(await (await other.request.get('/api/v1/me')).json());
+      73 |     const meeting = await apiMeeting(other, created.meeting.id);
+      74 |     expect(meeting.organizer_id).toBe(me.user.id);
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/26-account-deletion.spec.ts:71:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-mobile-webkit/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-mobile-webkit/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../../../../tmp/somewhere-20261103-account-web/26-account-deletion-surviv-396c3--after-the-owner-is-deleted-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted 
+    [mobile-webkit] › tests/26-account-deletion.spec.ts:26:1 › survivor keeps a meeting and legacy history after the owner is deleted 

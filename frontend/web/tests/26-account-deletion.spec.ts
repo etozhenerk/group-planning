@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
-import { login, csrf } from '@tests/helpers';
+import { login, csrf, apiCreate, writeHeaders, apiMeeting } from '@tests/helpers';
 import type { Page } from '@playwright/test';
+import { randomBytes, randomUUID } from 'node:crypto';
+import { feedSchema, sessionSchema } from '@/shared/api';
 
 const openDeletion = async (page: Page) => {
   const token = await csrf(page);
@@ -20,6 +22,85 @@ const openDeletion = async (page: Page) => {
 
   return page.getByRole('dialog', { name: 'Удалить аккаунт?' });
 };
+
+test('survivor keeps a meeting and legacy history after the owner is deleted', async ({
+  page,
+  browser,
+  baseURL,
+}) => {
+  await login(page, 'Удаление: автор');
+  const created = await apiCreate(page, `Сохранённая встреча ${randomUUID()}`);
+  const key = randomUUID();
+  const message = await page.request.post(
+    `/api/v1/meetings/${created.meeting.id}/messages`,
+    {
+      headers: await writeHeaders(page, key),
+      data: { text: 'История остаётся участникам', client_request_id: key },
+    },
+  );
+
+  expect(message.status()).toBe(201);
+  const other = await browser.newPage({
+    ...(baseURL ? { baseURL } : {}),
+    ignoreHTTPSErrors: true,
+  });
+
+  try {
+    await login(other, 'Удаление: участник');
+    const token = new URL(created.invitation_url).pathname.split('/').at(-1);
+    const joined = await other.request.put(`/api/v1/invitations/${token}/rsvp`, {
+      headers: await writeHeaders(other),
+      data: { answer: 'going', expected_revision: '0' },
+    });
+
+    expect(joined.status()).toBe(200);
+    const path = `/api/v1/meetings/${created.meeting.id}`;
+    const before = feedSchema.parse(
+      await (await other.request.get(`${path}/feed`)).json(),
+    );
+
+    await other.goto(`/meetings/${created.meeting.id}`);
+    const row = other
+      .getByTestId('feed-message')
+      .filter({ hasText: 'История остаётся участникам' });
+
+    await expect(row).toContainText('Удаление: автор');
+    const removed = await page.request.delete('/api/v1/me', {
+      headers: {
+        ...(await writeHeaders(page)),
+        'X-Deletion-Token': randomBytes(32).toString('base64url'),
+      },
+    });
+
+    expect(removed.status()).toBe(204);
+    await expect(row).toContainText('Удалённый аккаунт', { timeout: 15_000 });
+    const me = sessionSchema.parse(await (await other.request.get('/api/v1/me')).json());
+    const meeting = await apiMeeting(other, created.meeting.id);
+    expect(meeting.organizer_id).toBe(me.user.id);
+    expect(meeting.participant_count).toBe(1);
+    const after = feedSchema.parse(
+      await (await other.request.get(`${path}/feed`)).json(),
+    );
+
+    const original = before.entries.find((entry) => entry.client_request_id === key);
+    const retained = after.entries.find((entry) => entry.client_request_id === key);
+    expect(retained?.kind).toBe(original?.kind);
+    expect(retained?.payload).toEqual(original?.payload);
+    expect(retained?.actor.display_name).toBe('Удалённый аккаунт');
+    await other
+      .getByLabel('Сообщение', { exact: true })
+      .fill('После передачи организации');
+    await other.getByRole('button', { name: 'Отправить сообщение' }).click();
+    await expect(
+      other.getByTestId('feed-message').filter({ hasText: 'После передачи организации' }),
+    ).toHaveAttribute('data-delivery', 'accepted');
+    await other.reload();
+    await expect(row).toContainText('Удалённый аккаунт');
+    await other.screenshot({ path: test.info().outputPath('account-survivor.png') });
+  } finally {
+    await other.close();
+  }
+});
 
 test('profile hides account deletion and keeps logout last on narrow screens', async ({
   page,

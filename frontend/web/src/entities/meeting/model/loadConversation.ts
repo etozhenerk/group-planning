@@ -3,7 +3,8 @@ import { getFeed } from '@/entities/meeting/api/read';
 import { feedWindow } from '@/entities/meeting/model/feedWindow';
 import { mergeEntries } from '@/entities/meeting/lib/mapFeed';
 import { guarded, privateKey } from '@/entities/meeting/model/access';
-import type { Conversation } from '@/entities/meeting/model/types';
+import type { Conversation, FeedEntry } from '@/entities/meeting/model/types';
+import { refreshLegacyEntries } from '@/entities/meeting/model/refreshLegacyEntries';
 
 export const loadConversation = (
   client: QueryClient,
@@ -59,9 +60,26 @@ export const loadConversation = (
       incoming = mergeEntries(incoming, page.entries).slice(-500);
     }
 
-    const latest = client.getQueryData<Conversation>(key);
+    let latest = client.getQueryData<Conversation>(key);
+    let removed = new Set<string>();
+    let refreshedEntries: FeedEntry[] = [];
 
     if (latest && latest.meetingRevision !== page.meetingRevision) {
+      const refreshed = await refreshLegacyEntries(
+        id,
+        [...latest.entries, ...(latest.protectedEntries ?? [])],
+        signal,
+      );
+
+      removed = refreshed.removed;
+      refreshedEntries = refreshed.refreshed;
+      latest = client.getQueryData<Conversation>(key);
+      incoming = mergeEntries(
+        incoming,
+        refreshedEntries.filter((entry) =>
+          latest?.entries.some((value) => value.id === entry.id),
+        ),
+      );
       void client.invalidateQueries({ queryKey: privateKey(user, id, epoch, 'details') });
       void client.invalidateQueries({
         queryKey: privateKey(user, id, epoch, 'participants'),
@@ -71,7 +89,21 @@ export const loadConversation = (
 
     return {
       ...page,
-      entries: mergeEntries(latest?.entries ?? [], incoming),
+      entries: mergeEntries(latest?.entries ?? [], incoming).filter(
+        (entry) => !removed.has(entry.id),
+      ),
+      ...(latest?.protectedEntries
+        ? {
+            protectedEntries: mergeEntries(latest.protectedEntries, [
+              ...incoming,
+              ...refreshedEntries,
+            ]).filter(
+              (entry) =>
+                latest?.protectedEntries?.some((value) => value.id === entry.id) &&
+                !removed.has(entry.id),
+            ),
+          }
+        : {}),
       hasOlder: latest?.hasOlder ?? page.hasMore,
       receiveCursor,
       newMessages,

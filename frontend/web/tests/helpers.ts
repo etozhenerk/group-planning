@@ -3,7 +3,10 @@ import type { Page } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { createdSchema, meetingSchema, sessionSchema } from '@/shared/api';
 
-export const login = async (page: Page, who: 'Саша' | 'Лена') => {
+export const login = async (
+  page: Page,
+  who: 'Саша' | 'Лена' | 'Удаление: автор' | 'Удаление: участник',
+) => {
   await page.goto('/meetings');
   await page.getByRole('button', { name: 'Войти через Яндекс ID' }).click();
   await page.getByRole('link', { name: `Войти как ${who}` }).click();

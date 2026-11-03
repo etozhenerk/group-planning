@@ -41,6 +41,8 @@ var browserProfiles = []struct{ code, name string }{
 	{"profile-fields-full", "Профиль: все поля"},
 	{"profile-fields-partial", "Профиль: неполная дата"},
 	{"profile-fields-clear", "Профиль: очищение"},
+	{"account-removal-owner", "Удаление: автор"},
+	{"account-removal-survivor", "Удаление: участник"},
 }
 
 func (p browserProvider) AuthorizationURL(state, challenge string) string {

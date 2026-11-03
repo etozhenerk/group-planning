@@ -63,6 +63,7 @@ case "${1:-all}" in
     calendar) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests; somewhere_scope=calendar ;;
     album-preload) somewhere_filter=-only-testing:SomewhereUITests/AlbumPreloadUITests; somewhere_scope=calendar ;;
     album-save-many) somewhere_filter=-only-testing:SomewhereUITests/AlbumPreloadUITests/testSaveAll103PhotosThroughPhotoKit; somewhere_scope=calendar ;;
+    account-survivor) somewhere_filter=-only-testing:SomewhereUITests/AccountDeletionUITests/testOtherParticipantKeepsMeetingAndAnonymizedHistoryAfterOwnerDeletion; somewhere_scope=calendar ;;
     feed) somewhere_filter=-only-testing:SomewhereUITests/FeedUITests; somewhere_scope=feed; somewhere_chat=1 ;;
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
