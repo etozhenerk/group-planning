@@ -1,0 +1,1430 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_BEFORE=1
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_ACTIVE=0
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (10 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+    Target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: be2c890d86620f8cf751f28db73b293f
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/be2c890d86620f8cf751f28db73b293f.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261103T200328-32482.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/DesignExperienceUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T200328-32482.xcresult
+
+2026-11-03 21:03:30.854 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:03:32.259977+0100 SomewhereUITests-Runner[33474:16519457] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-03 21:03:35.300.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-03 21:03:35.301.
+Test Suite 'DesignExperienceUITests' started at 2026-11-03 21:03:35.301.
+Test Case '-[SomewhereUITests.DesignExperienceUITests testActionFormsMatchApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:03:35.303
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-03 21:03:35.398 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:03:35.398 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:03:35.428 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[33474]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1065d4398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x107344310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.04s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.45s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.49s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.49s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.59s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.66s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.71s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.72s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.74s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.77s     Synthesize event
+    t =     6.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.55s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.59s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.59s         Checking existence of `"meeting-add" Button`
+    t =     7.63s Tap "meeting-add" Button
+    t =     7.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.64s     Find the "meeting-add" Button
+    t =     7.66s     Check for interrupting elements affecting "meeting-add" Button
+    t =     7.69s     Synthesize event
+    t =     7.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.99s Tap "new-preparation-task" Button
+    t =     7.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.00s     Find the "new-preparation-task" Button
+    t =     8.03s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =     8.05s     Synthesize event
+    t =     8.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.85s Waiting 5.0s for "preparation-title" Any to exist
+    t =     9.88s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-title" Any`
+    t =     9.88s         Checking existence of `"preparation-title" Any`
+    t =     9.99s Checking existence of `"home-tab-calendar" Button`
+    t =    10.04s Checking existence of `"action-form-back" Button`
+    t =    10.06s Find the "action-form-header" StaticText
+    t =    10.09s Tap "preparation-title" Any
+    t =    10.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.10s     Find the "preparation-title" Any
+    t =    10.18s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    10.22s     Synthesize event
+    t =    10.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.DesignExperienceUITests testActionFormsMatchApprovedLayout] : Invalid frame dimension (negative or non-finite).
+    t =    10.79s Type 'Заказать пиццу' into "preparation-title" TextField
+    t =    10.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.17s     Find the "preparation-title" TextField
+    t =    11.39s     Check for interrupting elements affecting "preparation-title" TextField
+    t =    11.45s     Synthesize event
+    t =    11.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.91s Tap "action-keyboard-done" Button
+    t =    11.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.91s     Find the "action-keyboard-done" Button
+    t =    11.95s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    11.99s     Synthesize event
+    t =    12.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.59s Waiting 5.0s for "preparation-recipient" Button to exist
+    t =    13.67s     Checking `Expect predicate `existsNoRetry == 1` for object "preparation-recipient" Button`
+    t =    13.67s         Checking existence of `"preparation-recipient" Button`
+    t =    14.28s Added attachment named 'design-action-task'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task.png
+    t =    14.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task.json
+    t =    14.44s Find the "action-keyboard-done" Button
+    t =    15.47s     Find the "action-keyboard-done" Button (retry 1)
+    t =    16.52s     Find the "action-keyboard-done" Button (retry 2)
+    t =    16.57s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    17.63s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    17.63s         Checking existence of `"action-form-header" StaticText`
+    t =    17.67s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.70s Find the "action-form-header" StaticText
+    t =    17.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.77s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 552.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    17.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.77s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.79s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    17.82s     Synthesize event
+    t =    17.82s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.84s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.86s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.87s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.90s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.29s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    20.29s     Checking existence of `"action-form-header" StaticText`
+    t =    20.32s Waiting 5.0s for "meeting-add" Button to exist
+    t =    21.35s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    21.35s         Checking existence of `"meeting-add" Button`
+    t =    21.38s Tap "meeting-add" Button
+    t =    21.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.38s     Find the "meeting-add" Button
+    t =    21.41s     Check for interrupting elements affecting "meeting-add" Button
+    t =    21.43s     Synthesize event
+    t =    21.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.74s Tap "new-place-poll" Button
+    t =    21.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.75s     Find the "new-place-poll" Button
+    t =    21.78s     Check for interrupting elements affecting "new-place-poll" Button
+    t =    21.81s     Synthesize event
+    t =    22.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.56s Waiting 5.0s for "place-poll-place" Any to exist
+    t =    23.60s     Checking `Expect predicate `existsNoRetry == 1` for object "place-poll-place" Any`
+    t =    23.60s         Checking existence of `"place-poll-place" Any`
+    t =    23.71s Checking existence of `"home-tab-calendar" Button`
+    t =    23.73s Checking existence of `"action-form-back" Button`
+    t =    23.76s Find the "action-form-header" StaticText
+    t =    24.33s Added attachment named 'design-action-place'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place.png
+    t =    24.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place.json
+    t =    24.49s Find the "action-keyboard-done" Button
+    t =    25.52s     Find the "action-keyboard-done" Button (retry 1)
+    t =    26.56s     Find the "action-keyboard-done" Button (retry 2)
+    t =    26.60s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    27.63s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    27.64s         Checking existence of `"action-form-header" StaticText`
+    t =    27.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.71s Find the "action-form-header" StaticText
+    t =    27.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.76s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.78s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 378.2) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    27.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.78s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.80s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    27.83s     Synthesize event
+    t =    27.83s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.85s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.87s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.89s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.91s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.62s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    30.62s     Checking existence of `"action-form-header" StaticText`
+    t =    30.65s Waiting 5.0s for "meeting-add" Button to exist
+    t =    31.68s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    31.69s         Checking existence of `"meeting-add" Button`
+    t =    31.72s Tap "meeting-add" Button
+    t =    31.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.72s     Find the "meeting-add" Button
+    t =    31.75s     Check for interrupting elements affecting "meeting-add" Button
+    t =    31.78s     Synthesize event
+    t =    32.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.09s Tap "new-date-poll" Button
+    t =    32.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.09s     Find the "new-date-poll" Button
+    t =    32.12s     Check for interrupting elements affecting "new-date-poll" Button
+    t =    32.15s     Synthesize event
+    t =    32.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.92s Waiting 5.0s for "poll-create" Any to exist
+    t =    33.95s     Checking `Expect predicate `existsNoRetry == 1` for object "poll-create" Any`
+    t =    33.95s         Checking existence of `"poll-create" Any`
+    t =    34.04s Checking existence of `"home-tab-calendar" Button`
+    t =    34.07s Checking existence of `"action-form-back" Button`
+    t =    34.09s Find the "action-form-header" StaticText
+    t =    34.64s Added attachment named 'design-action-date'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date.png
+    t =    34.64s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.66s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.72s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date.json
+    t =    34.79s Find the "action-keyboard-done" Button
+    t =    35.82s     Find the "action-keyboard-done" Button (retry 1)
+    t =    36.86s     Find the "action-keyboard-done" Button (retry 2)
+    t =    36.91s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    37.94s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    37.94s         Checking existence of `"action-form-header" StaticText`
+    t =    37.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.00s Find the "action-form-header" StaticText
+    t =    38.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.07s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 153.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    38.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.08s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.10s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    38.12s     Synthesize event
+    t =    38.13s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.14s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.17s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.18s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.21s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    39.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.36s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    41.36s     Checking existence of `"action-form-header" StaticText`
+    t =    41.40s Waiting 5.0s for "meeting-add" Button to exist
+    t =    42.41s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    42.42s         Checking existence of `"meeting-add" Button`
+    t =    42.46s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testActionFormsMatchApprovedLayout]' passed (42.757 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testActionSheetsKeepCloseAccessibleAtLargeText]' started.
+    t =     0.00s Start Test at 2026-11-03 21:04:18.063
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:33492
+2026-11-03 21:04:18.107 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:04:18.107 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:04:18.108 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:04:19.147 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:04:19.147 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:04:19.162 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.30s         Setting up automation session
+    t =     3.67s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.97s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.99s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.99s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     6.09s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.20s Swipe up ScrollView (First Match)
+    t =     6.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.21s     Find the ScrollView (First Match)
+    t =     6.23s     Check for interrupting elements affecting "meetings-list" ScrollView
+    t =     6.27s     Synthesize event
+    t =     6.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.88s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.92s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.97s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.98s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.00s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.03s     Synthesize event
+    t =     9.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.76s Waiting 10.0s for "meeting-add" Button to exist
+    t =    10.80s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    10.80s         Checking existence of `"meeting-add" Button`
+    t =    10.83s Tap "meeting-add" Button
+    t =    10.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.84s     Find the "meeting-add" Button
+    t =    10.86s     Check for interrupting elements affecting "meeting-add" Button
+    t =    10.88s     Synthesize event
+    t =    11.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.19s Tap "new-preparation-task" Button
+    t =    11.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.20s     Find the "new-preparation-task" Button
+    t =    11.22s     Check for interrupting elements affecting "new-preparation-task" Button
+    t =    11.25s     Synthesize event
+    t =    11.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.06s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    13.10s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    13.10s         Checking existence of `"action-form-header" StaticText`
+    t =    13.14s Find the "action-form-header" StaticText
+    t =    13.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.19s Find the "action-form-header" StaticText
+    t =    13.22s Checking existence of `"Предложить задачу" StaticText`
+    t =    13.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.26s Find the "Предложить задачу" StaticText
+    t =    13.29s Checking existence of `"action-form-back" Button`
+    t =    13.32s Checking existence of `"home-tab-calendar" Button`
+    t =    13.89s Added attachment named 'design-action-task-large-text'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task-large-text.png
+    t =    13.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task-large-text.json
+    t =    14.03s Checking existence of `"action-form-scroll" ScrollView`
+    t =    14.05s Checking existence of `"preparation-create" Button`
+    t =    14.07s Find the "preparation-create" Button
+    t =    14.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.11s Find the "preparation-create" Button
+    t =    14.14s Find the "preparation-create" Button
+    t =    14.16s Find the "action-form-header" StaticText
+    t =    14.19s Find the "preparation-create" Button
+    t =    14.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.23s Find the "action-form-header" StaticText
+    t =    14.26s Find the "action-form-header" StaticText
+    t =    14.82s Added attachment named 'design-action-task-large-text-submit'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task-large-text-submit.png
+    t =    14.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-task-large-text-submit.json
+    t =    14.95s Find the "action-keyboard-done" Button
+    t =    15.97s     Find the "action-keyboard-done" Button (retry 1)
+    t =    17.02s     Find the "action-keyboard-done" Button (retry 2)
+    t =    17.04s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    18.07s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    18.07s         Checking existence of `"action-form-header" StaticText`
+    t =    18.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.11s Find the "action-form-header" StaticText
+    t =    18.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.16s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 306.5) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    18.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.17s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.18s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    18.20s     Synthesize event
+    t =    18.21s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.22s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.24s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.25s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.27s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.12s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    21.12s     Checking existence of `"action-form-header" StaticText`
+    t =    21.16s Waiting 5.0s for "meeting-add" Button to exist
+    t =    22.18s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    22.18s         Checking existence of `"meeting-add" Button`
+    t =    22.21s Tap "meeting-add" Button
+    t =    22.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.22s     Find the "meeting-add" Button
+    t =    22.24s     Check for interrupting elements affecting "meeting-add" Button
+    t =    22.27s     Synthesize event
+    t =    22.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.58s Tap "new-place-poll" Button
+    t =    22.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.58s     Find the "new-place-poll" Button
+    t =    22.62s     Check for interrupting elements affecting "new-place-poll" Button
+    t =    22.64s     Synthesize event
+    t =    22.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.36s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    24.39s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    24.39s         Checking existence of `"action-form-header" StaticText`
+    t =    24.43s Find the "action-form-header" StaticText
+    t =    24.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.48s Find the "action-form-header" StaticText
+    t =    24.51s Checking existence of `"Предложить место" StaticText`
+    t =    24.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.55s Find the "Предложить место" StaticText
+    t =    24.58s Checking existence of `"action-form-back" Button`
+    t =    24.60s Checking existence of `"home-tab-calendar" Button`
+    t =    25.14s Added attachment named 'design-action-place-large-text'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place-large-text.png
+    t =    25.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place-large-text.json
+    t =    25.27s Checking existence of `"action-form-scroll" ScrollView`
+    t =    25.29s Checking existence of `"place-poll-create" Button`
+    t =    25.32s Find the "place-poll-create" Button
+    t =    25.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.36s Find the "place-poll-create" Button
+    t =    25.39s Find the "place-poll-create" Button
+    t =    25.42s Find the "action-form-header" StaticText
+    t =    25.45s Find the "place-poll-create" Button
+    t =    25.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.49s Find the "action-form-header" StaticText
+    t =    25.52s Find the "action-form-header" StaticText
+    t =    26.07s Added attachment named 'design-action-place-large-text-submit'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place-large-text-submit.png
+    t =    26.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-place-large-text-submit.json
+    t =    26.19s Find the "action-keyboard-done" Button
+    t =    27.22s     Find the "action-keyboard-done" Button (retry 1)
+    t =    28.25s     Find the "action-keyboard-done" Button (retry 2)
+    t =    28.27s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    29.30s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    29.30s         Checking existence of `"action-form-header" StaticText`
+    t =    29.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.35s Find the "action-form-header" StaticText
+    t =    29.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.41s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 129.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    29.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.41s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.43s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    29.45s     Synthesize event
+    t =    29.45s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.47s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.49s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.50s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.52s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.73s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    32.73s     Checking existence of `"action-form-header" StaticText`
+    t =    32.77s Waiting 5.0s for "meeting-add" Button to exist
+    t =    33.80s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    33.80s         Checking existence of `"meeting-add" Button`
+    t =    33.83s Tap "meeting-add" Button
+    t =    33.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.84s     Find the "meeting-add" Button
+    t =    33.87s     Check for interrupting elements affecting "meeting-add" Button
+    t =    33.89s     Synthesize event
+    t =    34.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.20s Tap "new-date-poll" Button
+    t =    34.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.20s     Find the "new-date-poll" Button
+    t =    34.24s     Check for interrupting elements affecting "new-date-poll" Button
+    t =    34.27s     Synthesize event
+    t =    34.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    35.02s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    36.05s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    36.05s         Checking existence of `"action-form-header" StaticText`
+    t =    36.09s Find the "action-form-header" StaticText
+    t =    36.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.15s Find the "action-form-header" StaticText
+    t =    36.18s Checking existence of `"Новая дата встречи" StaticText`
+    t =    36.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.22s Find the "Новая дата встречи" StaticText
+    t =    36.25s Checking existence of `"action-form-back" Button`
+    t =    36.28s Checking existence of `"home-tab-calendar" Button`
+    t =    36.83s Added attachment named 'design-action-date-large-text'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date-large-text.png
+    t =    36.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date-large-text.json
+    t =    36.97s Checking existence of `"action-form-scroll" ScrollView`
+    t =    37.00s Checking existence of `"poll-create" Button`
+    t =    37.03s Find the "poll-create" Button
+    t =    37.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.08s Find the "poll-create" Button
+    t =    37.11s Find the "poll-create" Button
+    t =    37.14s Find the "action-form-header" StaticText
+    t =    37.17s Find the "poll-create" Button
+    t =    37.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.21s Find the "action-form-header" StaticText
+    t =    37.24s Find the "action-form-header" StaticText
+    t =    37.81s Added attachment named 'design-action-date-large-text-submit'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date-large-text-submit.png
+    t =    37.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-action-date-large-text-submit.json
+    t =    37.95s Find the "action-keyboard-done" Button
+    t =    38.97s     Find the "action-keyboard-done" Button (retry 1)
+    t =    40.02s     Find the "action-keyboard-done" Button (retry 2)
+    t =    40.07s Waiting 5.0s for "action-form-header" StaticText to exist
+    t =    41.09s     Checking `Expect predicate `existsNoRetry == 1` for object "action-form-header" StaticText`
+    t =    41.10s         Checking existence of `"action-form-header" StaticText`
+    t =    41.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.15s Find the "action-form-header" StaticText
+    t =    41.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.21s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 129.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    41.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.21s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.23s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    41.26s     Synthesize event
+    t =    41.26s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.28s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.30s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.31s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.33s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    43.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    44.51s Checking `Expect predicate `exists == 0` for object "action-form-header" StaticText`
+    t =    44.51s     Checking existence of `"action-form-header" StaticText`
+    t =    44.54s Waiting 5.0s for "meeting-add" Button to exist
+    t =    45.56s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    45.56s         Checking existence of `"meeting-add" Button`
+    t =    45.60s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testActionSheetsKeepCloseAccessibleAtLargeText]' passed (45.873 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testAlbumAndFullScreenMatchApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:05:03.936
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:33793
+2026-11-03 21:05:03.976 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:03.976 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:03.976 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:05.010 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:05:05.010 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:05:05.028 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.52s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.82s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.85s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.95s Tap "period-past" Button
+    t =     5.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.95s     Find the "period-past" Button
+    t =     5.98s     Check for interrupting elements affecting "period-past" Button
+    t =     6.01s     Synthesize event
+    t =     6.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.34s Waiting 10.0s for "meeting-memories-deb00000-0000-4000-8000-000000000004" Button to exist
+    t =     7.36s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-deb00000-0000-4000-8000-000000000004" Button`
+    t =     7.36s         Checking existence of `"meeting-memories-deb00000-0000-4000-8000-000000000004" Button`
+    t =     7.91s Added attachment named 'design-past'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-past.png
+    t =     7.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.96s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-past.json
+    t =     8.01s Tap "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     8.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.02s     Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     8.04s     Check for interrupting elements affecting "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     8.06s     Synthesize event
+    t =     8.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.75s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     9.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     9.76s         Checking existence of `"Открыть фото 1" Button`
+    t =    10.36s Added attachment named 'design-album'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-album.png
+    t =    10.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-album.json
+    t =    10.50s Tap "Открыть фото 1" Button
+    t =    10.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.50s     Find the "Открыть фото 1" Button
+    t =    10.52s     Check for interrupting elements affecting "Открыть фото 1" Button
+    t =    10.55s     Synthesize event
+    t =    10.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.19s Waiting 5.0s for "Закрыть" Button to exist
+    t =    12.22s     Checking `Expect predicate `existsNoRetry == 1` for object "Закрыть" Button`
+    t =    12.22s         Checking existence of `"Закрыть" Button`
+    t =    12.79s Added attachment named 'design-photo'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-photo.png
+    t =    12.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-photo.json
+    t =    12.94s Tap "Закрыть" Button
+    t =    12.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.95s     Find the "Закрыть" Button
+    t =    12.97s     Check for interrupting elements affecting "Закрыть" Button
+    t =    13.00s     Synthesize event
+    t =    13.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.65s Tap "Показать сеткой" Button
+    t =    13.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.66s     Find the "Показать сеткой" Button
+    t =    13.69s     Check for interrupting elements affecting "Показать сеткой" Button
+    t =    13.72s     Synthesize event
+    t =    14.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.58s Added attachment named 'design-album-grid'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-album-grid.png
+    t =    14.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.65s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.66s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-album-grid.json
+    t =    14.71s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testAlbumAndFullScreenMatchApprovedLayout]' passed (15.006 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testChatMenuAndEmojiMatchApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:05:18.943
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:34212
+2026-11-03 21:05:18.981 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:18.981 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:18.981 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:20.013 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:05:20.013 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:05:20.025 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.28s         Setting up automation session
+    t =     3.48s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.80s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.82s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.82s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.92s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.99s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.03s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.04s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.06s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.09s     Synthesize event
+    t =     6.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.81s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.83s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.83s         Checking existence of `"meeting-add" Button`
+    t =     7.87s Checking existence of `"feed-title" StaticText`
+    t =     7.89s Find the "feed-timeline" ScrollView
+    t =     7.91s Find the "meeting-heading" Button
+    t =     7.93s Find the "feed-timeline" ScrollView
+    t =     7.96s Find the "message-input" TextView
+    t =     7.98s Checking existence of `Button (First Match)`
+    t =     8.01s Find the Button (First Match)
+    t =     8.05s Find the "reaction-chip-❤️" Button
+    t =     8.09s Find the "reaction-chip-❤️" Button
+    t =     8.13s Waiting 3.0s for "reaction-chip-❤️" Button to exist
+    t =     9.16s     Checking `Expect predicate `existsNoRetry == 1` for object "reaction-chip-❤️" Button`
+    t =     9.16s         Checking existence of `"reaction-chip-❤️" Button`
+    t =     9.74s Added attachment named 'design-chat'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-chat.png
+    t =     9.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.76s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.78s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-chat.json
+    t =     9.85s Tap "meeting-add" Button
+    t =     9.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.86s     Find the "meeting-add" Button
+    t =     9.88s     Check for interrupting elements affecting "meeting-add" Button
+    t =     9.91s     Synthesize event
+    t =    10.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.21s Waiting 5.0s for "Предложить место" Button to exist
+    t =    11.23s     Checking `Expect predicate `existsNoRetry == 1` for object "Предложить место" Button`
+    t =    11.23s         Checking existence of `"Предложить место" Button`
+    t =    11.77s Added attachment named 'design-menu'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-menu.png
+    t =    11.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-menu.json
+    t =    11.90s Tap "meeting-add" Button
+    t =    11.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.90s     Find the "meeting-add" Button
+    t =    11.92s     Check for interrupting elements affecting "meeting-add" Button
+    t =    11.95s     Synthesize event
+    t =    12.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.26s Tap "composer-emoji-toggle" Button
+    t =    12.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.26s     Find the "composer-emoji-toggle" Button
+    t =    12.29s     Check for interrupting elements affecting "composer-emoji-toggle" Button
+    t =    12.31s     Synthesize event
+    t =    12.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.62s Waiting 5.0s for "emoji-search" TextField to exist
+    t =    13.65s     Checking `Expect predicate `existsNoRetry == 1` for object "emoji-search" TextField`
+    t =    13.65s         Checking existence of `"emoji-search" TextField`
+    t =    14.22s Added attachment named 'design-emoji'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-emoji.png
+    t =    14.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-emoji.json
+    t =    14.42s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testChatMenuAndEmojiMatchApprovedLayout]' passed (14.686 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testHelpAndAboutMatchApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:05:33.630
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:34236
+2026-11-03 21:05:33.678 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:33.679 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:33.679 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:34.707 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:05:34.707 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:05:34.716 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.49s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.85s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.89s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.89s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.97s Tap "home-tab-person.crop.circle" Button
+    t =     5.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.97s     Find the "home-tab-person.crop.circle" Button
+    t =     6.00s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =     6.02s     Synthesize event
+    t =     6.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.36s Waiting 10.0s for "Яндекс ID" StaticText to exist
+    t =     7.38s     Checking `Expect predicate `existsNoRetry == 1` for object "Яндекс ID" StaticText`
+    t =     7.38s         Checking existence of `"Яндекс ID" StaticText`
+    t =     7.44s Find the "Помощь" Button
+    t =     7.48s Swipe up ScrollView (First Match)
+    t =     7.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.49s     Find the ScrollView (First Match)
+    t =     7.50s     Check for interrupting elements affecting "profile-screen" ScrollView
+    t =     7.53s     Synthesize event
+    t =     7.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.10s Find the "Помощь" Button
+    t =    10.15s Find the "Помощь" Button
+    t =    10.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.20s Tap "Помощь" Button
+    t =    10.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.20s     Find the "Помощь" Button
+    t =    10.22s     Check for interrupting elements affecting "Помощь" Button
+    t =    10.25s     Synthesize event
+    t =    10.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.89s Waiting 5.0s for "Нужна подсказка?" StaticText to exist
+    t =    11.91s     Checking `Expect predicate `existsNoRetry == 1` for object "Нужна подсказка?" StaticText`
+    t =    11.91s         Checking existence of `"Нужна подсказка?" StaticText`
+    t =    12.46s Added attachment named 'design-help'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-help.png
+    t =    12.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-help.json
+    t =    12.54s Tap "Назад" Button
+    t =    12.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.55s     Find the "Назад" Button
+    t =    12.56s     Check for interrupting elements affecting "Назад" Button
+    t =    12.58s     Synthesize event
+    t =    12.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.19s Find the "О приложении" Button
+    t =    13.23s Find the "О приложении" Button
+    t =    13.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.27s Tap "О приложении" Button
+    t =    13.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.27s     Find the "О приложении" Button
+    t =    13.30s     Check for interrupting elements affecting "О приложении" Button
+    t =    13.32s     Synthesize event
+    t =    13.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.96s Waiting 5.0s for "somewhere" StaticText to exist
+    t =    14.98s     Checking `Expect predicate `existsNoRetry == 1` for object "somewhere" StaticText`
+    t =    14.98s         Checking existence of `"somewhere" StaticText`
+    t =    15.01s Get number of matches for: Elements matching predicate '"somewhere" IN identifiers'
+    t =    15.02s Checking existence of `"О somewhere" StaticText`
+    t =    15.03s Checking existence of `"Версия" StaticText`
+    t =    15.54s Added attachment named 'design-about'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-about.png
+    t =    15.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-about.json
+    t =    15.61s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testHelpAndAboutMatchApprovedLayout]' passed (15.884 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testListProfileAndCreationMatchApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:05:49.515
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:34368
+2026-11-03 21:05:49.566 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:49.566 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:49.567 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:05:50.603 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:05:50.604 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:05:50.617 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.30s         Setting up automation session
+    t =     3.50s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.82s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.85s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.91s Find the "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =     5.98s Find the "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =     6.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.02s Waiting 10.0s for "meeting-cover" Image to exist
+    t =     7.05s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-cover" Image`
+    t =     7.05s         Checking existence of `"meeting-cover" Image`
+    t =     7.62s Added attachment named 'design-list'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-list.png
+    t =     7.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.64s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.66s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.67s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-list.json
+    t =     7.76s Tap "Календарь" Button
+    t =     7.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.77s     Find the "Календарь" Button
+    t =     7.79s     Check for interrupting elements affecting "Календарь" Button
+    t =     7.82s     Synthesize event
+    t =     8.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+SOMEWHERE_DESIGN_DATE_boardgame=2026-11-07
+    t =     8.14s Checking existence of `"calendar-day-2026-11-07" Button`
+    t =     8.17s Waiting 5.0s for "calendar-day-2026-11-07" Button to exist
+    t =     9.20s     Checking `Expect predicate `existsNoRetry == 1` for object "calendar-day-2026-11-07" Button`
+    t =     9.20s         Checking existence of `"calendar-day-2026-11-07" Button`
+    t =     9.25s Tap "calendar-day-2026-11-07" Button
+    t =     9.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.26s     Find the "calendar-day-2026-11-07" Button
+    t =     9.29s     Check for interrupting elements affecting "calendar-day-2026-11-07" Button
+    t =     9.32s     Synthesize event
+    t =     9.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.16s Added attachment named 'design-calendar'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-calendar.png
+    t =    10.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-calendar.json
+    t =    10.32s Tap "Список" Button
+    t =    10.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.32s     Find the "Список" Button
+    t =    10.35s     Check for interrupting elements affecting "Список" Button
+    t =    10.38s     Synthesize event
+    t =    10.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.68s Tap "home-tab-person.crop.circle" Button
+    t =    10.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.69s     Find the "home-tab-person.crop.circle" Button
+    t =    10.72s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =    10.74s     Synthesize event
+    t =    11.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.05s Waiting 10.0s for "Яндекс ID" StaticText to exist
+    t =    12.06s     Checking `Expect predicate `existsNoRetry == 1` for object "Яндекс ID" StaticText`
+    t =    12.06s         Checking existence of `"Яндекс ID" StaticText`
+    t =    12.09s Checking existence of `"ЛИЧНЫЕ ДАННЫЕ" StaticText`
+    t =    12.63s Added attachment named 'design-profile'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile.png
+    t =    12.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.65s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.67s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile.json
+    t =    12.76s Swipe up "profile-screen" ScrollView
+    t =    12.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.77s     Find the "profile-screen" ScrollView
+    t =    12.79s     Check for interrupting elements affecting "profile-screen" ScrollView
+    t =    12.81s     Synthesize event
+    t =    13.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.53s Added attachment named 'design-profile-contacts'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile-contacts.png
+    t =    15.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.65s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile-contacts.json
+    t =    15.67s Tap "home-tab-calendar" Button
+    t =    15.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.67s     Find the "home-tab-calendar" Button
+    t =    15.69s     Check for interrupting elements affecting "home-tab-calendar" Button
+    t =    15.72s     Synthesize event
+    t =    16.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.14s Tap "Создать встречу" Button
+    t =    16.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.15s     Find the "Создать встречу" Button
+    t =    16.19s     Check for interrupting elements affecting "Создать встречу" Button
+    t =    16.22s     Synthesize event
+    t =    16.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.93s Waiting 5.0s for "meeting-title" Any to exist
+    t =    17.96s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-title" Any`
+    t =    17.96s         Checking existence of `"meeting-title" Any`
+    t =    18.04s Tap "meeting-title" Any
+    t =    18.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.05s     Find the "meeting-title" Any
+    t =    18.11s     Check for interrupting elements affecting "meeting-title" TextField
+    t =    18.16s     Synthesize event
+    t =    18.46s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.DesignExperienceUITests testListProfileAndCreationMatchApprovedLayout] : Invalid frame dimension (negative or non-finite).
+    t =    18.79s Type 'Ужин в пятницу' into "meeting-title" TextField
+    t =    18.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.15s     Find the "meeting-title" TextField
+    t =    19.38s     Check for interrupting elements affecting "meeting-title" TextField
+    t =    19.48s     Synthesize event
+    t =    19.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.94s Checking existence of `"Готово" Button`
+    t =    20.01s Tap "Готово" Button
+    t =    20.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.01s     Find the "Готово" Button
+    t =    20.07s     Check for interrupting elements affecting "creation-keyboard-done" Button
+    t =    20.12s     Synthesize event
+    t =    20.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.25s Added attachment named 'design-create'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-create.png
+    t =    21.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-create.json
+    t =    21.48s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testListProfileAndCreationMatchApprovedLayout]' passed (21.759 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testMeetingInformationKeepsServiceLinksInProfileAndSettingsDraft]' started.
+    t =     0.00s Start Test at 2026-11-03 21:06:11.275
+    t =     0.04s Set Up
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:34396
+2026-11-03 21:06:11.333 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:11.334 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:11.334 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:12.357 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:06:12.357 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:06:12.371 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.51s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.83s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.85s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.94s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.00s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.04s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.05s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.07s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.10s     Synthesize event
+    t =     6.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.81s Waiting 10.0s for "meeting-info-open" Button to exist
+    t =     7.83s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-open" Button`
+    t =     7.83s         Checking existence of `"meeting-info-open" Button`
+    t =     7.86s Tap "meeting-info-open" Button
+    t =     7.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.87s     Find the "meeting-info-open" Button
+    t =     7.89s     Check for interrupting elements affecting "meeting-info-open" Button
+    t =     7.91s     Synthesize event
+    t =     8.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.69s Waiting 10.0s for "edit-meeting" Button to exist
+    t =     9.72s     Checking `Expect predicate `existsNoRetry == 1` for object "edit-meeting" Button`
+    t =     9.73s         Checking existence of `"edit-meeting" Button`
+    t =     9.78s Checking existence of `"Помощь" Button`
+    t =     9.80s Checking existence of `"Сообщить о проблеме" Button`
+    t =     9.82s Checking existence of `"Предложить идею" Button`
+    t =     9.84s Checking existence of `"О приложении" Button`
+    t =     9.87s Checking existence of `"Политика конфиденциальности" Button`
+    t =     9.89s Checking existence of `"Cookie и хранение" Button`
+    t =    10.42s Added attachment named 'design-meeting-info'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-meeting-info.png
+    t =    10.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-meeting-info.json
+    t =    10.55s Tap "edit-meeting" Button
+    t =    10.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.56s     Find the "edit-meeting" Button
+    t =    10.58s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    10.61s     Synthesize event
+    t =    10.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.92s Waiting 10.0s for "settings-title" Any to exist
+    t =    11.94s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-title" Any`
+    t =    11.94s         Checking existence of `"settings-title" Any`
+    t =    12.03s Tap "settings-title" Any
+    t =    12.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.04s     Find the "settings-title" Any
+    t =    12.13s     Check for interrupting elements affecting "settings-title" TextField
+    t =    12.18s     Synthesize event
+    t =    12.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.DesignExperienceUITests testMeetingInformationKeepsServiceLinksInProfileAndSettingsDraft] : Invalid frame dimension (negative or non-finite).
+    t =    12.75s Type ' — черновик' into "settings-title" TextField
+    t =    12.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.14s     Find the "settings-title" TextField
+    t =    13.35s     Check for interrupting elements affecting "settings-title" TextField
+    t =    13.41s     Synthesize event
+    t =    13.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.82s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    14.84s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    14.84s         Checking existence of `Keyboard (First Match)`
+    t =    14.87s Get number of matches for: Descendants matching type Key
+    t =    14.91s Find the Keyboard (First Match)
+    t =    14.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.97s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    14.99s Find the "settings-title" TextField
+    t =    15.18s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    15.20s Find the "settings-header" StaticText
+    t =    15.26s Find the "settings-header" StaticText
+    t =    15.31s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    15.88s Added attachment named 'design-settings-keyboard'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-settings-keyboard.png
+    t =    15.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-settings-keyboard.json
+    t =    16.12s Find the "action-keyboard-done" Button
+    t =    16.18s Tap "action-keyboard-done" Button
+    t =    16.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.18s     Find the "action-keyboard-done" Button
+    t =    16.23s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    16.27s     Synthesize event
+    t =    16.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.88s Waiting 5.0s for "settings-header" StaticText to exist
+    t =    17.90s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-header" StaticText`
+    t =    17.90s         Checking existence of `"settings-header" StaticText`
+    t =    17.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.96s Find the "settings-header" StaticText
+    t =    17.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.02s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 261.4) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    18.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.13s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.16s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    18.19s     Synthesize event
+    t =    18.19s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.21s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.23s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.25s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.28s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.19s Checking `Expect predicate `exists == 0` for object "settings-header" StaticText`
+    t =    21.19s     Checking existence of `"settings-header" StaticText`
+    t =    21.23s Waiting 5.0s for "edit-meeting" Button to exist
+    t =    22.25s     Checking `Expect predicate `existsNoRetry == 1` for object "edit-meeting" Button`
+    t =    22.25s         Checking existence of `"edit-meeting" Button`
+    t =    22.27s Tap "edit-meeting" Button
+    t =    22.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.28s     Find the "edit-meeting" Button
+    t =    22.30s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    22.33s     Synthesize event
+    t =    22.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.64s Waiting 5.0s for "settings-title" TextField to exist
+    t =    23.67s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-title" TextField`
+    t =    23.67s         Checking existence of `"settings-title" TextField`
+    t =    23.78s Find the "settings-title" TextField
+    t =    24.39s Added attachment named 'design-settings-reopen'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-settings-reopen.png
+    t =    24.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-settings-reopen.json
+    t =    24.54s Find the "action-keyboard-done" Button
+    t =    25.57s     Find the "action-keyboard-done" Button (retry 1)
+    t =    26.61s     Find the "action-keyboard-done" Button (retry 2)
+    t =    26.64s Waiting 5.0s for "settings-header" StaticText to exist
+    t =    27.67s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-header" StaticText`
+    t =    27.67s         Checking existence of `"settings-header" StaticText`
+    t =    27.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.72s Find the "settings-header" StaticText
+    t =    27.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.79s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 261.4) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    27.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.79s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.81s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    27.84s     Synthesize event
+    t =    27.84s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.86s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.88s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.90s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.92s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.82s Checking `Expect predicate `exists == 0` for object "settings-header" StaticText`
+    t =    30.83s     Checking existence of `"settings-header" StaticText`
+    t =    30.88s Find the "action-keyboard-done" Button
+    t =    31.91s     Find the "action-keyboard-done" Button (retry 1)
+    t =    32.94s     Find the "action-keyboard-done" Button (retry 2)
+    t =    32.97s Waiting 5.0s for "meeting-info-header" StaticText to exist
+    t =    34.00s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-info-header" StaticText`
+    t =    34.00s         Checking existence of `"meeting-info-header" StaticText`
+    t =    34.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.07s Find the "meeting-info-header" StaticText
+    t =    34.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.14s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 503.7) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    34.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.15s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.17s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    34.20s     Synthesize event
+    t =    34.20s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.22s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.24s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.25s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.28s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    36.74s Checking `Expect predicate `exists == 0` for object "meeting-info-header" StaticText`
+    t =    36.74s     Checking existence of `"meeting-info-header" StaticText`
+    t =    36.76s Waiting 5.0s for "meeting-add" Button to exist
+    t =    37.80s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =    37.80s         Checking existence of `"meeting-add" Button`
+    t =    37.84s Tap "feed-back" Button
+    t =    37.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    37.85s     Find the "feed-back" Button
+    t =    37.88s     Check for interrupting elements affecting "feed-back" Button
+    t =    37.91s     Synthesize event
+    t =    38.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.56s Tap "home-tab-person.crop.circle" Button
+    t =    38.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.57s     Find the "home-tab-person.crop.circle" Button
+    t =    38.61s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =    38.64s     Synthesize event
+    t =    38.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.95s Find the "Помощь" Button
+    t =    38.99s Swipe up ScrollView (First Match)
+    t =    38.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.99s     Find the ScrollView (First Match)
+    t =    39.01s     Check for interrupting elements affecting "profile-screen" ScrollView
+    t =    39.04s     Synthesize event
+    t =    39.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.15s Find the "Помощь" Button
+    t =    41.21s Find the "Помощь" Button
+    t =    41.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.26s Find the "Помощь" Button
+    t =    41.30s Checking existence of `"О приложении" Button`
+    t =    41.85s Added attachment named 'design-profile-service-links'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile-service-links.png
+    t =    41.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-profile-service-links.json
+    t =    42.01s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testMeetingInformationKeepsServiceLinksInProfileAndSettingsDraft]' passed (42.296 seconds).
+Test Case '-[SomewhereUITests.DesignExperienceUITests testSupportMatchesApprovedLayout]' started.
+    t =     0.00s Start Test at 2026-11-03 21:06:53.572
+    t =     0.04s Set Up
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:34438
+2026-11-03 21:06:53.633 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:53.633 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:53.634 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:06:54.663 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 21:06:54.663 xcodebuild[33463:16519246] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 21:06:54.672 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.30s         Setting up automation session
+    t =     3.57s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.93s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000001" Button to exist
+    t =     5.96s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     5.96s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     6.03s Tap "home-tab-person.crop.circle" Button
+    t =     6.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.04s     Find the "home-tab-person.crop.circle" Button
+    t =     6.06s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =     6.09s     Synthesize event
+    t =     6.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.43s Waiting 10.0s for "Яндекс ID" StaticText to exist
+    t =     7.45s     Checking `Expect predicate `existsNoRetry == 1` for object "Яндекс ID" StaticText`
+    t =     7.45s         Checking existence of `"Яндекс ID" StaticText`
+    t =     7.50s Find the "Сообщить о проблеме" Button
+    t =     7.55s Swipe up ScrollView (First Match)
+    t =     7.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.55s     Find the ScrollView (First Match)
+    t =     7.57s     Check for interrupting elements affecting "profile-screen" ScrollView
+    t =     7.59s     Synthesize event
+    t =     8.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.08s Find the "Сообщить о проблеме" Button
+    t =    10.13s Find the "Сообщить о проблеме" Button
+    t =    10.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.18s Tap "Сообщить о проблеме" Button
+    t =    10.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.19s     Find the "Сообщить о проблеме" Button
+    t =    10.21s     Check for interrupting elements affecting "Сообщить о проблеме" Button
+    t =    10.24s     Synthesize event
+    t =    10.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.59s Waiting 5.0s for "support-description" TextView to exist
+    t =    11.63s     Checking `Expect predicate `existsNoRetry == 1` for object "support-description" TextView`
+    t =    11.63s         Checking existence of `"support-description" TextView`
+    t =    12.21s Added attachment named 'design-report'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-report.png
+    t =    12.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-report.json
+    t =    12.42s Swipe up ScrollView (First Match)
+    t =    12.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.43s     Find the ScrollView (First Match)
+    t =    12.45s     Check for interrupting elements affecting "support-scroll" ScrollView
+    t =    12.48s     Synthesize event
+    t =    12.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.03s Added attachment named 'design-report-bottom'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-report-bottom.png
+    t =    14.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/3F10D4F5-A4E6-40C0-90EB-466185F4F635/tmp/somewhere-design-verification/design-report-bottom.json
+    t =    14.24s Tear Down
+Test Case '-[SomewhereUITests.DesignExperienceUITests testSupportMatchesApprovedLayout]' passed (14.461 seconds).
+Test Suite 'DesignExperienceUITests' passed at 2026-11-03 21:07:08.033.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 212.724 (212.732) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-03 21:07:08.035.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 212.724 (212.734) seconds
+Test Suite 'Selected tests' passed at 2026-11-03 21:07:08.036.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 212.724 (212.735) seconds
+2026-11-03 21:07:08.090 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.090 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.091 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.104 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.105 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.106 xcodebuild[33463:16519246] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 21:07:08.366 xcodebuild[33463:16519246] [MT] IDETestOperationsObserverDebug: 217.563 elapsed -- Testing started completed.
+2026-11-03 21:07:08.366 xcodebuild[33463:16519246] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-03 21:07:08.366 xcodebuild[33463:16519246] [MT] IDETestOperationsObserverDebug: 217.563 sec, +217.563 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T200328-32482.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_RESTORED=1
