@@ -8,9 +8,13 @@ struct MemoriesPreloadTests {
     private func page(_ photos: [MeetingMedia], cursor: String? = nil) throws -> Data {
         struct Page: Encodable {
             let photos: [MeetingMedia]
-            let next_cursor: String?
+            let nextCursor: String?
+            enum CodingKeys: String, CodingKey {
+                case photos
+                case nextCursor = "next_cursor"
+            }
         }
-        return try APICoding.encode(Page(photos: photos, next_cursor: cursor))
+        return try APICoding.encode(Page(photos: photos, nextCursor: cursor))
     }
 
     @Test func loadsThreePagesAndPreparesEveryPhotoBeforeOfflineReuse() async throws {

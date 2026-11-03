@@ -28,10 +28,11 @@ struct CreationFormView: View {
                         Text(warning).designFont(12).foregroundStyle(AppPalette.error)
                     }
                     HStack(spacing: 14) {
-                        Button("Отмена", action: owner.requestClose).font(
-                            .system(size: 14, weight: .semibold)
-                        )
-                        .padding(.horizontal, 18).frame(minHeight: 47)
+                        Button(action: owner.requestClose) {
+                            Text("Отмена").font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 18).frame(minHeight: 47)
+                                .contentShape(Rectangle())
+                        }
                         .overlay {
                             RoundedRectangle(cornerRadius: 13).stroke(
                                 .white.opacity(0.125), lineWidth: 1)

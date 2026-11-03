@@ -34,7 +34,7 @@ struct MeetingToolbar: View {
                 }
             }
             .foregroundStyle(owner.selection.period == value ? AppPalette.text : AppPalette.muted)
-            .frame(minHeight: 23).padding(.vertical, 12)
+            .frame(minHeight: 23).padding(.vertical, 12).contentShape(Rectangle())
             .overlay(alignment: .bottom) {
                 if owner.selection.period == value {
                     Capsule().fill(AppPalette.accent).frame(height: 2)

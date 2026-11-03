@@ -79,6 +79,29 @@ final class AccessibilityUITests: XCTestCase {
         try audit("audit-time-large", app)
     }
 
+    func testPeriodAndCancelExposeTheirWholeVisibleTouchTargets() {
+        let app = launch("audit-empty")
+        let past = app.buttons["period-past"]
+        XCTAssertTrue(past.waitForExistence(timeout: 10))
+        XCTAssertGreaterThanOrEqual(past.frame.height, 44)
+        past.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.05)).tap()
+        XCTAssertTrue(past.isSelected)
+        app.buttons["Создать встречу"].tap()
+        let title = app.descendants(matching: .any)["meeting-title"].firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        title.tap()
+        title.typeText("Проверка отмены")
+        app.buttons["creation-keyboard-done"].tap()
+        let cancel = app.buttons["Отмена"]
+        reveal(cancel, in: app.scrollViews["create-form"])
+        XCTAssertGreaterThanOrEqual(cancel.frame.height, 44)
+        cancel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.05)).tap()
+        XCTAssertTrue(app.alerts["Выйти из формы?"].waitForExistence(timeout: 5))
+        app.buttons["Продолжить редактирование"].tap()
+        XCTAssertEqual(title.value as? String, "Проверка отмены")
+        ExperienceScreenshot.save("creation-cancel-touch-target", test: self)
+    }
+
     func testCreationAndPickers() throws {
         let app = launch("audit-empty")
         XCTAssertTrue(app.buttons["Создать встречу"].waitForExistence(timeout: 15))
