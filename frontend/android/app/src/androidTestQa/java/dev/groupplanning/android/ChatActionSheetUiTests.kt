@@ -221,6 +221,46 @@ class ChatActionSheetUiTests {
         }
     }
 
+    @Test fun allFiveDateSettingsSurviveClosingAndReopening() {
+        fixture.launch("design").use {
+            openChat()
+            openAction("new-date-poll")
+            val labels = listOf(
+                R.string.poll_multiple,
+                R.string.poll_revote,
+                R.string.poll_new_options,
+                R.string.poll_anonymous,
+                R.string.poll_hidden,
+            ).map { fixture.context.getString(it) }
+            val expected = labels.associateWith { label ->
+                val control = compose.onNodeWithContentDescription(label)
+                control.performScrollTo()
+                val before = control.fetchSemanticsNode().config[
+                    SemanticsProperties.ToggleableState,
+                ]
+                control.performClick()
+                val after = control.fetchSemanticsNode().config[
+                    SemanticsProperties.ToggleableState,
+                ]
+                org.junit.Assert.assertNotEquals(before, after)
+                after
+            }
+            fixture.screenshot("sheet-all-five-date-settings")
+            fixture.closeActionSheet()
+            fixture.waitAbsent("chat-action-sheet")
+            openAction("new-date-poll")
+            labels.forEach { label ->
+                val control = compose.onNodeWithContentDescription(label)
+                control.performScrollTo()
+                org.junit.Assert.assertEquals(
+                    expected[label],
+                    control.fetchSemanticsNode().config[SemanticsProperties.ToggleableState],
+                )
+            }
+            fixture.screenshot("sheet-all-five-date-settings-restored")
+        }
+    }
+
     @Test fun memberResponseStaysAvailableOutsideExpandedPeople() {
         fixture.launch("design").use {
             fixture.waitText("Ужин в пятницу")

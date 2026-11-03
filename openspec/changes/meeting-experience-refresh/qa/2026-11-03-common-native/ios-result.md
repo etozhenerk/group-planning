@@ -31,9 +31,9 @@ gate 0.3 не объявлен пройденным. Релизов и Telegram-
 
 ## Артефакты и пределы
 
-[ios/navigation.log](ios/navigation.log): 3/3 PASS, 59.128 с весь выбранный набор.
-[ios/about.log](ios/about.log): 1/1 PASS.
-[ios/unit-existing-source.log](ios/unit-existing-source.log): исходный утренний
+[ios/navigation.txt](ios/navigation.txt): 3/3 PASS, 59.128 с весь выбранный набор.
+[ios/about.txt](ios/about.txt): 1/1 PASS.
+[ios/unit-existing-source.txt](ios/unit-existing-source.txt): исходный утренний
 прогон215; production iOS после него не изменялся, добавлены только UI-проверки.
 PNG/JSON рядом содержат фактически измеренный viewport и окружение.
 

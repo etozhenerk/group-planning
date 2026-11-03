@@ -67,7 +67,7 @@ final class ChatSheetGestureUITests: XCTestCase {
             app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
     }
 
-    func testDateSettingsSurviveSheetSwipe() {
+    func testDateSettingsSurviveSheetSwipe() throws {
         let app = ChatSheetTestSupport.launch()
         ChatSheetTestSupport.openChat(app)
         ChatSheetTestSupport.openAction("new-date-poll", app: app)
@@ -78,16 +78,30 @@ final class ChatSheetGestureUITests: XCTestCase {
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "picker-header")
         XCTAssertTrue(app.staticTexts["action-form-header"].waitForExistence(timeout: 5))
         ExperienceScreenshot.save("sheet-date-after-picker", test: self)
-        let multiple = app.switches["Несколько ответов"]
-        ChatSheetTestSupport.reveal(multiple, in: app.scrollViews["action-form-scroll"], app: app)
-        multiple.tap()
-        let expected = multiple.value as? String
-        XCTAssertNotNil(expected)
+        let labels = [
+            "Несколько ответов", "Можно изменить голос", "Можно добавлять варианты",
+            "Анонимный опрос", "Скрыть итоги до завершения",
+        ]
+        var expected: [String: String] = [:]
+        for label in labels {
+            let control = app.switches[label]
+            ChatSheetTestSupport.reveal(
+                control, in: app.scrollViews["action-form-scroll"], app: app)
+            let before = try XCTUnwrap(control.value as? String)
+            control.tap()
+            let after = try XCTUnwrap(control.value as? String)
+            XCTAssertNotEqual(before, after)
+            expected[label] = after
+        }
         ExperienceScreenshot.save("sheet-date-before-swipe", test: self)
         ChatSheetTestSupport.dismissBySwipe(app)
         ChatSheetTestSupport.openAction("new-date-poll", app: app)
-        XCTAssertTrue(multiple.waitForExistence(timeout: 5))
-        XCTAssertEqual(multiple.value as? String, expected)
+        for label in labels {
+            let control = app.switches[label]
+            ChatSheetTestSupport.reveal(
+                control, in: app.scrollViews["action-form-scroll"], app: app)
+            XCTAssertEqual(control.value as? String, expected[label])
+        }
         ExperienceScreenshot.save("sheet-date-swipe-reopen", test: self)
     }
 }
