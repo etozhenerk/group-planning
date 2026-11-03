@@ -1,5 +1,15 @@
 # Спецификация тестирования
 
+## Native preload103, 03.11.2026
+
+Отдельный album-preload-owner содержит103 фото в трёх страницах; стандартные
+профили и альбомы не меняются. iOS AlbumPreloadUITests и Android
+AlbumDownloadUiTests.allPagesWarmBeforeOfflineLastPhotoAndSave103Originals
+измеряют предварительные URL, запрещают content transport и проверяют последнее
+фото/возврат к началу без запросов. Отдельно PhotoKit103 и MediaStore103
+(на Android каждый byte hash и IS_PENDING). Это partial TC-VIBE-NATIVE-PRELOAD:
+весь набор жестов offline и ошибка отдельного preload не объявлены покрытыми.
+
 ## Общие web-состояния, 03.11.2026
 
 49-service-navigation дополнен разворотом WAAPI/reduced motion, двухсекундным

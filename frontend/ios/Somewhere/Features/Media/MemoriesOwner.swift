@@ -46,27 +46,36 @@ final class MemoriesOwner: Identifiable {
                 guard current, value.id == id, value.period == "past" else { return }
                 meeting = value
             }
-            let result = try await session.send(
-                ExperienceRequests.memories(id, cursor: more ? nextCursor : nil), as: MediaPage.self
-            )
-            try Task.checkCancellation()
-            guard current else { return }
-            guard result.photos.allSatisfy({ $0.meetingID == id && $0.purpose == "memory" }) else {
-                throw ClientFailure.invalidResponse
-            }
             var combined = more ? photos : []
-            for photo in result.photos where !combined.contains(where: { $0.id == photo.id }) {
-                combined.append(photo)
-            }
-            photos = combined
-            nextCursor = result.nextCursor
-            loaded = true
+            var cursor = more ? nextCursor : nil
+            var visited: Set<String> = []
+            repeat {
+                let result = try await session.send(
+                    ExperienceRequests.memories(id, cursor: cursor), as: MediaPage.self)
+                try Task.checkCancellation()
+                guard current else { return }
+                guard result.photos.allSatisfy({ $0.meetingID == id && $0.purpose == "memory" })
+                else {
+                    throw ClientFailure.invalidResponse
+                }
+                for photo in result.photos where !combined.contains(where: { $0.id == photo.id }) {
+                    combined.append(photo)
+                }
+                photos = combined
+                nextCursor = result.nextCursor
+                loaded = true
+                cursor = result.nextCursor
+                if let cursor, !visited.insert(cursor).inserted {
+                    throw ClientFailure.invalidResponse
+                }
+            } while cursor != nil
         } catch { if current, !(error is CancellationError) { failed = true } }
     }
     func prefetch(around selection: Int) async {
         guard current, !photos.isEmpty else { return }
-        // Serial neighbour prefetch bounds network/memory work and gives the next swipe priority.
-        for delta in [0, 1, -1, 2] {
+        // Warm every available page serially, starting with the visible photo.
+        // PrivateMediaCache still bounds retained bytes and decoded images.
+        for delta in photos.indices {
             guard current, !Task.isCancelled else { return }
             let photo = photos[(selection + delta + photos.count) % photos.count]
             if session.privateData.mediaCache.value(photo.id) != nil { continue }

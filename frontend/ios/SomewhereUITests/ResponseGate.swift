@@ -55,6 +55,14 @@ final class ResponseGate {
         }
     }
 
+    func failMediaContent(pathPrefix: String) throws {
+        let rule = Rule(
+            path: pathPrefix, queryName: nil, mode: "offline", method: "GET",
+            pathSuffix: "/content")
+        try JSONEncoder().encode(rule).write(
+            to: directory.appendingPathComponent("rule.json"), options: .atomic)
+    }
+
     func continuePartialFailure() throws {
         try Data().write(to: directory.appendingPathComponent("continue-partial"), options: .atomic)
     }

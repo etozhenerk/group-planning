@@ -19,18 +19,26 @@ const nativeMemoryMeeting = "dab00000-0000-4000-8000-000000000001"
 
 func seedNativeMemoryFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service, credential iosFixtureCredential) {
 	t.Helper()
-	seedNativeMemoryFixtureAt(t, store, auth, app, credential, nativeMemoryMeeting, "dab00000-0000-4000-8000-000000000002", "TUVNT1JJRVMtRklYVFVSRQ")
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, nativeMemoryMeeting, "dab00000-0000-4000-8000-000000000002", "TUVNT1JJRVMtRklYVFVSRQ", 3)
+}
+
+func seedNativeAlbumPreloadFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service) iosFixtureCredential {
+	t.Helper()
+	credential := iosCredential(t, auth, "album-preload-owner")
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, "daf40000-0000-4000-8000-000000000001", "daf40000-0000-4000-8000-000000000002", "QUxCVU0tUFJFTE9BRC0wMQ", 103)
+
+	return credential
 }
 
 func seedNativeVibeRevocationFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service) iosFixtureCredential {
 	t.Helper()
 	credential := iosCredential(t, auth, "vibe-revocation-owner")
-	seedNativeMemoryFixtureAt(t, store, auth, app, credential, "daf30000-0000-4000-8000-000000000001", "daf30000-0000-4000-8000-000000000002", "VklCRS1SRVZPS0UtMDAwMQ")
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, "daf30000-0000-4000-8000-000000000001", "daf30000-0000-4000-8000-000000000002", "VklCRS1SRVZPS0UtMDAwMQ", 3)
 
 	return credential
 }
 
-func seedNativeMemoryFixtureAt(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service, credential iosFixtureCredential, meetingID, invitationID, token string) {
+func seedNativeMemoryFixtureAt(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service, credential iosFixtureCredential, meetingID, invitationID, token string, count int) {
 	t.Helper()
 	ctx := context.Background()
 	principal, err := auth.Authenticate(ctx, credential.Token, false)
@@ -50,7 +58,7 @@ func seedNativeMemoryFixtureAt(t *testing.T, store *memory.Store, auth *identity
 		t.Fatal(err)
 	}
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < count; i++ {
 		pixels := image.NewRGBA(image.Rect(0, 0, 240, 320))
 		for y := 0; y < 320; y++ {
 			for x := 0; x < 240; x++ {

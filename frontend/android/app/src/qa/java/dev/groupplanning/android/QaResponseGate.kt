@@ -15,6 +15,8 @@ internal object QaResponseGate {
 
     @Volatile var unavailableGetPath: String? = null
 
+    @Volatile var unavailableMediaPrefix: String? = null
+
     private val persistenceMessageAttempts = AtomicInteger(-1)
 
     fun allowOnePersistenceMessageAttempt() {
@@ -74,6 +76,13 @@ internal object QaResponseGate {
     }
 
     fun before(request: Request, scenario: String) {
+        if (request.url.host == "127.0.0.1" &&
+            request.method == "GET" &&
+            request.url.encodedPath.endsWith("/content") &&
+            unavailableMediaPrefix?.let { request.url.encodedPath.startsWith(it) } == true
+        ) {
+            throw IOException("Controlled QA album outage")
+        }
         if (request.url.host == "127.0.0.1" &&
             request.method == "GET" &&
             request.url.encodedPath == unavailableGetPath

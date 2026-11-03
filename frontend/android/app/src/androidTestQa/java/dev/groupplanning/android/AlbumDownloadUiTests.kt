@@ -6,10 +6,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.click
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasScrollToIndexAction
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.core.app.ActivityScenario
@@ -41,8 +47,44 @@ class AlbumDownloadUiTests {
     }
 
     @After fun cleanup() {
+        QaResponseGate.unavailableMediaPrefix = null
         QaAlbumDownloadProbe.reset()
         (ownRows().keys - before).forEach { fixture.context.contentResolver.delete(it, null, null) }
+    }
+
+    @Test fun allPagesWarmBeforeOfflineLastPhotoAndSave103Originals() {
+        QaChatProbe.reset()
+        openAlbum(count = 103, scenario = "album-preload-owner").use {
+            compose.waitUntil(30_000) {
+                QaChatProbe.requests.filter { it.endsWith("/content") }.toSet().size == 103
+            }
+            Thread.sleep(1_000)
+            val beforeContent = QaChatProbe.requests.filter { it.endsWith("/content") }
+            fixture.screenshot("album-preload-103-ready")
+            QaResponseGate.unavailableMediaPrefix = "/api/v1/meetings/"
+            compose.onNodeWithContentDescription("Все фото").performClick()
+            compose.onNode(
+                hasScrollToIndexAction() and hasAnyAncestor(hasTestTag("memory-gallery")),
+            ).performScrollToIndex(102)
+            compose.onNodeWithContentDescription(
+                fixture.context.getString(R.string.memories_count, 103, 103),
+            ).performTouchInput { click() }
+            fixture.waitTag("memory-fullscreen")
+            compose.onNodeWithText("103 / 103", substring = true).assertExists()
+            fixture.screenshot("album-preload-103-offline")
+            fixture.device.pressBack()
+            fixture.device.pressBack()
+            fixture.waitTag("photo-stack")
+            compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
+            fixture.waitText("1 / 103")
+            assertEquals(beforeContent, QaChatProbe.requests.filter { it.endsWith("/content") })
+            fixture.screenshot("album-preload-offline-cycle")
+            QaResponseGate.unavailableMediaPrefix = null
+            compose.onNodeWithTag("album-save").performScrollTo().performClick()
+            fixture.waitText("Фотографии сохранены")
+            verifySavedOriginals(expected = 103)
+            fixture.screenshot("album-download-103-saved")
+        }
     }
 
     @Test fun adjacentActionSavesAllOriginalsAndKeepsSelectedPhoto() {
@@ -120,22 +162,25 @@ class AlbumDownloadUiTests {
         }
     }
 
-    private fun openAlbum(): ActivityScenario<MainActivity> {
-        val activity = fixture.launch("memories")
+    private fun openAlbum(
+        count: Int = 3,
+        scenario: String = "memories",
+    ): ActivityScenario<MainActivity> {
+        val activity = fixture.launch(scenario)
         fixture.waitTag("meetings-list")
         compose.onNodeWithText("Прошедшие").performClick()
         fixture.waitText("Суббота у озера")
         compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
         fixture.waitText("Открыть вайб")
         compose.onNodeWithText("Открыть вайб").performClick()
-        fixture.waitText("1 / 3")
+        fixture.waitText("1 / $count")
         fixture.waitTag("album-save")
         return activity
     }
 
-    private fun verifySavedOriginals() {
+    private fun verifySavedOriginals(expected: Int = 3) {
         val created = ownRows().filterKeys { it !in before }
-        assertEquals(3, QaAlbumDownloadProbe.photoIds.size)
+        assertEquals(expected, QaAlbumDownloadProbe.photoIds.size)
         assertEquals(QaAlbumDownloadProbe.photoIds.size, created.size)
         for (id in QaAlbumDownloadProbe.photoIds) {
             val (uri, row) = created.entries.single { it.value.first.contains(id) }

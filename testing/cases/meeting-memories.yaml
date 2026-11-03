@@ -707,13 +707,21 @@
       свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/AlbumPreloadUITests.swift
+          selector: testAllThreePagesWarmBeforeOfflineLastPhotoAndCycle
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumDownloadUiTests.kt
+          selector: allPagesWarmBeforeOfflineLastPhotoAndSave103Originals
+          runner: android-ui
+          level: e2e
 - id: TC-VIBE-WEB-PRELOAD
   title: Повторный свайп использует уже загруженные фотографии web
   lifecycle: active

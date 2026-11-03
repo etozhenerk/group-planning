@@ -226,4 +226,37 @@ func TestNativeDesignFixtureData(t *testing.T) {
 	if err != nil || len(photos.Photos) != 3 {
 		t.Fatalf("design photos: %v", err)
 	}
+
+	seedNativeMemoryFixture(t, store, auth, app, credential)
+	preload := seedNativeAlbumPreloadFixture(t, store, auth, app)
+	person, err := auth.Authenticate(context.Background(), preload.Token, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	reader := meetings.Actor{ID: person.User.ID, Name: person.User.DisplayName}
+	count, pages, cursor := 0, 0, ""
+	for {
+		page, err := app.Memories(context.Background(), reader, "daf40000-0000-4000-8000-000000000001", 50, cursor)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		count += len(page.Photos)
+		pages++
+		if page.NextCursor == "" {
+			break
+		}
+
+		cursor = page.NextCursor
+	}
+
+	if count != 103 || pages != 3 {
+		t.Fatalf("preload fixture: %d photos, %d pages", count, pages)
+	}
+
+	standard, err := app.Memories(context.Background(), actor, nativeMemoryMeeting, 10, "")
+	if err != nil || len(standard.Photos) != 3 {
+		t.Fatalf("preload fixture changed the shared album: %v", err)
+	}
 }
