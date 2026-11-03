@@ -30,6 +30,14 @@ func seedNativeAlbumPreloadFixture(t *testing.T, store *memory.Store, auth *iden
 	return credential
 }
 
+func seedNativeAlbumRevocationFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service) iosFixtureCredential {
+	t.Helper()
+	credential := iosCredential(t, auth, "album-revocation-owner")
+	seedNativeMemoryFixtureAt(t, store, auth, app, credential, "daf50000-0000-4000-8000-000000000001", "daf50000-0000-4000-8000-000000000002", "QUxCVU0tUkVWT0NBLTAwMQ", 3)
+
+	return credential
+}
+
 func seedNativeVibeRevocationFixture(t *testing.T, store *memory.Store, auth *identity.Service, app *meetings.Service) iosFixtureCredential {
 	t.Helper()
 	credential := iosCredential(t, auth, "vibe-revocation-owner")

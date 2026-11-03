@@ -71,3 +71,9 @@ PostgreSQL, настоящего OAuth и внешних сообщений. С�
 находится под ним; вторичная кнопка никогда не отделяется от primary. На mobile
 колонки равны. Переход ready→preparing→cancelled сохраняет геометрию альбома.
 Это повторная независимая проверка задачи 3.1; прежние pass не переносятся.
+
+## Текущая межплатформенная проверка · 03.11.2026
+
+Задача4.1 проверяется основным агентом по прямому решению пользователя работать одному. Старые paused-манифесты возвращены в checkpoint вслед за возобновлением работ; независимый/gate PASS этим не присваивается.
+
+Дополнительные адресные проверки: iOS `AlbumPreloadUITests/testSaveAll103PhotosThroughPhotoKit` с отдельной сверкой103 реальных PhotoKit-файлов, Android `AlbumDownloadUiTests#allPagesWarmBeforeOfflineLastPhotoAndSave103Originals` с SHA103 MediaStore originals. Для TC-VIBE-EXPORT-ACCESS добавлены iOS `AlbumAccessUITests/testRevokedAccessRejectsHeldSnapshotBeforePhotoKitCommit` и Android `AlbumDownloadUiTests#revokedAccessRejectsHeldSnapshotBeforeGalleryCommit`: успешный200 snapshot удерживается, отдельный QA-аккаунт `album-revocation-owner` удаляется другим HTTP-клиентом, затем поздний snapshot отпускается. Ожидаются закрытие приватного альбома и отсутствие новых галерейных копий; обычное приложение, production и другие аккаунты не удаляются.

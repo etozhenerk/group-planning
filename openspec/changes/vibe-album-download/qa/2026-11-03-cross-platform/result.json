@@ -1,0 +1,52 @@
+{
+  "task": "4.1",
+  "verification": "main-agent by explicit user direction; no independent gate PASS",
+  "functional_result": "passed-targeted-cross-platform",
+  "backend": {
+    "tests": [
+      "TestArchiveFullFrozenSnapshotOriginalBytesAndSafeNames",
+      "TestAccessExpirySessionAndShutdownCleanup",
+      "TestAlbumExportOpenAPIResponses"
+    ],
+    "race": true,
+    "fixture": "memory/loopback, no production",
+    "next_real_zip_counts": [
+      103,
+      104
+    ]
+  },
+  "web": {
+    "startTime": "2026-11-03T19:21:43.310Z",
+    "duration": 43770.157,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "ios": {
+    "ui_states_passed": 5,
+    "photo_kit_103_passed": true,
+    "gallery_unique_original_hashes": 103,
+    "gallery_dimensions": "240x320",
+    "revoked_late_200_snapshot_passed": true,
+    "revoked_gallery_new_files": 0
+  },
+  "android": {
+    "ui_tests_passed": 7,
+    "media_store_103_originals_passed": true,
+    "revoked_late_200_snapshot_passed": true,
+    "recovery_predicates_passed": 5,
+    "actual_force_stop_restart_modes": [
+      "pending",
+      "partial",
+      "published"
+    ]
+  },
+  "limitations": [
+    "Physical devices not exercised; user authorized simulators only.",
+    "No new independent/global qa:ready/design:ready PASS; exact failures in gates.json.",
+    "Synthetic iOS PhotoKit outputs retained in test simulator; pre-existing media preserved.",
+    "iOS transient capture sidecars were removed with the runner container; original PNG attachments exported from exact xcresult with native device/time/test manifest; no reconstructed sidecars presented as raw.",
+    "Initial new Swift test failed compilation due to async assertion; corrected and targeted test passed. An external gallery count overlapped a later successful-save test; isolated repetition proved no writes on revoke."
+  ]
+}

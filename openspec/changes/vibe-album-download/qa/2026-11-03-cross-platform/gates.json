@@ -1,0 +1,60 @@
+[
+  {
+    "name": "task-ready",
+    "command": [
+      "npm",
+      "run",
+      "qa:ready",
+      "--",
+      "--manifest",
+      "openspec/changes/vibe-album-download/testing-manifest.json",
+      "--tasks",
+      "4.1"
+    ],
+    "exit_code": 1,
+    "stdout": "\n> group-planning@0.0.0 qa:ready\n> node scripts/testing/cli.mjs ready --manifest openspec/changes/vibe-album-download/testing-manifest.json --tasks 4.1\n\n",
+    "stderr": "ENOENT: no such file or directory, realpath '/Users/misha/Documents/Codex/projects/group-planning/openspec/changes/vibe-album-download/qa/plan.json'\n"
+  },
+  {
+    "name": "design-ready-web",
+    "command": [
+      "npm",
+      "run",
+      "design:ready",
+      "--",
+      "--manifest",
+      "openspec/changes/vibe-album-download/design-manifest-web.json"
+    ],
+    "exit_code": 1,
+    "stdout": "\n> group-planning@0.0.0 design:ready\n> node scripts/design/cli.mjs ready --manifest openspec/changes/vibe-album-download/design-manifest-web.json\n\n",
+    "stderr": "UI change lacks design manifest: mobile-mvp-design-refresh\n"
+  },
+  {
+    "name": "design-ready-ios",
+    "command": [
+      "npm",
+      "run",
+      "design:ready",
+      "--",
+      "--manifest",
+      "openspec/changes/vibe-album-download/design-manifest-ios.json"
+    ],
+    "exit_code": 1,
+    "stdout": "\n> group-planning@0.0.0 design:ready\n> node scripts/design/cli.mjs ready --manifest openspec/changes/vibe-album-download/design-manifest-ios.json\n\n",
+    "stderr": "UI change lacks design manifest: mobile-mvp-design-refresh\n"
+  },
+  {
+    "name": "design-ready-android",
+    "command": [
+      "npm",
+      "run",
+      "design:ready",
+      "--",
+      "--manifest",
+      "openspec/changes/vibe-album-download/design-manifest-android.json"
+    ],
+    "exit_code": 1,
+    "stdout": "\n> group-planning@0.0.0 design:ready\n> node scripts/design/cli.mjs ready --manifest openspec/changes/vibe-album-download/design-manifest-android.json\n\n",
+    "stderr": "UI change lacks design manifest: mobile-mvp-design-refresh\n"
+  }
+]

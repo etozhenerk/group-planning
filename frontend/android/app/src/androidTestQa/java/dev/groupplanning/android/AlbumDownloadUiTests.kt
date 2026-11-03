@@ -162,6 +162,25 @@ class AlbumDownloadUiTests {
         }
     }
 
+    @Test fun revokedAccessRejectsHeldSnapshotBeforeGalleryCommit() {
+        openAlbum(scenario = "album-revocation-owner").use {
+            QaAlbumDownloadProbe.holdSnapshot()
+            compose.onNodeWithTag("album-save").performClick()
+            compose.waitUntil(15_000) { QaAlbumDownloadProbe.snapshotEntered }
+            assertEquals(3, QaAlbumDownloadProbe.photoIds.size)
+            val api = ChatReadLiveApi(fixture.context)
+            api.request("album-revocation-owner", "me", "DELETE")
+            QaAlbumDownloadProbe.release()
+            fixture.waitTag("onboarding")
+            compose.onNodeWithTag("memory-gallery").assertDoesNotExist()
+            compose.onNodeWithText("Фотографии сохранены").assertDoesNotExist()
+            assertEquals(before, ownRows().keys)
+            assertTrue(api.request("design", "me").has("user"))
+            assertTrue(api.request("vibe-revocation-owner", "me").has("user"))
+            fixture.screenshot("album-revoked-after-snapshot")
+        }
+    }
+
     private fun openAlbum(
         count: Int = 3,
         scenario: String = "memories",

@@ -1,0 +1,802 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_BEFORE=1
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_ACTIVE=0
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (10 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+    Target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 5c46ec01758d74e0fca0bd14db516bed
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/5c46ec01758d74e0fca0bd14db516bed.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261103T192158-12588.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/AlbumDownloadUITests" "-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T192158-12588.xcresult
+
+2026-11-03 20:22:00.629 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:01.856856+0100 SomewhereUITests-Runner[13078:16436493] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-03 20:22:04.740.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-03 20:22:04.741.
+Test Suite 'AlbumDownloadUITests' started at 2026-11-03 20:22:04.741.
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testAdjacentActionsSaveUsingRealPhotoKitAndKeepSelection]' started.
+    t =     0.00s Start Test at 2026-11-03 20:22:04.744
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-03 20:22:04.828 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 20:22:04.828 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 20:22:04.858 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.50s         Setting up automation session
+objc[13078]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1079c8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x107d48310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.06s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.49s Waiting 15.0s for "period-past" Button to exist
+    t =     5.57s     Checking `Expect predicate `existsNoRetry == 1` for object "period-past" Button`
+    t =     5.57s         Checking existence of `"period-past" Button`
+    t =     5.65s Tap "period-past" Button
+    t =     5.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.65s     Find the "period-past" Button
+    t =     5.67s     Check for interrupting elements affecting "period-past" Button
+    t =     5.69s     Synthesize event
+    t =     6.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.04s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =     7.11s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.11s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.13s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.14s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.16s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.18s     Synthesize event
+    t =     7.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.85s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     8.93s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     8.93s         Checking existence of `"Открыть фото 1" Button`
+    t =     8.97s Swipe left "Открыть фото 1" Button
+    t =     8.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.97s     Find the "Открыть фото 1" Button
+    t =     9.00s     Check for interrupting elements affecting "Открыть фото 1" Button
+    t =     9.02s     Synthesize event
+    t =     9.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.47s Waiting 5.0s for "2 из 3" StaticText to exist
+    t =    10.55s     Checking `Expect predicate `existsNoRetry == 1` for object "2 из 3" StaticText`
+    t =    10.55s         Checking existence of `"2 из 3" StaticText`
+    t =    10.58s Find the "album-add" Button
+    t =    10.61s Find the "album-save" Button
+    t =    10.64s Find the "album-add" Button
+    t =    10.67s Find the "album-save" Button
+    t =    10.70s Find the "album-add" Button
+    t =    10.73s Find the "album-save" Button
+    t =    10.76s Find the "album-add" Button
+    t =    10.79s Find the "album-save" Button
+    t =    10.82s Find the "album-save" Button
+    t =    10.85s Find the "album-add" Button
+    t =    10.87s Find the "album-save" Button
+    t =    10.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.46s Added attachment named 'album-download-ready'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-ready.png
+    t =    11.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-ready.json
+    t =    11.63s Tap "album-save" Button
+    t =    11.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.63s     Find the "album-save" Button
+    t =    11.65s     Check for interrupting elements affecting "album-save" Button
+    t =    11.68s     Synthesize event
+    t =    11.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.99s Waiting 2.0s for Alert (First Match) to exist
+    t =    13.06s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    13.06s         Checking existence of `Alert (First Match)`
+    t =    13.08s Checking existence of `StaticText (First Match)`
+    t =    13.10s Checking existence of `"Разрешить добавление фото" Button`
+    t =    13.13s Checking existence of `"Разрешить добавление" Button`
+    t =    13.14s Checking existence of `"Allow Adding Photos" Button`
+    t =    13.17s Checking existence of `"OK" Button`
+    t =    13.19s Checking existence of `"Разрешить" Button`
+    t =    13.20s Tap "Разрешить" Button
+    t =    13.20s     Wait for com.apple.springboard to idle
+    t =    13.21s     Find the "Разрешить" Button
+    t =    13.23s     Check for interrupting elements affecting "Разрешить" Button
+    t =    13.27s     Synthesize event
+    t =    13.57s     Wait for com.apple.springboard to idle
+    t =    13.82s Waiting 30.0s for "Фотографии сохранены" StaticText to exist
+    t =    14.88s     Checking `Expect predicate `existsNoRetry == 1` for object "Фотографии сохранены" StaticText`
+    t =    14.89s         Checking existence of `"Фотографии сохранены" StaticText`
+    t =    14.91s Checking existence of `"2 из 3" StaticText`
+    t =    14.94s Find the "album-save" Button
+    t =    15.49s Added attachment named 'album-download-saved'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-saved.png
+    t =    15.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-saved.json
+    t =    15.63s Tear Down
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testAdjacentActionsSaveUsingRealPhotoKitAndKeepSelection]' passed (15.865 seconds).
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testCancellationAndNetworkRetryKeepPhotoGeometry]' started.
+    t =     0.00s Start Test at 2026-11-03 20:22:20.610
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.03s         Terminate dev.groupplanning.ios.uitesthost:13101
+2026-11-03 20:22:20.654 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:20.655 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:20.655 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:21.717 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 20:22:21.717 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 20:22:21.730 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.32s         Setting up automation session
+    t =     3.78s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.18s Waiting 15.0s for "period-past" Button to exist
+    t =     6.25s     Checking `Expect predicate `existsNoRetry == 1` for object "period-past" Button`
+    t =     6.25s         Checking existence of `"period-past" Button`
+    t =     6.33s Tap "period-past" Button
+    t =     6.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.33s     Find the "period-past" Button
+    t =     6.35s     Check for interrupting elements affecting "period-past" Button
+    t =     6.38s     Synthesize event
+    t =     6.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.74s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =     7.82s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.82s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.84s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.84s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.86s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.89s     Synthesize event
+    t =     8.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.57s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     9.64s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     9.64s         Checking existence of `"Открыть фото 1" Button`
+    t =     9.68s Find the "Открыть фото 1" Button
+    t =     9.70s Find the "album-save" Button
+    t =     9.73s Tap "album-save" Button
+    t =     9.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.73s     Find the "album-save" Button
+    t =     9.75s     Check for interrupting elements affecting "album-save" Button
+    t =     9.78s     Synthesize event
+    t =    10.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.09s Waiting 2.0s for Alert (First Match) to exist
+    t =    11.17s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    11.17s         Checking existence of `Alert (First Match)`
+    t =    11.20s         Capturing element debug description
+    t =    12.10s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    12.10s         Checking existence of `Alert (First Match)`
+    t =    12.13s         Capturing element debug description
+    t =    12.13s     Checking existence of `Alert (First Match)`
+    t =    12.16s Collecting debug information to assist test failure triage
+    t =    12.16s     Requesting snapshot of accessibility hierarchy for app with pid 10007
+    t =    13.27s Find the "album-save" Button
+    t =    13.31s Find the "album-add" Button
+    t =    13.34s Find the "album-save" Button
+    t =    13.37s Find the "album-add" Button
+    t =    13.40s Find the "album-save" Button
+    t =    13.43s Find the "album-add" Button
+    t =    13.46s Find the "album-save" Button
+    t =    13.48s Find the "album-add" Button
+    t =    13.51s Find the "album-save" Button
+    t =    13.54s Find the "album-save" Button
+    t =    13.57s Find the "album-add" Button
+    t =    13.60s Find the "album-save" Button
+    t =    13.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.64s Find the "Открыть фото 1" Button
+    t =    13.67s Find the "Открыть фото 1" Button
+    t =    13.70s Find the "album-save" Button
+    t =    14.26s Added attachment named 'album-download-preparing'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-preparing.png
+    t =    14.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-preparing.json
+    t =    14.40s Tap "album-save" Button
+    t =    14.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.40s     Find the "album-save" Button
+    t =    14.43s     Check for interrupting elements affecting "album-save" Button
+    t =    14.45s     Synthesize event
+    t =    14.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.77s Find the "album-save" Button
+    t =    14.79s Find the "Открыть фото 1" Button
+    t =    14.82s Waiting 5.0s for "album-save" Button to exist
+    t =    15.88s     Checking `Expect predicate `existsNoRetry == 1` for object "album-save" Button`
+    t =    15.88s         Checking existence of `"album-save" Button`
+    t =    16.98s Checking `Expect predicate `enabled == 1` for object "album-save" Button`
+    t =    16.98s     Find the "album-save" Button
+    t =    17.01s Tap "album-save" Button
+    t =    17.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.02s     Find the "album-save" Button
+    t =    17.04s     Check for interrupting elements affecting "album-save" Button
+    t =    17.07s     Synthesize event
+    t =    17.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.38s Waiting 10.0s for "Не удалось подготовить фотографии. Попробуйте ещё раз." StaticText to exist
+    t =    18.45s     Checking `Expect predicate `existsNoRetry == 1` for object "Не удалось подготовить фотографии. Попробуйте ещё раз." StaticText`
+    t =    18.45s         Checking existence of `"Не удалось подготовить фотографии. Попробуйте ещё раз." StaticText`
+    t =    19.02s Added attachment named 'album-download-error'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-error.png
+    t =    19.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-error.json
+    t =    19.16s Tap "album-save" Button
+    t =    19.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.16s     Find the "album-save" Button
+    t =    19.19s     Check for interrupting elements affecting "album-save" Button
+    t =    19.22s     Synthesize event
+    t =    19.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.53s Find the "album-save" Button
+    t =    19.56s Tap "album-save" Button
+    t =    19.56s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.56s     Find the "album-save" Button
+    t =    19.59s     Check for interrupting elements affecting "album-save" Button
+    t =    19.62s     Synthesize event
+    t =    19.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.93s Find the "album-save" Button
+    t =    19.95s Checking existence of `"Фотографии сохранены" StaticText`
+    t =    19.98s Tear Down
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testCancellationAndNetworkRetryKeepPhotoGeometry]' passed (20.270 seconds).
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testLeavingCancelsPreparationAndLargeTextActionsRemainAdjacent]' started.
+    t =     0.00s Start Test at 2026-11-03 20:22:40.880
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.02s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.02s         Terminate dev.groupplanning.ios.uitesthost:13660
+2026-11-03 20:22:40.914 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:40.914 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:40.915 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:41.981 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 20:22:41.981 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 20:22:41.988 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.31s         Setting up automation session
+    t =     3.54s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.90s Waiting 15.0s for "period-past" Button to exist
+    t =     5.93s     Checking `Expect predicate `existsNoRetry == 1` for object "period-past" Button`
+    t =     5.93s         Checking existence of `"period-past" Button`
+    t =     5.99s Tap "period-past" Button
+    t =     5.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.99s     Find the "period-past" Button
+    t =     6.02s     Check for interrupting elements affecting "period-past" Button
+    t =     6.04s     Synthesize event
+    t =     6.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.38s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =     7.44s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.44s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.47s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.47s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.49s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.52s     Synthesize event
+    t =     7.53s         Scroll element to visible
+    t =     7.54s         Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.57s         Computed hit point {107.16666666666667, 712.33655273437523} after scrolling to visible
+    t =     7.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.22s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     9.29s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     9.29s         Checking existence of `"Открыть фото 1" Button`
+    t =     9.33s Find the "album-add" Button
+    t =     9.36s Find the "album-save" Button
+    t =     9.40s Find the "album-add" Button
+    t =     9.42s Find the "album-save" Button
+    t =     9.45s Find the "album-add" Button
+    t =     9.48s Find the "album-save" Button
+    t =     9.50s Find the "album-add" Button
+    t =     9.53s Find the "album-save" Button
+    t =     9.56s Find the "album-save" Button
+    t =     9.59s Find the "album-add" Button
+    t =     9.61s Find the "album-save" Button
+    t =     9.64s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.18s Added attachment named 'album-download-large-text'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-large-text.png
+    t =    10.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-large-text.json
+    t =    10.31s Tap "album-save" Button
+    t =    10.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.32s     Find the "album-save" Button
+    t =    10.34s     Check for interrupting elements affecting "album-save" Button
+    t =    10.37s     Synthesize event
+    t =    10.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.68s Waiting 2.0s for Alert (First Match) to exist
+    t =    11.75s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    11.75s         Checking existence of `Alert (First Match)`
+    t =    11.78s         Capturing element debug description
+    t =    12.69s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    12.69s         Checking existence of `Alert (First Match)`
+    t =    12.72s         Capturing element debug description
+    t =    12.73s     Checking existence of `Alert (First Match)`
+    t =    12.75s Collecting debug information to assist test failure triage
+    t =    12.75s     Requesting snapshot of accessibility hierarchy for app with pid 10007
+    t =    12.80s Waiting 10.0s for "Отменить подготовку фотографий" Button to exist
+    t =    13.86s     Checking `Expect predicate `existsNoRetry == 1` for object "Отменить подготовку фотографий" Button`
+    t =    13.86s         Checking existence of `"Отменить подготовку фотографий" Button`
+    t =    13.90s Tap "memories-back" Button
+    t =    13.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.90s     Find the "memories-back" Button
+    t =    13.93s     Check for interrupting elements affecting "memories-back" Button
+    t =    13.96s     Synthesize event
+    t =    14.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.62s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =    15.69s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =    15.69s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =    15.71s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =    15.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.71s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =    15.73s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =    15.75s     Synthesize event
+    t =    16.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.40s Waiting 10.0s for "album-save" Button to exist
+    t =    17.46s     Checking `Expect predicate `existsNoRetry == 1` for object "album-save" Button`
+    t =    17.46s         Checking existence of `"album-save" Button`
+    t =    17.49s Find the "album-save" Button
+    t =    17.51s Checking existence of `"Фотографии сохранены" StaticText`
+    t =    17.54s Tear Down
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testLeavingCancelsPreparationAndLargeTextActionsRemainAdjacent]' passed (17.800 seconds).
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testPermissionRefusalKeepsAlbumAndOffersSettings]' started.
+    t =     0.00s Start Test at 2026-11-03 20:22:58.682
+    t =     0.03s Set Up
+2026-11-03 20:22:58.725 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:58.726 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:22:58.726 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.05s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.05s         Terminate dev.groupplanning.ios.uitesthost:14173
+2026-11-03 20:22:59.783 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 20:22:59.783 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 20:22:59.791 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.32s         Setting up automation session
+    t =     3.55s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.91s Waiting 15.0s for "period-past" Button to exist
+    t =     5.95s     Checking `Expect predicate `existsNoRetry == 1` for object "period-past" Button`
+    t =     5.95s         Checking existence of `"period-past" Button`
+    t =     6.01s Tap "period-past" Button
+    t =     6.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.01s     Find the "period-past" Button
+    t =     6.03s     Check for interrupting elements affecting "period-past" Button
+    t =     6.05s     Synthesize event
+    t =     6.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.39s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =     7.42s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.42s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     7.45s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.45s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.47s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.49s     Synthesize event
+    t =     7.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.18s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     9.25s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     9.25s         Checking existence of `"Открыть фото 1" Button`
+    t =     9.29s Tap "album-save" Button
+    t =     9.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.29s     Find the "album-save" Button
+    t =     9.31s     Check for interrupting elements affecting "album-save" Button
+    t =     9.34s     Synthesize event
+    t =     9.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.65s Waiting 10.0s for Alert (First Match) to exist
+    t =    10.72s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    10.72s         Checking existence of `Alert (First Match)`
+    t =    10.74s Checking existence of `StaticText (First Match)`
+    t =    10.76s Tap "Не разрешать" Button
+    t =    10.76s     Wait for com.apple.springboard to idle
+    t =    10.76s     Find the "Не разрешать" Button
+    t =    10.78s     Check for interrupting elements affecting "Не разрешать" Button
+    t =    10.81s     Synthesize event
+    t =    11.12s     Wait for com.apple.springboard to idle
+    t =    11.37s Waiting 10.0s for "Разрешите сохранять фото в настройках приложения." StaticText to exist
+    t =    12.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Разрешите сохранять фото в настройках приложения." StaticText`
+    t =    12.40s         Checking existence of `"Разрешите сохранять фото в настройках приложения." StaticText`
+    t =    12.44s Find the "album-save" Button
+    t =    12.46s Checking existence of `"1 из 3" StaticText`
+    t =    12.50s Checking existence of `"Фотографии сохранены" StaticText`
+    t =    13.07s Added attachment named 'album-download-permission-denied'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-permission-denied.png
+    t =    13.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/album-download-permission-denied.json
+    t =    13.23s Tear Down
+2026-11-03 20:23:11.909 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:11.909 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:11.909 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    13.30s Checking for reports corresponding to termination of 1 app(s).
+Test Case '-[SomewhereUITests.AlbumDownloadUITests testPermissionRefusalKeepsAlbumAndOffersSettings]' passed (13.311 seconds).
+Test Suite 'AlbumDownloadUITests' passed at 2026-11-03 20:23:11.993.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 67.246 (67.252) seconds
+Test Suite 'ExperienceUITests' started at 2026-11-03 20:23:11.994.
+Test Case '-[SomewhereUITests.ExperienceUITests testMemoryStackGridAndFullScreenPreserveIndex]' started.
+    t =     0.00s Start Test at 2026-11-03 20:23:11.995
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-03 20:23:12.030 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 20:23:12.030 xcodebuild[13067:16436262] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-03 20:23:12.038 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.25s         Setting up automation session
+    t =     2.49s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     3.86s Waiting 15.0s for "period-past" Button to exist
+    t =     4.92s     Checking `Expect predicate `existsNoRetry == 1` for object "period-past" Button`
+    t =     4.92s         Checking existence of `"period-past" Button`
+    t =     4.98s Tap "period-past" Button
+    t =     4.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.98s     Find the "period-past" Button
+    t =     5.00s     Check for interrupting elements affecting "period-past" Button
+    t =     5.02s     Synthesize event
+    t =     5.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.36s Waiting 10.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =     6.40s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     6.40s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =     6.95s Added attachment named 'refresh-memory-card'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-card.png
+    t =     6.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-card.json
+    t =     7.07s Tap "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.07s     Find the "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.09s     Check for interrupting elements affecting "meeting-memories-dab00000-0000-4000-8000-000000000001" Button
+    t =     7.11s     Synthesize event
+    t =     7.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.80s Waiting 10.0s for "Открыть фото 1" Button to exist
+    t =     8.83s     Checking `Expect predicate `existsNoRetry == 1` for object "Открыть фото 1" Button`
+    t =     8.84s         Checking existence of `"Открыть фото 1" Button`
+    t =     9.42s Added attachment named 'refresh-memory-stack'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-stack.png
+    t =     9.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-stack.json
+    t =     9.56s Checking existence of `"brand-wordmark" StaticText`
+    t =     9.58s Checking existence of `"Прошедшие встречи" StaticText`
+    t =     9.60s Find the "memories-back" Button
+    t =     9.63s Swipe right "Открыть фото 1" Button
+    t =     9.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.63s     Find the "Открыть фото 1" Button
+    t =     9.66s     Check for interrupting elements affecting "Открыть фото 1" Button
+    t =     9.68s     Synthesize event
+    t =    10.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.14s Waiting 5.0s for "2 из 3" StaticText to exist
+    t =    11.19s     Checking `Expect predicate `existsNoRetry == 1` for object "2 из 3" StaticText`
+    t =    11.19s         Checking existence of `"2 из 3" StaticText`
+    t =    11.21s Swipe left "Открыть фото 2" Button
+    t =    11.21s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.21s     Find the "Открыть фото 2" Button
+    t =    11.24s     Check for interrupting elements affecting "Открыть фото 2" Button
+    t =    11.26s     Synthesize event
+    t =    11.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.71s Waiting 5.0s for "3 из 3" StaticText to exist
+    t =    12.76s     Checking `Expect predicate `existsNoRetry == 1` for object "3 из 3" StaticText`
+    t =    12.77s         Checking existence of `"3 из 3" StaticText`
+    t =    12.79s Swipe right "Открыть фото 3" Button
+    t =    12.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.79s     Find the "Открыть фото 3" Button
+    t =    12.82s     Check for interrupting elements affecting "Открыть фото 3" Button
+    t =    12.85s     Synthesize event
+    t =    13.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.30s Waiting 5.0s for "1 из 3" StaticText to exist
+    t =    14.37s     Checking `Expect predicate `existsNoRetry == 1` for object "1 из 3" StaticText`
+    t =    14.37s         Checking existence of `"1 из 3" StaticText`
+    t =    14.95s Added attachment named 'refresh-memory-stack-restarted'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-stack-restarted.png
+    t =    14.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.98s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-stack-restarted.json
+    t =    15.08s Swipe left "Открыть фото 1" Button
+    t =    15.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.09s     Find the "Открыть фото 1" Button
+    t =    15.11s     Check for interrupting elements affecting "Открыть фото 1" Button
+    t =    15.13s     Synthesize event
+    t =    15.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.59s Waiting 5.0s for "2 из 3" StaticText to exist
+    t =    16.66s     Checking `Expect predicate `existsNoRetry == 1` for object "2 из 3" StaticText`
+    t =    16.66s         Checking existence of `"2 из 3" StaticText`
+    t =    16.70s Tap "Открыть фото 2" Button
+    t =    16.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.71s     Find the "Открыть фото 2" Button
+    t =    16.74s     Check for interrupting elements affecting "Открыть фото 2" Button
+    t =    16.77s     Synthesize event
+    t =    17.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.41s Waiting 5.0s for "Закрыть" Button to exist
+    t =    18.49s     Checking `Expect predicate `existsNoRetry == 1` for object "Закрыть" Button`
+    t =    18.49s         Checking existence of `"Закрыть" Button`
+    t =    18.53s Swipe left Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.53s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.56s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    18.59s     Synthesize event
+    t =    19.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.03s Waiting 5.0s for "3 из 3" StaticText to exist
+    t =    20.09s     Checking `Expect predicate `existsNoRetry == 1` for object "3 из 3" StaticText`
+    t =    20.09s         Checking existence of `"3 из 3" StaticText`
+    t =    20.12s Swipe left Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.12s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.14s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    20.17s     Synthesize event
+    t =    20.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.61s Waiting 5.0s for "3 из 3" StaticText to exist
+    t =    21.67s     Checking `Expect predicate `existsNoRetry == 1` for object "3 из 3" StaticText`
+    t =    21.67s         Checking existence of `"3 из 3" StaticText`
+    t =    21.71s Swipe right Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.72s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.74s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    21.77s     Synthesize event
+    t =    22.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.21s Waiting 5.0s for "2 из 3" StaticText to exist
+    t =    23.25s     Checking `Expect predicate `existsNoRetry == 1` for object "2 из 3" StaticText`
+    t =    23.25s         Checking existence of `"2 из 3" StaticText`
+    t =    23.30s Swipe left Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.30s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.33s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    23.35s     Synthesize event
+    t =    23.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.79s Waiting 5.0s for "3 из 3" StaticText to exist
+    t =    24.84s     Checking `Expect predicate `existsNoRetry == 1` for object "3 из 3" StaticText`
+    t =    24.84s         Checking existence of `"3 из 3" StaticText`
+    t =    25.39s Added attachment named 'refresh-memory-fullscreen'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-fullscreen.png
+    t =    25.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-fullscreen.json
+    t =    25.53s Tap "Закрыть" Button
+    t =    25.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.53s     Find the "Закрыть" Button
+    t =    25.56s     Check for interrupting elements affecting "Закрыть" Button
+    t =    25.59s     Synthesize event
+    t =    25.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.24s Waiting 5.0s for "3 из 3" StaticText to exist
+    t =    27.30s     Checking `Expect predicate `existsNoRetry == 1` for object "3 из 3" StaticText`
+    t =    27.30s         Checking existence of `"3 из 3" StaticText`
+    t =    27.35s Tap "Показать сеткой" Button
+    t =    27.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.35s     Find the "Показать сеткой" Button
+    t =    27.38s     Check for interrupting elements affecting "Показать сеткой" Button
+    t =    27.40s     Synthesize event
+    t =    27.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.71s Checking existence of `"Открыть фото 1" Button`
+    t =    27.73s Checking existence of `"Открыть фото 3" Button`
+    t =    28.27s Added attachment named 'refresh-memory-grid'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-grid.png
+    t =    28.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-grid.json
+    t =    28.41s Setting device orientation to Landscape Left
+    t =    28.43s     Device orientation changed to Landscape Left
+    t =    28.50s     Interface orientation changed to Landscape Right
+    t =    28.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.31s Added attachment named 'refresh-memory-landscape'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-landscape.png
+    t =    29.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB55219B-B664-448C-84AB-34754674EC6D/tmp/somewhere-design-verification/refresh-memory-landscape.json
+    t =    29.44s Setting device orientation to Portrait
+    t =    29.44s     Device orientation changed to Portrait
+    t =    29.48s     Interface orientation changed to Portrait
+    t =    29.48s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.80s Tap "memories-back" Button
+    t =    29.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.80s     Find the "memories-back" Button
+    t =    29.83s     Check for interrupting elements affecting "memories-back" Button
+    t =    29.86s     Synthesize event
+    t =    30.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.52s Waiting 5.0s for "meeting-memories-dab00000-0000-4000-8000-000000000001" Button to exist
+    t =    31.59s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =    31.59s         Checking existence of `"meeting-memories-dab00000-0000-4000-8000-000000000001" Button`
+    t =    31.61s Tear Down
+Test Case '-[SomewhereUITests.ExperienceUITests testMemoryStackGridAndFullScreenPreserveIndex]' passed (31.896 seconds).
+Test Suite 'ExperienceUITests' passed at 2026-11-03 20:23:43.891.
+	 Executed 1 test, with 0 failures (0 unexpected) in 31.896 (31.897) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-03 20:23:43.891.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 99.142 (99.150) seconds
+Test Suite 'Selected tests' passed at 2026-11-03 20:23:43.892.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 99.142 (99.151) seconds
+2026-11-03 20:23:43.923 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:43.923 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:43.924 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:43.932 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:43.933 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:43.934 xcodebuild[13067:16436262] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-03 20:23:44.193 xcodebuild[13067:16436262] [MT] IDETestOperationsObserverDebug: 103.600 elapsed -- Testing started completed.
+2026-11-03 20:23:44.193 xcodebuild[13067:16436262] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-03 20:23:44.193 xcodebuild[13067:16436262] [MT] IDETestOperationsObserverDebug: 103.600 sec, +103.600 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261103T192158-12588.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_RESTORED=1

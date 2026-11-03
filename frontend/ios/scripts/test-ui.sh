@@ -27,6 +27,7 @@ case "${1:-all}" in
     experience-a11y) somewhere_filter=-only-testing:SomewhereUITests/ExperienceAccessibilityUITests; somewhere_scope=accessibility ;;
     media-batch) somewhere_filter=-only-testing:SomewhereUITests/NativeMediaBatchUITests; somewhere_scope=accessibility ;;
     album-download) somewhere_filter=-only-testing:SomewhereUITests/AlbumDownloadUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
+    album-access) somewhere_filter=-only-testing:SomewhereUITests/AlbumAccessUITests; somewhere_scope=calendar ;;
     native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
     help) somewhere_filter=-only-testing:SomewhereUITests/HelpDisclosureUITests; somewhere_scope=accessibility ;;
     common-about) somewhere_filter=-only-testing:SomewhereUITests/DesignExperienceUITests/testHelpAndAboutMatchApprovedLayout; somewhere_scope=accessibility ;;
@@ -72,7 +73,7 @@ case "${1:-all}" in
     touch-targets) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testPeriodAndCancelExposeTheirWholeVisibleTouchTargets; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh

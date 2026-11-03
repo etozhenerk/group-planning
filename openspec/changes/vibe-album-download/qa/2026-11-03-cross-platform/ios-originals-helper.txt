@@ -1,0 +1,50 @@
+package imagecontent
+
+import (
+    "bytes"
+    "crypto/sha256"
+    "encoding/hex"
+    "encoding/json"
+    "image"
+    "image/color"
+    "image/png"
+    "os"
+    "path/filepath"
+    "reflect"
+    "testing"
+)
+
+func TestQAAlbum103PhotoKitOriginals(t *testing.T) {
+    expected := map[string]int{}
+    for i:=0; i<103; i++ {
+        pixels:=image.NewRGBA(image.Rect(0,0,240,320))
+        for y:=0;y<320;y++ { for x:=0;x<240;x++ {
+            pixels.Set(x,y,color.RGBA{R:uint8(70+x/3+i*25),G:uint8(110+y/4),B:uint8(145+i*25),A:255})
+        }}
+        var encoded bytes.Buffer
+        if err:=png.Encode(&encoded,pixels);err!=nil { t.Fatal(err) }
+        original,_,err:=Prepare(encoded.Bytes(),"image/png",10<<20)
+        if err!=nil { t.Fatal(err) }
+        hash:=sha256.Sum256(original)
+        expected[hex.EncodeToString(hash[:])]++
+    }
+    var report struct {
+        New []struct { Path string `json:"path"`; SHA256 string `json:"sha256"` } `json:"new"`
+        Changed []string `json:"old_changed"`
+        Missing []string `json:"missing_old"`
+    }
+    data,err:=os.ReadFile(os.Getenv("SOMEWHERE_QA_PHOTO_REPORT"));if err!=nil {t.Fatal(err)}
+    if err=json.Unmarshal(data,&report);err!=nil {t.Fatal(err)}
+    if len(report.New)!=103 || len(report.Changed)!=0 || len(report.Missing)!=0 { t.Fatal("PhotoKit batch or existing gallery changed",len(report.New),report.Changed,report.Missing) }
+    actual:=map[string]int{}
+    for _,file:=range report.New {
+        path:=filepath.Join(os.Getenv("SOMEWHERE_QA_PHOTO_ROOT"),file.Path)
+        data,err:=os.ReadFile(path);if err!=nil {t.Fatal(err)}
+        hash:=sha256.Sum256(data);digest:=hex.EncodeToString(hash[:])
+        if digest!=file.SHA256 {t.Fatal("gallery file changed after capture")}
+        config,err:=png.DecodeConfig(bytes.NewReader(data));if err!=nil || config.Width!=240 || config.Height!=320 {t.Fatal("orientation or format",file.Path,config,err)}
+        actual[digest]++
+    }
+    if !reflect.DeepEqual(actual,expected) {t.Fatal("saved originals differ from server-normalized fixture")}
+    t.Logf("PHOTOKIT_ORIGINALS files=%d unique_hashes=%d dimensions=240x320 old_changed=0 old_missing=0",len(report.New),len(actual))
+}
