@@ -187,6 +187,7 @@ class TelegramChatUiTests {
             compose.onNodeWithTag("reaction-filter-❤️").assertIsSelected()
             compose.onNodeWithTag("reaction-filter-all").performClick().assertIsSelected()
             compose.onNodeWithTag("reaction-filter-❤️").performClick().assertIsSelected()
+            fixture.screenshot("telegram-reaction-people-open")
             fixture.closeActionSheet()
             fixture.waitAbsent("reaction-people")
             selectedChip.assertIsDisplayed().assertIsFocused()

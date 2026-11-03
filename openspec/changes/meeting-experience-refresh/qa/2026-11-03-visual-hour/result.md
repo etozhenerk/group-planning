@@ -75,3 +75,11 @@ mobile-mvp-design-refresh». Это соседняя новая задача, е
 Формальные9.4/10.3/0.3 остаются открытыми. Agent check и git diff --check PASS.
 
 Адресный qa:ready для17.4 также выполнен: exit1, «Stale catalog or unresolved coverage»; task-ready.txt. Проверка функционального кейса закрыта по самостоятельной приёмке пользователя, формальный gate не объявляется успешным.
+
+Открытая Android-панель людей реакции доснята отдельно: прежний снимок с именем
+telegram-reaction-hold-people сохранялся после закрытия и не изображал людей.
+Новый screenshot ставится до закрытия, без изменения приложения. Адресный тест
+holdingAReactionOpensItsPeopleWithoutToggling PASS6.524с: long press, фильтры,
+три участника, закрытие/возврат фокуса и снятие своей реакции. Текущая панель
+просмотрена в android/people/telegram-reaction-people-open.png; formatCheck PASS.
+Повтор остальных шести ранее успешных сценариев не выполнялся.
