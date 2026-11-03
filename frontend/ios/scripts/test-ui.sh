@@ -20,6 +20,8 @@ case "${1:-all}" in
     qa-baseline) somewhere_baseline=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
     qa-isolation) somewhere_filter=-only-testing:SomewhereUITests/QAIsolationUITests; somewhere_scope=accessibility ;;
     chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
+    chat-controls) somewhere_scope=accessibility ;;
+    media-batch) somewhere_filter=-only-testing:SomewhereUITests/NativeMediaBatchUITests; somewhere_scope=accessibility ;;
     album-download) somewhere_filter=-only-testing:SomewhereUITests/AlbumDownloadUITests; somewhere_auth_filter=-only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex; somewhere_scope=accessibility ;;
     native-usability) somewhere_native_filters=1; somewhere_scope=accessibility ;;
     help) somewhere_filter=-only-testing:SomewhereUITests/HelpDisclosureUITests; somewhere_scope=accessibility ;;
@@ -58,7 +60,7 @@ case "${1:-all}" in
     accessibility) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|album-download|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-controls|media-batch|album-download|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|chat-sync|telegram-chat|design|meeting-info|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -94,13 +96,19 @@ somewhere_prepare_simulator
 somewhere_prepare_software_keyboard
 
 case "${1:-all}" in
-    all|native-usability|sheet-media|media|media-native|covers|covers-large)
+    all|native-usability|chat-controls|media-batch|sheet-media|media|media-native|covers|covers-large)
         somewhere_photo=../../openspec/changes/meeting-experience-refresh/assets/boardgame.png
         printf 'QA_PHOTO_SOURCE=%s\n' "$somewhere_photo"
         shasum -a 256 "$somewhere_photo"
         xcrun simctl addmedia "$somewhere_simulator" "$somewhere_photo"
         ;;
 esac
+
+if [ "${1:-all}" = "media-batch" ]; then
+    xcrun simctl addmedia "$somewhere_simulator" \
+        ../../openspec/changes/meeting-experience-refresh/assets/friends.png \
+        ../../openspec/changes/meeting-experience-refresh/assets/dinner.png
+fi
 
 if [ -n "${SOMEWHERE_IOS_FIXTURE_BINARY:-}" ]; then
     cp "$SOMEWHERE_IOS_FIXTURE_BINARY" "$somewhere_temporary/httpapi.test"
@@ -143,7 +151,7 @@ xcrun simctl install "$somewhere_simulator" .build/UITestDerivedData/Build/Produ
 somewhere_container=$(xcrun simctl get_app_container "$somewhere_simulator" dev.groupplanning.ios.uitesthost data)
 cp "$somewhere_temporary/config.json" "$somewhere_container/tmp/ui-fixture.json"
 chmod 600 "$somewhere_container/tmp/ui-fixture.json"
-if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "all" ]; then
+if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "chat-controls" ] || [ "${1:-all}" = "all" ]; then
     python3 scripts/seed-ui-document.py "$somewhere_container/Documents"
 fi
 
@@ -175,6 +183,10 @@ elif [ "$somewhere_native_filters" = "1" ]; then
         -only-testing:SomewhereUITests/ChatShareListUITests \
         -only-testing:SomewhereUITests/ChatMediaSheetUITests \
         -only-testing:SomewhereUITests/ExperienceUITests/testMemoryStackGridAndFullScreenPreserveIndex
+elif [ "${1:-all}" = "chat-controls" ]; then
+    set -- -only-testing:SomewhereUITests/TelegramChatUITests \
+        -only-testing:SomewhereUITests/ExperienceUITests/testEmojiSelectionAndAttachmentCancellationKeepDraft \
+        -only-testing:SomewhereUITests/ChatMediaSheetUITests
 else
     set -- ${somewhere_filter:+"$somewhere_filter"} ${somewhere_auth_filter:+"$somewhere_auth_filter"}
 fi

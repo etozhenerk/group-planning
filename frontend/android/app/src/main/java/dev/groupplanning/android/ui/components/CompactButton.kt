@@ -9,12 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.ui.theme.DesignTokens
@@ -33,7 +38,9 @@ internal fun CompactButton(
     val compact = LocalMobileSheet.current
     Surface(
         click,
-        modifier.defaultMinSize(minHeight = DesignTokens.targetAndroid),
+        modifier.defaultMinSize(minHeight = DesignTokens.targetAndroid).semantics {
+            if (busy) contentDescription = title
+        },
         enabled = enabled && !busy,
         shape = RoundedCornerShape(
             if (compact) {
@@ -69,19 +76,27 @@ internal fun CompactButton(
             contentAlignment = Alignment.Center,
         ) {
             if (busy) {
-                CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
-            } else {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(9.dp),
-                ) {
-                    icon?.let { AppIcon(it, Modifier.size(22.dp)) }
-                    Text(
-                        title,
-                        fontSize = DesignTokens.typographySizeButton,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
+                CircularProgressIndicator(
+                    Modifier.size(20.dp),
+                    color = LocalContentColor.current,
+                    strokeWidth = 2.dp,
+                )
+            }
+            Row(
+                modifier = if (busy) {
+                    Modifier.alpha(0f).clearAndSetSemantics { }
+                } else {
+                    Modifier
+                },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(9.dp),
+            ) {
+                icon?.let { AppIcon(it, Modifier.size(22.dp)) }
+                Text(
+                    title,
+                    fontSize = DesignTokens.typographySizeButton,
+                    fontWeight = FontWeight.SemiBold,
+                )
             }
         }
     }

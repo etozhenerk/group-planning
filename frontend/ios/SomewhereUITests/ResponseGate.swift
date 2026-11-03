@@ -39,9 +39,10 @@ final class ResponseGate {
             to: directory.appendingPathComponent("rule.json"), options: .atomic)
     }
 
-    func failPublishedMediaResponse(pathPrefix: String) throws {
+    func failPublishedMediaResponse(pathPrefix: String, afterFirst: Bool = false) throws {
         let rule = Rule(
-            path: pathPrefix, queryName: nil, mode: "unavailable", method: "POST",
+            path: pathPrefix, queryName: nil,
+            mode: afterFirst ? "unavailable-after-first" : "unavailable", method: "POST",
             pathSuffix: "/publish")
         try JSONEncoder().encode(rule).write(
             to: directory.appendingPathComponent("rule.json"), options: .atomic)
@@ -52,6 +53,10 @@ final class ResponseGate {
         if FileManager.default.fileExists(atPath: file.path) {
             try FileManager.default.removeItem(at: file)
         }
+    }
+
+    func continuePartialFailure() throws {
+        try Data().write(to: directory.appendingPathComponent("continue-partial"), options: .atomic)
     }
 
     func cleanUp() throws { try FileManager.default.removeItem(at: directory) }

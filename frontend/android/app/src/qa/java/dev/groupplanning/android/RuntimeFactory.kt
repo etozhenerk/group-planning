@@ -89,6 +89,7 @@ internal object RuntimeFactory {
                     ).build(),
                 )
                 try {
+                    QaPhotoBatchProbe.after(chain.request())
                     if (scenario == "list-error") {
                         QaResponseGate.observeListFailure(chain.request(), response.code)
                     }

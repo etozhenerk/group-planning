@@ -90,7 +90,6 @@ internal fun UploadSheet(
                 )
             }
         }
-        if (state.sending) LinearProgressIndicator(Modifier.fillMaxWidth())
         if (selected.any { it.error }) {
             Text(
                 stringResource(R.string.upload_error),
@@ -129,7 +128,16 @@ internal fun UploadSheet(
                 )
             }
             CompactButton(
-                stringResource(R.string.upload_submit),
+                stringResource(
+                    if (selected.any {
+                            it.error
+                        }
+                    ) {
+                        R.string.retry
+                    } else {
+                        R.string.upload_submit
+                    },
+                ),
                 primary = true,
                 busy = state.sending,
                 enabled = !state.selecting &&

@@ -633,13 +633,21 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativeMediaBatchUITests.swift
+          selector: NativeMediaBatchUITests/testPartialBatchKeepsOnlyFailedPreviewAndRetryDoesNotRepublishSuccess
+          runner: sh scripts/test-ui.sh media-batch
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/PhotoBatchRetryUiTests.kt
+          selector: PhotoBatchRetryUiTests.partialCommitKeepsFailedPhotoAcrossRecreationAndDoesNotRepeatSuccess
+          runner: sh scripts/test-ui.sh media-batch
+          level: e2e
 - id: TC-MEDIA-WEB-PHOTO-BATCH
   title: Карусель и повтор частичного набора web
   lifecycle: active

@@ -64,6 +64,8 @@ sh scripts/test-ui.sh calendar
 sh scripts/test-ui.sh auth
 sh scripts/test-ui.sh experience
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh support
+ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh chat-controls
+ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh media-batch
 ANDROID_SERIAL=emulator-5554 SOMEWHERE_GRADLE_WORKERS=1 sh scripts/test-ui.sh sheet-controls
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh composer-focus
 ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh

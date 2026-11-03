@@ -36,15 +36,33 @@ enum FixtureResponseGate {
             return result
         }
         let ruleFile = root.appendingPathComponent("rule.json")
+        if rule.mode == "unavailable-after-first" {
+            do {
+                try Data(url.path.utf8).write(
+                    to: root.appendingPathComponent("first-published"), options: .withoutOverwriting
+                )
+                return result
+            } catch let error as CocoaError where error.code == .fileWriteFileExists {
+                // Only the first matching response succeeds; later publishes lose their reply.
+            }
+        }
         try Data(String(result.1.statusCode).utf8).write(
             to: root.appendingPathComponent("requested"), options: .atomic)
+        if rule.mode == "unavailable-after-first" {
+            while !FileManager.default.fileExists(
+                atPath: root.appendingPathComponent("continue-partial").path)
+                && FileManager.default.fileExists(atPath: ruleFile.path)
+            {
+                try await Task.sleep(for: .milliseconds(50))
+            }
+        }
         switch rule.mode {
         case "hold":
             while FileManager.default.fileExists(atPath: ruleFile.path) {
                 try await Task.sleep(for: .milliseconds(50))
             }
             return result
-        case "unavailable":
+        case "unavailable", "unavailable-after-first":
             guard
                 let response = HTTPURLResponse(
                     url: url, statusCode: 503, httpVersion: nil, headerFields: nil)
