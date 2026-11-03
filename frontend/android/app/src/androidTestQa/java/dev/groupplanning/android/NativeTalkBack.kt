@@ -59,7 +59,20 @@ internal object NativeTalkBack {
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
                 )
             }
-            block(automation)
+            try {
+                block(automation)
+            } catch (failure: Throwable) {
+                runCatching {
+                    capture(automation, "native-talkback-failure")
+                    File(outputDirectory(), "native-talkback-failure.txt").writeText(
+                        walk(checkNotNull(automation.rootInActiveWindow)).joinToString("\n") {
+                            "${it.className} text=${it.text} desc=${it.contentDescription}" +
+                                " click=${it.isClickable} actions=${it.actionList}"
+                        },
+                    )
+                }
+                throw failure
+            }
         } finally {
             shell("settings delete secure enabled_accessibility_services")
             if (originalEnabled == "null") {
@@ -92,10 +105,40 @@ internal object NativeTalkBack {
         ).executeShellCommand(command),
     ).bufferedReader().use { it.readText() }
 
-    private fun await(condition: () -> Boolean) {
+    fun await(condition: () -> Boolean) {
         val deadline = SystemClock.uptimeMillis() + 10_000
-        while (!condition() && SystemClock.uptimeMillis() < deadline) Thread.sleep(50)
+        while (!condition() && SystemClock.uptimeMillis() < deadline) {
+            dismissLateNotificationPrompt()
+            Thread.sleep(50)
+        }
         assertTrue("TalkBack condition timed out", condition())
+    }
+
+    private fun dismissLateNotificationPrompt() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val automation = instrumentation.getUiAutomation(
+            UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES,
+        )
+        val root = automation.rootInActiveWindow ?: return
+        if (root.packageName?.toString()?.contains("permissioncontroller") != true) return
+        val nodes = walk(root)
+        if (nodes.none {
+                it.text?.toString()?.contains("Android Accessibility Suite") == true
+            }
+        ) {
+            return
+        }
+        val deny = nodes.firstOrNull {
+            it.text?.toString() in setOf("Don’t allow", "Don't allow", "Не разрешать")
+        } ?: return
+        if (deny.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+            val context = instrumentation.targetContext
+            context.startActivity(
+                Intent(context, MainActivity::class.java).addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT,
+                ),
+            )
+        }
     }
 
     fun capture(automation: UiAutomation, name: String) {

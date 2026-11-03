@@ -16,9 +16,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,6 +61,8 @@ internal fun FeedScreen(
     shareUrl: String? = null,
 ) {
     val presentation = LocalChatPresentation.current
+    val focusManager = LocalFocusManager.current
+    val view = LocalView.current
     val media = model.media
     val mediaState = media?.state?.collectAsStateWithLifecycle()?.value
     var upload by rememberSaveable {
@@ -97,10 +102,21 @@ internal fun FeedScreen(
     val messages by model.sender.state.collectAsStateWithLifecycle()
     val reading by model.reading.state.collectAsStateWithLifecycle()
     var readerAnchor by remember { mutableStateOf<ReactionAnchor?>(null) }
+    var readerReturnPending by remember(model) { mutableStateOf(false) }
+    val windowFocused = LocalWindowInfo.current.isWindowFocused
+    LaunchedEffect(model, reading.readerEntry, windowFocused, readerReturnPending, state.revoked) {
+        if (readerReturnPending && reading.readerEntry == null && windowFocused && !state.revoked) {
+            readerAnchor?.focus?.requestFocus()
+            withFrameNanos { }
+            ReaderAccessibilityFocus.restore(view)
+            readerReturnPending = false
+        }
+    }
     val openReaders: (
         dev.groupplanning.android.data.api.models.FeedEntry,
         ReactionAnchor,
     ) -> Unit = { entry, anchor ->
+        focusManager.clearFocus(force = true)
         readerAnchor = anchor
         model.focused(entry.id)
         model.reading.openReaders(entry)
@@ -133,7 +149,7 @@ internal fun FeedScreen(
     if (reading.readerEntry != null) {
         ChatReadersSheet(reading, {
             model.reading.closeReaders()
-            readerAnchor?.focus?.requestFocus()
+            readerReturnPending = true
         }, { model.reading.loadReaders(more = reading.readers.isNotEmpty()) }, {
             model.reading.loadReaders(more = true)
         })

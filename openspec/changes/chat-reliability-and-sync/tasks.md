@@ -71,8 +71,8 @@ validation-plan.md/testing.md. Это уточнение точки отсчёт
 - [x] 6.1 Расширить Repository/ViewModel и MessageOutbox до очереди с устойчивыми ID и системной защитой хранения; проверить process death, lost ACK, draft, no-op/retry и изоляцию аккаунтов тестами. Проверены настоящий aftercommit/coldstart и адресные условия очереди/ACK/rejoin: [отчёт](qa/2026-11-02-sequential-android-outbox/result.md).
 - [x] 6.2 Подключить SDK adapter через Flow и lifecycle, recovery/fallback; проверить auth, reconnect/reset, один запрос, background и revoke через fake transport и эмулятор. Последовательная проверка и исправленный переход после401: [результат](qa/2026-11-02-sequential-sdk/android-6.2.md); полный performance/source-wide допуск остаётся отдельным.
 - [x] 6.3 Реализовать bounded store и LazyColumn anchor/around/автодогрузку; проверить reverse layout, IME/Back, resize карточки, собственный ACK и отсутствие прыжка при новых сообщениях.
-- [ ] 6.4 Добавить visibility/read-through, счётчики и readers sheet; проверить два устройства, TalkBack/font scale, ошибки и возврат к исходной строке.
-- [ ] 6.5 Сопоставить UI с UX v1, обновить документацию repository/outbox и выполнить wrapper/ktlint, unit/UI, Debug/Release и Android Lint по frontend/android/AGENTS.md; записать отдельно эмулятор и физическое устройство.
+- [x] 6.4 Добавить visibility/read-through, счётчики и readers sheet; проверить два устройства, TalkBack/font scale, ошибки и возврат к исходной строке. [Исправление и фактическая проверка на API 36](qa/2026-11-03-android-readers/result.md).
+- [x] 6.5 Сопоставить UI с UX v1, обновить документацию repository/outbox и выполнить wrapper/ktlint, unit/UI, Debug/Release и Android Lint по frontend/android/AGENTS.md; записать отдельно эмулятор и физическое устройство. [Проверки и ограничения](qa/2026-11-03-android-readers/result.md).
 
 ## 7. Сквозная приёмка и подготовка выпуска
 

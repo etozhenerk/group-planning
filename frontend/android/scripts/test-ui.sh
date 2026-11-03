@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_scope=${1:-all}
 case "$somewhere_scope" in
-    all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation]\n' >&2; exit 2 ;;
+    all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y) ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -33,7 +33,7 @@ somewhere_evidence_ready=0
 somewhere_process_output=
 somewhere_private_evidence=0
 somewhere_ui_output="/sdcard/Android/data/dev.groupplanning.android.uitesthost/files/ui-$$"
-if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ]; then
+if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ] || [ "$somewhere_scope" = readers-a11y ]; then
     somewhere_private_evidence=1
     somewhere_ui_output="/data/user/0/dev.groupplanning.android.uitesthost/files/ui-$$"
 fi
@@ -86,9 +86,9 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 (cd ../../backend && "${GO_BIN:-go}" test -c -o "$somewhere_temporary/httpapi.test" ./internal/httpapi)
 somewhere_fixture_scope=$somewhere_scope
-if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ]; then somewhere_fixture_scope=calendar; fi
+if [ "$somewhere_scope" = experience ] || [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ] || [ "$somewhere_scope" = readers-a11y ]; then somewhere_fixture_scope=calendar; fi
 somewhere_chat=0
-if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = sheet-controls ]; then somewhere_chat=1; fi
+if [ "$somewhere_scope" = all ] || [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = readers-a11y ]; then somewhere_chat=1; fi
 SOMEWHERE_ANDROID_CHAT_REALTIME="$somewhere_chat" SOMEWHERE_ANDROID_CHAT_READ_STATE="$somewhere_chat" \
 SOMEWHERE_ANDROID_FIXTURE=1 SOMEWHERE_ANDROID_FIXTURE_SCOPE="$somewhere_fixture_scope" SOMEWHERE_ANDROID_FIXTURE_CONFIG="$somewhere_temporary/config.json" \
     "$somewhere_temporary/httpapi.test" -test.run '^TestAndroidFixture$' -test.v -test.timeout 0 \
@@ -111,7 +111,7 @@ somewhere_port=$(python3 -c 'import json,sys,urllib.parse; print(urllib.parse.ur
 # unanswered invitation is part of that scenario. Design captures precede uploads.
 # Private evidence avoids Android 16 external-storage ownership races after reinstall.
 # This scope installs only the QA target and uses the same AndroidJUnitRunner cases.
-if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ]; then
+if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$somewhere_scope" = sheet-controls ] || [ "$somewhere_scope" = album-download ] || [ "$somewhere_scope" = composer-focus ] || [ "$somewhere_scope" = media-batch ] || [ "$somewhere_scope" = chat-controls ] || [ "$somewhere_scope" = experience-a11y ] || [ "$somewhere_scope" = experience-revocation ] || [ "$somewhere_scope" = readers-a11y ]; then
     somewhere_ui_classes=dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet
     somewhere_ui_result='OK (9 tests)'
     if [ "$somewhere_scope" = support ]; then
@@ -146,6 +146,10 @@ if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$som
     fi
     if [ "$somewhere_scope" = experience-revocation ]; then
         somewhere_ui_classes=dev.groupplanning.android.ProfileVibeAccessibilityUiTests#zRevokedSessionCannotKeepCachedAlbumVisible
+        somewhere_ui_result='OK (1 test)'
+    fi
+    if [ "$somewhere_scope" = readers-a11y ]; then
+        somewhere_ui_classes=dev.groupplanning.android.ChatReadersAccessibilityUiTests
         somewhere_ui_result='OK (1 test)'
     fi
     ./gradlew --no-daemon "--max-workers=${SOMEWHERE_GRADLE_WORKERS:-2}" -PsomewhereTestBuildType=qa :app:installQa :app:installQaAndroidTest

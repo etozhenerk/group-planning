@@ -68,6 +68,7 @@ ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh chat-controls
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh media-batch
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh experience-a11y # профиль/вайбы, TalkBack, font 1.8, landscape
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh experience-revocation # удаляет только свой отдельный QA-профиль
+ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh readers-a11y # два прочитавших, ошибка/повтор, TalkBack и возврат фокуса
 ANDROID_SERIAL=emulator-5554 SOMEWHERE_GRADLE_WORKERS=1 sh scripts/test-ui.sh sheet-controls
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh composer-focus
 ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh

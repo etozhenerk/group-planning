@@ -419,9 +419,13 @@
           runner: ios-ui
           level: e2e
     android:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ChatReadersAccessibilityUiTests.kt
+          selector: twoReadersErrorRetryAndTalkBackDismissPreserveTheSourceRow
+          runner: android-ui
+          level: e2e
 - id: TC-CHAT-READ-STATE-EC05E2CA
   title: "Кто прочитал собственное сообщение: Участник вышел"
   lifecycle: active

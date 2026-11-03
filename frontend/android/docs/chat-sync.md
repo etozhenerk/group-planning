@@ -136,3 +136,22 @@ Pin подтверждён Maven Central и SDK spike изменения chat-re
 Первый показ ждёт измерения разделителя до раскрытия ленты; прежний viewport
 без этого необязательного поля продолжает работать. Значение остаётся в памяти
 сессии и удаляется при отзыве доступа вместе с прежним anchor.
+
+### Фокус после списка прочитавших
+
+Открытие readers снимает прежний input focus. После закрытия возврат ждёт
+фокуса основного окна и следующего кадра; новая панель или отзыв доступа
+отменяют отложенную работу. Input focus и TalkBack focus различаются.
+На API 34+ `ReaderAccessibilityFocus` связывает только узел собственного View
+с его корнем через публичный
+[setQueryFromAppProcessEnabled](https://developer.android.com/reference/android/view/accessibility/AccessibilityNodeInfo#setQueryFromAppProcessEnabled(android.view.View,%20boolean))
+и запрашивает accessibility focus у целевого input-узла при включённом
+touch exploration. Чужие окна и приватные virtual IDs не используются.
+На прежних API сохраняется путь `FocusRequester`; реальный TalkBack-прогон
+выполнен на API 36 и не подтверждает поведение других версий.
+
+`sh scripts/test-ui.sh readers-a11y` проверяет реальный API, два reader marker,
+error/retry/empty, font 1.8, TalkBack ACTION_CLICK/ACTION_DISMISS и возвращённый
+accessibility focus. Тестовые Compose-часы продвигаются во время async-ответов.
+Helper отклоняет только известный запрос уведомлений Android Accessibility
+Suite и восстанавливает прежние service/permission flags и масштаб текста.
