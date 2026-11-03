@@ -1,5 +1,99 @@
 import { test, expect } from '@playwright/test';
-import { create, login } from '@tests/helpers';
+import { randomUUID } from 'node:crypto';
+import { entrySchema } from '@/shared/api';
+import { apiCreate, create, login, writeHeaders } from '@tests/helpers';
+
+test('a late confirmed reaction cannot restore the chat after real RSVP withdrawal', async ({
+  page,
+  browser,
+}) => {
+  await login(page, 'Саша');
+  const created = await apiCreate(page, 'Отозванный доступ к реакциям');
+  const id = created.meeting.id;
+  const key = randomUUID();
+  const sent = await page.request.post(`/api/v1/meetings/${id}/messages`, {
+    headers: await writeHeaders(page, key),
+    data: { text: 'Реакция с задержанным ответом', client_request_id: key },
+  });
+
+  expect(sent.status()).toBe(201);
+  const entry = entrySchema.parse(await sent.json());
+  const context = await browser.newContext({
+    ignoreHTTPSErrors: true,
+    baseURL: new URL(page.url()).origin,
+    viewport: page.viewportSize(),
+    isMobile: test.info().project.use.isMobile ?? false,
+    hasTouch: test.info().project.use.hasTouch ?? false,
+  });
+
+  const guest = await context.newPage();
+  const latch = { release: () => {}, received: () => {} };
+  const waiting = new Promise<void>((resolve) => {
+    latch.release = resolve;
+  });
+
+  const started = new Promise<void>((resolve) => {
+    latch.received = resolve;
+  });
+
+  try {
+    await login(guest, 'Лена');
+    const invitation = new URL(created.invitation_url).pathname.split('/').at(-1);
+    const joined = await guest.request.put(`/api/v1/invitations/${invitation}/rsvp`, {
+      headers: await writeHeaders(guest),
+      data: { answer: 'going', expected_revision: '0' },
+    });
+
+    expect(joined.status()).toBe(200);
+    const reaction = `/api/v1/meetings/${id}/messages/${entry.id}/reactions`;
+    await guest.route(`**${reaction}`, async (route) => {
+      if (route.request().method() !== 'PUT') {
+        await route.continue();
+
+        return;
+      }
+
+      const response = await route.fetch();
+      expect(response.status()).toBe(200);
+      latch.received();
+      await waiting;
+      await route.fulfill({ response }).catch(() => undefined);
+    });
+    await guest.goto(`/meetings/${id}`);
+    await guest.getByTestId('message-actions').press('Enter');
+    await guest.getByRole('button', { name: '👍', exact: true }).click();
+    await started;
+    await guest.getByRole('button', { name: 'Информация о встрече' }).click();
+    await guest.getByRole('button', { name: 'Возможно', exact: true }).click();
+    await expect(
+      guest.getByRole('textbox', { name: 'Сообщение', exact: true }),
+    ).toHaveCount(0);
+    latch.release();
+    await expect(guest.getByTestId('feed-message')).toHaveCount(0);
+    await expect(guest.getByRole('button', { name: '👍: 1', exact: true })).toHaveCount(
+      0,
+    );
+    const rejected = await guest.request.put(reaction, {
+      headers: await writeHeaders(guest),
+      data: { emoji: '👍', active: false },
+    });
+
+    expect(rejected.status()).toBe(403);
+    await guest.evaluate(
+      () =>
+        new Promise<void>((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+        }),
+    );
+    await expect(guest.getByTestId('feed-message')).toHaveCount(0);
+    await expect(guest.getByRole('button', { name: '👍: 1', exact: true })).toHaveCount(
+      0,
+    );
+  } finally {
+    latch.release();
+    await context.close();
+  }
+});
 
 test('public support receives a real reference and retries a lost response without duplication', async ({
   page,

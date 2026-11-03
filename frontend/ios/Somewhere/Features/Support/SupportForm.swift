@@ -12,7 +12,7 @@ struct SupportForm: View {
         VStack(alignment: .leading, spacing: 21) {
             SupportTopics(owner: owner)
             VStack(alignment: .leading, spacing: 8) {
-                Text("Ваше сообщение").designFont(13)
+                Text("Ваше сообщение").designFont(13).accessibilityHidden(true)
                 TextEditor(text: $owner.description).designFont(13).padding(8).frame(height: 145)
                     .scrollDismissesKeyboard(.immediately)
                     .scrollContentBackground(.hidden).background(
@@ -28,7 +28,9 @@ struct SupportForm: View {
                                 .foregroundStyle(.white.opacity(0.35))
                                 .padding(14).allowsHitTesting(false).accessibilityHidden(true)
                         }
-                    }.accessibilityIdentifier("support-description").focused(
+                    }.accessibilityIdentifier("support-description").accessibilityLabel(
+                        "Ваше сообщение"
+                    ).focused(
                         $focused, equals: "description")
             }
             VStack(alignment: .leading, spacing: 8) {
@@ -52,7 +54,8 @@ struct SupportForm: View {
                             RoundedRectangle(cornerRadius: 12).stroke(
                                 .white.opacity(0.078), lineWidth: 1)
                         }
-                }.accessibilityLabel("Раздел")
+                }.accessibilityLabel("Раздел").accessibilityValue(
+                    SupportSection(rawValue: owner.screen)?.title ?? "Другое")
             }
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
@@ -121,10 +124,12 @@ struct SupportForm: View {
                                 .designFont(10).foregroundStyle(AppPalette.muted)
                         }
                     }
-                }.frame(maxWidth: .infinity, alignment: .leading)
+                }.frame(
+                    maxWidth: .infinity, minHeight: DesignTokens.targetIos, alignment: .leading
+                ).contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityAddTraits(owner.diagnostics ? .isSelected : [])
                 .accessibilityLabel("Приложить сведения об устройстве").accessibilityValue(
-                    owner.diagnostics ? "1" : "0")
+                    owner.diagnostics ? "Включено" : "Выключено")
             ForEach(owner.fieldErrors.keys.sorted(), id: \.self) { field in
                 Text(owner.fieldErrors[field] ?? "Проверьте поле").designFont(12)
                     .foregroundStyle(AppPalette.error)
@@ -149,7 +154,7 @@ struct SupportForm: View {
             }.disabled(owner.sending)
             NavigationLink("Политика конфиденциальности") {
                 ServiceInformationScreen(document: .privacy, api: owner.api)
-            }.designFont(10)
+            }.designFont(10).frame(minHeight: DesignTokens.targetIos)
         }.padding(.horizontal, 17).padding(.vertical, 20)
             .background(Color(designHex: 0x2d2e35), in: RoundedRectangle(cornerRadius: 22))
             .toolbar {

@@ -4,6 +4,51 @@ import { apiCreate, login, writeHeaders } from '@tests/helpers';
 
 test.use({ hasTouch: true });
 
+test('IME confirmation retains the draft and only a subsequent Enter sends once', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await login(page, 'Саша');
+  const { meeting } = await apiCreate(page, 'Подтверждение IME');
+  await page.goto(`/meetings/${meeting.id}`);
+  const input = page.getByRole('textbox', { name: 'Сообщение', exact: true });
+  const requests: string[] = [];
+  page.on('request', (request) => {
+    if (
+      request.method() === 'POST' &&
+      request.url().endsWith(`/api/v1/meetings/${meeting.id}/messages`)
+    ) {
+      requests.push(request.url());
+    }
+  });
+  await input.fill('Принесу чай');
+  const consumed = await input.evaluate((element) => {
+    element.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+
+    return !element.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        isComposing: true,
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+  });
+
+  expect(consumed).toBe(false);
+  await expect(input).toHaveValue('Принесу чай');
+  expect(requests).toHaveLength(0);
+  await input.evaluate((element) => {
+    element.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+  });
+  await input.press('Enter');
+  const message = page.getByTestId('feed-message').filter({ hasText: 'Принесу чай' });
+  await expect(message).toHaveAttribute('data-delivery', 'accepted');
+  await expect(message).toHaveCount(1);
+  await expect(input).toHaveValue('');
+  expect(requests).toHaveLength(1);
+});
+
 test('emoji dock preserves selection, supports repeated insertion and restores the keyboard', async ({
   page,
 }) => {

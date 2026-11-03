@@ -115,8 +115,8 @@ if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$som
     somewhere_ui_classes=dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet
     somewhere_ui_result='OK (9 tests)'
     if [ "$somewhere_scope" = support ]; then
-        somewhere_ui_classes=dev.groupplanning.android.SupportKeyboardUiTests
-        somewhere_ui_result='OK (1 test)'
+        somewhere_ui_classes=dev.groupplanning.android.SupportKeyboardUiTests,dev.groupplanning.android.SupportBoundaryUiTests,dev.groupplanning.android.SupportTalkBackUiTests,dev.groupplanning.android.SupportServiceUiTests,dev.groupplanning.android.session.FeedbackRetryDeviceTests,dev.groupplanning.android.ExperienceUiTests#profileSupportDraftAndNavigationSurviveRecreation,dev.groupplanning.android.AccountDeletionUiTests#serviceBackReturnsToProfile,dev.groupplanning.android.AccountDeletionUiTests#helpDisclosureKeepsStateAndBackReturnsToProfile
+        somewhere_ui_result='OK (10 tests)'
     fi
     if [ "$somewhere_scope" = sheet-controls ]; then
         somewhere_ui_classes=dev.groupplanning.android.SheetControlsUiTests,dev.groupplanning.android.ChatPendingIndicatorUiTests,dev.groupplanning.android.SheetDismissLiveUiTests,dev.groupplanning.android.DatePollUiTests#createVoteAndApplyDateWithoutTime,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet

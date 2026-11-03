@@ -26,6 +26,7 @@ struct SupportScreen: View {
                             )
                             .rotationEffect(.degrees(-8)).padding(.bottom, 12)
                             Text("Обращение принято").designFont(28, weight: .bold)
+                                .accessibilityAddTraits(.isHeader)
                             Text("Номер: " + reference).designFont(14).foregroundStyle(
                                 AppPalette.muted)
                             Button("Готово") { dismiss() }.frame(minHeight: 44)
@@ -37,6 +38,7 @@ struct SupportScreen: View {
                                 : owner.kind == .question ? "Нужна помощь?" : "Что-то пошло не так?"
                         )
                         .designFont(28, weight: .bold).tracking(-0.9).padding(.top, 10)
+                        .accessibilityAddTraits(.isHeader)
                         Text(
                             owner.kind == .idea
                                 ? "Расскажите, как сделать somewhere удобнее."
@@ -50,10 +52,9 @@ struct SupportScreen: View {
                         .padding(.top, 12).padding(.bottom, 32)
                         SupportForm(owner: owner, screenshot: $screenshot, photoError: photoError) {
                             submission = true
-                        }
+                        }.disabled(owner.sending)
                     }
-                }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28).disabled(
-                    owner.sending)
+                }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
             }.scrollDismissesKeyboard(.immediately)
                 .accessibilityIdentifier("support-scroll").background(AppPalette.background)
                 .toolbar(

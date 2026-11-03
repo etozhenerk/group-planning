@@ -63,6 +63,7 @@ sh scripts/test-ui.sh
 sh scripts/test-ui.sh calendar
 sh scripts/test-ui.sh auth
 sh scripts/test-ui.sh experience
+ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh support
 ANDROID_SERIAL=emulator-5554 SOMEWHERE_GRADLE_WORKERS=1 sh scripts/test-ui.sh sheet-controls
 ANDROID_SERIAL=emulator-5554 sh scripts/test-ui.sh composer-focus
 ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh
@@ -72,6 +73,12 @@ ANDROID_SERIAL=emulator-5554 sh scripts/test-album-gallery.sh
 Lint, JVM-тесты и сборку instrumentation APK. `test-album-gallery.sh` проверяет
 реальный MediaStore только в отдельном QA-приложении: скрытые записи,
 публикацию оригинальных байтов/EXIF и удаление только собственных записей.
+
+`test-ui.sh support` проверяет клавиатуру, ограничения описания, системный выбор
+скриншота и отмену, восстановление формы, повтор потерянного ответа, документы
+и фактическую версию. На API 36 проверяется фокус с включённым TalkBack;
+настройки доступности и флаги его разрешения на уведомления восстанавливаются.
+Этому тесту нужен эмулятор без другого включённого сервиса доступности.
 Использует уже запущенное устройство из `ANDROID_SERIAL`; API и вход не нужны.
 `test-device.sh` выполняет
 проверки Android Keystore и защищённого контекста приглашения на уже запущенном устройстве.

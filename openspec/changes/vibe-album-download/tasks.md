@@ -29,9 +29,22 @@ Backend реализован и прошёл независимый feature-test
 
 ## 3. Клиенты
 
-- [ ] 3.1 Web: вторичная кнопка, подготовка/отмена/ошибка, download браузера без Blob, cleanup на уход/выход; unit+E2E на desktop/mobile и независимые feature-test/design-review, qa:ready/design:ready.
-- [ ] 3.2 iOS: add-only Photos, полный snapshot, приватная подготовка и пакетное сохранение, отмена/ошибка/повтор; unit+XCUITest с проверкой галереи и независимые feature-test/design-review, qa:ready/design:ready.
-- [ ] 3.3 Android: MediaStore, pending пакет, rollback только собственных записей, lifecycle/отказ/ошибка; unit+instrumentation с проверкой галереи, check.sh и независимые feature-test/design-review, qa:ready/design:ready.
+- [x] 3.1 Web: вторичная кнопка, подготовка/отмена/ошибка, download браузера без Blob, cleanup на уход/выход; unit+E2E на desktop/mobile и независимые feature-test/design-review, qa:ready/design:ready.
+
+03.11.2026: [проверка web](qa/2026-11-03-web-completion/result.md).
+Реализацию проверил основной агент по прямому указанию пользователя работать
+одному. Прежний незавершённый независимый отчёт сохранён; новый независимый
+PASS и успешные общие gates не заявляются. Межплатформенная приёмка 4.1 открыта.
+- [x] 3.2 iOS: add-only Photos, полный snapshot, приватная подготовка и пакетное сохранение, отмена/ошибка/повтор; unit+XCUITest с проверкой галереи и независимые feature-test/design-review, qa:ready/design:ready.
+
+03.11.2026: [проверка iOS](qa/2026-11-03-ios-completion/result.md).
+Проверка выполнена основным агентом по указанию пользователя работать одному;
+общие независимые gates и физический iPhone не объявляются пройденными.
+- [x] 3.3 Android: MediaStore, pending пакет, rollback только собственных записей, lifecycle/отказ/ошибка; unit+instrumentation с проверкой галереи, check.sh и независимые feature-test/design-review, qa:ready/design:ready.
+
+03.11.2026: [проверка Android](qa/2026-11-03-android-completion/result.md).
+Основной агент проверил работающую реализацию по указанию пользователя;
+невыданные независимые gates не объявляются пройденными.
 
 ## 4. Приёмка и выпуск
 

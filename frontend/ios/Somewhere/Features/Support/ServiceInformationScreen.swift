@@ -14,7 +14,9 @@ struct ServiceInformationScreen: View {
             VStack(alignment: .leading, spacing: 0) {
                 PageBackButton { dismiss() }
                 Text(heading).designFont(28, weight: .bold).tracking(-0.9).padding(
-                    .top, 10)
+                    .top, 10
+                )
+                .accessibilityAddTraits(.isHeader)
                 Text(
                     document == .help
                         ? "Ответы на вопросы о встречах и приглашениях."

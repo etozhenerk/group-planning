@@ -96,3 +96,26 @@ test('mobile bottom navigation belongs only to meeting lists, invitations and ma
     await expect(page.getByRole('contentinfo')).toHaveCount(0);
   }
 });
+
+for (const width of [320, 390, 768, 1440]) {
+  test(`public service links retain touch targets at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/privacy');
+    await expect(
+      page.getByRole('heading', { name: 'Политика конфиденциальности', exact: true }),
+    ).toBeVisible();
+    await expect(page.locator('footer')).toHaveCount(0);
+
+    const links = page.locator('main a');
+
+    for (const link of await links.all()) {
+      expect((await link.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    }
+
+    await page.getByRole('link', { name: 'Cookie и данные браузера →' }).click();
+    await expect(page.getByText('До 30 дней', { exact: true })).toBeVisible();
+    await expect(page.locator('footer')).toHaveCount(0);
+    await page.getByRole('link', { name: 'Политика конфиденциальности →' }).click();
+    await expect(page).toHaveURL(/\/privacy$/);
+  });
+}

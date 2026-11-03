@@ -5,6 +5,7 @@ struct AboutPanel: View {
     var body: some View {
         VStack(spacing: 16) {
             Image("RefreshBrand").resizable().frame(width: 76, height: 76)
+                .accessibilityHidden(true)
             Text("somewhere").designFont(31, weight: .bold).tracking(-1.2)
             Text("Договориться о встрече, обсудить детали и сохранить её вайб.")
                 .designFont(13).lineSpacing(7).foregroundStyle(AppPalette.muted)

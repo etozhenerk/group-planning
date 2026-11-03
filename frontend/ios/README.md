@@ -64,6 +64,7 @@ sh scripts/test-ui.sh accessibility
 sh scripts/test-ui.sh startup
 sh scripts/test-ui.sh native-usability # нативные picker/share, черновики, жесты, вкладки и помощь
 sh scripts/test-ui.sh help             # вопросы помощи при обычном и крупном тексте
+sh scripts/test-ui.sh support-voiceover # фокус и речь VoiceOver; iOS 27+, с возвратом настройки
 ```
 
 `format.sh --check` запускает строгий lint без записи; `--write` применяет
