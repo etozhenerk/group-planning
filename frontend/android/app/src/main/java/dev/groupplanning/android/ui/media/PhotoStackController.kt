@@ -82,8 +82,9 @@ internal class PhotoStackController(
                 if (model.cached(photos[target]) == null) restore(motion)
                 images[photos[target].id] = model.bitmap(photos[target])
                 if (restart) {
+                    // A missing neighbour must not block the already prepared first photo.
                     for (photo in photos.take(3)) {
-                        images[photo.id] = model.bitmap(photo)
+                        model.cached(photo)?.let { images[photo.id] = it }
                     }
                 }
                 if (motion) {

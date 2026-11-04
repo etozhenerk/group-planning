@@ -80,6 +80,23 @@ struct MediaExperienceTests {
         #expect(denied.data == nil && !denied.current)
     }
 
+    @Test func failedOwnerRecoversFromAnotherOwnersPreparedCacheWithoutRequest() async throws {
+        let harness = try SessionHarness()
+        try await harness.login()
+        let item = try media(UUID(), meeting: UUID())
+        let path = try harness.session.api.origin.url(for: ExperienceRequests.content(item)).path
+        await harness.transport.enqueue(path, status: 503)
+        let visible = MediaContentOwner(media: item, session: harness.session)
+        await visible.load()
+        #expect(visible.failed && visible.data == nil)
+        await harness.transport.enqueue(path, data: Data("test".utf8), mime: "text/plain")
+        let preparation = MediaContentOwner(media: item, session: harness.session)
+        await preparation.load()
+        await visible.load()
+        #expect(!visible.failed && visible.data == Data("test".utf8))
+        #expect(await harness.transport.count(path) == 2)
+    }
+
     private func waitForBatch(_ owner: MediaTransferOwner) async throws {
         for _ in 0..<200 {
             if !owner.busy { return }

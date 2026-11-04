@@ -197,6 +197,8 @@ struct MemoryPhotoStack: View {
                 return
             }
             aspects[photo.id] = image.size.width / image.size.height
+            failedPhotos.remove(photo.id)
+            retryID = UUID()
             if reduceMotion {
                 selection = target
                 translation = 0

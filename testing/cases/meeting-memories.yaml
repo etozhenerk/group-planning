@@ -714,12 +714,20 @@
           selector: testAllThreePagesWarmBeforeOfflineLastPhotoAndCycle
           runner: ios-ui
           level: e2e
+        - path: frontend/ios/SomewhereUITests/AlbumPreloadFailureUITests.swift
+          selector: testFailedPhotoKeepsOtherPreparedImagesAndCanRetryBeforeRevocation
+          runner: ios-ui
+          level: e2e
     android:
       status: partial
       health: unknown
       tests:
         - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumDownloadUiTests.kt
           selector: allPagesWarmBeforeOfflineLastPhotoAndSave103Originals
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumPreloadFailureUiTests.kt
+          selector: failedPhotoKeepsPreparedNeighboursAndRetriesBeforeRevocation
           runner: android-ui
           level: e2e
 - id: TC-VIBE-WEB-PRELOAD

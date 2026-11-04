@@ -28,6 +28,7 @@ final class MediaContentOwner {
     func load() async {
         guard current, data == nil, !loading else { return }
         if let cached = session.privateData.mediaCache.value(media.id) {
+            failed = false
             data = cached.data
             image = cached.image
             return

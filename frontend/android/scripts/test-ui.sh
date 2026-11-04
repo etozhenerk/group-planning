@@ -2,10 +2,12 @@
 set -eu
 cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
-somewhere_scope=${1:-all}
+somewhere_requested_scope=${1:-all}
+somewhere_scope=$somewhere_requested_scope
+if [ "$somewhere_requested_scope" = album-preload-failure ]; then somewhere_scope=album-access; fi
 case "$somewhere_scope" in
     all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|album-access|visual-design|reaction-people|avatar-ack|avatar-ack-http|avatar-fallback|album-preload|common-navigation|chat-actions|chat-date-settings|account-survivor|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y) ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|album-access|visual-design|reaction-people|avatar-ack|avatar-ack-http|avatar-fallback|album-preload|common-navigation|chat-actions|chat-date-settings|account-survivor|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [album-preload-failure|all|account|profile|persistence|calendar|auth|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|album-access|visual-design|reaction-people|avatar-ack|avatar-ack-http|avatar-fallback|album-preload|common-navigation|chat-actions|chat-date-settings|account-survivor|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y]\n' >&2; exit 2 ;;
 esac
 somewhere_adb="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/platform-tools/adb"
 somewhere_devices=$("$somewhere_adb" devices)
@@ -195,6 +197,10 @@ if [ "$somewhere_scope" = media ] || [ "$somewhere_scope" = support ] || [ "$som
     fi
     if [ "$somewhere_scope" = readers-a11y ]; then
         somewhere_ui_classes=dev.groupplanning.android.ChatReadersAccessibilityUiTests
+        somewhere_ui_result='OK (1 test)'
+    fi
+    if [ "$somewhere_requested_scope" = album-preload-failure ]; then
+        somewhere_ui_classes=dev.groupplanning.android.AlbumPreloadFailureUiTests
         somewhere_ui_result='OK (1 test)'
     fi
     ./gradlew --no-daemon "--max-workers=${SOMEWHERE_GRADLE_WORKERS:-2}" -PsomewhereTestBuildType=qa :app:installQa :app:installQaAndroidTest

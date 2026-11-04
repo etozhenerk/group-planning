@@ -98,6 +98,7 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         ChatSheetTestSupport.dismissBySwipe(app)
         assertDismissed(app)
         XCTAssertEqual(input.value as? String, draft)
+        ExperienceScreenshot.save("chat-keyboard-sheet-return-no-ime", test: self)
 
         input.tap()
         assertKeyboard(app, field: input)
@@ -107,6 +108,7 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         assertDismissed(app)
         XCTAssertEqual(input.value as? String, draft)
+        ExperienceScreenshot.save("chat-keyboard-info-return-no-ime", test: self)
     }
 
     func testMessageTapScrollAndLongPressKeepTheirBehavior() {
