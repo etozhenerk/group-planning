@@ -1,0 +1,8 @@
+.editor { display:grid; grid-template-columns:86px minmax(0,1fr); column-gap:16px; row-gap:4px; align-items:center; padding:14px; background:var(--ds-color-surface); border:1px solid var(--ds-color-line); border-radius:var(--ds-radius-card); }
+.media { grid-column:1; grid-row:1 / 3; width:86px; height:86px; display:grid; place-items:center; background:var(--ds-color-background); border:1px solid var(--ds-color-border-strong); border-radius:16px; overflow:hidden; color:var(--ds-color-accent); }
+.media>svg { width:28px; height:28px; }
+.preview,.skeleton { width:100%; height:100%; object-fit:cover; }
+.skeleton { background:var(--ds-color-line); }
+.label { grid-column:2; grid-row:1; align-self:end; font-size:13px; }
+.label small { display:block; color:var(--ds-color-muted); font-size:11px; margin-top:3px; }
+.error { grid-column:1 / -1; color:var(--ds-color-error); font-size:12px; margin:8px 0 0; }

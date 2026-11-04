@@ -1,0 +1,54 @@
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  list-style: none;
+  margin: 0;
+  padding: 12px 20px 14px;
+  scrollbar-width: none;
+}
+.item {
+  width: 176px;
+  flex: 0 0 176px;
+  min-width: 0;
+}
+.photo {
+  width: 176px;
+  height: 132px;
+  position: relative;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+.photo button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--ds-color-text);
+  isolation: isolate;
+  padding: 0;
+}
+.photo button:before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: var(--ds-color-background);
+  box-shadow: 0 2px 8px #0005;
+  z-index: -1;
+}
+.item p {
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ds-color-error);
+  margin: 8px 0 0;
+}

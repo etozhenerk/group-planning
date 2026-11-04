@@ -1,0 +1,116 @@
+.dialog {
+  width: 520px;
+  max-width: calc(100vw - 48px);
+  padding: 32px;
+  border: 1px solid var(--ds-color-line);
+  border-radius: var(--ds-radius-sheet);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
+  box-shadow: 0 24px 80px #0005;
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity var(--ds-motion-duration-fast),
+    translate var(--ds-motion-duration-fast),
+    display var(--ds-motion-duration-fast) allow-discrete,
+    overlay var(--ds-motion-duration-fast) allow-discrete;
+}
+.dialog[open] {
+  opacity: 1;
+  translate: 0 0;
+}
+.dialog::backdrop {
+  background: #101114b8;
+  backdrop-filter: blur(8px);
+}
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+.close {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--ds-color-muted);
+  border-radius: var(--ds-radius-control);
+}
+.close:hover {
+  background: var(--ds-color-selected-segment);
+  color: var(--ds-color-text);
+}
+.dialog h2 {
+  margin: 0 44px 28px 0;
+  font-size: 25px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+}
+.meeting {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.cover {
+  flex: none;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: var(--ds-radius-cover);
+}
+.meeting > div:last-child {
+  min-width: 0;
+}
+.meeting h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  overflow-wrap: anywhere;
+}
+.meeting p {
+  margin: 3px 0 0;
+  color: var(--ds-color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--ds-color-line);
+}
+.host > span:last-child {
+  flex: none;
+  color: var(--ds-color-muted);
+  font-size: 11px;
+}
+.status {
+  min-height: 44px;
+  margin: 16px 0 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ds-color-muted);
+}
+.status[data-error="true"] {
+  color: var(--ds-color-error);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog {
+    transition: none;
+    translate: none;
+  }
+}

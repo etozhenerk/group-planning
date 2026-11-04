@@ -1,0 +1,100 @@
+.header {
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--ds-color-accent);
+  text-decoration: none;
+  margin: 0 0 14px;
+}
+.header h1 {
+  font-size: var(--ds-typography-size-heading);
+  line-height: 33px;
+  letter-spacing: -0.6px;
+  font-weight: 650;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+.facts {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ds-color-muted);
+  margin: 0 0 24px;
+}
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.actions > button:only-child {
+  grid-column: 1/-1;
+}
+.actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 10px 9px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+.actions button > svg {
+  flex-shrink: 0;
+}
+.add {
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+}
+.save {
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-border-strong);
+  color: var(--ds-color-text);
+}
+.save:disabled {
+  opacity: 0.6;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  margin-bottom: 14px;
+}
+.nav .back {
+  margin: 0;
+}
+.view {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+}
+.view > span {
+  min-width: 48px;
+  text-align: right;
+  font-size: 16px;
+  line-height: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.total {
+  font-size: 12px;
+  color: var(--ds-color-muted);
+}
+.view > button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--ds-color-muted);
+  border-radius: 12px;
+}

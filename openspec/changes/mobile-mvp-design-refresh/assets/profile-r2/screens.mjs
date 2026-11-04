@@ -1,0 +1,4 @@
+import {chromium} from '/Users/misha/Documents/Codex/projects/group-planning/node_modules/playwright/index.mjs';
+const b=await chromium.launch(),p=await b.newPage({viewport:{width:390,height:874}});
+for(const state of ['ready','personal','missing','error','loading','long']){await p.goto('http://127.0.0.1:8797/profile-r2/frame.html?state='+state);await p.getByRole('heading',{name:'Профиль',exact:true}).waitFor();await p.waitForTimeout(500);await p.screenshot({path:'/private/tmp/somewhere-profile-r2/screen-'+state+'.png'})}
+await p.setViewportSize({width:1000,height:1100});await p.goto('http://127.0.0.1:8797/profile-r2/preview.html');await p.frameLocator('iframe').getByRole('heading',{name:'Профиль',exact:true}).waitFor();await p.waitForTimeout(400);await p.locator('.ss-phone').screenshot({path:'/private/tmp/somewhere-profile-r2/phone.png'});await b.close();

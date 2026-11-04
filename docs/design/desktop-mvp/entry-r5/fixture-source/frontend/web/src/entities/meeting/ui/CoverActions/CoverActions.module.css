@@ -1,0 +1,32 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s12);
+}
+
+.actions[data-compact='true'] {
+  grid-column: 3;
+  gap: 0;
+  flex-direction: column;
+}
+
+.actions[data-compact='true'] button {
+  padding: 0;
+  background: transparent;
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.actions[data-prominent='true'] button:first-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-component-button-icon-gap);
+  min-height: var(--ds-component-button-minimum-height);
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  background: var(--action);
+  color: var(--action-text);
+  border-radius: var(--ds-component-button-radius);
+}

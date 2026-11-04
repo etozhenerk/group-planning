@@ -1,0 +1,106 @@
+.sidebar {
+  min-width: 0;
+  background: var(--ds-color-navigation);
+  display: flex;
+  flex-direction: column;
+  padding: var(--ds-space-s32) var(--ds-space-s16) var(--ds-space-s24);
+  border-right: 1px solid var(--ds-color-line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s8);
+  padding: 0 var(--ds-space-s8);
+  color: var(--ds-color-text);
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+.brand img {
+  flex: none;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-s8);
+  margin-top: var(--ds-space-s40);
+}
+.nav button {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+  min-height: 48px;
+  padding: var(--ds-space-s12);
+  font-size: 14px;
+  text-align: left;
+  justify-content: flex-start;
+  color: var(--ds-color-navigation-inactive-text);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-control);
+  background: transparent;
+}
+.nav button[aria-current] {
+  color: var(--ds-color-navigation-selected-text);
+  background: var(--ds-color-navigation-selected);
+  border-color: var(--ds-color-navigation-selected-border);
+}
+.nav svg {
+  flex: none;
+  stroke-width: 1.7px;
+}
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+  margin-top: auto;
+  padding: var(--ds-space-s16) var(--ds-space-s8) 0;
+  border-top: 1px solid var(--ds-color-line);
+  font-size: 14px;
+  width: 100%;
+  min-height: 64px;
+  background: transparent;
+  border-radius: 0;
+  border-inline: 0;
+  border-bottom: 0;
+  color: var(--ds-color-text);
+  text-align: left;
+  justify-content: flex-start;
+  font-weight: 400;
+}
+.identity:hover {
+  color: var(--ds-color-accent);
+}
+.identity img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.identity small {
+  display: block;
+  color: var(--ds-color-muted);
+  margin-top: var(--ds-space-s3);
+  font-size: 11px;
+}
+@media (max-width: 1100px) {
+  .sidebar {
+    padding: var(--ds-space-s24) var(--ds-space-s12);
+  }
+  .brand {
+    justify-content: center;
+    padding: 0;
+  }
+  .brand span,
+  .nav span,
+  .identity span {
+    display: none;
+  }
+  .nav button {
+    justify-content: center;
+    padding: var(--ds-space-s12);
+  }
+  .identity {
+    justify-content: center;
+    padding-inline: 0;
+  }
+}

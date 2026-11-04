@@ -1,0 +1,73 @@
+.card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--ds-color-line);
+  border-radius: 18px;
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
+  overflow-wrap: anywhere;
+}
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.byline time {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--ds-color-muted);
+}
+.caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--ds-color-muted);
+}
+.title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  margin: 10px 0 16px;
+  background: transparent;
+  color: var(--ds-color-text);
+}
+.title strong {
+  font-size: 21px;
+  line-height: 28px;
+  letter-spacing: -0.2px;
+  font-weight: 650;
+}
+.title svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+  color: var(--ds-color-muted);
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ds-color-muted);
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0 0 14px;
+  min-height: 28px;
+}
+.status[data-state="completed"] {
+  color: var(--ds-color-accent);
+}
+.status[data-state="cancelled"],
+.status[data-state="declined"] {
+  margin-bottom: 0;
+}
+.status > svg {
+  color: var(--ds-color-accent);
+}

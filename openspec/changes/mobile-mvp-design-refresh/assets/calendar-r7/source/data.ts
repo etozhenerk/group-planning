@@ -1,0 +1,8 @@
+import type {CalendarMeeting} from '@/entities/meeting'
+export const noop=()=>undefined
+export const user={user:{id:'misha',displayName:'Миша'},expiresAt:'2027-01-01T00:00:00Z',csrf:null}
+export const people=[{id:'sasha',display_name:'Саша'},{id:'lena',display_name:'Лена'},{id:'misha',display_name:'Миша'}]
+export const base:CalendarMeeting={id:'dinner',title:'Ужин в пятницу',startsAt:'2026-11-06T17:00:00Z',startsOn:'2026-11-06',timezone:'Europe/Moscow',place:'Кафе «Соседи»',coverUrl:'/dinner',organizerId:'lena',participantCount:6,participantPreview:people,revision:'1',myRsvp:'going',myRsvpRevision:'1',localDate:'2026-11-06',period:'upcoming',unreadCount:'2'}
+export const upcoming:CalendarMeeting[]=[base,{...base,id:'board',title:'Настолки у Саши',startsAt:'2026-11-07T16:00:00Z',startsOn:'2026-11-07',localDate:'2026-11-07',place:'У Саши дома',coverUrl:'/boardgame',organizerId:'misha',unreadCount:'0'},{...base,id:'coffee',title:'Кофе в воскресенье',startsAt:'2026-11-08T09:00:00Z',startsOn:'2026-11-08',localDate:'2026-11-08',place:'Кофейня на углу',coverUrl:null,organizerId:'lena',participantCount:3,unreadCount:'0'},{...base,id:'next-month',title:'Встречаем зиму',startsAt:'2026-12-05T16:00:00Z',startsOn:'2026-12-05',localDate:'2026-12-05',place:null,coverUrl:null,unreadCount:'0'}]
+export const past:CalendarMeeting[]=[{...base,id:'past',title:'Ужин с друзьями',startsAt:'2026-10-30T17:00:00Z',startsOn:'2026-10-30',localDate:'2026-10-30',period:'past',unreadCount:'0',memoryPhotoCount:2,memoryPreview:[]}]
+export const undated:CalendarMeeting[]=[{...base,id:'undated',title:'Выбраться за город',startsAt:null,startsOn:null,localDate:null,period:'undated',place:null,coverUrl:null,unreadCount:'0'}]

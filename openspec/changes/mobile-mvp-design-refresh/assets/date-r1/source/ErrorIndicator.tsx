@@ -1,0 +1,3 @@
+import styles from '@preview/ErrorIndicator.module.css'
+export type ErrorIndicatorProps={open:boolean;show:()=>void}
+export const ErrorIndicator=({open,show}:ErrorIndicatorProps)=><button type="button" className={styles.indicator} aria-label="Сообщение не отправлено. Открыть действия" title="Сообщение не отправлено" aria-haspopup="dialog" aria-expanded={open} onClick={show} data-testid="message-delivery"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.5v6" stroke="var(--ds-color-background)" strokeWidth="1.8" strokeLinecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="var(--ds-color-background)"/></svg></button>

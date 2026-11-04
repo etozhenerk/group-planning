@@ -1,0 +1,2 @@
+import {chromium} from '/Users/misha/Documents/Codex/projects/group-planning/node_modules/playwright/index.mjs'
+const b=await chromium.launch({headless:true}),p=await b.newPage({viewport:{width:402,height:874}});p.on('pageerror',e=>console.log('ERROR',e.message));for(const state of ['form','poll','hidden']){await p.goto('http://127.0.0.1:8797/date-r1/frame.html?state='+state);await p.waitForTimeout(500);console.log('STATE',state,(await p.locator('body').innerText()).slice(-1800));await p.screenshot({path:'/private/tmp/somewhere-date/'+state+'.png'})}await b.close()

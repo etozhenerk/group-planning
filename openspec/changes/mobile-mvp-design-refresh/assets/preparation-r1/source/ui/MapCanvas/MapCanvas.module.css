@@ -1,0 +1,131 @@
+.map {
+  height: 100%;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #e7e5df;
+}
+.scheme {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+.pointArea {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+.pin {
+  position: absolute;
+  translate: -50% -100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: none;
+  color: #d75548;
+  z-index: 1;
+}
+.pin svg {
+  stroke: #fff;
+  filter: drop-shadow(0 2px 4px #38312644);
+}
+.label {
+  margin-bottom: 5px;
+  border-radius: 8px;
+  background: #fffdf7;
+  color: #34362f;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 2px 10px #413b2a24;
+  white-space: nowrap;
+}
+.shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  translate: -50% 0;
+  width: 20px;
+  height: 6px;
+  border-radius: 50%;
+  background: #665d4444;
+  filter: blur(2px);
+  z-index: -1;
+}
+.scale {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  border-bottom: 2px solid #6a6b63;
+  width: 42px;
+  font-size: 9px;
+  color: #585b51;
+  padding-bottom: 3px;
+  pointer-events: none;
+}
+.credit {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-size: 9px;
+  color: #75796d;
+  pointer-events: none;
+}
+
+.map {
+  height: 100%;
+  min-height: 0;
+  touch-action: none;
+  overscroll-behavior: none;
+  cursor: grab;
+}
+.map:active {
+  cursor: grabbing;
+}
+.world {
+  position: absolute;
+  inset: -25%;
+  will-change: transform;
+  pointer-events: none;
+}
+.tools {
+  position: absolute;
+  right: 16px;
+  top: 42%;
+  display: grid;
+  background: var(--ds-color-background);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px #0003;
+  overflow: hidden;
+}
+.tools button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--ds-color-text);
+  touch-action: manipulation;
+}
+.tools button + button {
+  border-top: 1px solid var(--ds-color-line);
+}
+.pickPoint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  translate: -50% 0;
+  min-height: 40px;
+  white-space: nowrap;
+  font-size: 11px;
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 3px 12px #0002;
+}

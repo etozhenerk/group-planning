@@ -1,0 +1,26 @@
+.page {
+  height: 100dvh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+  padding: 68px 20px 112px;
+  font-family: var(--ds-typography-family-mobile-chat);
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+}
+.page h1 {
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.8px;
+  font-weight: 650;
+  margin: 0;
+}
+.page::-webkit-scrollbar {
+  display: none;
+}
+@media (max-height: 650px) {
+  .page {
+    padding-top: 60px;
+  }
+}

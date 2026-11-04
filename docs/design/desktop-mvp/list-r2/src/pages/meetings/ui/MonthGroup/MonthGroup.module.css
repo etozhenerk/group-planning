@@ -1,0 +1,32 @@
+.group {
+  margin-bottom: var(--ds-space-s40);
+  min-width: 0;
+}
+.month {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-s10);
+  color: var(--ds-color-text);
+  font-size: 19px;
+  font-weight: 550;
+  letter-spacing: -0.4px;
+  line-height: 1.4;
+  margin: 0 0 var(--ds-space-s24);
+}
+.month span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-color-muted);
+  letter-spacing: 0;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-space-s32) var(--ds-space-s24);
+  padding-top: var(--ds-space-s4);
+}
+@media (max-width: 1000px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

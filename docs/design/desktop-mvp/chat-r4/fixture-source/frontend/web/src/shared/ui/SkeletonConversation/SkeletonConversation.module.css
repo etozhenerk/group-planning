@@ -1,0 +1,62 @@
+.conversation {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.messages {
+  display: grid;
+  align-content: start;
+  gap: 26px;
+  flex: 1;
+  overflow: hidden;
+  padding: 32px 24px;
+}
+
+.message {
+  display: flex;
+  gap: 10px;
+  width: 82%;
+  max-width: 430px;
+  align-items: flex-end;
+}
+
+.message[data-own='true'] {
+  margin-left: auto;
+  flex-direction: row-reverse;
+  width: 69%;
+}
+
+.bubble {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 10px;
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.composer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+}
+
+.composer > :last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 739px) {
+  .messages {
+    padding: 24px 16px;
+  }
+
+  .composer {
+    padding: 12px 16px;
+  }
+}

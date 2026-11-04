@@ -1,0 +1,57 @@
+.calendar {
+  min-width: 0;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-s16);
+  margin-bottom: var(--ds-space-s16);
+}
+.header h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 550;
+  text-transform: capitalize;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s4);
+}
+.buttons button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-muted);
+}
+.buttons button:hover {
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
+}
+.buttons .today {
+  width: auto;
+  padding-inline: var(--ds-space-s12);
+  font-size: 12px;
+  font-weight: 400;
+}
+.week,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.week {
+  margin-bottom: var(--ds-space-s8);
+}
+.week span {
+  text-align: center;
+  color: var(--ds-color-muted);
+  font-size: 11px;
+  padding-block: var(--ds-space-s6);
+}
+.grid {
+  gap: var(--ds-space-s4);
+}

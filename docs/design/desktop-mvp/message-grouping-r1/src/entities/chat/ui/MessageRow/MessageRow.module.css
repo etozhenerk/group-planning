@@ -1,0 +1,38 @@
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  width: max-content;
+  max-width: min(88%, 560px);
+  min-width: 0;
+  position: relative;
+  list-style: none;
+}
+.row[data-own="true"] {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.row[data-start="false"] {
+  margin-top: -16px;
+}
+.row[data-active="true"] {
+  z-index: 41;
+}
+.avatar {
+  display: block;
+  flex: none;
+  width: 30px;
+  height: 30px;
+}
+.row[data-end="false"] .avatar {
+  visibility: hidden;
+}
+.avatar > span {
+  width: 30px;
+  height: 30px;
+}
+.content {
+  flex: 0 1 auto;
+  min-width: 0;
+  position: relative;
+}

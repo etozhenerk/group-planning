@@ -1,0 +1,2 @@
+import {chromium} from '/Users/misha/Documents/Codex/projects/group-planning/node_modules/playwright/index.mjs'
+const b=await chromium.launch({headless:true}),p=await b.newPage({viewport:{width:402,height:874}});p.on('pageerror',e=>console.log('ERROR',e.message));await p.goto('http://127.0.0.1:8797/settings-r1/frame.html');await p.getByRole('heading',{name:'Настройки встречи',exact:true}).waitFor();await p.waitForTimeout(250);console.log(await p.locator('body').innerText());await p.screenshot({path:'/private/tmp/somewhere-settings/first.png'});await b.close()

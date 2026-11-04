@@ -1,0 +1,128 @@
+.section {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--ds-space-s64);
+  align-items: center;
+  padding: var(--ds-space-s64) 0 100px;
+  border-top: 1px solid var(--ds-color-line);
+  scroll-margin-top: var(--ds-space-s32);
+}
+.copy h2 {
+  font-size: 42px;
+  letter-spacing: -1.8px;
+  font-weight: 600;
+  line-height: 1.12;
+  margin: var(--ds-space-s24) 0;
+}
+.copy p {
+  max-width: 350px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ds-color-muted);
+}
+.photos {
+  position: relative;
+  height: 490px;
+}
+.first,
+.second {
+  position: absolute;
+  margin: 0;
+  border: 8px solid var(--ds-color-photo-frame);
+  border-radius: var(--ds-radius-cover);
+  background: var(--ds-color-photo-frame);
+  box-shadow: var(--desktop-photo-shadow);
+  overflow: hidden;
+}
+.first {
+  width: 78%;
+  left: 0;
+  top: var(--ds-space-s24);
+  height: 330px;
+  rotate: -4deg;
+}
+.first img {
+  height: 286px;
+  width: 100%;
+  object-fit: cover;
+}
+.first figcaption {
+  padding: var(--ds-space-s8) var(--ds-space-s4);
+  color: var(--ds-color-own-text);
+  font-size: 12px;
+}
+.second {
+  width: 40%;
+  height: 220px;
+  right: 0;
+  top: 190px;
+  rotate: 8deg;
+}
+.second img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.album {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: var(--ds-space-s16);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ds-space-s16);
+  font-size: 14px;
+}
+.album small {
+  color: var(--ds-color-muted);
+  display: block;
+  font-size: 12px;
+  margin-top: var(--ds-space-s4);
+}
+.download {
+  display: flex;
+  gap: var(--ds-space-s8);
+  align-items: center;
+  font-size: 13px;
+}
+@media (max-width: 1100px) {
+  .section {
+    gap: var(--ds-space-s32);
+  }
+  .copy h2 {
+    font-size: 36px;
+  }
+  .first {
+    height: 300px;
+  }
+  .first img {
+    height: 256px;
+  }
+  .second {
+    top: 170px;
+    height: 190px;
+  }
+  .photos {
+    height: 460px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .first,
+  .second {
+    rotate: 0deg;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: 1fr;
+  }
+  .copy p {
+    max-width: 540px;
+  }
+  .photos {
+    max-width: 620px;
+    width: 100%;
+  }
+}

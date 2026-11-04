@@ -1,0 +1,90 @@
+.tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 176px);
+  height: 52px;
+  flex: none;
+}
+
+.tabs button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-s8);
+  height: 52px;
+  min-width: 0;
+  padding: 0 var(--ds-space-s8);
+  border: 0;
+  border-radius: var(--ds-radius-control);
+  background: transparent;
+  color: var(--ds-color-muted);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  transition: color var(--ds-motion-duration-fast)
+    var(--ds-motion-easing-standard);
+}
+
+.tabs button:hover,
+.tabs button[aria-pressed="true"] {
+  color: var(--ds-color-text);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.count {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 20px;
+  padding: 0 var(--ds-space-s4);
+  box-sizing: border-box;
+  border-radius: var(--ds-radius-badge);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabs button[aria-pressed="true"] .count {
+  background: var(--ds-color-selected-segment);
+  color: var(--ds-color-text);
+}
+
+.count[data-unknown="true"] {
+  visibility: hidden;
+}
+
+.indicator {
+  position: absolute;
+  left: var(--ds-space-s8);
+  bottom: -1px;
+  width: calc(50% - 16px);
+  height: 2px;
+  border-radius: var(--ds-radius-badge);
+  background: var(--ds-color-accent);
+  pointer-events: none;
+  transition: translate var(--ds-motion-duration-navigation)
+    var(--ds-motion-easing-standard);
+}
+
+.tabs[data-past="true"] .indicator {
+  translate: calc(100% + 16px) 0;
+}
+
+@media (max-width: 900px) {
+  .tabs {
+    grid-template-columns: repeat(2, 156px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator,
+  .tabs button {
+    transition: none;
+  }
+}

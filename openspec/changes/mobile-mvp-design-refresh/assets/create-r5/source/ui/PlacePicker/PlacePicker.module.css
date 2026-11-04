@@ -1,0 +1,228 @@
+.picker {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mapArea {
+  position: relative;
+  flex: 1;
+  min-height: 200px;
+}
+.searchPanel {
+  position: absolute;
+  inset: 8px 16px auto;
+  z-index: 3;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  min-height: 48px;
+  background: var(--ds-color-navigation);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: 14px;
+  color: var(--ds-color-muted);
+  box-shadow: 0 4px 16px #0002;
+}
+.search input {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0;
+  min-height: 44px;
+  min-width: 0;
+  width: 100%;
+  color: var(--ds-color-text);
+  font-size: 16px;
+  line-height: 22px;
+}
+.search button {
+  width: 32px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--ds-color-muted);
+  flex-shrink: 0;
+}
+.search:focus-within {
+  border-color: var(--ds-color-accent);
+}
+.results {
+  margin-top: 8px;
+  border-radius: 14px;
+  padding: 4px 14px;
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-line);
+  box-shadow: 0 12px 24px #0003;
+  max-height: 240px;
+  overflow: auto;
+}
+.result {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  padding: 12px 0;
+  min-height: 72px;
+  background: transparent;
+  border-bottom: 1px solid var(--ds-color-line);
+  color: var(--ds-color-text);
+}
+.result:last-child {
+  border-bottom: 0;
+}
+.result > svg {
+  color: var(--ds-color-muted);
+  flex-shrink: 0;
+}
+.result > span {
+  display: grid;
+  gap: 4px;
+  flex: 1;
+}
+.result strong {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+.result small {
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ds-color-muted);
+}
+.footer {
+  padding: 18px 20px 32px;
+  background: var(--ds-color-surface);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 28px #0003;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 4;
+  margin-top: -16px;
+}
+.chosen {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.placeIcon {
+  width: 44px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--ds-color-background);
+  color: var(--ds-color-accent);
+  flex-shrink: 0;
+}
+.chosen > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.chosen small {
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--ds-color-muted);
+}
+.chosen strong {
+  font-size: 15px;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+.chosen p {
+  font-size: 12px;
+  line-height: 17px;
+  margin: 0;
+  color: var(--ds-color-muted);
+  overflow-wrap: anywhere;
+}
+.confirm {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.confirm:disabled {
+  opacity: 0.4;
+}
+.empty {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ds-color-muted);
+  padding: 8px 0;
+}
+.problem {
+  position: absolute;
+  inset: 0;
+  padding: 96px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--ds-color-background);
+  font-size: 14px;
+}
+.problem p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ds-color-muted);
+}
+.problem button {
+  min-height: 44px;
+  color: var(--ds-color-accent);
+  background: transparent;
+}
+.picker {
+  height: calc(var(--visual-viewport-height, 100dvh) - 140px);
+}
+.mapArea {
+  min-height: 140px;
+}
+.searchPanel {
+  max-height: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+.search {
+  flex-shrink: 0;
+}
+.results {
+  min-height: 0;
+  max-height: none;
+  overflow: auto;
+  flex-shrink: 1;
+}
+.picker {
+  flex: 0 0 auto;
+  height: calc(var(--visual-viewport-height, 100dvh) - 142px);
+  max-height: calc(var(--visual-viewport-height, 100dvh) - 142px);
+}
+
+.picker {
+  height: var(--visual-viewport-height, 100dvh);
+  max-height: var(--visual-viewport-height, 100dvh);
+  flex: 1;
+}
+.mapArea {
+  min-height: 0;
+}
+.footer {
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+.problem {
+  padding-top: 72px;
+}
+.search input{margin:0!important;padding:0!important;min-height:44px!important}

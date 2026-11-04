@@ -1,0 +1,89 @@
+.section {
+  margin-bottom: 24px;
+}
+.label {
+  display: block;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: 14px;
+  color: var(--ds-color-text);
+  text-align: left;
+  font: 400 16px/22px var(--ds-typography-family-mobile-chat);
+}
+.trigger svg {
+  flex: none;
+  color: var(--ds-color-muted);
+}
+.trigger[aria-expanded="true"] {
+  border-color: var(--ds-color-accent);
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 0 12px;
+}
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.option > span {
+  flex: 1;
+  min-width: 0;
+}
+.option > svg {
+  flex: none;
+  color: var(--ds-color-accent);
+  visibility: hidden;
+}
+.option:has(input:checked) {
+  background: var(--ds-color-background);
+}
+.option:has(input:checked) > svg {
+  visibility: visible;
+}
+.option:has(input:focus-visible) {
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: -2px;
+}
+.option:active {
+  background: var(--ds-color-background);
+}
+
+.options .option {
+  font-weight: 400;
+}
+.options .option:has(input:checked) > span {
+  font-weight: 600;
+}

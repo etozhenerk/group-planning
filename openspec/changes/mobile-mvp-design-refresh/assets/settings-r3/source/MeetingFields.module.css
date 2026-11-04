@@ -1,0 +1,13 @@
+.form-fields { --field-label-weight:500; --field-label-size:14px; display:grid; gap:20px; padding:0; margin:0; border:0; min-width:0; }
+.group { display:contents; }
+.control-field { display:grid; gap:8px; min-width:0; }
+.form-fields label { color:var(--ds-color-text); font-size:14px; font-weight:500; }
+.form-fields input,.form-fields textarea { margin-top:8px; min-height:48px; padding:12px 14px; border-radius:var(--ds-component-button-radius); border:1px solid var(--ds-color-border-strong); background:var(--ds-color-navigation); color:var(--ds-color-text); font-size:16px; }
+.form-fields textarea { min-height:80px; line-height:1.5; resize:vertical; }
+.form-fields :global(.g-text-input__control) { margin-top:0; background:transparent; padding:0; border:0; }
+.error { color:var(--ds-color-error); font-size:12px; margin-top:-12px; }
+
+.required { margin-left:3px; color:var(--ds-color-error); font-size:18px; font-weight:650; line-height:1; }
+.form-fields input[aria-invalid='true'] { border-color:color-mix(in srgb,var(--ds-color-error) 65%,var(--ds-color-border-strong)); box-shadow:0 0 0 3px color-mix(in srgb,var(--ds-color-error) 7%,transparent); background:color-mix(in srgb,var(--ds-color-error) 3%,var(--ds-color-navigation)); }
+
+.form-fields textarea{min-height:96px;field-sizing:content;max-height:180px}

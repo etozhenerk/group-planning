@@ -1,0 +1,50 @@
+.footer {
+  padding: 16px 20px max(28px, env(safe-area-inset-bottom));
+  background: var(--ds-color-background);
+}
+.footer[data-pinned="true"] {
+  border-radius: 24px 24px 0 0;
+  background: var(--ds-color-surface);
+  box-shadow: 0 -8px 28px #0004;
+}
+.footer > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.footer > button:disabled {
+  opacity: 0.6;
+}
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 0 16px;
+}
+.error > svg {
+  flex: none;
+  color: var(--ds-color-error);
+  margin-top: 2px;
+}
+.error strong {
+  display: block;
+  font-size: 13px;
+  line-height: 19px;
+  font-weight: 600;
+}
+.error small {
+  display: block;
+  font-size: 11px;
+  line-height: 17px;
+  color: var(--ds-color-muted);
+  margin-top: 4px;
+}

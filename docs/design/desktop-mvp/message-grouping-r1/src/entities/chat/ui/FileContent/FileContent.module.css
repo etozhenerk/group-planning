@@ -1,0 +1,48 @@
+.file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 48px;
+  text-align: left;
+}
+.download {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--ds-color-accent);
+  color: var(--ds-color-background);
+}
+.text {
+  display: block;
+  min-width: 0;
+}
+.text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+.text small {
+  display: block;
+  color: inherit;
+  opacity: 0.65;
+  font-size: 11px;
+  line-height: 17px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+[data-own="true"] .download {
+  background: var(--ds-color-weekday-badge);
+  color: var(--ds-color-text);
+}
+
+.file .text small {
+  color: inherit;
+  opacity: .65;
+}

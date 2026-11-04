@@ -1,0 +1,202 @@
+button.primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+button.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.composer-area {
+  padding: 12px 24px 22px;
+  flex-shrink: 0;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  background: transparent;
+  border-radius: 24px;
+  padding: 0;
+  max-width: none;
+  margin: auto;
+}
+
+.composer textarea {
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  resize: none;
+  min-height: 44px;
+  max-height: 140px;
+  padding: 12px 2px;
+  display: block;
+  margin: 0;
+}
+
+.composer-row .icon {
+  border-radius: 50%;
+  width: 44px;
+  min-height: 44px;
+}
+
+.composer .icon svg {
+  width: var(--ds-component-chat-composer-emoji-icon);
+  height: var(--ds-component-chat-composer-emoji-icon);
+}
+
+.pending-messages {
+  max-height: 180px;
+  overflow: auto;
+  max-width: none;
+  margin: 0 auto;
+}
+
+@media (max-width: 739px) {
+  .composer-area {
+    padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  }
+}
+
+.composer-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  padding: 7px;
+  border-radius: 22px;
+  min-height: 58px;
+  max-width: none;
+  margin: auto;
+}
+
+.composer {
+  flex: 1;
+  min-width: 0;
+}
+
+.composer-area {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  bottom: 100%;
+  right: 24px;
+  width: 338px;
+  max-width: calc(100% - 40px);
+  z-index: 4;
+}
+
+.dock {
+  height: min(
+    var(--ds-component-emoji-dock-preferred-height),
+    calc(
+      var(--visual-viewport-height, 100dvh) *
+        var(--ds-component-emoji-dock-maximum-viewport-ratio)
+    )
+  );
+  min-height: 0;
+  overflow: clip;
+  background: var(--ds-color-surface);
+}
+
+.panel[inert],
+.dock[inert] {
+  pointer-events: none;
+}
+
+.composer-area[data-mobile='true'] {
+  padding: 0;
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.composer-area[data-mobile='true'] .composer-row {
+  gap: var(--ds-component-chat-composer-gap);
+  padding: var(--ds-component-chat-composer-padding-top)
+    var(--ds-component-chat-composer-padding-inline)
+    max(var(--ds-component-chat-composer-padding-bottom), env(safe-area-inset-bottom));
+  align-items: flex-end;
+  background: transparent;
+  border-radius: 0;
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  min-height: 0;
+}
+
+.composer-area[data-mobile='true'] .composer {
+  gap: 0;
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: var(--ds-component-chat-composer-radius);
+}
+
+.composer-area[data-mobile='true'] .composer:focus-within {
+  border-color: var(--ds-color-border-strong);
+}
+
+.composer-area[data-mobile='true'] .composer textarea {
+  min-height: var(--ds-component-chat-composer-input-min-height);
+  max-height: var(--ds-component-chat-composer-input-max-height);
+  padding: var(--ds-component-chat-composer-input-inset-top) 0
+    var(--ds-component-chat-composer-input-inset-bottom)
+    var(--ds-component-chat-composer-input-inset-start);
+  font-size: var(--ds-typography-size-mobile-web-input);
+  line-height: var(--ds-component-chat-composer-input-line-height);
+}
+
+.composer-area[data-mobile='true'] .composer textarea:focus {
+  outline: none;
+}
+
+.composer-area[data-mobile='true'] .composer .icon {
+  color: var(--ds-color-muted);
+  background: transparent;
+}
+
+.composer-area[data-mobile='true'] .composer-row .primary {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: var(--ds-target-web);
+  height: var(--ds-target-web);
+}
+
+.composer-area[data-compact='true'] .dock {
+  height: min(
+    var(--ds-component-emoji-dock-compact-height),
+    calc(
+      var(--visual-viewport-height, 100dvh) *
+        var(--ds-component-emoji-dock-maximum-viewport-ratio)
+    )
+  );
+}
+
+.composer-area[data-compact='true'] .composer-row {
+  padding-top: var(--ds-component-chat-composer-compact-padding-block);
+  padding-bottom: max(
+    var(--ds-component-chat-composer-compact-padding-block),
+    env(safe-area-inset-bottom)
+  );
+}

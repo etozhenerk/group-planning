@@ -1,0 +1,28 @@
+.receipt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 18px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent !important;
+  color: var(--ds-color-own-text);
+  opacity: 0.48;
+  cursor: pointer;
+}
+.receipt:before {
+  content: "";
+  position: absolute;
+  inset: -13px -11px;
+  border-radius: 50%;
+}
+.receipt[data-read="true"] {
+  opacity: 1;
+}
+.receipt:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+}

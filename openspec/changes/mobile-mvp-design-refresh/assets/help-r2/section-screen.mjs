@@ -1,0 +1,2 @@
+import {chromium} from '/Users/misha/Documents/Codex/projects/group-planning/node_modules/playwright/index.mjs';
+const b=await chromium.launch(),p=await b.newPage({viewport:{width:1000,height:1100}});for(const state of ['form','form-section']){await p.goto('http://127.0.0.1:8797/help-r2/preview.html?state='+state);await p.frameLocator('iframe').getByRole('heading',{level:1}).waitFor();await p.waitForTimeout(400);await p.locator('.ss-phone').screenshot({path:'/private/tmp/somewhere-help-r2/phone-'+state+'.png'})}await b.close();

@@ -1,0 +1,1 @@
+export const SendGlyph=()=> <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 18V6m-4.5 4.5L12 6l4.5 4.5"/></svg>

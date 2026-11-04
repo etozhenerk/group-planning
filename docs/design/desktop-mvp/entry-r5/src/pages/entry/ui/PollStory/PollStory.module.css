@@ -1,0 +1,132 @@
+.section {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--ds-space-s64);
+  align-items: center;
+  margin-bottom: 90px;
+  padding: var(--ds-space-s48);
+  background: var(--ds-color-navigation);
+  border-radius: var(--ds-radius-sheet);
+}
+.stage {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tabs {
+  display: flex;
+  gap: var(--ds-space-s4);
+  padding: var(--ds-space-s4);
+  border-radius: var(--ds-radius-control);
+  background: var(--ds-color-background);
+  margin-bottom: var(--ds-space-s24);
+}
+.tabs button {
+  min-height: 40px;
+  background: none;
+  border: 0;
+  border-radius: var(--ds-radius-control);
+  padding: var(--ds-space-s10) var(--ds-space-s24);
+  font-size: 13px;
+  color: var(--ds-color-muted);
+  cursor: pointer;
+}
+.tabs button[aria-selected="true"] {
+  background: var(--ds-color-selected-segment);
+  color: var(--ds-color-text);
+}
+.card {
+  width: 100%;
+  max-width: 420px;
+  animation: enter var(--ds-motion-duration-cover)
+    var(--ds-motion-easing-standard);
+}
+.card section {
+  margin: 0;
+}
+.copy h2 {
+  font-size: 38px;
+  letter-spacing: -1.6px;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: var(--ds-space-s24) 0;
+}
+.summary {
+  color: var(--ds-color-text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 110px;
+}
+.detail {
+  color: var(--ds-color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 72px;
+}
+@keyframes enter {
+  from {
+    opacity: 0.6;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (max-width: 1100px) {
+  .section {
+    gap: var(--ds-space-s32);
+    padding: var(--ds-space-s32);
+  }
+  .copy h2 {
+    font-size: 32px;
+  }
+  .summary {
+    min-height: 140px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}
+
+.tabs button[aria-pressed="true"] {
+  background: var(--ds-color-selected-segment);
+  color: var(--ds-color-text);
+}
+.tabs button {
+  min-height: 44px;
+  font-weight: 500;
+}
+.stage {
+  min-height: 380px;
+}
+.summary {
+  min-height: 140px;
+}
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .stage {
+    order: 2;
+    width: 100%;
+  }
+  .copy {
+    order: 1;
+  }
+  .copy h2 {
+    font-size: 34px;
+  }
+  .summary {
+    min-height: 0;
+    margin-bottom: 0;
+  }
+}
+
+.card section[aria-label="Опрос о дате"] > p {
+  display: none;
+}

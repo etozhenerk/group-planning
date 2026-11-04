@@ -1,0 +1,32 @@
+.dock {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ds-color-surface);
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  box-shadow: 0 -8px 28px #0002;
+  padding: var(--ds-space-s16) var(--ds-space-s24);
+  z-index: 5;
+}
+.compose {
+  max-width: 760px;
+  margin: auto;
+}
+.jump {
+  position: absolute;
+  right: var(--ds-space-s24);
+  bottom: calc(100% + 16px);
+  border-radius: var(--ds-radius-control);
+  padding: var(--ds-space-s10) var(--ds-space-s16);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #0004;
+}
+@media (max-width: 900px) {
+  .dock {
+    padding-inline: var(--ds-space-s16);
+  }
+}

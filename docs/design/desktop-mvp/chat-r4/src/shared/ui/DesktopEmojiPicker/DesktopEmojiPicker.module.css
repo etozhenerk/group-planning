@@ -1,0 +1,108 @@
+.picker {
+  display: flex;
+  flex-direction: column;
+  width: 338px;
+  max-width: 100%;
+  height: min(420px, calc(100dvh - 220px));
+  min-height: 0;
+  padding: var(--ds-space-s12);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: var(--ds-radius-cover);
+  background: var(--ds-color-surface);
+  box-shadow: 0 12px 32px #0004;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.searchRow {
+  display: flex;
+  align-items: center;
+  flex: none;
+  height: 48px;
+  gap: var(--ds-space-s4);
+}
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-width: 44px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-radius-control);
+  background: transparent;
+  color: var(--ds-color-muted);
+}
+.results {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  margin-top: var(--ds-space-s12);
+  scrollbar-width: thin;
+}
+.results h3 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--ds-color-muted);
+  margin: 0 0 var(--ds-space-s8);
+}
+.results p {
+  margin: var(--ds-space-s24) var(--ds-space-s8);
+  font-size: 13px;
+  line-height: 21px;
+  text-align: center;
+  color: var(--ds-color-muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-content: start;
+  gap: var(--ds-space-s2);
+}
+.grid button {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-radius-badge);
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+}
+.grid button:hover {
+  background: var(--ds-color-raised);
+}
+.categories {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: 52px;
+  margin-top: var(--ds-space-s8);
+  padding-top: var(--ds-space-s8);
+  border-top: 1px solid var(--ds-color-line);
+}
+.categories button {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-radius-badge);
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ds-color-muted);
+}
+.categories button[aria-pressed="true"] {
+  color: var(--ds-color-accent);
+  background: var(--ds-color-selected-segment);
+}

@@ -1,0 +1,22 @@
+.row {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--ds-color-line);
+  font-size: 14px;
+  line-height: 21px;
+}
+.row:last-child {
+  border: 0;
+}
+.row dt {
+  color: var(--ds-color-muted);
+}
+.row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.row dd[data-missing="true"] {
+  color: var(--ds-color-muted);
+}

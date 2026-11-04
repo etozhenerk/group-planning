@@ -1,0 +1,119 @@
+.actions {
+  position: sticky;
+  bottom: 0;
+  padding: 16px 48px 24px;
+  z-index: 3;
+}
+.actions[data-sticky="true"] {
+  background: var(--ds-color-surface);
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  box-shadow:
+    0 -8px 28px #0005,
+    inset 0 1px #ffffff08;
+}
+.inner {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  column-gap: 64px;
+  row-gap: 12px;
+}
+.status {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  max-width: 620px;
+}
+.status:empty {
+  display: none;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  background: color-mix(
+    in srgb,
+    var(--ds-color-error) 8%,
+    var(--ds-color-background)
+  );
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-error);
+}
+.status strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.status p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--ds-color-muted);
+  line-height: 18px;
+}
+.primary {
+  grid-column: 1;
+  justify-self: start;
+  position: relative;
+  min-width: 220px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--ds-radius-control);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.primary span[data-hidden="true"] {
+  visibility: hidden;
+}
+.spinner {
+  position: absolute;
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
+  animation: spin 900ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 1250px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    column-gap: 40px;
+  }
+}
+@media (max-width: 1100px) {
+  .actions {
+    padding-inline: 32px;
+  }
+}
+@media (max-width: 999px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .primary {
+    width: 100%;
+    min-width: 0;
+  }
+}
+@media (max-width: 900px) {
+  .actions {
+    padding-inline: 24px;
+  }
+  .status:not(:empty) {
+    width: 100%;
+    max-width: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

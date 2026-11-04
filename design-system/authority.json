@@ -1,7 +1,7 @@
 {
-  "revision": "mobile-mvp-without-maps-2026-11-04-6.3.0",
+  "revision": "shared-rsvp-and-desktop-approved-2026-11-05-7.0.0",
   "sourceCommit": "ea4cad9be1077b23b0fa9394e6e51093ae8d4258",
-  "approval": "04.11.2026: реализация принятых мобильных экранов по approved-designs.json/ux.md; тексты r5 приняты, карты вынесены пользователем в отдельную paused проработку.",
+  "approval": "05.11.2026: общий результат RSVP и системные сообщения на всех поверхностях, затем «окаю дизайн»; принятые desktop-макеты по desktop-mvp/approval.json. Публикация не закрывает реализацию.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,7 @@
     "Общие основы"
   ],
   "corrections": [
+    "7.0.0: RSVP подтверждён → чат/приглашения/отказ, без промежуточной кнопки. Системные строки из серверной хронологии без дублей/расширения доступа. Общий контракт приоритетнее прежних static member/open-meeting состояний. Круглая подложка знака, новые desktop-композиции только по согласованным ревизиям.",
     "6.3.0: normalized list-референс раскрывает только данные unread-zero по принятому правилу скрытия нуля; raw list-r3 не меняется, preimage производного и генератора сохранён. Это не новая композиция и не доказательство реального чтения.",
     "6.3.0: компактный ответ использует существующую карточку по invitations-r2; baseline native navigation привязан до переноса общей edge-attached коррекции. VoiceOver сейчас исключён пользователем, прежние evidence/hash не изменяются.",
     "6.2.0: 44 привязок неизменённого baseline календаря перед переносом в единственный общий компонент; desktop и согласованный mobile-r7 сохраняются. В ту же публикацию до frozen candidate входят21 привязок принятой шапки/непрочитанного списка. Состояния списка/приглашений привязаны в той же публикации до финального кандидата, target44/48 приоритетнее старого40. Две общие привязки fallback72%/opacity0.7 закрепляют существующий производный эталон, не actual.",
@@ -770,15 +771,15 @@
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/ux.md",
-      "sha256": "c8167de1e099d9c040a94c7b09dc33481b7b62a5e12b8c10b7f13ee5170cee70"
+      "sha256": "787163f88c25830133e6948378dc7acdfe83374d9062b33bebba620c93f883b9"
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
-      "sha256": "dfdb33790d1047a58065dc84135373a452a228630ee3210f6be8e232dfdad1f1"
+      "sha256": "6fb1c992543252c3c3c4a097624bc4b3e2f403a348a617b2a0438192b83e81fb"
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references.json",
-      "sha256": "b3b0b24486069feecdf4497e40ab7c2d3127d0ddfa0f185a6ab13d88a399d795"
+      "sha256": "950b8f88ba5a718d6cf00ee80fb97b1db4da93f1e42b0a6b6a9bf3b09ad38992"
     },
     {
       "path": "docs/design/components/mobile-mvp.md",
@@ -887,6 +888,58 @@
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/preparation/mobile-response-navigation-bindings-6.3.json",
       "sha256": "94acdc7e4ffa2ca36b64256b2037dfbd2e998e5315cb20cce6bb5807c83ff224"
+    },
+    {
+      "path": "docs/design/components/invitation-response.md",
+      "sha256": "b18b66e957e56b0d9f52b1404fa969f3893ba35dd9366363d77ca8d63febee43"
+    },
+    {
+      "path": "docs/design/branding.md",
+      "sha256": "3e0db53e307832c205d3fd69c01d46520fd04d01f2e245b75f54311fdc33d299"
+    },
+    {
+      "path": "docs/design/desktop-mvp/README.md",
+      "sha256": "aad801ff0fc2b0476d19820852a04dc9cc7bbd611ed1a4d2953cfe55cb62a308"
+    },
+    {
+      "path": "docs/design/desktop-mvp/approval.json",
+      "sha256": "a49dbec6725fc8d71443c8a9099821378190c9e3fbc5b10d364c942354b2b557"
+    },
+    {
+      "path": "docs/design/desktop-mvp/snapshot-files.json",
+      "sha256": "eb8214cc8f6a1dd9bf41f820bd8ef5c2504e19d8fae7357e998826d08b2da515"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+      "sha256": "97a573abb9492dd5115fbb71b86b2a917e4ed9bb8398049175e8118866f37b97"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/build.mts",
+      "sha256": "64ed24f062db37d355411ff36de46d9a009bd97551374e5a734303026d596497"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/preview-mobile.html",
+      "sha256": "2437046a06899102f952b7ef2ed859b564898a70320acf4f0e2f79360638b6e4"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+      "sha256": "af9f266e2b43764b36d527d9fb85742f0ba7212aea571f527fe0d82e83313ad4"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
+      "sha256": "a27375b640821dedf405ff802446c795ed31015421e1dc5f16332234d7ff49e9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
+      "sha256": "66dc8615e5f7225dc9e3825b0faf3c3b3569a684426e16f1956f7670c91a446a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/list/frame.html",
+      "sha256": "858374cbf06135c0d4e088649ce4566d7d7f88fd6eb946279e6334ebe0027a12"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
+      "sha256": "6e7881ee9ab42d2d3c0cd028020d36badd1404c0477f5c19ca2e7d62a59db0a3"
     }
   ],
   "history": [

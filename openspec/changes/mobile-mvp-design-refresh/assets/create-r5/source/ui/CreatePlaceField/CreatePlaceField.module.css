@@ -1,0 +1,61 @@
+.field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.field > label {
+  font-size: 14px;
+  color: var(--ds-color-text);
+}
+.mapButton {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: 12px;
+  color: var(--ds-color-accent);
+  background: var(--ds-color-raised);
+  font-size: 14px;
+  font-weight: 500;
+}
+.mapButton:disabled {
+  opacity: 0.5;
+}
+.selected {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: 14px;
+  background: var(--ds-color-background);
+}
+.selected > svg {
+  flex-shrink: 0;
+  color: var(--ds-color-accent);
+}
+.selected > div {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+.selected strong {
+  font-size: 14px;
+  line-height: 20px;
+}
+.selected span {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ds-color-muted);
+}
+.selected button,
+.manual {
+  min-height: 44px;
+  text-align: left;
+  color: var(--ds-color-accent);
+  font-size: 13px;
+  background: transparent;
+  padding: 0;
+}
+.field>input{margin-top:0!important}

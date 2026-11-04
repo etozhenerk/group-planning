@@ -1,0 +1,75 @@
+.error {
+  background: var(--ds-color-surface);
+  border-radius: 20px;
+  padding: 24px;
+  margin: 28px 0 12px;
+}
+.icon {
+  color: var(--ds-color-accent);
+  margin-bottom: 18px;
+}
+.error h2 {
+  font-size: 20px;
+  line-height: 26px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.error p {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ds-color-muted);
+  margin: 0 0 18px;
+  max-width: 240px;
+}
+.error button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+.skeleton {
+  display: flex;
+  gap: 20px;
+  padding: 30px 0 26px;
+  height: 152px;
+  box-sizing: border-box;
+}
+.skeleton > span {
+  width: 88px;
+  height: 88px;
+  border-radius: 28px;
+  background: var(--ds-color-surface);
+}
+.skeleton > div {
+  flex: 1;
+  padding-top: 20px;
+}
+.skeleton i {
+  display: block;
+  height: 18px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background: var(--ds-color-surface);
+}
+.skeleton i:last-child {
+  width: 75%;
+  height: 12px;
+}
+.skeleton {
+  animation: breathe 1.3s ease-in-out infinite alternate;
+}
+@keyframes breathe {
+  to {
+    opacity: 0.45;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

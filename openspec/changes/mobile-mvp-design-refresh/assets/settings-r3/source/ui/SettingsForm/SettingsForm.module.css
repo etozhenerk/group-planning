@@ -1,0 +1,61 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 0;
+}
+.body {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: 0 20px 28px;
+}
+.body::-webkit-scrollbar {
+  display: none;
+}
+.back {
+  display: block;
+  padding: 0;
+  margin-bottom: 16px;
+  min-height: 36px;
+  background: transparent;
+  color: var(--ds-color-muted);
+  font-size: 12px;
+  text-align: left;
+}
+.legend {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ds-color-muted);
+  margin: 20px 0 18px;
+}
+.legend span {
+  color: var(--ds-color-error);
+  font-size: 18px;
+  font-weight: 650;
+  margin-right: 4px;
+}
+.footer {
+  flex-shrink: 0;
+  padding: 16px 20px 32px;
+  background: var(--ds-color-surface);
+  border-radius: 24px 24px 0 0;
+  box-shadow:
+    0 -8px 28px #0005,
+    inset 0 1px #ffffff08;
+}
+.save {
+  width: 100%;
+  min-height: 48px;
+  border-radius: var(--ds-component-button-radius);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

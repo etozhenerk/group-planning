@@ -1,0 +1,1 @@
+export const portraitForName=(name:string):string|null=>{const ids:Record<string,string>={'Лена':'lena','Миша':'misha','Саша':'sasha','Дима':'dima','Аня':'anya','Оля':'olya','Никита':'nikita','Катя':'katya','Ира':'ira'};return ids[name]?'./avatars/'+ids[name]+'.jpg':null}

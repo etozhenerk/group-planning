@@ -1,0 +1,173 @@
+.surface {
+  position: relative;
+  margin: var(--ds-space-s16);
+  border-radius: var(--ds-radius-control);
+  min-width: 0;
+  min-height: 0;
+  overflow: clip;
+  background: #e5e7df;
+  touch-action: none;
+  cursor: grab;
+  isolation: isolate;
+}
+.surface:active {
+  cursor: grabbing;
+}
+.world {
+  position: absolute;
+  inset: -100px -160px;
+  transform-origin: center;
+  will-change: transform;
+}
+.world > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+.marker {
+  position: absolute;
+  translate: -50% -100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: none;
+  color: #7c668f;
+  filter: drop-shadow(0 3px 4px #0004);
+}
+.marker > span {
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: #29252f;
+  background: #fffdf8;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.marker > svg {
+  stroke: #fffdf8;
+}
+.marker > i {
+  position: absolute;
+  bottom: 19px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fffdf8;
+}
+.tools {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  border: 1px solid #0002;
+  border-radius: 12px;
+  overflow: clip;
+  box-shadow: 0 4px 16px #0002;
+}
+.tools button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: #fffdf8;
+  color: #333239;
+  border: 0;
+  border-radius: 0;
+}
+.tools button + button {
+  border-top: 1px solid #0001;
+}
+.tip {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  max-width: calc(100% - 92px);
+  padding: 9px 12px;
+  margin: 0;
+  border-radius: 10px;
+  background: #fffdf8ed;
+  color: #3f3d44;
+  font-size: 11px;
+  line-height: 16px;
+  pointer-events: none;
+  box-shadow: 0 3px 12px #0001;
+}
+.credit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
+  background: #fffdf8e8;
+  color: #55515d;
+  font-size: 10px;
+  line-height: 16px;
+}
+.credit a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #24252ad9;
+  backdrop-filter: blur(5px);
+  padding: 24px;
+  cursor: auto;
+}
+.problem {
+  max-width: 320px;
+  padding: 28px;
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-line);
+  border-radius: var(--ds-radius-card);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.problem > svg {
+  color: var(--ds-color-accent);
+}
+.problem h3 {
+  margin: 20px 0 12px;
+  font-size: 19px;
+  line-height: 25px;
+}
+.problem p {
+  margin: 0 0 24px;
+  color: var(--ds-color-muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.problem button {
+  font-size: 12px;
+  width: 100%;
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+}
+.problem .manual {
+  margin-top: 8px;
+  background: transparent;
+  color: var(--ds-color-muted);
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

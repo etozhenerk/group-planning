@@ -1,0 +1,2 @@
+import {chromium} from '/Users/misha/Documents/Codex/projects/group-planning/node_modules/playwright/index.mjs'
+const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1000,height:1050},deviceScaleFactor:1});page.on('pageerror',error=>console.log('ERROR',error.message));await page.goto('http://127.0.0.1:8797/chat-r1/preview.html');await page.waitForTimeout(1000);console.log((await page.locator('body').innerText()).slice(0,5000));await page.screenshot({path:'/private/tmp/somewhere-chat/outer-first.png'});await browser.close()

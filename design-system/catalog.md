@@ -1,4 +1,4 @@
-# Токены somewhere · 6.3.0
+# Токены somewhere · 7.0.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;

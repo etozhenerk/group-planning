@@ -1,0 +1,277 @@
+.card {
+  --card-avatar-size: var(--ds-component-card-avatar);
+  position: relative;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  border-radius: var(--ds-radius-card);
+  background: var(--ds-color-weekday);
+  border: 1px solid #ffffff0a;
+  box-shadow: 0 8px 20px #0000000b;
+  min-width: 0;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.link {
+  position: relative;
+  display: block;
+  min-height: var(--ds-component-card-minimum-height);
+  padding: 29px 21px 30px;
+}
+
+.date {
+  position: absolute;
+  left: 17px;
+  top: -12px;
+  background: var(--ds-color-weekday-badge);
+  color: var(--ds-color-weekday-text);
+  border: 1px solid #ffffff09;
+  border-radius: var(--ds-radius-badge);
+  padding: 4px 10px;
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 600;
+  max-width: calc(100% - 34px);
+  box-shadow: 0 3px 7px #0002;
+  z-index: 2;
+  transition: transform 0.22s ease;
+}
+
+.cover {
+  position: absolute;
+  right: 18px;
+  top: -11px;
+  width: var(--ds-component-card-cover-width);
+  height: var(--ds-component-card-cover-height);
+  border: var(--ds-component-card-cover-border) solid var(--ds-color-weekday-frame);
+  border-radius: var(--ds-radius-cover);
+  overflow: hidden;
+  transform: rotate(5deg);
+  box-shadow: 0 5px 14px #0004;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.28s ease;
+}
+
+.card:has(.cover) .info {
+  padding-right: 137px;
+}
+
+.info {
+  min-height: 75px;
+}
+
+.info h2 {
+  font-size: var(--ds-typography-size-card-title);
+  line-height: var(--ds-typography-line-height-card-title);
+  letter-spacing: -0.45px;
+  margin: 0 0 8px;
+  max-width: 350px;
+  overflow-wrap: anywhere;
+}
+
+.info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  align-items: start;
+  gap: 6px;
+  overflow-wrap: anywhere;
+  max-width: 290px;
+}
+
+.info p svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.info h2 svg {
+  margin-left: 7px;
+  color: #cab4d7;
+}
+
+.people {
+  position: absolute;
+  bottom: -15px;
+  right: 21px;
+  z-index: 3;
+}
+
+.album {
+  position: absolute;
+  bottom: -15px;
+  left: 19px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 4px 10px;
+  background: #42414c;
+  border: 2px solid var(--background);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--muted);
+  max-width: 65%;
+}
+
+.sparkle {
+  position: absolute;
+  left: 22px;
+  bottom: 12px;
+  color: #c1a8d475;
+  transform: rotate(16deg);
+}
+
+.card:has(.album) .sparkle {
+  display: none;
+}
+
+.card[data-weekend='true'] {
+  background: var(--ds-color-weekend);
+}
+
+.card[data-weekend='true'] .date {
+  background: var(--ds-color-weekend-badge);
+  color: var(--ds-color-weekend-text);
+}
+
+.card[data-weekend='true'] .cover {
+  border-color: var(--ds-color-weekend-frame);
+  transform: rotate(-4deg);
+}
+
+.card[data-weekend='true'] .sparkle {
+  color: #a8cbbd75;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 13px 30px #0003;
+    border-color: #d6cce92a;
+    background: var(--ds-color-weekday-hover);
+  }
+
+  .card[data-weekend='true']:hover {
+    background: var(--ds-color-weekend-hover);
+  }
+
+  .card:hover .cover {
+    transform: translateY(-4px) rotate(2deg);
+  }
+
+  .card[data-weekend='true']:hover .cover {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+
+  .card:hover .date {
+    transform: translateY(-2px) rotate(-1deg);
+  }
+}
+
+@media (max-width: 739px) {
+  .card {
+    --card-avatar-size: var(--ds-component-card-avatar-mobile);
+    border-radius: 20px;
+    margin-bottom: 17px;
+  }
+
+  .link {
+    min-height: var(--ds-component-card-minimum-height-mobile);
+    padding: 26px 17px 29px;
+  }
+
+  .info h2 {
+    font-size: var(--ds-typography-size-card-title-mobile);
+  }
+
+  .cover {
+    width: var(--ds-component-card-cover-mobile-width);
+    height: var(--ds-component-card-cover-mobile-height);
+    right: 13px;
+    top: -10px;
+  }
+
+  .card:has(.cover) .info {
+    padding-right: 112px;
+  }
+
+  .date {
+    left: 14px;
+    font-size: 10px;
+    top: -11px;
+  }
+
+  .card:has(.cover) .date {
+    max-width: calc(100% - 95px);
+  }
+
+  .people {
+    right: 13px;
+  }
+
+  .info p {
+    font-size: 12px;
+  }
+
+  .sparkle {
+    left: 18px;
+    bottom: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cover,
+  .date {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .date {
+    transform: none;
+  }
+
+  .card:hover .cover {
+    transform: rotate(5deg);
+  }
+
+  .card[data-weekend='true']:hover .cover {
+    transform: rotate(-4deg);
+  }
+}
+
+.date {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.titleEnd {
+  display: inline-flex;
+  align-items: baseline;
+  max-width: 100%;
+}
+
+.titleEnd span {
+  min-width: 0;
+}
+
+.titleEnd svg {
+  flex-shrink: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-s8);
+}
+
+.titleRow h2 {
+  flex: 1;
+  min-width: 0;
+}

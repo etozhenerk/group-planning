@@ -1,0 +1,15 @@
+::view-transition-group(*) {
+  animation-duration: var(--ds-motion-duration-navigation);
+  animation-timing-function: var(--ds-motion-easing-standard);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+  }
+}
