@@ -1,3 +1,5 @@
+import { useId } from 'react';
+import { RequiredMark } from '@/shared/ui/RequiredMark';
 import styles from '@/entities/meeting/ui/MeetingFields/MeetingFields.module.css';
 import { MeetingTimeFields } from '@/entities/meeting/ui/MeetingTimeFields';
 import { useMobileLayout } from '@/shared/lib/media';
@@ -9,6 +11,7 @@ export type MeetingFieldsProps = {
   disabled?: boolean;
   errors?: Record<string, string>;
   settings?: boolean;
+  dateRequired?: boolean;
 };
 
 export const MeetingFields = ({
@@ -17,8 +20,11 @@ export const MeetingFields = ({
   disabled = false,
   errors = {},
   settings = false,
+  dateRequired = true,
 }: MeetingFieldsProps) => {
-  const mobile = useMobileLayout() && settings;
+  const mobileLayout = useMobileLayout();
+  const mobile = mobileLayout && settings;
+  const titleError = useId();
   const description = (
     <label>
       Описание
@@ -36,19 +42,24 @@ export const MeetingFields = ({
     <fieldset className={styles['form-fields']} disabled={disabled} data-mobile={mobile}>
       <div className={styles.group}>
         <label>
-          Название
+          Название <RequiredMark />
           <input
             required
             maxLength={120}
             value={value.title}
             onChange={(event) => onChange({ ...value, title: event.target.value })}
             aria-invalid={!!errors.title}
+            aria-describedby={errors.title ? titleError : undefined}
             autoComplete="off"
             placeholder="Например, вечер настольных игр"
           />
         </label>
         {errors.title && (
-          <span className={styles.error}>Проверьте название: от 1 до 120 символов.</span>
+          <span className={styles.error} id={titleError} role="alert">
+            {mobileLayout
+              ? 'Введите название встречи'
+              : 'Проверьте название: от 1 до 120 символов.'}
+          </span>
         )}
         {mobile && description}
       </div>
@@ -59,6 +70,7 @@ export const MeetingFields = ({
           errors={errors}
           disabled={disabled}
           mobileSheet={settings}
+          dateRequired={dateRequired}
         />
         <label>
           Место

@@ -1,17 +1,39 @@
+import { SkeletonRows } from '@/shared/ui/SkeletonRows';
+import { useChatLayout } from '@/shared/lib/media';
 import type { useMeetingsView } from '@/pages/meetings/ui/MeetingsView/hooks/useMeetingsView';
-import { CalendarGrid } from '@/pages/meetings/ui/CalendarGrid';
+import { CalendarGrid } from '@/entities/meeting';
 import { MeetingsResults } from '@/pages/meetings/ui/MeetingsResults';
 import { HomeEmpty } from '@/pages/meetings/ui/HomeEmpty';
 import { UndatedToggle } from '@/pages/meetings/ui/UndatedToggle';
-import { Status } from '@/shared/ui/Status';
-import { agendaLabel, meetingCountLabel } from '@/pages/meetings/lib/calendarDates';
+import { MeetingsFailure } from '@/pages/meetings/ui/MeetingsFailure';
+import { agendaLabel, meetingCountLabel } from '@/entities/meeting';
 import styles from '@/pages/meetings/ui/CalendarView/CalendarView.module.css';
 
 export type CalendarViewProps = { view: ReturnType<typeof useMeetingsView> };
 
 export const CalendarView = ({ view }: CalendarViewProps) => {
+  const layout = useChatLayout();
+
+  if (layout.mobile && !view.month.data && (view.month.error || view.list.error)) {
+    return (
+      <MeetingsFailure
+        title="Не удалось загрузить встречи"
+        refresh={false}
+        onRetry={view.retryCalendar}
+      />
+    );
+  }
+
+  if (layout.mobile && !view.month.data && view.month.isPending) {
+    return <SkeletonRows label="Загрузка календаря" />;
+  }
+
   return (
-    <div className={styles.layout}>
+    <div
+      className={styles.layout}
+      data-mobile={layout.mobile}
+      data-narrow={layout.narrow}
+    >
       <div className={styles.month}>
         <CalendarGrid
           day={view.day}
@@ -19,17 +41,23 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
           onSelect={view.selectDay}
         />
         {view.month.error && (
-          <Status
-            title="Не удалось обновить календарь"
-            error
-            action={() => void view.month.refetch()}
+          <MeetingsFailure
+            title={
+              layout.mobile
+                ? 'Не удалось обновить встречи'
+                : 'Не удалось обновить календарь'
+            }
+            refresh={!!view.month.data}
+            onRetry={layout.mobile ? view.retryCalendar : () => void view.month.refetch()}
           />
         )}
-        <UndatedToggle
-          count={view.counts?.undated}
-          selected={view.selection.undated}
-          onToggle={() => view.update({ undated: !view.selection.undated })}
-        />
+        {!layout.mobile && (
+          <UndatedToggle
+            count={view.counts?.undated}
+            selected={view.selection.undated}
+            onToggle={() => view.update({ undated: !view.selection.undated })}
+          />
+        )}
       </div>
       <section aria-label="Встречи выбранного дня" className={styles.agenda}>
         <div className={styles.heading}>
@@ -47,7 +75,9 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
         )}
         <div className={view.empty ? styles['mobile-results'] : undefined}>
           <MeetingsResults
+            key={`${view.day}-${view.selection.undated}`}
             query={view.ready ? view.query : view.list}
+            showError={!layout.mobile || !view.month.error}
             agenda
             emptyTitle={
               view.selection.undated ? 'Встреч без даты нет.' : 'На этот день встреч нет.'
@@ -55,6 +85,13 @@ export const CalendarView = ({ view }: CalendarViewProps) => {
           />
         </div>
       </section>
+      {layout.mobile && (
+        <UndatedToggle
+          count={view.counts?.undated}
+          selected={view.selection.undated}
+          onToggle={() => view.update({ undated: !view.selection.undated })}
+        />
+      )}
     </div>
   );
 };

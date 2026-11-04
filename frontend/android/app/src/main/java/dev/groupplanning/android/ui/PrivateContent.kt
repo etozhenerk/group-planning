@@ -5,12 +5,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
@@ -38,8 +42,12 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
             AppRoute.Home -> holder.SaveableStateProvider("home") {
                 HomeScreen(model, snapshot) { service = it }
             }
-            is AppRoute.Create -> CreationScreen(destination.model, model::home, model::created)
-            is AppRoute.Invitation -> InvitationScreen(destination.model, model::home)
+            is AppRoute.Create -> Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+                CreationScreen(destination.model, model::home, model::created)
+            }
+            is AppRoute.Invitation -> Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+                InvitationScreen(destination.model, model::home)
+            }
         }
     }
 }

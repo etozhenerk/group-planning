@@ -3,8 +3,9 @@ import SwiftUI
 struct HomeNavigation: View {
     @Binding var selection: HomeSection
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: DesignTokens.spaceS0) {
             ForEach(HomeSection.allCases) { item in
                 Button {
                     withAnimation(
@@ -14,26 +15,35 @@ struct HomeNavigation: View {
                         selection = item
                     }
                 } label: {
-                    VStack(spacing: 3) {
+                    VStack(spacing: DesignTokens.componentMobileNavigationIconGap) {
                         ExperienceIcon(
-                            kind: icon(item), size: 19, weight: selection == item ? 1.8 : 1.7)
-                        Text(item.rawValue).font(.system(size: 9, weight: .medium)).tracking(0.05)
-                            .lineLimit(1)
-                    }.frame(maxWidth: .infinity).frame(height: 48)
-                        .foregroundStyle(
-                            selection == item
-                                ? DesignTokens.colorNavigationSelectedText
-                                : DesignTokens.colorNavigationInactiveText
-                        )
-                        .contentShape(Rectangle())
-
-                }.buttonStyle(.plain).accessibilityAddTraits(selection == item ? .isSelected : [])
-                    .accessibilityIdentifier("home-tab-" + item.symbol)
-                    .accessibilityShowsLargeContentViewer {
-                        Label(item.rawValue, systemImage: item.symbol)
+                            kind: icon(item), size: DesignTokens.componentNavigationIcon,
+                            weight: CGFloat(selection == item
+                                ? DesignTokens.componentMobileNavigationSelectedIconStroke
+                                : DesignTokens.componentMobileNavigationIconStroke))
+                        Text(item.rawValue)
+                            .designFont(DesignTokens.typographySizeNavigationLabel, weight: .medium)
+                            .tracking(DesignTokens.typographyTrackingNavigationLabel)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: DesignTokens.targetAndroid)
+                    .foregroundStyle(
+                        selection == item
+                            ? DesignTokens.colorNavigationSelectedText
+                            : DesignTokens.colorNavigationInactiveText)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(selection == item ? .isSelected : [])
+                .accessibilityIdentifier("home-tab-" + item.symbol)
+                .accessibilityShowsLargeContentViewer {
+                    Label(item.rawValue, systemImage: item.symbol)
+                }
             }
-        }.background {
+        }
+        .background {
             GeometryReader { geometry in
                 let width = geometry.size.width / CGFloat(HomeSection.allCases.count)
                 let position = HomeSection.allCases.firstIndex(of: selection) ?? 0
@@ -41,31 +51,42 @@ struct HomeNavigation: View {
                     .fill(DesignTokens.colorNavigationSelected)
                     .overlay {
                         RoundedRectangle(cornerRadius: DesignTokens.radiusSheet)
-                            .stroke(
+                            .strokeBorder(
                                 DesignTokens.colorNavigationSelectedBorder,
                                 lineWidth: DesignTokens.spaceS1)
                     }
                     .frame(width: width)
                     .offset(x: width * CGFloat(position))
                     .animation(
-                        reduceMotion
-                            ? nil : .easeInOut(duration: DesignTokens.motionDurationNavigation),
+                        ChatMotion.animation(
+                            DesignTokens.motionDurationNavigation, reduceMotion: reduceMotion),
                         value: selection)
-            }.accessibilityHidden(true).allowsHitTesting(false)
-        }.padding(7).frame(height: 62)
-            .background {
-                Capsule().fill(.ultraThinMaterial).overlay {
-                    Capsule().fill(Color(designHex: 0x27282e, opacity: 0.92))
-                }
             }
-            .overlay { Capsule().stroke(Color.white.opacity(0.082), lineWidth: 1) }
-            .shadow(color: .black.opacity(0.33), radius: 14, y: 8)
-            .padding(.horizontal, 16).padding(.bottom, 12)
-            .animation(
-                reduceMotion ? nil : .easeInOut(duration: DesignTokens.motionDurationNavigation),
-                value: selection)
-
+            .accessibilityHidden(true).allowsHitTesting(false)
+        }
+        .padding(DesignTokens.componentMobileNavigationPadding)
+        .background {
+            panel.fill(.ultraThinMaterial)
+                .overlay { panel.fill(DesignTokens.colorMobileNavigationIOSBackground) }
+                .overlay {
+                    panel.strokeBorder(
+                        DesignTokens.colorMobileNavigationIOSBorder,
+                        lineWidth: DesignTokens.spaceS1)
+                }
+                .shadow(
+                    color: DesignTokens.colorMobileStickyShadow,
+                    radius: DesignTokens.componentMobileStickyShadowBlur,
+                    y: -DesignTokens.componentMobileStickyShadowUpOffset)
+                .ignoresSafeArea(edges: .bottom)
+        }
     }
+
+    private var panel: UnevenRoundedRectangle {
+        UnevenRoundedRectangle(
+            topLeadingRadius: DesignTokens.componentMobileStickyRadius,
+            topTrailingRadius: DesignTokens.componentMobileStickyRadius)
+    }
+
     private func icon(_ item: HomeSection) -> ExperienceIcon.Kind {
         switch item {
         case .meetings: .calendar

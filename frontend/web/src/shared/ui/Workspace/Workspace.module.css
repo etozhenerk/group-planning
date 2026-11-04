@@ -9,12 +9,9 @@
   min-height: calc(100dvh - 32px);
 }
 
-@media (max-width: 739px) {
+@media (width < design-token(breakpoint.mobile)) {
   .workspace {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -39,27 +36,6 @@
   }
 }
 
-@media (max-width: 739px) {
-  .conversation-workspace {
-    display: flex;
-    position: fixed;
-    inset-inline: 0;
-    top: var(--visual-viewport-top, 0px);
-    height: var(--visual-viewport-height, 100dvh);
-    overscroll-behavior: none;
-    padding-bottom: 0;
-  }
-
-  .conversation-workspace.demo {
-    top: calc(var(--visual-viewport-top, 0px) + 32px);
-    height: calc(var(--visual-viewport-height, 100dvh) - 32px);
-  }
-
-  .conversation-workspace > .navigation-slot {
-    display: none;
-  }
-}
-
 .navigation-slot {
   display: contents;
 }
@@ -70,28 +46,6 @@
 
 .mobileBrand {
   display: none;
-}
-
-@media (max-width: 1100px) and (min-width: 740px) {
-  .workspace {
-    grid-template-columns: var(--ds-component-navigation-sidebar-width) minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 739px) {
-  .mobileBrand {
-    display: flex;
-    align-items: center;
-    padding: 17px 20px 0;
-  }
-
-  .workspace {
-    padding-bottom: 0;
-  }
-
-  .conversation-workspace .mobileBrand {
-    display: none;
-  }
 }
 
 .conversationContent {
@@ -120,4 +74,49 @@
 
 .conversation-workspace[data-mobile='true'] > .navigation-slot {
   display: none;
+}
+
+.workspace[data-mobile='true'] {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.workspace[data-mobile='true'] .content {
+  padding-bottom: var(--mobile-navigation-height, 0);
+}
+
+.workspace[data-mobile='true'] .mobileBrand {
+  display: flex;
+  align-items: center;
+  padding: 17px 20px 0;
+}
+
+.conversation-workspace[data-mobile='true'] .mobileBrand {
+  display: none;
+}
+
+.workspace[data-mobile='true'][data-screen='true'] {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--visual-viewport-top, 0);
+  height: var(--visual-viewport-height, 100dvh);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workspace.demo[data-mobile='true'][data-screen='true'] {
+  top: calc(var(--visual-viewport-top, 0) + var(--ds-space-s32));
+  height: calc(var(--visual-viewport-height, 100dvh) - var(--ds-space-s32));
+}
+
+.workspace[data-mobile='true'][data-screen='true'] .content {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.workspace[data-mobile='true'][data-screen='true'] .mobileBrand {
+  flex: none;
 }

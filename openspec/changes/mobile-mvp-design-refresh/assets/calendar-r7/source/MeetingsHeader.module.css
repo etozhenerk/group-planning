@@ -1,0 +1,10 @@
+.header { position:relative; z-index:10; padding:0 20px; background:var(--ds-color-background); }
+.brand { min-height:36px; display:flex; align-items:center; }.heading { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:73px; padding:17px 0 12px; }.heading h1 { font-size:clamp(24px,7vw,28px); font-weight:720; line-height:1.2; letter-spacing:-.9px; margin:0; }
+.heading .create,.emptyCreate { background:var(--ds-color-action); color:var(--ds-color-action-text); font-size:13px; font-weight:600; min-height:44px; padding:0 13px; border-radius:var(--ds-component-button-radius); gap:8px; flex:none; }
+.toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; padding-bottom:0; }
+.periods { display:flex; align-items:center; flex:1; min-width:0; position:relative; gap:20px; }
+.periods button { padding:13px 0 14px; justify-content:flex-start; flex:none; min-height:48px; background:none; color:var(--ds-color-muted); border-radius:0; font-size:13px; font-weight:500; gap:6px; white-space:nowrap; }.periods button[aria-pressed=true] { color:var(--ds-color-text); }.periods button span { font-size:11px; color:var(--ds-color-muted); font-variant-numeric:tabular-nums; }
+.underline { position:absolute; bottom:2px; left:0; height:2px; border-radius:2px; width:var(--indicator-width); background:var(--ds-color-accent); transform:translateX(var(--indicator-left)); transition:transform var(--ds-motion-duration-navigation) var(--ds-motion-easing-standard),width var(--ds-motion-duration-navigation) var(--ds-motion-easing-standard); pointer-events:none; }
+.viewControl { position:relative; flex:none; }.viewControl .viewButton { width:44px; min-height:44px; padding:0; border-radius:12px; background:var(--ds-color-navigation); color:var(--ds-color-muted); }.viewButton[aria-expanded=true] { background:var(--ds-color-raised); color:var(--ds-color-text); }
+
+@media(prefers-reduced-motion:reduce) { .underline { transition:none; } }

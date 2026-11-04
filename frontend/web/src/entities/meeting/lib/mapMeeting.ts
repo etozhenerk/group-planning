@@ -1,3 +1,4 @@
+import { mapPublicUser } from '@/shared/api';
 import type { WireMeeting, WirePreview, WireResponse, WireSummary } from '@/shared/api';
 import type {
   Invitation,
@@ -41,9 +42,7 @@ export const mapMeeting = (wire: WireMeeting): Meeting => {
 export const mapInvitation = (wire: WirePreview): Invitation => {
   return {
     meetingId: wire.meeting_id,
-    ...(wire.organizer
-      ? { organizer: { id: wire.organizer.id, displayName: wire.organizer.display_name } }
-      : {}),
+    ...(wire.organizer ? { organizer: mapPublicUser(wire.organizer) } : {}),
     ...(wire.can_join === undefined ? {} : { canJoin: wire.can_join }),
     joinClosesAt: wire.join_closes_at ?? null,
     joinDisabledReason: wire.join_disabled_reason ?? null,

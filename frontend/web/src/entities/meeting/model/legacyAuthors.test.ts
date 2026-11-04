@@ -20,7 +20,16 @@ afterEach(() => {
 it('refreshes legacy authors in cached and protected rows without advancing receive or viewport', async () => {
   const epoch = accessEpoch('user', 'meeting');
   const key = privateKey('user', 'meeting', epoch, 'feed');
-  const entries = ['31', '32'].map(entry);
+  const cached = (sequence: string) => ({
+    ...entry(sequence),
+    actor: {
+      id: 'deleted',
+      displayName: 'Лена',
+      avatarUrl: 'https://images.example.test/lena.jpg',
+    },
+  });
+
+  const entries = ['31', '32'].map(cached);
   const window = feedWindow(entries);
   const position: FeedPosition = {
     entryId: 'entry-31',
@@ -33,14 +42,14 @@ it('refreshes legacy authors in cached and protected rows without advancing rece
     ...page(['31', '32']),
     entries,
     window,
-    protectedEntries: [entry('2')],
+    protectedEntries: [cached('2')],
     hasOlder: true,
     receiveCursor: '32',
     newMessages: 0,
   });
   const renamed = (sequence: string) => ({
     ...entry(sequence),
-    actor: { id: 'deleted', displayName: 'Удалённый аккаунт' },
+    actor: { id: 'deleted', displayName: 'Удалённый аккаунт', avatarUrl: null },
   });
 
   vi.mocked(getFeed)
@@ -60,6 +69,8 @@ it('refreshes legacy authors in cached and protected rows without advancing rece
     'Удалённый аккаунт',
   ]);
   expect(result.protectedEntries?.[0]?.actor.displayName).toBe('Удалённый аккаунт');
+  expect(result.entries.map((value) => value.actor.avatarUrl)).toEqual([null, null]);
+  expect(result.protectedEntries?.[0]?.actor.avatarUrl).toBeNull();
   expect(result.receiveCursor).toBe('32');
   expect(result.window?.id).toBe(window.id);
   expect(result.newMessages).toBe(0);

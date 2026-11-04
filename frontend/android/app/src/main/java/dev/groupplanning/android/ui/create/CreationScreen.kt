@@ -35,12 +35,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.CreatedMeeting
 import dev.groupplanning.android.state.CreationViewModel
-import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.CompactButton
+import dev.groupplanning.android.ui.components.PageBack
+import dev.groupplanning.android.ui.components.RequiredLegend
 import dev.groupplanning.android.ui.components.StatusPanel
 import dev.groupplanning.android.ui.covers.CoverEditor
 import dev.groupplanning.android.ui.meetingform.MeetingFields
 import dev.groupplanning.android.ui.meetings.MeetingsHeader
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -64,14 +66,15 @@ internal fun CreationScreen(
     Box(Modifier.fillMaxSize().imePadding()) {
         Column(Modifier.fillMaxSize()) {
             MeetingsHeader()
-            TextButton(
-                onClick = close,
+            PageBack(
+                modifier = Modifier.padding(
+                    start = DesignTokens.spaceS20,
+                    top = DesignTokens.componentMobilePageInsetTop,
+                ),
                 enabled = !state.busy && !state.preparingCover,
-                modifier = Modifier.padding(start = 8.dp, top = 28.dp),
-            ) {
-                AppIcon(R.drawable.ic_back)
-                Text(stringResource(R.string.my_meetings), color = Palette.muted, fontSize = 13.sp)
-            }
+                label = stringResource(R.string.back_to_meetings),
+                close = close,
+            )
             Column(
                 Modifier.fillMaxSize().verticalScroll(
                     rememberScrollState(),
@@ -111,6 +114,7 @@ internal fun CreationScreen(
                             change = { cover -> model.change { it.copy(cover = cover) } },
                             prominent = true,
                         )
+                        RequiredLegend()
                         MeetingFields(
                             state.record.value,
                             state.editable,

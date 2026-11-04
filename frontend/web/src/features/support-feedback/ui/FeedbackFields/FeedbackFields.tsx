@@ -1,3 +1,5 @@
+import { RequiredLegend } from '@/shared/ui/RequiredLegend';
+import { RequiredMark } from '@/shared/ui/RequiredMark';
 import type { useFeedback } from '@/features/support-feedback/model/useFeedback';
 import { screenOptions } from '@/features/support-feedback/model/types';
 import type {
@@ -10,6 +12,7 @@ export type FeedbackFieldsProps = { form: ReturnType<typeof useFeedback> };
 
 export const FeedbackFields = ({ form }: FeedbackFieldsProps) => (
   <div className={styles.fields}>
+    <RequiredLegend />
     <fieldset className={styles.kinds}>
       <legend>Тема обращения</legend>
       {Object.entries({ problem: 'Проблема', idea: 'Идея', question: 'Вопрос' }).map(
@@ -28,7 +31,7 @@ export const FeedbackFields = ({ form }: FeedbackFieldsProps) => (
       )}
     </fieldset>
     <label className={styles.field}>
-      Ваше сообщение
+      Ваше сообщение <RequiredMark />
       <textarea
         name="description"
         aria-required="true"

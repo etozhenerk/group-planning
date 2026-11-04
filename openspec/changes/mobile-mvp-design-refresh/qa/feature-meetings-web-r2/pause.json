@@ -1,0 +1,44 @@
+{
+  "phase": "paused",
+  "at": "2026-11-04T21:17:33.417129+00:00",
+  "reason": "Пользователь явно завершил работу на сегодня. Новые проверки не запускать.",
+  "planHash": "6b692ecb6d60c5c31e05511b6297ecda5e169a7f909b0c90876d609f03e510fa",
+  "sourceHash": "04af9a47911d87f9618e706304f2f9c355fcd4ba7bbaf96384e0bf4017fe32ef",
+  "catalogHash": "3b6eb1cf891e7be033467c16d82d519e0cf42c290badfa4e65904dd9d091980b",
+  "caseResults": "104 expected preserved; manual acceptance not finalized, no conditional pass",
+  "suites": [
+    {
+      "id": "web-check",
+      "status": "passed",
+      "commandHash": "f5fbb86ed6c006dfc55fb8b05dff26dfba04d258df5c7a6d5f3ec530e24b31b2",
+      "startedAt": "2026-11-04T21:06:00.941Z",
+      "finishedAt": "2026-11-04T21:06:23.064Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/web-check-1793826360942.txt",
+          "kind": "log",
+          "sha256": "f5446e667c661f591bd2c8209508aa0a3b6e9394e359b230e343aff4c566117f"
+        }
+      ]
+    },
+    {
+      "id": "web-e2e",
+      "status": "blocked",
+      "commandHash": "76feb4f92d0a823c3cc654ad6d5aaf2dc5d6e63969aef5b8aa7a801f30d63875",
+      "startedAt": "2026-11-04T21:06:54.961Z",
+      "finishedAt": "2026-11-04T21:16:13.853Z",
+      "exitCode": 130,
+      "actual": "Остановлено SIGINT по явной паузе пользователя: Playwright232 passed,1 skipped,1 interrupted,80 did not run; wrapper exit1, внутренний runner130. Suite pass не выставлен.",
+      "evidence": [
+        {
+          "path": "suites/web-e2e-1793826414962.txt",
+          "kind": "log",
+          "sha256": "eb32e6bc72b2b5269e9cfbb2a459333c6657232881b958b8fadaa3bd7cf09a31"
+        }
+      ]
+    }
+  ],
+  "cleanup": "Clock restored, contexts closed, parent-owned8861 not stopped"
+}

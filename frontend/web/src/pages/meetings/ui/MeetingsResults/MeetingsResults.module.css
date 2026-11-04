@@ -17,3 +17,25 @@
   line-height: 1.6;
   margin: 20px 0;
 }
+
+.items[data-mobile='true'] {
+  gap: var(--ds-space-s8);
+  animation: mobile-arrive var(--ds-motion-duration-navigation)
+    var(--ds-motion-easing-standard) both;
+}
+
+@keyframes mobile-arrive {
+  from {
+    transform: translateY(var(--ds-space-s8));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .items[data-mobile='true'] {
+    animation: none;
+  }
+}

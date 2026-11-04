@@ -1,0 +1,148 @@
+button.day {
+  position: relative;
+  min-height: var(--ds-target-web);
+  min-width: 0;
+  padding: 0;
+  border-radius: var(--ds-component-calendar-day-radius);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  font-weight: var(--ds-typography-weight-regular);
+  font-size: var(--ds-typography-size-small);
+  color: var(--ds-color-calendar-day);
+}
+
+.day[data-outside='true'] {
+  color: var(--ds-color-calendar-outside-day);
+}
+
+.day[data-weekend='true'] {
+  color: var(--ds-color-calendar-weekend-day);
+}
+
+.day[data-mobile='false']:hover {
+  background: var(--ds-color-calendar-hover);
+}
+
+.day[data-mobile='false'][data-event='true'] {
+  background: var(--ds-color-calendar-event);
+}
+
+.day[data-mobile='false'][data-weekend='true'][data-event='true'] {
+  background: var(--ds-color-calendar-weekend-event);
+}
+
+.day[data-mobile='false'][aria-pressed='true'] {
+  background: var(--ds-color-calendar-selected);
+  box-shadow: inset 0 0 0 var(--ds-space-s1) var(--ds-color-calendar-selected-border);
+  color: var(--ds-color-calendar-selected-text);
+}
+
+.day[data-mobile='false'][data-weekend='true'][aria-pressed='true'] {
+  background: var(--ds-color-calendar-weekend-selected);
+  box-shadow: inset 0 0 0 var(--ds-space-s1)
+    var(--ds-color-calendar-weekend-selected-border);
+  color: var(--ds-color-calendar-selected-text);
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  width: var(--ds-component-calendar-day-number-size);
+  height: var(--ds-component-calendar-day-number-size);
+  border-radius: var(--ds-component-calendar-day-number-radius);
+}
+
+.day[data-today='true'] .number {
+  outline: var(--ds-space-s1) solid var(--ds-color-calendar-today-outline);
+}
+
+.label,
+.additional {
+  display: none;
+}
+
+.dots {
+  position: absolute;
+  bottom: var(--ds-component-calendar-dots-inset);
+  display: flex;
+  gap: var(--ds-space-s2);
+}
+
+.dots i {
+  display: block;
+  width: var(--ds-space-s4);
+  height: var(--ds-space-s4);
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.day[data-mobile='true'] {
+  width: 100%;
+  display: block;
+  border-radius: var(--ds-component-mobile-calendar-selection-radius);
+  background: transparent;
+  box-shadow: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.day[data-mobile='true']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--ds-component-mobile-calendar-selection-size);
+  height: var(--ds-component-mobile-calendar-selection-size);
+  border-radius: var(--ds-component-mobile-calendar-selection-radius);
+  pointer-events: none;
+}
+
+.day[data-mobile='true'][data-outside='true'] {
+  color: var(--ds-color-calendar-outside-day);
+}
+
+.day[data-mobile='true']:hover::before {
+  background: var(--ds-color-calendar-hover);
+}
+
+.day[data-mobile='true'][data-event='true']::before {
+  background: var(--ds-color-calendar-event);
+}
+
+.day[data-mobile='true'][data-weekend='true'][data-event='true']::before {
+  background: var(--ds-color-calendar-weekend-event);
+}
+
+.day[data-mobile='true'][aria-pressed='true']::before {
+  background: var(--ds-color-calendar-selected);
+  box-shadow: inset 0 0 0 var(--ds-space-s1) var(--ds-color-calendar-selected-border);
+}
+
+.day[data-mobile='true'][aria-pressed='true'] {
+  color: var(--ds-color-calendar-selected-text);
+}
+
+.day[data-mobile='true'][data-weekend='true'][aria-pressed='true']::before {
+  background: var(--ds-color-calendar-weekend-selected);
+  box-shadow: inset 0 0 0 var(--ds-space-s1)
+    var(--ds-color-calendar-weekend-selected-border);
+}
+
+.day[data-mobile='true'][data-today='true']::before {
+  outline: var(--ds-space-s1) solid var(--ds-color-calendar-today-outline);
+  outline-offset: calc(-1 * var(--ds-space-s1));
+}
+
+.day[data-mobile='true'] .number {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  line-height: 1;
+  outline: none;
+}
+
+.day[data-mobile='true'] .dots {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: var(--ds-component-mobile-calendar-dots-inset);
+}

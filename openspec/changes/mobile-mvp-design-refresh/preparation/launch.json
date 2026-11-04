@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "packet": "launch",
+  "publicationTask": "2.12",
+  "published": true,
+  "approval": "launch-r1: да, оставляем увеличенный вариант с одним оборотом",
+  "reference": "openspec/changes/mobile-mvp-design-refresh/assets/launch-r1.html",
+  "referenceSha256": "2f2f2a983907d64c2ef862a5f69860caaa978acaa0b252404bcf3c00f06d9d4a",
+  "geometry": {
+    "wordSize": 44,
+    "markSize": 53,
+    "gap": 16,
+    "alignment": "Подпись центрируется целиком; знак слева, слово неподвижно. Размеры в pt/sp/dp по платформе.",
+    "trackingRatio": -0.052
+  },
+  "motion": {
+    "durationMs": 1200,
+    "turns": 1,
+    "easing": "quintic smoothstep: 6t^5 - 15t^4 + 10t^3",
+    "angle": "360 * smoothstep(clamp(elapsed / 1200, 0, 1))",
+    "reducedMotion": "Угол 0; прежний lifecycle/восстановление, без декоративного вращения.",
+    "interruption": "Не начинать цикл заново при фоне/возврате или повторной композиции; поздняя готовность не запускает второй оборот."
+  },
+  "tokensToAddInUnifiedPublication": {
+    "component.mobileLaunch.markSize": 53,
+    "component.mobileLaunch.gap": 16,
+    "typography.size.mobileLaunchWord": 44,
+    "component.mobileLaunch.trackingRatio": 0.052
+  },
+  "reuse": [
+    "docs/design/branding.md: графит/светлый знак и brand smoothstep",
+    "Существующие роли бренда и системные шрифты; без увеличения шапок"
+  ],
+  "platforms": {
+    "ios": {
+      "implementationTasks": [
+        "3.1"
+      ],
+      "reviewTasks": [
+        "3.6"
+      ],
+      "systemStage": "LaunchScreen статичен; та же геометрия полной подписи, SwiftUI продолжает её без смены масштаба.",
+      "viewports": [
+        "small-phone",
+        "standard-phone",
+        "large-text"
+      ],
+      "states": [
+        "system-static",
+        "cold-start",
+        "cold-mid-turn",
+        "cold-complete",
+        "restore-long",
+        "resume",
+        "reduced-motion"
+      ]
+    },
+    "android": {
+      "implementationTasks": [
+        "3.2"
+      ],
+      "reviewTasks": [
+        "3.7"
+      ],
+      "systemStage": "Существующий прозрачный placeholder системного splash; полная подпись только в Compose. Слово не помещать в маску app icon; системный знак не дублирует оборот.",
+      "viewports": [
+        "small-phone",
+        "standard-phone",
+        "large-text"
+      ],
+      "states": [
+        "system-mask",
+        "cold-start",
+        "cold-mid-turn",
+        "cold-complete",
+        "restore-long",
+        "resume",
+        "recreation",
+        "animations-disabled"
+      ]
+    },
+    "web": {
+      "applicable": false,
+      "reason": "Нет системного splash и искусственного 1200 ms вступления; знакомство отдельным пакетом."
+    }
+  },
+  "fixtures": {
+    "restore": [
+      "ready-before-1200",
+      "ready-after-1200",
+      "expired-session",
+      "invitation-deep-link"
+    ],
+    "locale": "ru-RU",
+    "timezone": "Europe/Moscow",
+    "accessibilityLabel": "somewhere, приложение загружается"
+  },
+  "acceptance": "Вход единого пакета 2.12. Не design manifest, не приёмка native; генерация и независимые live gates после публикации/реализации.",
+  "designVersion": "6.1.0"
+}

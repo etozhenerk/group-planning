@@ -1,8 +1,3 @@
-button.primary {
-  background: var(--action);
-  color: var(--action-text);
-}
-
 .muted {
   color: var(--muted);
 }
@@ -18,4 +13,80 @@ button.primary {
 .state h2,
 .state p {
   margin: 0;
+}
+
+.state[data-variant='panel'] {
+  display: block;
+  margin: var(--ds-space-s20) 0 0;
+  padding: var(--ds-component-mobile-state-panel-inset-block)
+    var(--ds-component-mobile-state-panel-inset-inline);
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: var(--ds-radius-card);
+  background: var(--ds-color-surface);
+  text-align: center;
+}
+
+.state[data-variant='panel'] .symbol {
+  display: grid;
+  place-items: center;
+  width: var(--ds-component-mobile-state-icon-size);
+  height: var(--ds-component-mobile-state-icon-size);
+  border-radius: var(--ds-component-mobile-state-icon-radius);
+  margin: 0 auto var(--ds-space-s20);
+  color: var(--ds-color-accent);
+  background: var(--ds-color-background);
+}
+
+.state[data-variant='panel'] h2 {
+  font-size: var(--ds-component-mobile-state-compact-title-size);
+  font-weight: var(--ds-component-mobile-state-title-weight);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-state-title-tracking));
+  line-height: var(--ds-component-mobile-state-compact-title-line-height);
+  margin: 0 0 var(--ds-space-s24);
+}
+
+.state[data-variant='panel'][data-size='large'] {
+  margin-top: var(--ds-space-s24);
+  padding: var(--ds-space-s32) var(--ds-space-s24);
+}
+
+.state[data-variant='panel'][data-size='large'] .symbol {
+  width: var(--ds-component-mobile-state-large-icon-size);
+  height: var(--ds-component-mobile-state-large-icon-size);
+  border-radius: var(--ds-component-mobile-state-large-icon-radius);
+  margin-bottom: var(--ds-component-mobile-state-large-icon-gap);
+  color: var(--ds-color-muted);
+}
+
+.state[data-variant='panel'][data-size='large'] h2 {
+  max-width: var(--ds-component-mobile-state-large-title-width);
+  font-size: var(--ds-component-mobile-state-title-size);
+  line-height: var(--ds-typography-line-height-card-title);
+  margin-inline: auto;
+}
+
+.state[data-variant='refresh'] {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s10);
+  margin-bottom: var(--ds-space-s20);
+  padding: var(--ds-space-s8) var(--ds-space-s8) var(--ds-space-s8)
+    var(--ds-component-mobile-state-refresh-inset-start);
+  border-radius: var(--ds-component-mobile-state-refresh-radius);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-muted);
+}
+
+.state[data-variant='refresh'] .symbol {
+  flex: none;
+  display: flex;
+}
+
+.state[data-variant='refresh'] h2 {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-typography-line-height-body);
+  letter-spacing: normal;
+  font-weight: var(--ds-typography-weight-regular);
 }

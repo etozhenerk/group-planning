@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { apiCreate, login, writeHeaders } from '@tests/helpers';
 
-for (const width of [320, 390, 1440]) {
+for (const width of [320, 390, 739, 1440]) {
   test(`saved invitation moves only after a confirmed answer at ${width}px`, async ({
     page,
     browser,
@@ -52,6 +52,23 @@ for (const width of [320, 390, 1440]) {
         fullPage: true,
       });
       await card.click();
+
+      if (width < 740) {
+        await expect(
+          guest.getByRole('heading', { name: 'Ваш ответ', exact: true }),
+        ).toBeVisible();
+        await expect(
+          guest.getByRole('navigation', { name: 'Основная навигация' }),
+        ).toHaveCount(0);
+        await guest.reload();
+        await expect(
+          guest.getByRole('heading', { name: 'Ваш ответ', exact: true }),
+        ).toBeVisible();
+        await expect(
+          guest.getByRole('link', { name: 'Вернуться к приглашениям', exact: true }),
+        ).toBeVisible();
+      }
+
       await guest.goBack();
       await expect(card).toBeVisible();
       await card.click();
@@ -64,8 +81,19 @@ for (const width of [320, 390, 1440]) {
       ).toHaveAttribute('aria-pressed', 'true');
       await guest.unroute(pattern);
       await guest.getByRole('button', { name: 'Приду', exact: true }).click();
-      await expect(guest.getByRole('link', { name: 'Открыть встречу' })).toBeVisible();
-      await guest.getByRole('link', { name: 'К приглашениям' }).click();
+
+      if (width < 740) {
+        await expect(guest.getByRole('status')).toContainText('Вы ответили «Приду»');
+      } else {
+        await expect(guest.getByRole('link', { name: 'Открыть встречу' })).toBeVisible();
+      }
+
+      await guest
+        .getByRole('link', {
+          name: width < 740 ? 'Вернуться к приглашениям' : 'К приглашениям',
+          exact: true,
+        })
+        .click();
       await expect(card).toHaveCount(0);
       await guest.getByRole('link', { name: 'Встречи', exact: true }).click();
       await expect(
@@ -84,7 +112,12 @@ for (const width of [320, 390, 1440]) {
       await card.click();
       await guest.getByRole('button', { name: 'Не смогу', exact: true }).click();
       await expect(guest.getByRole('status')).toContainText('Вы ответили «Не смогу»');
-      await guest.getByRole('link', { name: 'К приглашениям' }).click();
+      await guest
+        .getByRole('link', {
+          name: width < 740 ? 'Вернуться к приглашениям' : 'К приглашениям',
+          exact: true,
+        })
+        .click();
       await expect(card).toHaveCount(0);
     } finally {
       await guestContext.close();
@@ -111,8 +144,13 @@ test('invitations distinguish skeleton, error and empty state and preserve calen
   gate.release();
   await expect(page.getByText('Не удалось загрузить приглашения')).toBeVisible();
   await page.unroute('**/api/v1/invitations?*');
-  await page.getByRole('button', { name: 'Попробовать снова' }).click();
-  await expect(page.getByText('Пока ничего нет')).toBeVisible();
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
+  await page
+    .getByRole('button', { name: mobile ? 'Повторить загрузку' : 'Попробовать снова' })
+    .click();
+  await expect(
+    page.getByText(mobile ? 'Приглашений пока нет' : 'Пока ничего нет', { exact: true }),
+  ).toBeVisible();
   await page.goto('/meetings?view=calendar&period=past&past=2026-09-03');
   await expect(page.locator('[data-day="2026-09-03"]')).toHaveAttribute(
     'aria-pressed',

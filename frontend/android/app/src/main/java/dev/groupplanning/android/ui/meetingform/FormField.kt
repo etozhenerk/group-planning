@@ -14,6 +14,7 @@ internal fun FormField(
     placeholder: String,
     enabled: Boolean,
     minLines: Int = 1,
+    required: Boolean = false,
     onChange: (String) -> Unit,
 ) {
     DesignField(
@@ -25,5 +26,6 @@ internal fun FormField(
         enabled = enabled,
         minHeight = if (minLines > 1) 100.dp else 46.dp,
         singleLine = minLines == 1,
+        required = required,
     )
 }

@@ -6,11 +6,11 @@ import { usePlaceVote } from '@/features/place-poll/model/usePlaceVote';
 import { placePollError } from '@/features/place-poll/model/placePollCopy';
 import styles from '@/features/place-poll/ui/PlaceBallot/PlaceBallot.module.css';
 
-export type PlaceBallotProps = { poll: PlacePoll; session: Session };
+export type PlaceBallotProps = { poll: PlacePoll; session: Session; now?: number };
 
-export const PlaceBallot = ({ poll, session }: PlaceBallotProps) => {
+export const PlaceBallot = ({ poll, session, now = Date.now() }: PlaceBallotProps) => {
   const action = usePlaceVote(poll.meetingId, poll.id, session);
-  const available = poll.canVote && Date.parse(poll.closesAt) > Date.now();
+  const available = poll.canVote && Date.parse(poll.closesAt) > now;
   const conflict = action.error instanceof ApiError && action.error.status === 409;
 
   return (

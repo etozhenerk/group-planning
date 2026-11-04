@@ -14,8 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
@@ -23,6 +25,7 @@ import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.ChatIcon
 import dev.groupplanning.android.ui.components.ChatSymbol
 import dev.groupplanning.android.ui.components.LocalMobileSheet
+import dev.groupplanning.android.ui.components.RequiredFieldLabel
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -33,8 +36,10 @@ internal fun DateTimeField(
     icon: Int,
     enabled: Boolean,
     modifier: Modifier = Modifier,
+    required: Boolean = false,
     open: () -> Unit,
 ) {
+    val requiredHint = stringResource(R.string.required_field_hint)
     val compact = LocalMobileSheet.current
     Column(
         modifier,
@@ -42,12 +47,17 @@ internal fun DateTimeField(
             if (compact) DesignTokens.componentMobileFieldGap else DesignTokens.spaceS8,
         ),
     ) {
-        Text(label, fontSize = DesignTokens.typographySizeCaption, color = DesignTokens.colorMuted)
+        RequiredFieldLabel(
+            label,
+            required,
+            fontSize = DesignTokens.typographySizeCaption,
+            color = DesignTokens.colorMuted,
+        )
         Surface(
             open,
             Modifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid).semantics {
-                contentDescription =
-                    label
+                contentDescription = label
+                if (required) stateDescription = requiredHint
             },
             enabled = enabled,
             color = if (compact) DesignTokens.colorBackground else DesignTokens.colorNavigation,

@@ -42,6 +42,7 @@ internal fun MeetingFields(
             value.title,
             stringResource(R.string.meeting_title_hint),
             editable,
+            required = true,
         ) { title ->
             change { it.copy(title = title) }
         }
@@ -63,6 +64,7 @@ internal fun MeetingFields(
                 R.drawable.ic_calendar,
                 editable,
                 Modifier.weight(1f),
+                required = true,
             ) {
                 focus.clearFocus()
                 datePicker = true

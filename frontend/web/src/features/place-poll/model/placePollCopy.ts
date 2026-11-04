@@ -2,7 +2,11 @@ import { ApiError, errorText } from '@/shared/api';
 import type { PlacePoll } from '@/entities/meeting';
 import { timeLabel } from '@/shared/lib/time';
 
-export const placePollStatus = (poll: PlacePoll, zone: string): string => {
+export const placePollStatus = (
+  poll: PlacePoll,
+  zone: string,
+  now = Date.now(),
+): string => {
   if (poll.state === 'applied') {
     return 'Место изменено';
   }
@@ -15,7 +19,7 @@ export const placePollStatus = (poll: PlacePoll, zone: string): string => {
     return 'Опрос отменён: организатор изменил место';
   }
 
-  return !poll.canVote || Date.parse(poll.closesAt) <= Date.now()
+  return !poll.canVote || Date.parse(poll.closesAt) <= now
     ? 'Голосование завершено'
     : `До ${timeLabel(poll.closesAt, zone)}`;
 };

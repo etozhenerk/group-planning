@@ -15,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontWeight
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.ui.components.UserAvatar
 import dev.groupplanning.android.ui.theme.DesignTokens
@@ -52,9 +51,7 @@ internal fun ParticipantNameChip(user: UserProfile, color: Color) {
             user.avatarUrl,
             size = avatarSize,
             avatarColor = DesignTokens.colorParticipantChipAvatar,
-            textSize = DesignTokens.typographySizeMobilePeopleInitial,
-            textColor = DesignTokens.colorParticipantChipText,
-            textWeight = FontWeight(DesignTokens.typographyWeightParticipantChipAvatar.toInt()),
+            foregroundColor = DesignTokens.colorParticipantChipText,
         )
         Text(
             user.displayName,

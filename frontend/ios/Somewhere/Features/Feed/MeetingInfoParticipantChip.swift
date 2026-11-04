@@ -12,10 +12,8 @@ struct MeetingInfoParticipantChip: View {
         HStack(spacing: DesignTokens.componentMobilePeopleChipGap) {
             MeetingInfoAvatar(
                 user: person.user, size: DesignTokens.componentMobilePeopleChipAvatarSize,
-                textSize: DesignTokens.typographySizeMobilePeopleInitial,
-                weight: DesignTokens.typographyWeightParticipantChipAvatar,
                 color: DesignTokens.colorParticipantChipAvatar,
-                textColor: DesignTokens.colorParticipantChipText)
+                foregroundColor: DesignTokens.colorParticipantChipText)
             Text(person.user.displayName)
                 .designFont(DesignTokens.typographySizeParticipantChip)
                 .fixedSize(horizontal: false, vertical: true)

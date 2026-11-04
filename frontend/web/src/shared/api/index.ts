@@ -68,3 +68,7 @@ export {
 } from '@/shared/api/mediaSchema';
 
 export type { Media, MediaLimits } from '@/shared/api/mediaSchema';
+
+export { mapPublicUser } from '@/shared/api/publicUser';
+
+export type { PublicUser } from '@/shared/api/publicUser';

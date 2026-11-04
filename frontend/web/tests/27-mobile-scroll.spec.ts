@@ -44,7 +44,9 @@ for (const width of [320, 402, 430]) {
     await expectFitsWidth(page.locator('html'));
     await login(page, 'Лена');
     await page.goto('/meetings/new');
-    await expect(page.getByLabel('Название', { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('textbox', { name: 'Название', exact: true }),
+    ).toBeVisible();
     await expectFitsWidth(page.locator('html'));
     const fonts = await page
       .locator('input:not([type="file"]), textarea')
@@ -198,7 +200,9 @@ test('closing a mobile sheet restores the background position and permits normal
   await page.setViewportSize({ width: 402, height: 600 });
   await login(page, 'Саша');
   await page.goto('/meetings/new');
-  await page.getByLabel('Название', { exact: true }).fill('Несохранённая встреча');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Несохранённая встреча');
   const cancel = page.getByRole('link', { name: 'Отмена', exact: true });
   await cancel.scrollIntoViewIfNeeded();
   const before = await page.evaluate(() => scrollY);

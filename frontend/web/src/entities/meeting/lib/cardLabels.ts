@@ -1,14 +1,27 @@
 import type { MeetingSummary } from '@/entities/meeting/model/types';
+import { Temporal } from '@js-temporal/polyfill';
 import { browserTimezone, timezoneLabel } from '@/shared/lib/time';
 
 export const cardLabels = (
   meeting: Pick<MeetingSummary, 'startsAt' | 'startsOn' | 'timezone'>,
 ) => {
   if (!meeting.startsAt && !meeting.startsOn) {
-    return { day: '—', weekday: '', zone: '', date: 'Дата ещё не выбрана' };
+    return {
+      day: '—',
+      weekday: '',
+      weekend: false,
+      zone: '',
+      date: 'Дата ещё не выбрана',
+    };
   }
 
   const stamp = new Date(meeting.startsAt ?? `${meeting.startsOn}T12:00:00Z`);
+  const dayOfWeek = meeting.startsAt
+    ? Temporal.Instant.from(meeting.startsAt).toZonedDateTimeISO(meeting.timezone)
+        .dayOfWeek
+    : meeting.startsOn
+      ? Temporal.PlainDate.from(meeting.startsOn).dayOfWeek
+      : 0;
 
   const date = new Intl.DateTimeFormat('ru-RU', {
     timeZone: meeting.startsAt ? meeting.timezone : 'UTC',
@@ -26,6 +39,7 @@ export const cardLabels = (
     : 'время уточняем';
 
   return {
+    weekend: dayOfWeek >= 6,
     date: `${date.charAt(0).toUpperCase() + date.slice(1)} · ${time}`,
     day: new Intl.DateTimeFormat('ru-RU', {
       timeZone: meeting.startsAt ? meeting.timezone : 'UTC',

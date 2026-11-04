@@ -17,7 +17,9 @@ test('draft survives an error, back warns and sharing returns to the chat', asyn
 }) => {
   await login(page, 'Саша');
   await page.goto('/meetings/new');
-  await page.getByLabel('Название', { exact: true }).fill('Черновик встречи');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Черновик встречи');
   await page
     .getByRole('main')
     .getByRole('link', { name: 'Мои встречи', exact: true })
@@ -26,7 +28,7 @@ test('draft survives an error, back warns and sharing returns to the chat', asyn
   await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
-  await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Черновик встречи',
   );
   await page
@@ -36,7 +38,7 @@ test('draft survives an error, back warns and sharing returns to the chat', asyn
   await dialog.getByRole('button', { name: 'Выйти', exact: true }).click();
   await expect(page).toHaveURL(/\/meetings$/);
   await page.goto('/meetings/new');
-  await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Черновик встречи',
   );
   await setDate(page, '24.10.2026');
@@ -149,7 +151,9 @@ test('history and a stale settings form preserve authoritative state', async ({
   await page.getByRole('button', { name: 'Информация о встрече' }).click();
   await page.getByRole('button', { name: 'Изменить настройки', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Настройки встречи' });
-  await dialog.getByLabel('Название', { exact: true }).fill('Старая правка');
+  await dialog
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Старая правка');
   const meeting = await apiMeeting(page, id);
   const changed = await page.request.patch(`/api/v1/meetings/${id}`, {
     headers,
@@ -159,9 +163,9 @@ test('history and a stale settings form preserve authoritative state', async ({
   expect(changed.status()).toBe(200);
   await dialog.getByRole('button', { name: 'Сохранить изменения' }).click();
   await expect(dialog.getByRole('alert')).toContainText('Данные изменились');
-  await expect(dialog.getByLabel('Название', { exact: true })).toHaveValue(
-    'Старая правка',
-  );
+  await expect(
+    dialog.getByRole('textbox', { name: 'Название', exact: true }),
+  ).toHaveValue('Старая правка');
   expect((await apiMeeting(page, id)).title).toBe('Правка другого окна');
 });
 

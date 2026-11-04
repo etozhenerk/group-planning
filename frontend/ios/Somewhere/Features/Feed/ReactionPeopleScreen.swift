@@ -32,11 +32,9 @@ struct ReactionPeopleScreen: View {
                 HStack(spacing: DesignTokens.componentMobileRosterRowGap) {
                     MeetingInfoAvatar(
                         user: person.user, size: DesignTokens.componentMobileRosterAvatarSize,
-                        textSize: DesignTokens.typographySizeCaption,
-                        weight: DesignTokens.typographyWeightSemibold,
                         color: index.isMultiple(of: 2)
                             ? DesignTokens.colorRosterMint : DesignTokens.colorRosterLilac,
-                        textColor: DesignTokens.colorRosterText)
+                        foregroundColor: DesignTokens.colorRosterText)
                     Text(person.user.displayName).designFont(DesignTokens.typographySizeSmall)
                     Spacer(minLength: DesignTokens.spaceS0)
                     Text(person.emoji.joined(separator: " ")).designFont(

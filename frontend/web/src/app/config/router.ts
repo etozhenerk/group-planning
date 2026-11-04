@@ -75,13 +75,13 @@ export const router = createBrowserRouter([
       {
         path: '/i/:token',
         lazy: async () => ({
-          Component: (await import('@/pages/invitation')).InvitationPage,
+          Component: (await import('@/app/ui/InvitationRoute')).InvitationRoute,
         }),
       },
       {
         path: '/invitations/:token',
         lazy: async () => ({
-          Component: (await import('@/pages/invitation')).InvitationPage,
+          Component: (await import('@/app/ui/InvitationRoute')).InvitationRoute,
         }),
       },
       {

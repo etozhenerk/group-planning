@@ -1,6 +1,6 @@
 import { useCalendar, useCalendarCounts } from '@/entities/meeting';
 import { useHomeSelection, useInitialDay } from '@/pages/meetings/model/useHomeSelection';
-import { addDays, monthRange, today } from '@/pages/meetings/lib/calendarDates';
+import { addDays, monthRange, today } from '@/entities/meeting';
 
 export const useMeetingsView = (user: string) => {
   const { selection, update } = useHomeSelection(user);
@@ -31,6 +31,14 @@ export const useMeetingsView = (user: string) => {
     !list.isError &&
     !(calendar && month.isError);
 
+  const listEmpty =
+    !calendar &&
+    !selection.undated &&
+    !query.isPending &&
+    !query.error &&
+    !!query.data &&
+    query.data.pages.every((page) => page.meetings.length === 0);
+
   const dayPage = agenda.data?.pages[0] ?? month.data?.pages[0];
   const dayCount = dayPage
     ? (dayPage.days.find((entry) => entry.date === day)?.count ?? 0)
@@ -40,6 +48,15 @@ export const useMeetingsView = (user: string) => {
 
   const createPath =
     calendar && !selection.undated ? `/meetings/new?date=${day}` : '/meetings/new';
+
+  const retryCalendar = () => {
+    void list.refetch();
+
+    if (ready) {
+      void month.refetch();
+      void query.refetch();
+    }
+  };
 
   const selectDay = (value: string) =>
     update({ [selection.period]: value, undated: false });
@@ -55,8 +72,10 @@ export const useMeetingsView = (user: string) => {
     query,
     counts,
     empty,
+    listEmpty,
     dayCount,
     createPath,
     selectDay,
+    retryCalendar,
   };
 };

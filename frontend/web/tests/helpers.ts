@@ -75,7 +75,7 @@ export const create = async (
   cover?: { name: string; mimeType: string; buffer: Buffer },
 ) => {
   await page.goto('/meetings/new');
-  await page.getByLabel('Название', { exact: true }).fill(title);
+  await page.getByRole('textbox', { name: 'Название', exact: true }).fill(title);
   await setDate(page, '24.10.2099');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');

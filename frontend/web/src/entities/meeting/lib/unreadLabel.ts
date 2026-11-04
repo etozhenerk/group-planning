@@ -11,3 +11,11 @@ export const unreadLabel = (count: string) => {
 
   return `${count} ${noun}`;
 };
+
+export const unreadNotice = (count: string) => {
+  const value = BigInt(count);
+  const display = value > 99n ? '99+' : count;
+  const singular = value <= 99n && value % 10n === 1n && value % 100n !== 11n;
+
+  return `${display} ${singular ? 'непрочитанное' : 'непрочитанных'}`;
+};

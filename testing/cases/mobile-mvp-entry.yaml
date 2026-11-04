@@ -1,0 +1,318 @@
+- id: TC-MOBILE-LAUNCH-COLD
+  title: "Увеличенная заставка нативных клиентов: Холодный запуск"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Увеличенная заставка нативных клиентов
+    scenario: Холодный запуск
+    sha256: af8ea9f0cda844660dcc1d13fff35e3814ed9c7c1c1e6d63f49a7bc9bbb457c8
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: На изолированной сборке завершить приложение и открыть холодным запуском; снять системный
+        этап и приложение.
+      expected: Название 44 pt/sp, знак 53 pt/dp слева с промежутком 16 pt/dp, один оборот за 1200 ms;
+        слово неподвижно. Переход не меняет масштаб; Android не обрезает подпись маской.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-LAUNCH-RESUME
+  title: "Увеличенная заставка нативных клиентов: Долгое восстановление и возврат из фона"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Увеличенная заставка нативных клиентов
+    scenario: Долгое восстановление и возврат из фона
+    sha256: 34bcfbd2e9672136e887e7097ec1f14b3778d4cdd8b10dffa61429c3292145da
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Замедлить восстановление входа тестовым fixture более чем на 1,2 с; дождаться окончания
+        оборота, свернуть и вернуть приложение, повторить с пересозданием Activity на Android.
+      expected: Второй оборот и вымышленный прогресс отсутствуют; возвращение не повторяет вступление и не
+        теряет контекст входа.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-LAUNCH-REDUCED
+  title: "Увеличенная заставка нативных клиентов: Уменьшение движения на запуске"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Увеличенная заставка нативных клиентов
+    scenario: Уменьшение движения на запуске
+    sha256: 3278bb7927f7dd700822388acbfb430cc109646ea67c0d55d2cb60610626937f
+  platforms:
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Включить уменьшение/отключение системной анимации, запустить приложение и прочитать заставку
+        экранным диктором.
+      expected: Подпись целая и статичная, знак не вращается; доступное имя сообщает загрузку.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ONBOARD-NAV
+  title: "Общее мобильное знакомство: Навигация по знакомству"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Общее мобильное знакомство
+    scenario: Навигация по знакомству
+    sha256: d7e38ee17d95ef4eddd75cdde8861d25f13bcacde9772381bade8bda1bb7130c
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Открыть общий вход без сессии; пройти согласованную последовательность тем встреч и входа
+        кнопками, вернуться, выбрать страницу индикатором, выполнить свайп и Пропустить.
+      expected: Рассказ содержит создание/приглашения, список/календарь, чат с фото/файлами/реакциями,
+        выбор даты и места, подготовку и фотоальбом. Профиль, помощь и управление аккаунтом не
+        являются отдельными темами. Последний шаг ведёт к явному входу; Пропустить не авторизует, не
+        создаёт встречу и не меняет RSVP.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-WEB-BOUNDARY
+  title: "Общее мобильное знакомство: Мобильный веб и десктоп"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Общее мобильное знакомство
+    scenario: Мобильный веб и десктоп
+    sha256: 7ddfe0d8366e8dd0f38eae3d36af0590acc61358250e63467625623d6eff6dc6
+  platforms:
+    - web
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Открыть общий web-вход при 320/390/739 CSS px, затем 740/1100/1440; сравнить широкие
+        состояния с исходным desktop, повторить восстановление сессии.
+      expected: Узкий web использует мобильное знакомство без обязательного native-splash 1,2 с; широкий
+        сохраняет прежний desktop без изменений структуры/стилей/действий.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ENTRY-SIGNIN
+  title: "Сохранение контекста входа: Вход из последнего слайда"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Сохранение контекста входа
+    scenario: Вход из последнего слайда
+    sha256: d5f7f242f7ec988280a61bba97c67882fd08dcb739f6ee5ee66c18c078ef4894
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Дойти до последнего слайда, нажать вход повторно во время ожидания; отменить, воспроизвести
+        ошибку, повторить и успешно войти существующим OAuth-путём.
+      expected: Переход Яндекс ID один на попытку, busy доступен; отмена/ошибка позволяют повтор, успех
+        открывает личные встречи. Прототип и test provider явно отличены от реального OAuth.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ENTRY-INVITATION
+  title: "Сохранение контекста входа: Приглашение по прямой ссылке"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Сохранение контекста входа
+    scenario: Приглашение по прямой ссылке
+    sha256: 7e6fcee54dd8d88b53b38b6cabe97df9da67b733caf1fddee244a13a9158961a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Открыть действующее приглашение без сессии, войти, проверить адрес/ID приглашения и ответ
+        участия.
+      expected: Обязательное знакомство не перехватывает путь; после входа открывается исходное
+        приглашение, Приду не сохраняется автоматически.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ONBOARD-ACCESS
+  title: "Доступное мобильное знакомство: Крупный текст и уменьшение движения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Доступное мобильное знакомство
+    scenario: Крупный текст и уменьшение движения
+    sha256: 0d38477c472801785f24472651e92060496fb976c96897d545b3eb650ee6d844
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: На узком экране включить большой текст и reduced motion, пройти пять страниц и действие
+        входа клавиатурой/экранным диктором без swipe.
+      expected: Текст читается, кнопки не обрезаны и доступны без жестов, страницы имеют доступные имена,
+        декоративные перемещения отключены.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ONBOARD-EXAMPLES
+  title: "Доступное мобильное знакомство: Достоверные примеры"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/product-onboarding/spec.md
+    requirement: Доступное мобильное знакомство
+    scenario: Достоверные примеры
+    sha256: fc9c44d08cb7b395e30768b58248d75208a1524c15b20b640b01bfbd4f129d32
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное окружение testing/environments.md, точная сборка/API и тестовые профили;
+      исходное состояние входа/приглашения записано.
+  steps:
+    - action: Просмотреть примеры опроса, задачи и календаря; попробовать элементы иллюстраций, сверить
+        текст с реальной доступностью функций точного кандидата.
+      expected: Иллюстрации не создают реальные операции; слова и состояния достоверны, доступные функции
+        не обозначены как будущие и недоступные не обещаны как готовые.
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть настройки доступности и задержек; не
+      изменять production и чужую сессию.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

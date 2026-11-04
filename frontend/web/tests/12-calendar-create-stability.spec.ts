@@ -31,7 +31,12 @@ for (const width of [320, 1440]) {
         ['Следующий месяц', true],
       ] as const) {
         hold = true;
-        await page.getByRole('button', { name: new RegExp(`^${action}`) }).click();
+        const label =
+          width < 740 && (action === 'Календарь' || action === 'Список')
+            ? `Показать ${action === 'Календарь' ? 'календарь' : 'список'}`
+            : action;
+
+        await page.getByRole('button', { name: new RegExp(`^${label}`) }).click();
         // A previously visited tab may use cached data; any new request remains pending.
         await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(
           calendar && width <= 1180 ? 1 : 0,

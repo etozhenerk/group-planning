@@ -1,5 +1,6 @@
-import { readReturnLocation } from '@/shared/lib/navigation';
-import { Link, useSearchParams, useLocation } from 'react-router';
+import { PageBack } from '@/shared/ui/PageBack';
+import { readReturnLocation, returnLocationLabel } from '@/shared/lib/navigation';
+import { useSearchParams, useLocation } from 'react-router';
 import { useSession } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
 import { Workspace } from '@/shared/ui/Workspace';
@@ -19,9 +20,11 @@ export const SupportPage = () => {
   return (
     <Workspace navigation={<Navigation session={session.data ?? null} />}>
       <main id="main" className={styles.page}>
-        <Link className={styles.back} to={back.path} state={back.state}>
-          ← Назад
-        </Link>
+        <PageBack
+          to={back.path}
+          state={back.state}
+          label={returnLocationLabel(back.path)}
+        />
         <h1>Что-то пошло не так?</h1>
         <p className={styles.intro}>
           Расскажите, что случилось. Это поможет разобраться.

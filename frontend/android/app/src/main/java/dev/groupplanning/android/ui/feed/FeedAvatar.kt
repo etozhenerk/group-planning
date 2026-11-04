@@ -17,7 +17,6 @@ internal fun FeedAvatar(name: String, avatarUrl: String? = null) {
         avatarUrl,
         size = DesignTokens.componentMobileChatMessageAvatar,
         avatarColor = colors[(name.firstOrNull()?.code ?: 0) % colors.size],
-        textSize = DesignTokens.typographySizeCaption,
-        textColor = DesignTokens.colorRosterText,
+        foregroundColor = DesignTokens.colorRosterText,
     )
 }

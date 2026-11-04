@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "packet": "meetings",
+  "preparationTask": "2.5",
+  "publicationTask": "2.12",
+  "published": true,
+  "screens": [
+    {
+      "id": "list",
+      "reference": "openspec/changes/mobile-mvp-design-refresh/preparation/references/list/frame.html",
+      "source": "openspec/changes/mobile-mvp-design-refresh/assets/list-r3/frame.html",
+      "sourceSha256": "ece33f654f694145746de16519a91cd1c76a35f90aa54dfa0ff2ec2989922334",
+      "selectorStates": [
+        "ready",
+        "long",
+        "many-unread",
+        "empty",
+        "loading",
+        "error",
+        "refresh-error"
+      ],
+      "interactionStates": [
+        "future",
+        "past",
+        "undated",
+        "return-scroll",
+        "unread-zero"
+      ],
+      "states": [
+        "ready",
+        "long",
+        "many-unread",
+        "empty",
+        "loading",
+        "error",
+        "refresh-error",
+        "future",
+        "past",
+        "undated",
+        "return-scroll",
+        "unread-zero"
+      ],
+      "render": "state=<selector>&platform=<web|ios|android>; interactionStates достигаются действием в исходной fixture, не выдаются за новые API-операции",
+      "providerContentExcluded": false
+    },
+    {
+      "id": "calendar",
+      "reference": "openspec/changes/mobile-mvp-design-refresh/preparation/references/calendar/frame.html",
+      "source": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/frame.html",
+      "sourceSha256": "7002ff99dc6a514c21e2c53e45ca10fc3232916e5dbea8b8afa839d50e7a9020",
+      "selectorStates": [
+        "ready",
+        "twenty",
+        "multiple",
+        "long",
+        "empty-day",
+        "empty",
+        "loading",
+        "error"
+      ],
+      "interactionStates": [
+        "month-next",
+        "month-previous",
+        "today",
+        "selected-day",
+        "list-switch-return",
+        "return-scroll"
+      ],
+      "states": [
+        "ready",
+        "twenty",
+        "multiple",
+        "long",
+        "empty-day",
+        "empty",
+        "loading",
+        "error",
+        "month-next",
+        "month-previous",
+        "today",
+        "selected-day",
+        "list-switch-return",
+        "return-scroll"
+      ],
+      "render": "state=<selector>&platform=<web|ios|android>; interactionStates достигаются действием в исходной fixture, не выдаются за новые API-операции",
+      "providerContentExcluded": false
+    },
+    {
+      "id": "invitations",
+      "reference": "openspec/changes/mobile-mvp-design-refresh/preparation/references/invitations/frame.html",
+      "source": "openspec/changes/mobile-mvp-design-refresh/assets/invitations-r2/frame.html",
+      "sourceSha256": "247a7da4f49c6ae712b84fd7d53a52bdccc78abc7d685799d6cea89b3ae6fc7e",
+      "selectorStates": [
+        "ready",
+        "long",
+        "empty",
+        "loading",
+        "error",
+        "refresh-error"
+      ],
+      "interactionStates": [
+        "response-open",
+        "response-busy",
+        "response-retry",
+        "response-going",
+        "response-declined"
+      ],
+      "states": [
+        "ready",
+        "long",
+        "empty",
+        "loading",
+        "error",
+        "refresh-error",
+        "response-open",
+        "response-busy",
+        "response-retry",
+        "response-going",
+        "response-declined"
+      ],
+      "render": "state=<selector>&platform=<web|ios|android>; interactionStates достигаются действием в исходной fixture, не выдаются за новые API-операции",
+      "providerContentExcluded": false
+    }
+  ],
+  "platforms": {
+    "web": {
+      "viewports": {
+        "mobile-320": {
+          "width": 320,
+          "height": 760
+        },
+        "mobile-390": {
+          "width": 390,
+          "height": 844
+        },
+        "mobile-739": {
+          "width": 739,
+          "height": 844
+        },
+        "short-ime": {
+          "width": 390,
+          "height": 430
+        },
+        "coarse-landscape": {
+          "width": 844,
+          "height": 390,
+          "pointer": "coarse"
+        },
+        "large-text": {
+          "width": 320,
+          "height": 760,
+          "textScale": 2
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    },
+    "ios": {
+      "viewports": {
+        "small-phone": {
+          "logicalWidth": 320,
+          "logicalHeight": 568
+        },
+        "standard-phone": {
+          "logicalWidth": 402,
+          "logicalHeight": 874
+        },
+        "landscape": {
+          "logicalWidth": 874,
+          "logicalHeight": 402
+        },
+        "large-text": {
+          "logicalWidth": 402,
+          "logicalHeight": 874,
+          "textScale": "accessibility-xxxl"
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    },
+    "android": {
+      "viewports": {
+        "small-phone": {
+          "logicalWidth": 320,
+          "logicalHeight": 640
+        },
+        "standard-phone": {
+          "logicalWidth": 412,
+          "logicalHeight": 892
+        },
+        "landscape": {
+          "logicalWidth": 892,
+          "logicalHeight": 412
+        },
+        "large-text": {
+          "logicalWidth": 412,
+          "logicalHeight": 892,
+          "fontScale": 2
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    }
+  },
+  "referencesInventory": "preparation/references.json",
+  "commonContract": "preparation/mobile-foundation.md",
+  "acceptance": "Не client pass; независимые design-review и feature-test после реализации, на одном frozen candidate платформы.",
+  "designVersion": "6.1.0"
+}

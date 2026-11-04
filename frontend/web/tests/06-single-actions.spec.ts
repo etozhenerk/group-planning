@@ -43,7 +43,11 @@ for (const width of [320, 1440]) {
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toBeVisible();
     state = 'empty';
     deferred.release?.();
-    await expect(page.getByRole('heading', { name: 'С чего начнём?' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        name: width < 740 ? 'Нет предстоящих встреч' : 'С чего начнём?',
+      }),
+    ).toBeVisible();
     await expect(create).toHaveCount(1);
     await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(0);
     await expect(page.getByTestId('home-empty').getByRole('link')).toBeVisible();

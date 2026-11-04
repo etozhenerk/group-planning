@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { mediaSchema } from '@/shared/api';
+import { mapPublicUser, mediaSchema } from '@/shared/api';
 import { preparationTaskEvent } from '@/entities/meeting/lib/preparationTaskEvent';
 import { placePollEvent } from '@/entities/meeting/lib/placePollEvent';
 import { pollEvent } from '@/entities/meeting/lib/pollEvent';
@@ -101,7 +101,7 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
     meetingId: wire.meeting_id,
     sequence: wire.sequence,
     kind: wire.kind,
-    actor: { id: wire.actor.id, displayName: wire.actor.display_name },
+    actor: mapPublicUser(wire.actor),
     occurredAt: wire.occurred_at,
     clientRequestId: wire.client_request_id,
     text,
@@ -114,8 +114,7 @@ export const mapEntry = (wire: WireEntry): FeedEntry => {
       ? {
           sender: {
             kind: wire.sender.kind,
-            id: wire.sender.id,
-            displayName: wire.sender.display_name,
+            ...mapPublicUser(wire.sender),
           },
         }
       : {}),

@@ -51,6 +51,7 @@ export const FeedRecord = ({
     >
       <Avatar
         name={entry.actor.displayName}
+        mobileSrc={entry.actor.avatarUrl ?? (own ? session.user.avatarUrl : null) ?? null}
         own={own}
         size={surface.mobile ? 'mobile-chat' : 'chat'}
       />

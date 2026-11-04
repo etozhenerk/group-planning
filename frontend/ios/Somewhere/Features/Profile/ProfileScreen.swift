@@ -62,7 +62,7 @@ struct ProfileScreen: View {
 
                 }
 
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 100)
+            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, DesignTokens.spaceS20)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.background(AppPalette.background).task(id: retry) { await owner.load() }
             .accessibilityIdentifier("profile-screen")

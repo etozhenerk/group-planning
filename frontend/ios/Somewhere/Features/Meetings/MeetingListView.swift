@@ -20,7 +20,7 @@ struct MeetingListView: View {
                     MeetingResultsView(owner: owner, create: create, select: select)
                     UndatedMeetingsButton(owner: owner).padding(.top, 20)
                 }
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 110)
+            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, DesignTokens.spaceS20)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.defaultScrollAnchor(.top).accessibilityIdentifier("meetings-list")
             .background(AppPalette.background)

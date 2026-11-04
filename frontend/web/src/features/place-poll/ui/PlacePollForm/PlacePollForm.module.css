@@ -67,12 +67,20 @@
 }
 
 .form[data-mobile='true'] .footer {
-  padding: var(--ds-component-mobile-sheet-footer-inset-block)
-    var(--ds-component-mobile-sheet-content-inset-inline)
+  padding: var(--ds-component-mobile-sticky-inset-top)
+    var(--ds-component-mobile-sticky-inset-inline)
     max(var(--ds-component-mobile-sheet-footer-inset-bottom), env(safe-area-inset-bottom));
-  border-top: var(--ds-space-s1) solid var(--ds-color-line);
-  background: var(--ds-color-surface);
+  border: 0;
+  background: transparent;
   box-shadow: none;
+}
+
+.form[data-mobile='true'] .footer[data-sticky='true'] {
+  border-radius: var(--ds-component-mobile-sticky-radius)
+    var(--ds-component-mobile-sticky-radius) 0 0;
+  background: var(--ds-color-surface);
+  box-shadow: 0 calc(-1 * var(--ds-component-mobile-sticky-shadow-up-offset))
+    var(--ds-component-mobile-sticky-shadow-blur) var(--ds-color-mobile-sticky-shadow);
 }
 
 .form[data-mobile='true'] .footer button {

@@ -57,7 +57,7 @@ struct SavedInvitationsView: View {
                         ) { owner.refresh(more: true) }
                     }
                 }
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 110)
+            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, DesignTokens.spaceS20)
         }
         .accessibilityIdentifier("saved-invitations-list")
         .background(AppPalette.background)

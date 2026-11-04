@@ -165,3 +165,20 @@ export { useReaders } from '@/entities/meeting/model/useReaders';
 export type { ChatReadState } from '@/entities/meeting/model/readProjection';
 
 export { useMeetingListUpdates } from '@/entities/meeting/model/useMeetingListUpdates';
+
+export { requiredMeetingErrors } from '@/entities/meeting/model/requiredMeetingErrors';
+
+export { CalendarGrid } from '@/entities/meeting/ui/CalendarGrid';
+
+export {
+  today,
+  validDay,
+  addDays,
+  changeMonth,
+  monthRange,
+  monthDays,
+  monthLabel,
+  dayLabel as calendarDayLabel,
+  agendaLabel,
+  meetingCountLabel,
+} from '@/entities/meeting/lib/calendarDates';

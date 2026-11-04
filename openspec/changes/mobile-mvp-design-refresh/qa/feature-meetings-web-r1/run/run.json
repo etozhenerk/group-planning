@@ -1,0 +1,2584 @@
+{
+  "schemaVersion": 1,
+  "planHash": "c6be4c393d41265ac60c367768495b929fdde2a44709e04dbce3f976845f768b",
+  "checks": [
+    {
+      "id": "TC-MOBILE-NAV-CONTEXT/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "9a2c213554ac0e95175d74f6145d173442d293987f5b4a0d1540dd4bae36131a"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-NAV-CONTEXT/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "fd9f51a78ca754cb955beb7d8f8b4fadd1afd3c74da16863c3eebdaf7ae9e918"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-AVATAR-MAPPING/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Штатный provider-fields профиль: avatar_url дошёл до профиля и roster, img complete=true/naturalWidth=42; повторная загрузка сохранила фото. Публичный participants API содержит id/display_name/avatar_url/role/RSVP без почты, телефона и приватных полей.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-provider-avatar-roster.png",
+          "kind": "screenshot",
+          "sha256": "e3dd527ccf0395c8673d77cd9b883c1ff985c3ace3e299adc5dceeed289fbb86"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-AVATAR-MAPPING/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Штатный provider-fields профиль: avatar_url дошёл до профиля и roster, img complete=true/naturalWidth=42; повторная загрузка сохранила фото. Публичный participants API содержит id/display_name/avatar_url/role/RSVP без почты, телефона и приватных полей.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-provider-avatar-roster.png",
+          "kind": "screenshot",
+          "sha256": "1d36a246a94fa18272a4167a332b876c372bf04896b6497fef16e2394a9a3f1f"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LIST-CALENDAR/web-meetings-chromium-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "20/21 реальных встреч и позднее 52 доступны, выбранный день стабилен, zero unread не показывает пустой текст. Полный сценарий обновления ненулевого unread не проверен: fixture8857 работает без chat-read-state, в DTO нет unread_count. Нельзя переносить результат source suite на frozen runtime.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-dense-390.png",
+          "kind": "screenshot",
+          "sha256": "39a2f51e5f93aa9d89fccc330b85d603241b70616fff6c73d973afee80ff116a"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LIST-CALENDAR/web-meetings-webkit-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "20/21 реальных встреч и позднее 52 доступны, выбранный день стабилен, zero unread не показывает пустой текст. Полный сценарий обновления ненулевого unread не проверен: fixture8857 работает без chat-read-state, в DTO нет unread_count. Нельзя переносить результат source suite на frozen runtime.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-dense-390.png",
+          "kind": "screenshot",
+          "sha256": "e04f3f4411ef09e10feea44648e5ad9b78f1016a77ff14585651361dc3f45f00"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-MAYBE-LIST/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "882bb7eecef0ba77f7b071235a7718425a7b62894fabc12e484d473a9c4a408a"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-MAYBE-LIST/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "9d591e660d858d82326aa0fbd81c9853b036ed26990f0e58b9ad943b0f8b5c19"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-5389B110/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Создал встречу реальной формой, без точного часа; после перехода в личные встречи запись доступна, её карточка открывает соответствующий чат.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-created.png",
+          "kind": "screenshot",
+          "sha256": "3ed000e81c329af529b83a0081379d57d7a8757bc61622d99ea34b31ba2aca4a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-5389B110/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Создал встречу реальной формой, без точного часа; после перехода в личные встречи запись доступна, её карточка открывает соответствующий чат.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-created.png",
+          "kind": "screenshot",
+          "sha256": "114a9e18bbc304ec9de986015c207298687f94cbf4a646853c17a23ba5da040c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-52547BA0/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Лена сохранила «Приду»: приглашение исчезло из вкладки, появилось в личном списке, доступен переход к реальному чату. Дополнительно Ира открыла чат после принятия и отправила сообщение до переноса в историю.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-accepted-personal-list.png",
+          "kind": "screenshot",
+          "sha256": "b75981302cb3131fef850aae7897f02d5583a8dcc34cc9ef33a850f8fff2b06a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-52547BA0/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Лена сохранила «Приду»: приглашение исчезло из вкладки, появилось в личном списке, доступен переход к реальному чату. Дополнительно Ира открыла чат после принятия и отправила сообщение до переноса в историю.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-accepted-personal-list.png",
+          "kind": "screenshot",
+          "sha256": "43ddfbe3766461d32d3791bec787bb2f9f78736d42c90f7f3bae9caa20dd811f"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-ADAB91B7/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "После реального переноса даты сервер сохранил past; участник нашёл встречу в истории и открыл её чат.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-history-chat.png",
+          "kind": "screenshot",
+          "sha256": "3ac379f8c2722ad9f5551a86903c840cb6cc615c0d1c9ae77fb3acbe466671e4"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-ADAB91B7/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "После реального переноса даты сервер сохранил past; участник нашёл встречу в истории и открыл её чат.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-history-chat.png",
+          "kind": "screenshot",
+          "sha256": "c929dffaa1241d46139aa06857df06a8722c765faf03daac13f8ba3daf005edd"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-87A73A33/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "У отдельного аккаунта нет будущих встреч, но есть одна прошедшая: будущий раздел пуст, кнопка истории доступна и открывает встречу.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-extra-no-upcoming-with-history.png",
+          "kind": "screenshot",
+          "sha256": "482bfa8f621528e8c030d057aa084feae2c682042b19ee5d3509e4c154f31182"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-87A73A33/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "У отдельного аккаунта нет будущих встреч, но есть одна прошедшая: будущий раздел пуст, кнопка истории доступна и открывает встречу.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-no-upcoming-with-history.png",
+          "kind": "screenshot",
+          "sha256": "b12c94008bc4b28758a3a63b72bf45d46b1f6b82196a26ddb344f44f862147ea"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-133F2EBF/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Участник сначала принял будущую встречу, организатор перенёс её в прошлое. Прежнее сообщение осталось, новое отправилось в истории и сохранилось после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-history-message-persisted.png",
+          "kind": "screenshot",
+          "sha256": "b26b02f91d210fea3438ae7a9251a7fe950080ce145d23630dd54496c54bc440"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-133F2EBF/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Участник сначала принял будущую встречу, организатор перенёс её в прошлое. Прежнее сообщение осталось, новое отправилось в истории и сохранилось после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-history-message-persisted.png",
+          "kind": "screenshot",
+          "sha256": "00ba7dd506f5c1f34829e68fef1852fe82c4382bafc40cec0b64aa507a438777"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-FF2F37CB/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Участник истории сменил «Приду» на «Возможно»: встреча исчезла из личной истории, прямой чат закрыт, после reload собственная кнопка «Возможно» имеет aria-pressed=true.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-history-own-maybe.png",
+          "kind": "screenshot",
+          "sha256": "c3c5bf13f79b29d129a301aa42ee2849ff0edd1064b9e1b0622d1200d72b7317"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-FF2F37CB/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Участник истории сменил «Приду» на «Возможно»: встреча исчезла из личной истории, прямой чат закрыт, после reload собственная кнопка «Возможно» имеет aria-pressed=true.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-history-own-maybe.png",
+          "kind": "screenshot",
+          "sha256": "b206cd076eb854d7f2763a9033b4b34ee86e4d8577938ba2ede2ccd6892fb9a3"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-2BE34CCA/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Организатор выполнил настоящий PATCH с актуальным expected_revision: перенос будущей встречи в историю сменил period/counts, перенос между днями отразился в календаре без второй записи с тем же id.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-rescheduled-day.png",
+          "kind": "screenshot",
+          "sha256": "13c5eb3d5d67443d88a97d94fbbfd0828a4934fd1220b2e0e0c29f8db92f27af"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-2BE34CCA/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Организатор выполнил настоящий PATCH с актуальным expected_revision: перенос будущей встречи в историю сменил period/counts, перенос между днями отразился в календаре без второй записи с тем же id.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-rescheduled-day.png",
+          "kind": "screenshot",
+          "sha256": "b116a78ec95d45df581cd3c8dfbbfc98691f2d0ae9f87d8bc3380e93e49377f7"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-08B41F50/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Из выбранной истории нажал переключатель календаря: period=past сохранился, событие доступно на том же дне; отдельное открытие URL подтвердило набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-history-calendar.png",
+          "kind": "screenshot",
+          "sha256": "ef8dc6a7f8b5cfd2f16faf3c78b3fc27c04886a8a3534e32fade80d0d3f2f253"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-08B41F50/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Из выбранной истории нажал переключатель календаря: period=past сохранился, событие доступно на том же дне; отдельное открытие URL подтвердило набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-history-calendar.png",
+          "kind": "screenshot",
+          "sha256": "43a18b04f77d89ec6c13a96fa09a654b36672cd8df08b0eb3587752385e993c6"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-DCA296C2/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Саша/Аня в Europe/Moscow и отдельный контекст Ани в Pacific/Honolulu: одна встреча стоит 24 октября и показывает 03:00 по Europe/Moscow; смена пояса устройства не передвинула день.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-timezone-honolulu.png",
+          "kind": "screenshot",
+          "sha256": "3a5e0ae02ff8268d87ff69841ecb02a942f6e356c462d7fcbddf53ed63635d7c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-DCA296C2/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Саша/Аня в Europe/Moscow и отдельный контекст Ани в Pacific/Honolulu: одна встреча стоит 24 октября и показывает 03:00 по Europe/Moscow; смена пояса устройства не передвинула день.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-timezone-honolulu.png",
+          "kind": "screenshot",
+          "sha256": "bf1227fe63189b2dc04ec8ae2b607c0a16cdbbe202eca364786a119467117ee1"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8729E653/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Реальные API-данные превысили лимит50. День показал общий count52/53, первая страница50, «Показать ещё» догрузило остаток. Между страницами настоящий PATCH изменил набор; сервер вернул409, клиент сбросил устаревшие страницы, сохранил view/period/month/day и отобразил актуальный набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-pagination-final.png",
+          "kind": "screenshot",
+          "sha256": "c651425e8605ec9bb29ede60f7af1d2aca5f69919d868194165303f234c0dcc9"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8729E653/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Реальные API-данные превысили лимит50. День показал общий count52/53, первая страница50, «Показать ещё» догрузило остаток. Между страницами настоящий PATCH изменил набор; сервер вернул409, клиент сбросил устаревшие страницы, сохранил view/period/month/day и отобразил актуальный набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-pagination-final.png",
+          "kind": "screenshot",
+          "sha256": "dfc3aa8aa1630c0a49adbea43e128babe70f22e49e78ef88090d9b0955eab929"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-316128BD/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "В выбранном дне более двух встреч; открывал разные карточки списка и календаря в соответствующие реальные чаты, затем возвращался. Все id различны и принадлежат реальному fixture.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-dense-390.png",
+          "kind": "screenshot",
+          "sha256": "39a2f51e5f93aa9d89fccc330b85d603241b70616fff6c73d973afee80ff116a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-316128BD/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "В выбранном дне более двух встреч; открывал разные карточки списка и календаря в соответствующие реальные чаты, затем возвращался. Все id различны и принадлежат реальному fixture.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-dense-390.png",
+          "kind": "screenshot",
+          "sha256": "e04f3f4411ef09e10feea44648e5ad9b78f1016a77ff14585651361dc3f45f00"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-ACB261EF/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Выбранный пустой день показывает «На этот день встреч нет», без вымышленной карточки.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-today.png",
+          "kind": "screenshot",
+          "sha256": "68189c70ca51249b3a90318d6b890e02596c01f639fb6cd9b666919718e151ed"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-ACB261EF/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Выбранный пустой день показывает «На этот день встреч нет», без вымышленной карточки.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-today.png",
+          "kind": "screenshot",
+          "sha256": "aa1bcded4ae4a3f42a6c50ce9d1233702ae349fff77a98ae10db776e553b8ac0"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-DF554EBC/web-meetings-chromium-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Не удалось установить предусловие legacy undated: штатное создание требует дату, PATCH поддерживает снятие часа при сохранённом starts_on, но не удаление итоговой даты. У fixture8857 нет seed/control endpoint для legacy nullable-date записи. JSON-ответ бизнеса не подменялся.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-calendar-390.png",
+          "kind": "screenshot",
+          "sha256": "e16a6d3df024eb8a4bf034ef4d959e361006dcd41a1123e7af3e01885cc633c3"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-DF554EBC/web-meetings-webkit-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Не удалось установить предусловие legacy undated: штатное создание требует дату, PATCH поддерживает снятие часа при сохранённом starts_on, но не удаление итоговой даты. У fixture8857 нет seed/control endpoint для legacy nullable-date записи. JSON-ответ бизнеса не подменялся.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-calendar-390.png",
+          "kind": "screenshot",
+          "sha256": "c29da406891d0dded07412995047ce63b0466277ee7b68f6edf26b64e0c04288"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-9A6FBD0D/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Пустой личный набор успешно загружен: честное пустое состояние и ровно одно действие создания в пустом блоке; шапка не дублирует его.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-list.png",
+          "kind": "screenshot",
+          "sha256": "be7df813b1303db5f73ca04397eb2e2c986668bfa8949684397585d950a4e855"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-9A6FBD0D/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Пустой личный набор успешно загружен: честное пустое состояние и ровно одно действие создания в пустом блоке; шапка не дублирует его.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-list.png",
+          "kind": "screenshot",
+          "sha256": "19d9f5a47882f0d9bc4894c60951db654fc668c0c29922ed4ff768a65117a27c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-043034FD/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Прервал настоящий запрос встреч после задержки2с: показаны ошибка и «Повторить загрузку», нет утверждения об отсутствии встреч. Снял fault, повтор восстановил реальные данные.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-error-initial.png",
+          "kind": "screenshot",
+          "sha256": "660db79750c42463ff9c582e4bbd38ee9a8d548534d455928c7ba0445496e2d8"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-043034FD/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Прервал настоящий запрос встреч после задержки2с: показаны ошибка и «Повторить загрузку», нет утверждения об отсутствии встреч. Снял fault, повтор восстановил реальные данные.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-error-initial.png",
+          "kind": "screenshot",
+          "sha256": "d15697978a84c4f5267ce0ae27a871c9b427bda58c0f01dac6feddf6bca7d54e"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-FE4C30B8/web-meetings-chromium-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Сервер fixture использует time.Now, нет управления часами/сроком фонового worker на8857. Реальную серверную полночь текущего плана не установил. Подмена календарного JSON либо часы только браузера не подтверждают сохранённый past/worker, поэтому blocked.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-today.png",
+          "kind": "screenshot",
+          "sha256": "68189c70ca51249b3a90318d6b890e02596c01f639fb6cd9b666919718e151ed"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-FE4C30B8/web-meetings-webkit-responsive/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Сервер fixture использует time.Now, нет управления часами/сроком фонового worker на8857. Реальную серверную полночь текущего плана не установил. Подмена календарного JSON либо часы только браузера не подтверждают сохранённый past/worker, поэтому blocked.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-today.png",
+          "kind": "screenshot",
+          "sha256": "aa1bcded4ae4a3f42a6c50ce9d1233702ae349fff77a98ae10db776e553b8ac0"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8609AC3B/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Реальные API-данные превысили лимит50. День показал общий count52/53, первая страница50, «Показать ещё» догрузило остаток. Между страницами настоящий PATCH изменил набор; сервер вернул409, клиент сбросил устаревшие страницы, сохранил view/period/month/day и отобразил актуальный набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-pagination-final.png",
+          "kind": "screenshot",
+          "sha256": "c651425e8605ec9bb29ede60f7af1d2aca5f69919d868194165303f234c0dcc9"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8609AC3B/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Реальные API-данные превысили лимит50. День показал общий count52/53, первая страница50, «Показать ещё» догрузило остаток. Между страницами настоящий PATCH изменил набор; сервер вернул409, клиент сбросил устаревшие страницы, сохранил view/period/month/day и отобразил актуальный набор.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-pagination-final.png",
+          "kind": "screenshot",
+          "sha256": "dfc3aa8aa1630c0a49adbea43e128babe70f22e49e78ef88090d9b0955eab929"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-81E87CAE/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "9a2c213554ac0e95175d74f6145d173442d293987f5b4a0d1540dd4bae36131a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-81E87CAE/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "fd9f51a78ca754cb955beb7d8f8b4fadd1afd3c74da16863c3eebdaf7ae9e918"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-3078FA7A/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Пустой личный набор успешно загружен: честное пустое состояние и ровно одно действие создания в пустом блоке; шапка не дублирует его.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-list.png",
+          "kind": "screenshot",
+          "sha256": "be7df813b1303db5f73ca04397eb2e2c986668bfa8949684397585d950a4e855"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-3078FA7A/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Пустой личный набор успешно загружен: честное пустое состояние и ровно одно действие создания в пустом блоке; шапка не дублирует его.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-list.png",
+          "kind": "screenshot",
+          "sha256": "19d9f5a47882f0d9bc4894c60951db654fc668c0c29922ed4ff768a65117a27c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-33C30BAA/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "При непустом личном наборе создание доступно единственной кнопкой в шапке; пустой блок с дублирующей кнопкой отсутствует.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-populated-list.png",
+          "kind": "screenshot",
+          "sha256": "2ebcb42910c5a4636b67506453cf0308c522652a1970935e42b36f0d1ccbce8c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-33C30BAA/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "При непустом личном наборе создание доступно единственной кнопкой в шапке; пустой блок с дублирующей кнопкой отсутствует.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-covered-list.png",
+          "kind": "screenshot",
+          "sha256": "35bae689b6032204360d6c083856ed493e42824f1621a5b0e744d5edee8c2c36"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-C9EF742E/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "В мобильном календаре при долгой начальной загрузке и ошибке единственное создание остаётся в верхней панели. При успешном восстановлении её положение не меняется.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-error-initial.png",
+          "kind": "screenshot",
+          "sha256": "660db79750c42463ff9c582e4bbd38ee9a8d548534d455928c7ba0445496e2d8"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-C9EF742E/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "В мобильном календаре при долгой начальной загрузке и ошибке единственное создание остаётся в верхней панели. При успешном восстановлении её положение не меняется.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-error-initial.png",
+          "kind": "screenshot",
+          "sha256": "d15697978a84c4f5267ce0ae27a871c9b427bda58c0f01dac6feddf6bca7d54e"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-579BD1E0/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "В пустом мобильном календаре менял выбранный день: ровно одна видимая кнопка создания в верхней панели, под сеткой дубля нет; проверено320/390/739.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-calendar-390.png",
+          "kind": "screenshot",
+          "sha256": "e16a6d3df024eb8a4bf034ef4d959e361006dcd41a1123e7af3e01885cc633c3"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-579BD1E0/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "В пустом мобильном календаре менял выбранный день: ровно одна видимая кнопка создания в верхней панели, под сеткой дубля нет; проверено320/390/739.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-calendar-390.png",
+          "kind": "screenshot",
+          "sha256": "c29da406891d0dded07412995047ce63b0466277ee7b68f6edf26b64e0c04288"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-3DD0444B/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Пустой desktop-календарь: единственное создание в правом пустом состоянии, шапка его не дублирует; дополнительно проверены740/1100.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-calendar-1440.png",
+          "kind": "screenshot",
+          "sha256": "4379808f6e1ed62f7667e156fd2c1bd9e0db0cf07eee590f7419ad1929061806"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-3DD0444B/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Пустой desktop-календарь: единственное создание в правом пустом состоянии, шапка его не дублирует; дополнительно проверены740/1100.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-calendar-1440.png",
+          "kind": "screenshot",
+          "sha256": "0ac27bbd7c10573800b395a009ad22f53c7256122dd5925f0da26e7de7b79418"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-569071FD/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "При наличии прошедших встреч выбрал пустой день: сообщение об отсутствии встреч, создание только в шапке.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-extra-empty-day-nonempty-history.png",
+          "kind": "screenshot",
+          "sha256": "469083986ef00f5de144a9d07ae930537af58d1bbda60e12708590440e56452c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-569071FD/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "При наличии прошедших встреч выбрал пустой день: сообщение об отсутствии встреч, создание только в шапке.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-day-nonempty-history.png",
+          "kind": "screenshot",
+          "sha256": "26b7d5b040fcf13dfe646897c3bef18f21406c77d323a882694c41ca07d3fd71"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8D68235F/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На мобильном экране открыл октябрь2099, нажал «Сегодня»: выбран текущий4.11.2026, открыт ноябрь2026, период сохранён, activeElement — ячейка сегодняшнего дня.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-today.png",
+          "kind": "screenshot",
+          "sha256": "68189c70ca51249b3a90318d6b890e02596c01f639fb6cd9b666919718e151ed"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-8D68235F/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На мобильном экране открыл октябрь2099, нажал «Сегодня»: выбран текущий4.11.2026, открыт ноябрь2026, период сохранён, activeElement — ячейка сегодняшнего дня.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-today.png",
+          "kind": "screenshot",
+          "sha256": "aa1bcded4ae4a3f42a6c50ce9d1233702ae349fff77a98ae10db776e553b8ac0"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D18FE28E/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Выбрал24 октября и нажал единственное создание: форма получила эту дату, поле времени пусто; затем реальное создание без часа удалось.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-create-selected-day.png",
+          "kind": "screenshot",
+          "sha256": "98de9d5368d7d25648cbea1cd8c417a04f465718c6e99ac2992e449b0ff5d683"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D18FE28E/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Выбрал24 октября и нажал единственное создание: форма получила эту дату, поле времени пусто; затем реальное создание без часа удалось.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-create-selected-day.png",
+          "kind": "screenshot",
+          "sha256": "b0f9485f136e2be828a37d270e8074d50a90b818422f7f7951b584f63572348b"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-0FE7E758/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "В форме изменил24 октября на25, перезагрузил страницу: дата25 и название сохранены, исходный date query её не перезаписал.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-draft-after-reload.png",
+          "kind": "screenshot",
+          "sha256": "5ae9c2d2503ebc7a622bbebc6eb05fc9f5f44c4698fa7b14d8ff7b78fed63979"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-0FE7E758/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "В форме изменил24 октября на25, перезагрузил страницу: дата25 и название сохранены, исходный date query её не перезаписал.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-draft-after-reload.png",
+          "kind": "screenshot",
+          "sha256": "bef7a0cbb818b2e54ced4172ee5a590efc823609ba0c2a6875b09d2f6c86eb52"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-6239968D/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "При сохранённом черновике с названием открыл создание из26 октября: изменилась только дата, название осталось, точный час не выдуман.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-draft-new-calendar-date.png",
+          "kind": "screenshot",
+          "sha256": "b9f40c25285a1058b84bf5122ae1b478eff775a03f5154ac29798ffdd50cfee8"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-6239968D/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "При сохранённом черновике с названием открыл создание из26 октября: изменилась только дата, название осталось, точный час не выдуман.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-draft-new-calendar-date.png",
+          "kind": "screenshot",
+          "sha256": "52773f1a1032670064630377889a6e4aa3767ca7427f6b4d8b2ec875aa79da46"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D20DFBB0/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Задержал настоящий запрос выбранного дня на2с: строка счётчика сохраняла место, boundingBox создания до/во время ожидания одинаков. На Chromium дополнительно повторено на полностью пустом аккаунте Миши.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-account-pending.png",
+          "kind": "screenshot",
+          "sha256": "e16a6d3df024eb8a4bf034ef4d959e361006dcd41a1123e7af3e01885cc633c3"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D20DFBB0/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Задержал настоящий запрос выбранного дня на2с: строка счётчика сохраняла место, boundingBox создания до/во время ожидания одинаков. На Chromium дополнительно повторено на полностью пустом аккаунте Миши.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-slow-selected-day.png",
+          "kind": "screenshot",
+          "sha256": "0b6d6439892402eee59c7ed475d6b40ab5c3cc8045a62f184be075bda3731c90"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-4F4A9BEB/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "882bb7eecef0ba77f7b071235a7718425a7b62894fabc12e484d473a9c4a408a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-4F4A9BEB/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "9d591e660d858d82326aa0fbd81c9853b036ed26990f0e58b9ad943b0f8b5c19"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-516FFD79/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Лена сохранила «Приду»: приглашение исчезло из вкладки, появилось в личном списке, доступен переход к реальному чату. Дополнительно Ира открыла чат после принятия и отправила сообщение до переноса в историю.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-accepted-personal-list.png",
+          "kind": "screenshot",
+          "sha256": "b75981302cb3131fef850aae7897f02d5583a8dcc34cc9ef33a850f8fff2b06a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-516FFD79/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Лена сохранила «Приду»: приглашение исчезло из вкладки, появилось в личном списке, доступен переход к реальному чату. Дополнительно Ира открыла чат после принятия и отправила сообщение до переноса в историю.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-accepted-personal-list.png",
+          "kind": "screenshot",
+          "sha256": "43ddfbe3766461d32d3791bec787bb2f9f78736d42c90f7f3bae9caa20dd811f"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-E30711B2/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Лена сменила подтверждённое «Приду» на«Возможно»: встреча исчезла из личного раздела и появилась в приглашениях; прямой чат закрыт.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-maybe-returned-invitations.png",
+          "kind": "screenshot",
+          "sha256": "882bb7eecef0ba77f7b071235a7718425a7b62894fabc12e484d473a9c4a408a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-E30711B2/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Лена сменила подтверждённое «Приду» на«Возможно»: встреча исчезла из личного раздела и появилась в приглашениях; прямой чат закрыт.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-maybe-returned-invitations.png",
+          "kind": "screenshot",
+          "sha256": "9d591e660d858d82326aa0fbd81c9853b036ed26990f0e58b9ad943b0f8b5c19"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-12B3545C/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "При Maybe прервал запрос сохранения «Приду»: появилась ошибка, личный чат не открылся. После reload последнее сохранённое Maybe осталось в приглашениях; успешный повтор затем перевёл встречу.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-maybe-after-failed-reload.png",
+          "kind": "screenshot",
+          "sha256": "771659c39364bd4e57bb0b6e5598eb861d09ae3d6d6be42c09c05564412e86d6"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-12B3545C/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "При Maybe прервал запрос сохранения «Приду»: появилась ошибка, личный чат не открылся. После reload последнее сохранённое Maybe осталось в приглашениях; успешный повтор затем перевёл встречу.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-maybe-after-failed-reload.png",
+          "kind": "screenshot",
+          "sha256": "49f16898ccb92169747bc4836774c989bb923d4ef56eea2e6388493cec04068e"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-170C9AF2/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На основных встречах/приглашениях/профиле есть нижняя панель с подписями и текущим aria-current; последний контент и плотный день доступны прокруткой выше панели.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "3967dd3ad7564dfd7c8cbdb028a234c1a8d3e27a31c42528cff860e5195d9352"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-170C9AF2/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На основных встречах/приглашениях/профиле есть нижняя панель с подписями и текущим aria-current; последний контент и плотный день доступны прокруткой выше панели.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "0621ae2a3c6684cce512eec1539cf2df987aa2f634be156da79a6053677c365f"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-74A5E939/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На чате, share/edit sheets, альбоме/сетке/полном фото/upload, помощи/about/support/Cookie/privacy нижняя навигация скрыта; самостоятельный/browser Back и Escape возвращают в предыдущую поверхность. Для формы создания есть подтверждение выхода, после него возврат работает.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-extra-nested-full-photo.png",
+          "kind": "screenshot",
+          "sha256": "5214d66a31c56a5378bf5082f2344c4e442d81a9ec7face2f6f913cab5ac9122"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-74A5E939/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На чате, share/edit sheets, альбоме/сетке/полном фото/upload, помощи/about/support/Cookie/privacy нижняя навигация скрыта; самостоятельный/browser Back и Escape возвращают в предыдущую поверхность. Для формы создания есть подтверждение выхода, после него возврат работает.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-nested-full-photo.png",
+          "kind": "screenshot",
+          "sha256": "7d6b2fb30d7ca976a6f6d569d746bc1ebe8d11fc2eae3b6ef1d52734fe8fff82"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-57D734C1/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "9a2c213554ac0e95175d74f6145d173442d293987f5b4a0d1540dd4bae36131a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-57D734C1/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "fd9f51a78ca754cb955beb7d8f8b4fadd1afd3c74da16863c3eebdaf7ae9e918"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-155758C7/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "9a2c213554ac0e95175d74f6145d173442d293987f5b4a0d1540dd4bae36131a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-155758C7/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "После списка/календаря, чата, профиля, помощи и Cookie восстановлены календарный вид, период, выбранный месяц/день. Для списка зафиксированы независимый offset, возврат из чата и сохранение после reload.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-nav-calendar-restored.png",
+          "kind": "screenshot",
+          "sha256": "fd9f51a78ca754cb955beb7d8f8b4fadd1afd3c74da16863c3eebdaf7ae9e918"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-17F34870/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "882bb7eecef0ba77f7b071235a7718425a7b62894fabc12e484d473a9c4a408a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-17F34870/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На отдельном аккаунте ответ «Возможно» появился в приглашениях; карточка открыла RSVP, пояснение постоянно, нет понятия закладок. Прямой вход в чат с Maybe закрыт; чат/опрос даты в приглашении не раскрываются.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-maybe-list.png",
+          "kind": "screenshot",
+          "sha256": "9d591e660d858d82326aa0fbd81c9853b036ed26990f0e58b9ad943b0f8b5c19"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D671C5B8/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "В успешно загруженных пустых приглашениях постоянное пояснение одно, пустой блок не повторяет его вторым абзацем.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-empty-invitations.png",
+          "kind": "screenshot",
+          "sha256": "a6b52c241c313a4b47a37575440ef5b8b20ee40c2a8bb6ef745fb221ff92b5e8"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-D671C5B8/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "В успешно загруженных пустых приглашениях постоянное пояснение одно, пустой блок не повторяет его вторым абзацем.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-empty-invitations.png",
+          "kind": "screenshot",
+          "sha256": "c0db407e649e7aa17dd9e39c29f14f2c2fa5cb038bae93da3b03c289745f4d68"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-697C602C/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Созданы шесть подтверждённых участников через реальные RSVP. Карточка показывает три перекрывающихся аватара и+3, имена в семантических подписях; на320/390/739 нет горизонтального переполнения и перекрытия названия аватарами.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-six-participants-320.png",
+          "kind": "screenshot",
+          "sha256": "26fa814a1ba8c02d936a0b659aac3a004bd8c690743e62e7e61a957467b3caf9"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-697C602C/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Созданы шесть подтверждённых участников через реальные RSVP. Карточка показывает три перекрывающихся аватара и+3, имена в семантических подписях; на320/390/739 нет горизонтального переполнения и перекрытия названия аватарами.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-six-participants-320.png",
+          "kind": "screenshot",
+          "sha256": "a10c54d49dce2a6785dd90bfe927a04f560bdbd133c514f78decf30ccae2b495"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-5B54DA87/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Создана настоящая встреча с датой без часа/фото: карточка показывает дату и «время уточняем», место честно не выбрано, выдуманного часа и большой заглушки фотографии нет.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-created.png",
+          "kind": "screenshot",
+          "sha256": "3ed000e81c329af529b83a0081379d57d7a8757bc61622d99ea34b31ba2aca4a"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-5B54DA87/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Создана настоящая встреча с датой без часа/фото: карточка показывает дату и «время уточняем», место честно не выбрано, выдуманного часа и большой заглушки фотографии нет.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-created.png",
+          "kind": "screenshot",
+          "sha256": "114a9e18bbc304ec9de986015c207298687f94cbf4a646853c17a23ba5da040c"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-AA6FA112/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Загрузил собственный тестовый PNG в альбом прошедшей встречи штатной формой. В истории появились превью/«1 фото», две разные ссылки ведут в альбом и чат того же id; оба пути фактически открыты.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-album-history-card.png",
+          "kind": "screenshot",
+          "sha256": "4aa0e8e4407a458fbad5542c2bc9401f8e5fd3358d8d262034022da9ea3aea51"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-AA6FA112/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Загрузил собственный тестовый PNG в альбом прошедшей встречи штатной формой. В истории появились превью/«1 фото», две разные ссылки ведут в альбом и чат того же id; оба пути фактически открыты.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-album-history-card.png",
+          "kind": "screenshot",
+          "sha256": "eb080a5f8bb3088c721761252b33f73e587f843c8ead0b31754ca0ae83c7ebba"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-6BAF1838/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Созданы пятница23.10.2099 и суббота24.10.2099 Europe/Moscow: Chromium различает сливовый будний и серо-зелёный выходной, обе даты подписаны текстом.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-weekday-weekend.png",
+          "kind": "screenshot",
+          "sha256": "223498e12c1c98de38e074e6774de66aa5f0a2717a80b8bdac11bbd8f1464a00"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-6BAF1838/web-meetings-webkit-responsive/manual",
+      "status": "failed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "WebKit: суббота24.10.2099 имеет data-weekend=false и rgb(56,49,61), как пятница; требуется серо-зелёный. Текст даты/пояс/API верны. Runtime Intl weekday=\"Сб\", компонент сравнивает со строчным \"сб\". Повторено в списке и календаре.",
+      "defect": "WEB-MEETINGS-R1-001",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-defect-weekend-plum.png",
+          "kind": "screenshot",
+          "sha256": "e131d7f1660f4e3945eab5dd0d70a55ad5a5392d8cb549e5d8cb40591f770cdb"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-53C0DC15/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Встречи→Приглашения→Профиль→Встречи и быстро в обратном порядке: записаны промежуточные кадры/WAAPI keyframes одного индикатора260мс. После Reduce Motion и стабилизации animations=[], выделение в целевой позиции. На чате/создании/сервисных страницах панель скрыта.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "3967dd3ad7564dfd7c8cbdb028a234c1a8d3e27a31c42528cff860e5195d9352"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-53C0DC15/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Встречи→Приглашения→Профиль→Встречи и быстро в обратном порядке: записаны промежуточные кадры/WAAPI keyframes одного индикатора260мс. После Reduce Motion и стабилизации animations=[], выделение в целевой позиции. На чате/создании/сервисных страницах панель скрыта.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "0621ae2a3c6684cce512eec1539cf2df987aa2f634be156da79a6053677c365f"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-40EE551B/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "На мобильном экране открыл октябрь2099, нажал «Сегодня»: выбран текущий4.11.2026, открыт ноябрь2026, период сохранён, activeElement — ячейка сегодняшнего дня.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-today.png",
+          "kind": "screenshot",
+          "sha256": "68189c70ca51249b3a90318d6b890e02596c01f639fb6cd9b666919718e151ed"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-40EE551B/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "На мобильном экране открыл октябрь2099, нажал «Сегодня»: выбран текущий4.11.2026, открыт ноябрь2026, период сохранён, activeElement — ячейка сегодняшнего дня.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-today.png",
+          "kind": "screenshot",
+          "sha256": "aa1bcded4ae4a3f42a6c50ce9d1233702ae349fff77a98ae10db776e553b8ac0"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-AB3EFA81/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Одна реальная карточка с загруженной обложкой, организаторской короной и шестью участниками проверена в списке и выбранном дне календаря. Фото загружено, состав и символ совпадают. Цветовой дефект WebKit учтён отдельным failed TC-LIST-6BAF1838.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-covered-calendar.png",
+          "kind": "screenshot",
+          "sha256": "6c419baa0be1b30c7936c3c9e21fda1f26a2814e8467bbb5bb317a3cda76f03b"
+        }
+      ]
+    },
+    {
+      "id": "TC-LIST-AB3EFA81/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Одна реальная карточка с загруженной обложкой, организаторской короной и шестью участниками проверена в списке и выбранном дне календаря. Фото загружено, состав и символ совпадают. Цветовой дефект WebKit учтён отдельным failed TC-LIST-6BAF1838.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-covered-calendar.png",
+          "kind": "screenshot",
+          "sha256": "e131d7f1660f4e3945eab5dd0d70a55ad5a5392d8cb549e5d8cb40591f770cdb"
+        }
+      ]
+    },
+    {
+      "id": "TC-UI-LOADING-STABILITY/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Быстрые переключения дней записаны серией кадров: skeleton=0. При задержке2с обновление держало подтверждённые данные без скелетона; при ошибке показано «Не удалось обновить встречи», повтор вернул настоящий набор. Начальная долгая загрузка отдельно показывает skeleton после задержки.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-refresh-error.png",
+          "kind": "screenshot",
+          "sha256": "60a93a612e8abf3132f21495ca6c8c4146b3e09f2027a344ba4f52a20ef1c516"
+        }
+      ]
+    },
+    {
+      "id": "TC-UI-LOADING-STABILITY/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Быстрые переключения дней записаны серией кадров: skeleton=0. При задержке2с обновление держало подтверждённые данные без скелетона; при ошибке показано «Не удалось обновить встречи», повтор вернул настоящий набор. Начальная долгая загрузка отдельно показывает skeleton после задержки.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-refresh-error.png",
+          "kind": "screenshot",
+          "sha256": "0df7c586e0ee76ddcc084d915dd04f8333e6afc943ecefdae1fe5afc53198c8d"
+        }
+      ]
+    },
+    {
+      "id": "TC-UI-BOTTOM-TAB-MOTION/web-meetings-chromium-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T19:57:34.742Z",
+      "finishedAt": "2026-11-04T20:15:35.364Z",
+      "actual": "Встречи→Приглашения→Профиль→Встречи и быстро в обратном порядке: записаны промежуточные кадры/WAAPI keyframes одного индикатора260мс. После Reduce Motion и стабилизации animations=[], выделение в целевой позиции. На чате/создании/сервисных страницах панель скрыта.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/chromium-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "3967dd3ad7564dfd7c8cbdb028a234c1a8d3e27a31c42528cff860e5195d9352"
+        }
+      ]
+    },
+    {
+      "id": "TC-UI-BOTTOM-TAB-MOTION/web-meetings-webkit-responsive/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-web-meetings-feature-reviewer-r1"
+      },
+      "startedAt": "2026-11-04T20:08:31.151Z",
+      "finishedAt": "2026-11-04T20:20:52.507Z",
+      "actual": "Встречи→Приглашения→Профиль→Встречи и быстро в обратном порядке: записаны промежуточные кадры/WAAPI keyframes одного индикатора260мс. После Reduce Motion и стабилизации animations=[], выделение в целевой позиции. На чате/создании/сервисных страницах панель скрыта.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "8b5db4d5273d56e54529c689fef922cf47a14cacf72fe132c2693d1035bc41f2"
+        },
+        {
+          "path": "evidence/webkit-reduced-profile.png",
+          "kind": "screenshot",
+          "sha256": "0621ae2a3c6684cce512eec1539cf2df987aa2f634be156da79a6053677c365f"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "web-check",
+      "status": "passed",
+      "commandHash": "f5fbb86ed6c006dfc55fb8b05dff26dfba04d258df5c7a6d5f3ec530e24b31b2",
+      "startedAt": "2026-11-04T19:56:46.799Z",
+      "finishedAt": "2026-11-04T19:57:10.182Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/web-check-1793822206800.txt",
+          "kind": "log",
+          "sha256": "d188dde3cab27377958d0629e0a5011d8f65c7abf6e8adb35e9efe532156aa07"
+        }
+      ]
+    },
+    {
+      "id": "web-e2e",
+      "status": "failed",
+      "commandHash": "76feb4f92d0a823c3cc654ad6d5aaf2dc5d6e63969aef5b8aa7a801f30d63875",
+      "startedAt": "2026-11-04T19:58:00.662Z",
+      "finishedAt": "2026-11-04T20:10:47.403Z",
+      "exitCode": 1,
+      "actual": "Process exit: 1",
+      "evidence": [
+        {
+          "path": "suites/web-e2e-1793822280663.txt",
+          "kind": "log",
+          "sha256": "b5815d7b4f615d34e253a846b645b9871208e5343d65e28e987d4af216864360"
+        }
+      ]
+    },
+    {
+      "id": "web-chat-e2e",
+      "status": "passed",
+      "commandHash": "234c6638b019e30c97a0b11dd1d68a672fabe3fb27778bdc37c425a3d10c82f5",
+      "startedAt": "2026-11-04T20:11:16.435Z",
+      "finishedAt": "2026-11-04T20:13:59.028Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/web-chat-e2e-1793823076436.txt",
+          "kind": "log",
+          "sha256": "2b3a27332c1f25b2066e1e98ce25a2eaab6b5a0f814e5d61bbcf19a7a48f179a"
+        }
+      ]
+    },
+    {
+      "id": "web-read-e2e",
+      "status": "passed",
+      "commandHash": "1adaf00352ab99c135a1a5b77d2ae731eb568fd92b6f242faae4dc5877057484",
+      "startedAt": "2026-11-04T20:14:43.284Z",
+      "finishedAt": "2026-11-04T20:17:16.492Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/web-read-e2e-1793823283285.txt",
+          "kind": "log",
+          "sha256": "2c8cb5416eff6293199cfab38b4a088e565ebb4d30779da2ad677b9688ad1b19"
+        }
+      ]
+    },
+    {
+      "id": "web-window-e2e",
+      "status": "passed",
+      "commandHash": "da75e042f5ed15e11606514aa198ba721950fe337a2590a7e4a3c367728e9a5e",
+      "startedAt": "2026-11-04T20:18:13.509Z",
+      "finishedAt": "2026-11-04T20:18:38.875Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/web-window-e2e-1793823493510.txt",
+          "kind": "log",
+          "sha256": "2e22874ddefdbfe1d3e25a8b75f1f0c299eec4f738efcfe2dfc788576262277d"
+        }
+      ]
+    }
+  ]
+}

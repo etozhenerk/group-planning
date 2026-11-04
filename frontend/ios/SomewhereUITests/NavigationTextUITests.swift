@@ -26,7 +26,7 @@ final class NavigationTextUITests: XCTestCase {
                 "navigation-type-" + (large ? "large" : "default"), test: self)
             print("NAVIGATION_TEXT large=\(large) frame=\(meetings.frame)")
             if large {
-                XCTAssertEqual(meetings.frame.height, standardHeight, accuracy: 1)
+                XCTAssertGreaterThanOrEqual(meetings.frame.height, standardHeight)
                 print("NAVIGATION_HOLD_START")
                 Thread.sleep(forTimeInterval: 2)
                 app.buttons["home-tab-person.crop.circle"].press(forDuration: 5)

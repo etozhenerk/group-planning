@@ -11,7 +11,12 @@ for (const width of [320, 390, 1440]) {
     await page.goto('/meetings');
     const periods = page.getByRole('navigation', { name: 'Период встреч' });
     const before = await periods.boundingBox();
-    await page.getByRole('button', { name: 'Календарь', exact: true }).click();
+    await page
+      .getByRole('button', {
+        name: width < 740 ? 'Показать календарь' : 'Календарь',
+        exact: true,
+      })
+      .click();
 
     if (width === 1440) {
       expect((await periods.boundingBox())?.y).toBeCloseTo(before!.y, 0);
@@ -58,9 +63,19 @@ for (const width of [320, 390, 1440]) {
       'aria-pressed',
       'true',
     );
-    await page.getByRole('button', { name: 'Список', exact: true }).click();
+    await page
+      .getByRole('button', {
+        name: width < 740 ? 'Показать список' : 'Список',
+        exact: true,
+      })
+      .click();
     await expect(page.getByTestId('meeting-card')).toHaveCount(1);
-    await page.getByRole('button', { name: 'Календарь', exact: true }).click();
+    await page
+      .getByRole('button', {
+        name: width < 740 ? 'Показать календарь' : 'Календарь',
+        exact: true,
+      })
+      .click();
     await expect(days.locator('[data-day="2026-09-20"]')).toHaveAttribute(
       'aria-pressed',
       'true',

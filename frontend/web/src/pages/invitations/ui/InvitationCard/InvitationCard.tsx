@@ -1,3 +1,5 @@
+import { invitationContext } from '@/pages/invitations/model/invitationContext';
+import { useMobileLayout } from '@/shared/lib/media';
 import { MeetingCover, cardLabels } from '@/entities/meeting';
 import { Link } from 'react-router';
 import { MapPin, Sparkle } from 'lucide-react';
@@ -8,13 +10,16 @@ export type InvitationCardProps = { item: SavedInvitation };
 
 export const InvitationCard = ({ item }: InvitationCardProps) => {
   const labels = cardLabels(item.preview);
+  const mobile = useMobileLayout();
 
   return (
     <Link
       to={item.path}
+      state={mobile ? invitationContext(item.preview.organizer) : undefined}
       className={styles.card}
       data-testid="saved-invitation"
-      data-weekend={['сб', 'вс'].includes(labels.weekday)}
+      data-mobile={mobile}
+      data-weekend={labels.weekend}
     >
       <time className={styles.date}>{labels.date}</time>
       {item.preview.coverUrl && (
@@ -36,14 +41,18 @@ export const InvitationCard = ({ item }: InvitationCardProps) => {
       {item.preview.organizer && (
         <p className={styles.author}>Приглашает {item.preview.organizer.displayName}</p>
       )}
-      <Sparkle
-        size={16}
-        fill="currentColor"
-        strokeWidth={0}
-        className={styles.sparkle}
-        aria-hidden="true"
-      />
-      <span className={styles.answer}>Ваш ответ: Возможно</span>
+      {!mobile && (
+        <Sparkle
+          size={16}
+          fill="currentColor"
+          strokeWidth={0}
+          className={styles.sparkle}
+          aria-hidden="true"
+        />
+      )}
+      <span className={styles.answer}>
+        {mobile ? 'Изменить ответ →' : 'Ваш ответ: Возможно'}
+      </span>
     </Link>
   );
 };

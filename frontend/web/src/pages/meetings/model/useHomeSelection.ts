@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router';
 import type { CalendarPage } from '@/entities/meeting';
 import { readSelection, saveSelection } from '@/pages/meetings/model/selection';
 import type { HomeSelection } from '@/pages/meetings/model/selection';
-import { today } from '@/pages/meetings/lib/calendarDates';
+import { today } from '@/entities/meeting';
 
 export const useHomeSelection = (user: string) => {
   const [params, setParams] = useSearchParams();

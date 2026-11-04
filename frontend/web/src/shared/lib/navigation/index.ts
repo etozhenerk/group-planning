@@ -1,1 +1,4 @@
-export { readReturnLocation } from '@/shared/lib/navigation/returnLocation';
+export {
+  readReturnLocation,
+  returnLocationLabel,
+} from '@/shared/lib/navigation/returnLocation';

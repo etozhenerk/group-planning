@@ -38,6 +38,7 @@ var browserProfiles = []struct{ code, name string }{
 	{"katya", "Катя"},
 	{"oleg", "Олег"},
 	{"ira", "Ира"},
+	{"long-organizer", "Александра Константинопольская"},
 	{"profile-fields-full", "Профиль: все поля"},
 	{"profile-fields-partial", "Профиль: неполная дата"},
 	{"profile-fields-clear", "Профиль: очищение"},
@@ -122,9 +123,24 @@ func TestBrowserFixture(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	app, stream := browserChatFixture(t, store, service)
+	var calendarClock *browserMeetingsClock
+	now := time.Now
+	if os.Getenv("SOMEWHERE_BROWSER_MEETINGS") == "1" {
+		if !visual {
+			t.Fatal("meetings fixture requires SOMEWHERE_BROWSER_DESIGN=1")
+		}
+
+		calendarClock = newBrowserMeetingsClock()
+		now = calendarClock.now
+	}
+
+	app, stream := chatFixtureWithClock(t, store, service, "BROWSER", now)
 	if visual {
-		seedNativeDesignFixture(t, store, identities, service, app)
+		owner := seedNativeDesignFixture(t, store, identities, service, app)
+		if calendarClock != nil {
+			seedBrowserLegacyMeeting(t, store, service, owner)
+		}
+
 		if err := app.InitializeChatReadState(t.Context()); err != nil {
 			t.Fatal(err)
 		}
@@ -139,6 +155,10 @@ func TestBrowserFixture(t *testing.T) {
 
 	api := NewWithExports(app, service, fixtureSupport(), slog.New(slog.NewTextHandler(io.Discard, nil)), stream, exports, testAccounts(store, identities, service, time.Now))
 	mux := http.NewServeMux()
+	if calendarClock != nil {
+		calendarClock.mount(mux, app)
+	}
+
 	mux.Handle("/api/", browserFeedbackScope(api))
 	mux.Handle("/healthz", api)
 	mux.HandleFunc("/__test/provider", func(w http.ResponseWriter, r *http.Request) {
@@ -182,6 +202,11 @@ func TestBrowserFixture(t *testing.T) {
 	finished := make(chan struct{})
 	go func() {
 		defer close(finished)
+		if calendarClock != nil {
+			<-ctx.Done()
+			return
+		}
+
 		worker.Run(ctx)
 	}()
 	pollWorker, err := meetings.NewDatePollWorker(app, meetings.DefaultTransitionOptions(), nil)

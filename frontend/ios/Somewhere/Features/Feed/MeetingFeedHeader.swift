@@ -12,14 +12,10 @@ struct MeetingFeedHeader: View {
 
     var body: some View {
         HStack(spacing: DesignTokens.spaceS6) {
-            Button {
+            PageBackButton(label: "Вернуться к встречам") {
                 owner.actionDrafts.clear()
                 dismiss()
-            } label: {
-                ChatIcon(kind: .back)
-                    .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
-                    .contentShape(Rectangle())
-            }.accessibilityLabel("Назад").accessibilityIdentifier("feed-back")
+            }.accessibilityIdentifier("feed-back")
             ChatIcon(kind: .calendar)
                 .foregroundStyle(DesignTokens.colorMeetingMarkForeground)
                 .frame(

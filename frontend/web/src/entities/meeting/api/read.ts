@@ -2,6 +2,7 @@ import {
   feedSchema,
   invitationLinkSchema,
   meetingSchema,
+  mapPublicUser,
   meetingsSchema,
   participantsSchema,
   previewSchema,
@@ -55,7 +56,7 @@ export const getParticipants = async (
   });
 
   return wire.participants.map((value) => ({
-    user: { id: value.user.id, displayName: value.user.display_name },
+    user: mapPublicUser(value.user),
     role: value.role,
     answer: value.rsvp,
     revision: value.rsvp_revision,

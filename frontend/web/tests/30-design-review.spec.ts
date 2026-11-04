@@ -187,7 +187,9 @@ test('approved HTML and implemented screens at four widths', async ({
       await expect(page.locator('main')).toBeVisible();
 
       if (name === 'create') {
-        await page.getByLabel('Название', { exact: true }).fill('Ужин в пятницу');
+        await page
+          .getByRole('textbox', { name: 'Название', exact: true })
+          .fill('Ужин в пятницу');
         await setDate(page, '30.10.2099');
         await page.getByRole('textbox', { name: 'Время', exact: true }).fill('20:00');
         await page.getByLabel('Место', { exact: true }).fill('Кафе «Соседи»');

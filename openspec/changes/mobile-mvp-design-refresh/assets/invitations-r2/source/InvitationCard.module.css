@@ -1,0 +1,15 @@
+.card { position:relative; display:block; min-height:176px; padding:26px 17px 44px; margin:12px 0 16px; border-radius:var(--ds-radius-card); background:var(--ds-color-weekday); border:1px solid var(--ds-color-line); min-width:0; }
+.date { position:absolute; left:14px; top:-11px; padding:4px 10px; border-radius:8px; background:var(--ds-color-weekday-badge); color:var(--ds-color-weekday-text); font-size:10px; line-height:1.4; font-weight:600; z-index:2; max-width:calc(100% - 28px); white-space:nowrap; }
+.cover { position:absolute; right:13px; top:-10px; width:102px; height:101px; border:3px solid var(--ds-color-weekday-frame); border-radius:var(--ds-radius-cover); overflow:hidden; transform:rotate(5deg); box-shadow:0 5px 14px #0004; }
+.card:has(.cover) .info { padding-right:112px; }
+.card:has(.cover) .date { max-width:calc(100% - 95px); }
+.info h2 { font-size:19px; line-height:1.25; letter-spacing:-.45px; margin:0 0 8px; overflow-wrap:anywhere; }
+.info p { display:flex; align-items:flex-start; gap:6px; margin:0; font-size:12px; line-height:1.45; color:var(--ds-color-muted); overflow-wrap:anywhere; }
+.info p svg { flex:none; margin-top:1px; }
+.author { margin:16px 0 0; font-size:12px; line-height:1.5; color:var(--ds-color-muted); overflow-wrap:anywhere; }
+.answer { position:absolute; bottom:15px; left:17px; display:flex; align-items:center; gap:7px; color:var(--ds-color-accent); font-size:11px; font-weight:500; }
+.sparkle { display:none; }
+.card[data-weekend='true'] { background:var(--ds-color-weekend); }
+.card[data-weekend='true'] .date { background:var(--ds-color-weekend-badge); color:var(--ds-color-weekend-text); }
+.card[data-weekend='true'] .cover { border-color:var(--ds-color-weekend-frame); transform:rotate(-4deg); }
+@media(hover:hover) and (pointer:fine) { .card:hover { filter:brightness(1.05); } }

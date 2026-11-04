@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/launch-ios.json",
+  "inputHash": "1e93b2effbf33a14a087a8259fe5f3d407bc0fc6561054f91a8b71c5799b0967",
+  "reviewer": "codex-independent-launch-ios-design-2026-11-04",
+  "reviewedAt": "2026-11-04T17:06:52.390270Z",
+  "mode": "live",
+  "environment": "Xcode27.1/SDK27.1; SomewhereUI Debug/SomewhereUITestHost; iPhone18 Pro iOS27.0 build24A434, UDID31262733-50DC-46A5-938E-4C462D70F109;402×874pt/1206×2622px. Системный SF: адаптер бренда850 по исходнику; runtime probe .SFUI-Regular/.SFUI-Bold. ru_RU/Europe/Moscow; обычный large/textScale1 и системный accessibility5 с Reduce Motion=true. Изолированный localhost fixture accessibility/audit-loading, /me задержан на7с, hash конфигурации сохранён без credentials. Использовалось только QA-приложение. Raw launch-r1 отрисован локальным Chromium DPR2 и просмотрен. Озвучивание VoiceOver исключено по текущему указанию пользователя. Text Size3/Reduce Motion off/VoiceOver off восстановлены. Для extracted frames capturedAt — измеренный маркер запуска capture-сессии; точный PTS — cold-frames/frames.json, интервалы — fixture-cold-interaction.json; это не выдуманное точное wall time каждого кадра. Для resume указан момент завершения screenshot-файла.",
+  "summary": "needs-fixes: геометрия подписи системного LaunchScreen и SwiftUI расходится на переходе. 4 состояния standard-phone прошли,3 требуют исправлений;7 состояний small-phone заблокированы. Общая готовность не подтверждена. До и после прохода inputHash совпал; design:check в начале прошёл.",
+  "checks": [
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "system-static-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "system-static-standard-phone",
+      "status": "needs-fixes",
+      "observations": "Контракт требует одинаковую полную подпись при LaunchScreen→SwiftUI. Системный текст на14px уже и расположен на6px ниже SwiftUI (scale3:4,67pt/2pt); на переходе видны две несовпадающие подписи. Композиция53/16/44 сохранена. В storyboard systemHeavy44, в SwiftUI адаптер BrandTypography850.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/cold-frames/frame-023.png",
+          "sha256": "971f166cfbdbfc9c58e8314b6faef66f9c60ceccaade93c7461adef21cdab3c6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/geometry-measured.json",
+          "sha256": "1a8772de73a2dde67e1c516da433712c6bae2d18bf7807b86873d5ea323b2c29",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/fixture-cold-interaction.json",
+          "sha256": "d689c298f201701950f3aefa54b4531df7f744f07a4d3ef0e7d89e5ff938486d",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-start-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-start-standard-phone",
+      "status": "needs-fixes",
+      "observations": "Live-переход меняет ширину и положение текста: на2,8–3,0с видео видны две несовпадающие подписи. Это нарушает неизменность масштаба/геометрии по launch-r1 и native-контракту. Лишних кнопок/прогресса нет; графит и светлая подпись сохранены.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/cold-frames/frame-029.png",
+          "sha256": "a116bf91c408e2b2cf92bc23f3680742788e2cb95cc4004da5b287c8883b6fc6",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/geometry-measured.json",
+          "sha256": "1a8772de73a2dde67e1c516da433712c6bae2d18bf7807b86873d5ea323b2c29",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/fixture-cold-interaction.json",
+          "sha256": "d689c298f201701950f3aefa54b4531df7f744f07a4d3ef0e7d89e5ff938486d",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-mid-turn-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-mid-turn-standard-phone",
+      "status": "pass",
+      "observations": "Просмотрены кадры3,2/3,5/3,8с: вращается только знак вокруг своего центра; слово остаётся в x360..1055,y1301..1394. Один оборот заканчивается примерно к4,1с; длительность около1,2с при шаге просмотра0,1с. Дефект геометрии системного перехода отмечен отдельно.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/cold-frames/frame-035.png",
+          "sha256": "99f9ccf4388493bf2ab1d22a71b441ff56709cd0db6b61fb4ad04a896a7f7ed9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-mid-turn.png",
+          "sha256": "541a9abd1093babb1bf06c11b3b1c072e699a0a6ae341bb02aa4141b9cf3d8de",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/fixture-cold-interaction.json",
+          "sha256": "d689c298f201701950f3aefa54b4531df7f744f07a4d3ef0e7d89e5ff938486d",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/geometry-measured.json",
+          "sha256": "1a8772de73a2dde67e1c516da433712c6bae2d18bf7807b86873d5ea323b2c29",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "1e93b2effbf33a14a087a8259fe5f3d407bc0fc6561054f91a8b71c5799b0967",
+        "fixtureHash": "bf524e34ab4f92aa2c49c76af2441c9c6cc9e8f9ce7adadbd1b7907efadfef1f",
+        "runtime": "SomewhereUITestHost Debug / iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "iPhone18 Pro 402×874pt;1206×2622px;scale3",
+        "fonts": [
+          "SF system; BrandTypography44pt weight850 adapter (source)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T16:59:45.071227Z"
+      }
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-complete-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-complete-standard-phone",
+      "status": "pass",
+      "observations": "После одного оборота кадры4,1/4,4/5,0с показывают исходное положение знака, стабильное слово и отсутствие повторного цикла. Подпись помещается в402×874;53/16/44 подтверждены исходниками и AX-геометрией. Safe-area адаптация допустима по platforms.md.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/cold-frames/frame-044.png",
+          "sha256": "09367d0ceffffdd883dc083945c57d0b38de8dfe937f0ab6e81e96b4062f141c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "1e93b2effbf33a14a087a8259fe5f3d407bc0fc6561054f91a8b71c5799b0967",
+        "fixtureHash": "bf524e34ab4f92aa2c49c76af2441c9c6cc9e8f9ce7adadbd1b7907efadfef1f",
+        "runtime": "SomewhereUITestHost Debug / iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "iPhone18 Pro 402×874pt;1206×2622px;scale3",
+        "fonts": [
+          "SF system; BrandTypography44pt weight850 adapter (source)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T16:59:45.071227Z"
+      }
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "restore-long-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "restore-long-standard-phone",
+      "status": "pass",
+      "observations": "В audit-loading /me задержан на7с. После оборота подпись неподвижна, выдуманного прогресса нет. Просмотрены кадры4,4/5,0/5,5с и fixture-long, затем реальный список. Композиция actual/reference сверена; дефект системного перехода вынесен отдельно.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/fixture-long.png",
+          "sha256": "00d183137b12d3166caa2ab51fd83ec399657c3a25f9956795236e4988bd73ff",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "1e93b2effbf33a14a087a8259fe5f3d407bc0fc6561054f91a8b71c5799b0967",
+        "fixtureHash": "bf524e34ab4f92aa2c49c76af2441c9c6cc9e8f9ce7adadbd1b7907efadfef1f",
+        "runtime": "SomewhereUITestHost Debug / iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "iPhone18 Pro 402×874pt;1206×2622px;scale3",
+        "fonts": [
+          "SF system; BrandTypography44pt weight850 adapter (source)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T16:59:45.071227Z"
+      }
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "resume-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "resume-standard-phone",
+      "status": "pass",
+      "observations": "XCTest Home→activate проверил сохранение карточки и отсутствие app-loading. Независимый возврат Device Hub Home→somewhere QA привёл к тому же списку. resume-actual.png просмотрен. Повтора вступления нет, контекст сохранён.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/resume-actual.png",
+          "sha256": "d7cf358ce91f59d9b3e3ea8a55d922a0341219332786c2d4507c124d348d1ccc",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ],
+      "capture": {
+        "sourceHash": "1e93b2effbf33a14a087a8259fe5f3d407bc0fc6561054f91a8b71c5799b0967",
+        "fixtureHash": "bf524e34ab4f92aa2c49c76af2441c9c6cc9e8f9ce7adadbd1b7907efadfef1f",
+        "runtime": "SomewhereUITestHost Debug / iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "iPhone18 Pro 402×874pt;1206×2622px;scale3",
+        "fonts": [
+          "SF system; BrandTypography44pt weight850 adapter (source)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:04:48.316062Z"
+      }
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "reduced-motion-small-phone",
+      "status": "blocked",
+      "observations": "Blocked: live-сценарий small-phone не выполнялся. Согласованное работающее устройство402×874pt относится к standard. Имеющийся выключенный iPhone17e390×844 совпадает с ориентиром стандартного размера в контракте и не подменяет узкий экран. Устройства не создавались/не сбрасывались; выдуманного capture/pass нет.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/device.json",
+          "sha256": "8e18645783a377ad7aae8db403463743d8f5f147b0589a7a4e945ed5516a7b24",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "reduced-motion-standard-phone",
+      "status": "needs-fixes",
+      "observations": "Runtime подтвердил системные Reduce Motion=true и accessibility5. В кадрах знак не вращается, при максимальном тексте подпись целая. Однако LaunchScreen→SwiftUI всё ещё меняет геометрию слова, как при обычном запуске. Озвучивание VoiceOver исключено по указанию пользователя.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reduced-frames/frame-035.png",
+          "sha256": "47fe3cda7d4787fec9a590f6332bb57d6713930d36d6bf88a301ac5750fa1c1e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/interactions.json",
+          "sha256": "ffed0d022982e9fb9d518a65546c33eb4c9f620ce78bf6fbd44746d0a32bac49",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/runtime-context-reduced.json",
+          "sha256": "b23c90e70659bbfdc4668d49fcf6df79d5c56a603d91fdc0bb90df63917c3bcb",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios/reduced-interaction.json",
+          "sha256": "093bcaf7bbefd595f8f2f762b202e35f8952d9e80812a5d425b0b48f83045a5b",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

@@ -395,7 +395,9 @@ test('meeting information shares in one sheet, excludes service links and keeps 
   await open.click();
   await info.getByRole('button', { name: 'Настройки встречи', exact: true }).click();
   const edit = page.getByRole('dialog', { name: 'Настройки встречи' });
-  await edit.getByLabel('Название', { exact: true }).fill('Сохраним позже');
+  await edit
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Сохраним позже');
   await edit.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await expect(info).toBeVisible();
   await expect(
@@ -410,7 +412,7 @@ test('meeting information shares in one sheet, excludes service links and keeps 
   );
   await open.click();
   await info.getByRole('button', { name: 'Настройки встречи', exact: true }).click();
-  await expect(edit.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(edit.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Сохраним позже',
   );
   await edit.getByRole('button', { name: 'Закрыть', exact: true }).click();

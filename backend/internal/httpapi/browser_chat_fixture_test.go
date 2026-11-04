@@ -13,14 +13,13 @@ import (
 	"github.com/etozhenerk/group-planning/backend/internal/storage/memory"
 )
 
-// Opt-in test-only wiring shares the browser fixture's TLS cookie/provider flow.
-func browserChatFixture(t *testing.T, store *memory.Store, auth *identity.Service) (*meetings.Service, RealtimeHandler) {
-	t.Helper()
-	return chatFixture(t, store, auth, "BROWSER")
-}
-
 // All opt-in fixture variants share the same auth adapter and dispatcher lifecycle.
 func chatFixture(t *testing.T, store *memory.Store, auth *identity.Service, platform string) (*meetings.Service, RealtimeHandler) {
+	t.Helper()
+	return chatFixtureWithClock(t, store, auth, platform, time.Now)
+}
+
+func chatFixtureWithClock(t *testing.T, store *memory.Store, auth *identity.Service, platform string, now func() time.Time) (*meetings.Service, RealtimeHandler) {
 	t.Helper()
 	options := []meetings.Option{meetings.WithMediaContent(memory.NewMediaContent())}
 	enabled := os.Getenv("SOMEWHERE_"+platform+"_CHAT_REALTIME") == "1"
@@ -30,7 +29,7 @@ func chatFixture(t *testing.T, store *memory.Store, auth *identity.Service, plat
 	}
 
 	options = append(options, meetings.WithChatReadState(readEnabled))
-	app := meetings.NewService(store, time.Now, options...)
+	app := meetings.NewService(store, now, options...)
 	if err := app.InitializeChatReadState(t.Context()); err != nil {
 		t.Fatal(err)
 	}

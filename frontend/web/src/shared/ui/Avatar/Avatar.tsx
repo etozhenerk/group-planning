@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/shared/ui/Avatar/Avatar.module.css';
 
 export type AvatarProps = {
@@ -7,6 +8,7 @@ export type AvatarProps = {
   own?: boolean;
   tone?: 'sand' | 'lilac' | 'mint' | 'blue';
   src?: string | null;
+  mobileSrc?: string | null;
 };
 
 export const Avatar = ({
@@ -15,8 +17,11 @@ export const Avatar = ({
   own = false,
   src = null,
   tone,
+  mobileSrc,
 }: AvatarProps) => {
-  const [failed, setFailed] = useState(false);
+  const mobile = useMobileLayout();
+  const source = mobile && mobileSrc !== undefined ? mobileSrc : src;
+  const [failedSource, setFailedSource] = useState<string | null>(null);
 
   return (
     <span
@@ -32,16 +37,22 @@ export const Avatar = ({
         .join(' ')}
       data-testid="avatar"
       data-tone={tone}
+      data-mobile={mobile}
       aria-hidden="true"
     >
-      {src && !failed ? (
+      {source && source !== failedSource ? (
         <img
           className={styles.image}
-          src={src}
+          src={source}
           alt=""
           referrerPolicy="no-referrer"
-          onError={() => setFailed(true)}
+          onError={() => setFailedSource(source)}
         />
+      ) : mobile ? (
+        <svg className={styles.silhouette} viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="8" r="4" fill="currentColor" />
+          <path d="M4 22v-2a8 8 0 0 1 16 0v2Z" fill="currentColor" />
+        </svg>
       ) : (
         name.trim().slice(0, 1).toUpperCase() || '?'
       )}

@@ -13,6 +13,7 @@ export type MeetingTimeFieldsProps = {
   errors: Record<string, string>;
   disabled?: boolean;
   mobileSheet?: boolean;
+  dateRequired?: boolean;
 };
 
 export const MeetingTimeFields = ({
@@ -21,6 +22,7 @@ export const MeetingTimeFields = ({
   errors,
   disabled = false,
   mobileSheet = false,
+  dateRequired = true,
 }: MeetingTimeFieldsProps) => {
   const mobile = useMobileLayout();
   const narrow = useMediaQuery(`(max-width: ${designTokens.breakpointChatNarrowWidth})`);
@@ -37,6 +39,8 @@ export const MeetingTimeFields = ({
           mobileSheet={mobileSheet}
           compact
           value={fields.date}
+          required={dateRequired}
+          error={mobile && errors.starts_on ? 'Выберите дату встречи' : ''}
           timezone={value.timezone}
           onChange={fields.changeDate}
           invalid={!!errors.starts_at || !!errors.starts_on}
@@ -47,13 +51,14 @@ export const MeetingTimeFields = ({
           value={fields.time}
           onChange={fields.changeTime}
           invalid={!!errors.starts_at}
+          error={mobile && errors.starts_at ? 'Проверьте дату и время встречи.' : ''}
           disabled={disabled}
         />
       </div>
       <p className={styles['time-zone-note']}>
         Время можно уточнить позже · {fields.zone}
       </p>
-      {(errors.starts_at || errors.starts_on) && (
+      {!mobile && (errors.starts_at || errors.starts_on) && (
         <span className={styles['error']}>Проверьте дату и время встречи.</span>
       )}
       {errors.ambiguous && (

@@ -1,10 +1,11 @@
+import { mapPublicUser } from '@/shared/api';
 import type { WireDatePoll } from '@/shared/api';
 import type { DatePoll, PollSettings } from '@/entities/meeting/model/datePoll';
 
 export const mapDatePoll = (wire: WireDatePoll): DatePoll => ({
   id: wire.id,
   meetingId: wire.meeting_id,
-  author: { id: wire.author.id, displayName: wire.author.display_name },
+  author: mapPublicUser(wire.author),
   settings: {
     multipleAnswers: wire.settings.multiple_answers,
     allowRevoting: wire.settings.allow_revoting,
@@ -14,11 +15,7 @@ export const mapDatePoll = (wire: WireDatePoll): DatePoll => ({
   },
   options: wire.options.map((option) => ({
     ...option,
-    voters:
-      option.voters?.map((voter) => ({
-        id: voter.id,
-        displayName: voter.display_name,
-      })) ?? null,
+    voters: option.voters?.map(mapPublicUser) ?? null,
   })),
   state: wire.state,
   revision: wire.revision,

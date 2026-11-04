@@ -1,3 +1,4 @@
+import { RequiredMark } from '@/shared/ui/RequiredMark';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useMobileLayout } from '@/shared/lib/media';
 import { DateInput } from '@/shared/ui/DateInput';
@@ -26,7 +27,9 @@ export const PollDatesFields = ({
 
   return (
     <fieldset className={styles['dates']} data-mobile={mobile} disabled={disabled}>
-      <legend>Варианты даты</legend>
+      <legend>
+        Варианты даты <RequiredMark />
+      </legend>
       {dates.map((date, index) => (
         <div
           className={[styles['row'], dates.length > 2 ? styles['removable'] : '']
@@ -37,6 +40,7 @@ export const PollDatesFields = ({
           <DateInput
             mobileSheet
             compact
+            required
             weekday
             label={`Вариант ${index + 1}`}
             value={date}

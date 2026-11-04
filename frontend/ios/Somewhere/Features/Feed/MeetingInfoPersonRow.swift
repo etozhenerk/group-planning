@@ -12,9 +12,7 @@ struct MeetingInfoPersonRow: View {
         HStack(spacing: DesignTokens.componentMobileRosterRowGap) {
             MeetingInfoAvatar(
                 user: person.user, size: DesignTokens.componentMobileRosterAvatarSize,
-                textSize: DesignTokens.typographySizeParticipantRosterAvatar,
-                weight: DesignTokens.typographyWeightParticipantRosterAvatar,
-                color: colors[index % colors.count], textColor: DesignTokens.colorRosterText)
+                color: colors[index % colors.count], foregroundColor: DesignTokens.colorRosterText)
             VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
                 Text(person.user.displayName)
                     .designFont(DesignTokens.typographySizeSmall)

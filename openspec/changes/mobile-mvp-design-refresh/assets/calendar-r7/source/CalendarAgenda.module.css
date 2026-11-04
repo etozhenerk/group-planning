@@ -1,0 +1,10 @@
+.agenda { min-width:0; }
+.heading { position:sticky; top:0; z-index:1; background:var(--ds-color-background); display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 0 10px; }
+.heading h2 { margin:0; font-size:15px; font-weight:600; letter-spacing:-.25px; }
+.heading>span { flex:none; color:var(--ds-color-muted); font-size:11px; }
+.cards { display:flex; flex-direction:column; gap:8px; animation:arrive var(--ds-motion-duration-navigation) var(--ds-motion-easing-standard) both; }
+.empty { display:flex; align-items:center; gap:13px; border:1px solid var(--ds-color-line); border-radius:var(--ds-radius-card); padding:25px 18px; background:var(--ds-color-surface); color:var(--ds-color-muted); }
+.empty svg { color:var(--ds-color-accent); flex:none; }.empty p { margin:0; font-size:13px; line-height:1.5; }
+@keyframes arrive { from { translate:0 8px; } to { translate:0 0; } }
+@media(prefers-reduced-motion:reduce) { .cards { animation:none; } }
+@media(max-width:350px) { .heading { align-items:flex-start; }.heading h2 { max-width:180px; } }

@@ -21,7 +21,6 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -77,9 +76,9 @@ internal fun CompactButton(
         ) {
             if (busy) {
                 CircularProgressIndicator(
-                    Modifier.size(20.dp),
+                    Modifier.size(DesignTokens.spaceS20),
                     color = LocalContentColor.current,
-                    strokeWidth = 2.dp,
+                    strokeWidth = DesignTokens.spaceS2,
                 )
             }
             Row(
@@ -89,9 +88,15 @@ internal fun CompactButton(
                     Modifier
                 },
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(9.dp),
+                horizontalArrangement = Arrangement.spacedBy(DesignTokens.componentButtonIconGap),
             ) {
-                icon?.let { AppIcon(it, Modifier.size(22.dp), tint = LocalContentColor.current) }
+                icon?.let {
+                    AppIcon(
+                        it,
+                        Modifier.size(DesignTokens.componentMobileChatIconSize),
+                        tint = LocalContentColor.current,
+                    )
+                }
                 Text(
                     title,
                     fontSize = DesignTokens.typographySizeButton,

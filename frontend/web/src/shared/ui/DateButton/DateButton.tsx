@@ -16,6 +16,7 @@ export type DateButtonProps = {
   today: DateTime | null;
   disabled: boolean;
   invalid: boolean;
+  descriptionId?: string | undefined;
   clearable: boolean;
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -31,6 +32,7 @@ export const DateButton = ({
   today,
   disabled,
   invalid,
+  descriptionId,
   clearable,
   open,
   setOpen,
@@ -49,7 +51,7 @@ export const DateButton = ({
         aria-label={label}
         aria-haspopup="dialog"
         aria-expanded={open}
-        aria-describedby={`${id}-value`}
+        aria-describedby={[`${id}-value`, descriptionId].filter(Boolean).join(' ')}
         aria-invalid={invalid}
         disabled={disabled}
         onClick={() => setOpen(!open)}

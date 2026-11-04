@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "mobile-launch-android-current",
+  "purpose": "feature",
+  "component": "android",
+  "createdAt": "2026-11-04T17:23:14.167Z",
+  "implementer": "codex-mobile-mvp-2026-11-04",
+  "catalogHash": "f07c1805ac8a8b93d8e827a1d8ef86904d4f1e683428a3187cf85801d378bec3",
+  "sourceHash": "838656632f48e1a80a23ecf033ca34c5c48866a4ea1a6ce8bb8775b0b151c6e3",
+  "selectedCases": [
+    "TC-MOBILE-LAUNCH-COLD",
+    "TC-MOBILE-LAUNCH-REDUCED",
+    "TC-MOBILE-LAUNCH-RESUME"
+  ],
+  "expected": [
+    {
+      "id": "TC-MOBILE-LAUNCH-COLD/android-launch-small/manual",
+      "caseId": "TC-MOBILE-LAUNCH-COLD",
+      "environment": "android-launch-small",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-COLD/android-launch-standard/manual",
+      "caseId": "TC-MOBILE-LAUNCH-COLD",
+      "environment": "android-launch-standard",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-RESUME/android-launch-small/manual",
+      "caseId": "TC-MOBILE-LAUNCH-RESUME",
+      "environment": "android-launch-small",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-RESUME/android-launch-standard/manual",
+      "caseId": "TC-MOBILE-LAUNCH-RESUME",
+      "environment": "android-launch-standard",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-REDUCED/android-launch-small/manual",
+      "caseId": "TC-MOBILE-LAUNCH-REDUCED",
+      "environment": "android-launch-small",
+      "mode": "manual"
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-REDUCED/android-launch-standard/manual",
+      "caseId": "TC-MOBILE-LAUNCH-REDUCED",
+      "environment": "android-launch-standard",
+      "mode": "manual"
+    }
+  ],
+  "suites": [
+    "android-ui",
+    "android-unit"
+  ],
+  "environments": [
+    {
+      "id": "android-launch-small",
+      "profile": "android-phone",
+      "platform": "android",
+      "application": "product",
+      "url": "https://127.0.0.1:60675",
+      "build": "dev.groupplanning.android.uitesthost0.1.0(1); QA APK sha256663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+      "os": "Android16 API36 BE2A.250530.026.F3",
+      "device": "emulator-5554 sdk_gphone64_arm64; 320x760dp density320",
+      "locale": "App ru; system en-US",
+      "timezone": "Europe/Moscow",
+      "data": "TestAndroidFixture/calendar; isolated session/meeting data from /private/tmp/somewhere-launch-feature-android-config.json",
+      "backend": "API0.1.0; Go memory TestAndroidFixture, current source"
+    },
+    {
+      "id": "android-launch-standard",
+      "profile": "android-phone",
+      "platform": "android",
+      "application": "product",
+      "url": "https://127.0.0.1:60675",
+      "build": "dev.groupplanning.android.uitesthost0.1.0(1); QA APK sha256663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+      "os": "Android16 API36 BE2A.250530.026.F3",
+      "device": "emulator-5554 sdk_gphone64_arm64; 390x844dp density320",
+      "locale": "App ru; system en-US",
+      "timezone": "Europe/Moscow",
+      "data": "TestAndroidFixture/calendar; isolated session/meeting data from /private/tmp/somewhere-launch-feature-android-config.json",
+      "backend": "API0.1.0; Go memory TestAndroidFixture, current source"
+    }
+  ],
+  "artifact": null
+}

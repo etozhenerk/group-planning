@@ -1,3 +1,4 @@
+import { useNavigationInset } from '@/shared/ui/Workspace/hooks/useNavigationInset';
 import { Brand } from '@/shared/ui/Brand';
 import styles from '@/shared/ui/Workspace/Workspace.module.css';
 import type { ReactNode } from 'react';
@@ -10,21 +11,26 @@ export type WorkspaceProps = {
   navigation: ReactNode;
   children: ReactNode;
   conversation?: boolean;
+  screen?: boolean;
 };
 
 export const Workspace = ({
   navigation,
   children,
   conversation = false,
+  screen = false,
 }: WorkspaceProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
+  useNavigationInset(ref, navigationRef);
   const mobile = useMobileLayout();
-  useVisualViewport(ref, conversation);
+  useVisualViewport(ref);
 
   return (
     <div
       ref={ref}
       data-mobile={mobile}
+      data-screen={screen}
       className={[
         styles['workspace'],
         conversation ? styles['conversation-workspace'] : '',
@@ -33,7 +39,9 @@ export const Workspace = ({
         .filter(Boolean)
         .join(' ')}
     >
-      <div className={styles['navigation-slot']}>{navigation}</div>
+      <div className={styles['navigation-slot']} ref={navigationRef}>
+        {navigation}
+      </div>
       <div
         className={[styles.content, conversation ? styles.conversationContent : ''].join(
           ' ',

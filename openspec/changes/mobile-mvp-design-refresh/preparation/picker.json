@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "packet": "picker",
+  "preparationTask": "2.11",
+  "publicationTask": "2.12",
+  "published": false,
+  "screens": [
+    {
+      "id": "map",
+      "reference": "openspec/changes/mobile-mvp-design-refresh/preparation/references/map/frame.html",
+      "source": "openspec/changes/mobile-mvp-design-refresh/assets/place-r4/frame.html",
+      "sourceSha256": "62c5932275ab6f1c58212ca6920df2f3731c6d7b0aff0480122735020326c65f",
+      "selectorStates": [
+        "map",
+        "map-error"
+      ],
+      "interactionStates": [
+        "map",
+        "search",
+        "search-loading",
+        "results",
+        "empty-results",
+        "search-error",
+        "map-error",
+        "point-no-address",
+        "organization-selected",
+        "address-selected",
+        "point-selected",
+        "manual",
+        "cancel",
+        "confirm",
+        "geolocation-denied",
+        "stale-search",
+        "pan-mid",
+        "pinch",
+        "pointer-cancel",
+        "attribution-visible"
+      ],
+      "states": [
+        "map",
+        "map-error",
+        "search",
+        "search-loading",
+        "results",
+        "empty-results",
+        "search-error",
+        "point-no-address",
+        "organization-selected",
+        "address-selected",
+        "point-selected",
+        "manual",
+        "cancel",
+        "confirm",
+        "geolocation-denied",
+        "stale-search",
+        "pan-mid",
+        "pinch",
+        "pointer-cancel",
+        "attribution-visible"
+      ],
+      "render": "state=<selector>&platform=<web|ios|android>; interactionStates достигаются действием в исходной fixture, не выдаются за новые API-операции",
+      "providerContentExcluded": true
+    }
+  ],
+  "platforms": {
+    "web": {
+      "viewports": {
+        "mobile-320": {
+          "width": 320,
+          "height": 760
+        },
+        "mobile-390": {
+          "width": 390,
+          "height": 844
+        },
+        "mobile-739": {
+          "width": 739,
+          "height": 844
+        },
+        "short-ime": {
+          "width": 390,
+          "height": 430
+        },
+        "coarse-landscape": {
+          "width": 844,
+          "height": 390,
+          "pointer": "coarse"
+        },
+        "large-text": {
+          "width": 320,
+          "height": 760,
+          "textScale": 2
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    },
+    "ios": {
+      "viewports": {
+        "small-phone": {
+          "logicalWidth": 320,
+          "logicalHeight": 568
+        },
+        "standard-phone": {
+          "logicalWidth": 402,
+          "logicalHeight": 874
+        },
+        "landscape": {
+          "logicalWidth": 874,
+          "logicalHeight": 402
+        },
+        "large-text": {
+          "logicalWidth": 402,
+          "logicalHeight": 874,
+          "textScale": "accessibility-xxxl"
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    },
+    "android": {
+      "viewports": {
+        "small-phone": {
+          "logicalWidth": 320,
+          "logicalHeight": 640
+        },
+        "standard-phone": {
+          "logicalWidth": 412,
+          "logicalHeight": 892
+        },
+        "landscape": {
+          "logicalWidth": 892,
+          "logicalHeight": 412
+        },
+        "large-text": {
+          "logicalWidth": 412,
+          "logicalHeight": 892,
+          "fontScale": 2
+        }
+      },
+      "fixtures": {
+        "locale": "ru-RU",
+        "timezone": "Europe/Moscow",
+        "date": "2026-11-04",
+        "roles": [
+          "organizer",
+          "going",
+          "maybe",
+          "not-going",
+          "guest"
+        ],
+        "identities": [
+          "photo",
+          "missing-photo",
+          "broken-photo"
+        ],
+        "density": [
+          "20-meetings-day",
+          "30-participants",
+          "long-title-name",
+          "empty"
+        ],
+        "network": [
+          "loading",
+          "offline",
+          "timeout",
+          "unknown",
+          "conflict",
+          "revoked"
+        ],
+        "platformInsets": "Фактические insets и шрифт фиксируются в live capture; HTML-рамка не является native эталоном статуса/клавиатуры."
+      },
+      "status": "reference-preparation",
+      "note": "Web-render представляет композицию; фактическая native геометрия/системные действия принимаются на работающем клиенте."
+    }
+  },
+  "referencesInventory": "preparation/references.json",
+  "commonContract": "preparation/mobile-foundation.md",
+  "acceptance": "Не client pass; независимые design-review и feature-test после реализации, на одном frozen candidate платформы."
+}

@@ -75,3 +75,58 @@
   gap: var(--ds-space-s10);
   margin-bottom: var(--ds-space-s24);
 }
+
+.layout[data-mobile='true'] .month {
+  max-width: none;
+}
+
+.layout[data-mobile='true'][data-narrow='true'] {
+  margin-inline: calc(var(--ds-space-s6) - var(--ds-space-s20));
+}
+
+.layout[data-mobile='true'] {
+  gap: 0;
+}
+
+.layout[data-mobile='true'] .agenda {
+  margin-top: 0;
+}
+
+.layout[data-mobile='true'] .heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--ds-color-background);
+  align-items: center;
+  gap: var(--ds-space-s8);
+  padding: var(--ds-space-s8) 0 var(--ds-space-s10);
+  margin-bottom: 0;
+}
+
+.layout[data-mobile='true'] .heading h3 {
+  font-size: var(--ds-typography-size-body);
+  font-weight: var(--ds-typography-weight-semibold);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-meetings-agenda-tracking));
+}
+
+.layout[data-mobile='true'] .weekday {
+  flex: none;
+  font-size: var(--ds-typography-size-label);
+}
+
+.layout[data-mobile='true'][data-narrow='true'] .heading {
+  align-items: flex-start;
+}
+
+.layout[data-mobile='true'][data-narrow='true'] .heading h3 {
+  max-width: var(--ds-component-mobile-meetings-narrow-agenda-width);
+}
+
+.layout[data-mobile='true'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.layout[data-mobile='true'] .agenda {
+  width: 100%;
+  max-width: none;
+}

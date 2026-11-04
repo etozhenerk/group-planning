@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 5.0.0. Do not edit.
+// Generated from design-system/tokens.json · 6.3.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -37,6 +37,125 @@ enum DesignTokens {
         red: 0.2549019607843137,
         green: 0.25882352941176473,
         blue: 0.28627450980392155,
+        opacity: 1
+    )
+    static let colorCalendarBorder = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.0392156862745098
+    )
+    static let colorCalendarDay = Color(
+        .sRGB,
+        red: 0.8549019607843137,
+        green: 0.8431372549019608,
+        blue: 0.8745098039215686,
+        opacity: 1
+    )
+    static let colorCalendarEvent = Color(
+        .sRGB,
+        red: 0.27450980392156865,
+        green: 0.2235294117647059,
+        blue: 0.30196078431372547,
+        opacity: 1
+    )
+    static let colorCalendarHover = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.03137254901960784
+    )
+    static let colorCalendarOutsideDay = Color(
+        .sRGB,
+        red: 0.4470588235294118,
+        green: 0.4470588235294118,
+        blue: 0.49019607843137253,
+        opacity: 1
+    )
+    static let colorCalendarSelected = Color(
+        .sRGB,
+        red: 0.4117647058823529,
+        green: 0.3333333333333333,
+        blue: 0.45098039215686275,
+        opacity: 1
+    )
+    static let colorCalendarSelectedBorder = Color(
+        .sRGB,
+        red: 0.8352941176470589,
+        green: 0.7529411764705882,
+        blue: 0.8941176470588236,
+        opacity: 0.4588235294117647
+    )
+    static let colorCalendarSelectedText = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 1
+    )
+    static let colorCalendarSurface = Color(
+        .sRGB,
+        red: 0.16862745098039217,
+        green: 0.17254901960784313,
+        blue: 0.19607843137254902,
+        opacity: 1
+    )
+    static let colorCalendarTodayOutline = Color(
+        .sRGB,
+        red: 0.7176470588235294,
+        green: 0.6509803921568628,
+        blue: 0.7764705882352941,
+        opacity: 1
+    )
+    static let colorCalendarTodayText = Color(
+        .sRGB,
+        red: 0.8823529411764706,
+        green: 0.8627450980392157,
+        blue: 0.9098039215686274,
+        opacity: 1
+    )
+    static let colorCalendarWeekday = Color(
+        .sRGB,
+        red: 0.6352941176470588,
+        green: 0.6313725490196078,
+        blue: 0.6862745098039216,
+        opacity: 1
+    )
+    static let colorCalendarWeekendDay = Color(
+        .sRGB,
+        red: 0.7137254901960784,
+        green: 0.8156862745098039,
+        blue: 0.7647058823529411,
+        opacity: 1
+    )
+    static let colorCalendarWeekendEvent = Color(
+        .sRGB,
+        red: 0.20784313725490197,
+        green: 0.3058823529411765,
+        blue: 0.27450980392156865,
+        opacity: 1
+    )
+    static let colorCalendarWeekendSelected = Color(
+        .sRGB,
+        red: 0.33725490196078434,
+        green: 0.4549019607843137,
+        blue: 0.39215686274509803,
+        opacity: 1
+    )
+    static let colorCalendarWeekendSelectedBorder = Color(
+        .sRGB,
+        red: 0.7411764705882353,
+        green: 0.8431372549019608,
+        blue: 0.7803921568627451,
+        opacity: 0.5843137254901961
+    )
+    static let colorCalendarWeekendWeekday = Color(
+        .sRGB,
+        red: 0.6901960784313725,
+        green: 0.7803921568627451,
+        blue: 0.7411764705882353,
         opacity: 1
     )
     static let colorError = Color(
@@ -101,6 +220,55 @@ enum DesignTokens {
         green: 0.20392156862745098,
         blue: 0.22745098039215686,
         opacity: 1
+    )
+    static let colorMobileNavigationAndroidBackground = Color(
+        .sRGB,
+        red: 0.15294117647058825,
+        green: 0.1568627450980392,
+        blue: 0.1803921568627451,
+        opacity: 0.9803921568627451
+    )
+    static let colorMobileNavigationAndroidBorder = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.08235294117647059
+    )
+    static let colorMobileNavigationIOSBackground = Color(
+        .sRGB,
+        red: 0.15294117647058825,
+        green: 0.1568627450980392,
+        blue: 0.1803921568627451,
+        opacity: 0.92
+    )
+    static let colorMobileNavigationIOSBorder = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.082
+    )
+    static let colorMobileOnboardingInactive = Color(
+        .sRGB,
+        red: 0.2549019607843137,
+        green: 0.25882352941176473,
+        blue: 0.28627450980392155,
+        opacity: 1
+    )
+    static let colorMobileOnboardingNext = Color(
+        .sRGB,
+        red: 0.2235294117647059,
+        green: 0.22745098039215686,
+        blue: 0.25882352941176473,
+        opacity: 1
+    )
+    static let colorMobileStickyShadow = Color(
+        .sRGB,
+        red: 0,
+        green: 0,
+        blue: 0,
+        opacity: 0.3333333333333333
     )
     static let colorMuted = Color(
         .sRGB,
@@ -377,6 +545,24 @@ enum DesignTokens {
     static let componentButtonPaddingBlock = CGFloat(12)
     static let componentButtonPaddingInline = CGFloat(18)
     static let componentButtonRadius = CGFloat(13)
+    static let componentCalendarControlRadius = CGFloat(9)
+    static let componentCalendarDayNumberRadius = CGFloat(9)
+    static let componentCalendarDayNumberSize = CGFloat(26)
+    static let componentCalendarDayRadius = CGFloat(13)
+    static let componentCalendarDotsInset = CGFloat(5)
+    static let componentCalendarEnterOffset = CGFloat(5)
+    static let componentCalendarEnterOpacity = 0.5
+    static let componentCalendarHeadingGap = CGFloat(22)
+    static let componentCalendarMobileHeadingGap = CGFloat(17)
+    static let componentCalendarMobileInsetBlock = CGFloat(17)
+    static let componentCalendarMobileInsetInline = CGFloat(14)
+    static let componentCalendarMobileRadius = CGFloat(20)
+    static let componentCalendarMonthIconSize = CGFloat(17)
+    static let componentCalendarNarrowInsetBlock = CGFloat(15)
+    static let componentCalendarRadius = CGFloat(23)
+    static let componentCalendarTodayInsetBlock = CGFloat(7)
+    static let componentCalendarTodayInsetInline = CGFloat(9)
+    static let componentCalendarWeekGap = CGFloat(9)
     static let componentCardAvatar = CGFloat(35)
     static let componentCardAvatarMobile = CGFloat(32)
     static let componentCardAvatarOverlap = CGFloat(9)
@@ -443,6 +629,24 @@ enum DesignTokens {
     static let componentMeetingSettingsCoverSize = CGFloat(52)
     static let componentMessageDeliveryIndicatorSize = CGFloat(12)
     static let componentMessageDeliveryPendingDelay = 2
+    static let componentMobileAvatarFallbackOpacity = 0.7
+    static let componentMobileAvatarFallbackRatio = 0.72
+    static let componentMobileAvatarNormalSize = CGFloat(40)
+    static let componentMobileAvatarProfileSize = CGFloat(86)
+    static let componentMobileAvatarSmallSize = CGFloat(32)
+    static let componentMobileBackDisabledOpacity = 0.45
+    static let componentMobileBackFocusRadius = CGFloat(12)
+    static let componentMobileBackIconSize = CGFloat(24)
+    static let componentMobileBackPressedOpacity = 0.55
+    static let componentMobileBackStrokeWidth = 1.7
+    static let componentMobileBrandGap = CGFloat(7)
+    static let componentMobileBrandMarkSize = CGFloat(29)
+    static let componentMobileBrandTracking = CGFloat(1)
+    static let componentMobileCalendarDotsInset = CGFloat(7)
+    static let componentMobileCalendarSelectionRadius = CGFloat(9)
+    static let componentMobileCalendarSelectionSize = CGFloat(36)
+    static let componentMobileCalendarTitleSize = CGFloat(20)
+    static let componentMobileCalendarTitleTracking = CGFloat(0.5)
     static let componentMobileChatBubbleCornerRadius = CGFloat(6)
     static let componentMobileChatBubbleFocusOffset = CGFloat(3)
     static let componentMobileChatBubbleInsetBlock = CGFloat(11)
@@ -478,6 +682,8 @@ enum DesignTokens {
     static let componentMobileChatNarrowMarkHeight = CGFloat(34)
     static let componentMobileChatNarrowMarkRadius = CGFloat(10)
     static let componentMobileChatNarrowMarkWidth = CGFloat(30)
+    static let componentMobileChatSendCircleSize = CGFloat(38)
+    static let componentMobileChatSendIconSize = CGFloat(20)
     static let componentMobileFieldGap = CGFloat(7)
     static let componentMobileFieldIconSize = CGFloat(18)
     static let componentMobileFieldInsetBlock = CGFloat(10)
@@ -495,6 +701,73 @@ enum DesignTokens {
     static let componentMobileFormSwitchThumbSize = CGFloat(18)
     static let componentMobileFormSwitchWidth = CGFloat(38)
     static let componentMobileFormTwoFieldGap = CGFloat(10)
+    static let componentMobileInvitationCardAnswerGap = CGFloat(7)
+    static let componentMobileInvitationCardAnswerInsetBottom = CGFloat(15)
+    static let componentMobileInvitationCardAnswerInsetStart = CGFloat(17)
+    static let componentMobileInvitationCardCoverDateReserve = CGFloat(95)
+    static let componentMobileInvitationCardDateInset = CGFloat(14)
+    static let componentMobileInvitationCardFooterReserve = CGFloat(44)
+    static let componentMobileInvitationCardInsetInline = CGFloat(17)
+    static let componentMobileInvitationCardInsetTop = CGFloat(26)
+    static let componentMobileInvitationCardMinimumHeight = CGFloat(176)
+    static let componentMobileInvitationResponseActionsGap = CGFloat(22)
+    static let componentMobileInvitationsCounterRadius = CGFloat(9)
+    static let componentMobileInvitationsCounterSize = CGFloat(28)
+    static let componentMobileInvitationsExplanationLineHeight = 1.6
+    static let componentMobileInvitationsExplanationMaxWidth = CGFloat(360)
+    static let componentMobileInvitationsScrollBottom = CGFloat(26)
+    static let componentMobileLaunchGap = CGFloat(16)
+    static let componentMobileLaunchMarkSize = CGFloat(53)
+    static let componentMobileLaunchTrackingRatio = 0.052
+    static let componentMobileMeetingsAgendaTracking = CGFloat(0.25)
+    static let componentMobileMeetingsCreateIconSize = CGFloat(17)
+    static let componentMobileMeetingsCreateInsetInline = CGFloat(13)
+    static let componentMobileMeetingsEmptyActionInline = CGFloat(13)
+    static let componentMobileMeetingsEmptyDayGap = CGFloat(13)
+    static let componentMobileMeetingsEmptyDayIcon = CGFloat(24)
+    static let componentMobileMeetingsEmptyDayInsetBlock = CGFloat(25)
+    static let componentMobileMeetingsEmptyGlyph = CGFloat(40)
+    static let componentMobileMeetingsEmptyInset = CGFloat(18)
+    static let componentMobileMeetingsEmptyTop = CGFloat(70)
+    static let componentMobileMeetingsHeadingInsetBottom = CGFloat(12)
+    static let componentMobileMeetingsHeadingInsetTop = CGFloat(17)
+    static let componentMobileMeetingsHeadingMinimumHeight = CGFloat(73)
+    static let componentMobileMeetingsMonthTracking = CGFloat(1)
+    static let componentMobileMeetingsNarrowAgendaWidth = CGFloat(180)
+    static let componentMobileMeetingsPeriodInsetBottom = CGFloat(14)
+    static let componentMobileMeetingsPeriodInsetTop = CGFloat(13)
+    static let componentMobileMeetingsPeriodMinimumHeight = CGFloat(48)
+    static let componentMobileMeetingsTitleLineHeight = 1.2
+    static let componentMobileMeetingsTitleMaximum = CGFloat(28)
+    static let componentMobileMeetingsTitleMinimum = CGFloat(24)
+    static let componentMobileMeetingsTitleTracking = CGFloat(0.9)
+    static let componentMobileMeetingsTitleWeight = 720
+    static let componentMobileMeetingsTitleWidthRatio = 0.07
+    static let componentMobileMeetingsUndatedCountRadius = CGFloat(7)
+    static let componentMobileMeetingsUndatedInset = CGFloat(14)
+    static let componentMobileMeetingsUndatedMargin = CGFloat(14)
+    static let componentMobileMeetingsViewIconSize = CGFloat(20)
+    static let componentMobileNavigationAndroidLabelLineHeight = CGFloat(13.5)
+    static let componentMobileNavigationIconGap = CGFloat(3)
+    static let componentMobileNavigationIconStroke = 1.7
+    static let componentMobileNavigationPadding = CGFloat(7)
+    static let componentMobileNavigationSelectedIconStroke = 1.8
+    static let componentMobileOnboardingArtworkGap = CGFloat(30)
+    static let componentMobileOnboardingArtworkHeight = CGFloat(360)
+    static let componentMobileOnboardingCopyGap = CGFloat(18)
+    static let componentMobileOnboardingCopyMinimumHeight = CGFloat(180)
+    static let componentMobileOnboardingFooterMinimumHeight = CGFloat(110)
+    static let componentMobileOnboardingInsetInline = CGFloat(27)
+    static let componentMobileOnboardingNextHeight = CGFloat(52)
+    static let componentMobileOnboardingNextInsetInline = CGFloat(23)
+    static let componentMobileOnboardingNextMinimumWidth = CGFloat(135)
+    static let componentMobileOnboardingProgressDotSize = CGFloat(6)
+    static let componentMobileOnboardingProgressSelectedWidth = CGFloat(19)
+    static let componentMobileOnboardingProgressSlotWidth = CGFloat(27)
+    static let componentMobileOnboardingProgressVisualHeight = CGFloat(34)
+    static let componentMobileOnboardingTallArtworkHeight = CGFloat(390)
+    static let componentMobileOnboardingTitleTracking = CGFloat(1)
+    static let componentMobilePageInsetTop = CGFloat(28)
     static let componentMobilePeopleChipAvatarSize = CGFloat(21)
     static let componentMobilePeopleChipBorderWidth = CGFloat(2)
     static let componentMobilePeopleChipGap = CGFloat(4)
@@ -506,6 +779,8 @@ enum DesignTokens {
     static let componentMobilePeopleChipMoreWidth = CGFloat(32)
     static let componentMobilePeopleChipOpenerHeight = CGFloat(48)
     static let componentMobilePeopleChipOverlap = CGFloat(4)
+    static let componentMobileRequiredFontSize = CGFloat(18)
+    static let componentMobileRequiredFontWeight = 650
     static let componentMobileRosterActionHeight = CGFloat(52)
     static let componentMobileRosterActionIcon = CGFloat(20)
     static let componentMobileRosterAvatarSize = CGFloat(32)
@@ -531,6 +806,41 @@ enum DesignTokens {
     static let componentMobileSheetMinimumHeight = CGFloat(150)
     static let componentMobileSheetRadius = CGFloat(24)
     static let componentMobileSheetTopReserve = CGFloat(50)
+    static let componentMobileStateActionIconSize = CGFloat(17)
+    static let componentMobileStateActionMinimumHeight = CGFloat(48)
+    static let componentMobileStateCompactTitleLineHeight = 1.3
+    static let componentMobileStateCompactTitleSize = CGFloat(22)
+    static let componentMobileStateGlyphSize = CGFloat(32)
+    static let componentMobileStateGlyphStroke = 1.5
+    static let componentMobileStateIconRadius = CGFloat(20)
+    static let componentMobileStateIconSize = CGFloat(64)
+    static let componentMobileStateLargeGlyphSize = CGFloat(34)
+    static let componentMobileStateLargeIconGap = CGFloat(22)
+    static let componentMobileStateLargeIconRadius = CGFloat(24)
+    static let componentMobileStateLargeIconSize = CGFloat(72)
+    static let componentMobileStateLargeTitleWidth = CGFloat(250)
+    static let componentMobileStatePanelInsetBlock = CGFloat(30)
+    static let componentMobileStatePanelInsetInline = CGFloat(22)
+    static let componentMobileStateRefreshActionGlyphSize = CGFloat(18)
+    static let componentMobileStateRefreshActionRadius = CGFloat(10)
+    static let componentMobileStateRefreshGlyphSize = CGFloat(19)
+    static let componentMobileStateRefreshInsetStart = CGFloat(14)
+    static let componentMobileStateRefreshRadius = CGFloat(14)
+    static let componentMobileStateTitleSize = CGFloat(23)
+    static let componentMobileStateTitleTracking = CGFloat(0.5)
+    static let componentMobileStateTitleWeight = 650
+    static let componentMobileStickyInsetInline = CGFloat(20)
+    static let componentMobileStickyInsetTop = CGFloat(16)
+    static let componentMobileStickyRadius = CGFloat(24)
+    static let componentMobileStickyShadowBlur = CGFloat(28)
+    static let componentMobileStickyShadowOpacity = 0.3333333333333333
+    static let componentMobileStickyShadowUpOffset = CGFloat(8)
+    static let componentMobileUnreadGap = CGFloat(5)
+    static let componentMobileUnreadIconSize = CGFloat(14)
+    static let componentMobileUnreadIconStrokeWidth = 1.6
+    static let componentMobileUnreadInsetBottom = CGFloat(12)
+    static let componentMobileUnreadInsetStart = CGFloat(17)
+    static let componentMobileUnreadReserveEnd = CGFloat(138)
     static let componentNavigationDetailsSidebarWidth = CGFloat(280)
     static let componentNavigationHeight = CGFloat(62)
     static let componentNavigationIcon = CGFloat(19)
@@ -589,11 +899,13 @@ enum DesignTokens {
     static let componentTaskDetailsFactInsetBlock = CGFloat(8)
     static let componentTaskDetailsFactsGap = CGFloat(18)
     static let componentTaskDetailsFactsInsetTop = CGFloat(7)
+    static let motionDurationCalendarMonth = 0.18
     static let motionDurationCard = 0.22
     static let motionDurationCover = 0.28
     static let motionDurationEmojiPanelEnter = 0.18
     static let motionDurationEmojiPanelExit = 0.15
     static let motionDurationFast = 0.15
+    static let motionDurationMobileLaunch = 1.2
     static let motionDurationMobileSheet = 0.18
     static let motionDurationNavigation = 0.26
     static let motionDurationPhoto = 0.29
@@ -601,6 +913,7 @@ enum DesignTokens {
     static let motionDurationReactionExit = 0.15
     static let motionDurationReactionFeedback = 0.15
     static let motionDurationReactionLongPress = 0.45
+    static let motionEasingCalendarMonth = [0, 0, 0.58, 1]
     static let motionEasingStandard = [0.2, 0.7, 0.3, 1]
     static let radiusBadge = CGFloat(8)
     static let radiusCard = CGFloat(22)
@@ -635,9 +948,15 @@ enum DesignTokens {
     static let typographyLineHeightLabel = 1.4
     static let typographyLineHeightMeetingDescription = 1.6
     static let typographyLineHeightMobileFieldDescription = 1.45
+    static let typographyLineHeightMobileOnboardingBody = 1.55
+    static let typographyLineHeightMobileOnboardingTitle = 1.08
     static let typographyLineHeightMobileSheetTitle = 1.25
     static let typographySizeBody = CGFloat(15)
     static let typographySizeButton = CGFloat(14)
+    static let typographySizeCalendarTitle = CGFloat(19)
+    static let typographySizeCalendarTitleMobile = CGFloat(18)
+    static let typographySizeCalendarTitleNarrow = CGFloat(16)
+    static let typographySizeCalendarTodayNarrow = CGFloat(10)
     static let typographySizeCaption = CGFloat(12)
     static let typographySizeCardTitle = CGFloat(21)
     static let typographySizeCardTitleMobile = CGFloat(19)
@@ -652,22 +971,29 @@ enum DesignTokens {
     static let typographySizeHelpQuestion = CGFloat(14)
     static let typographySizeLabel = CGFloat(11)
     static let typographySizeMobileActionHeading = CGFloat(28)
+    static let typographySizeMobileBrandWord = CGFloat(21)
     static let typographySizeMobileChatNarrowTitle = CGFloat(14)
     static let typographySizeMobileChatTitle = CGFloat(16)
+    static let typographySizeMobileLaunchWord = CGFloat(44)
+    static let typographySizeMobileOnboardingNarrowTitle = CGFloat(28)
+    static let typographySizeMobileOnboardingTitle = CGFloat(32)
     static let typographySizeMobilePeopleInitial = CGFloat(10)
     static let typographySizeMobileSheetTitle = CGFloat(19)
     static let typographySizeMobileWebInput = CGFloat(16)
+    static let typographySizeNavigationLabel = CGFloat(9)
     static let typographySizeParticipantChip = CGFloat(11)
     static let typographySizeParticipantChipAvatar = CGFloat(9)
     static let typographySizeParticipantChipMore = CGFloat(10)
     static let typographySizeParticipantRosterAvatar = CGFloat(12)
     static let typographySizeSectionHeading = CGFloat(16)
     static let typographySizeSmall = CGFloat(13)
+    static let typographyTrackingNavigationLabel = CGFloat(0.05)
     static let typographyWeightBold = 700
     static let typographyWeightBrand = 850
     static let typographyWeightHelpQuestion = 550
     static let typographyWeightMedium = 500
     static let typographyWeightMobileChatTitle = 650
+    static let typographyWeightMobileOnboardingTitle = 740
     static let typographyWeightMobileSheetTitle = 650
     static let typographyWeightParticipantChipAvatar = 650
     static let typographyWeightParticipantRosterAvatar = 650

@@ -97,41 +97,23 @@
   }
 }
 
-@media (max-width: 739px) {
-  .card {
-    min-height: 145px;
-    padding: 26px 17px 29px;
-    border-radius: 20px;
-  }
+.card[data-mobile='true'] .cover {
+  width: 102px;
+  height: 101px;
+  right: 13px;
+  top: -10px;
+}
 
-  .date {
-    left: 14px;
-    font-size: 10px;
-    top: -11px;
-  }
+.card[data-mobile='true']:has(.cover) .info {
+  padding-right: 112px;
+}
 
-  .card:has(.cover) .date {
-    max-width: calc(100% - 95px);
-  }
+.card[data-mobile='true'] .info h2 {
+  font-size: 19px;
+}
 
-  .cover {
-    width: 102px;
-    height: 101px;
-    right: 13px;
-    top: -10px;
-  }
-
-  .card:has(.cover) .info {
-    padding-right: 112px;
-  }
-
-  .info h2 {
-    font-size: 19px;
-  }
-
-  .info p {
-    font-size: 12px;
-  }
+.card[data-mobile='true'] .info p {
+  font-size: 12px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -172,4 +154,53 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card[data-mobile='true'] {
+  min-height: var(--ds-component-mobile-invitation-card-minimum-height);
+  padding: var(--ds-component-mobile-invitation-card-inset-top)
+    var(--ds-component-mobile-invitation-card-inset-inline)
+    var(--ds-component-mobile-invitation-card-footer-reserve);
+  border-radius: var(--ds-radius-card);
+  border-color: var(--ds-color-line);
+  box-shadow: none;
+  background: var(--ds-color-weekday);
+}
+
+.card[data-mobile='true'][data-weekend='true'] {
+  background: var(--ds-color-weekend);
+}
+
+.card[data-mobile='true'] .date {
+  font-size: 10px;
+  top: -11px;
+  left: var(--ds-component-mobile-invitation-card-date-inset);
+  max-width: calc(100% - 2 * var(--ds-component-mobile-invitation-card-date-inset));
+  border: 0;
+  box-shadow: none;
+}
+
+.card[data-mobile='true']:has(.cover) .date {
+  max-width: calc(100% - var(--ds-component-mobile-invitation-card-cover-date-reserve));
+}
+
+.card[data-mobile='true'] .author {
+  line-height: var(--ds-typography-line-height-body);
+  overflow-wrap: anywhere;
+}
+
+.card[data-mobile='true'] .answer {
+  bottom: var(--ds-component-mobile-invitation-card-answer-inset-bottom);
+  left: var(--ds-component-mobile-invitation-card-answer-inset-start);
+  right: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-component-mobile-invitation-card-answer-gap);
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-label);
+  font-weight: var(--ds-typography-weight-medium);
 }

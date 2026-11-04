@@ -31,11 +31,9 @@ struct ChatReadersSheet: View {
                         HStack(spacing: DesignTokens.componentMobileRosterRowGap) {
                             MeetingInfoAvatar(
                                 user: person, size: DesignTokens.componentMobileRosterAvatarSize,
-                                textSize: DesignTokens.typographySizeCaption,
-                                weight: DesignTokens.typographyWeightSemibold,
                                 color: index.isMultiple(of: 2)
                                     ? DesignTokens.colorRosterMint : DesignTokens.colorRosterLilac,
-                                textColor: DesignTokens.colorRosterText)
+                                foregroundColor: DesignTokens.colorRosterText)
                             Text(person.displayName).designFont(DesignTokens.typographySizeSmall)
                             Spacer(minLength: DesignTokens.spaceS0)
                         }.frame(minHeight: rowHeight)

@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "change": "mobile-mvp-design-refresh",
+  "capturedAt": "2026-11-04",
+  "scope": [
+    "web-mobile",
+    "ios-phone",
+    "android-phone"
+  ],
+  "publicationTask": "2.12",
+  "published": false,
+  "authority": "Это инвентарь принятых входов, не опубликованные design manifests и не приёмка приложений. Нормализованные референсы по UX и общим коррекциям создаются до кода в 2.1–2.12; исходные файлы и их hash сохраняются.",
+  "globalCorrections": [
+    "Фото из avatar_url во всех местах идентичности; при отсутствии/ошибке нейтральный силуэт, не буква и не чужое демонстрационное фото.",
+    "Общий тонкий шеврон navigation-r2 без видимого Назад/постоянной подложки; sheet не получает лишний Back.",
+    "Sticky только при фактическом закреплении во время прокрутки: три края вплотную, только верхние скругления, тень вверх, reserved space.",
+    "Заметная звёздочка и легенда обязательных полей; полевая ошибка связана с полем; общая ошибка/unknown возле действия, без дублей.",
+    "Подписи кнопок одинаковы на платформах; реальные механизмы сохранения/входа/клавиатуры учитывают клиент.",
+    "Desktop от 740 CSS px сохраняется; исключения landscape/coarse-pointer остаются по действующему routing-контракту."
+  ],
+  "references": [
+    {
+      "id": "launch",
+      "title": "Запуск",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/launch-r1.html",
+      "sha256": "2f2f2a983907d64c2ef862a5f69860caaa978acaa0b252404bcf3c00f06d9d4a",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.1",
+      "note": "44/53/16; один оборот 360° за 1200 ms; без повторения при resume; Reduce Motion.",
+      "approval": "да, оставляем увеличенный вариант с одним оборотом"
+    },
+    {
+      "id": "onboarding",
+      "title": "Знакомство и вход",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/onboarding-r4/frame.html",
+      "sha256": "7fcde1887b3f8fd862ade8c6414012ec90118069b41eed1a2b5bf93f185b239e",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.2",
+      "note": "Композиция r4 и тексты r5 одобрены; общий Back и отсутствие отмены busy применяются при нормализации.",
+      "approval": "окаю",
+      "copySource": {
+        "path": "openspec/changes/mobile-mvp-design-refresh/assets/onboarding-r5/frame.html",
+        "sha256": "43f2757032826edf6549e6735681fa6d3a4a6e898002e3393a1964be3949bc1d",
+        "approval": "Принять тексты onboarding-r5, сохранив композицию r4 и общие коррекции",
+        "approvedOn": "2026-11-04"
+      }
+    },
+    {
+      "id": "list",
+      "title": "Мои встречи · список",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/list-r3/frame.html",
+      "sha256": "ece33f654f694145746de16519a91cd1c76a35f90aa54dfa0ff2ec2989922334",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.5",
+      "note": "Ровные табы, ошибка с повтором, непрочитанное внизу карточки; единый переключатель с календарём.",
+      "approval": "да, так лучше, оставляем"
+    },
+    {
+      "id": "calendar",
+      "title": "Мои встречи · календарь",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/frame.html",
+      "sha256": "7002ff99dc6a514c21e2c53e45ca10fc3232916e5dbea8b8afa839d50e7a9020",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.5",
+      "note": "view=calendar/list; центрирование выделения внутри ячейки, 20 встреч и восстановление контекста.",
+      "approval": "теперь нормально, оставляем"
+    },
+    {
+      "id": "invitations",
+      "title": "Приглашения · Возможно",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invitations-r2/frame.html",
+      "sha256": "247a7da4f49c6ae712b84fd7d53a52bdccc78abc7d685799d6cea89b3ae6fc7e",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.5",
+      "note": "Только ответ Возможно; не сохранения/закладки.",
+      "approval": "окаю"
+    },
+    {
+      "id": "create",
+      "title": "Создание встречи",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-create/frame.html",
+      "sha256": "078cde3999ab4362eaa59c43d4428cb5bde3c1fec59a812dc5198a5e7317d01f",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.6",
+      "note": "Основа create-r5 + общий Back; звёздочки/легенда, ошибки возле действия, fullscreen-карта, сохранность черновика.",
+      "approval": "окаю отлично, го некст"
+    },
+    {
+      "id": "invite",
+      "title": "Приглашение на встречу",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/frame.html",
+      "sha256": "0dce4f0d3eded6deb4a116e0484adf71329eef9b05ee37caf7d7947dc407f0a5",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.6",
+      "note": "Без подписи об аккаунте. При закрытии участия у не going нет новых ответов и нижней панели; going сохраняет чат. Применить общий Back.",
+      "approval": "окаю, давай следующий экран — чат встречи"
+    },
+    {
+      "id": "chat",
+      "title": "Чат встречи",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-chat/frame.html",
+      "sha256": "5dae152461f6fa065ad78d03bddf126ea105e7b8eff8cf1278967c0e66fd492f",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.7",
+      "note": "Основа chat-r6 + фото + общий Back. Реакции/галочки/детали, компактная ошибка, стрелка вверх и тонкий смайлик.",
+      "approval": "окаю, го некст"
+    },
+    {
+      "id": "info",
+      "title": "Сведения о встрече",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-info/frame.html",
+      "sha256": "50134bd51808f231b90b38561a4b2a8c99039b49b00f3a9e8b55848e98aea4a4",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.7",
+      "note": "Основа info-r2 + общий Back. Фото, ответы и действия по роли; пояснённая нижняя панель принята.",
+      "approval": "а ок, тогда окаю"
+    },
+    {
+      "id": "settings",
+      "title": "Настройки встречи",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-settings/frame.html",
+      "sha256": "fa310b05a29a175033d925de8a88d246d2a89167ad3357cc2be5b8d4add390e3",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.7",
+      "note": "Основа settings-r3; формы в sheet без лишней стрелки; центр часов, обложка без подписи необязательно.",
+      "approval": "окаю го некст"
+    },
+    {
+      "id": "date",
+      "title": "Предложение даты",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-date/frame.html",
+      "sha256": "d7cad22cc2b714c4c7b929544fbc64b61bbc31e238a2312bba1592a0c08487a2",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.8",
+      "note": "Основа date-r1; ровно одна ошибка голоса; пять параметров, правила действующих опросов.",
+      "approval": "окаю"
+    },
+    {
+      "id": "place",
+      "title": "Предложение места",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-place/frame.html",
+      "sha256": "b9519dde810993fa88c253bcbc6e7bdee1cd2e42c9d296364de79f60ffdcd757",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.8",
+      "note": "Основа place-r4; полноэкранный picker, pan/pinch не закрывает sheet. Реальная интеграция провайдера ещё впереди.",
+      "approval": "да так лучше"
+    },
+    {
+      "id": "preparation",
+      "title": "Подготовка",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/nav-preparation/frame.html",
+      "sha256": "797b5ca32c805c17307e2902bf577b184fe1da877109a3cf056ccd722f04fbcf",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.8",
+      "note": "Основа preparation-r1; явное принятие, выполнение, отказ/отмена и фото адресатов.",
+      "approval": "окаю, го следующий — вайб"
+    },
+    {
+      "id": "vibe",
+      "title": "Вайб",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/vibe-r3/frame.html",
+      "sha256": "e179bd2005f8b2772712c987447f71570f38d28ec359f06a725b23f40583b4f7",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.9",
+      "note": "Физические свайпы/rollback/fullscreen, стабильная шапка, Сохранить все, короткая форма без sticky-блока.",
+      "approval": "окаю, го следующий экран — профиль"
+    },
+    {
+      "id": "profile",
+      "title": "Профиль",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/profile-r2/frame.html",
+      "sha256": "7d6741895de63fcdab672549d4e7cd8ac1bcce19e2794e2df1aaa1199bb12d86",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.10",
+      "note": "Фото + полное имя; приватная read-only панель; без лишних подписей, скрытое удаление, выход последним.",
+      "approval": "окаю, го некст"
+    },
+    {
+      "id": "help",
+      "title": "Помощь и обращение",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/help-r2/frame.html",
+      "sha256": "fe642715d4558f05b7989172473e5e87c8b8a0ce6e9155a77648edce18046a5e",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.10",
+      "note": "FAQ, support, section-sheet с 8 ключами; клавиатура не отправляет родительскую форму; sticky только при overflow.",
+      "approval": "пойдет, го некст"
+    },
+    {
+      "id": "about",
+      "title": "О приложении",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/about-r2/frame.html",
+      "sha256": "c8950ac880064781a0e7aa7d58890e25566bcba3d053c5fdf14ea5ae130ff3ed",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.10",
+      "note": "Один бренд/разработчик, реальные platform/version/build, без повторных ссылок конфиденциальности/Cookie/обращения.",
+      "approval": "ок, го некст"
+    },
+    {
+      "id": "documents",
+      "title": "Конфиденциальность и Cookie",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/about-r2/frame.html",
+      "sha256": "c8950ac880064781a0e7aa7d58890e25566bcba3d053c5fdf14ea5ae130ff3ed",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.10",
+      "note": "state=privacy/privacy-index/cookies; полный текущий текст и Проект документа, TOC-sheet/история/позиция чтения.",
+      "approval": "ок, го некст"
+    },
+    {
+      "id": "back",
+      "title": "Общий возврат",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/PageBack.tsx",
+      "sha256": "c32b380eb162c99935179862bfa1e8a5f581412de15147b239947510dff96870",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.4",
+      "note": "Тонкий шеврон без слова/постоянного фона/рамки, доступное имя, платформенная hit-area; CSS прилагается.",
+      "approval": "Принят в vibe-r3 и последующих экранах"
+    },
+    {
+      "id": "map",
+      "title": "Полноэкранный выбор места",
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/place-r4/frame.html",
+      "sha256": "62c5932275ab6f1c58212ca6920df2f3731c6d7b0aff0480122735020326c65f",
+      "status": "approved-input-publication-pending",
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ],
+      "publicationTask": "2.11",
+      "note": "state=map; та же композиция в create-r5. Карта внутри — демонстрационная; provider-content не является pixel-эталоном.",
+      "approval": "да так лучше"
+    }
+  ],
+  "additionalFiles": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/navigation-r2/PageBack.module.css",
+      "sha256": "dd2d3d4ce796acad4a4f235c7e0d9f60cfface55a6fc34a7735e24292871aac1"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "flow-r1",
+      "reason": "Доработка и проверка остановлены пользователем «забей». Не эталон, не реализация, не evidence."
+    },
+    {
+      "id": "account-deletion",
+      "reason": "Пользователь выбрал оставить скрытым. Не добавлять вход, существующий API не удалять."
+    },
+    {
+      "id": "rejected-and-superseded",
+      "reason": "Остальные ранние варианты сохранены как история, не выбирать по новизне имени или открытой вкладке."
+    }
+  ]
+}

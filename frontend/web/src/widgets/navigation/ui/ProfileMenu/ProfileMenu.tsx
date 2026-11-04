@@ -12,7 +12,11 @@ export const ProfileMenu = ({ session }: ProfileMenuProps) => (
       className={styles.trigger}
       aria-label={`Профиль: ${session.user.displayName}`}
     >
-      <Avatar name={session.user.displayName} own />
+      <Avatar
+        name={session.user.displayName}
+        mobileSrc={session.user.avatarUrl ?? null}
+        own
+      />
       <span className={styles.name}>{session.user.displayName}</span>
     </summary>
     <div className={styles.menu}>

@@ -224,6 +224,27 @@ test('renaming a task and adding a state invalidate acceptance', async (t) => {
   await assert.rejects(() => readManifest(f.root, f.path), /Missing UI task/);
 });
 
+test('nested packet manifests use the change task file without a duplicate', async (t) => {
+  const f = await fixture(t);
+  const nested = 'openspec/changes/example/design/meetings-web.json';
+  await f.put(nested, f.manifest);
+  const context = await readManifest(f.root, nested);
+  assert.deepEqual(context.closedKeys, []);
+  assert.equal(context.expected.length, 3);
+});
+
+test('a nested task file cannot hide a closed change task from the gate', async (t) => {
+  const f = await fixture(t);
+  const nested = 'openspec/changes/example/design/meetings-web.json';
+  await f.put(nested, f.manifest);
+  await f.put('openspec/changes/example/design/tasks.md',
+    '- [ ] 1.1 Web\n- [ ] 1.2 iOS\n- [ ] 1.3 Android\n');
+  await f.put('openspec/changes/example/tasks.md',
+    '- [x] 1.1 Web\n- [ ] 1.2 iOS\n- [ ] 1.3 Android\n');
+  const context = await readManifest(f.root, nested);
+  assert.deepEqual(context.closedKeys, ['card/web/default']);
+});
+
 test('a pass needs reproducible capture provenance', async (t) => {
   const f = await fixture(t);
   delete f.report.checks[0].capture;

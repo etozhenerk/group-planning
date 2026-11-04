@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "status": "published-binding",
+  "designVersion": "6.2.0",
+  "sourceCommit": "ea4cad9be1077b23b0fa9394e6e51093ae8d4258",
+  "scope": "Привязки существующего календаря для единственного общего компонента. Не новая композиция; принятый calendar-r7 переносится задачей7, desktop baseline сохраняется.",
+  "sources": [
+    {
+      "path": "frontend/web/src/pages/meetings/ui/CalendarGrid/CalendarGrid.module.css",
+      "sha256": "3dc66414ac8ac9b75b768980a058ba36ee352763ec4bc1e08f4c865fd184c66a",
+      "snapshot": "openspec/changes/mobile-mvp-design-refresh/preparation/publication-history/6.1.0/frontend/web/src/pages/meetings/ui/CalendarGrid/CalendarGrid.module.css"
+    },
+    {
+      "path": "frontend/web/src/pages/meetings/ui/CalendarDay/CalendarDay.module.css",
+      "sha256": "d3f2f44514d14cd971f5a259ee39f670e6ec206f686d58d8c5f562a7d25d5a5f",
+      "snapshot": "openspec/changes/mobile-mvp-design-refresh/preparation/publication-history/6.1.0/frontend/web/src/pages/meetings/ui/CalendarDay/CalendarDay.module.css"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/source/CalendarGrid.module.css",
+      "sha256": "dcb23289899fc13ca7a92ce153ae6b41fa7a3f2fe8d30bb3f17a2fcc5b450930"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/source/CalendarDay.module.css",
+      "sha256": "e08e352b81ac39d77127bb1ea2a5c9eb032103d4a85c47046420d137cf58bba7"
+    }
+  ],
+  "roles": {
+    "color.calendar.surface": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.16862745098039217,
+          0.17254901960784313,
+          0.19607843137254902
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #2b2c32; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.border": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 0.0392156862745098
+      },
+      "$description": "Неизменённый baseline календаря #ffffff0a; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 0.03137254901960784
+      },
+      "$description": "Неизменённый baseline календаря #ffffff08; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.todayText": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8823529411764706,
+          0.8627450980392157,
+          0.9098039215686274
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #e1dce8; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekday": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6352941176470588,
+          0.6313725490196078,
+          0.6862745098039216
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #a2a1af; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekendWeekday": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6901960784313725,
+          0.7803921568627451,
+          0.7411764705882353
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #b0c7bd; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.day": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8549019607843137,
+          0.8431372549019608,
+          0.8745098039215686
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #dad7df; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.outsideDay": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4470588235294118,
+          0.4470588235294118,
+          0.49019607843137253
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #72727d; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekendDay": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7137254901960784,
+          0.8156862745098039,
+          0.7647058823529411
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #b6d0c3; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.event": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.27450980392156865,
+          0.2235294117647059,
+          0.30196078431372547
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #46394d; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekendEvent": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20784313725490197,
+          0.3058823529411765,
+          0.27450980392156865
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #354e46; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.selected": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4117647058823529,
+          0.3333333333333333,
+          0.45098039215686275
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #695573; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.selectedBorder": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8352941176470589,
+          0.7529411764705882,
+          0.8941176470588236
+        ],
+        "alpha": 0.4588235294117647
+      },
+      "$description": "Неизменённый baseline календаря #d5c0e475; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.selectedText": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #ffffff; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekendSelected": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.33725490196078434,
+          0.4549019607843137,
+          0.39215686274509803
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #567464; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.weekendSelectedBorder": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7411764705882353,
+          0.8431372549019608,
+          0.7803921568627451
+        ],
+        "alpha": 0.5843137254901961
+      },
+      "$description": "Неизменённый baseline календаря #bdd7c795; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "color.calendar.todayOutline": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7176470588235294,
+          0.6509803921568628,
+          0.7764705882352941
+        ],
+        "alpha": 1
+      },
+      "$description": "Неизменённый baseline календаря #b7a6c6; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники."
+    },
+    "component.calendar.radius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 23,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.headingGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.controlRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.todayInsetBlock": {
+      "$type": "dimension",
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.todayInsetInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.weekGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.enterOffset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 5,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.mobileInsetBlock": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.mobileInsetInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.mobileRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.mobileHeadingGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.narrowInsetBlock": {
+      "$type": "dimension",
+      "$value": {
+        "value": 15,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.dayRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.dayNumberSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 26,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.dayNumberRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "component.calendar.dotsInset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 5,
+        "unit": "px"
+      },
+      "$description": "Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0."
+    },
+    "typography.size.calendarTitle": {
+      "$type": "dimension",
+      "$value": {
+        "value": 19,
+        "unit": "px"
+      },
+      "$description": "Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json."
+    },
+    "typography.size.calendarTitleMobile": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$description": "Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json."
+    },
+    "typography.size.calendarTitleNarrow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json."
+    },
+    "typography.size.calendarTodayNarrow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$description": "Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json."
+    },
+    "motion.duration.calendarMonth": {
+      "$type": "duration",
+      "$value": {
+        "value": 180,
+        "unit": "ms"
+      },
+      "$description": "CalendarGrid month-enter baseline180ms."
+    },
+    "motion.easing.calendarMonth": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.58,
+        1
+      ],
+      "$description": "CalendarGrid month-enter baseline CSS ease-out."
+    },
+    "component.mobileCalendar.titleSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop."
+    },
+    "component.mobileCalendar.titleTracking": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop."
+    },
+    "component.mobileCalendar.dotsInset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop."
+    },
+    "component.calendar.monthIconSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Неизменённый baseline CalendarGrid: размер стрелки месяца и начальная opacity перехода до переноса общего компонента."
+    },
+    "component.calendar.enterOpacity": {
+      "$type": "number",
+      "$value": 0.5,
+      "$description": "Неизменённый baseline CalendarGrid: размер стрелки месяца и начальная opacity перехода до переноса общего компонента."
+    }
+  }
+}

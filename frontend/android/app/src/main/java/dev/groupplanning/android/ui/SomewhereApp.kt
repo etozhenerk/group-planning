@@ -4,9 +4,14 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -112,10 +117,17 @@ internal fun SomewhereApp(model: AppViewModel) {
                 animationSpec = tween(if (motion) 200 else 0),
                 label = "launch",
             ) { shown ->
-                Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+                val insets = if (shown && snapshot.session is SessionState.Authenticated) {
+                    Modifier.windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
+                    )
+                } else {
+                    Modifier.safeDrawingPadding()
+                }
+                Box(Modifier.fillMaxSize().then(insets)) {
                     if (!shown) {
                         Box(
-                            Modifier.fillMaxSize().padding(24.dp).testTag("launch"),
+                            Modifier.fillMaxSize().testTag("launch"),
                             contentAlignment = Alignment.Center,
                         ) {
                             BrandWordmark(rotation = { BrandMotion.rotation(elapsed, motion) })

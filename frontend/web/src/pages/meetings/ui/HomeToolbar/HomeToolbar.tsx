@@ -1,3 +1,6 @@
+import { useMobileLayout } from '@/shared/lib/media';
+import { HomeViewToggle } from '@/pages/meetings/ui/HomeViewToggle';
+import { usePeriodIndicator } from '@/pages/meetings/ui/HomeToolbar/hooks/usePeriodIndicator';
 import { Calendar, List } from 'lucide-react';
 import type { CalendarCounts, MeetingPeriod } from '@/entities/meeting';
 import type { HomeSelection } from '@/pages/meetings/model/selection';
@@ -10,9 +13,16 @@ export type HomeToolbarProps = {
 };
 
 export const HomeToolbar = ({ selection, counts, update }: HomeToolbarProps) => {
+  const mobile = useMobileLayout();
+  const tabs = usePeriodIndicator(
+    selection.period,
+    counts && counts.upcoming + counts.past,
+  );
+
   return (
-    <div className={styles.toolbar}>
-      <nav aria-label="Период встреч" className={styles.periods}>
+    <div className={styles.toolbar} data-mobile={mobile}>
+      <nav ref={tabs} aria-label="Период встреч" className={styles.periods}>
+        <span className={styles.indicator} aria-hidden="true" />
         {(['upcoming', 'past'] as MeetingPeriod[]).map((period) => (
           <button
             key={period}
@@ -25,24 +35,33 @@ export const HomeToolbar = ({ selection, counts, update }: HomeToolbarProps) => 
           </button>
         ))}
       </nav>
-      <nav aria-label="Вид встреч" className={styles.views}>
-        <button
-          type="button"
-          aria-pressed={selection.view === 'list'}
-          onClick={() => update({ view: 'list' })}
-        >
-          <List size={17} aria-hidden="true" />
-          Список
-        </button>
-        <button
-          type="button"
-          aria-pressed={selection.view === 'calendar'}
-          onClick={() => update({ view: 'calendar' })}
-        >
-          <Calendar size={17} aria-hidden="true" />
-          Календарь
-        </button>
-      </nav>
+      {mobile ? (
+        <HomeViewToggle
+          view={selection.view}
+          onToggle={() =>
+            update({ view: selection.view === 'calendar' ? 'list' : 'calendar' })
+          }
+        />
+      ) : (
+        <nav aria-label="Вид встреч" className={styles.views}>
+          <button
+            type="button"
+            aria-pressed={selection.view === 'list'}
+            onClick={() => update({ view: 'list' })}
+          >
+            <List size={17} aria-hidden="true" />
+            Список
+          </button>
+          <button
+            type="button"
+            aria-pressed={selection.view === 'calendar'}
+            onClick={() => update({ view: 'calendar' })}
+          >
+            <Calendar size={17} aria-hidden="true" />
+            Календарь
+          </button>
+        </nav>
+      )}
     </div>
   );
 };

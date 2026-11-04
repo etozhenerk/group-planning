@@ -1,3 +1,5 @@
+import { FieldError } from '@/shared/ui/FieldError';
+import { RequiredMark } from '@/shared/ui/RequiredMark';
 import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/shared/ui/TimeInput/TimeInput.module.css';
 import { useId } from 'react';
@@ -15,6 +17,7 @@ export type TimeInputProps = {
   mobileSheet?: boolean;
   invalid?: boolean;
   required?: boolean;
+  error?: string;
 };
 
 export const TimeInput = ({
@@ -25,6 +28,7 @@ export const TimeInput = ({
   mobileSheet = false,
   invalid = false,
   required = false,
+  error = '',
 }: TimeInputProps) => {
   const id = useId();
   const mobile = useMobileLayout();
@@ -35,7 +39,9 @@ export const TimeInput = ({
       data-sheet={mobileSheet && mobile}
       data-testid="time-input"
     >
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>
+        {label} {required && <RequiredMark />}
+      </label>
       <TextInput
         id={id}
         type="text"
@@ -56,8 +62,10 @@ export const TimeInput = ({
           maxLength: 5,
           pattern: '([01][0-9]|2[0-3]):[0-5][0-9]',
           required,
+          ...(error ? { 'aria-describedby': `${id}-error` } : {}),
         }}
       />
+      <FieldError id={`${id}-error`} error={error} />
     </div>
   );
 };

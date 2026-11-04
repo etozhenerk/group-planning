@@ -9,12 +9,12 @@ import { SignInButton, AuthNotice } from '@/features/sign-in';
 import { InvitationResponse } from '@/pages/invitation/ui/InvitationResponse';
 import { Status } from '@/shared/ui/Status';
 import { errorText } from '@/shared/api';
-import { useInvite } from '@/pages/invitation/ui/InvitationPage/hooks/useInvite';
+import { useOpenInvitation } from '@/features/respond';
 
 export const InvitationPage = () => {
   const { token = '' } = useParams();
   const session = useSession();
-  const query = useInvite(token, session.data?.user.id ?? '');
+  const query = useOpenInvitation(token, session.data?.user.id ?? '');
 
   return (
     <div className={styles['public-page']}>

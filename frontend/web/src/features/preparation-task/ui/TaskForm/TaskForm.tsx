@@ -1,3 +1,6 @@
+import { RequiredMark } from '@/shared/ui/RequiredMark';
+import { RequiredLegend } from '@/shared/ui/RequiredLegend';
+import { useFormViewport } from '@/shared/lib/form';
 import { useMobileLayout } from '@/shared/lib/media';
 import type { Session } from '@/entities/session';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
@@ -14,31 +17,35 @@ export type TaskFormProps = {
 
 export const TaskForm = ({ meeting, session, done, active }: TaskFormProps) => {
   const mobile = useMobileLayout();
+  const scroll = useFormViewport();
   const form = useTaskForm(meeting, session, done, active);
 
   return (
     <form onSubmit={form.submit} className={styles.form} data-mobile={mobile}>
-      <div className={styles.body}>
-        <label className={styles.field}>
-          Что сделать
-          <input
-            value={form.title}
-            onChange={(event) => form.setTitle(event.target.value)}
+      <div className={styles.body} ref={scroll.viewport} onScroll={scroll.update}>
+        <div ref={scroll.content}>
+          <RequiredLegend spaced />
+          <label className={styles.field}>
+            Что сделать <RequiredMark />
+            <input
+              value={form.title}
+              onChange={(event) => form.setTitle(event.target.value)}
+              disabled={form.locked}
+              required
+            />
+          </label>
+          <TaskRecipient
+            people={form.participants}
+            error={!!form.people.error}
+            retry={() => void form.people.refetch()}
+            value={form.recipient}
+            onChange={form.setRecipient}
             disabled={form.locked}
-            required
+            user={session.user.id}
           />
-        </label>
-        <TaskRecipient
-          people={form.participants}
-          error={!!form.people.error}
-          retry={() => void form.people.refetch()}
-          value={form.recipient}
-          onChange={form.setRecipient}
-          disabled={form.locked}
-          user={session.user.id}
-        />
+        </div>
       </div>
-      <div className={styles.footer}>
+      <div className={styles.footer} data-sticky={scroll.overflow}>
         {form.problem && (
           <p role="alert" className={styles.error}>
             {form.problem}

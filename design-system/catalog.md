@@ -1,4 +1,4 @@
-# Токены somewhere · 5.0.0
+# Токены somewhere · 6.3.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -15,6 +15,23 @@
 | color.actionText | color | #252429 | Смысловая роль actionText |
 | color.background | color | #24252a | Смысловая роль background |
 | color.borderStrong | color | #414249 | Смысловая роль borderStrong |
+| color.calendar.border | color | #ffffff0a | Неизменённый baseline календаря #ffffff0a; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.day | color | #dad7df | Неизменённый baseline календаря #dad7df; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.event | color | #46394d | Неизменённый baseline календаря #46394d; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.hover | color | #ffffff08 | Неизменённый baseline календаря #ffffff08; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.outsideDay | color | #72727d | Неизменённый baseline календаря #72727d; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.selected | color | #695573 | Неизменённый baseline календаря #695573; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.selectedBorder | color | #d5c0e475 | Неизменённый baseline календаря #d5c0e475; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.selectedText | color | #ffffff | Неизменённый baseline календаря #ffffff; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.surface | color | #2b2c32 | Неизменённый baseline календаря #2b2c32; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.todayOutline | color | #b7a6c6 | Неизменённый baseline календаря #b7a6c6; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.todayText | color | #e1dce8 | Неизменённый baseline календаря #e1dce8; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekday | color | #a2a1af | Неизменённый baseline календаря #a2a1af; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekendDay | color | #b6d0c3 | Неизменённый baseline календаря #b6d0c3; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekendEvent | color | #354e46 | Неизменённый baseline календаря #354e46; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekendSelected | color | #567464 | Неизменённый baseline календаря #567464; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekendSelectedBorder | color | #bdd7c795 | Неизменённый baseline календаря #bdd7c795; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
+| color.calendar.weekendWeekday | color | #b0c7bd | Неизменённый baseline календаря #b0c7bd; общий компонент списка и знакомства. См. calendar-token-bindings-6.2.json, sourceCommit/источники. |
 | color.error | color | #ffb8b2 | Смысловая роль error |
 | color.fieldBorder | color | #ffffff14 | Ранее согласованный assets/styles.css .field input/.field textarea/.search (строки 432–441) и .field select (2804–2811), border #ffffff14. Сохраняет desktop/noncompact поле; новая mobile-ревизия использует color.borderStrong. |
 | color.focus | color | #d6d1f5 | Смысловая роль focus |
@@ -24,6 +41,13 @@
 | color.meetingMark | color | #2e3938 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.meetingMarkForeground | color | #dcece5 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.message | color | #33343a | Смысловая роль message |
+| color.mobileNavigationAndroidBackground | color | #27282efa | Привязка неизменённого Android baseline фона; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| color.mobileNavigationAndroidBorder | color | #ffffff15 | Привязка неизменённой Android baseline рамки; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| color.mobileNavigationIOSBackground | color | #27282eeb | Привязка неизменённого iOS baseline фона поверх ultraThinMaterial; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| color.mobileNavigationIOSBorder | color | #ffffff15 | Привязка неизменённой iOS baseline рамки; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| color.mobileOnboardingInactive | color | #414249 | onboarding-r4/r5: фон невыбранной точки#414249, alias опубликованной neutral-роли. |
+| color.mobileOnboardingNext | color | #393a42 | onboarding-r4/r5: фон Далее#393a42, computed style действующего эталона. |
+| color.mobileStickyShadow | color | #00000055 | create-r4/r5: #0005, тень закреплённой мобильной панели |
 | color.muted | color | #b9b9c2 | Смысловая роль muted |
 | color.navigation | color | #1d1e22 | Смысловая роль navigation |
 | color.navigationInactiveText | color | #92939f | Неактивная нижняя вкладка, утверждённый assets/styles.css mobile navigation |
@@ -77,6 +101,24 @@
 | component.button.paddingBlock | dimension | 12px | Вертикальный отступ содержимого .button из styles.css:217 |
 | component.button.paddingInline | dimension | 18px | Горизонтальный отступ содержимого .button из styles.css:217 |
 | component.button.radius | dimension | 13px | Радиус .button из утверждённого styles.css:219 |
+| component.calendar.controlRadius | dimension | 9px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.dayNumberRadius | dimension | 9px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.dayNumberSize | dimension | 26px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.dayRadius | dimension | 13px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.dotsInset | dimension | 5px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.enterOffset | dimension | 5px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.enterOpacity | number | 0.5 | Неизменённый baseline CalendarGrid: размер стрелки месяца и начальная opacity перехода до переноса общего компонента. |
+| component.calendar.headingGap | dimension | 22px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.mobileHeadingGap | dimension | 17px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.mobileInsetBlock | dimension | 17px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.mobileInsetInline | dimension | 14px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.mobileRadius | dimension | 20px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.monthIconSize | dimension | 17px | Неизменённый baseline CalendarGrid: размер стрелки месяца и начальная opacity перехода до переноса общего компонента. |
+| component.calendar.narrowInsetBlock | dimension | 15px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.radius | dimension | 23px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.todayInsetBlock | dimension | 7px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.todayInsetInline | dimension | 9px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
+| component.calendar.weekGap | dimension | 9px | Привязка неизменённого baseline CalendarGrid/CalendarDay перед переносом в общий entity-компонент; desktop сохраняется. Новое mobile-выделение36/radius9 опубликовано отдельно в6.0. |
 | component.card.avatar | dimension | 35px | Карточка avatar |
 | component.card.avatarMobile | dimension | 32px | Карточка avatarMobile |
 | component.card.avatarOverlap | dimension | 9px | Карточка avatarOverlap |
@@ -143,6 +185,24 @@
 | component.meetingSettings.coverSize | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
 | component.messageDelivery.indicatorSize | dimension | 12px | Постоянный слот спиннера отправки в строке metadata без изменения высоты сообщения. |
 | component.messageDelivery.pendingDelay | duration | 2000ms | Прямое решение пользователя: индикатор только после двух секунд отправки. |
+| component.mobileAvatar.fallbackOpacity | number | 0.7 | Публикационная привязка уже нормализованного нейтрального силуэта по позднему общему решению; normalize.css [data-mobile-silhouette], source/hash в identity-token-bindings-6.2.json. |
+| component.mobileAvatar.fallbackRatio | number | 0.72 | Публикационная привязка уже нормализованного нейтрального силуэта по позднему общему решению; normalize.css [data-mobile-silhouette], source/hash в identity-token-bindings-6.2.json. |
+| component.mobileAvatar.normalSize | dimension | 40px | сохранённая геометрия Avatar, новый fallback по info-r2 |
+| component.mobileAvatar.profileSize | dimension | 86px | сохранённая геометрия Avatar.large; фото/fallback по profile-r2 |
+| component.mobileAvatar.smallSize | dimension | 32px | сохранённая геометрия Avatar.small |
+| component.mobileBack.disabledOpacity | number | 0.45 | navigation-r2/PageBack.module.css |
+| component.mobileBack.focusRadius | dimension | 12px | navigation-r2/PageBack.module.css |
+| component.mobileBack.iconSize | dimension | 24px | navigation-r2/PageBack.tsx |
+| component.mobileBack.pressedOpacity | number | 0.55 | navigation-r2/PageBack.module.css |
+| component.mobileBack.strokeWidth | number | 1.7 | navigation-r2/PageBack.tsx |
+| component.mobileBrand.gap | dimension | 7px | Header onboarding-r4/r5 из неизменённого эталона:29px/7px/tracking-1px; существующие header/desktop-варианты не меняются. |
+| component.mobileBrand.markSize | dimension | 29px | Header onboarding-r4/r5 из неизменённого эталона:29px/7px/tracking-1px; существующие header/desktop-варианты не меняются. |
+| component.mobileBrand.tracking | dimension | 1px | Header onboarding-r4/r5 из неизменённого эталона:29px/7px/tracking-1px; существующие header/desktop-варианты не меняются. |
+| component.mobileCalendar.dotsInset | dimension | 7px | Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop. |
+| component.mobileCalendar.selectionRadius | dimension | 9px | calendar-r7: скругление квадрата |
+| component.mobileCalendar.selectionSize | dimension | 36px | calendar-r7: квадрат внутри target |
+| component.mobileCalendar.titleSize | dimension | 20px | Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop. |
+| component.mobileCalendar.titleTracking | dimension | 0.5px | Принятый calendar-r7/source/CalendarGrid.module.css и CalendarDay.module.css; мобильная композиция без изменений desktop. |
 | component.mobileChat.bubbleCornerRadius | dimension | 6px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |
 | component.mobileChat.bubbleFocusOffset | dimension | 3px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |
 | component.mobileChat.bubbleInsetBlock | dimension | 11px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .bubble |
@@ -178,6 +238,8 @@
 | component.mobileChat.narrowMarkHeight | dimension | 34px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css @media max-width350 .meeting-mark |
 | component.mobileChat.narrowMarkRadius | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css @media max-width350 .meeting-mark |
 | component.mobileChat.narrowMarkWidth | dimension | 30px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css @media max-width350 .meeting-mark |
+| component.mobileChatSend.circleSize | dimension | 38px | chat-r6: круг внутри target44 |
+| component.mobileChatSend.iconSize | dimension | 20px | chat-r6: вертикальная стрелка |
 | component.mobileField.gap | dimension | 7px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |
 | component.mobileField.iconSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .date-field/.input-with-icon |
 | component.mobileField.insetBlock | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |
@@ -195,6 +257,73 @@
 | component.mobileForm.switchThumbSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch::after; web |
 | component.mobileForm.switchWidth | dimension | 38px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch; native использует системный Switch |
 | component.mobileForm.twoFieldGap | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .two-fields |
+| component.mobileInvitationCard.answerGap | dimension | 7px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.answerInsetBottom | dimension | 15px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.answerInsetStart | dimension | 17px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.coverDateReserve | dimension | 95px | Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.dateInset | dimension | 14px | Принятые CalendarScreen.errorIcon и InvitationCard.date: отступы22/14; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.footerReserve | dimension | 44px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.insetInline | dimension | 17px | Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.insetTop | dimension | 26px | Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationCard.minimumHeight | dimension | 176px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitationResponse.actionsGap | dimension | 22px | Привязка invitations-r2 .response margin-top22; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileInvitations.counterRadius | dimension | 9px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitations.counterSize | dimension | 28px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitations.explanationLineHeight | number | 1.6 | Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitations.explanationMaxWidth | dimension | 360px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileInvitations.scrollBottom | dimension | 26px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileLaunch.gap | dimension | 16px | launch-r1 / ux.md |
+| component.mobileLaunch.markSize | dimension | 53px | launch-r1 / ux.md |
+| component.mobileLaunch.trackingRatio | number | 0.052 | launch-r1: letter-spacing -2.288px при font-size44; отрицательный коэффициент применяется адаптером к размеру текста |
+| component.mobileMeetings.agendaTracking | dimension | 0.25px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.createIconSize | dimension | 17px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.createInsetInline | dimension | 13px | Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyActionInline | dimension | 13px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyDayGap | dimension | 13px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyDayIcon | dimension | 24px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyDayInsetBlock | dimension | 25px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyGlyph | dimension | 40px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyInset | dimension | 18px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.emptyTop | dimension | 70px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.headingInsetBottom | dimension | 12px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.headingInsetTop | dimension | 17px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.headingMinimumHeight | dimension | 73px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.monthTracking | dimension | 1px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.narrowAgendaWidth | dimension | 180px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.periodInsetBottom | dimension | 14px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.periodInsetTop | dimension | 13px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.periodMinimumHeight | dimension | 48px | Принятый header calendar-r7:48px область периода и адаптивный размер заголовка7vw между24/28px. |
+| component.mobileMeetings.titleLineHeight | number | 1.2 | Принятый мобильный header/unread, source/hash в meetings-token-bindings-6.2.json. |
+| component.mobileMeetings.titleMaximum | dimension | 28px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.titleMinimum | dimension | 24px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.titleTracking | dimension | 0.9px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMeetings.titleWeight | fontWeight | 720 | Принятый мобильный header/unread, source/hash в meetings-token-bindings-6.2.json. |
+| component.mobileMeetings.titleWidthRatio | number | 0.07 | Принятый header calendar-r7:48px область периода и адаптивный размер заголовка7vw между24/28px. |
+| component.mobileMeetings.undatedCountRadius | dimension | 7px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.undatedInset | dimension | 14px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.undatedMargin | dimension | 14px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileMeetings.viewIconSize | dimension | 20px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileNavigation.androidLabelLineHeight | dimension | 13.5px | Привязка Android baseline lineHeight13.5; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileNavigation.iconGap | dimension | 3px | Привязка iOS/Android baseline gap3; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileNavigation.iconStroke | number | 1.7 | Привязка iOS baseline обычного navigation icon; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileNavigation.padding | dimension | 7px | Привязка вертикального inset (navigation.height62 − target48) / 2, iOS baseline7; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileNavigation.selectedIconStroke | number | 1.8 | Привязка iOS baseline выбранного navigation icon; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
+| component.mobileOnboarding.artworkGap | dimension | 30px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.artworkHeight | dimension | 360px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.copyGap | dimension | 18px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.copyMinimumHeight | dimension | 180px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.footerMinimumHeight | dimension | 110px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.insetInline | dimension | 27px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.nextHeight | dimension | 52px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.nextInsetInline | dimension | 23px | onboarding-r4/r5, .next padding-inline23px из computed style. |
+| component.mobileOnboarding.nextMinimumWidth | dimension | 135px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.progressDotSize | dimension | 6px | onboarding-r4/r5: невыбранная точка6×6. |
+| component.mobileOnboarding.progressSelectedWidth | dimension | 19px | onboarding-r4/r5: выбранная капсула19×6, radius.pill. |
+| component.mobileOnboarding.progressSlotWidth | dimension | 27px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.progressVisualHeight | dimension | 34px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.tallArtworkHeight | dimension | 390px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.titleTracking | dimension | 1px | onboarding-r4/r5 title: tracking-1px; размер/вес/lineHeight уже опубликованы6.0.0. |
+| component.mobilePage.insetTop | dimension | 28px | Вертикальный отступ мобильной страницы из действующих app-форм и принятых create/help/profile; desktop не меняется. |
 | component.mobilePeopleChip.avatarSize | dimension | 21px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip i |
 | component.mobilePeopleChip.borderWidth | dimension | 2px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip |
 | component.mobilePeopleChip.gap | dimension | 4px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip |
@@ -206,6 +335,8 @@
 | component.mobilePeopleChip.moreWidth | dimension | 32px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-more |
 | component.mobilePeopleChip.openerHeight | dimension | 48px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-summary |
 | component.mobilePeopleChip.overlap | dimension | 4px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip margin-right negative |
+| component.mobileRequired.fontSize | dimension | 18px | Заметная звёздочка обязательного поля: settings-r3/source/ui/SettingsForm и help-r2/src/pages/help/ui/FeedbackFields, .required/.legend span. |
+| component.mobileRequired.fontWeight | fontWeight | 650 | Вес звёздочки в согласованных settings-r3/help-r2:650. |
 | component.mobileRoster.actionHeight | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .list-action |
 | component.mobileRoster.actionIcon | dimension | 20px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .list-action > .icon |
 | component.mobileRoster.avatarSize | dimension | 32px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row .avatar |
@@ -231,6 +362,41 @@
 | component.mobileSheet.minimumHeight | dimension | 150px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet; адаптируется к доступному viewport |
 | component.mobileSheet.radius | dimension | 24px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet |
 | component.mobileSheet.topReserve | dimension | 50px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet max-height; адаптируется к safe area/IME |
+| component.mobileState.actionIconSize | dimension | 17px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.actionMinimumHeight | dimension | 48px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.compactTitleLineHeight | number | 1.3 | Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.compactTitleSize | dimension | 22px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.glyphSize | dimension | 32px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.glyphStroke | number | 1.5 | Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.iconRadius | dimension | 20px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.iconSize | dimension | 64px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.largeGlyphSize | dimension | 34px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.largeIconGap | dimension | 22px | Принятые CalendarScreen.errorIcon и InvitationCard.date: отступы22/14; source/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.largeIconRadius | dimension | 24px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.largeIconSize | dimension | 72px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.largeTitleWidth | dimension | 250px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.panelInsetBlock | dimension | 30px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.panelInsetInline | dimension | 22px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.refreshActionGlyphSize | dimension | 18px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.refreshActionRadius | dimension | 10px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.refreshGlyphSize | dimension | 19px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.refreshInsetStart | dimension | 14px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.refreshRadius | dimension | 14px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.titleSize | dimension | 23px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.titleTracking | dimension | 0.5px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
+| component.mobileState.titleWeight | fontWeight | 650 | Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json. |
+| component.mobileSticky.insetInline | dimension | 20px | create-r5/source/CreateMeetingForm.module.css |
+| component.mobileSticky.insetTop | dimension | 16px | create-r5/source/CreateMeetingForm.module.css |
+| component.mobileSticky.radius | dimension | 24px | create-r4/r5: только верхние углы |
+| component.mobileSticky.shadowBlur | dimension | 28px | create-r5/source/CreateMeetingForm.module.css |
+| component.mobileSticky.shadowOpacity | number | 0.3333333333333333 | create-r5: #0005, чёрный с alpha 5/15 |
+| component.mobileSticky.shadowUpOffset | dimension | 8px | create-r5: отрицательное направление Y в адаптере |
+| component.mobileUnread.gap | dimension | 5px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileUnread.iconSize | dimension | 14px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileUnread.iconStrokeWidth | number | 1.6 | Принятый мобильный header/unread, source/hash в meetings-token-bindings-6.2.json. |
+| component.mobileUnread.insetBottom | dimension | 12px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileUnread.insetStart | dimension | 17px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileUnread.reserveEnd | dimension | 138px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
 | component.navigation.detailsSidebarWidth | dimension | 280px | Ширина боковой панели сведений встречи из styles.css:646 |
 | component.navigation.height | dimension | 62px | Основная нижняя навигация height |
 | component.navigation.icon | dimension | 19px | Основная нижняя навигация icon |
@@ -289,11 +455,13 @@
 | component.taskDetails.factInsetBlock | dimension | 8px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .task-facts > div |
 | component.taskDetails.factsGap | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .task-facts > div |
 | component.taskDetails.factsInsetTop | dimension | 7px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .task-facts |
+| motion.duration.calendarMonth | duration | 180ms | CalendarGrid month-enter baseline180ms. |
 | motion.duration.card | duration | 220ms | Длительность card |
 | motion.duration.cover | duration | 280ms | Длительность cover |
 | motion.duration.emojiPanelEnter | duration | 180ms | 2.2.0: вход панели эмодзи; Reduce Motion переключает сразу |
 | motion.duration.emojiPanelExit | duration | 150ms | 2.2.0: выход панели эмодзи; Reduce Motion переключает сразу |
 | motion.duration.fast | duration | 150ms | Длительность fast |
+| motion.duration.mobileLaunch | duration | 1200ms | launch-r1: один quintic smoothstep оборот, без повторения при resume |
 | motion.duration.mobileSheet | duration | 180ms | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet; native системное движение, reduced motion отключает сдвиг |
 | motion.duration.navigation | duration | 260ms | Длительность navigation |
 | motion.duration.photo | duration | 290ms | Длительность photo |
@@ -301,6 +469,7 @@
 | motion.duration.reactionExit | duration | 150ms | Коррекция 2.0.0: reactionExit контекстных реакций; Reduce Motion без scale/translation |
 | motion.duration.reactionFeedback | duration | 150ms | Коррекция 2.0.0: reactionFeedback контекстных реакций; Reduce Motion без scale/translation |
 | motion.duration.reactionLongPress | duration | 450ms | Web-порог удержания 450 ms; native системный long press, доступные действия на самом сообщении/чипе без постоянных кнопок |
+| motion.easing.calendarMonth | cubicBezier | cubic-bezier(0, 0, 0.58, 1) | CalendarGrid month-enter baseline CSS ease-out. |
 | motion.easing.standard | cubicBezier | cubic-bezier(0.2, 0.7, 0.3, 1) | Плавное завершение движения |
 | radius.badge | dimension | 8px | Радиус badge |
 | radius.card | dimension | 22px | Радиус card |
@@ -338,9 +507,15 @@
 | typography.lineHeight.label | number | 1.4 | Множитель высоты строки label |
 | typography.lineHeight.meetingDescription | number | 1.6 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .meeting-description |
 | typography.lineHeight.mobileFieldDescription | number | 1.45 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field > textarea |
+| typography.lineHeight.mobileOnboardingBody | number | 1.55 | onboarding-r4/r5 copy |
+| typography.lineHeight.mobileOnboardingTitle | number | 1.08 | onboarding-r4/r5 title |
 | typography.lineHeight.mobileSheetTitle | number | 1.25 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet-header h1 |
 | typography.size.body | dimension | 15px | Размер текста body |
 | typography.size.button | dimension | 14px | Размер подписи .button из утверждённого styles.css:222; Android использует sp |
+| typography.size.calendarTitle | dimension | 19px | Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json. |
+| typography.size.calendarTitleMobile | dimension | 18px | Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json. |
+| typography.size.calendarTitleNarrow | dimension | 16px | Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json. |
+| typography.size.calendarTodayNarrow | dimension | 10px | Размер CalendarGrid baseline, без смены desktop/mobile значений; источник в calendar-token-bindings-6.2.json. |
 | typography.size.caption | dimension | 12px | Размер текста caption |
 | typography.size.cardTitle | dimension | 21px | Размер текста cardTitle |
 | typography.size.cardTitleMobile | dimension | 19px | Размер текста cardTitleMobile |
@@ -355,22 +530,29 @@
 | typography.size.helpQuestion | dimension | 14px | FAQ 28.10.2026 |
 | typography.size.label | dimension | 11px | Размер текста label |
 | typography.size.mobileActionHeading | dimension | 28px | Заголовок мобильной формы из h1 утверждённого styles.css; историческая полностраничная mobile-композиция, новые панели чата используют mobileSheetTitle |
+| typography.size.mobileBrandWord | dimension | 21px | Header onboarding-r4/r5: system21/brand850. На native используется тот же смысловой размер с системными метриками. |
 | typography.size.mobileChatNarrowTitle | dimension | 14px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css narrow header |
 | typography.size.mobileChatTitle | dimension | 16px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-heading |
+| typography.size.mobileLaunchWord | dimension | 44px | launch-r1 / ux.md: название на native-заставке; не шапка |
+| typography.size.mobileOnboardingNarrowTitle | dimension | 28px | onboarding-r5: title при узкой ширине |
+| typography.size.mobileOnboardingTitle | dimension | 32px | onboarding-r5: title, композиция r4 принята |
 | typography.size.mobilePeopleInitial | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip i/.tiny-avatar |
 | typography.size.mobileSheetTitle | dimension | 19px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet-header h1 |
 | typography.size.mobileWebInput | dimension | 16px | Только mobile web: минимум текста input/textarea/select по ранее принятому gathering-activity-feed/mobile-scroll.md, строки 15–16,31–32; предотвращает Safari auto-zoom без запрета user zoom. Native сохраняет body 15 и платформенное масштабирование. |
+| typography.size.navigationLabel | dimension | 9px | Привязка iOS/Android baseline label9; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | typography.size.participantChip | dimension | 11px | Размер имени из общих .people/.person/.people-more styles.css:339–365,582–585,1348–1387; масштабируемый текст Android — sp |
 | typography.size.participantChipAvatar | dimension | 9px | Размер буквы инициала из общих .people/.person/.people-more styles.css:339–365,582–585,1348–1387; масштабируемый текст Android — sp |
 | typography.size.participantChipMore | dimension | 10px | Размер подписи счётчика из общих .people/.person/.people-more styles.css:339–365,582–585,1348–1387; масштабируемый текст Android — sp |
 | typography.size.participantRosterAvatar | dimension | 12px | Инициал .avatar исходного styles.css,12px; масштабируемый текст |
 | typography.size.sectionHeading | dimension | 16px | Заголовок раздела h3 исходного styles.css:75, в том числе compact-состав в сведениях встречи |
 | typography.size.small | dimension | 13px | Размер текста small |
+| typography.tracking.navigationLabel | dimension | 0.05px | Привязка iOS/Android baseline label tracking0.05; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | typography.weight.bold | fontWeight | 700 | Начертание bold |
 | typography.weight.brand | fontWeight | 850 | Начертание brand |
 | typography.weight.helpQuestion | fontWeight | 550 | FAQ заголовок 28.10.2026 |
 | typography.weight.medium | fontWeight | 500 | Начертание medium |
 | typography.weight.mobileChatTitle | fontWeight | 650 | Принятый chat.css .meeting-heading > span:first-child, начертание заголовка чата |
+| typography.weight.mobileOnboardingTitle | fontWeight | 740 | onboarding-r4/r5 title |
 | typography.weight.mobileSheetTitle | fontWeight | 650 | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet-header h1 |
 | typography.weight.participantChipAvatar | fontWeight | 650 | Начертание инициала компактного участника из унаследованного .avatar styles.css:171 |
 | typography.weight.participantRosterAvatar | fontWeight | 650 | Вес инициала .avatar исходного styles.css,650 |

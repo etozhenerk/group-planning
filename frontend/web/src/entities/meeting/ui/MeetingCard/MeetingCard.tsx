@@ -1,4 +1,5 @@
-import { UnreadBadge } from '@/entities/meeting/ui/UnreadBadge';
+import { useMobileLayout } from '@/shared/lib/media';
+import { UnreadIndicator } from '@/entities/meeting/ui/UnreadIndicator';
 import { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';
 import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 import { ParticipantPreview } from '@/entities/meeting/ui/ParticipantPreview';
@@ -12,6 +13,7 @@ export type MeetingCardProps = { meeting: MeetingSummary; user: string; past?: b
 
 export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) => {
   const location = useLocation();
+  const mobile = useMobileLayout();
   const labels = cardLabels(meeting);
   const lastSpace = meeting.title.trimEnd().lastIndexOf(' ');
   const prefix = lastSpace < 0 ? '' : meeting.title.slice(0, lastSpace + 1);
@@ -21,7 +23,8 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
     <article
       className={styles.card}
       data-testid="meeting-card"
-      data-weekend={['сб', 'вс'].includes(labels.weekday)}
+      data-mobile={mobile}
+      data-weekend={labels.weekend}
     >
       <Link className={styles.link} to={`/meetings/${meeting.id}`}>
         <time
@@ -51,7 +54,7 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
                 meeting.title
               )}
             </h2>
-            <UnreadBadge count={meeting.unreadCount} />
+            {!mobile && <UnreadIndicator count={meeting.unreadCount} />}
           </div>
           <p>
             <MapPin size={14} aria-hidden="true" />
@@ -59,13 +62,18 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
           </p>
           {labels.zone && <p>{labels.zone}</p>}
         </div>
-        <Sparkle
-          className={styles.sparkle}
-          size={16}
-          fill="currentColor"
-          strokeWidth={0}
-          aria-hidden="true"
-        />
+        {mobile && (
+          <UnreadIndicator count={meeting.unreadCount} variant="notice" flow={past} />
+        )}
+        {!mobile && (
+          <Sparkle
+            className={styles.sparkle}
+            size={16}
+            fill="currentColor"
+            strokeWidth={0}
+            aria-hidden="true"
+          />
+        )}
         <div className={styles.people}>
           <ParticipantPreview meeting={meeting} />
         </div>

@@ -63,9 +63,7 @@ struct FeedAttachmentMessageView: View {
         MeetingInfoAvatar(
             user: own ? session.profile ?? entry.actor : entry.actor,
             size: DesignTokens.componentMobileChatMessageAvatar,
-            textSize: DesignTokens.typographySizeCaption,
-            weight: DesignTokens.typographyWeightSemibold,
             color: own ? DesignTokens.colorRosterSand : DesignTokens.colorRosterMint,
-            textColor: DesignTokens.colorRosterText)
+            foregroundColor: DesignTokens.colorRosterText)
     }
 }

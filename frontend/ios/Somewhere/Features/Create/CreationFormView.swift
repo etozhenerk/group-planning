@@ -5,13 +5,9 @@ struct CreationFormView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Button(action: owner.requestClose) {
-                    HStack(spacing: 7) {
-                        ExperienceIcon(kind: .back)
-                        Text("Мои встречи")
-                    }
-                    .designFont(13).frame(minHeight: 44)
-                }.accessibilityLabel("Закрыть").disabled(owner.busy || owner.preparingCover)
+                PageBackButton(
+                    label: "Вернуться к встречам", enabled: !owner.busy && !owner.preparingCover,
+                    action: owner.requestClose)
                 Text("Новая встреча").designFont(28, weight: .bold).tracking(-0.9).padding(
                     .bottom, 24)
                 VStack(alignment: .leading, spacing: 18) {
@@ -19,6 +15,7 @@ struct CreationFormView: View {
                         value: owner.value.cover, disabled: !owner.editable,
                         onBusy: { owner.preparingCover = $0 },
                         onChange: { cover in owner.change { $0.cover = cover } })
+                    RequiredLegend()
                     CreationFieldsView(owner: owner)
                     if let problem = owner.problem {
                         Text(problem).designFont(12).foregroundStyle(AppPalette.error)
@@ -29,9 +26,11 @@ struct CreationFormView: View {
                     }
                     HStack(spacing: 14) {
                         Button(action: owner.requestClose) {
-                            Text("Отмена").font(.system(size: 14, weight: .semibold))
-                                .padding(.horizontal, 18).frame(minHeight: 47)
-                                .contentShape(Rectangle())
+                            Text("Отмена").font(
+                                .system(size: DesignTokens.typographySizeButton, weight: .semibold)
+                            )
+                            .padding(.horizontal, 18).frame(minHeight: 47)
+                            .contentShape(Rectangle())
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 13).stroke(

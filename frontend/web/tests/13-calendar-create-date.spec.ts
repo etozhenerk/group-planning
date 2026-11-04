@@ -52,7 +52,25 @@ for (const width of [320, 1440]) {
       release();
       await expect(agenda.getByText('0 встреч', { exact: true })).toBeVisible();
 
-      if (width <= 1180) {
+      if (width < 740) {
+        const before = await controls.boundingBox();
+        const viewport = page.getByTestId('meetings-scroll');
+        await viewport.evaluate((element) => {
+          element.scrollTop = 340;
+        });
+        await expect
+          .poll(() => viewport.evaluate((element) => element.scrollTop))
+          .toBeGreaterThan(0);
+        const after = await controls.boundingBox();
+        expect(after!.y).toBeCloseTo(before!.y, 0);
+        await expect(
+          controls.getByRole('button', { name: 'Показать список', exact: true }),
+        ).toBeInViewport({ ratio: 1 });
+        await expect(
+          page.getByRole('navigation', { name: 'Основная навигация' }),
+        ).toBeInViewport({ ratio: 1 });
+        await expect(controls).toHaveCSS('box-shadow', 'none');
+      } else if (width <= 1180) {
         const filters = page.getByRole('navigation', { name: 'Вид встреч' });
         const filtersDocumentY = await filters.evaluate(
           (element) => element.getBoundingClientRect().top + window.scrollY,
@@ -96,7 +114,12 @@ for (const width of [320, 1440]) {
       ).toHaveCount(1);
       await page.screenshot({ path: `test-results/calendar-create-${width}.png` });
 
-      if (width <= 1180) {
+      if (width < 740) {
+        await page.getByTestId('meetings-scroll').evaluate((element) => {
+          element.scrollTop = 0;
+        });
+        await expect(controls).toHaveCSS('box-shadow', 'none');
+      } else if (width <= 1180) {
         await page.evaluate(() => window.scrollTo(0, 0));
         await expect(controls).toHaveAttribute('data-pinned', 'false');
         await expect(controls).toHaveCSS('box-shadow', 'none');
@@ -121,12 +144,14 @@ test('creation from a calendar day prefills its date and keeps edits after reloa
   await page.getByRole('link', { name: 'Создать встречу', exact: true }).click();
   await expectDate(page, '24.10.2026');
   await expect(page.getByRole('textbox', { name: 'Время', exact: true })).toHaveValue('');
-  await page.getByLabel('Название', { exact: true }).fill('Встреча из календаря');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Встреча из календаря');
   await setDate(page, '25.10.2026');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:30');
   await page.reload();
   await expectDate(page, '25.10.2026');
-  await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Встреча из календаря',
   );
 });
@@ -150,7 +175,9 @@ test('header creation uses the calendar day but list and undated creation do not
   await page.locator('[data-day="2026-10-31"]').click();
   await create.click();
   await expectDate(page, '31.10.2026');
-  await page.getByLabel('Название', { exact: true }).fill('Пицца в субботу');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Пицца в субботу');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('18:30');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();

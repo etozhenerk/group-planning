@@ -17,3 +17,19 @@ export const readReturnLocation = (value: unknown, fallback = '/meetings') => {
     ? { path: parsed.data.returnTo, state: parsed.data.returnState }
     : { path: fallback, state: undefined };
 };
+
+export const returnLocationLabel = (path: string) => {
+  if (path === '/profile') {
+    return 'Вернуться в профиль';
+  }
+
+  if (path === '/help') {
+    return 'Вернуться к помощи';
+  }
+
+  if (path === '/about') {
+    return 'Вернуться к информации о приложении';
+  }
+
+  return 'Вернуться к встречам';
+};

@@ -207,19 +207,20 @@ test('settings and sharing return to the same information sheet and retain the d
   await info.getByRole('button', { name: 'Настройки встречи' }).click();
   const settings = page.getByRole('dialog', { name: 'Настройки встречи' });
   await expect(page.locator('dialog:modal')).toHaveCount(1);
-  await settings.getByLabel('Название', { exact: true }).fill('Несохранённое название');
-  await expect(settings.getByLabel('Название', { exact: true })).toHaveCSS(
-    'font-size',
-    '16px',
-  );
+  await settings
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Несохранённое название');
+  await expect(
+    settings.getByRole('textbox', { name: 'Название', exact: true }),
+  ).toHaveCSS('font-size', '16px');
   await page.screenshot({ path: test.info().outputPath('meeting-settings-draft.png') });
   await page.goBack();
   await expect(info).toBeVisible();
   await expect(info.getByRole('button', { name: 'Настройки встречи' })).toBeFocused();
   await info.getByRole('button', { name: 'Настройки встречи' }).click();
-  await expect(settings.getByLabel('Название', { exact: true })).toHaveValue(
-    'Несохранённое название',
-  );
+  await expect(
+    settings.getByRole('textbox', { name: 'Название', exact: true }),
+  ).toHaveValue('Несохранённое название');
   await settings.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await info.getByRole('button', { name: 'Пригласить друзей' }).click();
   const share = page.getByRole('dialog', { name: 'Пригласить друзей', exact: true });

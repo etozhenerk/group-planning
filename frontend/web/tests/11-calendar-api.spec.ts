@@ -6,7 +6,13 @@ import { login, writeHeaders } from '@tests/helpers';
 test('real API: complete day counts, pagination, changed cursor and rescheduled date', async ({
   page,
   browser,
-}) => {
+}, testInfo) => {
+  // Projects share the fixture process; keep each leap-day dataset independent.
+  const year =
+    2088 + (testInfo.project.name.includes('webkit') ? 4 : 0) + 8 * testInfo.retry;
+
+  const day = `${year}-02-29`;
+  const nextDay = `${year}-03-01`;
   await login(page, 'Саша');
   const headers = await writeHeaders(page);
   const meetings = [];
@@ -16,7 +22,7 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
       headers: { ...headers, 'Idempotency-Key': randomUUID() },
       data: {
         title: `Календарь ${index + 1}`,
-        starts_at: `2088-02-29T19:${String(index).padStart(2, '0')}:00+03:00`,
+        starts_at: `${day}T19:${String(index).padStart(2, '0')}:00+03:00`,
         timezone: 'Europe/Moscow',
       },
     });
@@ -26,16 +32,14 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
     meetings.push(createdSchema.parse(raw).meeting);
   }
 
-  await page.goto('/meetings?view=calendar&period=upcoming&upcoming=2088-02-29');
+  await page.goto(`/meetings?view=calendar&period=upcoming&upcoming=${day}`);
   const agenda = page.getByRole('region', { name: 'Встречи выбранного дня' });
-  await expect(page.locator('[data-day="2088-02-29"]')).toHaveAccessibleName(
-    /встреч: 52/,
-  );
+  await expect(page.locator(`[data-day="${day}"]`)).toHaveAccessibleName(/встреч: 52/);
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(50);
   const first = meetings[0]!;
   const update = await page.request.patch(`/api/v1/meetings/${first.id}`, {
     headers: { ...headers, 'Idempotency-Key': randomUUID() },
-    data: { expected_revision: first.revision, starts_at: '2088-03-01T19:00:00+03:00' },
+    data: { expected_revision: first.revision, starts_at: `${nextDay}T19:00:00+03:00` },
   });
 
   expect(update.status()).toBe(200);
@@ -45,12 +49,11 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
   await agenda.getByRole('button', { name: 'Показать ещё' }).click();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(51);
   await expect(agenda.getByRole('button', { name: 'Показать ещё' })).toHaveCount(0);
-  await expect(page.locator('[data-day="2088-02-29"]')).toHaveAccessibleName(
-    /встреч: 51/,
-    { timeout: 10_000 },
-  );
+  await expect(page.locator(`[data-day="${day}"]`)).toHaveAccessibleName(/встреч: 51/, {
+    timeout: 10_000,
+  });
   await page.getByRole('button', { name: 'Следующий месяц' }).click();
-  await page.locator('[data-day="2088-03-01"]').click();
+  await page.locator(`[data-day="${nextDay}"]`).click();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(1);
   await expect(agenda.getByTestId('agenda-meeting')).toContainText('Календарь 1');
   const invitationResponse = await page.request.get(
@@ -76,7 +79,7 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
     });
 
     expect(join.status()).toBe(200);
-    await friend.goto('/meetings?view=calendar&period=upcoming&upcoming=2088-03-01');
+    await friend.goto(`/meetings?view=calendar&period=upcoming&upcoming=${nextDay}`);
     const friendAgenda = friend.getByRole('region', { name: 'Встречи выбранного дня' });
     await expect(friendAgenda.getByTestId('agenda-meeting')).toHaveCount(1);
     const leave = await friend.request.put(`/api/v1/meetings/${first.id}/rsvp`, {
@@ -88,7 +91,7 @@ test('real API: complete day counts, pagination, changed cursor and rescheduled 
     await expect(friendAgenda.getByTestId('agenda-meeting')).toHaveCount(0, {
       timeout: 10_000,
     });
-    await expect(friend.locator('[data-day="2088-03-01"]')).toHaveAttribute(
+    await expect(friend.locator(`[data-day="${nextDay}"]`)).toHaveAttribute(
       'aria-pressed',
       'true',
     );

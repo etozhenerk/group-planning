@@ -1,4 +1,10 @@
-import { ApiError, logoutRequest, request, sessionSchema } from '@/shared/api';
+import {
+  ApiError,
+  logoutRequest,
+  mapPublicUser,
+  request,
+  sessionSchema,
+} from '@/shared/api';
 import type { Session } from '@/entities/session/model/types';
 
 export const getSession = async (signal?: AbortSignal): Promise<Session | null> => {
@@ -15,7 +21,7 @@ export const getSession = async (signal?: AbortSignal): Promise<Session | null> 
     );
 
     return {
-      user: { id: wire.user.id, displayName: wire.user.display_name },
+      user: mapPublicUser(wire.user),
       expiresAt: wire.expires_at,
       csrf: wire.csrf_token,
     };

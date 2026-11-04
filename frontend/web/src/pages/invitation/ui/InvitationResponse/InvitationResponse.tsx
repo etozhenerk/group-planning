@@ -1,4 +1,4 @@
-import { useJoinDeadline } from '@/pages/invitation/ui/InvitationResponse/hooks/useJoinDeadline';
+import { useJoinDeadline } from '@/features/respond';
 import { Link } from 'react-router';
 import type { Invitation } from '@/entities/meeting';
 import { useInvitationOrganizer } from '@/entities/meeting';

@@ -38,7 +38,8 @@ export const readManifest = async (root, path) => {
     throw new Error(
       'Review inputs must not include manifest/report directory; use explicit UI inputs',
     );
-  const tasksPath = posix.join(posix.dirname(path), 'tasks.md');
+  const changeRoot = path.match(/^(openspec\/changes\/[^/]+)\//)?.[1];
+  const tasksPath = posix.join(changeRoot ?? posix.dirname(path), 'tasks.md');
   const tasksText = await readFile(await safePath(root, tasksPath), 'utf8');
   const tasks = new Map(
     [...tasksText.matchAll(/^- \[([ xX])\] (\d+(?:\.\d+)+)\s/gm)].map((m) => [

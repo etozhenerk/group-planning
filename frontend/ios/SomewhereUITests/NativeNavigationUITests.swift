@@ -39,7 +39,7 @@ final class NativeNavigationUITests: XCTestCase {
         XCTAssertTrue(cover.isHittable)
         XCTAssertLessThan(cover.frame.maxY, title.frame.minY)
         ExperienceScreenshot.save("native-create-without-tabs", test: self)
-        app.buttons["Закрыть"].tap()
+        app.buttons["Вернуться к встречам"].tap()
         for id in tabs { XCTAssertTrue(app.buttons[id].isHittable) }
         ExperienceScreenshot.save("native-tabs-stable", test: self)
     }

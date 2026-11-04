@@ -41,7 +41,7 @@ test('create a meeting without an hour, then reload the unchanged date and syste
 }) => {
   await login(page, 'Саша');
   await page.goto('/meetings/new');
-  await page.getByLabel('Название', { exact: true }).fill('Только день');
+  await page.getByRole('textbox', { name: 'Название', exact: true }).fill('Только день');
   await setDate(page, '25.10.2026');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();

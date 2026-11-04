@@ -1,6 +1,6 @@
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
-import { useDatePoll, useMeeting } from '@/entities/meeting';
+import type { DatePoll } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollBallot } from '@/features/date-poll/ui/PollBallot';
 import { PollAddOption } from '@/features/date-poll/ui/PollAddOption';
@@ -9,23 +9,26 @@ import { pollStatus, pollError } from '@/features/date-poll/model/pollCopy';
 import styles from '@/features/date-poll/ui/DatePollCard/DatePollCard.module.css';
 
 export type DatePollCardProps = {
-  meeting: string;
-  id: string;
+  poll: DatePoll | undefined;
   session: Session;
   outgoing: boolean;
+  zone: string;
+  pending?: boolean;
+  error?: unknown;
+  retry?: () => void;
+  now?: number;
 };
 
-export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardProps) => {
-  const query = useDatePoll(meeting, id, session.user.id);
-  const details = useMeeting(meeting, session.user.id);
-
-  if (query.access.denied) {
-    return null;
-  }
-
-  const poll = query.data;
-  const zone = details.data?.timezone ?? 'UTC';
-
+export const DatePollCard = ({
+  poll,
+  session,
+  outgoing,
+  zone,
+  pending = false,
+  error,
+  retry,
+  now = Date.now(),
+}: DatePollCardProps) => {
   return (
     <section
       className={[styles['card'], outgoing ? styles['outgoing'] : '']
@@ -49,7 +52,7 @@ export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardPro
           <PollAddOption poll={poll} session={session} zone={zone} />
           <PollResolution poll={poll} session={session} zone={zone} />
           <div className={styles['footer']}>
-            <span>{pollStatus(poll, zone)}</span>
+            <span>{pollStatus(poll, zone, now)}</span>
             <span>
               {poll.settings.anonymous ? 'Анонимные голоса' : 'Открытые голоса'}
             </span>
@@ -58,13 +61,13 @@ export const DatePollCard = ({ meeting, id, session, outgoing }: DatePollCardPro
             <p className={styles['note']}>Результаты появятся после окончания опроса.</p>
           )}
         </>
-      ) : query.isPending ? (
+      ) : pending ? (
         <SkeletonRows label="Загрузка опроса" variant="agenda" />
       ) : null}
-      {query.error && (
+      {!!error && (
         <div role="alert">
-          <p>{pollError(query.error)}</p>
-          <button type="button" onClick={() => void query.refetch()}>
+          <p>{pollError(error)}</p>
+          <button type="button" onClick={retry}>
             Повторить
           </button>
         </div>

@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.Participant
 import dev.groupplanning.android.ui.components.UserAvatar
@@ -44,9 +43,7 @@ internal fun ParticipantRosterRow(participant: Participant, color: Color) {
             participant.user.avatarUrl,
             size = avatarSize,
             avatarColor = color,
-            textSize = DesignTokens.typographySizeParticipantRosterAvatar,
-            textColor = DesignTokens.colorRosterText,
-            textWeight = FontWeight(DesignTokens.typographyWeightParticipantRosterAvatar.toInt()),
+            foregroundColor = DesignTokens.colorRosterText,
         )
         Column(Modifier.weight(1f)) {
             Text(

@@ -3,7 +3,7 @@ import { Dialog } from '@/shared/ui/Dialog';
 import { TaskDetails } from '@/features/preparation-task/ui/TaskDetails';
 import { TaskConfirmation } from '@/features/preparation-task/ui/TaskConfirmation';
 import type { useTaskControls } from '@/features/preparation-task/model/useTaskControls';
-import type { useTaskPanel } from '@/features/preparation-task/ui/TaskCard/hooks/useTaskPanel';
+import type { useTaskPanel } from '@/features/preparation-task/ui/TaskRecord/hooks/useTaskPanel';
 
 export type TaskDialogProps = {
   task: PreparationTask;

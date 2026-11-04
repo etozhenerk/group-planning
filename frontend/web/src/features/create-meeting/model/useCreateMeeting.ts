@@ -3,10 +3,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import type { FormEvent } from 'react';
 import type { Session } from '@/entities/session';
-import { createMeeting, draftInput, emptyDraft } from '@/entities/meeting';
+import {
+  createMeeting,
+  draftInput,
+  emptyDraft,
+  requiredMeetingErrors,
+} from '@/entities/meeting';
 import type { MeetingDraft, MeetingInput } from '@/entities/meeting';
 import { ApiError, errorText } from '@/shared/api';
 import { useIntent } from '@/shared/lib/intent';
+import { useMobileLayout } from '@/shared/lib/media';
 import {
   readDraft,
   readPendingCreation,
@@ -18,6 +24,7 @@ import { useUnsaved } from '@/features/create-meeting/model/useUnsaved';
 type CreationAttempt = { key: string; input: MeetingInput; draft: MeetingDraft };
 
 export const useCreateMeeting = (session: Session) => {
+  const mobile = useMobileLayout();
   const { key } = useLocation();
   const [params] = useSearchParams();
   const [attempt, setAttempt] = useState<CreationAttempt | null>(() => {
@@ -39,6 +46,7 @@ export const useCreateMeeting = (session: Session) => {
   );
 
   const [localError, setLocalError] = useState('');
+  const [validationAttempt, setValidationAttempt] = useState(0);
   const [preparing, setPreparing] = useState(false);
   const [saved, setSaved] = useState(false);
   const [destination, setDestination] = useState<string | null>(null);
@@ -105,6 +113,11 @@ export const useCreateMeeting = (session: Session) => {
     }
 
     setLocalError('');
+    setValidationAttempt((current) => current + 1);
+
+    if (mobile && Object.keys(requiredMeetingErrors(value)).length) {
+      return;
+    }
 
     try {
       const input = draftInput(value);
@@ -119,11 +132,13 @@ export const useCreateMeeting = (session: Session) => {
 
   const fieldErrors: Record<string, string> = {
     ...errors,
+    ...(validationAttempt ? requiredMeetingErrors(value) : {}),
     ...(localError.includes('дважды') ? { ambiguous: 'choose' } : {}),
   };
 
   return {
     value,
+    validationAttempt,
     change,
     submit,
     pending: mutation.isPending,

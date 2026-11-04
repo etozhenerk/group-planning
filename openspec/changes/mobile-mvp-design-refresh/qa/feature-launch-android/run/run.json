@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "planHash": "d66894cd4e87bbaab0e1d1968ea6dd4e23e64ffbbed61d480c04278e0bb556ea",
+  "checks": [
+    {
+      "id": "TC-MOBILE-LAUNCH-COLD/android-launch-small/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:26:25.533607+00:00",
+      "finishedAt": "2026-11-04T17:27:21.604267+00:00",
+      "actual": "Выполнен force-stop QA host и холодный запуск scenario=calendar. Системный этап — однотонный графит без замаскированной подписи и дополнительного вращающегося знака; далее целая подпись, слово неподвижно. В живой семантике знак 106 px = 53 dp, промежуток 32 px = 16 dp, одинаковые границы подписи 564×112 px при density=2 и fontScale=1. Видео с шагом кадров 100 ms показывает один оборот приблизительно за 1,2 s и остановку; масштаб видимой подписи не меняется. После восстановления открываются личные встречи.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/small-cold.mp4",
+          "kind": "video",
+          "sha256": "247139e635a0c0bd4f9b3f9f6164c06524daec556f18541d835daf91263521f2"
+        },
+        {
+          "path": "evidence/small-cold-contact.png",
+          "kind": "screenshot",
+          "sha256": "8bd3f0c8444236dcd065324e9990ce1d4fb020b95481e0ad8615133f06246d44"
+        },
+        {
+          "path": "evidence/small-cold-2.png",
+          "kind": "screenshot",
+          "sha256": "ca0a55937581e1ed68b251cc10530818362a580750310d43040ff5d54b572773"
+        },
+        {
+          "path": "evidence/small-delayed-semantics.xml",
+          "kind": "raw",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-RESUME/android-launch-small/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:26:25.533607+00:00",
+      "finishedAt": "2026-11-04T17:41:09.057Z",
+      "actual": "TLS-поток только собственной fixture удержан общим 9 s gate без чтения payload. После одного оборота подпись и знак статичны на задержанной заставке, процентов и второго оборота нет. Home → возврат во время задержки сохраняет восстановление; после открытия личных встреч Home → возврат не показывает вступление. Пересоздание Activity через поворот portrait→landscape→portrait сохраняет авторизованный список и не запускает вступление.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/small-delayed.mp4",
+          "kind": "video",
+          "sha256": "550380042b95a532a7f766081b8e2e0d47215099cfb83b0a2a63f434a6f1de21"
+        },
+        {
+          "path": "evidence/small-delayed-contact.png",
+          "kind": "screenshot",
+          "sha256": "21511279737ffb23e3f423d1ec61820c9d5153e012500315c200055aced787aa"
+        },
+        {
+          "path": "evidence/small-delayed-1700.png",
+          "kind": "screenshot",
+          "sha256": "3fcdcd6f93deae00f4dfadef554e779eb24e677782388bc6347c87ef9a79afc0"
+        },
+        {
+          "path": "evidence/small-delayed-2400.png",
+          "kind": "screenshot",
+          "sha256": "e96b2810cc5d7ea026ba27dd66d4a375e835834a6066acf5c81b32b1c9eb0dd8"
+        },
+        {
+          "path": "evidence/small-resumed-delayed.png",
+          "kind": "screenshot",
+          "sha256": "dcec536c2d6da18d02e5a443cfa15173ed6d2613d30093789da096b451c49f20"
+        },
+        {
+          "path": "evidence/small-delayed-ready.png",
+          "kind": "screenshot",
+          "sha256": "526dee7c94d1feb19977bad0cceb5be89d9709470f68f4f799a2342038c23396"
+        },
+        {
+          "path": "evidence/small-recreated.png",
+          "kind": "screenshot",
+          "sha256": "526dee7c94d1feb19977bad0cceb5be89d9709470f68f4f799a2342038c23396"
+        },
+        {
+          "path": "evidence/small-recreated.xml",
+          "kind": "raw",
+          "sha256": "523c18497fea070bf498f2accc1a82eedfa69c8a06a88c5903a033a89e4ff8b1"
+        },
+        {
+          "path": "evidence/small-resume-ready.mp4",
+          "kind": "video",
+          "sha256": "8e6e9ed5fa69a259e4f5bb5afdf4e2ac3cd44adcd68ee766eaaa39c1d192a55f"
+        },
+        {
+          "path": "evidence/small-resume-ready-contact.png",
+          "kind": "screenshot",
+          "sha256": "dc699893de037f13d944a3a0ed40061445d7f7d1ac0d90488500c061f7bedee7"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        },
+        {
+          "path": "evidence/small-delayed-late-contact.png",
+          "kind": "screenshot",
+          "sha256": "9f79ea326520967542b0479054ddc9e6201dfc753965f5c5f403a2bab19fb1aa"
+        },
+        {
+          "path": "evidence/small-recreation-continuous.mp4",
+          "kind": "video",
+          "sha256": "55f87353103136f565e7af44b2a19f93f99d8e72de8518e1c7b875fa5d106860"
+        },
+        {
+          "path": "evidence/small-recreation-continuous.png",
+          "kind": "screenshot",
+          "sha256": "d73a2afdd811c038cacec4a463eb63ec2f7c853382ed6c554f8774c28975ff65"
+        },
+        {
+          "path": "evidence/small-recreation-contact.png",
+          "kind": "screenshot",
+          "sha256": "05ed407faeffef8f1b0f536f746e21d33434f5b39ce17448e9540eb4d22d3158"
+        },
+        {
+          "path": "evidence/recreation-interactions.json",
+          "kind": "interaction",
+          "sha256": "52f948a6a1117d4c07776add724908c61fbbfa3452aca035c98349f013023495"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-REDUCED/android-launch-small/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:26:25.533607+00:00",
+      "finishedAt": "2026-11-04T17:27:21.604267+00:00",
+      "actual": "Системные window/transition/animator scales установлены в 0. Холодный запуск: полная подпись и неподвижный знак на всех кадрах заставки. Отдельно обычная задержанная заставка имеет content-desc «somewhere, приложение загружается» в живом UI tree. Экранный диктор/озвучивание не запускались и не засчитаны; весь raw кейс не принят.",
+      "defect": "Непроведён обязательный шаг raw case: прочитать заставку экранным диктором. Текущий пользовательский scope исключает озвучивание; семантическое имя и неподвижные кадры его не заменяют.",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/small-reduced.mp4",
+          "kind": "video",
+          "sha256": "37b4825de199cdcdd247193726e92ebecb9427eb82d6c10c3c2958b4bce88dcd"
+        },
+        {
+          "path": "evidence/small-reduced-contact.png",
+          "kind": "screenshot",
+          "sha256": "03082f97e523193c1e0a9b254cc41ca4ad0a80971d3718957dac0c162fc12295"
+        },
+        {
+          "path": "evidence/small-reduced-ready.png",
+          "kind": "screenshot",
+          "sha256": "db7fe6d89b0e39ec23128d5f2112413444681f4cc606e84c262e60f61291a536"
+        },
+        {
+          "path": "evidence/small-delayed-semantics.xml",
+          "kind": "raw",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-COLD/android-launch-standard/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:27:22.849672+00:00",
+      "finishedAt": "2026-11-04T17:28:18.850210+00:00",
+      "actual": "Выполнен force-stop QA host и холодный запуск scenario=calendar. Системный этап — однотонный графит без замаскированной подписи и дополнительного вращающегося знака; далее целая подпись, слово неподвижно. В живой семантике знак 106 px = 53 dp, промежуток 32 px = 16 dp, одинаковые границы подписи 564×112 px при density=2 и fontScale=1. Видео с шагом кадров 100 ms показывает один оборот приблизительно за 1,2 s и остановку; масштаб видимой подписи не меняется. После восстановления открываются личные встречи.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/standard-cold.mp4",
+          "kind": "video",
+          "sha256": "cf0720ed92680248cc4fd9810d48715443a35da917b0df1f17414062952b059e"
+        },
+        {
+          "path": "evidence/standard-cold-contact.png",
+          "kind": "screenshot",
+          "sha256": "9eb2f6868f27c88e720857a293197c88dc522cf2495a158bbdf7e5e497d0213e"
+        },
+        {
+          "path": "evidence/standard-cold-2.png",
+          "kind": "screenshot",
+          "sha256": "ec00090d76596a7e15dc682cf7bdc802dacf9612f3910e2188289351ded88952"
+        },
+        {
+          "path": "evidence/standard-delayed-semantics.xml",
+          "kind": "raw",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-RESUME/android-launch-standard/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:27:22.849672+00:00",
+      "finishedAt": "2026-11-04T17:41:09.057Z",
+      "actual": "TLS-поток только собственной fixture удержан общим 9 s gate без чтения payload. После одного оборота подпись и знак статичны на задержанной заставке, процентов и второго оборота нет. Home → возврат во время задержки сохраняет восстановление; после открытия личных встреч Home → возврат не показывает вступление. Пересоздание Activity через поворот portrait→landscape→portrait сохраняет авторизованный список и не запускает вступление.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/standard-delayed.mp4",
+          "kind": "video",
+          "sha256": "7cb01778d0740fee7ca144d0d892a51d602bd12e11927e1c284d3b1e036a8aec"
+        },
+        {
+          "path": "evidence/standard-delayed-contact.png",
+          "kind": "screenshot",
+          "sha256": "f1d86fe49fcf03dc6f11036a79b379b702f83b02c238280da599502558e650ee"
+        },
+        {
+          "path": "evidence/standard-delayed-1700.png",
+          "kind": "screenshot",
+          "sha256": "c4b885308b5241312f9857ba35213aa8565b79f2ae1aca03aa720cfe1aa2059d"
+        },
+        {
+          "path": "evidence/standard-delayed-2400.png",
+          "kind": "screenshot",
+          "sha256": "5204bd6c2f6afef060946af4a5485279a6b38ef591c4d7b92e17cb5db3d212d5"
+        },
+        {
+          "path": "evidence/standard-resumed-delayed.png",
+          "kind": "screenshot",
+          "sha256": "887577fe0c3b326e11c915109bf16062c5905aaf8208cd9bbb4e89faf6230cfa"
+        },
+        {
+          "path": "evidence/standard-delayed-ready.png",
+          "kind": "screenshot",
+          "sha256": "1a5b84d744eee94daa1ad6b0206484797c3e66c656210fb64477f46219427f96"
+        },
+        {
+          "path": "evidence/standard-recreated.png",
+          "kind": "screenshot",
+          "sha256": "1a5b84d744eee94daa1ad6b0206484797c3e66c656210fb64477f46219427f96"
+        },
+        {
+          "path": "evidence/standard-recreated.xml",
+          "kind": "raw",
+          "sha256": "5c792b802471d82649f2b0c19a2b9ae26a004b800ed459181c37550808487c1a"
+        },
+        {
+          "path": "evidence/standard-resume-ready.mp4",
+          "kind": "video",
+          "sha256": "1c747ceddcb3da3030c5d8de39d8f10a1c82ae756417e642f95b78a0b5b9605e"
+        },
+        {
+          "path": "evidence/standard-resume-ready-contact.png",
+          "kind": "screenshot",
+          "sha256": "faafc0e65775e2bbca6fba12cad3b7f52dab3e710057db0deb9ac9532381f72f"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        },
+        {
+          "path": "evidence/standard-delayed-late-contact.png",
+          "kind": "screenshot",
+          "sha256": "e72c3a674a8d882b318d260faab5be24804b9c1a7fe9c3100493f009c7df2dde"
+        },
+        {
+          "path": "evidence/standard-recreation-continuous.mp4",
+          "kind": "video",
+          "sha256": "175803cb8419ff89015dc50528fa53e2c8c2b761f78a4fc60a38d6d785cb25cd"
+        },
+        {
+          "path": "evidence/standard-recreation-continuous.png",
+          "kind": "screenshot",
+          "sha256": "42ed68c2072a0368e587bef0385921ae1cb3397bdd6701dab89acbc40f7d0d61"
+        },
+        {
+          "path": "evidence/standard-recreation-contact.png",
+          "kind": "screenshot",
+          "sha256": "10c1deedb4a96137e63d2b022ef22445e91d422f9c7796eea08fbee6d39ff0d3"
+        },
+        {
+          "path": "evidence/recreation-interactions.json",
+          "kind": "interaction",
+          "sha256": "52f948a6a1117d4c07776add724908c61fbbfa3452aca035c98349f013023495"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-LAUNCH-REDUCED/android-launch-standard/manual",
+      "status": "blocked",
+      "executor": {
+        "kind": "agent",
+        "id": "independent-android-launch-feature-reviewer"
+      },
+      "startedAt": "2026-11-04T17:27:22.849672+00:00",
+      "finishedAt": "2026-11-04T17:28:18.850210+00:00",
+      "actual": "Системные window/transition/animator scales установлены в 0. Холодный запуск: полная подпись и неподвижный знак на всех кадрах заставки. Отдельно обычная задержанная заставка имеет content-desc «somewhere, приложение загружается» в живом UI tree. Экранный диктор/озвучивание не запускались и не засчитаны; весь raw кейс не принят.",
+      "defect": "Непроведён обязательный шаг raw case: прочитать заставку экранным диктором. Текущий пользовательский scope исключает озвучивание; семантическое имя и неподвижные кадры его не заменяют.",
+      "evidence": [
+        {
+          "path": "evidence/interactions.json",
+          "kind": "interaction",
+          "sha256": "ed51fd931abb5cbcc7ca0452fd6d495e898ceaac638829e59b4b328a56cda052"
+        },
+        {
+          "path": "evidence/device-before.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/device-after.json",
+          "kind": "raw",
+          "sha256": "1fd1cfee2a8b8661404227bacfabe423b58354089cedb3b7dd5c0fc6eca086f5"
+        },
+        {
+          "path": "evidence/standard-reduced.mp4",
+          "kind": "video",
+          "sha256": "40a24dd9bfe67631dc74c3f0e7b5f9c9fbc99e7c2f123cd347b557564f384d39"
+        },
+        {
+          "path": "evidence/standard-reduced-contact.png",
+          "kind": "screenshot",
+          "sha256": "35d3815214a13ac9f55e59f430dcbb342bee0a82519605e52c903b4b406c68f1"
+        },
+        {
+          "path": "evidence/standard-reduced-ready.png",
+          "kind": "screenshot",
+          "sha256": "5204bd6c2f6afef060946af4a5485279a6b38ef591c4d7b92e17cb5db3d212d5"
+        },
+        {
+          "path": "evidence/standard-delayed-semantics.xml",
+          "kind": "raw",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946"
+        },
+        {
+          "path": "evidence/installed-apk.json",
+          "kind": "raw",
+          "sha256": "e4a73fe504b5cde75024ba0d025f2cf3817d29545bbc19d70dcb4fd43990d02f"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "android-unit",
+      "status": "passed",
+      "commandHash": "d45774ad1de49ff68d209a6d115cda6d0c21b3a9c237e0cc40ba7176c28765ef",
+      "startedAt": "2026-11-04T17:26:49.743Z",
+      "finishedAt": "2026-11-04T17:26:57.492Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/android-unit-1793813209744.txt",
+          "kind": "log",
+          "sha256": "f6d8675d890af1d15fcdbefafeb64701bbe6d4f31cd073de593505237ebb8252"
+        }
+      ]
+    },
+    {
+      "id": "android-ui",
+      "status": "failed",
+      "commandHash": "8322197fd2ba69c5b7f15b3fd00d7bd9c36b0aa156fc1c6d32ad8aaf9c3be4a4",
+      "startedAt": "2026-11-04T17:28:46.914Z",
+      "finishedAt": "2026-11-04T17:40:20.370Z",
+      "exitCode": 1,
+      "actual": "Process exit: 1; connectedQaAndroidTest: 98 tests, 4 failures, 0 skipped; later persistence stages not executed; fixture cleanup also FAIL. Original failure is retained. Separate one-test emoji diagnostic passed on same APK and own fresh fixture; it does not replace this suite.",
+      "evidence": [
+        {
+          "path": "suites/android-ui-1793813326915.txt",
+          "kind": "log",
+          "sha256": "3a2f465a4b8c5fa9c8661c6010bd393be766fd5aec40fede6b73aad546656463"
+        },
+        {
+          "path": "evidence/suite-failure/original-junit-0.xml",
+          "kind": "raw",
+          "sha256": "4ae74c202000e35ea633c63db5fec00da0705b76983b6920d92f32581e4e2e31"
+        },
+        {
+          "path": "evidence/suite-failure/emoji-search-original-logcat.txt",
+          "kind": "log",
+          "sha256": "dfeb7c011438ee861519fa1bef366a0c08443f9d8e68220af73aead611f91728"
+        },
+        {
+          "path": "evidence/suite-failure/invitation-responses-original-logcat.txt",
+          "kind": "log",
+          "sha256": "41a3d9ff3fde3e1c6821d53e7964d7eecf48d564cc4fc88f74428f064c89e975"
+        },
+        {
+          "path": "evidence/suite-failure/invitation-cutoff-original-logcat.txt",
+          "kind": "log",
+          "sha256": "4791358c87500cb725c9d1281db832445e3cc0f53a0483d83b7c00542ce3ae7c"
+        },
+        {
+          "path": "evidence/suite-failure/photo-picker-original-logcat.txt",
+          "kind": "log",
+          "sha256": "3071af5c05e51dacb511a3279ce4ca0b9905b3cdf9d6353605ef15fbc1a65a6a"
+        },
+        {
+          "path": "evidence/suite-failure/defects.md",
+          "kind": "raw",
+          "sha256": "2ec1a6ac406c2067f6dad5a902a01f6f5678c9d8ce65e6c3daffdcf2af3d993f"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "revision": "chat-keyboard-dismiss-2026-10-29-5.0.0",
-  "sourceCommit": "678cff24a1d97833cc80ac2a8171f213ea695103",
-  "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48. 28.10.2026: прямые решения о sheets без крестиков/refresh, ровных категориях iOS, pending после2сек и стабильном readers. 29.10.2026: скачивание всего альбома «рядом с добавить фото» на всех клиентах; перенос под primary отклонён. 29.10.2026: повторно подтверждена единая строка web-кнопок; исправление эталона без нового UX. 29.10.2026: скрывать клавиатуру на всех фронтах по нажатию вне поля сообщения.",
+  "revision": "mobile-mvp-without-maps-2026-11-04-6.3.0",
+  "sourceCommit": "ea4cad9be1077b23b0fa9394e6e51093ae8d4258",
+  "approval": "04.11.2026: реализация принятых мобильных экранов по approved-designs.json/ux.md; тексты r5 приняты, карты вынесены пользователем в отдельную paused проработку.",
   "priority": [
     "Последнее явное решение пользователя",
     "Зафиксированные коррекции в ux.md и contracts",
@@ -9,6 +9,11 @@
     "Общие основы"
   ],
   "corrections": [
+    "6.3.0: normalized list-референс раскрывает только данные unread-zero по принятому правилу скрытия нуля; raw list-r3 не меняется, preimage производного и генератора сохранён. Это не новая композиция и не доказательство реального чтения.",
+    "6.3.0: компактный ответ использует существующую карточку по invitations-r2; baseline native navigation привязан до переноса общей edge-attached коррекции. VoiceOver сейчас исключён пользователем, прежние evidence/hash не изменяются.",
+    "6.2.0: 44 привязок неизменённого baseline календаря перед переносом в единственный общий компонент; desktop и согласованный mobile-r7 сохраняются. В ту же публикацию до frozen candidate входят21 привязок принятой шапки/непрочитанного списка. Состояния списка/приглашений привязаны в той же публикации до финального кандидата, target44/48 приоритетнее старого40. Две общие привязки fallback72%/opacity0.7 закрепляют существующий производный эталон, не actual.",
+    "6.1.0: совместимые привязки mobilePage/mobileRequired/mobileBrand/mobileOnboarding по существующим макетам; один target44/48 для восьми точек, прямой выбор и вид сохранены. Прежние значения и desktop не меняются.",
+    "6.0.0: новый мобильный пакет по mobile-mvp.md: Back-шеврон, фото/силуэт, настоящие sticky-области вплотную к краям, mandatory/error, 8 страниц r4/r5 и launch44/53/16. Desktop не редизайнится; карты и provider-ссылка не публикуются.",
     "5.0.0: внешний короткий tap снимает только фокус composer, не поглощает действие; черновик/selection и штатные жесты сохраняются.",
     "4.1.1: новая web-ревизия запрещает разрыв группы действий; при нехватке места переносится вся группа под заголовок. Mobile две равные колонки; native и токены прежние.",
     "4.1.0: две соседние кнопки альбома на desktop/native/mobile web; общая подготовка с отменой в secondary, ZIP/native gallery. Прежние значения токенов и все chat/focus/sheets эталоны сохранены.",
@@ -54,7 +59,9 @@
     "openspec/changes/meeting-experience-refresh/assets/chat-reactions.html",
     "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/2.1.0",
     "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/2.2.0",
-    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/history/2.5.0"
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/history/2.5.0",
+    "openspec/changes/mobile-mvp-design-refresh/assets/flow-r1",
+    "openspec/changes/mobile-mvp-design-refresh/preparation/provider-revision"
   ],
   "sources": [
     {
@@ -760,6 +767,126 @@
     {
       "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/outside-focus.js",
       "sha256": "8d17ce843079922ae7abb38d6e5e2429b54a0c6683288e521e86251db27d7d96"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/ux.md",
+      "sha256": "c8167de1e099d9c040a94c7b09dc33481b7b62a5e12b8c10b7f13ee5170cee70"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
+      "sha256": "dfdb33790d1047a58065dc84135373a452a228630ee3210f6be8e232dfdad1f1"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references.json",
+      "sha256": "b3b0b24486069feecdf4497e40ab7c2d3127d0ddfa0f185a6ab13d88a399d795"
+    },
+    {
+      "path": "docs/design/components/mobile-mvp.md",
+      "sha256": "9b3aac87a08c6c53cc9ea1ade467cc2ee7302be8e67258b0b7bff3b3913e0655"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-copy.json",
+      "sha256": "178d9615952b2a76b6eed093d103521d31084a1c178b1bf5d65680704bbb071d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/onboarding/frame.html",
+      "sha256": "f36e3da0916a185830d1939d351b5daa717dc7cd26c80699bf9cde5245646869"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/list/frame.html",
+      "sha256": "642bc95e36340f3fdb3132d067a785ca171c50f6a0e2ee9e4f6557be349540a9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/calendar/frame.html",
+      "sha256": "e9dd3533ddff6fab2f73ab3224e0c23e702946234633533c9dd9b66a5b3e6973"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/invitations/frame.html",
+      "sha256": "e20e283304cd726dccbe984f28c7a385e2cf47239edcc8859cfaa888612bb787"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/create/frame.html",
+      "sha256": "880fa8d707abe72bebb3190f414a18303aee4e8b72e9f6d82804b4f560c9a51e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/invite/frame.html",
+      "sha256": "670889c343e37e7b77de5b9a5fca960adfa708c4454c7dd8b7622282de0eaf0c"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/chat/frame.html",
+      "sha256": "dce885dcac632fa44eff6751f8a54ae453d870142a6a7f5b35cf82db799e191f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/info/frame.html",
+      "sha256": "12f3d7fb9044e1bffe041651dad420407038e2e01bd1550cc343ffe0332024ae"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/settings/frame.html",
+      "sha256": "fab28e8edb770a82522975ee797962749da890c36ea88c2e3f413d8417a5230a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/date/frame.html",
+      "sha256": "57c7caf86e19294404e63993135b54fc19e387f948a873af56ccd3cb1d94833c"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/place/frame.html",
+      "sha256": "0b82ec4bc0462b6ecfef98455fb9fd9379c71ae4dec0f43dd28189aa266f0844"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/preparation/frame.html",
+      "sha256": "fb13f3148ab01383a9eca046bfbc4416c2758fdcb7bb09ceca96c690dee0f215"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/vibe/frame.html",
+      "sha256": "56f3fb22de045a341f169f85a1c3f6555f14816702de93e9b6a8040020b518bd"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/profile/frame.html",
+      "sha256": "3f97c402215ac2e798f05d1370eef6ae139b6ac3068a1b48314544779ab5d543"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/help/frame.html",
+      "sha256": "e56b848b737a59d776ca98e430366a1e3712efcfaeb5c4b8e75dc2c089ae7011"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/about/frame.html",
+      "sha256": "2acc66ab0f53388950ab5930ea22724c758215db2cef3d6178b5c3486bd04dee"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/documents/frame.html",
+      "sha256": "2acc66ab0f53388950ab5930ea22724c758215db2cef3d6178b5c3486bd04dee"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/publication-additions-6.1.json",
+      "sha256": "7249f324012f74e4fc107e19663f932cc59256f84e9ad3ddd9a89d047bd9edfa"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-style-audit.json",
+      "sha256": "b645322de1656797618e11b03b94dc37d08dd2eee9b071b11c75d3e7e0291d9b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-layout-audit.json",
+      "sha256": "56b131d71df81fe39f7be8b96ade4d949d804b599a2ce41c42ecfb180d4eab1b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/calendar-token-bindings-6.2.json",
+      "sha256": "e599f45352eb39e5c52bd8129b24012f75c5658dd42407349347cb87bdc79576"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/meetings-token-bindings-6.2.json",
+      "sha256": "68516fbbd4d0308d9b57c77afbe3c198a371bc58de5fa712cb94da9105c91c65"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/meetings-state-bindings-6.2.json",
+      "sha256": "bcca5be2b402bff5154e552753ed7b298bfc29c0d32d3fa007d2936a51c10830"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/identity-token-bindings-6.2.json",
+      "sha256": "b0b50306b6a203b6a1001522b55305f93fcd6c3d8630d81f124c1d60a3442cf6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/mobile-response-navigation-bindings-6.3.json",
+      "sha256": "94acdc7e4ffa2ca36b64256b2037dfbd2e998e5315cb20cce6bb5807c83ff224"
     }
   ],
   "history": [
@@ -1492,5 +1619,6 @@
       }
     ],
     "note": "Прежние формулировки UX о крестике нижней панели приведены к прямому решению пользователя 4.0.0; значения и композиция новой ревизии не изменены."
-  }
+  },
+  "sourceState": "Publication from working tree; sourceCommit is the code baseline, exact design files identified by sources SHA256."
 }

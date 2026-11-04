@@ -107,7 +107,9 @@ for (const width of [320, 390, 1440]) {
     await expect(
       page.getByRole('button', { name: 'Добавить фото', exact: true }),
     ).toBeVisible();
-    await page.getByLabel('Название', { exact: true }).fill(`Встреча с фото ${width}`);
+    await page
+      .getByRole('textbox', { name: 'Название', exact: true })
+      .fill(`Встреча с фото ${width}`);
     await setDate(page, '29.02.2028');
     const file = page.getByLabel('Выбрать фото', { exact: true });
     await file.setInputFiles(await photo(page, '#a13932'));
@@ -125,9 +127,9 @@ for (const width of [320, 390, 1440]) {
       page.getByRole('alert').filter({ hasText: 'Не удалось открыть фото' }),
     ).toBeVisible();
     await expect(preview).toHaveAttribute('src', original ?? '');
-    await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
-      `Встреча с фото ${width}`,
-    );
+    await expect(
+      page.getByRole('textbox', { name: 'Название', exact: true }),
+    ).toHaveValue(`Встреча с фото ${width}`);
     await page.screenshot({
       path: `test-results/cover-form-${width}.png`,
       animations: 'disabled',
@@ -168,9 +170,9 @@ for (const width of [320, 390, 1440]) {
       page.getByRole('dialog', { name: `Встреча с фото ${width}`, exact: true }),
     ).toBeVisible();
     form = await edit(page);
-    await expect(form.getByLabel('Название', { exact: true })).toHaveValue(
-      `Встреча с фото ${width}`,
-    );
+    await expect(
+      form.getByRole('textbox', { name: 'Название', exact: true }),
+    ).toHaveValue(`Встреча с фото ${width}`);
     await expect(form.getByRole('img', { name: 'Выбранная обложка' })).toHaveAttribute(
       'src',
       chosen ?? '',
@@ -207,7 +209,9 @@ test('lost creation response preserves the prepared photo and key after reload',
   await expect(
     page.getByRole('button', { name: 'Добавить фото', exact: true }),
   ).toBeVisible();
-  await page.getByLabel('Название', { exact: true }).fill('Фото без дубля');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Фото без дубля');
   await setDate(page, '29.02.2028');
   await page.getByLabel('Выбрать фото').setInputFiles(await photo(page, '#a13932'));
   await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
@@ -234,11 +238,13 @@ test('lost creation response preserves the prepared photo and key after reload',
   await expect(page.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Убрать фото' })).toBeDisabled();
   await page.reload();
-  await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Фото без дубля',
   );
   await expect(page.getByRole('img', { name: 'Выбранная обложка' })).toBeVisible();
-  await expect(page.getByLabel('Название', { exact: true })).toBeDisabled();
+  await expect(
+    page.getByRole('textbox', { name: 'Название', exact: true }),
+  ).toBeDisabled();
   await page.getByRole('button', { name: 'Повторить отправку' }).click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   expect(keys[1]).toBe(keys[0]);

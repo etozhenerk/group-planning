@@ -1,0 +1,46 @@
+.page {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--visual-viewport-top, 0);
+  height: var(--visual-viewport-height, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: var(--ds-component-mobile-page-inset-top);
+  color: var(--ds-color-text);
+  background: var(--ds-color-background);
+}
+
+.page[data-demo='true'] {
+  top: calc(var(--visual-viewport-top, 0) + var(--ds-space-s32));
+  height: calc(var(--visual-viewport-height, 100dvh) - var(--ds-space-s32));
+}
+
+.header {
+  flex: none;
+  padding-inline: var(--ds-space-s20);
+}
+
+.header h1 {
+  display: flex;
+  align-items: center;
+  min-height: var(--ds-component-mobile-meetings-heading-minimum-height);
+  padding-block: var(--ds-component-mobile-meetings-heading-inset-top)
+    var(--ds-component-mobile-meetings-heading-inset-bottom);
+  font-size: clamp(
+    var(--ds-component-mobile-meetings-title-minimum),
+    calc(100vw * var(--ds-component-mobile-meetings-title-width-ratio)),
+    var(--ds-component-mobile-meetings-title-maximum)
+  );
+  font-weight: var(--ds-component-mobile-meetings-title-weight);
+  line-height: var(--ds-component-mobile-meetings-title-line-height);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-meetings-title-tracking));
+  margin: 0;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--ds-space-s4) var(--ds-space-s20) var(--ds-space-s32);
+}

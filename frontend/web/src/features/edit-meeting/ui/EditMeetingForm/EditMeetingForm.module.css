@@ -21,7 +21,7 @@ button.primary {
   gap: 20px;
 }
 
-.body {
+.content {
   display: grid;
   gap: var(--ds-space-s20);
 }
@@ -43,13 +43,26 @@ button.primary {
     var(--ds-component-mobile-sheet-content-inset-bottom);
 }
 
+.stack[data-mobile='true'] .content {
+  gap: var(--ds-component-mobile-form-group-gap);
+}
+
 .stack[data-mobile='true'] .footer {
   flex-shrink: 0;
-  padding: var(--ds-component-mobile-sheet-footer-inset-block)
-    var(--ds-component-mobile-sheet-content-inset-inline)
+  padding: var(--ds-component-mobile-sticky-inset-top)
+    var(--ds-component-mobile-sticky-inset-inline)
     max(var(--ds-component-mobile-sheet-footer-inset-bottom), env(safe-area-inset-bottom));
-  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.stack[data-mobile='true'] .footer[data-sticky='true'] {
+  border-radius: var(--ds-component-mobile-sticky-radius)
+    var(--ds-component-mobile-sticky-radius) 0 0;
   background: var(--ds-color-surface);
+  box-shadow: 0 calc(-1 * var(--ds-component-mobile-sticky-shadow-up-offset))
+    var(--ds-component-mobile-sticky-shadow-blur) var(--ds-color-mobile-sticky-shadow);
 }
 
 .stack[data-mobile='true'] .primary {

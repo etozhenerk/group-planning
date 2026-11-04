@@ -10,7 +10,7 @@ struct CreationFieldsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Название")
+                RequiredFieldLabel(title: "Название", required: true)
                 TextField(
                     "Название", text: text(\.title), prompt: Text("Например, ужин в пятницу"),
                     axis: .vertical
@@ -18,7 +18,8 @@ struct CreationFieldsView: View {
                 .lineLimit(1...3).focused($focus, equals: .title).meetingField()
                 .contentShape(Rectangle())
                 .simultaneousGesture(TapGesture().onEnded { focus = .title })
-                .accessibilityLabel("Название").accessibilityIdentifier("meeting-title")
+                .accessibilityLabel("Название").accessibilityHint("Обязательное поле")
+                .accessibilityIdentifier("meeting-title")
             }
             if typeSize.isAccessibilitySize {
                 VStack(alignment: .leading, spacing: 18) {
@@ -96,7 +97,7 @@ struct CreationFieldsView: View {
     }
     private var day: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Дата")
+            RequiredFieldLabel(title: "Дата", required: true)
             Button {
                 focus = nil
                 dateSheet = true
@@ -106,12 +107,12 @@ struct CreationFieldsView: View {
                     Spacer(minLength: 4)
                     ExperienceIcon(kind: .calendar, size: 13)
                 }.frame(maxWidth: .infinity, alignment: .leading).meetingField()
-            }.accessibilityLabel("Дата").accessibilityValue(MeetingLabels.day(owner.value.day))
+            }.accessibilityLabel("Дата").accessibilityHint("Обязательное поле").accessibilityValue(MeetingLabels.day(owner.value.day))
         }
     }
     private var clock: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Время")
+            RequiredFieldLabel(title: "Время")
             Button {
                 focus = nil
                 timeSheet = true

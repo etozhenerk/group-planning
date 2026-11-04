@@ -1,3 +1,4 @@
+import { Avatar } from '@/shared/ui/Avatar';
 import type { Participant } from '@/entities/meeting';
 import type { Ref } from 'react';
 import { useMobileLayout } from '@/shared/lib/media';
@@ -43,9 +44,17 @@ export const ParticipantChips = ({
           key={person.user.id}
           title={person.user.displayName}
         >
-          <span aria-hidden="true">
-            {person.user.displayName.slice(0, 1).toUpperCase()}
-          </span>
+          {mobile ? (
+            <Avatar
+              name={person.user.displayName}
+              src={person.user.avatarUrl ?? null}
+              size="tiny"
+            />
+          ) : (
+            <span className={styles.initial} aria-hidden="true">
+              {person.user.displayName.slice(0, 1).toUpperCase()}
+            </span>
+          )}
           {person.user.displayName}
         </span>
       ))}

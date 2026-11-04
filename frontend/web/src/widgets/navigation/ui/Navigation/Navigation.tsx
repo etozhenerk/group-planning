@@ -1,5 +1,6 @@
 import { NavLink, Link, useLocation } from 'react-router';
 import { Calendar, Mail, UserRound, MessageCircleWarning } from 'lucide-react';
+import { useMobileLayout } from '@/shared/lib/media';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Brand } from '@/shared/ui/Brand';
 import type { Session } from '@/entities/session';
@@ -10,6 +11,7 @@ export type NavigationProps = { session: Session | null; sticky?: boolean };
 
 export const Navigation = ({ session }: NavigationProps) => {
   const { pathname } = useLocation();
+  const mobile = useMobileLayout();
   const profileSection = /^\/(profile|support|help|about|privacy|cookies)/.test(pathname);
   const visible = /^\/(meetings|invitations|profile)\/?$/.test(pathname);
   const section = profileSection ? 2 : pathname.startsWith('/invitations') ? 1 : 0;
@@ -19,6 +21,7 @@ export const Navigation = ({ session }: NavigationProps) => {
     <nav
       className={styles.navigation}
       data-mobile={visible}
+      data-layout-mobile={mobile}
       aria-label="Основная навигация"
     >
       <div className={styles.brand}>

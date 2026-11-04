@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
+import { designMediaPlugin } from '#design-media';
 import { buildIdentityPlugin, readBuildIdentity } from '#build-identity';
 
 export default defineConfig(({ mode }) => {
@@ -8,6 +9,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), buildIdentityPlugin(identity)],
+    css: { postcss: { plugins: [designMediaPlugin()] } },
     define: {
       'import.meta.env.VITE_BUILD_IDENTITY': JSON.stringify(identity),
     },

@@ -1,7 +1,7 @@
 import Foundation
 
 enum BrandMotion {
-    static let duration: TimeInterval = 1.2
+    static let duration: TimeInterval = DesignTokens.motionDurationMobileLaunch
 
     static func rotation(elapsed: TimeInterval, moving: Bool) -> Double {
         guard moving else { return 0 }

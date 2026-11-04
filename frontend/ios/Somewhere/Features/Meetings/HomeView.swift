@@ -51,7 +51,9 @@ struct HomeView: View {
                 }.padding(.horizontal, 20).padding(.top, 17)
                     .background(AppPalette.background)
             }
-            .overlay(alignment: .bottom) { HomeNavigation(selection: $section) }
+            .safeAreaInset(edge: .bottom, spacing: DesignTokens.spaceS0) {
+                HomeNavigation(selection: $section)
+            }
             .navigationDestination(for: UUID.self) { id in
                 MeetingSnapshotView(id: id, session: session)
             }

@@ -12,7 +12,7 @@
 
 ## 2. Backend
 
-- [x] 2.1 Добавить атомарный снимок альбома, приватную подготовку/состояние/скачивание/отмену ZIP с bounded temp и cleanup; integration проверяет полный набор, совпадающие имена, отзыв, чужой ID, отмену и срок. Обновить OpenAPI и документацию, выполнить Go race/vet/build/format/dependencies и api:test.
+- [ ] 2.1 Добавить атомарный снимок альбома, приватную подготовку/состояние/скачивание/отмену ZIP с bounded temp и cleanup; integration проверяет полный набор, совпадающие имена, отзыв, чужой ID, отмену и срок. Обновить OpenAPI и документацию, выполнить Go race/vet/build/format/dependencies и api:test.
 
 Закрыто 01.11.2026 по [независимому backend-проходу](qa/2026-11-01-backend-independent/report.md)
 и [qa:ready 3/3](../meeting-experience-refresh/qa/2026-11-01-sdd-reconciliation/vibe-backend-ready.txt).
@@ -29,18 +29,18 @@ Backend реализован и прошёл независимый feature-test
 
 ## 3. Клиенты
 
-- [x] 3.1 Web: вторичная кнопка, подготовка/отмена/ошибка, download браузера без Blob, cleanup на уход/выход; unit+E2E на desktop/mobile и независимые feature-test/design-review, qa:ready/design:ready.
+- [ ] 3.1 Web: вторичная кнопка, подготовка/отмена/ошибка, download браузера без Blob, cleanup на уход/выход; unit+E2E на desktop/mobile и независимые feature-test/design-review, qa:ready/design:ready.
 
 03.11.2026: [проверка web](qa/2026-11-03-web-completion/result.md).
 Реализацию проверил основной агент по прямому указанию пользователя работать
 одному. Прежний незавершённый независимый отчёт сохранён; новый независимый
 PASS и успешные общие gates не заявляются. Межплатформенная приёмка 4.1 открыта.
-- [x] 3.2 iOS: add-only Photos, полный snapshot, приватная подготовка и пакетное сохранение, отмена/ошибка/повтор; unit+XCUITest с проверкой галереи и независимые feature-test/design-review, qa:ready/design:ready.
+- [ ] 3.2 iOS: add-only Photos, полный snapshot, приватная подготовка и пакетное сохранение, отмена/ошибка/повтор; unit+XCUITest с проверкой галереи и независимые feature-test/design-review, qa:ready/design:ready.
 
 03.11.2026: [проверка iOS](qa/2026-11-03-ios-completion/result.md).
 Проверка выполнена основным агентом по указанию пользователя работать одному;
 общие независимые gates и физический iPhone не объявляются пройденными.
-- [x] 3.3 Android: MediaStore, pending пакет, rollback только собственных записей, lifecycle/отказ/ошибка; unit+instrumentation с проверкой галереи, check.sh и независимые feature-test/design-review, qa:ready/design:ready.
+- [ ] 3.3 Android: MediaStore, pending пакет, rollback только собственных записей, lifecycle/отказ/ошибка; unit+instrumentation с проверкой галереи, check.sh и независимые feature-test/design-review, qa:ready/design:ready.
 
 03.11.2026: [проверка Android](qa/2026-11-03-android-completion/result.md).
 Основной агент проверил работающую реализацию по указанию пользователя;
@@ -48,7 +48,7 @@ PASS и успешные общие gates не заявляются. Межпл�
 
 ## 4. Приёмка и выпуск
 
-- [x] 4.1 Независимо проверить единый снимок, весь альбом более страницы, отмену/отзыв и native gallery на точных сборках; сохранить отчёты и выполнить qa:ready/design:ready без переноса исторических pass. Свежий [межплатформенный проход](qa/2026-11-03-cross-platform/result.md): web12/12, iOS5 UI+103 PhotoKit originals+late-snapshot revoke, Android7 UI+8 recovery checks. Основной агент по решению пользователя; общий формальный допуск не объявлен.
+- [ ] 4.1 Независимо проверить единый снимок, весь альбом более страницы, отмену/отзыв и native gallery на точных сборках; сохранить отчёты и выполнить qa:ready/design:ready без переноса исторических pass. Свежий [межплатформенный проход](qa/2026-11-03-cross-platform/result.md): web12/12, iOS5 UI+103 PhotoKit originals+late-snapshot revoke, Android7 UI+8 recovery checks. Основной агент по решению пользователя; общий формальный допуск не объявлен.
 - [ ] 4.2 Подготовить точные новые backend/web/native кандидаты, полный release-test/qa:release-ready, затем разрешённый выпуск backend/web и установку iOS; проверить smoke и совместимость старых клиентов.
 
 ## Пауза 29.10.2026
@@ -117,3 +117,5 @@ Web `0.1.0-rc.14` с исправлением строки действий ус
 [Результат](../deployment-and-store-release/qa/2026-10-29-web-rc14-tagged-deployment/report.md).
 Полная приёмка остаётся открытой; выпуск выполнен по точному разовому допуску
 владельца, без фиктивного PASS и закрытия общих checkbox.
+
+<!-- 04.11.2026: утрачена актуальность приёмки после пересмотра каталога для мобильного редизайна. Галочки 2.1, 3.1, 3.2, 3.3, 4.1 открыты заново. Прежние отчёты/планы/hash не изменены; исходные задачи и причины сохранены в mobile-mvp-design-refresh/preparation/baseline/stale-acceptance. Явная пауза сохраняется. -->

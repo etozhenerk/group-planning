@@ -88,10 +88,8 @@ struct FeedMessageView: View {
     private var avatar: some View {
         MeetingInfoAvatar(
             user: user, size: DesignTokens.componentMobileChatMessageAvatar,
-            textSize: DesignTokens.typographySizeCaption,
-            weight: DesignTokens.typographyWeightSemibold,
             color: own ? DesignTokens.colorRosterSand : DesignTokens.colorRosterMint,
-            textColor: DesignTokens.colorRosterText
+            foregroundColor: DesignTokens.colorRosterText
         )
         .padding(.top, authorSize * DesignTokens.typographyLineHeightLabel + DesignTokens.spaceS4)
     }

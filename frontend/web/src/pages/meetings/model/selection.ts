@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { validDay } from '@/pages/meetings/lib/calendarDates';
+import { validDay } from '@/entities/meeting';
 
 const selectionSchema = z.object({
   view: z.enum(['list', 'calendar']).catch('list'),

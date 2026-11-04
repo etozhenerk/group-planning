@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+import { StatusAction } from '@/shared/ui/StatusAction';
 import styles from '@/shared/ui/Status/Status.module.css';
 
 export type StatusProps = {
@@ -6,6 +8,11 @@ export type StatusProps = {
   error?: boolean;
   action?: () => void;
   actionLabel?: string;
+  actionTo?: string;
+  actionIcon?: ReactNode;
+  icon?: ReactNode;
+  variant?: 'default' | 'panel' | 'refresh';
+  size?: 'normal' | 'large';
 };
 
 export const Status = ({
@@ -14,16 +21,33 @@ export const Status = ({
   error = false,
   action,
   actionLabel = 'Попробовать снова',
-}: StatusProps) => {
-  return (
-    <section className={styles['state']} role={error ? 'alert' : 'status'}>
-      <h2>{title}</h2>
-      {text && <p className={styles['muted']}>{text}</p>}
-      {action && (
-        <button type="button" className={styles['primary']} onClick={action}>
-          {actionLabel}
-        </button>
-      )}
-    </section>
-  );
-};
+  actionTo,
+  actionIcon,
+  icon,
+  variant = 'default',
+  size = 'normal',
+}: StatusProps) => (
+  <section
+    className={styles.state}
+    role={error ? 'alert' : 'status'}
+    data-variant={variant}
+    data-size={size}
+  >
+    {icon && (
+      <div className={styles.symbol} aria-hidden="true">
+        {icon}
+      </div>
+    )}
+    <h2>{title}</h2>
+    {text && <p className={styles.muted}>{text}</p>}
+    {(action || actionTo) && (
+      <StatusAction
+        label={actionLabel}
+        {...(action ? { onClick: action } : {})}
+        {...(actionTo ? { to: actionTo } : {})}
+        icon={actionIcon}
+        variant={variant}
+      />
+    )}
+  </section>
+);

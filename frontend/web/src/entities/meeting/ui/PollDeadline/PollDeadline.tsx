@@ -40,6 +40,7 @@ export const PollDeadline = ({
         <DateInput
           mobileSheet
           compact
+          required
           label="Дата"
           value={value.split('T')[0] ?? ''}
           timezone={zone}

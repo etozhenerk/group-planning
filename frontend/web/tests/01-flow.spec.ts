@@ -34,17 +34,21 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
     }
   });
   await page.goto('/meetings/new');
-  await page.getByLabel('Название', { exact: true }).fill('Суббота без спешки');
+  await page
+    .getByRole('textbox', { name: 'Название', exact: true })
+    .fill('Суббота без спешки');
   await setDate(page, '24.10.2099');
   await page.getByRole('textbox', { name: 'Время', exact: true }).fill('19:00');
   await page.getByLabel(/^Место/).fill('Лофт «Квартал»');
   await page.getByLabel(/^Описание/).fill('Пицца и настольные игры.');
   await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();
   await expect(page.getByRole('alert')).toContainText('Не удалось');
-  await expect(page.getByLabel('Название', { exact: true })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
     'Суббота без спешки',
   );
-  await expect(page.getByLabel('Название', { exact: true })).toBeDisabled();
+  await expect(
+    page.getByRole('textbox', { name: 'Название', exact: true }),
+  ).toBeDisabled();
   await page.getByRole('button', { name: 'Повторить отправку', exact: true }).click();
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   expect(creates).toBe(2);

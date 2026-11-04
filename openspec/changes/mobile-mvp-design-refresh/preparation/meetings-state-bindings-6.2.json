@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 1,
+  "status": "published-binding",
+  "designVersion": "6.2.0",
+  "scope": "Привязки принятых состояний и приглашений в продолжаемой общей публикации6.2 до frozen candidate. Минимальный target44/48 имеет приоритет над старой40px кнопкой повтора.",
+  "sources": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/source/CalendarScreen.module.css",
+      "sha256": "da1875ceffc8d035b6a1334edcc80de5a6d68e73aea17a5ba461824b15dca9ec"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/source/CalendarAgenda.module.css",
+      "sha256": "6d5dbc2d3e7d4103dff2b050ac500b710254767517f57b9b15abc6a8129cf9c8"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invitations-r2/source/InvitationsScreen.module.css",
+      "sha256": "45b0f1e029ecc88321fbf20d68167221aaf6de5a110db7d6ad6c1b142bcb61f9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invitations-r2/source/InvitationCard.module.css",
+      "sha256": "5cb52c2e0ea9f2a1f3daf326417ae455dd001f1d419e1eb3f5332cd44265bda9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/meetings-style-audit.json",
+      "sha256": "2f7e8f0145cbe231820dcf21e2e9f10f828b8999c2f4aac912618fd88ef4d749"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/list-empty-style-audit.json",
+      "sha256": "37c55b5145db74edeac5d355690a1237e8979804ad77610ba2d09655d2ce2a2d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/calendar-r7/source/CalendarAgenda.tsx",
+      "sha256": "5c335f23ac8894d077400d08d08ce85f454fde5b743bd69ade5967c8d00cc20c"
+    }
+  ],
+  "roles": {
+    "component.mobileState.titleSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 23,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.compactTitleSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.titleTracking": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.panelInsetBlock": {
+      "$type": "dimension",
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.panelInsetInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.iconSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.largeIconSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 72,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.iconRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.largeIconRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.glyphSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.largeGlyphSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 34,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.refreshGlyphSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 19,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.refreshActionGlyphSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.refreshInsetStart": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.refreshRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.refreshActionRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.actionMinimumHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.largeTitleWidth": {
+      "$type": "dimension",
+      "$value": {
+        "value": 250,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.actionIconSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyTop": {
+      "$type": "dimension",
+      "$value": {
+        "value": 70,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyInset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyGlyph": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.narrowAgendaWidth": {
+      "$type": "dimension",
+      "$value": {
+        "value": 180,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyActionInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.minimumHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 176,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.answerInsetBottom": {
+      "$type": "dimension",
+      "$value": {
+        "value": 15,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.answerInsetStart": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.answerGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.footerReserve": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitations.counterSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitations.counterRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitations.explanationMaxWidth": {
+      "$type": "dimension",
+      "$value": {
+        "value": 360,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitations.scrollBottom": {
+      "$type": "dimension",
+      "$value": {
+        "value": 26,
+        "unit": "px"
+      },
+      "$description": "Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.compactTitleLineHeight": {
+      "$type": "number",
+      "$value": 1.3,
+      "$description": "Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.titleWeight": {
+      "$type": "fontWeight",
+      "$value": 650,
+      "$description": "Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitations.explanationLineHeight": {
+      "$type": "number",
+      "$value": 1.6,
+      "$description": "Принятые заголовок и пояснение мобильных состояний; источник/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.largeIconGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Принятые CalendarScreen.errorIcon и InvitationCard.date: отступы22/14; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.dateInset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Принятые CalendarScreen.errorIcon и InvitationCard.date: отступы22/14; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileState.glyphStroke": {
+      "$type": "number",
+      "$value": 1.5,
+      "$description": "Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.createInsetInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      },
+      "$description": "Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.insetTop": {
+      "$type": "dimension",
+      "$value": {
+        "value": 26,
+        "unit": "px"
+      },
+      "$description": "Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.insetInline": {
+      "$type": "dimension",
+      "$value": {
+        "value": 17,
+        "unit": "px"
+      },
+      "$description": "Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileInvitationCard.coverDateReserve": {
+      "$type": "dimension",
+      "$value": {
+        "value": 95,
+        "unit": "px"
+      },
+      "$description": "Привязка принятых иконок/отступов списка и InvitationCard перед удалением прежних mobile-overrides; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.undatedMargin": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.undatedInset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.undatedCountRadius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.monthTracking": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyDayInsetBlock": {
+      "$type": "dimension",
+      "$value": {
+        "value": 25,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyDayGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    },
+    "component.mobileMeetings.emptyDayIcon": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json."
+    }
+  }
+}

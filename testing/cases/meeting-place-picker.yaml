@@ -1,0 +1,360 @@
+- id: TC-MAP-PLACE-SEARCH
+  title: "Выбор места через Яндекс Карты: Найденное заведение"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места через Яндекс Карты
+    scenario: Найденное заведение
+    sha256: 8eecce3a2f9cf44763b48d0537873ac266842ba4f54185f7cc44902a2122f1dd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Найти организацию, выбрать один результат, изменить запрос до ответа и подтвердить
+        актуальный результат.
+      expected: форма показывает выбранные название и адрес, сохраняет координаты и доступный
+        идентификатор/URI провайдера пояснение и срок опроса сохраняются, место самой встречи ещё не
+        изменяется
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-POINT
+  title: "Выбор места через Яндекс Карты: Точка без организации"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места через Яндекс Карты
+    scenario: Точка без организации
+    sha256: 846c00fcf3bd2d4b168d728c8f5cf9f56e2f84ed377986b86fa9be66a9c0b48d
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Выбрать точку без организации; повторить при отсутствии адреса.
+      expected: форма хранит координаты выбранной точки и показывает полученный адрес либо явную подпись
+        точки с координатами при отсутствии адреса идентификатор организации не выдумывается, точка
+        остаётся доступной без организации
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-CANCEL
+  title: "Выбор места через Яндекс Карты: Возврат без подтверждения"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места через Яндекс Карты
+    scenario: Возврат без подтверждения
+    sha256: 86e0ca9e448a80ab82cce9356282459007516859c1006833c09389289304e49b
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Изменить предварительный выбор и закрыть карту, затем открыть снова; проверить поля, фокус и
+        прежний выбор.
+      expected: ранее подтверждённое место, пояснение и срок остаются прежними выбор из карты и текстовый
+        черновик не теряются из-за фонового обновления поиска
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-UNAVAILABLE
+  title: "Выбор места через Яндекс Карты: Карта недоступна"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места через Яндекс Карты
+    scenario: Карта недоступна
+    sha256: f928496ca3f4cd0f7dd939a06ec59888a50207d4f1bb5f61291b38dccf89d2fd
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Воспроизвести ошибку карты/поиска, пустую выдачу и отказ геолокации; повторить запрос или
+        вернуться к ручному вводу.
+      expected: интерфейс различает ошибку и отсутствие результатов, предлагает повтор или ручной ввод
+        ошибка не заменяется вымышленным адресом или сохранённым результатом; отказ в геолокации не
+        блокирует выбор места
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-APPLY
+  title: "Совместимые данные выбранного места: Применение выбранного места"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Совместимые данные выбранного места
+    scenario: Применение выбранного места
+    sha256: b882d3109bb8bfc5d1e1ce3f51bb5f39526ec61ce02df2fc6e570263acab461a
+  platforms:
+    - backend
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Создать опрос со структурированным местом, прочитать его другим клиентом, изменить голос,
+        дождаться срока и принятия предложения.
+      expected: название, адрес и координаты выбранного места доступны в опросе и актуальных деталях
+        встречи, а событие изменения появляется один раз до окончания опроса актуальное место
+        встречи не изменяется
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-LEGACY
+  title: "Совместимые данные выбранного места: Текстовое место прежнего клиента"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Совместимые данные выбранного места
+    scenario: Текстовое место прежнего клиента
+    sha256: cf5ae1022cdf40b9fef7b70ae0c64f79d78ad7cd31e57ea2e969020f15c7ceb1
+  platforms:
+    - backend
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированное QA-окружение, точные сборки/API, профиль going и организатор; provider test
+      fixture либо разрешённый тестовый ключ, без production и реальной геолокации пользователя.
+  steps:
+    - action: Создать/прочитать опрос прежним клиентом со строковым местом; открыть встречу нового клиента
+        и вручную заменить её текстовое место.
+      expected: строковое место остаётся достаточным и читаемым, отсутствие структурированного объекта не
+        вызывает ошибку при ручной замене текста прежние координаты не приписываются новому месту
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/задержки; не менять чужие планы
+      и evidence.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-PLACE-GESTURES
+  title: "Полноэкранная карта без закрытия жестами: Перетаскивание и масштаб карты"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Полноэкранная карта без закрытия жестами
+    scenario: Перетаскивание и масштаб карты
+    sha256: bed8d62061d788f650f9414a64706f856a15a82ecce7552fb347a351e7ae7fea
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная сборка/API, заполненный черновик с названием/датой/обложкой/описанием; тестовый
+      provider fixture, production не используется.
+  steps:
+    - action: Открыть карту из обеих форм, двигать одним пальцем по вертикали/диагонали, выполнить pinch и
+        pointercancel; вернуться кнопкой/системной навигацией.
+      expected: полноэкранный выбор остаётся открыт, карта изменяет положение/масштаб и не закрывается
+        свайпом панели возврат кнопкой или системной навигацией возвращает к исходной форме без
+        применения неподтверждённого кандидата
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/состояния окружения.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-CREATE-SELECT
+  title: "Выбор места при создании встречи: Подтверждение места в новой встрече"
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места при создании встречи
+    scenario: Подтверждение места в новой встрече
+    sha256: 7c8d1397c13b76685a313b1d4572a32856283d79d62f34442527c291109d875a
+  platforms:
+    - backend
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная сборка/API, заполненный черновик с названием/датой/обложкой/описанием; тестовый
+      provider fixture, production не используется.
+  steps:
+    - action: Из создания выбрать организацию, затем точку; подтвердить и проверить все поля, после чего
+        создать встречу. На backend проверить optional place_location в создании/чтении и прежний
+        строковый запрос.
+      expected: форма показывает выбранные название/адрес и сохраняет структурированное место в черновике
+        для будущей отправки создания остальные поля и обложка остаются прежними, встреча не
+        создаётся до нажатия её кнопки, старые клиенты с текстовым местом совместимы
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/состояния окружения.
+  automation:
+    backend:
+      status: planned
+      health: unknown
+      tests: []
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MAP-CREATE-CANCEL
+  title: "Выбор места при создании встречи: Отмена выбора в новой встрече"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/meeting-place-picker/specs/meeting-place-picker/spec.md
+    requirement: Выбор места при создании встречи
+    scenario: Отмена выбора в новой встрече
+    sha256: c9579cfff07349faffd4e38deb9845088d0a503ed3fdd4f32ae5304e4093c9d1
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная сборка/API, заполненный черновик с названием/датой/обложкой/описанием; тестовый
+      provider fixture, production не используется.
+  steps:
+    - action: Из заполненного создания открыть карту, сменить кандидата и вернуться без подтверждения;
+        повторить системным Back/Escape, затем проверить ручной и пустой ввод.
+      expected: прежнее место и остальные поля сохраняются, форма остаётся открыта пустое место
+        по-прежнему допустимо, а ручной ввод очищает неактуальные координаты
+  cleanup:
+    - Удалить только собственные fixture-данные, вернуть разрешения/состояния окружения.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

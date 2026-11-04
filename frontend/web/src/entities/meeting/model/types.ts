@@ -3,7 +3,7 @@ import type { FeedWindow } from '@/entities/meeting/model/feedWindow';
 import type { ChatState } from '@/entities/meeting/model/chatState';
 import type { PreparedCover } from '@/entities/meeting/model/cover';
 import type { Media } from '@/shared/api';
-import type { Answer } from '@/shared/api';
+import type { Answer, PublicUser } from '@/shared/api';
 
 export type MeetingSummary = {
   unreadCount?: string;
@@ -37,7 +37,7 @@ export type Meeting = MeetingSummary & {
 };
 
 export type Invitation = {
-  organizer?: { id: string; displayName: string };
+  organizer?: PublicUser;
   joinClosesAt?: string | null;
   canJoin?: boolean;
   joinDisabledReason?: string | null;
@@ -54,7 +54,7 @@ export type Invitation = {
 };
 
 export type Participant = {
-  user: { id: string; displayName: string };
+  user: PublicUser;
   role: 'organizer' | 'guest';
   answer: Answer | null;
   revision: string;
@@ -75,13 +75,13 @@ export type FeedEntry = {
   meetingId: string;
   sequence: string;
   kind: string;
-  actor: { id: string; displayName: string };
+  actor: PublicUser;
   occurredAt: string;
   clientRequestId: string | null;
   text: string | null;
   event: string;
   supported: boolean;
-  sender?: { kind: 'user' | 'bot'; id: string; displayName: string };
+  sender?: PublicUser & { kind: 'user' | 'bot' };
   pollId?: string;
   placePollId?: string;
   taskId?: string;

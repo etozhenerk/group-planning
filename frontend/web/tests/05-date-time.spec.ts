@@ -7,7 +7,9 @@ for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await login(page, 'Саша');
     await page.goto('/meetings/new');
-    await page.getByLabel('Название', { exact: true }).fill('Дата и время');
+    await page
+      .getByRole('textbox', { name: 'Название', exact: true })
+      .fill('Дата и время');
     await setDate(page, '24.10.2026');
     const date = page.getByRole('combobox', { name: 'Дата', exact: true });
     const time = page.getByRole('textbox', { name: 'Время', exact: true });
@@ -134,7 +136,9 @@ test.describe('automatic browser timezone', () => {
   }) => {
     await login(page, 'Саша');
     await page.goto('/meetings/new');
-    await page.getByLabel('Название', { exact: true }).fill('Встреча на Урале');
+    await page
+      .getByRole('textbox', { name: 'Название', exact: true })
+      .fill('Встреча на Урале');
     let posts = 0;
     page.on('request', (request) => {
       if (request.method() === 'POST' && request.url().endsWith('/api/v1/meetings')) {
@@ -166,7 +170,9 @@ test.describe('repeated local time', () => {
   test('requires an explicit DST choice in the custom select', async ({ page }) => {
     await login(page, 'Саша');
     await page.goto('/meetings/new');
-    await page.getByLabel('Название', { exact: true }).fill('Повторяющийся час');
+    await page
+      .getByRole('textbox', { name: 'Название', exact: true })
+      .fill('Повторяющийся час');
     await setDate(page, '01.11.2026');
     await page.getByRole('textbox', { name: 'Время', exact: true }).fill('01:30');
     await page.getByRole('button', { name: 'Создать встречу', exact: true }).click();

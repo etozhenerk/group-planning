@@ -1,5 +1,6 @@
-import { readReturnLocation } from '@/shared/lib/navigation';
-import { Link, useLocation } from 'react-router';
+import { PageBack } from '@/shared/ui/PageBack';
+import { readReturnLocation, returnLocationLabel } from '@/shared/lib/navigation';
+import { useLocation } from 'react-router';
 import { useSession } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
 import { Workspace } from '@/shared/ui/Workspace';
@@ -20,9 +21,11 @@ export const ServicePage = () => {
   return (
     <Workspace navigation={<Navigation session={session.data ?? null} />}>
       <main id="main" className={styles.page}>
-        <Link className={styles.back} to={back.path} state={back.state}>
-          ← Назад
-        </Link>
+        <PageBack
+          to={back.path}
+          state={back.state}
+          label={returnLocationLabel(back.path)}
+        />
         <header className={styles.heading}>
           <h1>{content.title}</h1>
           {

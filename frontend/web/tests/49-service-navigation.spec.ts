@@ -5,6 +5,9 @@ import { calendarItems, calendarResponse } from '@tests/calendar-helpers';
 for (const width of [390, 1440]) {
   test(`profile service return and FAQ disclosure work at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
+    const backTo = (label: string) =>
+      page.getByRole('link', { name: width < 740 ? label : /Назад/, exact: width < 740 });
+
     await login(page, 'Саша');
     await page.getByRole('link', { name: 'Профиль', exact: true }).click();
     await page.getByRole('link', { name: 'Помощь', exact: true }).click();
@@ -21,24 +24,24 @@ for (const width of [390, 1440]) {
     await expect(answer).toHaveAttribute('aria-hidden', 'true');
     await expect(answer).toHaveCSS('opacity', '0');
     await page.getByRole('link', { name: 'Задать вопрос ↗', exact: true }).click();
-    await page.getByRole('link', { name: /Назад/ }).click();
+    await backTo('Вернуться к помощи').click();
     await expect(page).toHaveURL(/\/help$/);
-    await page.getByRole('link', { name: /Назад/ }).click();
+    await backTo('Вернуться в профиль').click();
     await expect(page).toHaveURL(/\/profile$/);
     await expect(
       page.getByRole('button', { name: 'Удалить аккаунт', exact: true }),
     ).toHaveCount(0);
     await page.getByRole('link', { name: 'Cookie', exact: true }).click();
-    await page.getByRole('link', { name: /Назад/ }).click();
+    await backTo('Вернуться в профиль').click();
     await expect(page).toHaveURL(/\/profile$/);
     await page.getByRole('link', { name: 'О приложении', exact: true }).click();
     await expect(
       page.getByRole('heading', { name: 'О приложении', exact: true }),
     ).toHaveCount(1);
     await page.getByRole('link', { name: 'Сообщить о проблеме ↗', exact: true }).click();
-    await page.getByRole('link', { name: /Назад/ }).click();
+    await backTo('Вернуться к информации о приложении').click();
     await expect(page).toHaveURL(/\/about$/);
-    await page.getByRole('link', { name: /Назад/ }).click();
+    await backTo('Вернуться в профиль').click();
     await expect(page).toHaveURL(/\/profile$/);
   });
 }
@@ -159,7 +162,7 @@ test('calendar day refresh keeps content through a slow error and retry without 
   await expect(agenda.getByText('Не удалось обновить встречи')).toBeVisible();
   await expect(original).toBeVisible();
   fail = false;
-  await agenda.getByRole('button', { name: 'Попробовать снова' }).click();
+  await agenda.getByRole('button', { name: 'Повторить обновление' }).click();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(2);
   await expect(skeleton).toHaveCount(0);
   await page.getByRole('button', { name: /24 октября 2026/ }).click();
@@ -198,11 +201,15 @@ test('calendar continuity clears data across periods and after access denial', a
   const original = agenda.getByRole('link', { name: /Суббота без спешки/ });
   await expect(original).toBeVisible();
   await page.getByRole('button', { name: /^Прошедшие/ }).click();
-  await expect(agenda.getByText('Не удалось загрузить встречи')).toBeVisible();
+  await expect(
+    page.getByText('Не удалось загрузить встречи', { exact: true }),
+  ).toBeVisible();
   await expect(original).toHaveCount(0);
   await page.getByRole('button', { name: /^Предстоящие/ }).click();
   await expect(original).toBeVisible();
   await page.getByRole('button', { name: /25 октября 2026/ }).click();
-  await expect(agenda.getByText('Не удалось загрузить встречи')).toBeVisible();
+  await expect(
+    page.getByText('Не удалось загрузить встречи', { exact: true }),
+  ).toBeVisible();
   await expect(agenda.getByTestId('agenda-meeting')).toHaveCount(0);
 });

@@ -1,3 +1,4 @@
+import { RequiredLegend } from '@/shared/ui/RequiredLegend';
 import { useMobileLayout } from '@/shared/lib/media';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
 import type { Meeting } from '@/entities/meeting';
@@ -37,6 +38,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
         data-testid="poll-form-scroll"
       >
         <div ref={scroll.content}>
+          <RequiredLegend spaced />
           <PollDatesFields
             dates={form.dates}
             errors={form.dateErrors}
@@ -64,6 +66,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
           .filter(Boolean)
           .join(' ')}
         data-testid="poll-form-footer"
+        data-sticky={scroll.overflow}
       >
         {form.problem && (
           <p role="alert" className={styles['error']}>

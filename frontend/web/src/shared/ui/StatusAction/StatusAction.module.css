@@ -1,0 +1,27 @@
+.action {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+.action[data-variant='panel'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-s8);
+  width: 100%;
+  min-height: var(--ds-component-mobile-state-action-minimum-height);
+  padding: var(--ds-space-s10) var(--ds-space-s12);
+  border-radius: var(--ds-component-button-radius);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.action[data-variant='refresh'] {
+  flex: none;
+  min-height: var(--ds-target-web);
+  width: var(--ds-target-web);
+  padding: 0;
+  background: var(--ds-color-raised);
+  color: var(--ds-color-muted);
+  border-radius: var(--ds-component-mobile-state-refresh-action-radius);
+}

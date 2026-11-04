@@ -1,0 +1,868 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/launch-ios.json",
+  "inputHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+  "reviewer": "codex-independent-launch-ios-r2-2026-11-04",
+  "reviewedAt": "2026-11-04T17:32:25.305463Z",
+  "mode": "live",
+  "environment": "Свежая сборка SomewhereUI/SomewhereUITestHost Debug из текущего кода, startup последовательно на iPhone18Pro402×874pt/1206×2622px и разрешённом временном iPhone13mini375×812pt (AX)/1080×2340px (фактический native capture). iOS27.0 build24A434; Xcode27.1/SDK27.1. Системный SF, UIKit systemHeavy44 из общей storyboard; UIFont probe SFUI-Regular/Bold измерен отдельно. ru_RU,Europe/Moscow. Обычный large и системный accessibility5 с Reduce Motion=true: бренд-композиция фиксирована44pt, поэтому textScale=1 относится к ней, среда и реальные размеры probe записаны в runtime-context. Ephemeral localhost accessibility/audit-loading fixture, /me delay7с; для отдельного resume штатный QA hold-before gate. Только QA bundle, без production-данных. Raw launch-r1 свежо отрисован Chromium DPR2 и просмотрен. Capture timestamp для video-derived actuals — измеренный маркер capture-сессии; точный PTS/интервалы сохранены отдельно. VoiceOver не включался/не проверялся по прямому указанию пользователя. Настройки обоих устройств восстановлены; временный small shutdown, standard остаётся booted.",
+  "summary": "pass: все14 объявленных launch/ios состояний проверены live на двух размерах. Системная и SwiftUI геометрия совпадает, один оборот и неподвижное долгое восстановление/возврат подтверждены, Reduce Motion и максимальный текст проверены. Семантика AX проверена; озвучивание VoiceOver исключено пользователем. Старые результаты не переносились. InputHash до/после совпал.",
+  "checks": [
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "system-static-small-phone",
+      "status": "pass",
+      "observations": "Просмотрен статичный системный LaunchScreen: графитовый фон, светлая полная подпись, знак слева. Композиция44/53/16 подтверждена storyboard и AX. Подпись целиком помещается в375×812pt; settled текст x314..967,y1149..1238. Safe area — допустимая адаптация по platforms.md.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:22:10.154083+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/frames/frame-011.png",
+          "sha256": "44a5e450df81beea3ed5030dd0081dfdd21b148fc9b6fb7ea5f393b650e4ed9e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/interactions.json",
+          "sha256": "fcf4af26082d630ed1cfa237792e849f6c3dd1761aa7e561257621b8e78ca049",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/runtime-context.json",
+          "sha256": "1dd7a1f89fe34bdbf98c13581514b36f5ef7b09989706f6e761579a523d80191",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/launch.mov",
+          "sha256": "8b326b334bfd2a2609e42706b33cfdcaf57d51bd01511f44d25ab2c6cdb1d8fa",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "system-static-standard-phone",
+      "status": "pass",
+      "observations": "Просмотрен статичный системный LaunchScreen: графитовый фон, светлая полная подпись, знак слева. Композиция44/53/16 подтверждена storyboard и AX. Подпись целиком помещается в402×874pt; settled текст x367..1048,y1307..1400. Safe area — допустимая адаптация по platforms.md.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:17:50.117411+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/frames/frame-011.png",
+          "sha256": "adf89f640b4399e7156e5fb5e07c3e10f66f79433f009b0fea4c025cd5035fb0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/interactions.json",
+          "sha256": "f44c740fc9f8e6c713061acd9f836ae2f697cc399d08c4c894512a6aa57e134f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/runtime-context.json",
+          "sha256": "fa674448aaa51761c8da1944ca9dd0b4fd63449aded58d46fc6c3b4858dd79ad",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/launch.mov",
+          "sha256": "421c4f8732e33b4dd878a19d7ada1aa9985027dc0faf19ecdf81a2c929187b94",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-start-small-phone",
+      "status": "pass",
+      "observations": "Системная и SwiftUI композиции совпадают на live-переходе: settled текст x314..967,y1149..1238 не меняет ширину/положение, двоения нет. Просмотрен переход в новом видео; стандартная системная zoom-анимация отдельно от геометрии приложения. Геометрия сверена с raw launch-r1 и native-контрактом.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:22:10.154083+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/frames/frame-021.png",
+          "sha256": "dfebe36a9cfaa0c76af8aef6035a10beffa22715d112101923c396c08cd7f1a9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/interactions.json",
+          "sha256": "fcf4af26082d630ed1cfa237792e849f6c3dd1761aa7e561257621b8e78ca049",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/runtime-context.json",
+          "sha256": "1dd7a1f89fe34bdbf98c13581514b36f5ef7b09989706f6e761579a523d80191",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/launch.mov",
+          "sha256": "8b326b334bfd2a2609e42706b33cfdcaf57d51bd01511f44d25ab2c6cdb1d8fa",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/frames/frame-041.png",
+          "sha256": "26fe6ade1ab571e92e9f292ea179846f0cdfcb5b7935b4e77f452d823aa925d9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/geometry.json",
+          "sha256": "262c2e2d261c8ddf716eccd3276c0764344f139d35c73f3801783ba15f0e6e89",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-start-standard-phone",
+      "status": "pass",
+      "observations": "Системная и SwiftUI композиции совпадают на live-переходе: settled текст x367..1048,y1307..1400 не меняет ширину/положение, двоения нет. Просмотрен переход в новом видео; стандартная системная zoom-анимация отдельно от геометрии приложения. Геометрия сверена с raw launch-r1 и native-контрактом.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:17:50.117411+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/frames/frame-021.png",
+          "sha256": "90149fe0b15078f424f68cede9241ed7483607466fe5a5ace219f5a1fbdb6445",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/interactions.json",
+          "sha256": "f44c740fc9f8e6c713061acd9f836ae2f697cc399d08c4c894512a6aa57e134f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/runtime-context.json",
+          "sha256": "fa674448aaa51761c8da1944ca9dd0b4fd63449aded58d46fc6c3b4858dd79ad",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/launch.mov",
+          "sha256": "421c4f8732e33b4dd878a19d7ada1aa9985027dc0faf19ecdf81a2c929187b94",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/frames/frame-041.png",
+          "sha256": "7e26bfc6ea36ae1b8cd3fbb41ae3217dce9e684016fe4fc1e227b78e4e2907c3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/geometry.json",
+          "sha256": "63e059f7f3ed8b4ccc597a44eeb6ba4845bdb44a6ca10910cfd5a6c333b2e912",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-mid-turn-small-phone",
+      "status": "pass",
+      "observations": "Промежуточные кадры нового запуска показывают вращение только знака вокруг своего центра; слово остаётся вx314..967,y1149..1238. Наблюдается один оборот примерно за1,2с с мягким разгоном/торможением; разрешение временной проверки0,1с. Эталон движения raw просмотрен.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:22:10.154083+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/frames/frame-027.png",
+          "sha256": "c255107a5bc780887b37862d3ef7aa54298d8035299da0865ac38394334d698e",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/interactions.json",
+          "sha256": "fcf4af26082d630ed1cfa237792e849f6c3dd1761aa7e561257621b8e78ca049",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/runtime-context.json",
+          "sha256": "1dd7a1f89fe34bdbf98c13581514b36f5ef7b09989706f6e761579a523d80191",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/launch.mov",
+          "sha256": "8b326b334bfd2a2609e42706b33cfdcaf57d51bd01511f44d25ab2c6cdb1d8fa",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-mid.png",
+          "sha256": "1784fb2ca450595e6ec98e60f4d9dc4b249245933c0140242f5aa22dd4be050e",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/geometry.json",
+          "sha256": "262c2e2d261c8ddf716eccd3276c0764344f139d35c73f3801783ba15f0e6e89",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-mid-turn-standard-phone",
+      "status": "pass",
+      "observations": "Промежуточные кадры нового запуска показывают вращение только знака вокруг своего центра; слово остаётся вx367..1048,y1307..1400. Наблюдается один оборот примерно за1,2с с мягким разгоном/торможением; разрешение временной проверки0,1с. Эталон движения raw просмотрен.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:17:50.117411+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/frames/frame-027.png",
+          "sha256": "4d4f6b8202d2cc4db6ad16970ad169174f8ae37fd805efd7f03962b6aac1d4a0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/interactions.json",
+          "sha256": "f44c740fc9f8e6c713061acd9f836ae2f697cc399d08c4c894512a6aa57e134f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/runtime-context.json",
+          "sha256": "fa674448aaa51761c8da1944ca9dd0b4fd63449aded58d46fc6c3b4858dd79ad",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/launch.mov",
+          "sha256": "421c4f8732e33b4dd878a19d7ada1aa9985027dc0faf19ecdf81a2c929187b94",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-mid.png",
+          "sha256": "1784fb2ca450595e6ec98e60f4d9dc4b249245933c0140242f5aa22dd4be050e",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/geometry.json",
+          "sha256": "63e059f7f3ed8b4ccc597a44eeb6ba4845bdb44a6ca10910cfd5a6c333b2e912",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-complete-small-phone",
+      "status": "pass",
+      "observations": "После единственного оборота знак возвращается к исходному положению. На последовательных кадрах после завершения подпись неподвижна, второго оборота нет; слово/цвета/интервалы и размер сохраняются. Кадровый цикл в реализации завершается finished; live результат совпадает с контрактом.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:22:10.154083+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/frames/frame-041.png",
+          "sha256": "26fe6ade1ab571e92e9f292ea179846f0cdfcb5b7935b4e77f452d823aa925d9",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/interactions.json",
+          "sha256": "fcf4af26082d630ed1cfa237792e849f6c3dd1761aa7e561257621b8e78ca049",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/runtime-context.json",
+          "sha256": "1dd7a1f89fe34bdbf98c13581514b36f5ef7b09989706f6e761579a523d80191",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/launch.mov",
+          "sha256": "8b326b334bfd2a2609e42706b33cfdcaf57d51bd01511f44d25ab2c6cdb1d8fa",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "cold-complete-standard-phone",
+      "status": "pass",
+      "observations": "После единственного оборота знак возвращается к исходному положению. На последовательных кадрах после завершения подпись неподвижна, второго оборота нет; слово/цвета/интервалы и размер сохраняются. Кадровый цикл в реализации завершается finished; live результат совпадает с контрактом.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:17:50.117411+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/frames/frame-041.png",
+          "sha256": "7e26bfc6ea36ae1b8cd3fbb41ae3217dce9e684016fe4fc1e227b78e4e2907c3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/interactions.json",
+          "sha256": "f44c740fc9f8e6c713061acd9f836ae2f697cc399d08c4c894512a6aa57e134f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/runtime-context.json",
+          "sha256": "fa674448aaa51761c8da1944ca9dd0b4fd63449aded58d46fc6c3b4858dd79ad",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/launch.mov",
+          "sha256": "421c4f8732e33b4dd878a19d7ada1aa9985027dc0faf19ecdf81a2c929187b94",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "restore-long-small-phone",
+      "status": "pass",
+      "observations": "Штатный audit-loading задерживает /me на7с: оборот завершается, затем подпись остаётся неподвижной до настоящего восстановления/списка. Просмотрены long.png и последовательные кадры после оборота; чисел, процентов и вымышленного прогресса нет.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:22:10.154083+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/long.png",
+          "sha256": "038c22e88412f52b77178a45154f10935528bfa6ef0e992405baef4893860774",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/interactions.json",
+          "sha256": "fcf4af26082d630ed1cfa237792e849f6c3dd1761aa7e561257621b8e78ca049",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/runtime-context.json",
+          "sha256": "1dd7a1f89fe34bdbf98c13581514b36f5ef7b09989706f6e761579a523d80191",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/launch.mov",
+          "sha256": "8b326b334bfd2a2609e42706b33cfdcaf57d51bd01511f44d25ab2c6cdb1d8fa",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "restore-long-standard-phone",
+      "status": "pass",
+      "observations": "Штатный audit-loading задерживает /me на7с: оборот завершается, затем подпись остаётся неподвижной до настоящего восстановления/списка. Просмотрены long.png и последовательные кадры после оборота; чисел, процентов и вымышленного прогресса нет.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:17:50.117411+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/long.png",
+          "sha256": "d8d48e8412f85ee6b154ac6beaa1317afc15d0b826cd5af159bb2ecd0fc393e5",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/interactions.json",
+          "sha256": "f44c740fc9f8e6c713061acd9f836ae2f697cc399d08c4c894512a6aa57e134f",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/runtime-context.json",
+          "sha256": "fa674448aaa51761c8da1944ca9dd0b4fd63449aded58d46fc6c3b4858dd79ad",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/launch.mov",
+          "sha256": "421c4f8732e33b4dd878a19d7ada1aa9985027dc0faf19ecdf81a2c929187b94",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "resume-small-phone",
+      "status": "pass",
+      "observations": "Новый startup XCTest и независимый ручной Home→somewhere QA сохранили готовую карточку без повторного app-loading. Дополнительно проверен возврат при удержанном /me: поздние video frames после Springboard показывают исходный неподвижный знак без нового оборота; освобождение собственного gate привело к реальному списку.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:27:52.035296+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/return-frames/frame-051.png",
+          "sha256": "bc43b71342cc585358280388b9bea2f041f1bdcc5b661c83d470062306db9599",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/interactions.json",
+          "sha256": "4d9cc55aad8ded472237e854f9cf740f0c1ce350f0310e3b9ec55e0b6b2eb219",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/runtime-context.json",
+          "sha256": "999027caa6da9172de63fa97cd4ebe98e99a4493a9864675252fbf730f834f1a",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/launch.mov",
+          "sha256": "3ea7909d4d8b08365ee36198d7c7dbc6c6e4fb45800290a3d297b5a85c495cf1",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-normal/resume.png",
+          "sha256": "163b13f1fb7271f1a0ce86545dd444c3562896c9f5d07167775b7878a9099e48",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/released-ready.png",
+          "sha256": "a63f8631b389c5b002b17646d4fee4d47f0365840574d72c02a768dc27c0a8cc",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume/contact.png",
+          "sha256": "935203d4f3cc12321356154ea930abbbaad092e4b965351474a312c57b36bd27",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-resume-gate.json",
+          "sha256": "646cdf58840c8231481491bc054059e2c5a0c9c83c2173585e003c8535142594",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "resume-standard-phone",
+      "status": "pass",
+      "observations": "Новый startup XCTest и независимый ручной Home→somewhere QA сохранили готовую карточку без повторного app-loading. Дополнительно проверен возврат при удержанном /me: поздние video frames после Springboard показывают исходный неподвижный знак без нового оборота; освобождение собственного gate привело к реальному списку.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:26:24.254943+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/return-frames/frame-051.png",
+          "sha256": "949eec2127d6e13c524fcf4aed3e929ecbe4758b9bae5b3b5ccb3123b657b2c1",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/interactions.json",
+          "sha256": "51ef575169992d438ac3689bb6c2f05a81f6b3b43f47c23b21928236492ce1a9",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/runtime-context.json",
+          "sha256": "8d7d3836d6476892b118de23163c431e49317c9cd2e8320d9754ad7a93c58e5e",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/launch.mov",
+          "sha256": "8b937ed9f4007795a271fd39fe2822d17c3266f52f99f8f14b17303ca90912e4",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-normal/resume.png",
+          "sha256": "bd1e6aaf70c88c0afcf725600f742014206cee762d9ece073fc743167b70e867",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/released-ready.png",
+          "sha256": "292d51bbda4f5fc5ab9c30aed67efb8510978cd8e649efa244696e1c72ed51f0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume/contact.png",
+          "sha256": "daf6309390fdf720dcfe982df504e995d1bbce29ae631720961dba7a587756ea",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-resume-gate.json",
+          "sha256": "646cdf58840c8231481491bc054059e2c5a0c9c83c2173585e003c8535142594",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "reduced-motion-small-phone",
+      "status": "pass",
+      "observations": "Системные Reduce Motion=true и accessibility5 измерены runtime-context. Просмотрены новое видео, исходные кадры и long.png: угол0, вращения нет, полная подпись44/53/16 помещается при максимальном системном тексте. AX сообщает загрузку. Озвучивание VoiceOver исключено по просьбе пользователя и не проверялось.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "375×812pt;1080×2340px; iPhone13mini (native capture downsampling)",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:24:05.383543+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/long.png",
+          "sha256": "c9ca90a4e5e6ccdd3197cf28e4ac64d5a95b895b67def539d9a86091e5312799",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/interactions.json",
+          "sha256": "157e25ff0c86ecd0eb89f4a0ab5ddea8494e6b2794afa43c18849297887a1d03",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/runtime-context.json",
+          "sha256": "ac0d99fb5698f3fc5ced6bc187f4f11fe99f83e8ce368fcd3298a791c498f854",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/launch.mov",
+          "sha256": "e4855103c732290020c9cba7e402e1471c784667c8b0fab951c0a77435f11296",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/frames/frame-029.png",
+          "sha256": "eb6614f59e023948bcf561182dffae2c49bf318cc8d0ca83669b61f8c45dcb40",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/small-reduced/geometry.json",
+          "sha256": "4c04b40045e8a31d1c9800d62eb8ed58d95b733b6e35e755a5d0382666a19074",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "ios",
+      "state": "reduced-motion-standard-phone",
+      "status": "pass",
+      "observations": "Системные Reduce Motion=true и accessibility5 измерены runtime-context. Просмотрены новое видео, исходные кадры и long.png: угол0, вращения нет, полная подпись44/53/16 помещается при максимальном системном тексте. AX сообщает загрузку. Озвучивание VoiceOver исключено по просьбе пользователя и не проверялось.",
+      "capture": {
+        "sourceHash": "7fce7f4e7d6865eac7526fc6a8e6c1c16c734c9e95c94e4c8a16e64e4e774032",
+        "fixtureHash": "8c8a7c8c2f2a51741f397f24af3d86de0def026573faf0d1beca72bf54dd3518",
+        "runtime": "SomewhereUITestHost Debug; iOS Simulator27.0",
+        "os": "Version 27.0 (Build 24A434)",
+        "viewport": "402×874pt;1206×2622px; iPhone18Pro scale3",
+        "fonts": [
+          "UIKit systemHeavy44pt (общий LaunchScreen.storyboard)",
+          "runtime probe: .SFUI-Regular, .SFUI-Bold"
+        ],
+        "locale": "ru_RU",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:19:52.470461+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/long.png",
+          "sha256": "8a34af3fc3f88559a08fb3f2dba73e8aa9ac5d97178009104e6fcd3dceb286dd",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/reference-launch-r1.png",
+          "sha256": "996e4b9941721c75e39fd5beab275e2be3b150096c02976063d7b677242cb3ef",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/interactions.json",
+          "sha256": "06f803d234b3da6ea390bc83137a83d5f074339297425b6e35b2054ba3e00447",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/interactions.json",
+          "sha256": "de1984a053eec9d86a051ed1de07704dc7099ba479ba0f4d074203e73532be26",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/runtime-context.json",
+          "sha256": "0c209bee5f29baad786271f59f08abd962823b9790bdfcf7e8fa9d300753cb3d",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/launch.mov",
+          "sha256": "45eabd61aacee320a14fab8c2c920096b999eaeb481a0e910e225011b2c42cf1",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/frames/frame-029.png",
+          "sha256": "5ede5936a43dedd7a28b4f7ee1bb4597266a26c9f99ef6e68c134526caf38d93",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-ios-r2/standard-reduced/geometry.json",
+          "sha256": "2d4edd5c1d396b03a360e56531239492c44843a4ea5db1d9e03a45ab8f7d796d",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

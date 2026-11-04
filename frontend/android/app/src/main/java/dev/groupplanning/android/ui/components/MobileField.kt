@@ -15,7 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
+import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 internal val LocalMobileSheet = staticCompositionLocalOf { false }
@@ -30,7 +34,9 @@ internal fun MobileField(
     enabled: Boolean = true,
     error: Boolean = false,
     singleLine: Boolean = false,
+    required: Boolean = false,
 ) {
+    val requiredHint = stringResource(R.string.required_field_hint)
     val shape = RoundedCornerShape(DesignTokens.componentMobileFieldRadius)
     val inputStyle = TextStyle(
         color = DesignTokens.colorText,
@@ -39,11 +45,18 @@ internal fun MobileField(
             DesignTokens.typographyLineHeightMobileFieldDescription,
     )
     Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMobileFieldGap)) {
-        Text(label, color = DesignTokens.colorMuted, fontSize = DesignTokens.typographySizeCaption)
+        RequiredFieldLabel(
+            label,
+            required,
+            color = DesignTokens.colorMuted,
+            fontSize = DesignTokens.typographySizeCaption,
+        )
         BasicTextField(
             value,
             change,
-            modifier.fillMaxWidth().heightIn(
+            modifier.semantics {
+                if (required) stateDescription = requiredHint
+            }.fillMaxWidth().heightIn(
                 min = if (singleLine) {
                     DesignTokens.targetAndroid
                 } else {

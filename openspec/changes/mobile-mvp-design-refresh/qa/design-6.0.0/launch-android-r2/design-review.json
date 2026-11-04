@@ -1,0 +1,820 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/launch-android.json",
+  "inputHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+  "reviewer": "codex-independent-launch-android-r2-2026-11-04",
+  "reviewedAt": "2026-11-04T17:20:01.230200+00:00",
+  "mode": "live",
+  "environment": "Только emulator-5554, sdk_gphone64_arm64 Android16/API36; свежесобранный неизменённый QA target0.1.0(1), APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2. Build log rebuild-current-qa.log. Native320x760dp и390x844dp при density320; base textScale1, recreation capture1.1, отдельные large-text captures1.8. App ru, system en-US, Europe/Moscow. Native system sans-serif, доступные файлы зафиксированы fonts.txt; точный resolved font file не инструментирован. Изолированный loopback TestAndroidFixture/calendar, fixture sha256 fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b. Долгое восстановление контролируется остановкой только собственного fixture. Историческая первая попытка r2 со старым APK сохранена в stale-build-attempt/ и полностью исключена из этого отчёта. design:check pass, контекст до/после неизменён.",
+  "summary": "PASS16/16 объявленных состояний на двух размерах. Actual/reference просмотрены, взаимодействия выполнены live; повторены cold/long restore/resume/recreation/animations-disabled и крупный текст1.8. Согласованное semantics-имя подтверждено иерархией. Screen reader/TalkBack/озвучивание не запускались по прямому ограничению пользователя и НЕ объявляются проверенными. Озвучивание не является основанием этого pass. Back/IME/ввод неприменимы к заставке без controls; Home/resume проверены. Это дизайн-приёмка заявленной матрицы, не полная функциональная приёмка: отдельные expired-session/invitation-deep-link restore-варианты здесь не проходились. Точный frame-time benchmark, непрерывное видео и pixel-regression не выполнялись. Native font differences допустимы по platforms.md; эталон отрисован заново из неизменённого raw. Все временные settings/viewport восстановлены; приложение, tokens, contracts, manifest/tasks/cases не редактировались.",
+  "checks": [
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "system-mask-small-phone",
+      "status": "pass",
+      "observations": "Android system-stage соответствует явному платформенному правилу ux.md/preparation/launch.json: графитовый фон, прозрачный placeholder, нет увеличенного app-icon/обрезанного слова в icon mask. Далее Compose показывает полную подпись; дублированного вращения нет. Raw launch-r1 показывает Compose-сцену, а не Android system-stage.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:39.771966+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-01.png",
+          "sha256": "273003b3205a3ad283553530f06b77053e27970741b1e560bd8157c7a6ea68e2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-start-small-phone",
+      "status": "pass",
+      "observations": "Просмотрен первый видимый Compose-кадр и последовательность: полная центрированная подпись, знак слева; геометрия44sp/53dp/gap16dp визуально согласуется с launch-r1 и опубликованным mobileLaunch. Native sans-serif сохраняет допустимые Android-метрики. Живая semantics hierarchy содержит согласованное имя \"somewhere, приложение загружается\". Озвучивание не проверялось по поручению пользователя.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:40.118904+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-03.png",
+          "sha256": "1282d4ebe961461c8657cccec6aea768efe338dec539c648e19008d19614e72a",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-launch-hierarchy.xml",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-contact.png",
+          "sha256": "58ac37f197de18a8d6a3d93bce01526835fc05ed7a33ab1637463a700ea479dd",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-mid-turn-small-phone",
+      "status": "pass",
+      "observations": "Серия actual кадров: один оборот знака вокруг своего центра; слово остаётся на прежнем месте, без сдвига/изменения размера. Мягкое ускорение/замедление соответствует характеру quintic smoothstep1200ms из raw/контракта. Дискретные screenshots не считаются точным frame-time benchmark. Доступное имя согласовано.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:40.605456+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-06.png",
+          "sha256": "f0302d9ee5edc1658e26debb2512631a8c0f66f46e3b695a31b7f2e6fb462317",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-launch-hierarchy.xml",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-contact.png",
+          "sha256": "58ac37f197de18a8d6a3d93bce01526835fc05ed7a33ab1637463a700ea479dd",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-region-hashes.json",
+          "sha256": "5605579dff1b7357734d6635154608866529ede0a36e1e3758bfa8210973d8ed",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-comparison.txt",
+          "sha256": "eafc469000b2a6b6a5fe8dc2ec5aaef0d945d84e55a58031d3eebe319c511ee2",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-complete-small-phone",
+      "status": "pass",
+      "observations": "Знак завершает один оборот и остаётся в исходном положении, поздняя готовность не запускает новый цикл. При готовом API после вступления открываются встречи. Дополнительно реально включён font_scale1.8 на этом viewport: полное слово и знак растут совместно, остаются видимыми, геометрия адаптивно помещается. Ширина видимых glyph слова 421→480px; уменьшения текста не наблюдается. См. large-text.png и pixel-observations.json. На320dp включается fit-to-width, на390dp сохраняется больше свободного места. Доступное имя согласовано.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:42.003998+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-15.png",
+          "sha256": "e7846bbedb5bbaa7b6495621bef6a07e7490e16b5a8c1bf0f10995012d9d2422",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-launch-hierarchy.xml",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-cold-contact.png",
+          "sha256": "58ac37f197de18a8d6a3d93bce01526835fc05ed7a33ab1637463a700ea479dd",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-large-text.png",
+          "sha256": "a199de6eb32a3d6bbfb59b1de9eb42aeabf4f33dffdc73854483d717bf320313",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/pixel-observations.json",
+          "sha256": "fe53fdbce99b2f812235cfc8040a34006a227bb8a8bc914d8b26a99df9ee5db5",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-fast-ready.png",
+          "sha256": "827bff8bb865cab1105c91062675b1139d0cd82b48b6639dec07545d4d121b1c",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "restore-long-small-phone",
+      "status": "pass",
+      "observations": "Изолированный HTTPS fixture временно удержан SIGSTOP дольше1200ms. Просмотрены два поздних actual кадра с интервалом >1s: подпись статична, второго оборота/числового прогресса нет. После SIGCONT появляется содержимое. Это соответствует launch-r1 и interruption-контракту. Живой hierarchy содержит согласованное имя загрузки.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:44.727788+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-restore-long.png",
+          "sha256": "e7846bbedb5bbaa7b6495621bef6a07e7490e16b5a8c1bf0f10995012d9d2422",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-launch-hierarchy.xml",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-restore-long-later.png",
+          "sha256": "e7846bbedb5bbaa7b6495621bef6a07e7490e16b5a8c1bf0f10995012d9d2422",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "resume-small-phone",
+      "status": "pass",
+      "observations": "После готового содержимого нажата системная Home и возвращена та же Activity. Серия live кадров показывает возвращение содержимого без повторного splash/оборота; contract resume соблюдён. Отдельный неизменённый instrumentation-test также проверил CREATED→RESUMED и elapsed==duration.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:14:49.962256+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-resume-06.png",
+          "sha256": "827bff8bb865cab1105c91062675b1139d0cd82b48b6639dec07545d4d121b1c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-recreation-instrumentation.txt",
+          "sha256": "af502c069ff443a0f05371464e400abc15ee1bb0bad621ba941ed68b2f949d7d",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "recreation-small-phone",
+      "status": "pass",
+      "observations": "Live configuration-change font_scale1.1 после завершённого вступления: Activity возвращает содержимое без новой заставки. Screenshot снят при textScale1.1 (после возвращён1). На этом же viewport выполнен неизменённый EntryUiTests#launchCompletesOnceAcrossRecreationAndBackground: ActivityScenario.recreate, тот же AppViewModel, elapsed==duration и отсутствие launch-node; OK(1 test). Это соответствует lifecycle-контракту.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.1,
+        "capturedAt": "2026-11-04T17:14:50.982921+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-recreation.png",
+          "sha256": "52edd19d9699187eb4ed47aae4ce8628d47a20fcdaca7cc22a7abac70314e4c3",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-recreation-instrumentation.txt",
+          "sha256": "af502c069ff443a0f05371464e400abc15ee1bb0bad621ba941ed68b2f949d7d",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "animations-disabled-small-phone",
+      "status": "pass",
+      "observations": "Системные animator/transition/window scales временно0. Просмотрена последовательность actual кадров: знак статичен, не поворачивается; после освобождения fixture открывается содержимое. Доступное имя загрузки согласовано. Настройки восстановлены в точности до исходных значений; контракт Reduce Motion соблюдён.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "640x1520 physical px; 320x760 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:00.712764+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-disabled-static.png",
+          "sha256": "e7846bbedb5bbaa7b6495621bef6a07e7490e16b5a8c1bf0f10995012d9d2422",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-launch-hierarchy.xml",
+          "sha256": "cd66c8bfdc100ed25c4d21f7a37bfc276b09eb9b1001ee1d9b36d51e3d009244",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-disabled-14.png",
+          "sha256": "e7846bbedb5bbaa7b6495621bef6a07e7490e16b5a8c1bf0f10995012d9d2422",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/small-phone-disabled-ready.png",
+          "sha256": "827bff8bb865cab1105c91062675b1139d0cd82b48b6639dec07545d4d121b1c",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-region-hashes.json",
+          "sha256": "5605579dff1b7357734d6635154608866529ede0a36e1e3758bfa8210973d8ed",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-comparison.txt",
+          "sha256": "eafc469000b2a6b6a5fe8dc2ec5aaef0d945d84e55a58031d3eebe319c511ee2",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "system-mask-standard-phone",
+      "status": "pass",
+      "observations": "Android system-stage соответствует явному платформенному правилу ux.md/preparation/launch.json: графитовый фон, прозрачный placeholder, нет увеличенного app-icon/обрезанного слова в icon mask. Далее Compose показывает полную подпись; дублированного вращения нет. Raw launch-r1 показывает Compose-сцену, а не Android system-stage.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:05.797413+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-01.png",
+          "sha256": "3f66ee78da9b267976323b486e3733643f2d23b895221747b6595154dd5c44d8",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-start-standard-phone",
+      "status": "pass",
+      "observations": "Просмотрен первый видимый Compose-кадр и последовательность: полная центрированная подпись, знак слева; геометрия44sp/53dp/gap16dp визуально согласуется с launch-r1 и опубликованным mobileLaunch. Native sans-serif сохраняет допустимые Android-метрики. Живая semantics hierarchy содержит согласованное имя \"somewhere, приложение загружается\". Озвучивание не проверялось по поручению пользователя.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:06.172909+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-03.png",
+          "sha256": "5ce289cf45d1388619e68b0c71da3ec78745772d394a624a613648f3fdee850a",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-launch-hierarchy.xml",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-contact.png",
+          "sha256": "302756ce3f222192ebd6d6ac764831cd76e65e91541bd913b61c0ac1389c870b",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-mid-turn-standard-phone",
+      "status": "pass",
+      "observations": "Серия actual кадров: один оборот знака вокруг своего центра; слово остаётся на прежнем месте, без сдвига/изменения размера. Мягкое ускорение/замедление соответствует характеру quintic smoothstep1200ms из raw/контракта. Дискретные screenshots не считаются точным frame-time benchmark. Доступное имя согласовано.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:06.732836+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-06.png",
+          "sha256": "324eebb2acfcb12b62fa0ccf7d4d54d630dc10ec8d6ae86bea38771aa975319f",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-launch-hierarchy.xml",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-contact.png",
+          "sha256": "302756ce3f222192ebd6d6ac764831cd76e65e91541bd913b61c0ac1389c870b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-region-hashes.json",
+          "sha256": "5605579dff1b7357734d6635154608866529ede0a36e1e3758bfa8210973d8ed",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-comparison.txt",
+          "sha256": "eafc469000b2a6b6a5fe8dc2ec5aaef0d945d84e55a58031d3eebe319c511ee2",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-complete-standard-phone",
+      "status": "pass",
+      "observations": "Знак завершает один оборот и остаётся в исходном положении, поздняя готовность не запускает новый цикл. При готовом API после вступления открываются встречи. Дополнительно реально включён font_scale1.8 на этом viewport: полное слово и знак растут совместно, остаются видимыми, геометрия адаптивно помещается. Ширина видимых glyph слова 421→543px; уменьшения текста не наблюдается. См. large-text.png и pixel-observations.json. На320dp включается fit-to-width, на390dp сохраняется больше свободного места. Доступное имя согласовано.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:08.265157+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-15.png",
+          "sha256": "4d269e0b3d77be04e263f4e43f38859d14533e1c41236186f9c52f4c4fd69323",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-launch-hierarchy.xml",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-cold-contact.png",
+          "sha256": "302756ce3f222192ebd6d6ac764831cd76e65e91541bd913b61c0ac1389c870b",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-large-text.png",
+          "sha256": "ee50aa3176c9a8a1130574f815d6e46f567435b1df7e978bc2e1dcfb29e5f5db",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/pixel-observations.json",
+          "sha256": "fe53fdbce99b2f812235cfc8040a34006a227bb8a8bc914d8b26a99df9ee5db5",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-fast-ready.png",
+          "sha256": "6ea798246fe6d5b7c26530d958220f0f7e0f59ecf867a3335d0164424b67aca2",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "restore-long-standard-phone",
+      "status": "pass",
+      "observations": "Изолированный HTTPS fixture временно удержан SIGSTOP дольше1200ms. Просмотрены два поздних actual кадра с интервалом >1s: подпись статична, второго оборота/числового прогресса нет. После SIGCONT появляется содержимое. Это соответствует launch-r1 и interruption-контракту. Живой hierarchy содержит согласованное имя загрузки.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:10.547559+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-restore-long.png",
+          "sha256": "4d269e0b3d77be04e263f4e43f38859d14533e1c41236186f9c52f4c4fd69323",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-launch-hierarchy.xml",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-restore-long-later.png",
+          "sha256": "4d269e0b3d77be04e263f4e43f38859d14533e1c41236186f9c52f4c4fd69323",
+          "kind": "actual"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "resume-standard-phone",
+      "status": "pass",
+      "observations": "После готового содержимого нажата системная Home и возвращена та же Activity. Серия live кадров показывает возвращение содержимого без повторного splash/оборота; contract resume соблюдён. Отдельный неизменённый instrumentation-test также проверил CREATED→RESUMED и elapsed==duration.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:15.949295+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-resume-06.png",
+          "sha256": "34c65174184d3d8d8a7360fd3c3ce87612d54fe2d30467a08b064c490fc3ca97",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-recreation-instrumentation.txt",
+          "sha256": "27fd154ef9bec14a53d3e48c1b562026d59a3d655eed07efc60ef32fadaa22ff",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "recreation-standard-phone",
+      "status": "pass",
+      "observations": "Live configuration-change font_scale1.1 после завершённого вступления: Activity возвращает содержимое без новой заставки. Screenshot снят при textScale1.1 (после возвращён1). На этом же viewport выполнен неизменённый EntryUiTests#launchCompletesOnceAcrossRecreationAndBackground: ActivityScenario.recreate, тот же AppViewModel, elapsed==duration и отсутствие launch-node; OK(1 test). Это соответствует lifecycle-контракту.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.1,
+        "capturedAt": "2026-11-04T17:15:16.834202+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-recreation.png",
+          "sha256": "eb1c30c04286d4761f9ed86b25c04d3b5fa19ad494041d523be1462d5cc9c4c0",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-recreation-instrumentation.txt",
+          "sha256": "27fd154ef9bec14a53d3e48c1b562026d59a3d655eed07efc60ef32fadaa22ff",
+          "kind": "interaction"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "animations-disabled-standard-phone",
+      "status": "pass",
+      "observations": "Системные animator/transition/window scales временно0. Просмотрена последовательность actual кадров: знак статичен, не поворачивается; после освобождения fixture открывается содержимое. Доступное имя загрузки согласовано. Настройки восстановлены в точности до исходных значений; контракт Reduce Motion соблюдён.",
+      "capture": {
+        "sourceHash": "b510a31519ec09cafc256b79e8e014b2a1793a673650f8ff3f648e9a4128022f",
+        "fixtureHash": "fbbfb7056cffebe6544db95bf6257ae4101416caf84426f43a5ffbba1d63b70b",
+        "runtime": "QA target dev.groupplanning.android.uitesthost 0.1.0 (1), fresh QA APK sha256 663484b591217485b9dc8a74b93ddb10e948e5d85346dac088913b36692c62f2",
+        "os": "Android16/API36, google sdk_gphone64_arm64 BE2A.250530.026.F3/13894323",
+        "viewport": "780x1688 physical px; 390x844 dp; density320; emulator-5554; portrait; native insets",
+        "fonts": [
+          "Android system sans-serif (native default); available Roboto-Regular.ttf/RobotoFlex-Regular.ttf/RobotoStatic-Regular.ttf; exact resolved font file not instrumented"
+        ],
+        "locale": "App ru (MainActivity Configuration); system en-US",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-04T17:15:25.837160+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-disabled-static.png",
+          "sha256": "e9a93f244634d30d7a8831b97aa9119ea5bc2679ce0a24aec74c9e7f72f44c39",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/reference-launch-r1.png",
+          "sha256": "eb686f95f41b0fabb0d87e3891b4f4112d323273773266d7749e9ed9d2f04bfa",
+          "kind": "reference"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/interactions.json",
+          "sha256": "5fa73143689a4b7ecef7158250edd0c4c437763f18fc02044792f83fc2363205",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-launch-hierarchy.xml",
+          "sha256": "a735593cdbd599341fa4201daf1a70624e5e35f416d5256215b93c506dbb1946",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-disabled-11.png",
+          "sha256": "e9a93f244634d30d7a8831b97aa9119ea5bc2679ce0a24aec74c9e7f72f44c39",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/standard-phone-disabled-ready.png",
+          "sha256": "6ea798246fe6d5b7c26530d958220f0f7e0f59ecf867a3335d0164424b67aca2",
+          "kind": "actual"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-region-hashes.json",
+          "sha256": "5605579dff1b7357734d6635154608866529ede0a36e1e3758bfa8210973d8ed",
+          "kind": "interaction"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/design-6.0.0/launch-android-r2/motion-comparison.txt",
+          "sha256": "eafc469000b2a6b6a5fe8dc2ec5aaef0d945d84e55a58031d3eebe319c511ee2",
+          "kind": "interaction"
+        }
+      ]
+    }
+  ]
+}

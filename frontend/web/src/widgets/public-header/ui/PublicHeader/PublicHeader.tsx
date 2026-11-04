@@ -28,7 +28,11 @@ export const PublicHeader = ({ landing = false }: PublicHeaderProps) => {
               Мои встречи
             </Link>
             <span className={styles['profile-avatar']}>
-              <Avatar name={session.data.user.displayName} size="small" />
+              <Avatar
+                name={session.data.user.displayName}
+                mobileSrc={session.data.user.avatarUrl ?? null}
+                size="small"
+              />
             </span>
             <LogoutButton session={session.data} />
           </>

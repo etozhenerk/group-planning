@@ -30,6 +30,7 @@ export default defineConfig({
     {
       name: 'mobile-webkit',
       testMatch: [
+        '21-saved-invitations.spec.ts',
         '27-mobile-scroll.spec.ts',
         '28-meeting-refresh.spec.ts',
         '29-media-refresh.spec.ts',
@@ -52,6 +53,7 @@ export default defineConfig({
         '59-album-download.spec.ts',
         '60-album-download-access.spec.ts',
         '61-composer-outside-focus.spec.ts',
+        '62-mobile-meetings.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

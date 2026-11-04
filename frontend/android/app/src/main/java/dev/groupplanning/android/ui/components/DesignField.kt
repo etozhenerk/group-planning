@@ -15,10 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.groupplanning.android.R
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -33,17 +38,29 @@ internal fun DesignField(
     minHeight: Dp = 46.dp,
     singleLine: Boolean = false,
     background: Color = Color(0xff1d1e22),
+    required: Boolean = false,
 ) {
     if (LocalMobileSheet.current) {
-        MobileField(value, change, label, placeholder, modifier, enabled, error, singleLine)
+        MobileField(
+            value, change, label, placeholder, modifier, enabled, error, singleLine,
+            required = required,
+        )
         return
     }
+    val requiredHint = stringResource(R.string.required_field_hint)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(label, fontSize = 13.sp, lineHeight = 19.5.sp)
+        RequiredFieldLabel(
+            label,
+            required,
+            fontSize = DesignTokens.typographySizeSmall,
+            lineHeight = DesignTokens.typographySizeSmall * DesignTokens.typographyLineHeightBody,
+        )
         BasicTextField(
             value,
             change,
-            modifier.fillMaxWidth().heightIn(min = minHeight)
+            modifier.semantics {
+                if (required) stateDescription = requiredHint
+            }.fillMaxWidth().heightIn(min = minHeight)
                 .background(background, RoundedCornerShape(12.dp))
                 .border(
                     1.dp,

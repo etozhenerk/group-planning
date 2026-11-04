@@ -9,9 +9,10 @@ test.afterEach(async ({ page }, info) => {
     return;
   }
 
-  const frames: unknown = await page.evaluate(() =>
+  const frames: unknown = await page.evaluate((): unknown =>
     Reflect.get(window, '__qaBaselineFrames'),
   );
+
   await info.attach('incomplete-frame-samples', {
     body: JSON.stringify(frames ?? null),
     contentType: 'application/json',

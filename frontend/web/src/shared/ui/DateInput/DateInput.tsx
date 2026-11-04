@@ -1,3 +1,7 @@
+import { dateInputDescription } from '@/shared/ui/DateInput/lib/dateInputDescription';
+import { RequiredHint } from '@/shared/ui/RequiredHint';
+import { FieldError } from '@/shared/ui/FieldError';
+import { RequiredMark } from '@/shared/ui/RequiredMark';
 import styles from '@/shared/ui/DateInput/DateInput.module.css';
 import { DatePicker } from '@gravity-ui/date-components';
 import { MobileProvider } from '@gravity-ui/uikit';
@@ -18,6 +22,7 @@ export type DateInputProps = {
   error?: string;
   compact?: boolean;
   weekday?: boolean;
+  required?: boolean;
 };
 
 export const DateInput = ({
@@ -33,9 +38,11 @@ export const DateInput = ({
   error = '',
   compact = false,
   weekday = false,
+  required = false,
 }: DateInputProps) => {
   const field = useDateInput(value, timezone, onChange, disabled);
   const mobile = useMobileLayout();
+  const descriptionId = dateInputDescription(field.id, required && mobile, error);
 
   return (
     <div className={styles['control-field']} data-sheet={mobileSheet && mobile}>
@@ -43,7 +50,7 @@ export const DateInput = ({
         htmlFor={field.id}
         className={hideLabel ? styles['hidden-label'] : undefined}
       >
-        {label}
+        {label} {required && <RequiredMark />}
       </label>
       {compact && mobile ? (
         <DateButton
@@ -55,6 +62,7 @@ export const DateInput = ({
           today={field.today ?? null}
           disabled={disabled}
           invalid={invalid || !!error}
+          descriptionId={descriptionId || undefined}
           clearable={clearable}
           open={field.open}
           setOpen={field.setOpen}
@@ -81,16 +89,13 @@ export const DateInput = ({
               {...(invalid || error ? { validationState: 'invalid' as const } : {})}
               popupClassName={styles['meeting-date-popup'] ?? ''}
               hasClear={clearable}
-              {...(error ? { 'aria-describedby': `${field.id}-error` } : {})}
+              {...(descriptionId ? { 'aria-describedby': descriptionId } : {})}
             />
           </MobileProvider>
         </div>
       )}
-      {error && (
-        <p className={styles['error']} id={`${field.id}-error`} role="alert">
-          {error}
-        </p>
-      )}
+      <RequiredHint id={`${field.id}-required`} required={required} />
+      <FieldError id={`${field.id}-error`} error={error} />
     </div>
   );
 };

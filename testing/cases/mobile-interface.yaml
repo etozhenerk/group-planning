@@ -1,0 +1,715 @@
+- id: TC-MOBILE-WEB-SCOPE
+  title: "Граница мобильного редизайна: Десктоп после мобильного переноса"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Граница мобильного редизайна
+    scenario: Десктоп после мобильного переноса
+    sha256: 415db4ce17a9224738638e695402c2b1cb69ad6693ed592c1f2dda92b8437078
+  platforms:
+    - web
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: те же маршруты открыты в mobile web на320/390/739 и desktop на740/1100/1440, а также в
+        landscape/coarse-pointer конфигурации действующего routing-контракта
+      expected: мобильные экраны используют новые композиции, desktop сохраняет baseline до редизайна, а
+        элементы не меняют ветку произвольно из-за новой CSS-темы
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-NAV-CONTEXT
+  title: "Возврат и единая навигация: Переходы и восстановление контекста"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Возврат и единая навигация
+    scenario: Переходы и восстановление контекста
+    sha256: 7196184c9ac6bbf63d00261f462b905821530fc4a2fce58326a47ea8f7be5686
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь меняет список на календарь, открывает встречу и возвращается, а затем проходит
+        профиль, помощь и документы
+      expected: переключатель остаётся на месте, сохраняются выбранные дата/период и позиция чтения,
+        системный и видимый возврат ведут на предыдущую поверхность без тупика
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/62-mobile-meetings.spec.ts
+          selector: mobile meetings retain independent view offsets and expose all 20 cards at
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-SHEET-SCROLL
+  title: "Мобильные панели и закреплённые действия: Длинная форма и клавиатура"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Мобильные панели и закреплённые действия
+    scenario: Длинная форма и клавиатура
+    sha256: 500bd6521c582549bf9346847f483663f2f02c4faa922e4c55d165ff11fc105a
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: форма не помещается, открыта клавиатура или увеличен системный текст
+      expected: закреплённое действие и связанная общая ошибка доступны, последнее поле можно прокрутить
+        выше панели, а safe area и закрытие не теряют ввод
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-SHORT-FORM
+  title: "Мобильные панели и закреплённые действия: Короткая форма без прокрутки"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Мобильные панели и закреплённые действия
+    scenario: Короткая форма без прокрутки
+    sha256: c6a6cc72ce6c285a5c550eac35230480f3be00714980181f48eb7e1dbdd8d5af
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: форма добавления фото или другая короткая форма помещается целиком
+      expected: её действие находится в обычном потоке без отдельной sticky-подложки, тени и верхних
+        скруглений
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-REQUIRED-FIELDS
+  title: "Обязательность и понятные ошибки: Отправка незаполненной формы"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Обязательность и понятные ошибки
+    scenario: Отправка незаполненной формы
+    sha256: c2fbd720ab66a07cfcd5e9b247893273c2829b6a94228288f6f0e3431fcd7929
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь пытается отправить форму с отсутствующим обязательным значением
+      expected: обязательность видна до отправки, ошибка появляется у нужного поля, фокус/прокрутка
+        помогают его исправить, остальные значения сохранены
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ACTION-ERROR
+  title: "Обязательность и понятные ошибки: Ошибка или неизвестный результат действия"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Обязательность и понятные ошибки
+    scenario: Ошибка или неизвестный результат действия
+    sha256: 4635772386cd504c05fadb003f8af337d69c4904c8741e3dc74e1b338623bd41
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: отправка формы или голоса не удалась либо результат неизвестен
+      expected: показан один относящийся к действию статус с корректным повтором, без ложного успеха и
+        потери введённого; голос не получает два одинаковых сообщения об ошибке
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-AVATAR-MAPPING
+  title: "Фото идентичности: Фото от API до интерфейса"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Фото идентичности
+    scenario: Фото от API до интерфейса
+    sha256: 690579f1b0207bca42bc8038421942bb324833585699dc567f9771dc20b82495
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: текущий пользователь, участник, автор сообщения, читатель или исполнитель имеет публичный
+        avatar_url
+      expected: его фото показано после загрузки и обновления данных, API-to-client mapping не теряет URL,
+        а личные контакты отсутствуют в моделях других участников
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-AVATAR-FALLBACK
+  title: "Фото идентичности: Фото отсутствует или не загрузилось"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Фото идентичности
+    scenario: Фото отсутствует или не загрузилось
+    sha256: 236802ba856a1935a35a249e3adf302e5307d121221639d8ab0772590ad90391
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: avatar_url отсутствует или изображение недоступно
+      expected: виден согласованный силуэт того же размера без скачка строки, буквы имени и выдуманной
+        фотографии
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-LIST-CALENDAR
+  title: "Личные встречи и приглашения: Плотный день и непрочитанное"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Личные встречи и приглашения
+    scenario: Плотный день и непрочитанное
+    sha256: 600aa38626a7f90d9df671adfc878df5ddb56e399becf26317cd99a67ebe4850
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: в выбранный день двадцать встреч, пользователь меняет вид и получает обновление счётчиков
+      expected: все карточки доступны прокруткой, выделение дня не смещается, вкладки/переключатель
+        стабильны, ноль непрочитанного не оставляет пустую подпись
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/62-mobile-meetings.spec.ts
+          selector: mobile meetings retain independent view offsets and expose all 20 cards at
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-MAYBE-LIST
+  title: "Личные встречи и приглашения: Ответ Возможно"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Личные встречи и приглашения
+    scenario: Ответ Возможно
+    sha256: dba72561d14c8a56d726f17403e6a3d4bbc31075bbd6316aa27f2c245c6c2439
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь выбрал «Возможно» и затем открыл приглашения
+      expected: встреча доступна для изменения ответа, а интерфейс не вводит сохранения/закладки и не
+        считает вход ответом «Приду»
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: partial
+      health: unknown
+      tests:
+        - path: frontend/web/tests/21-saved-invitations.spec.ts
+          selector: saved invitation moves only after a confirmed answer at
+          runner: web-e2e
+          level: e2e
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-CHAT-ACTIONS
+  title: "Чат и сведения о встрече: Сообщение, реакция и ошибка отправки"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Чат и сведения о встрече
+    scenario: Сообщение, реакция и ошибка отправки
+    sha256: ad42b7c4fc08e7e4e7012b1d1de8706499c8f347e278dcf4e69c1750d374e937
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь выбирает реакцию, видит ошибку отправки и повторяет сообщение
+      expected: нет грубого обвода/скачка пузыря, ошибка представлена компактным доступным значком с
+        действиями, повтор сохраняет текст, composer использует принятую стрелку и иконку эмодзи
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-CHAT-READERS
+  title: "Чат и сведения о встрече: Прочитанность и информация по роли"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Чат и сведения о встрече
+    scenario: Прочитанность и информация по роли
+    sha256: 3c4a3f5e72ef69f009bc61b71ca4d9b9d1d11cb63c4ba3d68247091384e87f99
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: появляется подтверждение чтения и пользователь открывает сведения/настройки встречи
+      expected: галочки и детали чтения согласованы с сервером, у участников фото/силуэт, а действия
+        организатора не появляются у участника
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-VIBE-GESTURE
+  title: "Непрерывный просмотр вайба: Свайп и короткий жест"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Непрерывный просмотр вайба
+    scenario: Свайп и короткий жест
+    sha256: 236cfdbaea29e1790d83ab9fb0b009e949c7fc0c8afa47b609768f5aeecae769
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь ведёт фото пальцем/указателем либо горизонтальным трекпадом, отпускает его или
+        отменяет жест
+      expected: видны промежуточные положения фото, короткий жест возвращает кадр, достаточный свайп
+        завершает переход, последующий tap открывает просмотр; полный кадр не обрезан
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-VIBE-STABILITY
+  title: "Непрерывный просмотр вайба: Вид галереи и добавление"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Непрерывный просмотр вайба
+    scenario: Вид галереи и добавление
+    sha256: 965896cc573ba782d71e903bdfe38e413c32c59ae708f3d5273406b546806dbb
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь меняет стопку на сетку, добавляет фото и получает частичный результат или ошибку
+      expected: шапка не прыгает, выбранные файлы/остаток повтора сохраняются по действующим правилам,
+        короткая форма не получает фиктивную sticky-панель, а «Сохранить все» не обещает
+        неподтверждённый результат
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-PROFILE-SIMPLE
+  title: "Приватный профиль: Профиль и скрытое удаление"
+  lifecycle: active
+  level: e2e
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Приватный профиль
+    scenario: Профиль и скрытое удаление
+    sha256: b09ac76c71b64ffbd5aad756e361bdb67e2af811907f78c742b98037cc970f29
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь открывает профиль и сервисные страницы, затем возвращается или выходит
+      expected: нет лишней подписи под фото/названия приложения над меню, выход последний, удаления нет в
+        UI/accessibility tree и просмотр не вызывает DELETE /me; ошибка выхода сохраняет доступный
+        профиль
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-SUPPORT-SECTION
+  title: "Выбор раздела обращения: Выбор, отмена и клавиатура"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Выбор раздела обращения
+    scenario: Выбор, отмена и клавиатура
+    sha256: b5a13790ff3ba7f7b10b9ae3bdbd77bb124b37847b5b7716094a31a797290710
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь открывает список разделов, выбирает вариант или отменяет, а также пользуется
+        стрелками/Home/End/Enter/Space
+      expected: выбор отмечен и применён только явно, отмена сохраняет прежнее значение, фокус
+        возвращается к строке, сообщение/скриншот/прокрутка сохранены и Enter не отправляет
+        обращение
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-ABOUT-METADATA
+  title: "Сведения и чтение документов: Метаданные без повторных ссылок"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Сведения и чтение документов
+    scenario: Метаданные без повторных ссылок
+    sha256: ce4ad61b50901ea698ec77d923443008e066024ea323dc8637bd6954c7922d01
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь открывает сведения в release, local или неизвестной сборке
+      expected: показаны действительные метаданные клиента или честный fallback, нет подставленного
+        примера0.1.0-rc.2/42, отсутствующая сборка не становится0, ссылки на документы/обращение
+        остаются в профиле
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []
+- id: TC-MOBILE-DOCUMENT-READER
+  title: "Сведения и чтение документов: Чтение и возврат"
+  lifecycle: active
+  level: e2e
+  risk: normal
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Сведения и чтение документов
+    scenario: Чтение и возврат
+    sha256: 4c917d8392b14a71255af1be5bcef9c6b2756382f6abae523eea0861bfcc4127
+  platforms:
+    - web
+    - ios
+    - android
+  preconditions:
+    - Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash;
+      опубликованный пакет мобильного редизайна и тестовые профили.
+    - Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента.
+      Включить необходимые права/ошибки/размер текста только на собственном fixture.
+  steps:
+    - action: пользователь переходит из профиля в документ, выбирает раздел содержания, открывает
+        перекрёстную ссылку и возвращается
+      expected: весь текст и текущая пометка проекта доступны, возврат остаётся достижимым, содержание не
+        растягивает текст при анимации, место чтения и исходный экран восстановлены; окончательные
+        правовые условия не выдуманы
+  cleanup:
+    - Восстановить свои настройки/тестовые данные и фоновые ограничения; сохранить обезличенные
+      screenshots, interaction log и build/API identity.
+  automation:
+    web:
+      status: manual
+      health: unknown
+      tests: []
+    ios:
+      status: manual
+      health: unknown
+      tests: []
+    android:
+      status: manual
+      health: unknown
+      tests: []

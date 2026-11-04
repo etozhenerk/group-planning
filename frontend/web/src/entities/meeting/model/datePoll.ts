@@ -1,3 +1,5 @@
+import type { PublicUser } from '@/shared/api';
+
 export type PollSettings = {
   multipleAnswers: boolean;
   allowRevoting: boolean;
@@ -10,13 +12,13 @@ export type PollOption = {
   id: string;
   date: string;
   votes: number | null;
-  voters: { id: string; displayName: string }[] | null;
+  voters: PublicUser[] | null;
 };
 
 export type DatePoll = {
   id: string;
   meetingId: string;
-  author: { id: string; displayName: string };
+  author: PublicUser;
   settings: PollSettings;
   options: PollOption[];
   state:

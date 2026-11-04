@@ -16,7 +16,7 @@ export const voteLabel = (count: number): string => {
   return `${count} ${word}`;
 };
 
-export const pollStatus = (poll: DatePoll, zone: string): string => {
+export const pollStatus = (poll: DatePoll, zone: string, now = Date.now()): string => {
   const states = {
     applied: 'Опрос завершён · дата выбрана',
     no_majority: 'Опрос завершён · без большинства',
@@ -31,7 +31,7 @@ export const pollStatus = (poll: DatePoll, zone: string): string => {
 
   return poll.canVote || poll.canAddOptions
     ? `До ${timeLabel(poll.closesAt, zone)}`
-    : Date.parse(poll.closesAt) <= Date.now()
+    : Date.parse(poll.closesAt) <= now
       ? 'Подводим итог…'
       : `До ${timeLabel(poll.closesAt, zone)}`;
 };
