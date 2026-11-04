@@ -19,6 +19,10 @@ case "${1:-all}" in
     qa-followup) somewhere_followup=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
     qa-baseline) somewhere_baseline=1; somewhere_scope=accessibility; somewhere_chat=1 ;;
     qa-isolation) somewhere_filter=-only-testing:SomewhereUITests/QAIsolationUITests; somewhere_scope=accessibility ;;
+    creation-field-hit) somewhere_filter=-only-testing:SomewhereUITests/CreationFieldHitUITests; somewhere_scope=accessibility ;;
+    creation-field-hit-more) somewhere_filter=-only-testing:SomewhereUITests/CreationFieldHitUITests/testPlaceAndDescriptionPaddingFocusesTheirOwnEditor; somewhere_scope=accessibility ;;
+    creation-large-visual) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAtLargestText; somewhere_scope=accessibility ;;
+    navigation-type) somewhere_filter=-only-testing:SomewhereUITests/NavigationTextUITests; somewhere_scope=accessibility ;;
     chat-keyboard) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests; somewhere_scope=accessibility ;;
     chat-keyboard-geometry) somewhere_filter=-only-testing:SomewhereUITests/ChatKeyboardDismissalUITests/testOutsideTapPreservesSelectionAndEmojiSearchFocus; somewhere_scope=chat; somewhere_chat=1 ;;
     avatar-ack) somewhere_filter=-only-testing:SomewhereUITests/AvatarAcknowledgementUITests/testRealtimeAndLostReplyKeepPhoto; somewhere_scope=chat; somewhere_chat=1; export SOMEWHERE_NATIVE_AVATAR_FIXTURE=1 SOMEWHERE_NATIVE_AVATAR_CHECK=realtime ;;
@@ -78,13 +82,14 @@ case "${1:-all}" in
     touch-targets) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testPeriodAndCancelExposeTheirWholeVisibleTouchTargets; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [all|qa-selectors|qa-followup|qa-baseline|qa-isolation|creation-field-hit|creation-field-hit-more|creation-large-visual|navigation-type|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
 . ./scripts/software-keyboard.sh
 somewhere_fixture=
 somewhere_control_written=0
+somewhere_original_content_size=
 cleanup() {
     somewhere_status=$?
     trap - EXIT
@@ -102,6 +107,13 @@ cleanup() {
             chmod 600 .build/chat-fixture-control.json
         fi
     fi
+    if [ -n "$somewhere_original_content_size" ]; then
+        if xcrun simctl ui "$somewhere_simulator" content_size "$somewhere_original_content_size"; then
+            printf 'QA_CONTENT_SIZE_RESTORED=%s\n' "$somewhere_original_content_size"
+        else
+            somewhere_status=1
+        fi
+    fi
     if ! somewhere_restore_software_keyboard; then somewhere_status=1; fi
     somewhere_release_simulator
     rm -rf "$somewhere_temporary"
@@ -111,6 +123,10 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 somewhere_prepare_simulator
+if [ "${1:-all}" = navigation-type ]; then
+    somewhere_original_content_size=$(xcrun simctl ui "$somewhere_simulator" content_size)
+    xcrun simctl ui "$somewhere_simulator" content_size accessibility-extra-extra-extra-large
+fi
 somewhere_prepare_software_keyboard
 
 case "${1:-all}" in

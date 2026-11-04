@@ -16,6 +16,8 @@ struct CreationFieldsView: View {
                     axis: .vertical
                 )
                 .lineLimit(1...3).focused($focus, equals: .title).meetingField()
+                .contentShape(Rectangle())
+                .simultaneousGesture(TapGesture().onEnded { focus = .title })
                 .accessibilityLabel("Название").accessibilityIdentifier("meeting-title")
             }
             if typeSize.isAccessibilitySize {
@@ -49,7 +51,10 @@ struct CreationFieldsView: View {
                     axis: .vertical
                 )
                 .lineLimit(1...3).focused($focus, equals: .place).meetingField().accessibilityLabel(
-                    "Место")
+                    "Место"
+                )
+                .contentShape(Rectangle())
+                .simultaneousGesture(TapGesture().onEnded { focus = .place })
             }
             VStack(alignment: .leading, spacing: 8) {
                 Text("Описание")
@@ -60,6 +65,8 @@ struct CreationFieldsView: View {
                 .lineLimit(3...6).focused($focus, equals: .description)
                 .frame(minHeight: 72, alignment: .topLeading).meetingField()
                 .accessibilityLabel("Описание")
+                .contentShape(Rectangle())
+                .simultaneousGesture(TapGesture().onEnded { focus = .description })
             }
         }.designFont(13).disabled(!owner.editable)
             .toolbar {

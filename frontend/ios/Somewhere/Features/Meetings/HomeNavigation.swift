@@ -29,6 +29,9 @@ struct HomeNavigation: View {
 
                 }.buttonStyle(.plain).accessibilityAddTraits(selection == item ? .isSelected : [])
                     .accessibilityIdentifier("home-tab-" + item.symbol)
+                    .accessibilityShowsLargeContentViewer {
+                        Label(item.rawValue, systemImage: item.symbol)
+                    }
             }
         }.background {
             GeometryReader { geometry in

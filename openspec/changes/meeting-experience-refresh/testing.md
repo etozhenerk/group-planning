@@ -1,5 +1,18 @@
 # Спецификация тестирования
 
+## Адресные UI-проверки, 04.11.2026
+
+CreationFieldHitUITests проверяет реальный padding заполненных полей и IME:
+название L/AX XXXL, место/описание L. Scopes creation-field-hit и
+creation-field-hit-more не заменяют другие кейсы создания.
+creation-large-visual запускает только testCreationAtLargestText для заголовков
+и системных picker. NavigationTextUITests/navigation-type проверяет компактные
+вкладки и удержание с системным Large Content Viewer; runner временно меняет
+content_size только разрешённого тестового симулятора и восстанавливает его.
+Без настоящей системной настройки этот опциональный тест пропускается, не даёт
+PASS HUD. Видеокадр берётся с нулевым time tolerance. Общая матрица не закрыта;
+[исходные результаты](qa/2026-11-04-ui-checks/result.md).
+
 ## Нативный аватар при ACK, 04.11.2026
 
 `TC-CHAT-NATIVE-AVATAR-ACK` проверяется отдельными scopes `avatar-ack-http`,
