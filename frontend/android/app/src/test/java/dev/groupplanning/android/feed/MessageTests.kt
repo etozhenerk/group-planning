@@ -3,7 +3,12 @@
 package dev.groupplanning.android.feed
 
 import dev.groupplanning.android.data.api.ClientFailure
+import dev.groupplanning.android.data.api.WireResponse
 import dev.groupplanning.android.data.api.apiJson
+import dev.groupplanning.android.data.api.models.FeedEntry
+import dev.groupplanning.android.data.api.models.FeedPage
+import dev.groupplanning.android.data.api.models.RsvpAnswer
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.data.outbox.MessageOutbox
 import dev.groupplanning.android.data.repository.FeedRepository
 import dev.groupplanning.android.state.feed.MessageSender
@@ -29,6 +34,7 @@ class MessageTests {
         first.edit("Пиццу закажу я")
         runCurrent()
         h.transport.enqueue("${h.path}/messages", "", 503)
+        h.page()
         first.send()
         runCurrent()
         val pending = checkNotNull(first.state.value.pending)
@@ -59,6 +65,40 @@ class MessageTests {
         assertEquals("А напитки кто возьмёт?", h.outbox.read(Fixtures.userId, h.id).draft)
     }
 
+    @Test fun lostReplyReconcilesBeforeShowingUncertainAndWithoutASecondPost() = runTest {
+        val h = FeedHarness(StandardTestDispatcher(testScheduler))
+        h.login()
+        val received = mutableListOf<FeedEntry>()
+        val sender = MessageSender(h.repository, backgroundScope) { received.add(it) }
+        sender.open(h.repository.open(h.id))
+        sender.edit("Уже принято")
+        runCurrent()
+        h.transport.enqueue("${h.path}/messages", "", 503)
+        h.transport.handle("${h.path}/feed") {
+            val pending = checkNotNull(sender.state.value.pending)
+            val entry = h.entry(1, pending.key, pending.text)
+            val page = FeedPage(
+                listOf(entry),
+                false,
+                ServerCounter.Zero,
+                2,
+                RsvpAnswer.Going,
+                ServerCounter.Zero,
+                ServerCounter("1"),
+            )
+            WireResponse(
+                200,
+                "application/json",
+                apiJson.encodeToString(page),
+            )
+        }
+        sender.send()
+        runCurrent()
+        assertTrue(sender.state.value.queue.isEmpty())
+        assertEquals("Уже принято", received.single().messageText)
+        assertEquals(1, h.transport.requests.count { it.method == "POST" })
+    }
+
     @Test fun pollingAcknowledgesOnlyOwnMatchingMessage() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
@@ -67,6 +107,7 @@ class MessageTests {
         sender.edit("Привет")
         runCurrent()
         h.transport.enqueue("${h.path}/messages", "", 503)
+        h.page()
         sender.send()
         runCurrent()
         val pending = checkNotNull(sender.state.value.pending)

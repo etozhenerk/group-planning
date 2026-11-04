@@ -33,7 +33,12 @@ func seedNativeDesignFixture(t *testing.T, store *memory.Store, identities *memo
 		ids[i] = fmt.Sprintf("dea00000-0000-4000-8000-%012d", i+1)
 		subject := fmt.Sprintf("yandex:ios-ui-design-%d", i+1)
 		if err := identities.Update(ctx, func(r identity.Records) error {
-			return r.PutUser(subject, identity.User{ID: ids[i], DisplayName: name, Email: "sasha@example.com", Login: "sasha", FirstName: "Александр", LastName: "Иванов", Birthday: "0000-12-23", Sex: "male", CreatedAt: now})
+			user := identity.User{ID: ids[i], DisplayName: name, Email: "sasha@example.com", Login: "sasha", FirstName: "Александр", LastName: "Иванов", Birthday: "0000-12-23", Sex: "male", CreatedAt: now}
+			if i == 2 {
+				user.AvatarURL = nativeAvatarFixtureURL()
+			}
+
+			return r.PutUser(subject, user)
 		}); err != nil {
 			t.Fatal(err)
 		}

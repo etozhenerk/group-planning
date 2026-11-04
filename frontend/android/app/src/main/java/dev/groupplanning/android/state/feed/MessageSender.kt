@@ -177,6 +177,8 @@ internal class MessageSender(
                 } catch (failure: ClientFailure) {
                     if (access != lease) break
                     val rejected = failure.status in listOf(400, 409, 422)
+                    if (!rejected && reconcile(lease, next)) continue
+                    if (access != lease) break
                     try {
                         changeStatus(
                             lease,
@@ -190,6 +192,19 @@ internal class MessageSender(
                     if (!rejected) break
                 }
             }
+        }
+    }
+
+    private suspend fun reconcile(lease: MeetingAccess, pending: PendingMessage): Boolean {
+        if (state.value.queue.none { it.key == pending.key }) return true
+        return try {
+            val entry = repository.page(lease).entries.firstOrNull { it.confirms(lease, pending) }
+                ?: return false
+            if (access != lease || !active) return false
+            received(entry)
+            acknowledge(listOf(entry))
+        } catch (_: ClientFailure) {
+            false
         }
     }
 

@@ -76,6 +76,7 @@ class MessageQueueTests {
         first.edit("Один")
         runCurrent()
         h.transport.enqueue("${h.path}/messages", "", 503)
+        h.page()
         first.send()
         runCurrent()
         val key = first.state.value.queue.single().key

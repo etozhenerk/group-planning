@@ -1345,13 +1345,37 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/AvatarAcknowledgementUITests.swift
+          selector: testHTTPAndLostReplyKeepPhoto
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/AvatarAcknowledgementUITests.swift
+          selector: testRealtimeAndLostReplyKeepPhoto
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/AvatarAcknowledgementUITests.swift
+          selector: testProfileWithoutPhotoKeepsInitial
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AvatarAcknowledgementUiTests.kt
+          selector: httpAndLostReplyKeepPhoto
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AvatarAcknowledgementUiTests.kt
+          selector: realtimeAndLostReplyKeepPhoto
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AvatarAcknowledgementUiTests.kt
+          selector: profileWithoutPhotoKeepsInitial
+          runner: android-ui
+          level: e2e
 - id: TC-CHAT-IOS-EDGE-BACK
   title: "Системный жест возврата из чата iOS: Свайп iOS возвращает исходный список или календарь"
   lifecycle: active

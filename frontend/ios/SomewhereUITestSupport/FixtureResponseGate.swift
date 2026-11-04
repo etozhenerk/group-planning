@@ -13,6 +13,18 @@ enum FixtureResponseGate {
 
     static func before(_ request: URLRequest) async throws {
         guard let (rule, root) = try matchingRule(request) else { return }
+        if rule.mode == "staged-hold" || rule.mode == "staged-drop" {
+            try Data("waiting-before".utf8).write(
+                to: root.appendingPathComponent("requested"), options: .atomic)
+            while FileManager.default.fileExists(
+                atPath: root.appendingPathComponent("rule.json").path)
+                && !FileManager.default.fileExists(
+                    atPath: root.appendingPathComponent("commit").path)
+            {
+                try await Task.sleep(for: .milliseconds(20))
+            }
+            return
+        }
         if rule.mode == "hold-before" {
             try Data("waiting".utf8).write(
                 to: root.appendingPathComponent("requested"), options: .atomic)
@@ -57,11 +69,14 @@ enum FixtureResponseGate {
             }
         }
         switch rule.mode {
-        case "hold":
+        case "hold", "staged-hold":
             while FileManager.default.fileExists(atPath: ruleFile.path) {
                 try await Task.sleep(for: .milliseconds(50))
             }
             return result
+        case "staged-drop":
+            try FileManager.default.removeItem(at: ruleFile)
+            throw URLError(.networkConnectionLost)
         case "unavailable", "unavailable-after-first":
             guard
                 let response = HTTPURLResponse(

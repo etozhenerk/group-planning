@@ -1,0 +1,1102 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme Somewhere -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/TestDerivedData -resultBundlePath .build/TestResults-20261104T080235-7016.xcresult -parallel-testing-enabled NO SOMEWHERE_APP_BUNDLE_IDENTIFIER=dev.groupplanning.ios.unittesthost ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+    SOMEWHERE_APP_BUNDLE_IDENTIFIER = dev.groupplanning.ios.unittesthost
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestResults-20261104T080235-7016.xcresult
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (10 targets)
+    Target 'SomewhereTests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'Somewhere' in project 'Somewhere'
+    Target 'Somewhere' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+    Target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: fd9729fd29e8f25993414dde528d0259
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/XCBuildData/fd9729fd29e8f25993414dde528d0259.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+SwiftDriver Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/Info.plist (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Info.plist
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Somewhere (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+
+SwiftCompile normal arm64 Compiling\ FeedMessageView.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/FeedMessageView.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedMessageView.swift
+
+SwiftCompile normal arm64 Compiling\ MeetingFeedHeader.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MeetingFeedHeader.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MeetingFeedHeader.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling FeedMessageView.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ FeedOwner+Sending.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/Model/FeedOwner+Sending.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/Model/FeedOwner+Sending.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedOwner+Sending.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling MeetingFeedHeader.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ FeedOwner.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/Model/FeedOwner.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/Model/FeedOwner.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedOwner.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling FeedOwner+Sending.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 Compiling\ MessageWithActions.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Features/Feed/MessageWithActions.swift (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile MessageWithActions.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling FeedOwner.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Compiling MessageWithActions.swift (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for Somewhere (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftsourceinfo (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriver\ Compilation Somewhere normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Somewhere -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.abi.json (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftDriver SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib normal (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -filelist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.LinkFileList -install_name @rpath/Somewhere.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.swiftmodule -lc++ -framework Foundation -framework Security -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SomewhereTests (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+
+SwiftCompile normal arm64 Compiling\ FeedOwnerTests.swift /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereTests/Feed/FeedOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftCompile normal arm64 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/SomewhereTests/Feed/FeedOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-SwiftPerFileCompile FeedOwnerTests.swift
+
+ConstructStubExecutorLinkFileList /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    construct-stub-executor-link-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'Somewhere' from project 'Somewhere')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SomewhereTests (in target 'SomewhereTests' from project 'Somewhere')
+
+SwiftDriver\ Compilation\ Requirements SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere normal (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app-Simulated.xcent.der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftsourceinfo (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftsourceinfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+ExtractAppIntentsMetadata (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Somewhere --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.unittesthost --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere --dependency-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere_dependency_info.dat --stringsdata-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftFileList --metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.DependencyMetadataFileList --static-metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Objects-normal/arm64/Somewhere.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-04 11:02:48.254 appintentsmetadataprocessor[7640:16834269] Starting appintentsmetadataprocessor export
+2026-11-04 11:02:48.256 appintentsmetadataprocessor[7640:16834269] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling FeedOwnerTests.swift (in target 'SomewhereTests' from project 'Somewhere')
+
+Copy /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.abi.json (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.abi.json /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftDriver\ Compilation SomewhereTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SomewhereTests -Onone @/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include/module.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -warnings-as-errors -index-store-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Index.noindex/DataStore -swift-version 6 -I /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache -output-file-map /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-generated-files.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-own-target-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere-400e3a0e6a338d820e0858649b9e9cd4-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests-project-headers.hmap -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SourcePackages/checkouts/yandex-login-sdk-ios/Vendor/CertificateTransparency/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources/arm64 -Xcc -I/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests-Swift.h -working-directory /Users/misha/Documents/Codex/projects/group-planning/frontend/ios -experimental-emit-module-separately -disable-cmo
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/empty-SomewhereTests.plist (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/empty-SomewhereTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Info.plist
+
+Ld /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests normal (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk/Developer/Library/Frameworks -filelist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere -Xlinker -object_path_lto -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.swiftmodule -lc++ -framework Foundation -framework Security -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest-Simulated.xcent.der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests
+
+ExtractAppIntentsMetadata (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SomewhereTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier dev.groupplanning.ios.tests --output /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests --dependency-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests_dependency_info.dat --stringsdata-file /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftFileList --metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.DependencyMetadataFileList --static-metadata-file-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/Objects-normal/arm64/SomewhereTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-04 11:02:48.835 appintentsmetadataprocessor[7646:16834307] Starting appintentsmetadataprocessor export
+2026-11-04 11:02:48.838 appintentsmetadataprocessor[7646:16834307] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SomewhereTests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest (in target 'SomewhereTests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereTests.build/SomewhereTests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/PlugIns/SomewhereTests.xctest
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/Somewhere.debug.dylib
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib
+/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/Somewhere.build/Somewhere.app.xcent --timestamp\=none --generate-entitlement-der /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app
+
+Validate /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app (in target 'Somewhere' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-validationUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Products/Debug-iphonesimulator/Somewhere.app -shallow-bundle -infoplist-subpath Info.plist
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+2026-11-04 11:02:49.326 xcodebuild[7306:16833173] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:57.011084+0300 Somewhere[7652:16834564] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 11:02:57.042012+0300 Somewhere[7652:16834564] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 11:02:57.043540+0300 Somewhere[7652:16834564] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+Test Suite 'All tests' started at 2026-11-04 11:02:57.224.
+Test Suite 'All tests' passed at 2026-11-04 11:02:57.227.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.003) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "HTTP requests and API errors" started.
+◇ Test requestUsesBearerAndMatchingMessageKey() started.
+✔ Test requestUsesBearerAndMatchingMessageKey() passed after 0.009 seconds.
+◇ Test statusSurvivesMalformedErrorBody() started.
+✔ Test statusSurvivesMalformedErrorBody() passed after 0.001 seconds.
+◇ Test successfulWrongMimeOrDataFailsValidation() started.
+✔ Test successfulWrongMimeOrDataFailsValidation() passed after 0.010 seconds.
+◇ Test originAndPathCannotChangeDestination() started.
+✔ Test originAndPathCannotChangeDestination() passed after 0.001 seconds.
+◇ Test mobileAttemptAndFeedCursorsUseCanonicalWireValues() started.
+✔ Test mobileAttemptAndFeedCursorsUseCanonicalWireValues() passed after 0.001 seconds.
+◇ Test credentialsRejectHeaderInjectionAndRedactDebugging() started.
+✔ Test credentialsRejectHeaderInjectionAndRedactDebugging() passed after 0.001 seconds.
+✔ Suite "HTTP requests and API errors" passed after 0.023 seconds.
+◇ Suite AccountDeletionTests started.
+◇ Test completionClearsCredentialsAndPrivateState() started.
+✔ Test completionClearsCredentialsAndPrivateState() passed after 0.003 seconds.
+◇ Test failedResponseRestoresPendingOperationBeforeSessionCheck() started.
+✔ Test failedResponseRestoresPendingOperationBeforeSessionCheck() passed after 0.001 seconds.
+◇ Test unauthorizedDoesNotClaimSuccessAndConcurrentClickDoesNotSendAgain() started.
+✔ Test unauthorizedDoesNotClaimSuccessAndConcurrentClickDoesNotSendAgain() passed after 0.011 seconds.
+✔ Suite AccountDeletionTests passed after 0.017 seconds.
+◇ Suite AlbumDownloadTests started.
+◇ Test fullSnapshotUsesOriginalBytesOnceAndExcludesNewPhotos() started.
+✔ Test fullSnapshotUsesOriginalBytesOnceAndExcludesNewPhotos() passed after 0.070 seconds.
+◇ Test permissionDeniedDoesNotDownloadOrCreateFiles() started.
+✔ Test permissionDeniedDoesNotDownloadOrCreateFiles() passed after 0.007 seconds.
+◇ Test revocationAfterLateDownloadCleansEverythingWithoutSaving() started.
+✔ Test revocationAfterLateDownloadCleansEverythingWithoutSaving() passed after 0.002 seconds.
+◇ Test revocationAtFinalVerificationDoesNotCommit() started.
+✔ Test revocationAtFinalVerificationDoesNotCommit() passed after 0.003 seconds.
+◇ Test cancellationBeforeCommitAndConcurrentTapCannotSave() started.
+✔ Test cancellationBeforeCommitAndConcurrentTapCannotSave() passed after 0.010 seconds.
+◇ Test cancellationAfterCommitStartsWaitsForOutcomeAndCleans() started.
+✔ Test cancellationAfterCommitStartsWaitsForOutcomeAndCleans() passed after 0.003 seconds.
+◇ Test partialDownloadAndGalleryFailureCleanFiles() started.
+✔ Test partialDownloadAndGalleryFailureCleanFiles() passed after 0.004 seconds.
+◇ Test snapshotRejectsDuplicatesWrongPurposeOversizeAndPagination() started.
+✔ Test snapshotRejectsDuplicatesWrongPurposeOversizeAndPagination() passed after 0.038 seconds.
+◇ Test duplicateTapAndCancellationIgnoreLateDownload() started.
+✔ Test duplicateTapAndCancellationIgnoreLateDownload() passed after 0.007 seconds.
+◇ Test systemCommitCannotBeCancelledAndOnlyThenReportsSuccess() started.
+✔ Test systemCommitCannotBeCancelledAndOnlyThenReportsSuccess() passed after 0.003 seconds.
+◇ Test permissionReturnNeedsGrantedAccessBeforeRetry() started.
+✔ Test permissionReturnNeedsGrantedAccessBeforeRetry() passed after 0.002 seconds.
+◇ Test leavingDuringCommitDoesNotShowLateSuccess() started.
+✔ Test leavingDuringCommitDoesNotShowLateSuccess() passed after 0.002 seconds.
+◇ Test revokedOwnerDoesNotAcceptLateResultOrStartAgain() started.
+✔ Test revokedOwnerDoesNotAcceptLateResultOrStartAgain() passed after 0.002 seconds.
+◇ Test networkAndSystemErrorsHaveDistinctRetryStates() started.
+✔ Test networkAndSystemErrorsHaveDistinctRetryStates() passed after 0.014 seconds.
+✔ Suite AlbumDownloadTests passed after 0.175 seconds.
+◇ Suite AlbumFileBufferTests started.
+◇ Test streamsAcrossBoundariesWithoutChangingBytes() started.
+✔ Test streamsAcrossBoundariesWithoutChangingBytes() passed after 0.022 seconds.
+◇ Test rejectsShortExcessAndOversizeWithoutGrowingPastLimit() started.
+✔ Test rejectsShortExcessAndOversizeWithoutGrowingPastLimit() passed after 0.001 seconds.
+✔ Suite AlbumFileBufferTests passed after 0.023 seconds.
+◇ Suite AlbumTemporaryFilesTests started.
+◇ Test abandonedCleanupNeverFollowsLinksOutsideOwnedRoot() started.
+✔ Test abandonedCleanupNeverFollowsLinksOutsideOwnedRoot() passed after 0.002 seconds.
+✔ Suite AlbumTemporaryFilesTests passed after 0.002 seconds.
+◇ Suite BrandMotionTests started.
+◇ Test reducedMotionAndInactiveSceneStayStill() started.
+✔ Test reducedMotionAndInactiveSceneStayStill() passed after 0.001 seconds.
+◇ Test rotationCompletesExactlyOnceEvenDuringLongLoading() started.
+✔ Test rotationCompletesExactlyOnceEvenDuringLongLoading() passed after 0.001 seconds.
+✔ Suite BrandMotionTests passed after 0.001 seconds.
+◇ Suite CalendarDateTests started.
+◇ Test civilArithmeticAcrossLeapYear() started.
+✔ Test civilArithmeticAcrossLeapYear() passed after 0.002 seconds.
+◇ Test monthGridContainsOnlyCompleteWeeksCoveringMonth(selected:first:last:count:) started.
+◇ Test case passing 4 arguments selected → "2021-02-15", first → "2021-02-01", last → "2021-02-28", count → 28 to monthGridContainsOnlyCompleteWeeksCoveringMonth(selected:first:last:count:) started.
+​◇ Test case passing 4 arguments selected → "2026-10-31", first → "2026-09-28", last → "2026-11-01", count → 35 to monthGridContainsOnlyCompleteWeeksCoveringMonth(selected:first:last:count:) started.
+​◇ Test case passing 4 arguments selected → "2027-05-20", first → "2027-04-26", last → "2027-06-06", count → 42 to monthGridContainsOnlyCompleteWeeksCoveringMonth(selected:first:last:count:) started.
+​✔ Test monthGridContainsOnlyCompleteWeeksCoveringMonth(selected:first:last:count:) with 3 test cases passed after 0.003 seconds.
+◇ Test selectionRetainsBothPeriodsAndCreationContext() started.
+✔ Test selectionRetainsBothPeriodsAndCreationContext() passed after 0.001 seconds.
+◇ Test refreshHonorsServerDeadlineWithoutBusyLoop() started.
+✔ Test refreshHonorsServerDeadlineWithoutBusyLoop() passed after 0.001 seconds.
+✔ Suite CalendarDateTests passed after 0.008 seconds.
+◇ Suite CalendarOwnerTests started.
+◇ Test metadataAndDelayedFilterKeepOneEmptyAction() started.
+✔ Test metadataAndDelayedFilterKeepOneEmptyAction() passed after 0.013 seconds.
+◇ Test revisitingFilterUsesOnlyItsCacheWhileRefreshing() started.
+✔ Test revisitingFilterUsesOnlyItsCacheWhileRefreshing() passed after 0.018 seconds.
+◇ Test oldPeriodCannotReplaceNewData() started.
+✔ Test oldPeriodCannotReplaceNewData() passed after 0.013 seconds.
+◇ Test paginationConflictRestartsAndKeepsSelection() started.
+✔ Test paginationConflictRestartsAndKeepsSelection() passed after 0.003 seconds.
+◇ Test monthMetadataAndMeetingZoneSurviveRefreshFailure() started.
+✔ Test monthMetadataAndMeetingZoneSurviveRefreshFailure() passed after 0.002 seconds.
+◇ Test persistedStatusChangesOnlyOnResponseAndLogoutRejectsLateData() started.
+✔ Test persistedStatusChangesOnlyOnResponseAndLogoutRejectsLateData() passed after 0.012 seconds.
+✔ Suite CalendarOwnerTests passed after 0.065 seconds.
+◇ Suite CalendarSelectionTests started.
+◇ Test periodLeavesUndatedAndCalendarStartsFromDatedMeetings() started.
+✔ Test periodLeavesUndatedAndCalendarStartsFromDatedMeetings() passed after 0.004 seconds.
+◇ Test dayPaginationRestartsWithoutChangingDayOrCombiningSnapshots() started.
+✔ Test dayPaginationRestartsWithoutChangingDayOrCombiningSnapshots() passed after 0.003 seconds.
+✔ Suite CalendarSelectionTests passed after 0.007 seconds.
+◇ Suite ChatContractTests started.
+◇ Test syncRoutesAndAroundUsePublishedAPI() started.
+✔ Test syncRoutesAndAroundUsePublishedAPI() passed after 0.001 seconds.
+◇ Test snapshotAndChangesDecodeIndependentCursorsAndLargeVersions() started.
+✔ Test snapshotAndChangesDecodeIndependentCursorsAndLargeVersions() passed after 0.006 seconds.
+✔ Suite ChatContractTests passed after 0.006 seconds.
+◇ Suite ChatFallbackTests started.
+◇ Test successfulHTTPWithoutSubscriptionUsesProtocolCadenceAndIndependentJitter() started.
+✔ Test successfulHTTPWithoutSubscriptionUsesProtocolCadenceAndIndependentJitter() passed after 0.004 seconds.
+✔ Suite ChatFallbackTests passed after 0.004 seconds.
+◇ Suite "Mobile chat interactions" started.
+◇ Test backwardDeletionRemovesACompleteGrapheme(_:) started.
+◇ Test case passing 1 argument emoji → "👨‍👩‍👧‍👦" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "👍🏽" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "🇷🇺" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​◇ Test case passing 1 argument emoji → "❤️" to backwardDeletionRemovesACompleteGrapheme(_:) started.
+​✔ Test backwardDeletionRemovesACompleteGrapheme(_:) with 4 test cases passed after 0.001 seconds.
+◇ Test selectionAndRepeatedInsertionPreserveSurroundingText() started.
+✔ Test selectionAndRepeatedInsertionPreserveSurroundingText() passed after 0.001 seconds.
+◇ Test childSheetReturnsToInformationWithoutDiscardingComposer() started.
+✔ Test childSheetReturnsToInformationWithoutDiscardingComposer() passed after 0.001 seconds.
+◇ Test peopleFiltersMergeUsersWithoutTogglingReactions() started.
+✔ Test peopleFiltersMergeUsersWithoutTogglingReactions() passed after 0.001 seconds.
+✔ Suite "Mobile chat interactions" passed after 0.003 seconds.
+◇ Suite ChatOutboxTests started.
+◇ Test storageFailureKeepsDraftAndDoesNotPost() started.
+✔ Test storageFailureKeepsDraftAndDoesNotPost() passed after 0.001 seconds.
+◇ Test onlyOldestUncertainCanSendAndOtherIntentWaits() started.
+✔ Test onlyOldestUncertainCanSendAndOtherIntentWaits() passed after 0.001 seconds.
+◇ Test wrongACKDoesNotEraseIntentOrMoveReceiveCursor() started.
+✔ Test wrongACKDoesNotEraseIntentOrMoveReceiveCursor() passed after 0.001 seconds.
+✔ Suite ChatOutboxTests passed after 0.003 seconds.
+◇ Suite ChatReadTests started.
+◇ Test loadOrShortVisibilityOrOverlayDoesNotReadMessage() started.
+✔ Test loadOrShortVisibilityOrOverlayDoesNotReadMessage() passed after 1.230 seconds.
+◇ Test visibleEndReadsAfter500msAndServerMaximumWins() started.
+✔ Test visibleEndReadsAfter500msAndServerMaximumWins() passed after 1.073 seconds.
+◇ Test dividerDoesNotFollowMarkerAndReceiptRequiresServerCount() started.
+✔ Test dividerDoesNotFollowMarkerAndReceiptRequiresServerCount() passed after 0.001 seconds.
+◇ Test staleSyncCannotRestoreUnreadAfterConfirmedMarker() started.
+✔ Test staleSyncCannotRestoreUnreadAfterConfirmedMarker() passed after 0.001 seconds.
+◇ Test receiptBatchUsesCanonicalLowercaseIDs() started.
+✔ Test receiptBatchUsesCanonicalLowercaseIDs() passed after 0.001 seconds.
+◇ Test optionalReadFieldsDecodeWithoutChangingLegacyCapability() started.
+✔ Test optionalReadFieldsDecodeWithoutChangingLegacyCapability() passed after 0.001 seconds.
+✔ Suite ChatReadTests passed after 2.307 seconds.
+◇ Suite ChatRepositoryTests started.
+◇ Test restartRetainsOrderIDsAndDraftAndMarksSendingUncertain() started.
+✔ Test restartRetainsOrderIDsAndDraftAndMarksSendingUncertain() passed after 0.001 seconds.
+◇ Test oldDraftAndOldLeaseCannotResurrectRemovedOrNewAccountData() started.
+✔ Test oldDraftAndOldLeaseCannotResurrectRemovedOrNewAccountData() passed after 0.001 seconds.
+◇ Test newerDraftSurvivesSlowEnqueueAndRevokeRejectsOldWriter() started.
+✔ Test newerDraftSurvivesSlowEnqueueAndRevokeRejectsOldWriter() passed after 0.001 seconds.
+✔ Suite ChatRepositoryTests passed after 0.001 seconds.
+◇ Suite ChatSessionFenceTests started.
+◇ Test oldLogoutCannotRemoveCredentialSavedDuringChatCleanup() started.
+✔ Test oldLogoutCannotRemoveCredentialSavedDuringChatCleanup() passed after 0.024 seconds.
+✔ Suite ChatSessionFenceTests passed after 0.024 seconds.
+◇ Suite ChatSheetStateTests started.
+◇ Test pendingDelayIsBoundedWhenClockChanges() started.
+✔ Test pendingDelayIsBoundedWhenClockChanges() passed after 0.001 seconds.
+◇ Test dismissPreservesParentAndDoesNotRequestRefresh() started.
+✔ Test dismissPreservesParentAndDoesNotRequestRefresh() passed after 0.055 seconds.
+◇ Test messageFocusWaitsForNativeDismissAndRepeatsForTheSameMessage() started.
+✔ Test messageFocusWaitsForNativeDismissAndRepeatsForTheSameMessage() passed after 0.001 seconds.
+◇ Test pendingLifecycleKeepsStartAndTimelineIdentityThroughAcknowledgement() started.
+✔ Test pendingLifecycleKeepsStartAndTimelineIdentityThroughAcknowledgement() passed after 0.001 seconds.
+✔ Suite ChatSheetStateTests passed after 0.058 seconds.
+◇ Suite ChatSyncTests started.
+◇ Test snapshotAndChangeCursorStayIndependentFromOwnACK() started.
+✔ Test snapshotAndChangeCursorStayIndependentFromOwnACK() passed after 0.003 seconds.
+◇ Test snapshotSubscribeRaceCatchesUpAndIdleDoesNotPoll() started.
+✔ Test snapshotSubscribeRaceCatchesUpAndIdleDoesNotPoll() passed after 0.249 seconds.
+◇ Test invalidProjectionCannotAdvanceCursorOrPartiallyMergePage() started.
+✔ Test invalidProjectionCannotAdvanceCursorOrPartiallyMergePage() passed after 0.002 seconds.
+◇ Test successfulCatchupStopsTemporaryFallbackOnExistingSubscription() started.
+✔ Test successfulCatchupStopsTemporaryFallbackOnExistingSubscription() passed after 0.002 seconds.
+✔ Suite ChatSyncTests passed after 0.258 seconds.
+◇ Suite ChatWindowTests started.
+◇ Test windowStaysBoundedAndPreservesReaderAndPending() started.
+✔ Test windowStaysBoundedAndPreservesReaderAndPending() passed after 0.011 seconds.
+◇ Test receivedWrongOwnIntentCannotHidePending() started.
+✔ Test receivedWrongOwnIntentCannotHidePending() passed after 0.001 seconds.
+◇ Test mediaOrMalformedAttachmentsCannotAcknowledgePlainText() started.
+✔ Test mediaOrMalformedAttachmentsCannotAcknowledgePlainText() passed after 0.001 seconds.
+◇ Test uint64BoundaryRemainsExact() started.
+✔ Test uint64BoundaryRemainsExact() passed after 0.001 seconds.
+✔ Suite ChatWindowTests passed after 0.013 seconds.
+◇ Suite "Shared API contract" started.
+◇ Test allSharedFixturesDecode() started.
+✔ Test allSharedFixturesDecode() passed after 0.019 seconds.
+◇ Test dateOnlyCreationAndHiddenPollPreserveContract() started.
+✔ Test dateOnlyCreationAndHiddenPollPreserveContract() passed after 0.003 seconds.
+◇ Test preparationTasksSeparateProposalFromAcceptance() started.
+✔ Test preparationTasksSeparateProposalFromAcceptance() passed after 0.012 seconds.
+◇ Test placePollKeepsCountsOwnVoteAndFinalState() started.
+✔ Test placePollKeepsCountsOwnVoteAndFinalState() passed after 0.006 seconds.
+◇ Test nullAndMissingDescriptionsRemainAbsent() started.
+✔ Test nullAndMissingDescriptionsRemainAbsent() passed after 0.003 seconds.
+◇ Test unsupportedEntriesStayDataAndKeepLargeSequences() started.
+✔ Test unsupportedEntriesStayDataAndKeepLargeSequences() passed after 0.003 seconds.
+◇ Test conflictSnapshotAllowsNoPreviousAnswer() started.
+✔ Test conflictSnapshotAllowsNoPreviousAnswer() passed after 0.001 seconds.
+◇ Test datesKeepOffsetsFractionsAndOriginalText() started.
+✔ Test datesKeepOffsetsFractionsAndOriginalText() passed after 0.001 seconds.
+◇ Test malformedCountersAndAnswersAreRejected() started.
+✔ Test malformedCountersAndAnswersAreRejected() passed after 0.013 seconds.
+◇ Test patchDistinguishesUnchangedAndClear() started.
+✔ Test patchDistinguishesUnchangedAndClear() passed after 0.010 seconds.
+◇ Test invitationContextAcceptsBothTokens() started.
+✔ Test invitationContextAcceptsBothTokens() passed after 0.001 seconds.
+✔ Suite "Shared API contract" passed after 0.078 seconds.
+◇ Suite CoverAccessTests started.
+◇ Test onlyExactOriginMeetingAndVersionCanReceiveAuthorization() started.
+✔ Test onlyExactOriginMeetingAndVersionCanReceiveAuthorization() passed after 0.002 seconds.
+◇ Test privateImageUsesSessionAndRejectsWrongMime() started.
+✔ Test privateImageUsesSessionAndRejectsWrongMime() passed after 0.024 seconds.
+◇ Test lateImageIsDiscardedAfterAccessRevocationAndAfterLogout() started.
+✔ Test lateImageIsDiscardedAfterAccessRevocationAndAfterLogout() passed after 0.024 seconds.
+◇ Test aDisplayedImageDisappearsAsSoonAsItsAccessLeaseExpires() started.
+2026-11-04 11:03:00.582974+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:00.583118+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test aDisplayedImageDisappearsAsSoonAsItsAccessLeaseExpires() passed after 0.209 seconds.
+✔ Suite CoverAccessTests passed after 0.261 seconds.
+◇ Suite CoverProcessingTests started.
+◇ Test largeCameraPhotoIsDownsampledAndOrientationIsApplied() started.
+2026-11-04 11:03:00.603673+0300 Somewhere[7652:16834948] [] CVPixelBufferCreate returned err -6680. width 1600, height 900, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:00.619745+0300 Somewhere[7652:16834948] [] CVPixelBufferCreate returned err -6680. width 900, height 1600, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test largeCameraPhotoIsDownsampledAndOrientationIsApplied() passed after 0.036 seconds.
+◇ Test deniedMissingCorruptAndOversizedFilesAreRejected() started.
+✔ Test deniedMissingCorruptAndOversizedFilesAreRejected() passed after 0.026 seconds.
+◇ Test creationAndSettingsEncodePhotoRetainAndRemoval() started.
+✔ Test creationAndSettingsEncodePhotoRetainAndRemoval() passed after 0.008 seconds.
+✔ Suite CoverProcessingTests passed after 0.071 seconds.
+◇ Suite CreationOwnerTests started.
+◇ Test calendarPrefillPreservesDraftAndDoesNotModifyPendingSubmission() started.
+✔ Test calendarPrefillPreservesDraftAndDoesNotModifyPendingSubmission() passed after 0.001 seconds.
+◇ Test lostResponseRestoresFrozenBodyAndKey() started.
+✔ Test lostResponseRestoresFrozenBodyAndKey() passed after 0.003 seconds.
+◇ Test diskFailurePreventsRequestAndValidationUnlocksFields() started.
+✔ Test diskFailurePreventsRequestAndValidationUnlocksFields() passed after 0.001 seconds.
+◇ Test doubleSubmitAndLateResponseAfterLogoutCannotPublish() started.
+✔ Test doubleSubmitAndLateResponseAfterLogoutCannotPublish() passed after 0.012 seconds.
+◇ Test changeCanReadCurrentDraftWithoutOverlappingAccess() started.
+✔ Test changeCanReadCurrentDraftWithoutOverlappingAccess() passed after 0.001 seconds.
+◇ Test unauthorizedClearsSessionAndCannotPublish() started.
+✔ Test unauthorizedClearsSessionAndCannotPublish() passed after 0.002 seconds.
+✔ Suite CreationOwnerTests passed after 0.022 seconds.
+◇ Suite DatePollTests started.
+◇ Test uncertainVoteRetriesExactlyAndKeepsHiddenResultsPrivate() started.
+✔ Test uncertainVoteRetriesExactlyAndKeepsHiddenResultsPrivate() passed after 0.010 seconds.
+◇ Test conflictRefreshKeepsSelectionAndClosedPollDisablesChanges() started.
+✔ Test conflictRefreshKeepsSelectionAndClosedPollDisablesChanges() passed after 0.006 seconds.
+◇ Test revokedAccessRejectsLatePollAndResolveCanExplicitlyClearTime() started.
+✔ Test revokedAccessRejectsLatePollAndResolveCanExplicitlyClearTime() passed after 0.013 seconds.
+✔ Suite DatePollTests passed after 0.031 seconds.
+◇ Suite DraftRepositoryTests started.
+◇ Test profilesAndOldOwnersStayIsolated() started.
+✔ Test profilesAndOldOwnersStayIsolated() passed after 0.007 seconds.
+◇ Test fileSurvivesRepositoryRecreationWithoutSessionSecret() started.
+✔ Test fileSurvivesRepositoryRecreationWithoutSessionSecret() passed after 0.001 seconds.
+✔ Suite DraftRepositoryTests passed after 0.009 seconds.
+◇ Suite EncryptedChatStorageTests started.
+◇ Test restartRestoresIntentWithoutPlaintextAndUsesFreshNonce() started.
+✔ Test restartRestoresIntentWithoutPlaintextAndUsesFreshNonce() passed after 0.014 seconds.
+◇ Test authenticationRejectsTamperingAndMovingToAnotherMeeting() started.
+✔ Test authenticationRejectsTamperingAndMovingToAnotherMeeting() passed after 0.018 seconds.
+◇ Test accountRemovalPreservesOtherAccountAndRemovesEncryptionKey() started.
+✔ Test accountRemovalPreservesOtherAccountAndRemovesEncryptionKey() passed after 0.007 seconds.
+​➜ Test encryptedFileUsesCompleteDeviceProtection() skipped: "Complete file protection must be verified on a physical iOS device."
+​✔ Suite EncryptedChatStorageTests passed after 0.039 seconds.
+◇ Suite "Meeting experience contracts and privacy" started.
+◇ Test invitationCutoffIsInclusiveAndKeepsCurrentParticipants() started.
+✔ Test invitationCutoffIsInclusiveAndKeepsCurrentParticipants() passed after 0.001 seconds.
+◇ Test optionalProfileFieldsStayPrivateAndMissing() started.
+✔ Test optionalProfileFieldsStayPrivateAndMissing() passed after 0.002 seconds.
+◇ Test profileCallbackAfterLogoutCannotRepopulateState() started.
+✔ Test profileCallbackAfterLogoutCannotRepopulateState() passed after 0.012 seconds.
+◇ Test completeEmojiCatalogHasRussianSearchAndRecentIsSessionScoped() started.
+✔ Test completeEmojiCatalogHasRussianSearchAndRecentIsSessionScoped() passed after 0.019 seconds.
+◇ Test approvedEmojiGroupsKeepEveryCatalogEntryReachableExactlyOnce() started.
+✔ Test approvedEmojiGroupsKeepEveryCatalogEntryReachableExactlyOnce() passed after 0.009 seconds.
+✔ Suite "Meeting experience contracts and privacy" passed after 0.045 seconds.
+◇ Suite FeedOwnerTests started.
+◇ Test legacyRevisionRefreshesCachedAuthorsWithoutMovingCursorOrDraft() started.
+✔ Test legacyRevisionRefreshesCachedAuthorsWithoutMovingCursorOrDraft() passed after 0.002 seconds.
+◇ Test cursorUsesReadEntriesNotMetadataOrPostAndHistoryDoesNotMoveIt() started.
+✔ Test cursorUsesReadEntriesNotMetadataOrPostAndHistoryDoesNotMoveIt() passed after 0.002 seconds.
+◇ Test emptyInitialPageStartsIncrementalReadsAtZero() started.
+✔ Test emptyInitialPageStartsIncrementalReadsAtZero() passed after 0.001 seconds.
+◇ Test retryRetainsBodyAndIDAndPollingReconcilesLostResponse() started.
+✔ Test retryRetainsBodyAndIDAndPollingReconcilesLostResponse() passed after 0.001 seconds.
+◇ Test lostReplyReconcilesBeforeExposingAnUncertainStatus() started.
+✔ Test lostReplyReconcilesBeforeExposingAnUncertainStatus() passed after 0.001 seconds.
+◇ Test backgroundCancelsLateReadButPreservesDraftAndUncertainIntent() started.
+✔ Test backgroundCancelsLateReadButPreservesDraftAndUncertainIntent() passed after 0.012 seconds.
+◇ Test forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+◇ Test case passing 1 argument status → 401 to forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+​◇ Test case passing 1 argument status → 403 to forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) started.
+​✔ Test forbiddenOrExpiredSessionPurgesAndRejectsLateSend(status:) with 2 test cases passed after 0.027 seconds.
+◇ Test historyDoesNotAppearAfterAccessLeaseChanges() started.
+✔ Test historyDoesNotAppearAfterAccessLeaseChanges() passed after 0.012 seconds.
+◇ Test unknownEventVersionIsSafeAndDoesNotExposeItsPayload() started.
+✔ Test unknownEventVersionIsSafeAndDoesNotExposeItsPayload() passed after 0.001 seconds.
+✔ Suite FeedOwnerTests passed after 0.063 seconds.
+◇ Suite InvitationCoverRecoveryTests started.
+◇ Test privatePreviewFromRealtimeReloadIsReplacedAndLateReloadCannotRestoreIt() started.
+✔ Test privatePreviewFromRealtimeReloadIsReplacedAndLateReloadCannotRestoreIt() passed after 0.021 seconds.
+◇ Test meetingTargetMaybeUsesOwnSavedPublicCoverWithoutReopeningPrivateAccess() started.
+2026-11-04 11:03:00.898173+0300 Somewhere[7652:16834961] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:00.898303+0300 Somewhere[7652:16834961] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:00.900154+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:00.900259+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test meetingTargetMaybeUsesOwnSavedPublicCoverWithoutReopeningPrivateAccess() passed after 0.006 seconds.
+◇ Test rememberedPublicTokenSurvivesMaybeToNotGoingAndFreshGoingRestoresPrivateState() started.
+✔ Test rememberedPublicTokenSurvivesMaybeToNotGoingAndFreshGoingRestoresPrivateState() passed after 0.006 seconds.
+◇ Test idOnlyNotGoingDoesNotInventTokenOrKeepPrivateCover() started.
+✔ Test idOnlyNotGoingDoesNotInventTokenOrKeepPrivateCover() passed after 0.002 seconds.
+◇ Test tokenTargetNotGoingRetainsPublicCoverAndServerCutoff() started.
+✔ Test tokenTargetNotGoingRetainsPublicCoverAndServerCutoff() passed after 0.003 seconds.
+◇ Test publicRecoveryFailureKeepsConfirmedMaybeAndPrivateCacheRevoked() started.
+✔ Test publicRecoveryFailureKeepsConfirmedMaybeAndPrivateCacheRevoked() passed after 0.003 seconds.
+◇ Test mismatchedPublicMeetingCannotReplaceWithdrawalPreviewOrGrantAccess() started.
+✔ Test mismatchedPublicMeetingCannotReplaceWithdrawalPreviewOrGrantAccess() passed after 0.003 seconds.
+◇ Test lateSavedLookupCannotApplyAfterCancellationOrLogout() started.
+✔ Test lateSavedLookupCannotApplyAfterCancellationOrLogout() passed after 0.029 seconds.
+✔ Suite InvitationCoverRecoveryTests passed after 0.078 seconds.
+◇ Suite InvitationLinkTests started.
+◇ Test validCurrentLegacyAndNativeLinks() started.
+✔ Test validCurrentLegacyAndNativeLinks() passed after 0.001 seconds.
+◇ Test rejectsUntrustedAndAmbiguousLinks() started.
+✔ Test rejectsUntrustedAndAmbiguousLinks() passed after 0.001 seconds.
+◇ Test protectedContextIgnoresLateWriteAndRestores() started.
+✔ Test protectedContextIgnoresLateWriteAndRestores() passed after 0.001 seconds.
+◇ Test runtimeRestoresInvitationWithoutReply() started.
+✔ Test runtimeRestoresInvitationWithoutReply() passed after 0.001 seconds.
+✔ Suite InvitationLinkTests passed after 0.003 seconds.
+◇ Suite InvitationOwnerTests started.
+◇ Test anonymousPreviewNeverReadsPrivateDataOrSavesReply() started.
+✔ Test anonymousPreviewNeverReadsPrivateDataOrSavesReply() passed after 0.001 seconds.
+◇ Test uncertainReplyRetriesSameBodyAndKeyWithoutGrantingAccess() started.
+✔ Test uncertainReplyRetriesSameBodyAndKeyWithoutGrantingAccess() passed after 0.003 seconds.
+◇ Test withdrawalPurgesFeedAndRejectsLateRead() started.
+✔ Test withdrawalPurgesFeedAndRejectsLateRead() passed after 0.016 seconds.
+◇ Test conflictReloadsCurrentAnswerWithoutAutomaticOverwrite() started.
+✔ Test conflictReloadsCurrentAnswerWithoutAutomaticOverwrite() passed after 0.002 seconds.
+◇ Test changedSessionRejectsLateResponseAndAccess() started.
+✔ Test changedSessionRejectsLateResponseAndAccess() passed after 0.012 seconds.
+◇ Test expiredSessionClosesAccess() started.
+✔ Test expiredSessionClosesAccess() passed after 0.003 seconds.
+◇ Test unavailableInvitationDoesNotExposeCachedDetails() started.
+✔ Test unavailableInvitationDoesNotExposeCachedDetails() passed after 0.003 seconds.
+✔ Suite InvitationOwnerTests passed after 0.043 seconds.
+◇ Suite KeychainTests started.
+◇ Test persistenceAndOriginIsolation() started.
+✔ Test persistenceAndOriginIsolation() passed after 0.005 seconds.
+◇ Test staleSaveCannotRestoreRemovedSession() started.
+✔ Test staleSaveCannotRestoreRemovedSession() passed after 0.001 seconds.
+✔ Suite KeychainTests passed after 0.005 seconds.
+◇ Suite "Bounded native photo display" started.
+◇ Test largePhotosKeepOriginalBytesAndFourDecodedNeighbours() started.
+2026-11-04 11:03:01.037328+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 4032, height 3024, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test largePhotosKeepOriginalBytesAndFourDecodedNeighbours() passed after 0.108 seconds.
+◇ Test exifRotatedPhotosStayPortraitAndKeepOppositeRotationDirections() started.
+2026-11-04 11:03:01.113100+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 40, height 20, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.113919+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 40, height 20, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test exifRotatedPhotosStayPortraitAndKeepOppositeRotationDirections() passed after 0.002 seconds.
+✔ Suite "Bounded native photo display" passed after 0.110 seconds.
+◇ Suite "Private media upload and access" started.
+◇ Test documentCaptionLimitKeepsWholeEmojiAndSkipsPhotos() started.
+✔ Test documentCaptionLimitKeepsWholeEmojiAndSkipsPhotos() passed after 0.001 seconds.
+◇ Test downloadReconstructsOwnOriginAndSuppressesRevokedCallback() started.
+✔ Test downloadReconstructsOwnOriginAndSuppressesRevokedCallback() passed after 0.011 seconds.
+◇ Test repeatedContentUsesSessionCacheAndRevocationClearsIt() started.
+✔ Test repeatedContentUsesSessionCacheAndRevocationClearsIt() passed after 0.001 seconds.
+◇ Test partialUploadPreservesSuccessAndRetriesSamePreparedFile() started.
+✔ Test partialUploadPreservesSuccessAndRetriesSamePreparedFile() passed after 0.037 seconds.
+✔ Suite "Private media upload and access" passed after 0.052 seconds.
+◇ Suite "Photo album boundaries" started.
+◇ Test stackAlwaysAdvancesAndRestartsWithoutChangingFullscreenNavigation() started.
+✔ Test stackAlwaysAdvancesAndRestartsWithoutChangingFullscreenNavigation() passed after 0.001 seconds.
+◇ Test twoPhotosHaveDifferentPreviousAndNextActions() started.
+✔ Test twoPhotosHaveDifferentPreviousAndNextActions() passed after 0.001 seconds.
+◇ Test emptySingleAndMiddlePhotosStayInBounds() started.
+✔ Test emptySingleAndMiddlePhotosStayInBounds() passed after 0.001 seconds.
+✔ Suite "Photo album boundaries" passed after 0.001 seconds.
+◇ Suite "System document selection" started.
+◇ Test coordinatedPDFKeepsMIMEBytesAndName() started.
+✔ Test coordinatedPDFKeepsMIMEBytesAndName() passed after 0.026 seconds.
+◇ Test missingProviderFileDoesNotProduceAnEmptySelection() started.
+✔ Test missingProviderFileDoesNotProduceAnEmptySelection() passed after 0.003 seconds.
+✔ Suite "System document selection" passed after 0.030 seconds.
+◇ Suite "Meeting action drafts in memory" started.
+◇ Test retainedDatePickerKeepsIdentityWhenOptionsAreRemovedOrCleared() started.
+✔ Test retainedDatePickerKeepsIdentityWhenOptionsAreRemovedOrCleared() passed after 0.001 seconds.
+◇ Test reopeningKeepsEveryFormUntilSuccessOrMeetingExit() started.
+✔ Test reopeningKeepsEveryFormUntilSuccessOrMeetingExit() passed after 0.001 seconds.
+◇ Test failedCreationKeepsRequestAcrossCloseAndReopen() started.
+✔ Test failedCreationKeepsRequestAcrossCloseAndReopen() passed after 0.001 seconds.
+✔ Suite "Meeting action drafts in memory" passed after 0.003 seconds.
+◇ Suite MeetingDraftTests started.
+◇ Test dateIsRequiredAndOptionalTimePreservesOffset() started.
+✔ Test dateIsRequiredAndOptionalTimePreservesOffset() passed after 0.007 seconds.
+◇ Test missingAndRepeatedHoursDoNotMoveSilently() started.
+✔ Test missingAndRepeatedHoursDoNotMoveSilently() passed after 0.004 seconds.
+◇ Test invalidCalendarAndUnicodeScalarLimits() started.
+✔ Test invalidCalendarAndUnicodeScalarLimits() passed after 0.001 seconds.
+✔ Suite MeetingDraftTests passed after 0.013 seconds.
+◇ Suite MeetingRepositoryTests started.
+◇ Test retryPreservesPreviousSnapshotAndClearsError() started.
+✔ Test retryPreservesPreviousSnapshotAndClearsError() passed after 0.002 seconds.
+◇ Test overlappingLoadsCannotReplaceNewerSnapshot() started.
+✔ Test overlappingLoadsCannotReplaceNewerSnapshot() passed after 0.012 seconds.
+◇ Test cancellationEndsLoadingWithoutError() started.
+✔ Test cancellationEndsLoadingWithoutError() passed after 0.012 seconds.
+✔ Suite MeetingRepositoryTests passed after 0.027 seconds.
+◇ Suite MeetingSettingsTests started.
+◇ Test textOnlyEditDoesNotReinterpretAmbiguousTimeAndClearIsNull() started.
+✔ Test textOnlyEditDoesNotReinterpretAmbiguousTimeAndClearIsNull() passed after 0.001 seconds.
+◇ Test clearingTimePreservesCivilDayAndDateOnlyDraftRestores() started.
+✔ Test clearingTimePreservesCivilDayAndDateOnlyDraftRestores() passed after 0.002 seconds.
+◇ Test conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() started.
+✔ Test conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() passed after 0.001 seconds.
+◇ Test uncertainSaveFreezesRequestAndRetryKeepsKeyAndBody() started.
+✔ Test uncertainSaveFreezesRequestAndRetryKeepsKeyAndBody() passed after 0.001 seconds.
+◇ Test organizerPermissionFailureDoesNotRevokeFeed() started.
+✔ Test organizerPermissionFailureDoesNotRevokeFeed() passed after 0.002 seconds.
+◇ Test lateSettingsResponseCannotRestoreRevokedMeeting() started.
+✔ Test lateSettingsResponseCannotRestoreRevokedMeeting() passed after 0.012 seconds.
+✔ Suite MeetingSettingsTests passed after 0.021 seconds.
+◇ Suite MemoriesPreloadTests started.
+◇ Test loadsThreePagesAndPreparesEveryPhotoBeforeOfflineReuse() started.
+2026-11-04 11:03:01.276267+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.276404+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.277085+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.277172+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.277695+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.277771+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.278263+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.278893+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.279812+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.279910+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.280986+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.281083+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.281732+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.281821+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.282432+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.282537+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.283179+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.283276+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.283919+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.284027+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.284699+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.284779+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.285313+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.285385+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.285879+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.285948+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.286489+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.286555+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.287172+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.287273+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.287890+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.288008+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.288638+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.288705+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.289201+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.289267+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.289755+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.289815+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.290305+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.290375+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.290832+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.290897+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.291343+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.291409+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.291874+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.291938+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.292416+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.292485+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.292925+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.292986+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.293430+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.293497+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.293951+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.294013+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.294457+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.294519+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.294972+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.295047+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.295839+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.295975+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.296697+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.296763+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.297290+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.297358+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.297959+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.298036+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.298499+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.298567+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.299037+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.299099+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.299559+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.299624+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.300074+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.300135+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.300580+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.300637+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.301107+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.301172+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.301630+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.301700+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.302156+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.302219+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.302804+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.302871+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.303585+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.303702+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.304328+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.304391+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.304886+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.304948+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.305414+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.305536+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.306051+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.306126+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.306584+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.306651+0300 Somewhere[7652:16834940] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.307102+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.307163+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.307810+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.307895+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.308396+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.308473+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.308963+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.309033+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.309531+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.309599+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.310077+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.310139+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.310643+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.310750+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.311302+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.311369+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.311857+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.311939+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.312689+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.312781+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.313361+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.313427+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.313888+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.313962+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.314431+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.314493+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.314955+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.315019+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.315492+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.315552+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.316013+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.316126+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.316683+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.316748+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.317220+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.317290+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.317738+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.317797+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.318207+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.318264+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.318693+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.318763+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.319307+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.319383+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.320031+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.320099+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.320776+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.320865+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.321459+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.321533+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.322022+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.322084+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.322550+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.322607+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.323096+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.323158+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.323682+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.323758+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.324185+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.324243+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.324715+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.324780+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.325288+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.325349+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.325811+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.325870+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.326324+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.326387+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.326849+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.326908+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.327375+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.327437+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.327894+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.327955+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.328419+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.328479+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.329237+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.329320+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.329855+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.329920+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.330391+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.330457+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.330906+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.330965+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.331446+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.331506+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.331950+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.332022+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.332468+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.332536+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.333015+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.333077+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.333531+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.333595+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.334082+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.334142+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.334618+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.334683+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.335164+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.335231+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.335685+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.335744+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.336175+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.336232+0300 Somewhere[7652:16834970] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.336696+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.336758+0300 Somewhere[7652:16834947] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.337496+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.337584+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.338178+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+2026-11-04 11:03:01.338244+0300 Somewhere[7652:16834949] [] CVPixelBufferCreate returned err -6680. width 3, height 2, pixel format RGBA, options [ExtendedPixelsRight = 0, ExtendedPixelsBottom = 0, BytesPerRowAlignment = 64]
+✔ Test loadsThreePagesAndPreparesEveryPhotoBeforeOfflineReuse() passed after 0.077 seconds.
+◇ Test repeatedCursorStopsAndPageFailureKeepsEarlierPhotosRetryable() started.
+✔ Test repeatedCursorStopsAndPageFailureKeepsEarlierPhotosRetryable() passed after 0.001 seconds.
+✔ Suite MemoriesPreloadTests passed after 0.079 seconds.
+◇ Suite PaginationTests started.
+◇ Test moreFailureKeepsItemsAndRetryMergesWithoutDuplicates() started.
+✔ Test moreFailureKeepsItemsAndRetryMergesWithoutDuplicates() passed after 0.002 seconds.
+◇ Test refreshedListRejectsLatePage() started.
+✔ Test refreshedListRejectsLatePage() passed after 0.012 seconds.
+✔ Suite PaginationTests passed after 0.014 seconds.
+◇ Suite PlacePollTests started.
+◇ Test failedVotePreservesAnswerAndExactRetry() started.
+✔ Test failedVotePreservesAnswerAndExactRetry() passed after 0.006 seconds.
+◇ Test conflictReadsCurrentAndClosedPollRejectsVote() started.
+✔ Test conflictReadsCurrentAndClosedPollRejectsVote() passed after 0.004 seconds.
+◇ Test lostMembershipRejectsLateReadAndFailureKeepsCard() started.
+✔ Test lostMembershipRejectsLateReadAndFailureKeepsCard() passed after 0.013 seconds.
+◇ Test createRequestAndDeadlineStates() started.
+✔ Test createRequestAndDeadlineStates() passed after 0.001 seconds.
+◇ Test explanationIsPrivateOptionalAndPreservedOnRetry() started.
+✔ Test explanationIsPrivateOptionalAndPreservedOnRetry() passed after 0.004 seconds.
+✔ Suite PlacePollTests passed after 0.032 seconds.
+◇ Suite PreparationTaskTests started.
+◇ Test unconfirmedAcceptanceRetainsOfferedStateAndExactRetry() started.
+✔ Test unconfirmedAcceptanceRetainsOfferedStateAndExactRetry() passed after 0.006 seconds.
+◇ Test conflictLoadsCurrentTaskAndPreventsAnotherAcceptance() started.
+✔ Test conflictLoadsCurrentTaskAndPreventsAnotherAcceptance() passed after 0.004 seconds.
+◇ Test readFailureKeepsCardAndRevocationRejectsLateMutation() started.
+✔ Test readFailureKeepsCardAndRevocationRejectsLateMutation() passed after 0.014 seconds.
+◇ Test creationRequiresValidDraftAndEncodesGeneralRecipientExplicitly() started.
+✔ Test creationRequiresValidDraftAndEncodesGeneralRecipientExplicitly() passed after 0.002 seconds.
+◇ Test participantsRetryRetainsDraftAndWrongTaskReplyIsNotApplied() started.
+✔ Test participantsRetryRetainsDraftAndWrongTaskReplyIsNotApplied() passed after 0.004 seconds.
+✔ Suite PreparationTaskTests passed after 0.032 seconds.
+◇ Suite "Private Yandex profile data" started.
+◇ Test newPrivateFieldsDecode() started.
+✔ Test newPrivateFieldsDecode() passed after 0.001 seconds.
+◇ Test partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+◇ Test case passing 2 arguments input → "1990-12-23", expected → "23 декабря 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-12-23", expected → "23 декабря" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-00-00", expected → "1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-12-00", expected → "декабрь 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-00-23", expected → "23 число, 1990" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-00-23", expected → "23 число" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-12-00", expected → "декабрь" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-00-00", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "0000-02-29", expected → "29 февраля" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "2023-02-29", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-13-01", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990-01-32", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "1990", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​◇ Test case passing 2 arguments input → "bad", expected → "Не указано" to partialBirthdayNeverInventsMissingComponents(input:expected:) started.
+​✔ Test partialBirthdayNeverInventsMissingComponents(input:expected:) with 14 test cases passed after 0.004 seconds.
+◇ Test missingAndUnknownDataIsExplicit() started.
+✔ Test missingAndUnknownDataIsExplicit() passed after 0.001 seconds.
+✔ Suite "Private Yandex profile data" passed after 0.004 seconds.
+◇ Suite "Reactions and composer" started.
+◇ Test emojiReplacesSelectedTextWithoutSplittingUnicodeOrSending() started.
+✔ Test emojiReplacesSelectedTextWithoutSplittingUnicodeOrSending() passed after 0.001 seconds.
+◇ Test visibleMessagesLoadReactionsWithoutWaitingForFeedPolling() started.
+✔ Test visibleMessagesLoadReactionsWithoutWaitingForFeedPolling() passed after 0.011 seconds.
+◇ Test failedReactionRollsBackAndRetrySendsDesiredState() started.
+✔ Test failedReactionRollsBackAndRetrySendsDesiredState() passed after 0.029 seconds.
+◇ Test staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+◇ Test case passing 1 argument startDuringMutation → false to staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+​◇ Test case passing 1 argument startDuringMutation → true to staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) started.
+​✔ Test staleBatchCannotOverwriteCompletedMutation(startDuringMutation:) with 2 test cases passed after 0.063 seconds.
+✔ Suite "Reactions and composer" passed after 0.105 seconds.
+◇ Suite "Reaction pending state" started.
+◇ Test confirmingAnOptimisticReactionNotifiesPendingObservers() started.
+✔ Test confirmingAnOptimisticReactionNotifiesPendingObservers() passed after 0.018 seconds.
+✔ Suite "Reaction pending state" passed after 0.018 seconds.
+◇ Suite SavedInvitationsOwnerTests started.
+◇ Test paginationDeduplicatesAndRefreshRetainsLoadedPages() started.
+✔ Test paginationDeduplicatesAndRefreshRetainsLoadedPages() passed after 0.008 seconds.
+◇ Test refreshFailureRetainsCardsAndServerResponseRemovesThem() started.
+✔ Test refreshFailureRetainsCardsAndServerResponseRemovesThem() passed after 0.004 seconds.
+◇ Test logoutRejectsLateResponseAndCancellationAllowsRetry() started.
+✔ Test logoutRejectsLateResponseAndCancellationAllowsRetry() passed after 0.026 seconds.
+◇ Test unexpectedAnswerCannotBecomeSavedInvitation() started.
+✔ Test unexpectedAnswerCannotBecomeSavedInvitation() passed after 0.002 seconds.
+✔ Suite SavedInvitationsOwnerTests passed after 0.041 seconds.
+◇ Suite SessionAlbumSourceTests started.
+◇ Test fullSnapshotAndContentUseConfiguredOriginAndFixedLease() started.
+✔ Test fullSnapshotAndContentUseConfiguredOriginAndFixedLease() passed after 0.003 seconds.
+◇ Test forbiddenContentRevokesScope() started.
+✔ Test forbiddenContentRevokesScope() passed after 0.012 seconds.
+◇ Test unauthorizedContentInvalidatesSessionAndScope() started.
+✔ Test unauthorizedContentInvalidatesSessionAndScope() passed after 0.002 seconds.
+◇ Test logoutCancelsDownloadAndRejectsLateResponse() started.
+✔ Test logoutCancelsDownloadAndRejectsLateResponse() passed after 0.006 seconds.
+✔ Suite SessionAlbumSourceTests passed after 0.024 seconds.
+◇ Suite SessionStoreTests started.
+◇ Test restoreVerifiesProfileAndRejectsExpiredCredential() started.
+✔ Test restoreVerifiesProfileAndRejectsExpiredCredential() passed after 0.001 seconds.
+◇ Test keychainFailureDoesNotCreateSession() started.
+✔ Test keychainFailureDoesNotCreateSession() passed after 0.001 seconds.
+◇ Test unauthorizedClearsAllPrivateStateAndCredential() started.
+✔ Test unauthorizedClearsAllPrivateStateAndCredential() passed after 0.002 seconds.
+◇ Test forbiddenReadClearsOnlyAffectedMeetingAndRejectsLateResponse() started.
+✔ Test forbiddenReadClearsOnlyAffectedMeetingAndRejectsLateResponse() passed after 0.015 seconds.
+◇ Test organizerOnlyForbiddenDoesNotRevokeChat() started.
+✔ Test organizerOnlyForbiddenDoesNotRevokeChat() passed after 0.002 seconds.
+◇ Test logoutClearsLocalStateEvenWhenServerFails() started.
+✔ Test logoutClearsLocalStateEvenWhenServerFails() passed after 0.002 seconds.
+◇ Test obsoleteRestoreCannotEraseNewSession() started.
+✔ Test obsoleteRestoreCannotEraseNewSession() passed after 0.011 seconds.
+◇ Test canceledRestoreDoesNotAuthenticateLate() started.
+✔ Test canceledRestoreDoesNotAuthenticateLate() passed after 0.011 seconds.
+✔ Suite SessionStoreTests passed after 0.047 seconds.
+◇ Suite "Feedback privacy and retry" started.
+◇ Test invalidDraftExplainsFailureAndCanBeCorrectedWithoutLosingText() started.
+✔ Test invalidDraftExplainsFailureAndCanBeCorrectedWithoutLosingText() passed after 0.004 seconds.
+◇ Test validationAndRateLimitKeepFieldsWithoutSuccess() started.
+✔ Test validationAndRateLimitKeepFieldsWithoutSuccess() passed after 0.001 seconds.
+◇ Test lostResponseRetainsDraftAndIdempotencyWithoutPrivateDiagnostics() started.
+✔ Test lostResponseRetainsDraftAndIdempotencyWithoutPrivateDiagnostics() passed after 0.001 seconds.
+◇ Test cancelledFeedbackCannotPresentDelayedReceipt() started.
+✔ Test cancelledFeedbackCannotPresentDelayedReceipt() passed after 0.011 seconds.
+✔ Suite "Feedback privacy and retry" passed after 0.018 seconds.
+◇ Suite URLSessionTransportTests started.
+◇ Test albumStreamWritesResponseBytesUnchanged() started.
+✔ Test albumStreamWritesResponseBytesUnchanged() passed after 0.036 seconds.
+◇ Test albumStreamRejectsErrorMimeAndIncorrectActualSize() started.
+✔ Test albumStreamRejectsErrorMimeAndIncorrectActualSize() passed after 0.004 seconds.
+◇ Test albumStreamCancellationStopsUnderlyingRequest() started.
+✔ Test albumStreamCancellationStopsUnderlyingRequest() passed after 0.014 seconds.
+◇ Test adapterReturnsHTTPDataAndCancelsUnderlyingTask() started.
+✔ Test adapterReturnsHTTPDataAndCancelsUnderlyingTask() passed after 0.022 seconds.
+◇ Test redirectDelegateRejectsDestination() started.
+✔ Test redirectDelegateRejectsDestination() passed after 0.001 seconds.
+✔ Suite URLSessionTransportTests passed after 0.079 seconds.
+◇ Suite YandexSignInTests started.
+◇ Test proofMatchesPKCEVector() started.
+✔ Test proofMatchesPKCEVector() passed after 0.001 seconds.
+◇ Test coldCallbackRestoresInvitationAndCannotReplay() started.
+✔ Test coldCallbackRestoresInvitationAndCannotReplay() passed after 0.011 seconds.
+◇ Test cancellationClearsAttemptWithoutExchange() started.
+✔ Test cancellationClearsAttemptWithoutExchange() passed after 0.010 seconds.
+◇ Test issuedSessionSurvivesMeNetworkFailure() started.
+✔ Test issuedSessionSurvivesMeNetworkFailure() passed after 0.012 seconds.
+✔ Suite YandexSignInTests passed after 0.035 seconds.
+✔ Test run with 217 tests in 53 suites passed after 4.555 seconds.
+2026-11-04 11:03:01.809 xcodebuild[7306:16833173] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:03:01.810 xcodebuild[7306:16833173] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:03:01.811 xcodebuild[7306:16833173] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:03:02.091 xcodebuild[7306:16833173] [MT] IDETestOperationsObserverDebug: 12.823 elapsed -- Testing started completed.
+2026-11-04 11:03:02.091 xcodebuild[7306:16833173] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 11:03:02.091 xcodebuild[7306:16833173] [MT] IDETestOperationsObserverDebug: 12.823 sec, +12.823 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/TestResults-20261104T080235-7016.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

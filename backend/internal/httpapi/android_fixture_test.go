@@ -80,7 +80,7 @@ func TestAndroidFixture(t *testing.T) {
 	server.Config.Handler = pollFaults.handler(coverFaults.handler(taskFaults.handler(placeFaults.handler(savedFaults.handler(persistence.handler(feed.handler(faults.handler(api))))))))
 	server.StartTLS()
 	defer server.Close()
-	config := iosFixtureConfig{Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
+	config := iosFixtureConfig{AvatarCheck: os.Getenv("SOMEWHERE_NATIVE_AVATAR_CHECK"), AvatarURL: nativeAvatarFixtureURL(), Origin: origin, Certificate: base64.StdEncoding.EncodeToString(server.Certificate().Raw), Cases: map[string]iosFixtureCredential{}}
 	config.Cases["design"] = seedNativeDesignFixture(t, store, identities, service, app)
 	config.Cases["vibe-revocation-owner"] = seedNativeVibeRevocationFixture(t, store, service, app)
 	config.Cases["album-preload-owner"] = seedNativeAlbumPreloadFixture(t, store, service, app)

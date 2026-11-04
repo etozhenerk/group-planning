@@ -33,6 +33,10 @@ final class ResponseGate {
         if FileManager.default.fileExists(atPath: marker.path) {
             try FileManager.default.removeItem(at: marker)
         }
+        let commit = directory.appendingPathComponent("commit")
+        if FileManager.default.fileExists(atPath: commit.path) {
+            try FileManager.default.removeItem(at: commit)
+        }
         let rule = Rule(
             path: path, queryName: queryName, mode: mode, method: method, pathSuffix: nil)
         try JSONEncoder().encode(rule).write(
@@ -53,6 +57,10 @@ final class ResponseGate {
         if FileManager.default.fileExists(atPath: file.path) {
             try FileManager.default.removeItem(at: file)
         }
+    }
+
+    func allowMessageCommit() throws {
+        try Data().write(to: directory.appendingPathComponent("commit"), options: .atomic)
     }
 
     func failMediaContent(pathPrefix: String) throws {

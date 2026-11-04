@@ -31,6 +31,26 @@ class FeedRowTests {
         assertEquals(3, after.map { it.key }.toSet().size)
     }
 
+    @Test fun acknowledgementKeepsTheCurrentProfilePortraitAndOtherAuthors() {
+        val h = FeedHarness(StandardTestDispatcher())
+        val profile = Fixtures.user.copy(avatarUrl = "https://avatars.yandex.net/portrait")
+        val intent = PendingMessage(UUID.randomUUID(), "Сообщение", Fixtures.expiry)
+        val messages = MessageState(queue = listOf(intent), ready = true)
+        val before = feedRows(FeedState(), messages, profile).single()
+        val accepted = h.entry(
+            1,
+            intent.key,
+            intent.text,
+        ).copy(actor = profile.copy(avatarUrl = null))
+        val another = h.entry(2).copy(actor = Fixtures.user.copy(id = UUID.randomUUID()))
+        val after = feedRows(FeedState(entries = listOf(accepted, another)), messages, profile)
+        assertEquals(before.key, after[0].key)
+        assertEquals(profile, after[0].author)
+        assertEquals(another.actor, after[1].author)
+        val reconciled = feedRows(FeedState(entries = listOf(accepted)), MessageState(), profile)
+        assertEquals(profile, reconciled.single().author)
+    }
+
     @Test fun attachmentsWithSameRequestIdDoNotHideTextOnlyIntent() {
         val h = FeedHarness(StandardTestDispatcher())
         val intent = PendingMessage(UUID.randomUUID(), "Текст", Fixtures.expiry)

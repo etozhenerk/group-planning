@@ -82,6 +82,7 @@ internal object RuntimeFactory {
                     throw IOException("Offline authentication fixture")
                 }
                 QaResponseGate.before(chain.request(), scenario)
+                QaAvatarAckGate.before(chain.request())
                 QaAlbumDownloadProbe.before(chain.request())
                 val response = chain.proceed(
                     chain.request().newBuilder().header(
@@ -90,6 +91,7 @@ internal object RuntimeFactory {
                     ).build(),
                 )
                 try {
+                    QaAvatarAckGate.after(chain.request())
                     QaPhotoBatchProbe.after(chain.request())
                     if (scenario == "list-error") {
                         QaResponseGate.observeListFailure(chain.request(), response.code)

@@ -1,0 +1,407 @@
+swift-driver version: 1.168.6 iOS toolchain OK: Xcode 27.1, Swift 6.4, swift-format main.
+Testing sequentially on simulator 31262733-50DC-46A5-938E-4C462D70F109
+Monitoring boot status for iPhone 18 Pro (31262733-50DC-46A5-938E-4C462D70F109).
+Device already booted, nothing to do.
+
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_BEFORE=1
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_ACTIVE=0
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual build-for-testing
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (10 targets)
+    Target 'SomewhereUITests' in project 'Somewhere'
+        ➜ Explicit dependency on target 'SomewhereUITestHost' in project 'Somewhere'
+    Target 'SomewhereUITestHost' in project 'Somewhere'
+        ➜ Explicit dependency on target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+    Target 'SwiftCentrifuge-product' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftCentrifuge' in project 'SwiftCentrifuge'
+        ➜ Explicit dependency on target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf-product' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+    Target 'YandexLoginSDK-product' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'YandexLoginSDK' in project 'YandexLoginSDK'
+        ➜ Explicit dependency on target 'CertificateTransparency' in project 'YandexLoginSDK'
+    Target 'CertificateTransparency' in project 'YandexLoginSDK' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -x c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 0d126576b54bcc54ff1f805e905b3afb
+Build description path: /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/XCBuildData/0d126576b54bcc54ff1f805e905b3afb.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Somewhere.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKStatCaches.noindex/iphonesimulator27.1-24A94232-35d3147121984ba087c28d913653d626.sdkstatcache
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf-b.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/Config/UIInfo.plist -producttype com.apple.product-type.application -genpkginfo /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/LaunchScreen-SBPartialInfo.plist -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app (in target 'SomewhereUITestHost' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SomewhereUITestHost.debug.dylib --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITestHost.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITestHost.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-infoPlistUtility /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/empty-SomewhereUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest (in target 'SomewhereUITests' from project 'Somewhere')
+    cd /Users/misha/Documents/Codex/projects/group-planning/frontend/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SomewhereUITests --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/PlugIns --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/SystemExtensions --scan-folder /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Products/Debug-iphonesimulator/SomewhereUITests-Runner.app/PlugIns/SomewhereUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/Somewhere.build/Debug-iphonesimulator/SomewhereUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UITestDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/UITestDerivedData -resultBundlePath .build/UIResults-20261104T080133-4270.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/AvatarAcknowledgementUITests/testProfileWithoutPhotoKeepsInitial"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+
+Writing result bundle at path:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261104T080133-4270.xcresult
+
+2026-11-04 11:01:36.068 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:01:37.568253+0300 SomewhereUITests-Runner[5192:16827490] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-04 11:01:40.615.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-04 11:01:40.615.
+Test Suite 'AvatarAcknowledgementUITests' started at 2026-11-04 11:01:40.615.
+Test Case '-[SomewhereUITests.AvatarAcknowledgementUITests testProfileWithoutPhotoKeepsInitial]' started.
+    t =     0.00s Start Test at 2026-11-04 11:01:40.618
+    t =     0.03s Set Up
+    t =     0.05s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+2026-11-04 11:01:40.729 xcodebuild[5183:16827304] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-04 11:01:40.729 xcodebuild[5183:16827304] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-04 11:01:40.766 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.73s         Setting up automation session
+objc[5192]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1069d4398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106b0c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.15s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.49s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.53s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.53s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.66s Checking existence of `"home-tab-calendar" Button`
+    t =     5.71s Find the "home-tab-calendar" Button
+    t =     5.75s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.77s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.90s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.96s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.99s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.00s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.03s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.06s     Synthesize event
+    t =     6.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.81s Waiting 10.0s for "meeting-add" Button to exist
+    t =     7.85s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-add" Button`
+    t =     7.85s         Checking existence of `"meeting-add" Button`
+    t =     8.97s Tap "message-input" TextView
+    t =     8.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.97s     Find the "message-input" TextView
+    t =     9.00s     Check for interrupting elements affecting "message-input" TextView
+    t =     9.02s     Synthesize event
+    t =     9.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.60s Type 'Аватар fallback B5...' into "message-input" TextView
+    t =     9.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.97s     Find the "message-input" TextView
+    t =    10.04s     Check for interrupting elements affecting "message-input" TextView
+    t =    10.10s     Synthesize event
+    t =    11.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.64s Tap "feed-timeline" ScrollView[0.98, 0.05]
+    t =    11.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.64s     Find the "feed-timeline" ScrollView
+    t =    11.77s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    11.81s     Synthesize event
+    t =    11.82s         Find the "feed-timeline" ScrollView
+    t =    11.87s         Find the "feed-timeline" ScrollView
+    t =    11.92s         Find the "feed-timeline" ScrollView
+    t =    12.28s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.11s Tap "message-send" Button
+    t =    13.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.12s     Find the "message-send" Button
+    t =    13.16s     Check for interrupting elements affecting "message-send" Button
+    t =    13.28s     Synthesize event
+    t =    13.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.84s Waiting 5.0s for StaticText (First Match) to exist
+    t =    14.87s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    14.88s         Checking existence of `StaticText (First Match)`
+    t =    14.94s Checking existence of `Any (First Match)`
+    t =    15.01s Find the Any (First Match)
+    t =    15.05s Checking existence of `"chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other`
+    t =    16.13s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    16.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-ready.png
+    t =    17.49s Added attachment named 'avatar-fallback-before'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-before.png
+    t =    17.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.62s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-before.json
+    t =    17.64s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    17.67s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.78s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-0.png
+    t =    17.83s Find the StaticText (First Match)
+    t =    17.91s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    17.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-1.png
+    t =    18.10s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    18.18s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    18.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-2.png
+    t =    18.37s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    18.45s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    18.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-3.png
+    t =    18.64s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    18.71s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    18.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-4.png
+    t =    18.90s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    18.98s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    19.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-5.png
+    t =    19.17s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    19.24s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    19.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-6.png
+    t =    19.45s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    19.54s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    19.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-7.png
+    t =    19.75s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    19.83s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    19.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-8.png
+    t =    20.04s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    20.12s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    20.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-9.png
+    t =    20.34s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    20.43s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    20.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-10.png
+    t =    20.64s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    20.85s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    20.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-11.png
+    t =    21.10s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    21.29s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    21.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-12.png
+    t =    21.52s Find the "chat-message-30fbee8e-dcef-478f-bcfc-df1282ebb24a" StaticText
+    t =    21.56s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    21.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-0.png
+    t =    21.79s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    21.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-1.png
+    t =    22.02s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    22.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-2.png
+    t =    22.28s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    22.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-3.png
+    t =    22.52s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    22.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.67s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-4.png
+    t =    22.75s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    22.78s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-5.png
+    t =    22.99s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    23.02s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-6.png
+    t =    23.23s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    23.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-tail-7.png
+    t =    24.71s Added attachment named 'avatar-fallback-accepted'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-accepted.png
+    t =    24.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.79s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-accepted.json
+    t =    24.87s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    24.90s Press "feed-timeline" ScrollView[0.45, 0.50] for 0.1 seconds, then drag to "feed-timeline" ScrollView[0.45, 0.58] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    24.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.90s     Find the "feed-timeline" ScrollView
+    t =    24.93s     Check for interrupting elements affecting "feed-timeline" ScrollView
+    t =    24.96s     Synthesize event
+    t =    24.96s         Find the "feed-timeline" ScrollView
+    t =    25.00s         Find the "feed-timeline" ScrollView
+    t =    25.04s         Find the "feed-timeline" ScrollView
+    t =    25.07s         Find the "feed-timeline" ScrollView
+    t =    25.14s         Find the "feed-timeline" ScrollView
+    t =    25.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.03s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.06s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-scroll-0.png
+    t =    26.26s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-scroll-1.png
+    t =    26.46s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-scroll-2.png
+    t =    26.65s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-scroll-3.png
+    t =    26.85s Find the "chat-row-0b3f996a-2524-471b-a691-a535250962f8" Other
+    t =    26.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_AVATAR_FRAME=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback-scroll-4.png
+    t =    28.14s Added attachment named 'avatar-fallback-scrolled'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-scrolled.png
+    t =    28.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.24s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-fallback-scrolled.json
+SOMEWHERE_AVATAR_TRACE=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/C44C946A-0E08-4F32-9798-17EE07FA99B4/tmp/somewhere-design-verification/avatar-ack/fallback.json
+    t =    28.30s Terminate dev.groupplanning.ios.uitesthost:5209
+2026-11-04 11:02:08.923 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:08.924 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:08.924 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    29.36s Tear Down
+Test Case '-[SomewhereUITests.AvatarAcknowledgementUITests testProfileWithoutPhotoKeepsInitial]' passed (29.435 seconds).
+Test Suite 'AvatarAcknowledgementUITests' passed at 2026-11-04 11:02:10.053.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.435 (29.438) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-04 11:02:10.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.435 (29.439) seconds
+Test Suite 'Selected tests' passed at 2026-11-04 11:02:10.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.435 (29.439) seconds
+2026-11-04 11:02:10.094 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:10.095 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:10.095 xcodebuild[5183:16827304] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-04 11:02:10.366 xcodebuild[5183:16827304] [MT] IDETestOperationsObserverDebug: 34.351 elapsed -- Testing started completed.
+2026-11-04 11:02:10.366 xcodebuild[5183:16827304] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 11:02:10.366 xcodebuild[5183:16827304] [MT] IDETestOperationsObserverDebug: 34.351 sec, +34.351 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/misha/Documents/Codex/projects/group-planning/frontend/ios/.build/UIResults-20261104T080133-4270.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
+QA_KEYBOARD_AUTOMATIC_MINIMIZATION_RESTORED=1

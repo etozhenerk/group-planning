@@ -28,7 +28,8 @@ internal fun feedRows(
         } else {
             entry.id.toString()
         }
-        FeedRow(key, entry.actor, entry = entry)
+        val author = if (entry.actor.id == profile.id) profile else entry.actor
+        FeedRow(key, author, entry = entry)
     }
     val keys = confirmed.map { it.key }.toSet()
     val pending = messages.queue.map { FeedRow("${profile.id}:${it.key}", profile, pending = it) }

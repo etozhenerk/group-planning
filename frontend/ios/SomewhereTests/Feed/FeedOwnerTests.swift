@@ -117,6 +117,19 @@ struct FeedOwnerTests {
         await context.owner.refresh()
         #expect(context.owner.pending.isEmpty && context.owner.entries.count == 2)
     }
+    @Test func lostReplyReconcilesBeforeExposingAnUncertainStatus() async throws {
+        let context = try await FeedTestContext()
+        context.owner.loaded = true
+        context.owner.draft = "Уже принято"
+        let key = try #require(await context.owner.enqueue())
+        let entry = try context.entry("1", key: key, text: "Уже принято")
+        await context.harness.transport.enqueue(context.path + "/messages", status: 503)
+        try await context.enqueue([entry])
+        await context.owner.transmit(key)
+        #expect(context.owner.pending.isEmpty)
+        #expect(context.owner.entries == [entry])
+        #expect(await context.harness.transport.count(context.path + "/messages") == 1)
+    }
     @Test func backgroundCancelsLateReadButPreservesDraftAndUncertainIntent() async throws {
         let context = try await FeedTestContext()
         context.owner.loaded = true

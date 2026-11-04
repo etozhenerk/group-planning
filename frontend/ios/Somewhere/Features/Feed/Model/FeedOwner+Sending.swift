@@ -103,6 +103,12 @@ extension FeedOwner {
             let status: OutgoingMessage.Status =
                 [400, 409, 422].contains(
                     (error as? ClientFailure)?.statusCode ?? 0) ? .rejected : .uncertain
+            if status == .uncertain {
+                await refresh()
+                guard current, generation == version,
+                    outgoing.contains(where: { $0.id == key })
+                else { return }
+            }
             setStatus(status, key: key)
             if status == .uncertain { scheduleRetry() }
             if let lease = localLease {
