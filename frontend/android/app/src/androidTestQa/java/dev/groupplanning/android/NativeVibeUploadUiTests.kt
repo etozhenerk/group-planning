@@ -1,5 +1,7 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -8,6 +10,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.util.regex.Pattern
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -25,12 +28,23 @@ class NativeVibeUploadUiTests {
 
     @Before fun configure() = fixture.configure()
 
+    @After fun releaseGate() = QaResponseGate.releaseMedia()
+
     @Test fun confirmedVibePhotoClosesPreviewAndAppearsOnce() {
+        verifyUpload(delayed = false)
+    }
+
+    @Test fun delayedConfirmationKeepsVibePreviewUntilReleased() {
+        verifyUpload(delayed = true)
+    }
+
+    private fun verifyUpload(delayed: Boolean) {
         val id = "deb00000-0000-4000-8000-000000000004"
         val api = ChatReadLiveApi(fixture.context)
         val before = photoIds(api, id)
         assertEquals(3, before.size)
         val photo = createQaTestPhoto(fixture.context, 0)
+        if (delayed) QaResponseGate.holdPublication("/api/v1/meetings/$id/media/")
         try {
             fixture.launch("design").use {
                 fixture.waitTag("meetings-list")
@@ -63,6 +77,14 @@ class NativeVibeUploadUiTests {
                 fixture.waitTag("upload-sheet")
                 fixture.screenshot("native-vibe-photo-preview")
                 compose.onNodeWithText("Отправить").performScrollTo().performClick()
+                if (delayed) {
+                    compose.waitUntil(15_000) { QaResponseGate.mediaEntered }
+                    fixture.waitTag("upload-sheet")
+                    compose.onNodeWithContentDescription("Отправить").assertIsNotEnabled()
+                    assertEquals(4, photoIds(api, id).size)
+                    fixture.screenshot("native-vibe-publish-held-after-commit")
+                    QaResponseGate.releaseMedia()
+                }
                 fixture.waitAbsent("upload-sheet")
                 fixture.waitText("1 / 4")
                 val after = photoIds(api, id)

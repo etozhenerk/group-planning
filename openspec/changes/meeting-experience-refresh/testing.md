@@ -784,3 +784,14 @@ Scope `native-vibe-upload` дополняет TC-MEDIA-NATIVE-SUCCESS-DISMISS н
 автоматическое закрытие; серверный набор3→4 без дубликата. Удержания ответа
 и ошибки чат-пакета не повторяются и не объявляются новым memory fault-тестом.
 [Результат](qa/2026-11-04-native-vibe-upload/result.md).
+
+### Задержанное успешное подтверждение PDF и вайба · 04.11.2026
+
+Только недостающие шаги TC-MEDIA-NATIVE-SUCCESS-DISMISS, scopes
+`native-pdf-delayed` и `native-vibe-delayed`: настоящий publish уже committed,
+успешный HTTP-ответ удержан QA transport; preview остаётся busy/disabled.
+После release он закрывается без повторного отправления. PDF проверяется
+вторым аккаунтом по исходным байтам/SHA, memory — по набору ID3→4.
+[PDF](qa/2026-11-04-native-pdf-delayed/result.md),
+[вайб](qa/2026-11-04-native-vibe-delayed/result.md).
+Nominal, partial batch и остальные пройденные шаги не повторяются.

@@ -48,6 +48,8 @@ internal object QaResponseGate {
 
     @Volatile private var mediaPath: String? = null
 
+    @Volatile private var publicationPrefix: String? = null
+
     @Volatile var mediaEntered = false
         private set
 
@@ -62,6 +64,14 @@ internal object QaResponseGate {
         media?.countDown()
         media = null
         mediaPath = null
+        publicationPrefix = null
+    }
+
+    fun holdPublication(prefix: String) {
+        releaseMedia()
+        mediaEntered = false
+        publicationPrefix = prefix
+        media = CountDownLatch(1)
     }
 
     fun holdHistory() {
@@ -109,9 +119,12 @@ internal object QaResponseGate {
     }
 
     fun after(request: Request) {
+        val matchingMedia = request.method == "GET" && request.url.encodedPath == mediaPath
+        val matchingPublication = request.method == "POST" &&
+            request.url.encodedPath.endsWith("/publish") &&
+            publicationPrefix?.let { request.url.encodedPath.startsWith(it) } == true
         if (request.url.host == "127.0.0.1" &&
-            request.method == "GET" &&
-            request.url.encodedPath == mediaPath
+            (matchingMedia || matchingPublication)
         ) {
             val gate = media
             if (gate != null) {

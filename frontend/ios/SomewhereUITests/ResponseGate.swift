@@ -52,6 +52,14 @@ final class ResponseGate {
             to: directory.appendingPathComponent("rule.json"), options: .atomic)
     }
 
+    func holdPublishedMediaResponse(pathPrefix: String) throws {
+        let rule = Rule(
+            path: pathPrefix, queryName: nil, mode: "hold", method: "POST",
+            pathSuffix: "/publish")
+        try JSONEncoder().encode(rule).write(
+            to: directory.appendingPathComponent("rule.json"), options: .atomic)
+    }
+
     func release() throws {
         let file = directory.appendingPathComponent("rule.json")
         if FileManager.default.fileExists(atPath: file.path) {

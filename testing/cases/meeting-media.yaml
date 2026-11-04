@@ -572,12 +572,28 @@
           selector: testConfirmedVibePhotoClosesPreviewAndAppearsOnce
           runner: ios-ui
           level: e2e
+        - path: frontend/ios/SomewhereUITests/NativeVibeUploadUITests.swift
+          selector: testDelayedConfirmationKeepsVibePreviewUntilReleased
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/NativePDFDelayedUITests.swift
+          selector: testPDFPreviewWaitsForConfirmedPublishResponse
+          runner: ios-ui
+          level: e2e
     android:
       status: partial
       health: unknown
       tests:
         - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativeVibeUploadUiTests.kt
           selector: confirmedVibePhotoClosesPreviewAndAppearsOnce
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativeVibeUploadUiTests.kt
+          selector: delayedConfirmationKeepsVibePreviewUntilReleased
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativePDFDelayedUiTests.kt
+          selector: pdfPreviewWaitsForConfirmedPublishResponse
           runner: android-ui
           level: e2e
 - id: TC-MEDIA-IOS-PDF-SEND
