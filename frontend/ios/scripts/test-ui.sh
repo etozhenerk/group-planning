@@ -76,6 +76,11 @@ case "${1:-all}" in
     places) somewhere_filter=-only-testing:SomewhereUITests/PlacePollUITests; somewhere_scope=places ;;
     polls) somewhere_filter=-only-testing:SomewhereUITests/DatePollUITests; somewhere_scope=polls ;;
     calendar) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests; somewhere_scope=calendar ;;
+    native-vibe-upload) somewhere_filter=-only-testing:SomewhereUITests/NativeVibeUploadUITests; somewhere_scope=accessibility ;;
+    native-picker-photo-more) somewhere_filter=-only-testing:SomewhereUITests/NativePickerSelectionUITests/testAddingMorePhotosThenCancelKeepsTheSelectedPreview; somewhere_scope=accessibility ;;
+    native-picker-selection) somewhere_filter=-only-testing:SomewhereUITests/NativePickerSelectionUITests; somewhere_scope=accessibility ;;
+    native-empty-invite) somewhere_filter=-only-testing:SomewhereUITests/NativeEmptyInviteUITests; somewhere_scope=calendar ;;
+    album-offline-sweep) somewhere_filter=-only-testing:SomewhereUITests/AlbumOfflineSweepUITests; somewhere_scope=calendar ;;
     album-preload) somewhere_filter=-only-testing:SomewhereUITests/AlbumPreloadUITests; somewhere_scope=calendar ;;
     album-save-many) somewhere_filter=-only-testing:SomewhereUITests/AlbumPreloadUITests/testSaveAll103PhotosThroughPhotoKit; somewhere_scope=calendar ;;
     account-survivor) somewhere_filter=-only-testing:SomewhereUITests/AccountDeletionUITests/testOtherParticipantKeepsMeetingAndAnonymizedHistoryAfterOwnerDeletion; somewhere_scope=calendar ;;
@@ -84,7 +89,7 @@ case "${1:-all}" in
     touch-targets) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testPeriodAndCancelExposeTheirWholeVisibleTouchTargets; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [chat-keyboard-return|album-preload-failure|all|qa-selectors|qa-followup|qa-baseline|qa-isolation|creation-field-hit|creation-field-hit-more|creation-large-visual|navigation-type|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [native-vibe-upload|native-picker-photo-more|native-picker-selection|native-empty-invite|album-offline-sweep|chat-keyboard-return|album-preload-failure|all|qa-selectors|qa-followup|qa-baseline|qa-isolation|creation-field-hit|creation-field-hit-more|creation-large-visual|navigation-type|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -132,7 +137,7 @@ fi
 somewhere_prepare_software_keyboard
 
 case "${1:-all}" in
-    all|native-usability|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|sheet-media|media|media-native|covers|covers-large)
+    all|native-vibe-upload|native-picker-photo-more|native-picker-selection|native-usability|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|sheet-media|media|media-native|covers|covers-large)
         somewhere_photo=../../openspec/changes/meeting-experience-refresh/assets/boardgame.png
         printf 'QA_PHOTO_SOURCE=%s\n' "$somewhere_photo"
         shasum -a 256 "$somewhere_photo"
@@ -187,7 +192,7 @@ xcrun simctl install "$somewhere_simulator" .build/UITestDerivedData/Build/Produ
 somewhere_container=$(xcrun simctl get_app_container "$somewhere_simulator" dev.groupplanning.ios.uitesthost data)
 cp "$somewhere_temporary/config.json" "$somewhere_container/tmp/ui-fixture.json"
 chmod 600 "$somewhere_container/tmp/ui-fixture.json"
-if [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "chat-controls" ] || [ "${1:-all}" = "all" ]; then
+if [ "${1:-all}" = "native-picker-selection" ] || [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "chat-controls" ] || [ "${1:-all}" = "all" ]; then
     python3 scripts/seed-ui-document.py "$somewhere_container/Documents"
 fi
 

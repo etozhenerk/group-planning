@@ -1301,13 +1301,21 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativeEmptyInviteUITests.swift
+          selector: testSystemOnlyChatKeepsInviteUntilAnotherParticipantSendsFirstMessage
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativeEmptyInviteUiTests.kt
+          selector: systemOnlyChatKeepsInviteUntilAnotherParticipantSendsFirstMessage
+          runner: android-ui
+          level: e2e
 - id: TC-CHAT-NATIVE-AVATAR-ACK
   title: "Стабильный аватар при подтверждении нативного сообщения: ACK не заставляет нативный аватар
     мигать"

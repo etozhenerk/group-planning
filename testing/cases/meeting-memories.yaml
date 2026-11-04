@@ -718,6 +718,10 @@
           selector: testFailedPhotoKeepsOtherPreparedImagesAndCanRetryBeforeRevocation
           runner: ios-ui
           level: e2e
+        - path: frontend/ios/SomewhereUITests/AlbumOfflineSweepUITests.swift
+          selector: testEveryPreparedPhotoRemainsVisibleAcrossBothOfflineSwipeDirections
+          runner: ios-ui
+          level: e2e
     android:
       status: partial
       health: unknown
@@ -728,6 +732,10 @@
           level: e2e
         - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumPreloadFailureUiTests.kt
           selector: failedPhotoKeepsPreparedNeighboursAndRetriesBeforeRevocation
+          runner: android-ui
+          level: e2e
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumOfflineSweepUiTests.kt
+          selector: everyPreparedPhotoRemainsVisibleAcrossBothOfflineSwipeDirections
           runner: android-ui
           level: e2e
 - id: TC-VIBE-WEB-PRELOAD

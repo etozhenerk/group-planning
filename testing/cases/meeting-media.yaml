@@ -506,13 +506,29 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativePickerSelectionUITests.swift
+          selector: testInitialPickerCancellationsKeepSelectedRange
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/NativePickerSelectionUITests.swift
+          selector: testAddingMoreFilesThenCancelKeepsThePDFAndCaption
+          runner: ios-ui
+          level: e2e
+        - path: frontend/ios/SomewhereUITests/NativePickerSelectionUITests.swift
+          selector: testAddingMorePhotosThenCancelKeepsTheSelectedPreview
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativePickerSelectionUiTests.kt
+          selector: initialPickerCancellationsKeepSelectedRange
+          runner: android-ui
+          level: e2e
 - id: TC-MEDIA-NATIVE-SUCCESS-DISMISS
   title: "Завершение нативной загрузки: Нативная панель закрывается после подтверждённой отправки"
   lifecycle: active
@@ -549,13 +565,21 @@
       настройки, закрыть системные панели и остановить свои fixtures.
   automation:
     ios:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/ios/SomewhereUITests/NativeVibeUploadUITests.swift
+          selector: testConfirmedVibePhotoClosesPreviewAndAppearsOnce
+          runner: ios-ui
+          level: e2e
     android:
-      status: planned
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativeVibeUploadUiTests.kt
+          selector: confirmedVibePhotoClosesPreviewAndAppearsOnce
+          runner: android-ui
+          level: e2e
 - id: TC-MEDIA-IOS-PDF-SEND
   title: "Отправка PDF из системных Файлов iOS: PDF выбран на iPhone и доступен получателю"
   lifecycle: active

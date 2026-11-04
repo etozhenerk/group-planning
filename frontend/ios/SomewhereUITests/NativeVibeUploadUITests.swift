@@ -1,0 +1,47 @@
+import XCTest
+
+@MainActor
+final class NativeVibeUploadUITests: XCTestCase {
+    override func setUpWithError() throws { continueAfterFailure = false }
+
+    func testConfirmedVibePhotoClosesPreviewAndAppearsOnce() async throws {
+        let id = "deb00000-0000-4000-8000-000000000004"
+        let api = try NativeChatCounterpart(actor: "design", meeting: id)
+        let before = try await photoIDs(api, meeting: id)
+        XCTAssertEqual(before.count, 3)
+        let app = ChatSheetTestSupport.launch()
+        app.buttons["period-past"].tap()
+        let album = app.buttons["meeting-memories-" + id]
+        ChatSheetTestSupport.reveal(album, in: app.scrollViews["meetings-list"], app: app)
+        album.tap()
+        XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 10))
+        app.buttons["album-add"].tap()
+        XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
+        let photo = app.images.matching(identifier: "PXGGridLayout-Info").firstMatch
+        XCTAssertTrue(photo.waitForExistence(timeout: 10))
+        photo.tap()
+        let add = app.buttons["Add"]
+        XCTAssertTrue(add.waitForExistence(timeout: 5))
+        add.tap()
+        let preview = app.staticTexts["media-picker-header"]
+        XCTAssertTrue(preview.waitForExistence(timeout: 10))
+        ExperienceScreenshot.save("native-vibe-photo-preview", test: self)
+        app.buttons["media-batch-send"].tap()
+        XCTAssertTrue(preview.waitForNonExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["1 из 4"].waitForExistence(timeout: 10))
+        let after = try await photoIDs(api, meeting: id)
+        XCTAssertEqual(after.count, 4)
+        XCTAssertTrue(before.isSubset(of: after))
+        XCTAssertEqual(after.subtracting(before).count, 1)
+        ExperienceScreenshot.save("native-vibe-photo-confirmed-once", test: self)
+    }
+
+    private func photoIDs(_ api: NativeChatCounterpart, meeting: String) async throws -> Set<String>
+    {
+        let page = try await api.request("meetings/" + meeting + "/memories")
+        let photos = try XCTUnwrap(page["photos"] as? [[String: Any]])
+        let ids = try photos.map { try XCTUnwrap($0["id"] as? String) }
+        XCTAssertEqual(Set(ids).count, ids.count)
+        return Set(ids)
+    }
+}
