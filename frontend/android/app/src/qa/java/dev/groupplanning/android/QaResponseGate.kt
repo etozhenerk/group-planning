@@ -17,6 +17,8 @@ internal object QaResponseGate {
 
     @Volatile var unavailableMediaPrefix: String? = null
 
+    @Volatile var artificialRoundTripMillis = 0L
+
     private val persistenceMessageAttempts = AtomicInteger(-1)
 
     fun allowOnePersistenceMessageAttempt() {
@@ -86,6 +88,9 @@ internal object QaResponseGate {
     }
 
     fun before(request: Request, scenario: String) {
+        if (request.url.host == "127.0.0.1" && artificialRoundTripMillis > 0) {
+            Thread.sleep(artificialRoundTripMillis / 2)
+        }
         if (request.url.host == "127.0.0.1" &&
             request.method == "GET" &&
             request.url.encodedPath.endsWith("/content") &&
@@ -119,6 +124,9 @@ internal object QaResponseGate {
     }
 
     fun after(request: Request) {
+        if (request.url.host == "127.0.0.1" && artificialRoundTripMillis > 0) {
+            Thread.sleep(artificialRoundTripMillis / 2)
+        }
         val matchingMedia = request.method == "GET" && request.url.encodedPath == mediaPath
         val matchingPublication = request.method == "POST" &&
             request.url.encodedPath.endsWith("/publish") &&

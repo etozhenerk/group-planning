@@ -1,0 +1,43 @@
+[WebServer] (node:55890) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55891) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:55915) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+BASELINE chromium tail-start 0 9962..10011
+BASELINE chromium older 0 9912..10011
+BASELINE chromium older 20 8912..9411
+BASELINE chromium older 40 7912..8411
+BASELINE chromium older 60 6912..7411
+  ✘  1 [chromium] › tests/performance/scroll-baseline.perf.ts:7:1 › 10k mixed-height history baseline in both directions (1.1m)
+
+
+  1) [chromium] › tests/performance/scroll-baseline.perf.ts:7:1 › 10k mixed-height history baseline in both directions 
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "5962"
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      112 |     await expect
+      113 |       .poll(() => view.getAttribute('data-window-first'), { timeout: 15_000 })
+    > 114 |       .not.toBe(before);
+          |            ^
+      115 |
+      116 |     if (pages % 20 === 0) {
+      117 |       await snapshot('older');
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/performance/scroll-baseline.perf.ts:114:12
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../.cache/qa/chat-baseline-20261104/chromium/scroll-baseline.perf.ts-10-6577f-baseline-in-both-directions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../.cache/qa/chat-baseline-20261104/chromium/scroll-baseline.perf.ts-10-6577f-baseline-in-both-directions-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/performance/scroll-baseline.perf.ts:7:1 › 10k mixed-height history baseline in both directions 

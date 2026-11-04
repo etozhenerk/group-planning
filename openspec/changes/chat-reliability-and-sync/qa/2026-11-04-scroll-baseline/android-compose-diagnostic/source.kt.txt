@@ -1,0 +1,156 @@
+package dev.groupplanning.android
+
+import android.os.Debug
+import android.os.SystemClock
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
+import androidx.compose.ui.test.swipeUp
+import androidx.test.platform.app.InstrumentationRegistry
+import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
+import java.io.File
+import java.security.MessageDigest
+import java.util.UUID
+import org.json.JSONArray
+import org.json.JSONObject
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
+
+class ChatScrollBaselineUiTests {
+    @get:Rule(order = 0)
+    val appLocale: TestRule = QaAppLocaleRule()
+
+    @get:Rule(order = 1)
+    val compose = createEmptyComposeRule()
+    private val fixture = InvitationUiFixture(compose)
+
+    @Before fun configure() = fixture.configure()
+
+    @After fun cleanup() {
+        QaResponseGate.artificialRoundTripMillis = 0
+    }
+
+    @Test fun tenThousandMixedHeightEntriesFrameMemoryAndScrollBaseline() {
+        val api = ChatReadLiveApi(fixture.context)
+        val created = api.request(
+            "empty",
+            "meetings",
+            "POST",
+            JSONObject().put("title", "Baseline Android 10k")
+                .put("starts_on", "2099-10-24").put("timezone", "Europe/Moscow"),
+        )
+        val id = created.getJSONObject("meeting").getString("id")
+        val digest = MessageDigest.getInstance("SHA-256")
+        val sequences = LongArray(10_000)
+        repeat(10_000) { number ->
+            val text = "$number: ${"Переменная высота строки. ".repeat(1 + number % 32)}"
+            digest.update(text.toByteArray())
+            val key = UUID.randomUUID().toString()
+            val message = api.request(
+                "empty",
+                "meetings/$id/messages",
+                "POST",
+                JSONObject().put("text", text).put("client_request_id", key),
+            )
+            sequences[number] = message.getString("sequence").toLong()
+            if (number % 1000 == 999) {
+                println("CHAT_BASELINE_SEED ${number + 1}")
+                val title = "Подготовка $number: ${"длинная карточка ".repeat(8)}"
+                digest.update(title.toByteArray())
+                api.request(
+                    "empty",
+                    "meetings/$id/preparation-tasks",
+                    "POST",
+                    JSONObject().put("title", title).put("recipient_id", JSONObject.NULL),
+                )
+            }
+        }
+        QaResponseGate.artificialRoundTripMillis = 150
+        fixture.launch("empty").use { activity ->
+            fixture.waitText("Baseline Android 10k")
+            compose.onNodeWithText("Baseline Android 10k").performScrollTo().performClick()
+            fixture.waitTag("feed-timeline")
+            fixture.waitTag("feed-entry-${sequences.last()}")
+            val frames = WindowFrameBaseline()
+            val checkpoints = JSONArray()
+            activity.onActivity { frames.start(it.window) }
+            try {
+                snapshot(checkpoints, "tail-start", sequences.last())
+                traverse(sequences.first(), older = true, checkpoints)
+                traverse(sequences.last(), older = false, checkpoints)
+                fixture.screenshot("chat-baseline-tail-return")
+            } finally {
+                activity.onActivity { frames.stop(it.window) }
+                frames.close()
+                val result = JSONObject().put("messages", 10_000).put("tasks", 10)
+                    .put("templateSha256", digest.digest().joinToString("") { "%02x".format(it) })
+                    .put("artificialHttpRoundTripMs", 150)
+                    .put(
+                        "memoryScope",
+                        "Target plus instrumentation in one process; fixed QA frame buffers",
+                    )
+                    .put("frames", frames.result()).put("checkpoints", checkpoints)
+                val output = checkNotNull(
+                    InstrumentationRegistry.getArguments().getString("additionalTestOutputDir"),
+                )
+                File(output, "chat-scroll-baseline.json").writeText(result.toString(2))
+            }
+        }
+    }
+
+    private fun traverse(sequence: Long, older: Boolean, checkpoints: JSONArray) {
+        val deadline = SystemClock.elapsedRealtime() + 900_000
+        val list = compose.onNodeWithTag("feed-timeline")
+        var gestures = 0
+        do {
+            val rows = compose.onAllNodes(hasTestTag("feed-entry-$sequence"))
+                .fetchSemanticsNodes()
+            if (rows.isNotEmpty() &&
+                runCatching {
+                    compose.onNodeWithTag("feed-entry-$sequence").assertIsDisplayed()
+                }.isSuccess
+            ) {
+                snapshot(checkpoints, if (older) "oldest" else "tail-return", sequence)
+                return
+            }
+            list.performTouchInput {
+                if (older) swipeDown(durationMillis = 120) else swipeUp(durationMillis = 120)
+            }
+            gestures += 1
+            if (gestures % 10 == 0) {
+                checkpoints.put(
+                    JSONObject().put("direction", if (older) "older" else "newer")
+                        .put("gestures", gestures).put("pssKiB", Debug.getPss()),
+                )
+                println(
+                    "CHAT_BASELINE_SCROLL older=$older gestures=$gestures PSS=${Debug.getPss()}",
+                )
+            }
+        } while (SystemClock.elapsedRealtime() < deadline && gestures < 5000)
+        fixture.screenshot("chat-baseline-missing-$sequence")
+        throw AssertionError("Directional gestures did not reach endpoint message $sequence")
+    }
+
+    private fun snapshot(output: JSONArray, direction: String, sequence: Long) {
+        val memory = Debug.MemoryInfo().apply { Debug.getMemoryInfo(this) }
+        output.put(
+            JSONObject().put("direction", direction).put("sequence", sequence.toString())
+                .put("pssKiB", memory.totalPss).put("javaPssKiB", memory.dalvikPss)
+                .put("nativePssKiB", memory.nativePss),
+        )
+        assertEquals(
+            1,
+            compose.onAllNodes(hasTestTag("feed-entry-$sequence")).fetchSemanticsNodes().size,
+        )
+        println("CHAT_BASELINE $direction $sequence PSS=${memory.totalPss}")
+    }
+}

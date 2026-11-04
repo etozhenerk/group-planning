@@ -369,3 +369,23 @@ Coverage partial/unknown сохраняет отдельно непровере�
 После unit/race/backend checks обязателен повтор реального горячего профиля
 на отдельной БД; прежний rc.6 не содержит исправления и не доказывает его PASS.
 Новые независимые и клиентские gates этим дополнением не объявляются пройденными.
+
+
+## Адресный baseline прокрутки · 04.11.2026
+
+Пункт1.6: отдельные opt-in замеры текущих опубликованных карточек; прежние
+функциональные suites не повторяются. Web запускается через
+`playwright.baseline.config.ts` / `tests/performance/scroll-baseline.perf.ts`:
+10000 сообщений переменной длины,10 задач,150мс задержки HTTP, проход обоих
+направлений,500 записей и ограниченный DOM. JS rAF и RSS потомков browser worker
+не подменяют GPU presented-frame durations/полный WebKit XPC footprint.
+[Полученные web-результаты](qa/2026-11-04-scroll-baseline/web-result.md).
+Android scope `chat-scroll-baseline` использует реальные жесты, отдельный
+профиль empty и такие же размеры данных. Android: FrameMetrics своей Activity
+и Debug.MemoryInfo, фиксированные буферы QA-сэмплера. iOS: подготовлены XCT metrics и
+периодический TASK_VM_INFO собственного QA app; запуск не выполнялся, код сохранён
+в qa/2026-11-04-scroll-baseline/ios-prepared вне компилируемых targets.
+Пробы компилируются только в QA, default-прогон не включает этот длинный benchmark.
+Пункт1.6 пока открыт;7.9, физические устройства и release PASS не заявлены.
+
+Работа остановлена по просьбе пользователя04.11; [пауза и границы](qa/2026-11-04-scroll-baseline/pause.md).
