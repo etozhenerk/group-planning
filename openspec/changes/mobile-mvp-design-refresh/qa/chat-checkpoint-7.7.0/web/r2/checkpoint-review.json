@@ -1,0 +1,63 @@
+{
+  "kind": "independent targeted K2 K3 K4 checkpoint; not final gate",
+  "at": "2026-11-05T17:25:29.898Z",
+  "candidate": {
+    "sourceHash": "e534b88b22f6db046c024757c257091687a33d1b1f51d3d3bbb500afb977a406",
+    "artifactHash": "9eaf47338ee8ab0ce09da1747014a7ebb8cf344c3f9e063a40b1b110fc0a12bf",
+    "candidateSha256": "51a7e6e84a252117487379cf7a98dab5953b405cbe4fa7bde48a5616a602d070"
+  },
+  "sourceBefore": "e534b88b22f6db046c024757c257091687a33d1b1f51d3d3bbb500afb977a406",
+  "sourceAfter": "e534b88b22f6db046c024757c257091687a33d1b1f51d3d3bbb500afb977a406",
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 38,
+    "allMatch": true
+  },
+  "findings": [
+    {
+      "id": "K2-border",
+      "severity": "P3",
+      "summary": "Input border transparent rather than reference line; background/radius/layout fixed",
+      "evidence": [
+        "composer320-actual.png",
+        "composer320-reference.png",
+        "checkpoint-probes-followup.json"
+      ]
+    },
+    {
+      "id": "K3-icon",
+      "severity": "P3",
+      "summary": "TriangleAlert remains instead of approved filled circle exclamation; effective target44 is correct",
+      "evidence": [
+        "rejected-menu-actual.png",
+        "reference-error-icon.json",
+        "checkpoint-probes-followup.json"
+      ]
+    }
+  ],
+  "resolvedWithinScope": [
+    "K3 menu supports Enter and pointer",
+    "same-key retry accepted201, exactly one server ACK",
+    "restore occupied guard and actual text return/removal",
+    "K2 composer background/radius/Add/layout320/390",
+    "K4 dim full feed through empty space to composer; selected bubble above",
+    "WebKit menu close sanity"
+  ],
+  "retry": {
+    "sameKey": true,
+    "ackStatus": 201,
+    "serverAckCount": 1,
+    "serverClientRequestCount": 1
+  },
+  "followupErrors": [],
+  "excluded": [
+    "read/OAuth/info/settings/Create acceptance",
+    "desktop",
+    "full matrix",
+    "suites",
+    "final gates"
+  ],
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "writes": "QA only; app/manifests/tasks/Git untouched"
+}

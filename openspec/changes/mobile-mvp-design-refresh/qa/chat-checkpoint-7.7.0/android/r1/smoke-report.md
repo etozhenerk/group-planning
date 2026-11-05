@@ -1,0 +1,24 @@
+# Android chat7.7.0 r1: короткий checkpoint
+
+Вердикт: **needs-fixes**, два наблюдаемых визуальных расхождения. Это ограниченный независимый design-review + feature-smoke, не финальная приёмка. Info/settings/Create/полные suites/матрицы/gates не запускались.
+
+Frozen APK SHA256 `4af6a59557ed814ffe6a6a9f5c276d2d7b864db2b7339f7b9e8495d8ee98810b`, source `89cba9e8901159195b1b270cccf151a0e5f379ecf1676b0eee31b4dd2ad0361a`; байты проверены до установки и после (`review-binding.json`, `installed-after.json`). Только5554/API36,360×800dp и320×640dp с реальной клавиатурой, font1. Собственный memory HTTPS fixture, real realtime/read-state. Два реальных тестовых пользователя, отдельная созданная через API встреча; RSVP API использован только как предусловие членства, UI RSVP не прогонялся.
+
+Два замечания одной пачкой:
+
+1. **[P2] ReactionChip остался большой круглой кнопкой, а не компактным footer-chip.** Выбранная «👍1✓» занимает110×96px при density2 (55×48dp) и расположена в середине footer; в normalized chat-r6 чип компактный, выровнен слева внутри bubble, metadata справа. Actual [reaction-chosen](actual/reaction-chosen.png), [keyboard320](actual/keyboard320.png), точные bounds/Selected=true в reaction-chosen.semantics.txt. [Fresh reference](reference/ready360.png). Причина: ReactionChip.kt:43–51 задаёт targetAndroid как видимую поверхность и CircleShape; FeedMessageFooter.kt:28 использует сжимающийся Row, переданный align(End), без полного пространства footer. Нужна компактная видимая форма/выравнивание при сохранении нативной области попадания. Галочка собственной реакции здесь дополнительно утяжеляет чип по сравнению с принятым оформлением.
+2. **[P2] Внутренняя поверхность поля composer исчезла.** На actual [empty360](actual/ready360-zero.png) и [keyboard320](actual/keyboard320.png) текст и smile находятся на том же фоне, что вся sticky-панель. В [normalized reference](reference/ready360.png) поле отделено более тёмной rounded-капсулой. `MessageComposer.kt:150` и `:184` задают colorSurface одновременно внешней панели и inputRow; border у inputRow отсутствует. Согласованный sticky-контейнер не отменяет принятую вложенную поверхность ввода.
+
+Фактически выполненные действия и наблюдения:
+
+- Реальные incoming/own: avatar у верхнего края, острый верхний угол к отправителю, incoming author внутри bubble, HH:mm/checks внутри footer. [Zero](actual/ready360-zero.png). Пустая send спокойная; при вводе виден circle38dp/arrow20, тонкий smile и сама send доступны над IME. Размеры адаптированы к native target48.
+- Известный count0 даёт одну приглушённую галочку. Тап receipt открывает context с reactions/«Кто прочитал»; открывается пустой Readers. [Context](actual/zero-context.png), [empty readers](actual/zero-readers.png).
+- Второй пользователь через настоящий API меняет read-marker. UI через realtime показывает count1/две контрастные галочки; tap→menu→Readers показывает его реальное имя. [Positive](actual/read-positive.png), [reader](actual/reader-person.png). Постоянной текстовой подписи «Прочитали1» под сообщением нет.
+- Long press сообщения→quick menu→👍 реально выбирает реакцию, Selected=true/count1 в UI. Композиционный дефект описан выше.
+-320dp: ввод с настоящей IME, enabled send видна. Отправка достигла backend: `actual/ack-api.json` содержит ровно одно сообщение с текстом «Сообщение с клавиатуры320». Composer после ACK имеет EditableText='' и InputText='' (`smoke.log`/`actual/failure-live.semantics.txt`), actual [ACK](actual/failure-live.png) показывает принятое сообщение и спокойную пустую send.
+
+Журнал instrumentation завершён **QA assertion failure**, не OK suite: финальный assertTextEquals("") сравнил EditableText вместе с placeholder Text='Сообщение'. Это ошибка matcher, не дефект очистки; raw failure/result сохранены без подмены. ACK подтверждён независимым GET после прогона; новые комбинации/повтор всего driver не выполнялись. Действия/время — `actual/result.json`, `actual/actions.json`; screenshots+metadata+semantics — actual/, fresh raw — reference/. Raw result.status=failed описывает этот QA stop и не является отдельным продуктовым отказом.
+
+Ограничения: unknown read count не достигнут детерминированно имеющимся fixture, поэтому его summary не принят; confirmed rejected retry/recover также не принят. Существующий QaResponseGate.rejectMessage бросает IOException до commit, backend feed fixture отвечает503 — это unknown, а не подтверждённое rejection. Новые gates/fixture-серии не создавались, fake rejection не подставлялся. Revoke/Back/rotation/large/RM/history/attachments и остальная матрица здесь не проверялись. Maps/VoiceOver/TalkBack не запускались. Исторические pass не переносились; pixel regression не заявляется.
+
+Очистка: исходные wm/font/settings восстановлены, own fixture/reverse/remote и private config удалены, QA-процесс остановлен (`cleanup.json`, restored=true). Root fixtures не затронуты.5554 свободен; код/manifests/tasks/Git не менялись.

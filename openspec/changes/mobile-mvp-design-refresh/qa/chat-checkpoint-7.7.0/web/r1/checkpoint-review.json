@@ -1,0 +1,114 @@
+{
+  "kind": "independent chat-only checkpoint K1-K4; no final acceptance",
+  "at": "2026-11-05T17:05:37.911Z",
+  "candidate": {
+    "sourceHash": "d5d42efc6cefd2ade463da4be52abd754dfe3174f69441dbd3d36be01fd7b0c6",
+    "artifactHash": "90d55f3b622f81d1fb043fe4767250c5ef8f2afdb7c540811d3416272f83a790",
+    "designInputHash": "c819a65cdd8a95e62a2c3099f427fe73a641942fd212c51e3f8cda9b2f5d15d1",
+    "candidateSha256": "cd312f01fc731a7d5b06fe1209438161fe92d4660cba345ee5f50851044c7bcf"
+  },
+  "origins": {
+    "main": "https://127.0.0.1:8896",
+    "correctedReadFixture": "https://127.0.0.1:8897"
+  },
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets8896": 38,
+    "liveEntry8897": 2,
+    "allMatch": true
+  },
+  "scope": {
+    "chromium": [
+      [
+        320,
+        760
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        390,
+        430
+      ]
+    ],
+    "webkit": [
+      [
+        390,
+        844
+      ],
+      [
+        390,
+        430
+      ]
+    ],
+    "desktopSpot": [
+      [
+        1100,
+        900
+      ]
+    ],
+    "realIME": false
+  },
+  "findings": [
+    {
+      "id": "K3",
+      "severity": "P1",
+      "summary": "Rejected icon mouse/Enter never opens menu; local outbox id rejected by conversation panel validator; retry/restore blocked",
+      "evidence": [
+        "rejected-actions-unavailable-actual.png",
+        "checkpoint-probes-final-spot.json",
+        "rejected-reference.png"
+      ]
+    },
+    {
+      "id": "K2",
+      "severity": "P2",
+      "summary": "Composer input is surface/radius22/transparent border and Plus unbordered round, rather than approved navigation/radius14/line controls",
+      "evidence": [
+        "ready390-actual.png",
+        "ready390-reference.png",
+        "component-metrics.json",
+        "webkit390-actual.png"
+      ]
+    },
+    {
+      "id": "K4",
+      "severity": "P2",
+      "summary": "Dim backdrop ends at timeline content height leaving blank feed bright; quick menu retains control radius instead of pill",
+      "evidence": [
+        "quick-reaction-actual.png",
+        "quick-reaction-reference.png",
+        "all-reactions-actual.png",
+        "component-metrics.json"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "K1 upper4 corners and metadata/reactions inside",
+    "send44 circle38 arrow20 quiet empty/action active",
+    "real send→other actor read→doublechecks→menu→Readers",
+    "unknown receipt summary no invented read",
+    "reaction picker and chip PUT/toggle off",
+    "WebKit real send",
+    "desktop spot preserves nonmobile composition"
+  ],
+  "blockedByFinding": [
+    "mobile rejected retry",
+    "mobile rejected restore",
+    "restore occupied-draft guard"
+  ],
+  "environmentIssue": "8896 read capability404 resolved using corrected fixture8897; same frozen dist",
+  "excluded": [
+    "info",
+    "settings",
+    "Create UI",
+    "RSVP/OAuth acceptance",
+    "full matrix",
+    "suites",
+    "final gates"
+  ],
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "writes": "QA only; no app/manifests/tasks/Git"
+}
