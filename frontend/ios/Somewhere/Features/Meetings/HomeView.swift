@@ -37,7 +37,7 @@ struct HomeView: View {
                         session: session, logout: owner.logout, deleteAccount: deleteAccount)
                 } else if section == .invitations {
                     SavedInvitationsView(
-                        owner: savedInvitations, invitations: invitations, create: openCreate)
+                        owner: savedInvitations, invitations: invitations)
                 } else {
                     MeetingListView(
                         owner: owner, create: openCreate, select: { path.append(.meeting($0)) },

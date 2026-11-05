@@ -72,6 +72,7 @@ case "${1:-all}" in
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
     invitation-layout) somewhere_filter=-only-testing:SomewhereUITests/InvitationViewportUITests; somewhere_scope=auth ;;
     saved) somewhere_filter=-only-testing:SomewhereUITests/SavedInvitationsUITests; somewhere_scope=saved ;;
+    saved-error) somewhere_filter=-only-testing:SomewhereUITests/SavedInvitationsUITests/testListErrorRetryAndLargeText; somewhere_scope=saved ;;
     covers) somewhere_filter=-only-testing:SomewhereUITests/CoverUITests; somewhere_scope=covers ;;
     tasks) somewhere_filter=-only-testing:SomewhereUITests/PreparationTaskUITests; somewhere_scope=tasks ;;
     places) somewhere_filter=-only-testing:SomewhereUITests/PlacePollUITests; somewhere_scope=places ;;

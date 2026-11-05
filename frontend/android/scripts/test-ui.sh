@@ -4,6 +4,7 @@ cd "$(dirname "$0")/.."
 sh scripts/check-toolchain.sh
 somewhere_requested_scope=${1:-all}
 somewhere_scope=$somewhere_requested_scope
+if [ "$somewhere_requested_scope" = saved-large ]; then somewhere_scope=saved; fi
 if [ "$somewhere_requested_scope" = chat-scroll-baseline ] || [ "$somewhere_requested_scope" = native-pdf-delayed ] || [ "$somewhere_requested_scope" = native-vibe-delayed ] || [ "$somewhere_requested_scope" = native-vibe-upload ] || [ "$somewhere_requested_scope" = album-preload-failure ] || [ "$somewhere_requested_scope" = album-offline-sweep ] || [ "$somewhere_requested_scope" = native-empty-invite ] || [ "$somewhere_requested_scope" = native-picker-selection ]; then somewhere_scope=album-access; fi
 case "$somewhere_scope" in
     all|account|profile|persistence|calendar|auth|invitation|polls|places|tasks|covers|saved|experience|media|support|chat|sheet-controls|album-download|album-access|visual-design|reaction-people|avatar-ack|avatar-ack-http|avatar-fallback|album-preload|common-navigation|chat-actions|chat-date-settings|account-survivor|composer-focus|media-batch|chat-controls|experience-a11y|experience-revocation|readers-a11y) ;;
@@ -268,6 +269,7 @@ if [ "$somewhere_scope" = chat ] || [ "$somewhere_scope" = media ] || [ "$somewh
     if [ "$somewhere_scope" = media ]; then somewhere_classes=dev.groupplanning.android.MediaUploadUiTests,dev.groupplanning.android.PhotoPickerUiTests,dev.groupplanning.android.ExperienceUiTests,dev.groupplanning.android.AccountDeletionUiTests,dev.groupplanning.android.TelegramChatUiTests#settingsAndShareReturnThroughOneInformationSheet; fi
     if [ "$somewhere_scope" = profile ]; then somewhere_classes=dev.groupplanning.android.ProfileFieldsUiTests; fi
     if [ "$somewhere_scope" = saved ]; then somewhere_classes=dev.groupplanning.android.SavedInvitationsUiTests; fi
+    if [ "$somewhere_requested_scope" = saved-large ]; then somewhere_classes=dev.groupplanning.android.SavedInvitationsUiTests#listErrorRetryLargeTextAndBack; fi
     if [ "$somewhere_scope" = invitation ]; then somewhere_classes=dev.groupplanning.android.InvitationUiTests; fi
     if [ "$somewhere_scope" = covers ]; then somewhere_classes=dev.groupplanning.android.CoverUiTests,dev.groupplanning.android.CoverProcessingTests; fi
     if [ "$somewhere_scope" = tasks ]; then somewhere_classes=dev.groupplanning.android.PreparationTaskUiTests; fi

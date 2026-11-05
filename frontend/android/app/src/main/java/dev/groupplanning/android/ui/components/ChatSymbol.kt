@@ -2,6 +2,8 @@ package dev.groupplanning.android.ui.components
 
 // Geometry from the published chat prototype, in its original 24 × 24 viewport.
 internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
+    Mail("M6,5 H18 Q21,5 21,8 V16 Q21,19 18,19 H6 Q3,19 3,16 V8 Q3,5 6,5 M3,7 L12,13 L21,7"),
+
     // Lucide MessageCircle, ISC; assets/licenses/lucide-react/LICENSE.txt.
     Message(
         "M2.992,16.342 a2,2 0,0 1,.094,1.167 l-1.065,3.29 a1,1 0,0 0,1.236,1.168 l3.413,-.998 a2,2 0,0 1,1.099,.092 a10,10 0,1 0,-4.777,-4.719",

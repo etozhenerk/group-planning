@@ -64,7 +64,7 @@ final class SavedInvitationsUITests: XCTestCase {
         let meeting = app.buttons["meeting-card-22222222-2222-4222-8222-222222222222"]
         XCTAssertTrue(meeting.waitForExistence(timeout: 10))
         app.buttons["Приглашения"].tap()
-        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Приглашений пока нет"].waitForExistence(timeout: 10))
         app.buttons["Встречи"].tap()
         meeting.tap()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
@@ -84,7 +84,7 @@ final class SavedInvitationsUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Встречи"].waitForExistence(timeout: 10))
         XCTAssertFalse(meeting.exists)
         app.buttons["Приглашения"].tap()
-        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Приглашений пока нет"].waitForExistence(timeout: 10))
         capture("ios-saved-empty")
     }
 
@@ -94,9 +94,10 @@ final class SavedInvitationsUITests: XCTestCase {
         XCTAssertTrue(
             app.staticTexts["Не удалось загрузить приглашения"].waitForExistence(timeout: 10))
         capture("ios-saved-list-error")
-        let retry = app.buttons["Попробовать ещё раз"]
+        let retry = app.buttons["Повторить загрузку"]
         for _ in 0..<4 {
-            if retry.isHittable { break }
+            let navigation = app.buttons["home-tab-calendar"]
+            if retry.isHittable && retry.frame.maxY < navigation.frame.minY - 16 { break }
             app.scrollViews.firstMatch.swipeUp()
         }
         retry.tap()
@@ -121,7 +122,7 @@ final class SavedInvitationsUITests: XCTestCase {
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
         selected.tap()
         app.buttons["Приглашения"].tap()
-        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Приглашений пока нет"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["К моим встречам"].exists)
         app.buttons["К моим встречам"].tap()
         XCTAssertTrue(selected.waitForExistence(timeout: 10))

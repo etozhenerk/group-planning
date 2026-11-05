@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -66,60 +67,124 @@ internal fun MeetingCard(
     val own = meeting.organizerId != null && meeting.organizerId == LocalViewer.current
     val crown = stringResource(R.string.organizer_badge)
     val cover = meeting.coverUrl != null && LocalDensity.current.fontScale <= 1.5f
-    Box(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 16.dp)) {
+    val coverReserve = if (cover) {
+        if (invitation) {
+            DesignTokens.componentCardCoverMobileWidth + DesignTokens.spaceS10
+        } else {
+            DesignTokens.componentCardCoverMobileWidth + DesignTokens.spaceS16 +
+                DesignTokens.spaceS6
+        }
+    } else {
+        DesignTokens.spaceS0
+    }
+    BoxWithConstraints(
+        Modifier.fillMaxWidth().padding(
+            top = DesignTokens.spaceS12,
+            bottom = DesignTokens.spaceS16,
+        ),
+    ) {
+        val dateMaximum = maxWidth - if (cover) {
+            DesignTokens.componentMobileInvitationCardCoverDateReserve
+        } else {
+            DesignTokens.componentMobileInvitationCardDateInset * 2
+        }
         Surface(
             onClick,
             Modifier.fillMaxWidth().testTag("meeting-${meeting.id}"),
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(
+                if (invitation) DesignTokens.radiusCard else DesignTokens.spaceS20,
+            ),
             color = tint,
-            border = BorderStroke(1.dp, Color(0x0affffff)),
+            border = BorderStroke(
+                DesignTokens.spaceS1,
+                if (invitation) DesignTokens.colorLine else DesignTokens.colorCalendarBorder,
+            ),
         ) {
             Column(
-                Modifier.heightIn(min = 145.dp).padding(
+                Modifier.heightIn(
+                    min = if (invitation) {
+                        DesignTokens.componentMobileInvitationCardMinimumHeight
+                    } else {
+                        DesignTokens.componentCardMinimumHeightMobile
+                    },
+                ).padding(
                     start = 17.dp,
                     end = 17.dp,
                     top = 26.dp,
-                    bottom = 29.dp,
-                ).padding(end = if (cover) 124.dp else 0.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    bottom = if (invitation) {
+                        DesignTokens.componentMobileInvitationCardAnswerInsetBottom
+                    } else {
+                        DesignTokens.spaceS24 + DesignTokens.spaceS4 + DesignTokens.spaceS1
+                    },
+                ),
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    Text(
-                        meeting.title,
-                        Modifier.weight(1f, false),
-                        fontSize = 19.sp,
-                        lineHeight = 23.75.sp,
-                        letterSpacing = (-.45).sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Palette.text,
-                    )
-                    if (own) {
-                        AppIcon(
-                            R.drawable.ic_crown,
-                            Modifier.size(18.dp).semantics {
-                                contentDescription = crown
-                            },
-                            tint = if (weekend) Color(0xffc2d8cb) else Palette.accent,
+                Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS8)) {
+                    Row(
+                        modifier = Modifier.padding(end = coverReserve),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS6),
+                    ) {
+                        Text(
+                            meeting.title,
+                            Modifier.weight(1f, false),
+                            fontSize = 19.sp,
+                            lineHeight = 23.75.sp,
+                            letterSpacing = (-.45).sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Palette.text,
+                        )
+                        if (own) {
+                            AppIcon(
+                                R.drawable.ic_crown,
+                                Modifier.size(18.dp).semantics {
+                                    contentDescription = crown
+                                },
+                                tint = if (weekend) Color(0xffc2d8cb) else Palette.accent,
+                            )
+                        }
+                    }
+                    Row(
+                        modifier = Modifier.padding(end = coverReserve),
+                        horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS6),
+                    ) {
+                        AppIcon(R.drawable.ic_place, Modifier.size(15.dp).padding(top = 1.dp))
+                        Text(
+                            meeting.place ?: stringResource(R.string.calendar_place_missing),
+                            color = Palette.muted,
+                            fontSize = 13.sp,
+                            lineHeight = 18.85.sp,
                         )
                     }
+                    if (invitation && inviter != null) {
+                        Text(
+                            stringResource(R.string.invitation_author, inviter),
+                            Modifier.padding(top = DesignTokens.spaceS8),
+                            fontSize = DesignTokens.typographySizeCaption,
+                            color = Palette.muted,
+                        )
+                    }
+                    if (!invitation && meeting.period == MeetingPeriod.Past) {
+                        meeting.unreadCount?.takeIf { it > ServerCounter.Zero }
+                            ?.let {
+                                MeetingUnreadNotice(
+                                    it,
+                                    Modifier.padding(top = DesignTokens.spaceS12),
+                                )
+                            }
+                    }
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    AppIcon(R.drawable.ic_place, Modifier.size(15.dp).padding(top = 1.dp))
+                if (invitation) {
                     Text(
-                        meeting.place ?: stringResource(R.string.calendar_place_missing),
-                        color = Palette.muted,
-                        fontSize = 13.sp,
-                        lineHeight = 18.85.sp,
+                        stringResource(R.string.invitation_change_answer),
+                        Modifier.padding(top = DesignTokens.spaceS8),
+                        fontSize = DesignTokens.typographySizeLabel,
+                        lineHeight =
+                        DesignTokens.typographySizeLabel *
+                            DesignTokens.typographyLineHeightLabel,
+                        fontWeight = FontWeight.Medium,
+                        color = Palette.accent,
                     )
-                }
-                if (!invitation && meeting.period == MeetingPeriod.Past) {
-                    meeting.unreadCount?.takeIf { it > ServerCounter.Zero }
-                        ?.let {
-                            MeetingUnreadNotice(it, Modifier.padding(top = DesignTokens.spaceS12))
-                        }
                 }
             }
         }
@@ -153,16 +218,7 @@ internal fun MeetingCard(
                 )
             }
         }
-        if (invitation) {
-            inviter?.let {
-                Text(
-                    stringResource(R.string.invitation_author, it),
-                    Modifier.align(Alignment.BottomEnd).offset(x = (-18).dp, y = 12.dp),
-                    fontSize = 12.sp,
-                    color = Palette.muted,
-                )
-            }
-        } else {
+        if (!invitation) {
             Row(
                 Modifier.align(Alignment.BottomEnd).offset(x = (-13).dp, y = 15.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -201,8 +257,14 @@ internal fun MeetingCard(
             }
         }
         Surface(
-            Modifier.align(Alignment.TopStart).offset(x = 17.dp, y = (-12).dp)
-                .widthIn(max = if (cover) 225.dp else 292.dp),
+            Modifier.align(Alignment.TopStart).offset(
+                x = if (invitation) {
+                    DesignTokens.componentMobileInvitationCardDateInset
+                } else {
+                    DesignTokens.componentMobileInvitationCardInsetInline
+                },
+                y = (-12).dp,
+            ).widthIn(max = dateMaximum),
             shape = RoundedCornerShape(8.dp),
             color = accent,
             border = BorderStroke(1.dp, Color(0x09ffffff)),

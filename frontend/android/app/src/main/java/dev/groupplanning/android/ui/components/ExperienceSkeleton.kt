@@ -18,11 +18,15 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun ExperienceSkeleton(modifier: Modifier = Modifier, profile: Boolean = false) {
+internal fun ExperienceSkeleton(
+    modifier: Modifier = Modifier,
+    profile: Boolean = false,
+    label: String? = null,
+) {
     if (!rememberLoadingVisible(true)) return
-    val label = stringResource(R.string.calendar_loading)
+    val accessibleLabel = label ?: stringResource(R.string.calendar_loading)
     Column(
-        modifier.fillMaxWidth().semantics { contentDescription = label },
+        modifier.fillMaxWidth().semantics { contentDescription = accessibleLabel },
         verticalArrangement = Arrangement.spacedBy(28.dp),
     ) {
         repeat(if (profile) 2 else 3) {

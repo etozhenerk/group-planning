@@ -27,17 +27,21 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
@@ -77,6 +81,25 @@ internal fun HomeNavigation(selected: Int, select: (Int) -> Unit, modifier: Modi
             .padding(DesignTokens.componentMobileNavigationPadding).selectableGroup(),
     ) {
         val width = maxWidth / 3
+        val labels = listOf(
+            R.string.home_meetings,
+            R.string.home_invitations,
+            R.string.profile_title,
+        )
+            .map { stringResource(it) }
+        val density = LocalDensity.current
+        val measurer = rememberTextMeasurer()
+        val labelStyle = LocalTextStyle.current.copy(
+            fontSize = DesignTokens.typographySizeNavigationLabel,
+            letterSpacing = DesignTokens.typographyTrackingNavigationLabel,
+        )
+        val labelScale = remember(width, labels, density, labelStyle) {
+            val available = with(density) { (width - DesignTokens.spaceS1).toPx() }
+            val widest = labels.maxOf {
+                measurer.measure(it, labelStyle, softWrap = false, maxLines = 1).size.width
+            }
+            minOf(1f, available / widest.coerceAtLeast(1))
+        }
         val x by animateDpAsState(width * selected, tween(duration), label = "navigation")
         Box(Modifier.matchParentSize()) {
             Box(
@@ -132,10 +155,13 @@ internal fun HomeNavigation(selected: Int, select: (Int) -> Unit, modifier: Modi
                         )
                         Text(
                             stringResource(label),
-                            fontSize = DesignTokens.typographySizeNavigationLabel,
+                            fontSize = DesignTokens.typographySizeNavigationLabel * labelScale,
                             lineHeight =
-                            DesignTokens.componentMobileNavigationAndroidLabelLineHeight.value.sp,
+                            DesignTokens.componentMobileNavigationAndroidLabelLineHeight.value.sp *
+                                labelScale,
                             letterSpacing = DesignTokens.typographyTrackingNavigationLabel,
+                            maxLines = 1,
+                            softWrap = false,
                             textAlign = TextAlign.Center,
                             color = tint,
                         )

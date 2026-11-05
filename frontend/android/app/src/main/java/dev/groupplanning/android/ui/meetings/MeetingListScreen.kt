@@ -24,6 +24,7 @@ import dev.groupplanning.android.data.repository.CalendarData
 import dev.groupplanning.android.state.CalendarSelection
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.ExperienceSkeleton
+import dev.groupplanning.android.ui.components.MobileStatus
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
@@ -88,7 +89,7 @@ internal fun MeetingListScreen(
             }
             if (data.error != null) {
                 item(key = "error") {
-                    MeetingFailure(
+                    MobileStatus(
                         stringResource(
                             if (page ==
                                 null

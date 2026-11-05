@@ -3,48 +3,32 @@ import SwiftUI
 struct SavedInvitationsView: View {
     let owner: SavedInvitationsOwner
     @Binding var invitations: Bool
-    let create: () -> Void
     @State private var target: InvitationTarget?
     @Environment(\.scenePhase) private var phase
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
-                Text("Приглашения").designFont(28, weight: .bold).tracking(-0.9).padding(
-                    .bottom, 4)
-                Text(
-                    "Здесь сохранены приглашения, на которые вы ответили «Возможно». Когда определитесь, откройте приглашение и измените ответ."
-                )
-                .designFont(13).lineSpacing(5).foregroundStyle(AppPalette.muted).padding(
-                    .bottom, 16)
-
+            LazyVStack(alignment: .leading, spacing: DesignTokens.spaceS8) {
+                if typeSize.isAccessibilitySize {
+                    SavedInvitationsExplanation().padding(.bottom, DesignTokens.spaceS20)
+                }
                 if owner.page.value == nil && owner.page.error == nil {
                     SavedInvitationsLoading()
                 } else {
                     if owner.page.error != nil {
-                        StatusView(
+                        MobileStatusView(
                             title: owner.page.value == nil
                                 ? "Не удалось загрузить приглашения"
-                                : "Не удалось обновить приглашения", retry: { owner.refresh() })
+                                : "Не удалось обновить приглашения",
+                            refresh: owner.page.value != nil,
+                            retry: { owner.refresh() }, large: false)
                     }
                     if owner.items.isEmpty && owner.page.error == nil {
-                        VStack(spacing: 14) {
-                            ExperienceIcon(kind: .envelope, size: 22)
-                            Text("Пока ничего нет").designFont(22, weight: .bold)
-                            Button {
-                                invitations = false
-                            } label: {
-                                Text("К моим встречам").designFont(14, weight: .semibold)
-                                    .padding(.horizontal, 18).frame(minHeight: 47)
-                                    .overlay {
-                                        RoundedRectangle(cornerRadius: 13).stroke(
-                                            .white.opacity(0.125), lineWidth: 1)
-                                    }
-                            }
-                        }.padding(.horizontal, 20).padding(.vertical, 55)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                .white.opacity(0.012), in: RoundedRectangle(cornerRadius: 22))
+                        MobileStatusView(
+                            title: "Приглашений пока нет", refresh: false,
+                            retry: { invitations = false }, large: false, symbol: "envelope",
+                            actionLabel: "К моим встречам", actionSymbol: nil)
                     }
                     ForEach(owner.items) { item in
                         SavedInvitationCard(item: item, api: owner.session.api) {
@@ -54,14 +38,28 @@ struct SavedInvitationsView: View {
                     if owner.page.value?.nextCursor != nil {
                         ActionButton(
                             title: "Показать ещё", primary: false, busy: owner.page.isLoading
-                        ) { owner.refresh(more: true) }
+                        ) {
+                            owner.refresh(more: true)
+                        }
                     }
                 }
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, DesignTokens.spaceS20)
+            }
+            .padding(.horizontal, DesignTokens.spaceS20).padding(.top, DesignTokens.spaceS4)
+            .padding(.bottom, DesignTokens.componentMobileInvitationsScrollBottom)
         }
         .accessibilityIdentifier("saved-invitations-list")
-        .background(AppPalette.background)
-        .refreshable { await owner.load() }
+        .safeAreaInset(edge: .top, spacing: DesignTokens.spaceS0) {
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                SavedInvitationsHeader(
+                    count: owner.page.value == nil ? nil : owner.items.count,
+                    hasMore: owner.page.value?.nextCursor != nil)
+                if !typeSize.isAccessibilitySize {
+                    SavedInvitationsExplanation().padding(.bottom, DesignTokens.spaceS20)
+                }
+            }
+            .padding(.horizontal, DesignTokens.spaceS20).background(AppPalette.background)
+        }
+        .background(AppPalette.background).refreshable { await owner.load() }
         .onChange(of: target?.id) { old, new in
             if old != nil && new == nil && phase == .active { owner.refresh() }
         }

@@ -35,8 +35,7 @@ internal fun HomeMeetings(model: AppViewModel, snapshot: ClientSnapshot) {
         if (invitations) {
             SavedInvitationsScreen(
                 snapshot.data.invitations,
-                tabs = {},
-                create = model::create,
+                backToMeetings = { model.selectHomeTab(0) },
                 refresh = { savedInvitations.refresh() },
                 more = { savedInvitations.refresh(true) },
                 select = model::receiveLink,

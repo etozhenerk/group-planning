@@ -1,0 +1,134 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData -resultBundlePath /private/tmp/saved-checkpoint75-r4-navigation.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/SavedR4NavigationTests/testNarrowAccessibilityNavigationAndFooter"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/saved-checkpoint75-r4-navigation.xcresult
+
+2026-11-05 18:35:26.084 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:27.332969+0300 SomewhereUITests-Runner[49712:20210123] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 18:35:30.121.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 18:35:30.122.
+Test Suite 'SavedR4NavigationTests' started at 2026-11-05 18:35:30.122.
+Test Case '-[SomewhereUITests.SavedR4NavigationTests testNarrowAccessibilityNavigationAndFooter]' started.
+    t =     0.00s Start Test at 2026-11-05 18:35:30.124
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 18:35:30.215 xcodebuild[49672:20209812] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 18:35:30.215 xcodebuild[49672:20209812] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 18:35:30.244 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[49712]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10629c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106b24310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.84s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.27s Checking `Expect predicate `exists == 1` for object "Приглашения" Button`
+    t =     5.27s     Checking existence of `"Приглашения" Button`
+    t =     5.36s Tap "Приглашения" Button
+    t =     5.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.37s     Find the "Приглашения" Button
+    t =     5.38s     Check for interrupting elements affecting "home-tab-envelope" Button
+    t =     5.40s     Synthesize event
+    t =     5.73s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.77s Checking `Expect predicate `exists == 1` for object "home-tab-envelope" Button`
+    t =     6.77s     Checking existence of `"home-tab-envelope" Button`
+    t =     6.79s Find the "home-tab-envelope" Button
+    t =     6.80s Find the "home-tab-envelope" Button
+    t =     6.91s Requesting snapshot of accessibility hierarchy for app with pid 49723
+    t =     6.99s Requesting snapshot of accessibility hierarchy for app with pid 49723
+    t =     7.42s Find the Window (First Match)
+    t =     7.53s Added attachment named 'meetings-narrow-accessibility5-selected-saved'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/ACA7AD2D-6898-41EF-93B3-8CCB3D616F0E/tmp/somewhere-design-verification/meetings-narrow-accessibility5-selected-saved.png
+    t =     7.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/ACA7AD2D-6898-41EF-93B3-8CCB3D616F0E/tmp/somewhere-design-verification/meetings-narrow-accessibility5-selected-saved.json
+INDEPENDENT_MEETINGS_CAPTURE=narrow-accessibility5-selected-saved
+    t =     7.60s Tap "home-tab-calendar" Button
+    t =     7.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.60s     Find the "home-tab-calendar" Button
+    t =     7.62s     Check for interrupting elements affecting "home-tab-calendar" Button
+    t =     7.64s     Synthesize event
+    t =     7.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.94s Checking `Expect predicate `selected == 1` for object "home-tab-calendar" Button`
+    t =     8.94s     Find the "home-tab-calendar" Button
+    t =     8.97s Find the "home-tab-envelope" Button
+    t =     8.99s Tap "home-tab-envelope" Button
+    t =     8.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.99s     Find the "home-tab-envelope" Button
+    t =     9.01s     Check for interrupting elements affecting "home-tab-envelope" Button
+    t =     9.03s     Synthesize event
+    t =     9.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.36s Checking `Expect predicate `selected == 1` for object "home-tab-envelope" Button`
+    t =    10.37s     Find the "home-tab-envelope" Button
+    t =    10.40s Find the "Изменить ответ →" StaticText
+    t =    10.42s Swipe up ScrollView (First Match)
+    t =    10.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.42s     Find the ScrollView (First Match)
+    t =    10.43s     Check for interrupting elements affecting "saved-invitations-list" ScrollView
+    t =    10.45s     Synthesize event
+    t =    10.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.24s Find the "Изменить ответ →" StaticText
+    t =    12.28s Find the "Изменить ответ →" StaticText
+    t =    12.30s Find the "home-tab-calendar" Button
+    t =    13.36s Checking `Expect predicate `exists == 1` for object "Изменить ответ →" StaticText`
+    t =    13.36s     Checking existence of `"Изменить ответ →" StaticText`
+    t =    13.37s Find the "Изменить ответ →" StaticText
+    t =    13.40s Find the "Изменить ответ →" StaticText
+    t =    13.42s Find the "home-tab-calendar" Button
+    t =    13.54s Requesting snapshot of accessibility hierarchy for app with pid 49723
+    t =    13.61s Requesting snapshot of accessibility hierarchy for app with pid 49723
+    t =    14.04s Find the Window (First Match)
+    t =    14.16s Added attachment named 'meetings-narrow-accessibility5-footer-reachable'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/ACA7AD2D-6898-41EF-93B3-8CCB3D616F0E/tmp/somewhere-design-verification/meetings-narrow-accessibility5-footer-reachable.png
+    t =    14.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/ACA7AD2D-6898-41EF-93B3-8CCB3D616F0E/tmp/somewhere-design-verification/meetings-narrow-accessibility5-footer-reachable.json
+INDEPENDENT_MEETINGS_CAPTURE=narrow-accessibility5-footer-reachable
+    t =    14.20s Find the "home-tab-envelope" Button
+    t =    14.22s Find the "home-tab-envelope" Button
+    t =    14.23s Find the "home-tab-envelope" Button
+    t =    14.25s Find the "Изменить ответ →" StaticText
+    t =    14.27s Find the "Изменить ответ →" StaticText
+    t =    14.29s Terminate dev.groupplanning.ios.uitesthost:49723
+2026-11-05 18:35:44.426 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:44.427 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:44.427 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    15.35s Tear Down
+Test Case '-[SomewhereUITests.SavedR4NavigationTests testNarrowAccessibilityNavigationAndFooter]' passed (15.394 seconds).
+Test Suite 'SavedR4NavigationTests' passed at 2026-11-05 18:35:45.518.
+	 Executed 1 test, with 0 failures (0 unexpected) in 15.394 (15.396) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-05 18:35:45.520.
+	 Executed 1 test, with 0 failures (0 unexpected) in 15.394 (15.398) seconds
+Test Suite 'Selected tests' passed at 2026-11-05 18:35:45.521.
+	 Executed 1 test, with 0 failures (0 unexpected) in 15.394 (15.399) seconds
+2026-11-05 18:35:45.553 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:45.553 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:45.554 xcodebuild[49672:20209812] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:35:45.819 xcodebuild[49672:20209812] [MT] IDETestOperationsObserverDebug: 19.771 elapsed -- Testing started completed.
+2026-11-05 18:35:45.819 xcodebuild[49672:20209812] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 18:35:45.819 xcodebuild[49672:20209812] [MT] IDETestOperationsObserverDebug: 19.771 sec, +19.771 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/saved-checkpoint75-r4-navigation.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

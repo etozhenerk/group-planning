@@ -1,4 +1,4 @@
-package dev.groupplanning.android.ui.meetings
+package dev.groupplanning.android.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -30,8 +30,36 @@ import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) {
-    val action = stringResource(
+internal fun MobileStatus(
+    title: String,
+    refresh: Boolean,
+    retry: () -> Unit,
+    large: Boolean = true,
+    symbol: ChatSymbol = ChatSymbol.CloudOff,
+    actionLabel: String? = null,
+    actionSymbol: ChatSymbol? = ChatSymbol.Refresh,
+) {
+    val iconSize = if (large) {
+        DesignTokens.componentMobileStateLargeIconSize
+    } else {
+        DesignTokens.componentMobileStateIconSize
+    }
+    val iconRadius = if (large) {
+        DesignTokens.componentMobileStateLargeIconRadius
+    } else {
+        DesignTokens.componentMobileStateIconRadius
+    }
+    val glyphSize = if (large) {
+        DesignTokens.componentMobileStateLargeGlyphSize
+    } else {
+        DesignTokens.componentMobileStateGlyphSize
+    }
+    val titleSize = if (large) {
+        DesignTokens.componentMobileStateTitleSize
+    } else {
+        DesignTokens.componentMobileStateCompactTitleSize
+    }
+    val action = actionLabel ?: stringResource(
         if (refresh) R.string.meetings_retry_refresh else R.string.meetings_retry_load,
     )
     val shape = RoundedCornerShape(
@@ -39,9 +67,15 @@ internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) 
     )
     Surface(
         Modifier.fillMaxWidth().padding(
-            top = if (refresh) DesignTokens.spaceS0 else DesignTokens.spaceS24,
+            top = if (refresh) {
+                DesignTokens.spaceS0
+            } else if (large) {
+                DesignTokens.spaceS24
+            } else {
+                DesignTokens.spaceS20
+            },
             bottom = if (refresh) DesignTokens.spaceS20 else DesignTokens.spaceS0,
-        ).testTag("meetings-error"),
+        ).testTag("mobile-status"),
         shape = shape,
         color = Palette.surface,
         border = if (refresh) null else BorderStroke(DesignTokens.spaceS1, DesignTokens.colorLine),
@@ -53,7 +87,7 @@ internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) 
                 horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS10),
             ) {
                 ChatIcon(
-                    ChatSymbol.CloudOff,
+                    symbol,
                     Modifier.size(DesignTokens.componentMobileStateRefreshGlyphSize),
                 )
                 Text(
@@ -66,7 +100,7 @@ internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) 
                     onClick = retry,
                     modifier = Modifier.size(DesignTokens.targetAndroid)
                         .semantics { contentDescription = action },
-                    color = Palette.surface,
+                    color = DesignTokens.colorRaised,
                     shape = RoundedCornerShape(
                         DesignTokens.componentMobileStateRefreshActionRadius,
                     ),
@@ -82,31 +116,44 @@ internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) 
         } else {
             Column(
                 Modifier.padding(
-                    vertical = DesignTokens.spaceS32,
-                    horizontal = DesignTokens.spaceS24,
+                    vertical = if (large) {
+                        DesignTokens.spaceS32
+                    } else {
+                        DesignTokens.componentMobileStatePanelInsetBlock
+                    },
+                    horizontal = if (large) {
+                        DesignTokens.spaceS24
+                    } else {
+                        DesignTokens.componentMobileStatePanelInsetInline
+                    },
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box(
-                    Modifier.size(DesignTokens.componentMobileStateLargeIconSize).background(
+                    Modifier.size(iconSize).background(
                         Palette.background,
-                        RoundedCornerShape(DesignTokens.componentMobileStateLargeIconRadius),
+                        RoundedCornerShape(iconRadius),
                     ),
                     contentAlignment = Alignment.Center,
                 ) {
                     ChatIcon(
-                        ChatSymbol.CloudOff,
-                        Modifier.size(DesignTokens.componentMobileStateLargeGlyphSize),
+                        symbol,
+                        Modifier.size(glyphSize),
+                        tint = if (large) Palette.muted else Palette.accent,
                         strokeWidth = DesignTokens.componentMobileStateGlyphStroke,
                     )
                 }
                 Text(
                     title,
                     Modifier.padding(
-                        top = DesignTokens.componentMobileStateLargeIconGap,
+                        top = if (large) {
+                            DesignTokens.componentMobileStateLargeIconGap
+                        } else {
+                            DesignTokens.spaceS20
+                        },
                         bottom = DesignTokens.spaceS24,
                     ),
-                    fontSize = DesignTokens.componentMobileStateTitleSize.value.sp,
+                    fontSize = titleSize.value.sp,
                     fontWeight = FontWeight(DesignTokens.componentMobileStateTitleWeight.toInt()),
                     textAlign = TextAlign.Center,
                 )
@@ -126,11 +173,13 @@ internal fun MeetingFailure(title: String, refresh: Boolean, retry: () -> Unit) 
                             Alignment.CenterHorizontally,
                         ),
                     ) {
-                        ChatIcon(
-                            ChatSymbol.Refresh,
-                            Modifier.size(DesignTokens.componentMobileStateActionIconSize),
-                            tint = Palette.actionText,
-                        )
+                        actionSymbol?.let {
+                            ChatIcon(
+                                it,
+                                Modifier.size(DesignTokens.componentMobileStateActionIconSize),
+                                tint = Palette.actionText,
+                            )
+                        }
                         Text(
                             action,
                             fontSize = DesignTokens.typographySizeSmall,

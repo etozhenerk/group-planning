@@ -11,7 +11,7 @@ struct MeetingResultsView: View {
                 DeferredPlaceholder { MeetingCardsSkeleton(label: "Загрузка встреч") }
             }
             if owner.page.error != nil {
-                MeetingFailureView(
+                MobileStatusView(
                     title: owner.page.value == nil
                         ? "Не удалось загрузить встречи" : "Не удалось обновить встречи",
                     refresh: owner.page.value != nil, retry: owner.retry)

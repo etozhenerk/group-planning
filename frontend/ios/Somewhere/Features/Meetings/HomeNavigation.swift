@@ -3,6 +3,8 @@ import SwiftUI
 struct HomeNavigation: View {
     @Binding var selection: HomeSection
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .body) private var labelSize = DesignTokens
+        .typographySizeNavigationLabel
 
     var body: some View {
         HStack(spacing: DesignTokens.spaceS0) {
@@ -23,7 +25,11 @@ struct HomeNavigation: View {
                                     ? DesignTokens.componentMobileNavigationSelectedIconStroke
                                     : DesignTokens.componentMobileNavigationIconStroke))
                         Text(item.rawValue)
-                            .designFont(DesignTokens.typographySizeNavigationLabel, weight: .medium)
+                            .font(.system(size: labelSize, weight: .medium))
+                            .lineLimit(1)
+                            .minimumScaleFactor(
+                                min(1, DesignTokens.typographySizeNavigationLabel / labelSize)
+                            )
                             .tracking(DesignTokens.typographyTrackingNavigationLabel)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)

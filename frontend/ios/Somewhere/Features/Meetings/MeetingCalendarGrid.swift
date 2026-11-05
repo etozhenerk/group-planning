@@ -27,8 +27,10 @@ struct MeetingCalendarGrid: View {
                         .foregroundStyle(AppPalette.muted).frame(
                             maxWidth: .infinity)
                 }
-            }.frame(height: 18).padding(.bottom, DesignTokens.spaceS4)
-                .accessibilityHidden(true)
+            }.frame(height: DesignTokens.spaceS16 + DesignTokens.spaceS2).padding(
+                .bottom, DesignTokens.spaceS4
+            )
+            .accessibilityHidden(true)
             LazyVGrid(
                 columns: Array(
                     repeating: GridItem(.flexible(), spacing: DesignTokens.spaceS0), count: 7),
