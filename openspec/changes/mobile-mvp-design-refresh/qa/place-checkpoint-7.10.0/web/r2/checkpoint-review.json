@@ -1,0 +1,51 @@
+{
+  "kind": "independent targeted shared exit and vote-style checkpoint; not final gate",
+  "candidate": {
+    "sourceHash": "2dc013ac38f47a78b6ad6599f1e5e855dff6d996b4566f6f8cbbfe6b8a964a82",
+    "artifactHash": "038f528450a02fb15a73dc4e10a44aeb1dfc33410c462715bfa0fb4c486e0063",
+    "candidateSha256": "9b7456c89e75fefbcfb93591a974861d735f3ec9378ac01ab8fafd995b56d940"
+  },
+  "sourceBefore": "2dc013ac38f47a78b6ad6599f1e5e855dff6d996b4566f6f8cbbfe6b8a964a82",
+  "sourceAfter": "2dc013ac38f47a78b6ad6599f1e5e855dff6d996b4566f6f8cbbfe6b8a964a82",
+  "findings": [
+    {
+      "id": "R2-DateGuard",
+      "severity": "P2",
+      "summary": "Dirty Date Back closes without confirmation, so requested Leave cannot be exercised",
+      "evidence": [
+        "date-back-observed-actual.png",
+        "targeted-probes-complete.json"
+      ]
+    },
+    {
+      "id": "R2-VoteHeight",
+      "severity": "P3",
+      "summary": "Active/selected controls47px rather than raw48; other vote bindings corrected",
+      "evidence": [
+        "targeted-probes-complete.json",
+        "reference-selected-settled.json"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "PlaceBackStay preserves draft",
+    "PlaceBackLeave returns same chat/composer/noDialog",
+    "Place reopen blank",
+    "PlaceEscapeLeave same chat/composer/noDialog",
+    "active/selected14/21/r12/pad12/space-between/countinherit/owncolors"
+  ],
+  "referenceClock": {
+    "isolatedReferenceOnly": "2026-11-05T10:00:00Z",
+    "appUnchanged": true
+  },
+  "probeCount": 8,
+  "driverErrors": [],
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 38,
+    "allMatch": true
+  },
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "released": true
+}

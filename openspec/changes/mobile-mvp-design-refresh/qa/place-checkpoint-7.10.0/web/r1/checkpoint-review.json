@@ -1,0 +1,63 @@
+{
+  "kind": "independent short manual-place checkpoint; not final gate",
+  "candidate": {
+    "sourceHash": "9375c74b86d27e43271f2dcae3e341aa4ce5c39b8f6e572f09d52975b3b4ebed",
+    "artifactHash": "b74eb8820855ea1f3310e14ebcd75947b5c5987cfc2352c17f69a42c27e4f500",
+    "candidateSha256": "6a8ddb873a57f41d1a377526ced8797c1c5a8f51b91be9d9d36ea50d3b9c0b92"
+  },
+  "sourceBefore": "9375c74b86d27e43271f2dcae3e341aa4ce5c39b8f6e572f09d52975b3b4ebed",
+  "sourceAfter": "9375c74b86d27e43271f2dcae3e341aa4ce5c39b8f6e572f09d52975b3b4ebed",
+  "findings": [
+    {
+      "id": "P1-nav",
+      "severity": "P2",
+      "summary": "Dirty browserBack→Leave double-pop returns meetings rather than original chat",
+      "evidence": [
+        "leave-probe.json",
+        "leave-observed-actual.png"
+      ]
+    },
+    {
+      "id": "P2-vote",
+      "severity": "P2",
+      "summary": "Active vote controls13/19.5/44/r10 instead of raw14/21/48/r12",
+      "evidence": [
+        "card-comparison-active.json",
+        "card-reference-active.png",
+        "created-card-actual.png"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "manual forms390/320/current-place comparison",
+    "empty/same field invalid association/focus POST0",
+    "multiline correction",
+    "dirty Stay same Dialog",
+    "known429→real commit/lostACK→same-body/key retry one poll",
+    "real author and silhouette fallback",
+    "UI vote1/0; meeting place unchanged before deadline",
+    "Moscow local→UTC",
+    "desktop old controls spot"
+  ],
+  "referenceClock": {
+    "onlyReferencePage": "2026-11-05T10:00:00Z",
+    "appClockUnchanged": true
+  },
+  "limits": [
+    "dirty Leave/reopen same browser not passed due nav finding",
+    "no map/geolocation",
+    "no deadline closure/worker race/ties",
+    "no native IME/VO/WebKit/full matrix/gates",
+    "profile avatar_url absent"
+  ],
+  "probeCount": 14,
+  "driverErrors": [],
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 38,
+    "allMatch": true
+  },
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "released": true
+}
