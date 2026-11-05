@@ -117,7 +117,9 @@ internal fun SomewhereApp(model: AppViewModel) {
                 animationSpec = tween(if (motion) 200 else 0),
                 label = "launch",
             ) { shown ->
-                val insets = if (shown && snapshot.session is SessionState.Authenticated) {
+                val insets = if (shown &&
+                    (snapshot.session is SessionState.Authenticated || route is AppRoute.Invitation)
+                ) {
                     Modifier.windowInsetsPadding(
                         WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
                     )
@@ -154,6 +156,7 @@ internal fun SomewhereApp(model: AppViewModel) {
                             InvitationScreen(
                                 (route as AppRoute.Invitation).model,
                                 model::home,
+                                response = model::completedResponse,
                                 authenticating = auth.busy,
                                 signIn = model::startSignIn,
                             )

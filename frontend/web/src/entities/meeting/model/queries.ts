@@ -5,7 +5,13 @@ import {
   getParticipants,
   listMeetings,
 } from '@/entities/meeting/api/read';
-import { guarded, privateKey, useAccess } from '@/entities/meeting/model/access';
+import {
+  accessEpoch,
+  confirmMeetingAccess,
+  guarded,
+  privateKey,
+  useAccess,
+} from '@/entities/meeting/model/access';
 import { ApiError } from '@/shared/api';
 
 export const useMeetings = (user: string) => {
@@ -29,14 +35,15 @@ export const useInvitation = (token: string, user: string) => {
   });
 };
 
-export const useInvitationOrganizer = (id: string, user: string) => {
+export const useInvitationAccess = (id: string, user: string) => {
   return useQuery({
-    queryKey: ['invitation-organizer', user, id],
+    queryKey: ['invitation-access', user, id],
     queryFn: async ({ signal }) => {
       try {
+        const epoch = accessEpoch(user, id);
         const meeting = await getMeeting(id, signal);
 
-        return meeting.organizerId === user;
+        return confirmMeetingAccess(user, id, meeting.myRsvpRevision, epoch);
       } catch (error) {
         if (error instanceof ApiError && error.status === 403) {
           return false;

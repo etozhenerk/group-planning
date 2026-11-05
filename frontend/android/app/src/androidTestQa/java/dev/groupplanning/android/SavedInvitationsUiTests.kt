@@ -15,6 +15,7 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -57,15 +58,19 @@ class SavedInvitationsUiTests {
             fixture.waitTag(card)
             fixture.screenshot("android-saved-invitations")
             compose.onNodeWithTag(card).performClick()
-            fixture.waitText("Вы пока не уверены")
+            fixture.waitTag("rsvp-Maybe")
             respond("Приду")
-            fixture.waitText("Повторить сохранение")
-            compose.onNodeWithText("Вы пока не уверены").assertIsDisplayed()
+            fixture.waitText(
+                "Сохранение не подтверждено. Повторите запрос.",
+            )
+            compose.onNodeWithTag("rsvp-Maybe").assertIsSelected()
             compose.onAllNodesWithTag("invitation-conversation").assertCountEquals(0)
             fixture.screenshot("android-saved-response-error")
-            compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+            compose.onNodeWithTag("rsvp-Going").performClick()
             fixture.waitTag("invitation-conversation")
             fixture.device.pressBack()
+            fixture.waitText("Настолки у Саши")
+            compose.onNodeWithTag("home-invitations").performClick()
             fixture.waitText("Пока нет приглашений")
             compose.onNodeWithTag("home-meetings").performClick()
             fixture.waitText("Настолки у Саши")
@@ -74,17 +79,18 @@ class SavedInvitationsUiTests {
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
             fixture.waitTag("invitation-people")
             respond("Возможно")
-            fixture.waitText("Вы пока не уверены")
-            compose.onAllNodesWithTag("invitation-conversation").assertCountEquals(0)
-            fixture.device.pressBack()
-            fixture.waitTag("home-invitations")
-            compose.onNodeWithTag("home-invitations").performClick()
             fixture.waitTag(card)
+            compose.onAllNodesWithTag("invitation-conversation").assertCountEquals(0)
             compose.onNodeWithTag(card).performClick()
-            fixture.waitText("Вы пока не уверены")
+            fixture.waitTag("rsvp-Maybe")
             respond("Не смогу")
-            fixture.waitText("Вы не сможете прийти")
-            fixture.device.pressBack()
+            fixture.waitTag("rsvp-declined")
+            fixture.waitText("Вы ответили «Не смогу»")
+            compose.onNodeWithText("Организатор увидит ваш ответ.").assertIsDisplayed()
+            compose.onNodeWithText("К моим встречам").performScrollTo().performClick()
+            fixture.waitTag("home-meetings")
+            compose.onAllNodesWithText("Настолки у Саши").assertCountEquals(0)
+            compose.onNodeWithTag("home-invitations").performClick()
             fixture.waitText("Пока нет приглашений")
             fixture.screenshot("android-saved-empty")
         }
@@ -174,7 +180,7 @@ class SavedInvitationsUiTests {
                 assertTrue("caption glyph top clipped", inkRows.first() <= expectedTop + 2)
                 assertTrue("caption glyph bottom clipped", inkRows.last() >= expectedBottom - 2)
                 compose.onNodeWithTag(card).performClick()
-                fixture.waitText("Вы пока не уверены")
+                fixture.waitTag("rsvp-Maybe")
                 fixture.device.pressBack()
                 fixture.waitTag(card)
             }
@@ -208,7 +214,15 @@ class SavedInvitationsUiTests {
     }
 
     private fun respond(answer: String) {
-        compose.onNode(hasText(answer) and hasClickAction()).performScrollTo().performClick()
-        compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+        val public = compose.onAllNodesWithTag(
+            "rsvp-${when (answer) {
+                "Приду" -> "Going"
+                "Возможно" -> "Maybe"
+                else -> "NotGoing"
+            }}",
+        ).fetchSemanticsNodes().isNotEmpty()
+        val action = compose.onNode(hasText(answer) and hasClickAction())
+        if (!public) action.performScrollTo()
+        action.performClick()
     }
 }

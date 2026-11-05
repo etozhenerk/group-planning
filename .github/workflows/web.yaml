@@ -154,6 +154,10 @@ jobs:
         id: window
         if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
         run: python3 scripts/ci/run.py window npm exec --workspace @somewhere/web -- playwright test --config playwright.window.config.ts --reporter=github,line --output=test-results/window
+      - name: RSVP with realtime access revocation
+        id: rsvp
+        if: ${{ !cancelled() && steps.demo.outcome == 'success' && steps.browser.outcome == 'success' }}
+        run: python3 scripts/ci/run.py rsvp npm exec --workspace @somewhere/web -- playwright test --config playwright.rsvp.config.ts --reporter=github,line --output=test-results/rsvp
       - name: Preserve browser failure evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

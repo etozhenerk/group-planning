@@ -9,19 +9,22 @@ struct HomeView: View {
     @State private var owner: MeetingListOwner
     @State private var savedInvitations: SavedInvitationsOwner
     @State private var section: HomeSection = .meetings
-    @State private var path: [UUID] = []
+    @State private var path: [HomeDestination] = []
+    @Binding private var responseDestination: RSVPOutcome?
     @State private var showingCreate = false
     @State private var creator: CreationOwner?
     @State private var refreshID = UUID()
 
     init(
         session: SessionStore, user: UserProfile, drafts: DraftRepository,
-        deleteAccount: @escaping () -> Void = {}
+        deleteAccount: @escaping () -> Void = {},
+        responseDestination: Binding<RSVPOutcome?> = .constant(nil)
     ) {
         self.session = session
         self.user = user
         self.drafts = drafts
         self.deleteAccount = deleteAccount
+        _responseDestination = responseDestination
         _owner = State(initialValue: MeetingListOwner(session: session))
         _savedInvitations = State(initialValue: SavedInvitationsOwner(session: session))
     }
@@ -37,7 +40,7 @@ struct HomeView: View {
                         owner: savedInvitations, invitations: invitations, create: openCreate)
                 } else {
                     MeetingListView(
-                        owner: owner, create: openCreate, select: { path.append($0) },
+                        owner: owner, create: openCreate, select: { path.append(.meeting($0)) },
                         invitations: invitations
                     )
                     .refreshable { await owner.load() }
@@ -54,8 +57,15 @@ struct HomeView: View {
             .safeAreaInset(edge: .bottom, spacing: DesignTokens.spaceS0) {
                 HomeNavigation(selection: $section)
             }
-            .navigationDestination(for: UUID.self) { id in
-                MeetingSnapshotView(id: id, session: session)
+            .navigationDestination(for: HomeDestination.self) { destination in
+                switch destination {
+                case .meeting(let id): MeetingSnapshotView(id: id, session: session)
+                case .declined(let title):
+                    DeclinedResponseScreen(title: title) {
+                        section = .meetings
+                        path = []
+                    }
+                }
             }
             .task(
                 id:
@@ -68,9 +78,33 @@ struct HomeView: View {
             .onDisappear { owner.cancel() }
         }
         .fullScreenCover(isPresented: $showingCreate) {
-            if let creator { CreateMeetingScreen(owner: creator, openMeeting: { path.append($0) }) }
+            if let creator {
+                CreateMeetingScreen(owner: creator, openMeeting: { path.append(.meeting($0)) })
+            }
+        }
+        .task(id: "\(scenePhase)-\(path.isEmpty)-\(section.rawValue)-\(refreshID)") {
+            if scenePhase == .active && path.isEmpty && section == .invitations {
+                await savedInvitations.load()
+            }
         }
         .onChange(of: showingCreate) { old, new in if old && !new { refreshID = UUID() } }
+        .onChange(of: responseDestination) { _, destination in
+            guard let destination else { return }
+            switch destination {
+            case .going(let id):
+                section = .meetings
+                path = [.meeting(id)]
+            case .maybe:
+                savedInvitations.invalidate()
+                refreshID = UUID()
+                section = .invitations
+                path = []
+            case .declined(let title):
+                section = .meetings
+                path = [.declined(title)]
+            }
+            responseDestination = nil
+        }
         .environment(\.avatarImages, session.privateData.avatars)
         .tint(AppPalette.accent)
     }

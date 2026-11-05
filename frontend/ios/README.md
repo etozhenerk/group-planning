@@ -206,6 +206,12 @@ HTTPS-ссылкой API. Входящие `group-planning-ios://i/{token}` от
 profile с Associated Domains и AASA на домене: [настройка и проверка](../../backend/docs/app-links.md).
 Без подтверждения ОС HTTPS-ссылка остаётся рабочим веб-приглашением.
 UI-test host использует отдельную схему `group-planning-ios-ui`.
+Проверка `sh scripts/test-ui.sh invitation-layout` задаёт QA-окну реальные
+ограничения320×568pt на существующем симуляторе. Снимок сохраняет физический экран;
+metadata отдельно фиксирует nativeWindow, его safe area и physicalScreen.
+`SOMEWHERE_UI_VIEWPORT=320x568` и управляемые SDK-результаты
+`SOMEWHERE_UI_LOGIN_OUTCOME=success|cancelled|hold` доступны только UITestHost.
+Обычный клиент использует размер окна ОС и настоящий LoginSDK.
 RSVP отправляет ожидаемую ревизию и ключ намерения. Подтверждённое снятие
 участия отменяет приватные запросы и очищает сообщения/состав. Экран обновляется
 после возврата в приложение и периодически в активном состоянии; несохранённый

@@ -6,6 +6,7 @@ struct SomewhereApp: App {
         WindowGroup {
             AppRootView()
                 #if SOMEWHERE_UI_TEST_HOST
+                    .modifier(UITestViewport())
                     .modifier(UITestCaptureContext())
                 #endif
         }

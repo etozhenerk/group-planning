@@ -38,6 +38,27 @@ export const useAccess = (user: string, id: string) => {
   );
 };
 
+export const accessSessionEpoch = () => initial.epoch;
+
+export const applyConfirmedResponse = (
+  client: QueryClient,
+  user: string,
+  result: ResponseState,
+  epoch: number,
+  sessionEpoch: number,
+): boolean => {
+  if (initial.epoch !== sessionEpoch) {
+    return false;
+  }
+
+  return (
+    applyResponse(client, user, result, epoch) ||
+    (!result.canAccess &&
+      read(user, result.meetingId).denied &&
+      applyResponse(client, user, result, accessEpoch(user, result.meetingId)))
+  );
+};
+
 export const accessEpoch = (user: string, id: string) => {
   return read(user, id).epoch;
 };
@@ -98,6 +119,26 @@ export const applyResponse = (
   void client.invalidateQueries({ queryKey: ['meetings', user] });
   void client.invalidateQueries({ queryKey: ['saved-invitations', user] });
   void client.invalidateQueries({ queryKey: ['invitation'] });
+
+  return true;
+};
+
+// Only a fresh protected read can reopen a previously revoked local lease.
+export const confirmMeetingAccess = (
+  user: string,
+  id: string,
+  revision: string,
+  epoch: number,
+): boolean => {
+  const state = read(user, id);
+
+  if (state.epoch !== epoch || BigInt(revision) < BigInt(state.revision)) {
+    return false;
+  }
+
+  if (state.denied) {
+    publish(user, id, { epoch: nextEpoch(), denied: false, revision });
+  }
 
   return true;
 };

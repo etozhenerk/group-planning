@@ -70,6 +70,7 @@ case "${1:-all}" in
     auth) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAndLoginFailure; somewhere_auth_filter=-only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent; somewhere_scope=auth ;;
     onboarding-large) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAtLargeText; somewhere_scope=accessibility ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
+    invitation-layout) somewhere_filter=-only-testing:SomewhereUITests/InvitationViewportUITests; somewhere_scope=auth ;;
     saved) somewhere_filter=-only-testing:SomewhereUITests/SavedInvitationsUITests; somewhere_scope=saved ;;
     covers) somewhere_filter=-only-testing:SomewhereUITests/CoverUITests; somewhere_scope=covers ;;
     tasks) somewhere_filter=-only-testing:SomewhereUITests/PreparationTaskUITests; somewhere_scope=tasks ;;
@@ -91,7 +92,7 @@ case "${1:-all}" in
     touch-targets) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testPeriodAndCancelExposeTheirWholeVisibleTouchTargets; somewhere_scope=accessibility ;;
     pickers) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testCreationAndPickers; somewhere_scope=accessibility ;;
     startup) somewhere_filter=-only-testing:SomewhereUITests/AccessibilityUITests/testLoadingBrandAndReturn; somewhere_scope=accessibility ;;
-    *) printf 'Usage: sh scripts/test-ui.sh [native-pdf-delayed|native-vibe-delayed|native-vibe-upload|native-picker-photo-more|native-picker-selection|native-empty-invite|album-offline-sweep|chat-keyboard-return|album-preload-failure|all|qa-selectors|qa-followup|qa-baseline|qa-isolation|creation-field-hit|creation-field-hit-more|creation-large-visual|navigation-type|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
+    *) printf 'Usage: sh scripts/test-ui.sh [native-pdf-delayed|native-vibe-delayed|native-vibe-upload|native-picker-photo-more|native-picker-selection|native-empty-invite|album-offline-sweep|chat-keyboard-return|album-preload-failure|all|qa-selectors|qa-followup|qa-baseline|qa-isolation|creation-field-hit|creation-field-hit-more|creation-large-visual|navigation-type|chat-keyboard|chat-keyboard-geometry|chat-controls|avatar-ack|avatar-ack-http|avatar-fallback|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|album-download|album-access|sheet-stability|sheet-pending|sheet-task|support|support-voiceover|native-usability|help|media-native|native-navigation|common-navigation|common-about|chat-sync|readers-a11y|telegram-chat|design|design-forms|meeting-info|sheet-date-settings|sheet-gestures|sheet-media|sheet-navigation|sheet-motion|media|memories|experience|account|profile|auth|onboarding-large|invitation|invitation-layout|feed|calendar|polls|places|tasks|covers|covers-large|saved|accessibility|touch-targets|pickers|startup]\n' >&2; exit 2 ;;
 esac
 somewhere_temporary=$(mktemp -d "${TMPDIR:-/tmp}/somewhere-ios-ui.XXXXXX")
 . ./scripts/simulator.sh
@@ -235,6 +236,13 @@ elif [ "${1:-all}" = "chat-controls" ]; then
         -only-testing:SomewhereUITests/ChatMediaSheetUITests
 else
     set -- ${somewhere_filter:+"$somewhere_filter"} ${somewhere_auth_filter:+"$somewhere_auth_filter"}
+fi
+
+if [ "${SOMEWHERE_IOS_SKIP_VOICEOVER:-0}" = "1" ]; then
+    printf 'QA_VOICEOVER=excluded-by-explicit-user-request\n'
+    set -- "$@" -skip-testing:SomewhereUITests/SupportVoiceOverUITests \
+        -skip-testing:SomewhereUITests/ChatReadersAccessibilityUITests \
+        -skip-testing:SomewhereUITests/ExperienceAccessibilityUITests
 fi
 
 xcodebuild -jobs "${SOMEWHERE_XCODE_JOBS:-2}" -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug \

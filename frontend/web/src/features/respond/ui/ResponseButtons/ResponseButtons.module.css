@@ -1,19 +1,4 @@
-.button {
-  min-height: 44px;
-  border: 0;
-  border-radius: 14px;
-  padding: 11px 18px;
-  color: var(--text);
-  background: var(--surface);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 650;
-}
-
-button.primary,
-.button.primary {
+button.primary {
   background: var(--action);
   color: var(--action-text);
 }
@@ -75,4 +60,55 @@ button.primary,
   .response-buttons
   button[aria-pressed='true'] {
   outline: none;
+}
+
+.stack[data-mobile='true']:not(.meeting) {
+  gap: var(--ds-space-s12);
+}
+
+.stack[data-mobile='true']:not(.meeting) .response-buttons {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-space-s8);
+}
+
+.stack[data-mobile='true']:not(.meeting) .response-buttons button {
+  min-height: var(--ds-target-web);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  padding: var(--ds-space-s10) var(--ds-space-s12);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-medium);
+  border-radius: var(--ds-component-button-radius);
+  background: transparent;
+}
+
+.stack[data-mobile='true']:not(.meeting) .response-buttons button.primary {
+  grid-column: 1 / -1;
+  min-height: var(--ds-target-android);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  border-color: transparent;
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.stack[data-mobile='true']:not(.meeting) .response-buttons button[aria-pressed='true'] {
+  background: var(--ds-color-navigation-selected);
+  color: var(--ds-color-navigation-selected-text);
+  border-color: var(--ds-color-accent);
+  outline: none;
+}
+
+.stack[data-mobile='true']:not(.meeting) p {
+  margin: 0;
+  font-size: var(--ds-typography-size-caption);
+  color: var(--ds-color-muted);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.stack[data-mobile='true']:not(.meeting) p[role='status'] {
+  color: var(--ds-color-text);
+}
+
+.stack[data-mobile='true']:not(.meeting) p.error {
+  color: var(--ds-color-error);
 }

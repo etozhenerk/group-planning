@@ -29,6 +29,7 @@ enum ExperienceScreenshot {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { settled.fulfill() }
         _ = XCTWaiter.wait(for: [settled], timeout: 1)
         let app = XCUIApplication()
+        let window = app.windows.firstMatch.frame
         let screenshot = XCUIScreen.main.screenshot()
         let capturedAt = Date()
         let attachment = XCTAttachment(screenshot: screenshot)
@@ -53,13 +54,16 @@ enum ExperienceScreenshot {
                     "x": app.frame.minX, "y": app.frame.minY,
                     "width": app.frame.width, "height": app.frame.height,
                 ],
-                "viewport": ["width": app.frame.width, "height": app.frame.height],
+                "viewport": ["width": window.width, "height": window.height],
+                "nativeWindowFrame": [
+                    "x": window.minX, "y": window.minY,
+                    "width": window.width, "height": window.height,
+                ],
                 "pixels": [
                     "width": screenshot.image.cgImage?.width ?? 0,
                     "height": screenshot.image.cgImage?.height ?? 0,
                 ],
-                "screenScale": app.frame.width > 0
-                    ? CGFloat(screenshot.image.cgImage?.width ?? 0) / app.frame.width : 0,
+                "screenScale": screenshot.image.scale,
                 "imageScale": screenshot.image.scale,
             ]
             let data = try JSONSerialization.data(

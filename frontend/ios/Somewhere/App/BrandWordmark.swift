@@ -10,11 +10,11 @@ struct BrandWordmark: View {
     }
 
     private var markSize: CGFloat {
-        compact ? 34 : fontSize * 1.2
+        compact ? DesignTokens.componentMobileBrandMarkSize : fontSize * 1.2
     }
 
     private var gap: CGFloat {
-        compact ? 5 : 9
+        compact ? DesignTokens.componentMobileBrandGap : 9
     }
 
     var body: some View {

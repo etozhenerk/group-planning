@@ -156,6 +156,16 @@ internal class InvitationViewModel(
             )
             if (privateAccess) {
                 repository.loadPrivate(details.preview.meetingId, includeFeed = feeds == null)
+                if (epoch != version) return
+                val organizer = snapshot.value.data.participants[details.preview.meetingId]
+                    ?.value?.participants?.firstOrNull { it.role == "organizer" }?.user
+                if (details.preview.organizer == null && organizer != null) {
+                    mutable.value = state.value.copy(
+                        details = details.copy(
+                            preview = details.preview.copy(organizer = organizer),
+                        ),
+                    )
+                }
                 if (details.organizer) loadShare(details)
             }
         } catch (cancelled: CancellationException) {
@@ -171,6 +181,26 @@ internal class InvitationViewModel(
         } finally {
             if (epoch == version) mutable.value = state.value.copy(loading = false)
         }
+    }
+
+    fun respond(answer: RsvpAnswer) {
+        refreshDeadline()
+        val before = state.value
+        val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile ?: return
+        if (before.profileId != profile.id) return
+        if (before.loading || before.saving || before.details?.organizer == true) return
+        if (before.pending != null) {
+            if (before.pending.input.answer != answer) return
+        } else {
+            if (before.joinClosed) return
+            val details = before.details ?: return
+            mutable.value = before.copy(
+                choice = answer,
+                issue = null,
+                pending = RsvpSubmission(RsvpRequest(answer, details.preview.myRsvpRevision)),
+            )
+        }
+        save()
     }
 
     fun save() {
@@ -206,6 +236,12 @@ internal class InvitationViewModel(
                         ),
                     ),
                     choice = result.rsvp,
+                    completedResponse = RsvpOutcome(
+                        profile.id,
+                        result.meetingId,
+                        result.rsvp,
+                        details.preview.title,
+                    ),
                     pending = null,
                     saving = false,
                 )

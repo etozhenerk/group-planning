@@ -1,0 +1,1699 @@
+{
+  "revision": "invitation-review-fixes-2026-11-05-7.3.0",
+  "sourceCommit": "ea4cad9be1077b23b0fa9394e6e51093ae8d4258",
+  "approval": "05.11.2026: общий результат RSVP и системные сообщения на всех поверхностях, затем «окаю дизайн»; принятые desktop-макеты по desktop-mvp/approval.json. Публикация не закрывает реализацию.",
+  "priority": [
+    "Последнее явное решение пользователя",
+    "Зафиксированные коррекции в ux.md и contracts",
+    "Утверждённый макет конкретного состояния",
+    "Общие основы"
+  ],
+  "corrections": [
+    "7.2.0: неизменённые invite-r3 и desktop DeclinedScreen связаны с ролями до переноса замечаний. Остальной desktop сохраняет исходный baseline. После раннего revoke unknown/retry остаётся в принятой public-invite error/no-cover поверхности, без приватного DOM/обложки/состава.",
+    "7.1.0: привязки размеров и типографики уже принятого экрана отказа, без изменения raw-макетов и результата RSVP; старые отчёты не переносятся.",
+    "7.0.0: RSVP подтверждён → чат/приглашения/отказ, без промежуточной кнопки. Системные строки из серверной хронологии без дублей/расширения доступа. Общий контракт приоритетнее прежних static member/open-meeting состояний. Круглая подложка знака, новые desktop-композиции только по согласованным ревизиям.",
+    "6.3.0: normalized list-референс раскрывает только данные unread-zero по принятому правилу скрытия нуля; raw list-r3 не меняется, preimage производного и генератора сохранён. Это не новая композиция и не доказательство реального чтения.",
+    "6.3.0: компактный ответ использует существующую карточку по invitations-r2; baseline native navigation привязан до переноса общей edge-attached коррекции. VoiceOver сейчас исключён пользователем, прежние evidence/hash не изменяются.",
+    "6.2.0: 44 привязок неизменённого baseline календаря перед переносом в единственный общий компонент; desktop и согласованный mobile-r7 сохраняются. В ту же публикацию до frozen candidate входят21 привязок принятой шапки/непрочитанного списка. Состояния списка/приглашений привязаны в той же публикации до финального кандидата, target44/48 приоритетнее старого40. Две общие привязки fallback72%/opacity0.7 закрепляют существующий производный эталон, не actual.",
+    "6.1.0: совместимые привязки mobilePage/mobileRequired/mobileBrand/mobileOnboarding по существующим макетам; один target44/48 для восьми точек, прямой выбор и вид сохранены. Прежние значения и desktop не меняются.",
+    "6.0.0: новый мобильный пакет по mobile-mvp.md: Back-шеврон, фото/силуэт, настоящие sticky-области вплотную к краям, mandatory/error, 8 страниц r4/r5 и launch44/53/16. Desktop не редизайнится; карты и provider-ссылка не публикуются.",
+    "5.0.0: внешний короткий tap снимает только фокус composer, не поглощает действие; черновик/selection и штатные жесты сохраняются.",
+    "4.1.1: новая web-ревизия запрещает разрыв группы действий; при нехватке места переносится вся группа под заголовок. Mobile две равные колонки; native и токены прежние.",
+    "4.1.0: две соседние кнопки альбома на desktop/native/mobile web; общая подготовка с отменой в secondary, ZIP/native gallery. Прежние значения токенов и все chat/focus/sheets эталоны сохранены.",
+    "4.0.0: sheet-controls raw и SVG заменяют close-X/pending текст; live render blocked, pass не переносится.",
+    "3.0.1 iOS: последнее явное уточнение пользователя и два native raw-макета; старые шапка/полноширинные preview/цикл iOS отменены.",
+    "28.10.2026: нижние вкладки перетекают общим индикатором за motion.navigation, Reduce Motion мгновенно; область показа не расширяется. Общий photo batch carousel и preload относятся ко всем клиентам.",
+    "3.0.0 native: picker-first; selected-only sheet; system share; swipe не tap; карусель/overlayX/batchstate/auto-close; cache; emptyInvite; edge-back; профиль/cover/loading по последним прямым решениям.",
+    "3.0.0: web picker только из формы; cancel сохраняет форму; прямой вход в добавление вайба; compact desktop Dialog; contain полного фото. Native отдельно, токены прежние.",
+    "2.5.2: desktop удаление только клавиатурой в composer; поиск меняет запрос. Мобильная кнопка прежняя. Противоречивое общее ожидание кнопки в тесте уточнено по прямому решению пользователя; новые UI-элементы и токены не добавляются.",
+    "2.5.1: state=context-zero явно показывает строку Кто прочитал под реакциями в общем popup собственного accepted сообщения; menu exit предшествует readers sheet/dialog, возврат к bubble. Токены прежние.",
+    "2.5.0: конкретизирован уже принятый UX v1 read/unread, readers sheet и bounded history; существующие композиции/токены сохраняются. Фрагмент state=list задаёт только badge, не новый список.",
+    "2.4.1: исправлено описание scope исходящих — принятый UX v1 и same-row states относятся к web, iOS и Android; композиция/значения токенов прежние, приёмка каждой платформы отдельная.",
+    "2.4.0: уточнение пользователя — телефонный iOS проверяется кнопками, жестами и возвратом экранной клавиатуры; external-keyboard Escape остаётся отдельной дополнительной проверкой. Web Escape и Android Back сохраняются.",
+    "2.4.0: web outbox использует одну строку в timeline до/после ACK; существующие bubble и токены сохраняются, ошибка устройства у composer, retry/recover не перезаписывают новый draft.",
+    "2.3.0: по прямому запросу пользователя меню по плюсу имеет opacity/сдвиг 8, enter 180/exit 150 ms; Reduce Motion сразу, retained exit без ввода, безопасное повторное открытие.",
+    "2.2.0: вход/выход панели эмодзи, завершение выхода до удаления, быстрое повторное открытие и Reduce Motion; композиция прежняя.",
+    "2.1.0: дополнительные роли размеров ранее принятого raw inline-карточек. Raw не меняется; legacy avatar/bubble и полноширинный inline CTA исправляются в клиентах.",
+    "2.0.0: все действия + desktop модалки/mobile sheets; прежние route-страницы отменены.",
+    "2.0.0: long press message открывает anchored picker; long press chip открывает людей с emoji filter; tap chip меняет своё участие. Постоянных smile/add-reaction/people кнопок нет. AX actions на исходных элементах.",
+    "2.0.0: заметные selected/pressed, enter/exit motion с Reduce Motion, единый SVG smile24, caret/placeholder общие insets, deadline без weekday/equal height/adaptive stack.",
+    "1.4.1: mobile-web input/textarea/select/search используют минимум16px без запрета zoom по прежнему mobile-scroll.md. Native body15 сохраняется; общая иконка22 и emoji-toggle23 различаются. Старые CSS/hash/evidence сохранены, новый raw требует нового live review.",
+    "Мобильные composer/emoji, anchored quick/full reactions, people, info/settings/task/date/place/task forms — APPROVED 2026-10-27-telegram-chat; эта ревизия заменяет прежние мобильные композиции покрытых состояний.",
+    "Composer и Send над emoji-доком, без backdrop; keyboard toggle возвращает selection и фокус в composer. Web Escape и Android Back возвращают фокус к opener; на iOS возврат экранной клавиатуры фокусирует composer.",
+    "Reactions anchored к сообщению, full grid ограничена conversation bounds; отдельная people sheet, выбранный filter/focus и прокрутка сохраняются.",
+    "Компактные панели title19/650, одна активная поверхность, закреплённое подтверждение форм; native адаптация по platforms.md. Все пять настроек даты сохранены.",
+    "Compact состав считает организатора и Приду; expanded показывает все ответы; expand/collapse сохраняет видимый фокус. Настройки/RSVP доступны независимо от раскрытия.",
+    "Мобильный онбординг без дополнительного знака вопроса и панели помощи/документов. Предпросмотры вложений сохраняют chat-sheets и полный продуктовый путь.",
+    "Макетные ограничения, demo controls и workbench scale не переносятся в приложения; права/API/черновики/подтверждения/идемпотентность прежние."
+  ],
+  "excludedReferences": [
+    "list-avatars.html",
+    "list-names.html",
+    "participants.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/extended-draft",
+    "openspec/changes/meeting-experience-refresh/assets/action-task.html",
+    "openspec/changes/meeting-experience-refresh/assets/action-place.html",
+    "openspec/changes/meeting-experience-refresh/assets/action-date.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-date.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-place.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-task.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.1",
+    "openspec/changes/meeting-experience-refresh/assets/chat-emoji-reaction.html",
+    "openspec/changes/meeting-experience-refresh/assets/chat-reactions.html",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/2.1.0",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/2.2.0",
+    "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/history/2.5.0",
+    "openspec/changes/mobile-mvp-design-refresh/assets/flow-r1",
+    "openspec/changes/mobile-mvp-design-refresh/preparation/provider-revision"
+  ],
+  "sources": [
+    {
+      "path": "openspec/changes/meeting-experience-refresh/ux.md",
+      "sha256": "4f37ee8f924324f2d09a88e4c5706e2f7558d248712f30d4967ffe03eaecfcd5"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
+      "sha256": "a3a96aaf84ce0674d4ead8a54a7cc50b4d5d2c470de00709d56c613779dbf982"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/interactions.js",
+      "sha256": "47646b4e2363677252d3b863d4c9c04f10a36c3215f01f6df78509641bb84526"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/list.html",
+      "sha256": "c9a46c61b791c7175902c970cc6da214db4434ad77cba61c0506e0818d19a93e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+      "sha256": "609187220012779db7f977677e4ffa4a2241c33f88415f4c2f4dabd4e6a4e890"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+      "sha256": "b56d99cc6dbcaf9ad0ab6cb4dc7ace7c5fdcb43f4f423affde1147639bb3affa"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/album.html",
+      "sha256": "992ccfd786498f8fbef032d8c9e0185191a8db498333775dcc21b9d7d4be79fb"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+      "sha256": "dc939441c07707c8c44f012bc56da3e474321ed4c95ea335f0697080e1a1918a"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/friends.png",
+      "sha256": "0cbb47834646b79bdc232dacb0e1caab6e0faaf65dc95eec7bfbe2f35c32ee41"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+      "sha256": "27fa4f65f62a16fde25c994cfe9e292068eb2ec1855e4b0dddb05dbd57a1e2bc"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+      "sha256": "12a7194dc0f23fbd4c7646fcbe162edfb87550bbea3ef2bba9ddf969286d6dbb"
+    },
+    {
+      "path": "docs/design/mobile-onboarding.md",
+      "sha256": "1fe849ef9136c778749d9bf2df0c4f4bd65cdd4cd3a54044e32d488d45558b5c"
+    },
+    {
+      "path": "openspec/changes/gathering-activity-feed/assets/date-poll-v1/date-poll.css",
+      "sha256": "f2e4c3112813f9426dd0df02d89d80be5375e1c9488bddebf05c766e136766f5"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+      "sha256": "3b53b60cd74f92f940ffc3dcbfbfc96a95e209295952ed6b3ef0c91c1dbc377d"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat.html",
+      "sha256": "8acde9cdec2133901673b452b24ebee259e8f70a41fa8afe6ffb0a68a26603ea"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/index.html",
+      "sha256": "d45cc3150d5718673b2d967c03c140b2a7432f5ee22b840c6a287f5dfa1c05d0"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-details.html",
+      "sha256": "63b7ef07a02e376dbe474dd5a3cf8b2cf0c08d23212b571cb1f475b1e2ed2976"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+      "sha256": "7c2d95f1d451e13674c33d6ea7c6412cbdd55d49345aeb9742afb4608a2385f5"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+      "sha256": "a376e1c53c8ff6c581e6c41fa51651c90292e922d4ef9f6a37e4b004781aff3b"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+      "sha256": "5eb9e60d9075e390ba48e9ba0fb502ce34166b6125e83d68258bc5e10442df7e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share-copied.html",
+      "sha256": "547010f04733c10a8e026a51d6b1d72abeb30eb32d419c937bfc8b2164af14a2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share.html",
+      "sha256": "6d22fa8c6dcd8fb11e60105f90a49a5fee34deadd638fe7210deab051216e3f2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+      "sha256": "8cc444f99e71c5724d94a282d40ecd14ad36f4fdac044239af04fd3e4a47930c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+      "sha256": "a48dfe8d5c3acf8a02ab47047b5d0d8aece65c2cbb8d92e81e948def4a38ebf2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-one.html",
+      "sha256": "ed118dae0b4de4134d8522520426b282b50f72f6a2a730dbd9963f8f84cd4aa5"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+      "sha256": "415d4308c339258ef35cce693aeaffd49f014e526c71dc1ecb239e81e6181490"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-organizer.html",
+      "sha256": "5e9d68ee8576623e6a38022e60aeb96faaf2419eefca0992b31f4c8bdadb054c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-member.html",
+      "sha256": "0648b90bd3dd1de4f7c385eac7fc62dc2a7de26f37773838185341245ade501e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.css",
+      "sha256": "a8c6c2780a086dd16ea23f08fb8cb3115850372af9d19161411cdfb1498807a4"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.js",
+      "sha256": "736ba66626a3e05a98f7335081d4427a6f8d6ea40fe78f653a4d5aeb9929cbf6"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.ts",
+      "sha256": "24380607e554aa00b25aeb8eff8022b2a20f2e85459d923b0806780273085f89"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/generate-participants.ts",
+      "sha256": "4fa8ebb5be64ccfe05ee26c752ef7391735bd0c5b67aec321e23f54817536432"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-review.md",
+      "sha256": "da796793336ae4d10f99cba0b0d3f9ec24d13b006f64395b0d153dfa076f4e5f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-provenance.json",
+      "sha256": "671dab6e64c3ad839f6d57adf3af22db2f133d290abc609373614596a48c285e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+      "sha256": "c21b8aa602326e768143895d662515027c3dd18522e00e3a07eb4efacb241add"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+      "sha256": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+      "sha256": "8e9036f535646daaac7ab45688aac429b9ff323f6052c9be27ccf513a5b7abc7"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+      "sha256": "3b202fa95050be608b2fe6ea622f992b8ed4ed0747b76f6d1b1e0ada6e32ccc7"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+      "sha256": "edc5a7c160d2d641a785659017f19c6e06d3920e23eeed63d2e739e545534562"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/index.html",
+      "sha256": "ff8e6ed17fa4e19df3372d531510245e960efdc1ce0985eece0fd366340c3a00"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/workbench.css",
+      "sha256": "ef08392fb6bb52841254ae1c3bb10a4083b968402771432c743249912938e1a9"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/workbench.js",
+      "sha256": "d3ecc7f0b779c4582db3186654b3935af94a0d8f51cc33f1627787e6a9115caa"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/app/main.ts",
+      "sha256": "30ba1cb14fc446c94807a526dd7b5acc554dc3ef7fa8443e9ca96d6d33102c50"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/app/workbench.ts",
+      "sha256": "f15afadb6166151f4c584268b21273bf2101f9fdc53577dc9e013cf28cee2e7b"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/index.ts",
+      "sha256": "4046bc1b3becc7d839e457b1d59ee4b998f52a0a49424480ee56a7bdc6cd98bb"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/actions.ts",
+      "sha256": "00d4ba1c0359cf9d9ea6f35568df9674f14871e32b7595a12c0c585e32ead2be"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/composer.ts",
+      "sha256": "e2c9708a6ebfe89954536a177075a0e38f046f49ba46b915bbc026decad5a342"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/form-events.ts",
+      "sha256": "4771bbe6b39097bb947a06deb098c641d9c8991567afcc4a606a90ce5b1bccad"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/reactions.ts",
+      "sha256": "649d2f391be997829b6bd80527ba0bd52036e4ec7712df1acc250d6556137139"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/sheets.ts",
+      "sha256": "7d48c4492a6c1e211a2ce56136cdd9c3faeddf258c5d0157363793a24c7436e9"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/task-actions.ts",
+      "sha256": "97630cbc251cba2cf00417694d5503a594dbf9b33df570808d18b9f39cfc3993"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/context.ts",
+      "sha256": "0735b21b8fe4aed9c2186d5fe0510787ab889add1c0f6b917fd0990d61feda5f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/emoji.ts",
+      "sha256": "a394e38ff4ce6f777cf3e0c82fdfe28beddbdf25a1cf7704c29c5087249296f1"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/model.ts",
+      "sha256": "7d45d64719408b75417a71b4bad9de131cd14f86dbfed0969ce3ecda91c1967c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/add-menu.ts",
+      "sha256": "78e2965d69ad93a6f110b7c34ade2ab6cc003dbf2f6f1837259fd5f3bc4cbc5e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/conversation.ts",
+      "sha256": "dfe7921932739b9d4ea4ac63416db1c94c3e87f17152db6aa3c24d192f9dcda7"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/emoji-picker.ts",
+      "sha256": "8e26908d40b475ca0dd3720b6b1b83037f08febd304ff523354385e7d5c4795f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/forms.ts",
+      "sha256": "983ae8183c2c165f23dea12c05f9a6787e31fbc649da73f8cc52fccfa4274182"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/sheet-content.ts",
+      "sha256": "1f5cd0e4357f3000473eca9089ac35481f139a91529be903b0049e2d1b50236c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/shared/lib/dom.ts",
+      "sha256": "d3f1cb18a13e543f33b97edb1a7ba14f77f1ff0ee4933ef38f276e5909c8effe"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tsconfig.json",
+      "sha256": "ee806332f802835959f6ecc3fc6422936852073ffcf9ead6b93b29043f1ada8b"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/verify-browser.ts",
+      "sha256": "3cacd5a462bfdfed0a51100d16f8878cca11db66fdc995fd0b43f018aaf3a065"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/probe-fit.ts",
+      "sha256": "7b2790e823e2c4ec84df0215f83380c4db3e6fe24148055306ab373226b940f9"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/probe-roster.ts",
+      "sha256": "15309e00e1407b5111119dca4b786f3fff0226e19a1de53e18f6935868027072"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+      "sha256": "648949c6d8455bae4c232e3713e2c4932d19026451cf0f198a0a8d0d2f3407f0"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/README.md",
+      "sha256": "0ceb4fa57677d02fc31aa223548fa9efe63a37ed19edc015c0d82704c3b0a48c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+      "sha256": "9d685164cecb949a85e7d536207ad1d47aece7adcfac656266b9a4e41ff0ed4f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+      "sha256": "69bda7f3401d1ad9da9a5d08875166da235c1e821b41240575203fa751c5b6cd"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+      "sha256": "d2c9b416faa176c8e4b2b7eef7d45c736a22e70c414d5013c139921d74c027df"
+    },
+    {
+      "path": "openspec/changes/gathering-activity-feed/mobile-scroll.md",
+      "sha256": "fa5f133309c4e661638ae618ee874060de0d65036141d303bd0f53ee7c8cf328"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/tokens.css",
+      "sha256": "dc102920d047475b4e7af0ff267a87df934b66fa11252abcc46e5f68f0c29b0a"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/chat.css",
+      "sha256": "0277edf72f70e0977c402d0dca9c039d821fb40d927d4c28f00194cbb8f85825"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/panels.css",
+      "sha256": "4e99e54ff89f70a95a084cb7e2a9382f94a77c91c991b883b299d7078f28fdb7"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/source-hashes.json",
+      "sha256": "31af1db07725cfa008acfbb7f73eaa5033261acee8579afe588342475f8495f8"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+      "sha256": "c4d0e6efdfe6af62623848c560322527af396bfe8f88e82f5c33d92e0e36b1ae"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+      "sha256": "4ce5798fac23caa53aaf052f2dea1ad505276bc5e87791fc8fa0e3a075b79c59"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/dock-motion.ts",
+      "sha256": "b36c497922187783a95c247aa7d415eba52f84f2e56cd503e4121169340dd707"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-emoji-motion-2.2.0.md",
+      "sha256": "f9d4077f1e798adc14edc90b993dececa3c51ac009c08342d8db7bc2b612e9ca"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/menu-motion.ts",
+      "sha256": "03d6ef88f11979a617755bc2b9a4d1ac5b45d7ebb44fb5e3b23b9e9de064d099"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-composer-menu-motion-2.3.0.md",
+      "sha256": "2120a840c40c0feeebb3f6510883783c83eb682ca6d7355b82e748ca20d9e505"
+    },
+    {
+      "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+      "sha256": "0d2ed01b7e118ccd80d471b7db3cf906648c6f0531e8d82b3ef800c7aa106185"
+    },
+    {
+      "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+      "sha256": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e"
+    },
+    {
+      "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+      "sha256": "8e9036f535646daaac7ab45688aac429b9ff323f6052c9be27ccf513a5b7abc7"
+    },
+    {
+      "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css",
+      "sha256": "3b202fa95050be608b2fe6ea622f992b8ed4ed0747b76f6d1b1e0ada6e32ccc7"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+      "sha256": "ea722ae627902ce8e399c319fc0434a4c4cd767cf101d5af2ff3ba2048e7eceb"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+      "sha256": "989c7f91a6915e281c39890372e01f3a2ef97d3f6766db92dfa90c2b42bdd152"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/index.html",
+      "sha256": "68a51e10ba881afc1cc8c5244e962734fa479d76a0da6eb730dfbd5bd5c98378"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+      "sha256": "c826f424e18b942c2180aa21d089cd7163de4c91a1befcc4493a09de37c54901"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+      "sha256": "9dc3bae39b0b5b3e4b0adc4502d1ceedf953a42aae494fbdd9dc4111dd26568c"
+    },
+    {
+      "path": "docs/design/components/chat-read-state.md",
+      "sha256": "8c95fba8f77f0abbb6fab0c0ac80e7d11fc621f2bd141a41b459c8c6cc7e6896"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-context.ts",
+      "sha256": "78c91a8d473058acd79ed510e87c4991614c33ed56014716e863f6e934baf248"
+    },
+    {
+      "path": "docs/design/components/chat-actions.md",
+      "sha256": "b70aee64db64286993495334df567a39a3c560c7bda1e11ee2e13365a90cf1f6"
+    },
+    {
+      "path": "docs/design/components/memories.md",
+      "sha256": "e832f68d54efe8c6b1b917c0620981eed2362559224307cb63ffc327d808b746"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+      "sha256": "842097b76dda92f97115384ce7c3f037e607fb31ccf16cfa6016a98b39d28c91"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js",
+      "sha256": "6c507e7368d9d0ed5b3e1c4cb4c940d3e17f59654d128031bf3eee94a9fe9b7c"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+      "sha256": "6729c9a171e740b8c23256548deaed733368f92ed233589e6d1ee30c13dde925"
+    },
+    {
+      "path": "docs/design/components/navigation.md",
+      "sha256": "92ad0dff8654de82526374de1e898c42a0fd3c12f9f79dd7bccbd28e0ab7698f"
+    },
+    {
+      "path": "docs/design/components/help-disclosure.md",
+      "sha256": "57fa321f384690044cf25e4aaa28a18587ee8e753f344f6c3c79063869da745a"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-help-disclosure/index.html",
+      "sha256": "7db591c59e039860a937674c29796916a2e3fa8080e62f64ffb7cb764fd4f6a2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-ios-media-polish/album-native.html",
+      "sha256": "14a919c90a9878be84179b1b4c7b147502f7061ac892102c45817f304dd0a89a"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-ios-media-polish/upload-native.html",
+      "sha256": "888bda404c3a89cf0e0adca626ddf2983fa34df4cd9228ed4575db72a9d31bb3"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-ios-vibe-stability/album-native.html",
+      "sha256": "6667ab4635ade2bd7cc125b44c3e8ed9a8e7ae75ce824f28f670f4e9cb1d40c9"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-android-vibe-stability/album-native.html",
+      "sha256": "33c4af5e04fd4fd7a8cc20c0de5ded288b781fd5549f6e718437dc6d978e7303"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-android-vibe-stability/upload-native.html",
+      "sha256": "fa53111806c87912afba3cbbfef3e299df27e28b165fb24776e98e84b86cbe87"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-android-vibe-stability/support-native.html",
+      "sha256": "02ec077232955edd61fcfa016866d989b47d1a76ab16aab5ad29223c0ef0d740"
+    },
+    {
+      "path": "docs/design/content.md",
+      "sha256": "a6e5c979a6c4121907e178712a284b8b93eae56a19d591cc24c1ef8a4c33d37f"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/index.html",
+      "sha256": "1fa880184926cc2c32a4ecdd2736a88209b7fbca148366fe7014797538e99c32"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/controls.js",
+      "sha256": "0b8632778fa0b53ef950efe28a1503049ff48ba664b0f2449975611466086ea2"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/controls.css",
+      "sha256": "8d530a76c3b48649c1a8be7459ee25f981ce1dbfd77e2f099e59a7f240f0e854"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/bulb.svg",
+      "sha256": "39274a10209383e19b4ef86aa562ece1fd2fbc9c9985f94d4d05dfcceea99091"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/plane.svg",
+      "sha256": "7fe63c41267bab2432630c497fd9b1205bdefcf4986e32d0d682b6d75922b27e"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/smile.svg",
+      "sha256": "1976a680db304baa716b6aae2bc8ee2d7cb66cc75de7db23751dcd48304bb079"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/leaf.svg",
+      "sha256": "e7a34c15ed796beb1d9a3ee85c04a73861b0a3f0883f6488d9794b9abf3d909d"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/clock.svg",
+      "sha256": "4a88107e089297cacd3ca626e63509869c5aaec7a036d5cfbd33602383eda04d"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/food.svg",
+      "sha256": "60b8799ca96ac3c894918b17c0d9515ecb9e03faddedfed3396b5a3c988831ce"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-sheet-controls/icons/heart.svg",
+      "sha256": "76c1dd1d502dc6774cee5af7f4eac80ed1d1a41fa42018ddfa34d4590b024525"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/review.css",
+      "sha256": "ea7c02337ecb797201c33b0d46a3be70834c12beee0060f5fd0c9ff61f1d66e9"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-preparing.html",
+      "sha256": "bdb4849c2ff55153e91eaff6be637fa66b46719a7a070c2cd1ac6120ce9d939c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-saving.html",
+      "sha256": "a2946a851c7b3cbd69dd2193249aaa420b2681045513639f80dc9e0b6f2fcc43"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-error.html",
+      "sha256": "3bb30e81ec4628811c2b6bdfd7de4dd6d31d6c6de1cdd11641eabbf7121bbfe8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-empty.html",
+      "sha256": "960544f2a562ee188b737df0603949706aace92a95489c3ce55a8daa83deed6c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-permissions.html",
+      "sha256": "2cb10b4fb807c3a091538864a4e1c46e3cafbfd2503407cc63f302b3f7d37dc4"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile.html",
+      "sha256": "d1c7e50460301692a2d023c5b71f77dbc78bcb0fcb2f1345405acd8941757353"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/index.html",
+      "sha256": "ab7df97ff3afb37d96e8d6f6dac05748fdfd3b4493df390dcedafa6249b010eb"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-ready.html",
+      "sha256": "6bbfb503d173bffed70e2ef1432eaa0d66a3dcb828f719d59f985a601a81fc7d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop.html",
+      "sha256": "9ff1550a7a7d8e9ddda56e03862ca2ca836af6524ffef7623d7b88929046d31c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-preparing.html",
+      "sha256": "718e4eb23a715d202c78d984f2484505fb207503aa3df601060f86fce78d6197"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-cancelled.html",
+      "sha256": "8db92b7e91e0942c0407f5293c6f050dc9e60f490b052d4757e88f1be9691214"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-save-error.html",
+      "sha256": "723f66185d5be81c9881a0365ed40dc82d036e569f0f6993a98d0dab8c25c4c5"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-success.html",
+      "sha256": "18729a56ec5090fa06955a8b698f3c931ca1727358c9f98bc372a79f303ce792"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-empty.html",
+      "sha256": "d642e90f3f008dc98d1d431cd18f290f1684bc78dad3c43c8620d98724b594f0"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-error.html",
+      "sha256": "3c3215b455dbe0dce5259f3e8471cd77e41addc1e173360ed06efa3eae49d86c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-empty.html",
+      "sha256": "99e96c79be901aaa8ab0e738bd683bb816b7d95ca1946956806f5ba43d847266"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-error.html",
+      "sha256": "297b22d0d849a2bbe0ecb8d5c20f79fa51a851c83b768e622b0eec960ba98c44"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-saving.html",
+      "sha256": "0b4c9f57b1db12d0dd62ffadd21264f4abdf06f614ecb16923158111bd91a05d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css",
+      "sha256": "7e9d1f231ea72b6f4965ea7b77b0ab719a962e5a2457c8ba861f96854a4d45f1"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-success.html",
+      "sha256": "80c5d54844db46d484f3edf55b5cfd9e259e78297abe7e77ff803343924c24e9"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios.html",
+      "sha256": "6bbfb503d173bffed70e2ef1432eaa0d66a3dcb828f719d59f985a601a81fc7d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-preparing.html",
+      "sha256": "f6356fe421454548f7190489ca99af47f7f01b84ec19005c230917a467131c27"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-preparing.html",
+      "sha256": "2b7d14a19ab46483dc1a64539af6a8a9650991f4fe0337cc53bc8d09066d12da"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-ready.html",
+      "sha256": "d1c7e50460301692a2d023c5b71f77dbc78bcb0fcb2f1345405acd8941757353"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-mobile-cancelled.html",
+      "sha256": "c38564624600c9a3c0ef19f8a6ef28ef2426c44ed9f46076fb20995049eb7989"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-ready.html",
+      "sha256": "9ff1550a7a7d8e9ddda56e03862ca2ca836af6524ffef7623d7b88929046d31c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-cancelled.html",
+      "sha256": "c5f445e587328b2c18ff27f5e55768795610fea8f68b4502e65e5a83a6de5e0c"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-save-error.html",
+      "sha256": "134dd8d72c1fc62e7f2794022130f525434baad688f50e4bd3a106e41db853df"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/web-desktop-success.html",
+      "sha256": "7edf234c685cdaf68cc1eb7a255900f1e9050c0e218c6a00c4ed1efc9aca5cbb"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-partial.html",
+      "sha256": "7c52ddbd0fc90399e148ad81b2f62c5f0d1101dd42bd613c6366533da4f70e87"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
+      "sha256": "3f4ed42091257399674ef611beedd753a4d32a7f0d01b1bf33380b482ca2ec0b"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-success.html",
+      "sha256": "fe2afbb7341cffa191ea74741b42b1426e45d005bec5709d3a616c099edf38ff"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android.html",
+      "sha256": "55476152f39cc4745b59e7abe3c0576187fce5a094615d7485853a99f76aca14"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-permissions.html",
+      "sha256": "b81ba95ae3610993ac6746b03062fe4ca7a0a5bd7b616e4de19c9275d3474a17"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-ready.html",
+      "sha256": "55476152f39cc4745b59e7abe3c0576187fce5a094615d7485853a99f76aca14"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-cancelled.html",
+      "sha256": "e76a7efdf731f723bc774dffd586617fa6dde8fd9e4a4e10d15c0140d92119a4"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-empty.html",
+      "sha256": "69ec978ff255f4fdf2c403a59c266294acc0e26db2b98643693a2a6c312398b8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/ios-error.html",
+      "sha256": "7c7ce8fb665ed6589c44fbb59b2894bbe46b68ee4328a0a8ce6be5878b07bde8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
+      "sha256": "d15fa7e87343eb2161cb0e6bba17ac9862bc90eebed220c89397ae1799f5bacb"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/ux.md",
+      "sha256": "c57d83d7313262ac9295ec564668b2ebc8d608545decb06498b890f3c0385fb2"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-preparing.html",
+      "sha256": "27fa6dcd840dc6e83c94bda828a45e0e47081994d0f877b4a279c47fc31d3081"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile.html",
+      "sha256": "78d440e95d98ed1e0e50905d75647869dfdaba4992850cd9af8dd24b6e523934"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/index.html",
+      "sha256": "eaff5e768c228e44bc837a1257d8d6153cbc10c411d75bbdefda288c7144ff43"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop.html",
+      "sha256": "fff9bff871cff6f8e595acfcd554c09fca6706e91fb68aea56ec2ce0aa1c7bb8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-preparing.html",
+      "sha256": "0724fde20019c756e85d42bb443acd6b1a78671626adea06af58d0188f2ac52b"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-empty.html",
+      "sha256": "ec00636e36740bfcca64b9ccbb7bf9a5bdff3121f9a8c81dbbe6848b00436130"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-error.html",
+      "sha256": "ef73912c651d29fbcbc5bb91ce0a8901244253fe9986d01328a04e9dcbbeebb2"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-empty.html",
+      "sha256": "f55aca12b6cb0b7c16b73b5656ea4e3fd65045ff7c42212a868fe832e754323d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-error.html",
+      "sha256": "ed8771dad4faa2528775a060d1e5d263c3eb939f0aa4227c374fe6734d689ac0"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-success.html",
+      "sha256": "d763a7957e2693310cd825325d19efa1b8e312d23c204d769a523d6fb2b665c7"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-ready.html",
+      "sha256": "78d440e95d98ed1e0e50905d75647869dfdaba4992850cd9af8dd24b6e523934"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-cancelled.html",
+      "sha256": "bfcf92643a390d87ab881352071a78917676fb8654f2d29228b993976885866f"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-ready.html",
+      "sha256": "fff9bff871cff6f8e595acfcd554c09fca6706e91fb68aea56ec2ce0aa1c7bb8"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-cancelled.html",
+      "sha256": "7eec8e0db18181b3653dad6f81fa5415857b8d32720b4e2bf9825e8807cda87d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-success.html",
+      "sha256": "c52b489368ab4926d83049658b3474ab536869bb727e06ef2a4e3022bf4d2f5d"
+    },
+    {
+      "path": "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
+      "sha256": "01b301791a6c7d178f69d7d3b16b13e7ea20a5e4988cf5cfa24c7950fabd8c26"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/index.html",
+      "sha256": "4c3407adbd9032526fbf057eb61be4160c3b92840478b4a9fe0fcaf38eb46051"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/README.md",
+      "sha256": "5816ad5cbc119b62b99d66a96035b2f633847a9ddabfb09f9d256ed13f5f6bd4"
+    },
+    {
+      "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-29-chat-keyboard-dismiss/outside-focus.js",
+      "sha256": "8d17ce843079922ae7abb38d6e5e2429b54a0c6683288e521e86251db27d7d96"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/ux.md",
+      "sha256": "14d3db30703bb917909bb12d4cbce73f9d265848fdeec71e3fc8533fd1b6b72c"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
+      "sha256": "0bdc3001156a7cf1462cf3bca177b4366ee00fca16d06c8e2dc2cbe6d1697c6e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references.json",
+      "sha256": "950b8f88ba5a718d6cf00ee80fb97b1db4da93f1e42b0a6b6a9bf3b09ad38992"
+    },
+    {
+      "path": "docs/design/components/mobile-mvp.md",
+      "sha256": "9b3aac87a08c6c53cc9ea1ade467cc2ee7302be8e67258b0b7bff3b3913e0655"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-copy.json",
+      "sha256": "178d9615952b2a76b6eed093d103521d31084a1c178b1bf5d65680704bbb071d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/onboarding/frame.html",
+      "sha256": "f36e3da0916a185830d1939d351b5daa717dc7cd26c80699bf9cde5245646869"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/list/frame.html",
+      "sha256": "642bc95e36340f3fdb3132d067a785ca171c50f6a0e2ee9e4f6557be349540a9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/calendar/frame.html",
+      "sha256": "e9dd3533ddff6fab2f73ab3224e0c23e702946234633533c9dd9b66a5b3e6973"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/invitations/frame.html",
+      "sha256": "e20e283304cd726dccbe984f28c7a385e2cf47239edcc8859cfaa888612bb787"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/create/frame.html",
+      "sha256": "880fa8d707abe72bebb3190f414a18303aee4e8b72e9f6d82804b4f560c9a51e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/invite/frame.html",
+      "sha256": "670889c343e37e7b77de5b9a5fca960adfa708c4454c7dd8b7622282de0eaf0c"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/chat/frame.html",
+      "sha256": "dce885dcac632fa44eff6751f8a54ae453d870142a6a7f5b35cf82db799e191f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/info/frame.html",
+      "sha256": "12f3d7fb9044e1bffe041651dad420407038e2e01bd1550cc343ffe0332024ae"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/settings/frame.html",
+      "sha256": "fab28e8edb770a82522975ee797962749da890c36ea88c2e3f413d8417a5230a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/date/frame.html",
+      "sha256": "57c7caf86e19294404e63993135b54fc19e387f948a873af56ccd3cb1d94833c"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/place/frame.html",
+      "sha256": "0b82ec4bc0462b6ecfef98455fb9fd9379c71ae4dec0f43dd28189aa266f0844"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/preparation/frame.html",
+      "sha256": "fb13f3148ab01383a9eca046bfbc4416c2758fdcb7bb09ceca96c690dee0f215"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/vibe/frame.html",
+      "sha256": "56f3fb22de045a341f169f85a1c3f6555f14816702de93e9b6a8040020b518bd"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/profile/frame.html",
+      "sha256": "3f97c402215ac2e798f05d1370eef6ae139b6ac3068a1b48314544779ab5d543"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/help/frame.html",
+      "sha256": "e56b848b737a59d776ca98e430366a1e3712efcfaeb5c4b8e75dc2c089ae7011"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/about/frame.html",
+      "sha256": "2acc66ab0f53388950ab5930ea22724c758215db2cef3d6178b5c3486bd04dee"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/documents/frame.html",
+      "sha256": "2acc66ab0f53388950ab5930ea22724c758215db2cef3d6178b5c3486bd04dee"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/publication-additions-6.1.json",
+      "sha256": "7249f324012f74e4fc107e19663f932cc59256f84e9ad3ddd9a89d047bd9edfa"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-style-audit.json",
+      "sha256": "b645322de1656797618e11b03b94dc37d08dd2eee9b071b11c75d3e7e0291d9b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/onboarding-layout-audit.json",
+      "sha256": "56b131d71df81fe39f7be8b96ade4d949d804b599a2ce41c42ecfb180d4eab1b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/calendar-token-bindings-6.2.json",
+      "sha256": "e599f45352eb39e5c52bd8129b24012f75c5658dd42407349347cb87bdc79576"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/meetings-token-bindings-6.2.json",
+      "sha256": "68516fbbd4d0308d9b57c77afbe3c198a371bc58de5fa712cb94da9105c91c65"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/meetings-state-bindings-6.2.json",
+      "sha256": "bcca5be2b402bff5154e552753ed7b298bfc29c0d32d3fa007d2936a51c10830"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/identity-token-bindings-6.2.json",
+      "sha256": "b0b50306b6a203b6a1001522b55305f93fcd6c3d8630d81f124c1d60a3442cf6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/mobile-response-navigation-bindings-6.3.json",
+      "sha256": "94acdc7e4ffa2ca36b64256b2037dfbd2e998e5315cb20cce6bb5807c83ff224"
+    },
+    {
+      "path": "docs/design/components/invitation-response.md",
+      "sha256": "0a58773021ca409cfe01e79704d7e512b0617b0a85b109bd5071537428cf390a"
+    },
+    {
+      "path": "docs/design/branding.md",
+      "sha256": "3e0db53e307832c205d3fd69c01d46520fd04d01f2e245b75f54311fdc33d299"
+    },
+    {
+      "path": "docs/design/desktop-mvp/README.md",
+      "sha256": "aad801ff0fc2b0476d19820852a04dc9cc7bbd611ed1a4d2953cfe55cb62a308"
+    },
+    {
+      "path": "docs/design/desktop-mvp/approval.json",
+      "sha256": "a49dbec6725fc8d71443c8a9099821378190c9e3fbc5b10d364c942354b2b557"
+    },
+    {
+      "path": "docs/design/desktop-mvp/snapshot-files.json",
+      "sha256": "eb8214cc8f6a1dd9bf41f820bd8ef5c2504e19d8fae7357e998826d08b2da515"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+      "sha256": "97a573abb9492dd5115fbb71b86b2a917e4ed9bb8398049175e8118866f37b97"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/build.mts",
+      "sha256": "64ed24f062db37d355411ff36de46d9a009bd97551374e5a734303026d596497"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/preview-mobile.html",
+      "sha256": "2437046a06899102f952b7ef2ed859b564898a70320acf4f0e2f79360638b6e4"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+      "sha256": "af9f266e2b43764b36d527d9fb85742f0ba7212aea571f527fe0d82e83313ad4"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
+      "sha256": "a27375b640821dedf405ff802446c795ed31015421e1dc5f16332234d7ff49e9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
+      "sha256": "66dc8615e5f7225dc9e3825b0faf3c3b3569a684426e16f1956f7670c91a446a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/list/frame.html",
+      "sha256": "858374cbf06135c0d4e088649ce4566d7d7f88fd6eb946279e6334ebe0027a12"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
+      "sha256": "6e7881ee9ab42d2d3c0cd028020d36badd1404c0477f5c19ca2e7d62a59db0a3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+      "sha256": "9a0798270adb125d4aa75f88da7ce9e3c47c3a94418707476d5155c96a8ee138"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/source/InvitationNotice.tsx",
+      "sha256": "ccc6302d817bd4002cfe83ff8f8ed3ca1bb1cf47bdb8c066582c171c2ff484a0"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/source/InvitationNotice.module.css",
+      "sha256": "d8dc9e85d5b6d7f4d83096396d51f074b6ef3f9f5f273d62cbf90ce80c96dd41"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-baseline.json",
+      "sha256": "75a7f6070cac85e32c72fa8a11ad9585dbc2263202a6071cdcaf05cfe828cba3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-response-reference.tsx",
+      "sha256": "b0151e59bbc4b6aa7599d68c8b734b40a4c67a376d5b51e1c6162f2073f71ccb"
+    }
+  ],
+  "history": [
+    {
+      "revision": "meeting-experience-2026-10-27-participants",
+      "version": "1.2.0",
+      "approval": "25.10.2026 — весь дизайн-пакет; 26–27.10.2026 — конкретные коррекции в ux.md; реальные HTML нижних панелей 2026-10-27-chat-sheets, с явными границами покрытия; дополнение компактного/раскрытого состава проверено 27.10.2026 по принятым источникам",
+      "sources": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/ux.md",
+          "sha256": "a7d2b109945c3f118e24071bfe5218a5ca91d84fe04918aecf0971ff82b6cd3e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
+          "sha256": "a3a96aaf84ce0674d4ead8a54a7cc50b4d5d2c470de00709d56c613779dbf982"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/interactions.js",
+          "sha256": "97da474c053987efa468093faa6dabaec8f486a0ebdf33771fb696510a56b230"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/list.html",
+          "sha256": "c9a46c61b791c7175902c970cc6da214db4434ad77cba61c0506e0818d19a93e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+          "sha256": "609187220012779db7f977677e4ffa4a2241c33f88415f4c2f4dabd4e6a4e890"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+          "sha256": "b56d99cc6dbcaf9ad0ab6cb4dc7ace7c5fdcb43f4f423affde1147639bb3affa"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/action-task.html",
+          "sha256": "78a152e9770c40c102cd1f50296028729716c4f72462c7882d203e17ff31cfae"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/action-place.html",
+          "sha256": "941a7963e172262931488fa5ecf3fce71ac27932e1b210a6bd4ac3ba5de28971"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/action-date.html",
+          "sha256": "2fdd68a9914b1280f657d7a508a900dc235ce8ba27fc284b68e74778cccc6acd"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/album.html",
+          "sha256": "8ded6bf787e495cad65e3a6ef346a0e5c13606ce15fa7d2481b265960a8518a5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+          "sha256": "dc939441c07707c8c44f012bc56da3e474321ed4c95ea335f0697080e1a1918a"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/friends.png",
+          "sha256": "0cbb47834646b79bdc232dacb0e1caab6e0faaf65dc95eec7bfbe2f35c32ee41"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+          "sha256": "27fa4f65f62a16fde25c994cfe9e292068eb2ec1855e4b0dddb05dbd57a1e2bc"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+          "sha256": "12a7194dc0f23fbd4c7646fcbe162edfb87550bbea3ef2bba9ddf969286d6dbb"
+        },
+        {
+          "path": "docs/design/mobile-onboarding.md",
+          "sha256": "1fe849ef9136c778749d9bf2df0c4f4bd65cdd4cd3a54044e32d488d45558b5c"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/assets/date-poll-v1/date-poll.css",
+          "sha256": "f2e4c3112813f9426dd0df02d89d80be5375e1c9488bddebf05c766e136766f5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-date.html",
+          "sha256": "a2eed06376d77e6203852a49a259215593635a4c21ff4a03eb9763d7359f4f68"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-place.html",
+          "sha256": "ec76cf464ccd7d69afbbcf1b6dbcef741d4b1500213a3986215e053c7a2fa35b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/action-task.html",
+          "sha256": "8fdc244845a5030effcf69764ab5fb50d227d266aa4abb86a74ff6c31e88ec38"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+          "sha256": "3b53b60cd74f92f940ffc3dcbfbfc96a95e209295952ed6b3ef0c91c1dbc377d"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat.html",
+          "sha256": "8acde9cdec2133901673b452b24ebee259e8f70a41fa8afe6ffb0a68a26603ea"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/index.html",
+          "sha256": "d45cc3150d5718673b2d967c03c140b2a7432f5ee22b840c6a287f5dfa1c05d0"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-details.html",
+          "sha256": "63b7ef07a02e376dbe474dd5a3cf8b2cf0c08d23212b571cb1f475b1e2ed2976"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+          "sha256": "7c2d95f1d451e13674c33d6ea7c6412cbdd55d49345aeb9742afb4608a2385f5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+          "sha256": "a376e1c53c8ff6c581e6c41fa51651c90292e922d4ef9f6a37e4b004781aff3b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+          "sha256": "5eb9e60d9075e390ba48e9ba0fb502ce34166b6125e83d68258bc5e10442df7e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share-copied.html",
+          "sha256": "547010f04733c10a8e026a51d6b1d72abeb30eb32d419c937bfc8b2164af14a2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share.html",
+          "sha256": "6d22fa8c6dcd8fb11e60105f90a49a5fee34deadd638fe7210deab051216e3f2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+          "sha256": "8cc444f99e71c5724d94a282d40ecd14ad36f4fdac044239af04fd3e4a47930c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+          "sha256": "a48dfe8d5c3acf8a02ab47047b5d0d8aece65c2cbb8d92e81e948def4a38ebf2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-one.html",
+          "sha256": "ed118dae0b4de4134d8522520426b282b50f72f6a2a730dbd9963f8f84cd4aa5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+          "sha256": "415d4308c339258ef35cce693aeaffd49f014e526c71dc1ecb239e81e6181490"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-organizer.html",
+          "sha256": "5e9d68ee8576623e6a38022e60aeb96faaf2419eefca0992b31f4c8bdadb054c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-member.html",
+          "sha256": "0648b90bd3dd1de4f7c385eac7fc62dc2a7de26f37773838185341245ade501e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.css",
+          "sha256": "a8c6c2780a086dd16ea23f08fb8cb3115850372af9d19161411cdfb1498807a4"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.js",
+          "sha256": "736ba66626a3e05a98f7335081d4427a6f8d6ea40fe78f653a4d5aeb9929cbf6"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.ts",
+          "sha256": "24380607e554aa00b25aeb8eff8022b2a20f2e85459d923b0806780273085f89"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/generate-participants.ts",
+          "sha256": "4fa8ebb5be64ccfe05ee26c752ef7391735bd0c5b67aec321e23f54817536432"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-review.md",
+          "sha256": "da796793336ae4d10f99cba0b0d3f9ec24d13b006f64395b0d153dfa076f4e5f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-provenance.json",
+          "sha256": "671dab6e64c3ad839f6d57adf3af22db2f133d290abc609373614596a48c285e"
+        }
+      ]
+    },
+    {
+      "revision": "chat-reliability-2026-10-27-read-state-2.5.0",
+      "version": "2.5.0",
+      "approval": "27.10.2026: реализация ранее разрешённого UX v1 прочитанности и ограниченного окна на web/iOS/Android; повторно используются принятые chat/people/sheet роли, без новых продуктовых решений.",
+      "sources": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/ux.md",
+          "sha256": "27f3d1c66451c7ef1c29955d0d5511aa71a00e6afd821bccac75276bda46d6c7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/styles.css",
+          "sha256": "a3a96aaf84ce0674d4ead8a54a7cc50b4d5d2c470de00709d56c613779dbf982"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/interactions.js",
+          "sha256": "97da474c053987efa468093faa6dabaec8f486a0ebdf33771fb696510a56b230"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/list.html",
+          "sha256": "c9a46c61b791c7175902c970cc6da214db4434ad77cba61c0506e0818d19a93e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/calendar.html",
+          "sha256": "609187220012779db7f977677e4ffa4a2241c33f88415f4c2f4dabd4e6a4e890"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+          "sha256": "b56d99cc6dbcaf9ad0ab6cb4dc7ace7c5fdcb43f4f423affde1147639bb3affa"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/album.html",
+          "sha256": "8ded6bf787e495cad65e3a6ef346a0e5c13606ce15fa7d2481b265960a8518a5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+          "sha256": "dc939441c07707c8c44f012bc56da3e474321ed4c95ea335f0697080e1a1918a"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/friends.png",
+          "sha256": "0cbb47834646b79bdc232dacb0e1caab6e0faaf65dc95eec7bfbe2f35c32ee41"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+          "sha256": "27fa4f65f62a16fde25c994cfe9e292068eb2ec1855e4b0dddb05dbd57a1e2bc"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+          "sha256": "12a7194dc0f23fbd4c7646fcbe162edfb87550bbea3ef2bba9ddf969286d6dbb"
+        },
+        {
+          "path": "docs/design/mobile-onboarding.md",
+          "sha256": "1fe849ef9136c778749d9bf2df0c4f4bd65cdd4cd3a54044e32d488d45558b5c"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/assets/date-poll-v1/date-poll.css",
+          "sha256": "f2e4c3112813f9426dd0df02d89d80be5375e1c9488bddebf05c766e136766f5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+          "sha256": "3b53b60cd74f92f940ffc3dcbfbfc96a95e209295952ed6b3ef0c91c1dbc377d"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat.html",
+          "sha256": "8acde9cdec2133901673b452b24ebee259e8f70a41fa8afe6ffb0a68a26603ea"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/index.html",
+          "sha256": "d45cc3150d5718673b2d967c03c140b2a7432f5ee22b840c6a287f5dfa1c05d0"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-details.html",
+          "sha256": "63b7ef07a02e376dbe474dd5a3cf8b2cf0c08d23212b571cb1f475b1e2ed2976"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+          "sha256": "7c2d95f1d451e13674c33d6ea7c6412cbdd55d49345aeb9742afb4608a2385f5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+          "sha256": "a376e1c53c8ff6c581e6c41fa51651c90292e922d4ef9f6a37e4b004781aff3b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+          "sha256": "5eb9e60d9075e390ba48e9ba0fb502ce34166b6125e83d68258bc5e10442df7e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share-copied.html",
+          "sha256": "547010f04733c10a8e026a51d6b1d72abeb30eb32d419c937bfc8b2164af14a2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/share.html",
+          "sha256": "6d22fa8c6dcd8fb11e60105f90a49a5fee34deadd638fe7210deab051216e3f2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+          "sha256": "8cc444f99e71c5724d94a282d40ecd14ad36f4fdac044239af04fd3e4a47930c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+          "sha256": "a48dfe8d5c3acf8a02ab47047b5d0d8aece65c2cbb8d92e81e948def4a38ebf2"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-one.html",
+          "sha256": "ed118dae0b4de4134d8522520426b282b50f72f6a2a730dbd9963f8f84cd4aa5"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+          "sha256": "415d4308c339258ef35cce693aeaffd49f014e526c71dc1ecb239e81e6181490"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-organizer.html",
+          "sha256": "5e9d68ee8576623e6a38022e60aeb96faaf2419eefca0992b31f4c8bdadb054c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/meeting-participants-member.html",
+          "sha256": "0648b90bd3dd1de4f7c385eac7fc62dc2a7de26f37773838185341245ade501e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.css",
+          "sha256": "a8c6c2780a086dd16ea23f08fb8cb3115850372af9d19161411cdfb1498807a4"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.js",
+          "sha256": "736ba66626a3e05a98f7335081d4427a6f8d6ea40fe78f653a4d5aeb9929cbf6"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants.ts",
+          "sha256": "24380607e554aa00b25aeb8eff8022b2a20f2e85459d923b0806780273085f89"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/generate-participants.ts",
+          "sha256": "4fa8ebb5be64ccfe05ee26c752ef7391735bd0c5b67aec321e23f54817536432"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-review.md",
+          "sha256": "da796793336ae4d10f99cba0b0d3f9ec24d13b006f64395b0d153dfa076f4e5f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/participants-provenance.json",
+          "sha256": "671dab6e64c3ad839f6d57adf3af22db2f133d290abc609373614596a48c285e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+          "sha256": "c21b8aa602326e768143895d662515027c3dd18522e00e3a07eb4efacb241add"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+          "sha256": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+          "sha256": "8e9036f535646daaac7ab45688aac429b9ff323f6052c9be27ccf513a5b7abc7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+          "sha256": "3b202fa95050be608b2fe6ea622f992b8ed4ed0747b76f6d1b1e0ada6e32ccc7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+          "sha256": "edc5a7c160d2d641a785659017f19c6e06d3920e23eeed63d2e739e545534562"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/index.html",
+          "sha256": "ff8e6ed17fa4e19df3372d531510245e960efdc1ce0985eece0fd366340c3a00"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/workbench.css",
+          "sha256": "ef08392fb6bb52841254ae1c3bb10a4083b968402771432c743249912938e1a9"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/workbench.js",
+          "sha256": "d3ecc7f0b779c4582db3186654b3935af94a0d8f51cc33f1627787e6a9115caa"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/app/main.ts",
+          "sha256": "30ba1cb14fc446c94807a526dd7b5acc554dc3ef7fa8443e9ca96d6d33102c50"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/app/workbench.ts",
+          "sha256": "f15afadb6166151f4c584268b21273bf2101f9fdc53577dc9e013cf28cee2e7b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/index.ts",
+          "sha256": "4046bc1b3becc7d839e457b1d59ee4b998f52a0a49424480ee56a7bdc6cd98bb"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/actions.ts",
+          "sha256": "00d4ba1c0359cf9d9ea6f35568df9674f14871e32b7595a12c0c585e32ead2be"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/composer.ts",
+          "sha256": "e2c9708a6ebfe89954536a177075a0e38f046f49ba46b915bbc026decad5a342"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/form-events.ts",
+          "sha256": "4771bbe6b39097bb947a06deb098c641d9c8991567afcc4a606a90ce5b1bccad"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/reactions.ts",
+          "sha256": "649d2f391be997829b6bd80527ba0bd52036e4ec7712df1acc250d6556137139"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/sheets.ts",
+          "sha256": "7d48c4492a6c1e211a2ce56136cdd9c3faeddf258c5d0157363793a24c7436e9"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/task-actions.ts",
+          "sha256": "97630cbc251cba2cf00417694d5503a594dbf9b33df570808d18b9f39cfc3993"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/context.ts",
+          "sha256": "0735b21b8fe4aed9c2186d5fe0510787ab889add1c0f6b917fd0990d61feda5f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/emoji.ts",
+          "sha256": "a394e38ff4ce6f777cf3e0c82fdfe28beddbdf25a1cf7704c29c5087249296f1"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/model/model.ts",
+          "sha256": "7d45d64719408b75417a71b4bad9de131cd14f86dbfed0969ce3ecda91c1967c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/add-menu.ts",
+          "sha256": "78e2965d69ad93a6f110b7c34ade2ab6cc003dbf2f6f1837259fd5f3bc4cbc5e"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/conversation.ts",
+          "sha256": "dfe7921932739b9d4ea4ac63416db1c94c3e87f17152db6aa3c24d192f9dcda7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/emoji-picker.ts",
+          "sha256": "8e26908d40b475ca0dd3720b6b1b83037f08febd304ff523354385e7d5c4795f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/forms.ts",
+          "sha256": "983ae8183c2c165f23dea12c05f9a6787e31fbc649da73f8cc52fccfa4274182"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/ui/sheet-content.ts",
+          "sha256": "1f5cd0e4357f3000473eca9089ac35481f139a91529be903b0049e2d1b50236c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/shared/lib/dom.ts",
+          "sha256": "d3f1cb18a13e543f33b97edb1a7ba14f77f1ff0ee4933ef38f276e5909c8effe"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tsconfig.json",
+          "sha256": "ee806332f802835959f6ecc3fc6422936852073ffcf9ead6b93b29043f1ada8b"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/verify-browser.ts",
+          "sha256": "3cacd5a462bfdfed0a51100d16f8878cca11db66fdc995fd0b43f018aaf3a065"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/probe-fit.ts",
+          "sha256": "7b2790e823e2c4ec84df0215f83380c4db3e6fe24148055306ab373226b940f9"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/probe-roster.ts",
+          "sha256": "15309e00e1407b5111119dca4b786f3fff0226e19a1de53e18f6935868027072"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+          "sha256": "648949c6d8455bae4c232e3713e2c4932d19026451cf0f198a0a8d0d2f3407f0"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/README.md",
+          "sha256": "0ceb4fa57677d02fc31aa223548fa9efe63a37ed19edc015c0d82704c3b0a48c"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+          "sha256": "9d685164cecb949a85e7d536207ad1d47aece7adcfac656266b9a4e41ff0ed4f"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+          "sha256": "01f25f1fb5329a3c71a3d32d702e6b24c15567474924820fbc09feabd53ab601"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/specs/chat-reactions/spec.md",
+          "sha256": "d2c9b416faa176c8e4b2b7eef7d45c736a22e70c414d5013c139921d74c027df"
+        },
+        {
+          "path": "openspec/changes/gathering-activity-feed/mobile-scroll.md",
+          "sha256": "fa5f133309c4e661638ae618ee874060de0d65036141d303bd0f53ee7c8cf328"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/tokens.css",
+          "sha256": "dc102920d047475b4e7af0ff267a87df934b66fa11252abcc46e5f68f0c29b0a"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/chat.css",
+          "sha256": "0277edf72f70e0977c402d0dca9c039d821fb40d927d4c28f00194cbb8f85825"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/panels.css",
+          "sha256": "4e99e54ff89f70a95a084cb7e2a9382f94a77c91c991b883b299d7078f28fdb7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/1.4.0/source-hashes.json",
+          "sha256": "31af1db07725cfa008acfbb7f73eaa5033261acee8579afe588342475f8495f8"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+          "sha256": "c4d0e6efdfe6af62623848c560322527af396bfe8f88e82f5c33d92e0e36b1ae"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+          "sha256": "4ce5798fac23caa53aaf052f2dea1ad505276bc5e87791fc8fa0e3a075b79c59"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/dock-motion.ts",
+          "sha256": "b36c497922187783a95c247aa7d415eba52f84f2e56cd503e4121169340dd707"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-emoji-motion-2.2.0.md",
+          "sha256": "f9d4077f1e798adc14edc90b993dececa3c51ac009c08342d8db7bc2b612e9ca"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src/pages/chat/lib/menu-motion.ts",
+          "sha256": "03d6ef88f11979a617755bc2b9a4d1ac5b45d7ebb44fb5e3b23b9e9de064d099"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-composer-menu-motion-2.3.0.md",
+          "sha256": "2120a840c40c0feeebb3f6510883783c83eb682ca6d7355b82e748ca20d9e505"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/index.html",
+          "sha256": "0d2ed01b7e118ccd80d471b7db3cf906648c6f0531e8d82b3ef800c7aa106185"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/tokens.css",
+          "sha256": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/chat.css",
+          "sha256": "8e9036f535646daaac7ab45688aac429b9ff323f6052c9be27ccf513a5b7abc7"
+        },
+        {
+          "path": "openspec/changes/chat-reliability-and-sync/assets/2026-10-27-web-outbox/panels.css",
+          "sha256": "3b202fa95050be608b2fe6ea622f992b8ed4ed0747b76f6d1b1e0ada6e32ccc7"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/chat.html",
+          "sha256": "ea722ae627902ce8e399c319fc0434a4c4cd767cf101d5af2ff3ba2048e7eceb"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/generated/read-state.js",
+          "sha256": "6298b96adf9ee8f8945e46d4da2131694f0a9431569f56a18be1e461ab0eb1ad"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/index.html",
+          "sha256": "02bf38e65839b6f90d77b3c4aeb435a19b404aa5736022670461320907ece7c1"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.css",
+          "sha256": "0af480f29311743a89a9c9d9654c3fe8728aae426735549c43036bf185044726"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-read-state/read-state.ts",
+          "sha256": "4062d608225b39ab1896ec23c7b1150a3a2c34ad098c0f397c4232538b1708d5"
+        },
+        {
+          "path": "docs/design/components/chat-read-state.md",
+          "sha256": "bfbbdb27a422ff656d46c9dc81f5bb57ba50bb66aa4e0f84a43d66f1553d5f2c"
+        }
+      ]
+    },
+    {
+      "revision": "chat-desktop-keyboard-2026-10-28-2.5.2",
+      "approval": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+      "sourceCommit": "ba987791"
+    },
+    {
+      "revision": "native-vibe-support-2026-10-28-3.0.3",
+      "approval": "28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. После проверки iPhone пользователь уточнил native picker-first/system-share, карусель фото, общий batch-progress, предзагрузку, аватары, пустой чат и edge-back; профиль, обложка и загрузки на всех платформах. 28.10 пользователь согласовал FAQ плюс/минус с плавной высотой на всех платформах. Прямые поправки iOS 28.10: back icon only, bounded photo directions, orientation preservation, compact carousel and corner X. 28.10.2026: стандартный текстовый Назад вместо отдельной стрелки; исправление повторно подтверждённого скачка размера. Оба свайпа фотостопки показывают следующее; после последнего анимированная пересборка с первым. Продолжение Android прямо поручено пользователем; общие native исправления, платформенная цель48.",
+      "sourceCommit": "c3e3451d"
+    },
+    {
+      "revision": "sheet-stability-2026-10-28-4.0.0",
+      "sourceCommit": "c3e3451d",
+      "reason": "До публикации adjacent album action 4.1.0; прежний memories contract сохранён в Git.",
+      "sources": [
+        {
+          "path": "docs/design/components/memories.md",
+          "sha256": "89bfe69d300164ea4016258c3dd9b1a993835f609adca97302f7251f4bde788c"
+        }
+      ]
+    },
+    {
+      "revision": "album-web-actions-row-2026-10-29-4.1.1",
+      "sourceCommit": "5fb99a7a0d7bbc50a9e75e2a7ed34c2bb3973844",
+      "reason": "До изменения outside-tap keyboard 5.0.0; предыдущие источники и evidence сохранены.",
+      "sources": [
+        {
+          "path": "openspec/changes/meeting-experience-refresh/ux.md",
+          "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
+        },
+        {
+          "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+          "sha256": "6912dbf9742390116710bd468998e2da9958f25da4b362a2fe2cd76f3f7042fe"
+        },
+        {
+          "path": "docs/design/components/chat-actions.md",
+          "sha256": "c16aa94dc19aa32295977c96c6e433fa9611883b3f19ccb2fd8f7875056984ae"
+        }
+      ]
+    }
+  ],
+  "approvedWorkingTree": {
+    "prototype": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat",
+    "aggregateSha256": "6e87ebc7839ff230af84053b91a12729deab6a620cc35ab9bf63d63fa90d4351",
+    "chatBundleSha256": "edc5a7c160d2d641a785659017f19c6e06d3920e23eeed63d2e739e545534562",
+    "platforms": [
+      "mobile-web",
+      "ios",
+      "android"
+    ],
+    "desktop": "Прежние отдельные страницы/sidebar; workbench не desktop-эталон.",
+    "approvalAggregateSha256": "be9e0e9a8afa0da56ad2524438adcd0c1292a249e4338c4a330ac740d58be5f8",
+    "previousSourceIndex": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/history/2.2.0/source-hashes.json"
+  },
+  "technicalPublication": {
+    "version": "1.4.1",
+    "date": "2026-10-27",
+    "reason": "Недостающая общая иконка22 из принятого tokens.css и восстановление прежнего web input minimum16px. Native body15, остальные размеры и поведение неизменны.",
+    "sources": [
+      {
+        "path": "scripts/design/formats.mjs",
+        "sha256": "48c8618edeb28fd7fdb814d3c542649e1680346361686be7fdb78c1c69476561"
+      },
+      {
+        "path": "scripts/design/generate.mjs",
+        "sha256": "463ecd82e0deed89b52d16d4bb0b180e9d8b50fa76c330717f54aa2c3e45747a"
+      },
+      {
+        "path": "scripts/design/tokens.test.mjs",
+        "sha256": "0d15f4d9cf9948d7bc3b6b79ffbebe4e8b0eb716418b00840eef5cc8a3e28a9b"
+      }
+    ],
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "e0d9a428ee583b77902c8feb63bb2c5a5fda5b7e290eb6883845f0108024a0fe",
+        "sha256": "739cb92d2f4588ee377c4a74768a58f36a458ac3d660ac549fbb1cd0592ff743"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "previousSha256": "dc102920d047475b4e7af0ff267a87df934b66fa11252abcc46e5f68f0c29b0a",
+        "sha256": "55c2232d59a1d5973b1513039d876f4fcc3d5acbbf0e71d1d5af2bdf77bb427e"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "previousSha256": "0277edf72f70e0977c402d0dca9c039d821fb40d927d4c28f00194cbb8f85825",
+        "sha256": "3a37e0b1ea188db2d4ee52255fad08e0cbe9376e0bec62ba15c783962fd3f928"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "previousSha256": "4e99e54ff89f70a95a084cb7e2a9382f94a77c91c991b883b299d7078f28fdb7",
+        "sha256": "d6f3304462a5d043d019f475eb3fcaeb74274f83ca737737051458662e549601"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "previousSha256": "31af1db07725cfa008acfbb7f73eaa5033261acee8579afe588342475f8495f8",
+        "sha256": "505a155859f62b082ed9ba4ffa4bcf7037394a4727adf087e8f7ad0372ae8049"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/README.md",
+        "previousSha256": "82c868d9f91acb9e103f453db0ef4c399c55a88f18c8e9751337f539c16da0c1",
+        "sha256": "76a9175042ef5afc7d60f4a3d4fba85eab034521cb1a581815a5cce4af341c54"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "previousSha256": "bde3f76f73190ca669eceb2889e84ee54b8fbde8e372f029bcf4dc59d4713efe",
+        "sha256": "9d685164cecb949a85e7d536207ad1d47aece7adcfac656266b9a4e41ff0ed4f"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "previousSha256": "da89f80180c545650a6282df0811ed613554557f45003dc19e92de9bf0592160",
+        "sha256": "59ea0b367407bea5c7339a24fac374411cd913f043255d5df8b20d4aecd724c6"
+      }
+    ],
+    "previousPrototypeAggregateSha256": "be9e0e9a8afa0da56ad2524438adcd0c1292a249e4338c4a330ac740d58be5f8",
+    "currentPrototypeAggregateSha256": "46b6aeb81f9462b550ac264668b90e0d45fddcb2d5099d700487ace9af85dd7a",
+    "browserStatus": "Новый raw source проверен без browser/render; повторный просмотр и live приемка остаются открыты."
+  },
+  "technicalPublicationHistory": [
+    {
+      "version": "1.3.1",
+      "date": "2026-10-27",
+      "reason": "Исправлен native-экспорт общих chat breakpoint dimensions; tokens.json, принятый дизайн и его approval/source hashes не изменены.",
+      "sources": [
+        {
+          "path": "scripts/design/formats.mjs",
+          "sha256": "c72137ad45aa97e3f85376efb4f5d6cc651f9e19b28534bb2ce6427dd0c11632"
+        },
+        {
+          "path": "scripts/design/tokens.test.mjs",
+          "sha256": "e95dc670129b1d7709d30aaf8e7887d6f44a1c28a1e305f36aa8c54702865df0"
+        }
+      ]
+    }
+  ],
+  "platformScopePublication": {
+    "version": "2.4.0",
+    "date": "2026-10-27",
+    "decision": "Прямое уточнение пользователя о телефонной клавиатуре; вид и токены не изменены. Исторический failing hardware Escape review сохранён, pass не присвоен.",
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "bcd2a470aa9c2b8ba0783f9ccbc42cef3d5a594c2b5d691bda6d5153dfe25380",
+        "sha256": "27f3d1c66451c7ef1c29955d0d5511aa71a00e6afd821bccac75276bda46d6c7"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "previousSha256": "6a98e6a5027d90c6f995f8d21e536715661ef86dc38ba6d852d66787d01d2953",
+        "sha256": "01f25f1fb5329a3c71a3d32d702e6b24c15567474924820fbc09feabd53ab601"
+      }
+    ],
+    "evidence": "openspec/changes/meeting-experience-refresh/qa/2026-10-27-ios-keyboard-regression/triage.md"
+  },
+  "outboxScopePublication": {
+    "version": "2.4.1",
+    "reviewedSourceUpdates": [],
+    "note": "Documentation scope clarification of approved UX v1; raw values unchanged; no acceptance claimed."
+  },
+  "desktopKeyboardPublication": {
+    "version": "2.5.2",
+    "date": "2026-10-28",
+    "decision": "28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются.",
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "27f3d1c66451c7ef1c29955d0d5511aa71a00e6afd821bccac75276bda46d6c7",
+        "sha256": "ed5f5a20f22876c5a7538ec82247c2a468e8a0d15a30db40416ca943fa9cd712"
+      },
+      {
+        "path": "openspec/changes/meeting-experience-refresh/specs/chat-composition/spec.md",
+        "previousSha256": "01f25f1fb5329a3c71a3d32d702e6b24c15567474924820fbc09feabd53ab601",
+        "sha256": "76121f9981da20d32b549344b8467211a3da93b00d22c4c92aa6e161416246ea"
+      }
+    ],
+    "prototypeChange": "Отклонённый черновик с кнопкой не публикуется. Ранее принятая desktop-композиция сохраняется.",
+    "acceptance": "Нужен новый независимый keyboard-проход; прежние hashes/evidence сохранены."
+  },
+  "sheetControlsPublication": {
+    "version": "4.0.0",
+    "date": "2026-10-28",
+    "approval": "Прямые сообщения пользователя",
+    "browserStatus": "Live render blocked: Mac locked. Acceptance not claimed.",
+    "reviewedSourceUpdates": [
+      {
+        "path": "openspec/changes/meeting-experience-refresh/ux.md",
+        "previousSha256": "dc0ba24fb67027cdeb45f7e7cdbff55b19df42b2e7e352b3eff7dca8be24581b",
+        "sha256": "0c9e7862aea5f34d4082c0e49e1c8d7512f86f3fbbb25d67e9a3071e421c28cf"
+      },
+      {
+        "path": "docs/design/components/chat-read-state.md",
+        "previousSha256": "73b106ec24dc704f05e838599dfa6e97254d4e8ed0feddc2c85d7bb13bc7fc82",
+        "sha256": "8c95fba8f77f0abbb6fab0c0ac80e7d11fc621f2bd141a41b459c8c6cc7e6896"
+      }
+    ],
+    "note": "Прежние формулировки UX о крестике нижней панели приведены к прямому решению пользователя 4.0.0; значения и композиция новой ревизии не изменены."
+  },
+  "sourceState": "Publication from working tree; sourceCommit is the code baseline, exact design files identified by sources SHA256."
+}

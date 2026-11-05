@@ -1,3 +1,5 @@
+import { usePendingResponse } from '@/features/respond';
+import { MeetingResponseRecovery } from '@/pages/meeting/ui/MeetingResponseRecovery';
 import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import styles from '@/pages/meeting/ui/MeetingView/MeetingView.module.css';
 import { Link } from 'react-router';
@@ -18,6 +20,11 @@ export const MeetingView = ({ id, session }: MeetingViewProps) => {
   const action = useMeetingAction(id);
   const view = useMeetingView(id, session.user.id);
   const query = view.query;
+  const pending = usePendingResponse(id, session.user.id);
+
+  if (query.access.denied && pending) {
+    return <MeetingResponseRecovery request={pending} session={session} />;
+  }
 
   if (query.access.denied) {
     return (

@@ -21,15 +21,16 @@ internal fun MeetingInformationContent(
     state: InvitationState,
     participants: Participants?,
     participantError: Boolean,
-    choose: (RsvpAnswer) -> Unit,
-    save: () -> Unit,
+    respond: (RsvpAnswer) -> Unit,
     reload: () -> Unit,
     share: () -> Unit,
     settings: () -> Unit,
 ) {
     val details = state.details ?: return
     MeetingInformationFacts(details.preview)
-    state.issue?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
+    state.issue?.takeUnless {
+        it in setOf(InvitationIssue.Unconfirmed, InvitationIssue.Conflict, InvitationIssue.Rejected)
+    }?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
     participants?.let {
         InvitationParticipants(it)
     }
@@ -53,6 +54,6 @@ internal fun MeetingInformationContent(
             ) { ChatIcon(ChatSymbol.Settings) }
         }
     } else {
-        MeetingInformationRsvp(state, choose, save)
+        MeetingInformationRsvp(state, respond, reload)
     }
 }

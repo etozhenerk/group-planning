@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "shared-rsvp-routing-web",
-  "designVersion": "7.0.0",
-  "phase": "paused",
+  "designVersion": "7.5.0",
+  "phase": "checkpoint",
   "approval": "05.11.2026: прямое решение пользователя для всех поверхностей, затем «окаю дизайн». На сегодня пользователь остановил дальнейшую работу.",
-  "implementer": "codex-design-2026-11-05",
-  "report": "openspec/changes/mobile-mvp-design-refresh/qa/design-7.0.0/rsvp-routing-web/design-review.json",
+  "implementer": "codex-mobile-apply-2026-11-05",
+  "report": "openspec/changes/mobile-mvp-design-refresh/qa/design-7.5.0/rsvp-web-final/design-review.json",
   "screens": [
     {
       "id": "response-route",
@@ -82,8 +82,11 @@
         "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
         "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
         "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
-        "docs/design/desktop-mvp/invite-r2/preview.html",
-        "docs/design/desktop-mvp/invitations-r2/preview.html"
+        "docs/design/desktop-mvp/invitations-r2/preview.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-baseline.json",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-response-reference.tsx"
       ],
       "platforms": [
         "web"
@@ -198,6 +201,87 @@
         "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
         "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
         "docs/design/desktop-mvp/chat-r4/preview.html"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "response-recovery",
+      "states": [
+        "pending-w320",
+        "pending-w390",
+        "pending-w739",
+        "pending-w740",
+        "pending-w1100",
+        "pending-w1440",
+        "error-w320",
+        "error-w390",
+        "error-w739",
+        "error-w740",
+        "error-w1100",
+        "error-w1440",
+        "retry-w320",
+        "retry-w390",
+        "retry-w739",
+        "retry-w740",
+        "retry-w1100",
+        "retry-w1440"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+        "docs/design/components/invitation-response.md"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "declined-account-menu",
+      "states": [
+        "keyboard-open-w740",
+        "keyboard-open-w1100",
+        "keyboard-open-w1440",
+        "escape-focus-w740",
+        "escape-focus-w1100",
+        "escape-focus-w1440"
+      ],
+      "references": [
+        "docs/design/desktop-mvp/invite-r2/src/widgets/public-header",
+        "docs/design/components/invitation-response.md"
       ],
       "platforms": [
         "web"

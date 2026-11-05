@@ -67,7 +67,9 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await expect(friend.getByRole('heading', { name: 'Суббота без спешки' })).toBeVisible();
   await expect(friend.getByText('Пицца и настольные игры.')).toBeVisible();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
-  await friend.getByRole('button', { name: 'Войти и ответить' }).click();
+  await friend
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await friend.getByRole('link', { name: 'Войти как Лена' }).click();
   await expect(friend).toHaveURL(/\/(i|invitations)\//);
   const forbidden = await friend.request.get(`/api/v1/meetings/${id}/feed`);
@@ -83,8 +85,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
     }
   });
   await friend.getByRole('button', { name: 'Приду', exact: true }).click();
-  await expect(friend.getByRole('status')).toContainText('Вы ответили «Приду»');
-  await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+  await expect(friend).toHaveURL(`/meetings/${id}`);
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   await expect(
     page.getByRole('heading', { name: 'Кто придёт · 2', exact: true }),
@@ -118,7 +119,7 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   await friend.setViewportSize({ width: 1440, height: 900 });
   await friend.getByRole('button', { name: 'Информация о встрече' }).click();
   await friend.getByRole('button', { name: 'Возможно', exact: true }).click();
-  await expect(friend.getByRole('heading', { name: 'Переписка закрыта' })).toBeVisible();
+  await expect(friend).toHaveURL(/\/invitations$/);
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toHaveCount(0);
   const old = await friend.request.put(
     `/api/v1/invitations/${invitation.split('/').at(-1)}/rsvp`,
@@ -132,15 +133,18 @@ test('create, retry, invite, join, chat and revoke across two profiles', async (
   expect(responseSchema.parse(raw).can_access_feed).toBe(false);
   expect((await friend.request.get(`/api/v1/meetings/${id}/feed`)).status()).toBe(403);
   await friend.reload();
-  await expect(friend.getByRole('heading', { name: 'Переписка закрыта' })).toBeVisible();
-  await friend.getByRole('link', { name: 'Открыть приглашение' }).click();
+  await expect(friend).toHaveURL(/\/invitations$/);
+  await friend.goto(invitation);
   await expect(
     friend.getByRole('button', { name: 'Возможно', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
   await friend.getByRole('button', { name: 'Не смогу', exact: true }).click();
-  await expect(friend.getByRole('status')).toContainText('Вы ответили «Не смогу»');
+  await expect(
+    friend.getByRole('heading', { name: 'Вы ответили «Не смогу»' }),
+  ).toBeVisible();
+  await friend.goto(invitation);
   await friend.getByRole('button', { name: 'Приду', exact: true }).click();
-  await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+  await expect(friend).toHaveURL(`/meetings/${id}`);
   await expect(friend.getByText('Принесу настолки!', { exact: true })).toBeVisible();
   await page.screenshot({ path: 'test-results/flow-desktop.png', fullPage: true });
   await friend.setViewportSize({ width: 390, height: 844 });

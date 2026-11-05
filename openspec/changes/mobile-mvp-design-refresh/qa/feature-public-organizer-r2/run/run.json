@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "planHash": "cf3c45fbadaff93caca6232bc73a2a884afa3f4fa19a315022abb3fd612ec597",
+  "checks": [
+    {
+      "id": "TC-INVITE-PUBLIC-ORGANIZER/public-organizer-api/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-public-organizer-feature-r2"
+      },
+      "startedAt": "2026-11-05T09:37:02.041824+00:00",
+      "finishedAt": "2026-11-05T09:37:53.887Z",
+      "actual": "Fresh live API8874: anonymous/signed/repeated preview has identical real organizer id/display_name/avatar_url and exact public whitelist; private contacts/roster/chat absent; RSVP null/revision0; private meeting/feed/participants403; owner feed and guest invitation list unchanged; invalid token404 with no identity. Independent count=1 actual HTTP overlay: both missing real user and identity-disabled omit organizer, keep old fields and null RSVP. Historical web previewSchema3e25d63c freshly decoded all4 actual JSON responses. Mandatory separate backend race suite passed. Backend source/catalog unchanged; R1 results not reused.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "aacdd24496d6ccfa8e052451d17aa59e355e84f2a21fa3178eeac0018574aac7"
+        },
+        {
+          "path": "evidence/public-preview.json",
+          "kind": "raw",
+          "sha256": "d60f6510a052f7a627b3c8385e535a4830235bfd5596162d3d262e801c06070b"
+        },
+        {
+          "path": "evidence/signed-preview.json",
+          "kind": "raw",
+          "sha256": "d60f6510a052f7a627b3c8385e535a4830235bfd5596162d3d262e801c06070b"
+        },
+        {
+          "path": "evidence/invalid-preview.json",
+          "kind": "raw",
+          "sha256": "2bbc50df4c1383242ec7c88b25fa9beee7ff20ecd8272e5077498397938ac7c4"
+        },
+        {
+          "path": "evidence/public-summary.json",
+          "kind": "raw",
+          "sha256": "b285c40d43e0c9f328176bf4c3c95e147652bc9836cad0891660e24d2e7fcd6c"
+        },
+        {
+          "path": "evidence/missing-identity-preview.json",
+          "kind": "raw",
+          "sha256": "906ecc15c35d037e47a1f1a6357967e36b83ed7cc6151c85182fd584fcaa5da3"
+        },
+        {
+          "path": "evidence/no-identity-service-preview.json",
+          "kind": "raw",
+          "sha256": "906ecc15c35d037e47a1f1a6357967e36b83ed7cc6151c85182fd584fcaa5da3"
+        },
+        {
+          "path": "evidence/optional-identity-http.log",
+          "kind": "log",
+          "sha256": "898e898ce2292f2ddba719662202c4b6943a883cd67f158e4572808befae89fc"
+        },
+        {
+          "path": "evidence/legacy-decoder.log",
+          "kind": "log",
+          "sha256": "b3bce2f1369eb3b6b767584c2b57de937615edeea420fc6b72ad123c09e8da5b"
+        },
+        {
+          "path": "evidence/legacy-web-3e25d63c/source-index.json",
+          "kind": "raw",
+          "sha256": "55646ac57ec17089393d72a7c9738db58b2ccf96e9b9cdf34dac5b0ae13de713"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-11-05T09:36:57.434Z",
+      "finishedAt": "2026-11-05T09:37:03.630Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793871417435.txt",
+          "kind": "log",
+          "sha256": "8f1b6a96be0d728625407d42282e8c5cd4a6c2202c9cb76354fc15a14d3ef650"
+        }
+      ]
+    }
+  ]
+}

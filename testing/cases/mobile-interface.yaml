@@ -824,7 +824,7 @@
     path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
     requirement: Единый результат ответа на приглашение
     scenario: Ответ не подтверждён
-    sha256: f8479b8d45eaeb718727404e27d13e9b886b37413e718894c8f2543f01067463
+    sha256: 188ce5688fbb61cdba88bbc59c7b280e83d39de12f204e51ca1775597193f9ed
   platforms:
     - web
     - ios
@@ -832,18 +832,25 @@
   preconditions:
     - Изолированная работающая сборка клиента/API с точными hash; два тестовых пользователя и три RSVP;
       web-проход на мобильной и широкой композиции.
+    - Для смены ответа из сведений включены настоящие realtime и read_state; серверный revoke
+      доставляется раньше held/lost HTTP ACK.
   steps:
     - action: На своём fixture воспроизвести ошибку до сохранения, затем потерю ACK после сохранения; выполнить
         повтор/сверку.
-      expected: Нет преждевременного перехода или нового доступа; подтверждённые данные сохранены, один статус,
-        повтор не дублирует RSVP/событие.
+      expected: Нет преждевременного успеха или расширения доступа; ранний revoke убирает приватный чат/состав,
+        но сохраняет публичные факты, ошибку и повтор того же intent. ACK ведёт к новому результату,
+        повтор не дублирует RSVP/событие; старый ответ после смены сессии не применяется.
   cleanup:
     - Восстановить свои fixture и сохранить обезличенные screenshots, взаимодействия, API/build identity.
   automation:
     web:
-      status: manual
+      status: partial
       health: unknown
-      tests: []
+      tests:
+        - path: frontend/web/tests/64-rsvp-realtime.spec.ts
+          selector: after realtime revocation at
+          runner: web-rsvp-e2e
+          level: e2e
     ios:
       status: manual
       health: unknown
@@ -852,6 +859,7 @@
       status: manual
       health: unknown
       tests: []
+
 - id: TC-RSVP-EXISTING-ACCESS
   title: Участник повторно открыл ссылку
   lifecycle: active
@@ -926,3 +934,44 @@
       status: manual
       health: unknown
       tests: []
+
+- id: TC-INVITE-PUBLIC-ORGANIZER
+  title: Публичная личность организатора без контактов и RSVP
+  lifecycle: active
+  level: integration
+  risk: high
+  source:
+    path: openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md
+    requirement: Публичная личность приглашающего
+    scenario: Организатор виден по действующей ссылке без входа
+    sha256: aace9861495bf1579905c6b0439f8ee67307360d0c8846020a8f819a3f5f8089
+  platforms:
+    - backend
+  preconditions:
+    - Изолированный реальный HTTP API с test OAuth, организатор с публичным именем/фото и приватными
+      контактами; точный server build/hash.
+  steps:
+    - action: Создать встречу; запросить invitation preview без сессии, затем после входа другим профилем без
+        RSVP.
+      expected: organizer содержит только id/display_name/avatar_url; контактов, участников, переписки нет.
+        Имя/ID соответствуют организатору, my_rsvp остаётся null.
+    - action: Открыть недействующий token; повторить preview через совместимые старые модели клиента и при
+        отсутствии публичной личности.
+      expected: Недоступная ссылка не раскрывает профиль, старые обязательные поля и декодирование сохранены;
+        отсутствующая личность не заменяется демонстрационной.
+  cleanup:
+    - Сбросить только свой fixture, сохранить обезличенные HTTP responses и hashes; без реальных
+      пользовательских данных.
+  automation:
+    backend:
+      status: partial
+      health: unknown
+      tests:
+        - path: backend/internal/httpapi/meeting_test.go
+          selector: TestMeetingOpenAPIResponses
+          runner: backend-unit-integration
+          level: integration
+        - path: backend/internal/httpapi/invitation_identity_test.go
+          selector: TestInvitationPreviewWithoutOrganizerIdentity
+          runner: backend-unit-integration
+          level: integration

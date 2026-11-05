@@ -1,5 +1,5 @@
 {
-  "revision": "shared-rsvp-and-desktop-approved-2026-11-05-7.0.0",
+  "revision": "rsvp-system-bindings-2026-11-05-7.5.0",
   "sourceCommit": "ea4cad9be1077b23b0fa9394e6e51093ae8d4258",
   "approval": "05.11.2026: общий результат RSVP и системные сообщения на всех поверхностях, затем «окаю дизайн»; принятые desktop-макеты по desktop-mvp/approval.json. Публикация не закрывает реализацию.",
   "priority": [
@@ -9,6 +9,10 @@
     "Общие основы"
   ],
   "corrections": [
+    "7.5.0: привязаны неизменённые system-event и disabled для native; финальная приёмка отдельно от реализации.",
+    "7.4.0: loading/unavailable из неизменённого invite-r3; полный перенос мобильного приглашения, desktop сохраняется.",
+    "7.2.0: неизменённые invite-r3 и desktop DeclinedScreen связаны с ролями до переноса замечаний. Остальной desktop сохраняет исходный baseline. После раннего revoke unknown/retry остаётся в принятой public-invite error/no-cover поверхности, без приватного DOM/обложки/состава.",
+    "7.1.0: привязки размеров и типографики уже принятого экрана отказа, без изменения raw-макетов и результата RSVP; старые отчёты не переносятся.",
     "7.0.0: RSVP подтверждён → чат/приглашения/отказ, без промежуточной кнопки. Системные строки из серверной хронологии без дублей/расширения доступа. Общий контракт приоритетнее прежних static member/open-meeting состояний. Круглая подложка знака, новые desktop-композиции только по согласованным ревизиям.",
     "6.3.0: normalized list-референс раскрывает только данные unread-zero по принятому правилу скрытия нуля; raw list-r3 не меняется, preimage производного и генератора сохранён. Это не новая композиция и не доказательство реального чтения.",
     "6.3.0: компактный ответ использует существующую карточку по invitations-r2; baseline native navigation привязан до переноса общей edge-attached коррекции. VoiceOver сейчас исключён пользователем, прежние evidence/hash не изменяются.",
@@ -771,11 +775,11 @@
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/ux.md",
-      "sha256": "787163f88c25830133e6948378dc7acdfe83374d9062b33bebba620c93f883b9"
+      "sha256": "2817610d4f1fca0902c53a24bbe829e49104bef0e0c933cf0d7fbb1d89379f00"
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
-      "sha256": "6fb1c992543252c3c3c4a097624bc4b3e2f403a348a617b2a0438192b83e81fb"
+      "sha256": "f2bb01d44dd6895df2c868216dfbb9c1e92efba8bb5cc5a52f577b25226745f3"
     },
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references.json",
@@ -891,7 +895,7 @@
     },
     {
       "path": "docs/design/components/invitation-response.md",
-      "sha256": "b18b66e957e56b0d9f52b1404fa969f3893ba35dd9366363d77ca8d63febee43"
+      "sha256": "d550655c13478e3149f442b7f50b62332f5bcccc0a77b1b1d7207f45f1ffa7fc"
     },
     {
       "path": "docs/design/branding.md",
@@ -940,6 +944,30 @@
     {
       "path": "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
       "sha256": "6e7881ee9ab42d2d3c0cd028020d36badd1404c0477f5c19ca2e7d62a59db0a3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+      "sha256": "9a0798270adb125d4aa75f88da7ce9e3c47c3a94418707476d5155c96a8ee138"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/source/InvitationNotice.tsx",
+      "sha256": "ccc6302d817bd4002cfe83ff8f8ed3ca1bb1cf47bdb8c066582c171c2ff484a0"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/source/InvitationNotice.module.css",
+      "sha256": "d8dc9e85d5b6d7f4d83096396d51f074b6ef3f9f5f273d62cbf90ce80c96dd41"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-baseline.json",
+      "sha256": "75a7f6070cac85e32c72fa8a11ad9585dbc2263202a6071cdcaf05cfe828cba3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-response-reference.tsx",
+      "sha256": "b0151e59bbc4b6aa7599d68c8b734b40a4c67a376d5b51e1c6162f2073f71ccb"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/invite-r3/source/InvitationPreview.module.css",
+      "sha256": "e325f388fa8919ecfb8b2ec0341a0045d2ddf49bfafda9c2be64f30610776a1b"
     }
   ],
   "history": [
@@ -1516,6 +1544,16 @@
           "sha256": "c16aa94dc19aa32295977c96c6e433fa9611883b3f19ccb2fd8f7875056984ae"
         }
       ]
+    },
+    {
+      "revision": "invitation-review-fixes-2026-11-05-7.3.0",
+      "reason": "До invitation-state bindings7.4.0",
+      "sourceIndex": "design-system/publication-history/7.3.0-before-invitation-states/source-index.json"
+    },
+    {
+      "revision": "invitation-state-bindings-2026-11-05-7.4.0",
+      "sourceIndex": "design-system/publication-history/7.4.0-before-system-entry-bindings/source-index.json",
+      "reason": "До system-entry bindings7.5.0"
     }
   ],
   "approvedWorkingTree": {

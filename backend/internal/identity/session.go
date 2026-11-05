@@ -108,6 +108,20 @@ func (s *Service) Cleanup(ctx context.Context) (CleanupCount, error) {
 	return count, err
 }
 
+// LookupUser reads a real local profile without substituting a deleted-account label.
+// Callers expose only fields permitted by their public response contract.
+func (s *Service) LookupUser(ctx context.Context, id string) (User, bool, error) {
+	var user User
+	var found bool
+
+	err := s.readRecords(ctx, func(records ReadRecords) error {
+		user, found = records.User(id)
+		return nil
+	})
+
+	return user, found, err
+}
+
 // Users resolves local public profiles for an already authorized meeting snapshot.
 // It never accepts provider subjects as proof of identity.
 func (s *Service) Users(ctx context.Context, ids []string) (map[string]User, error) {

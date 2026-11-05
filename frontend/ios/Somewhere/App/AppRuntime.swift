@@ -11,6 +11,7 @@ final class AppRuntime {
     let api: APIClient?
     let linkScheme: String
     var invitation: InvitationTarget?
+    var responseDestination: RSVPOutcome?
     private(set) var linkWarning: String?
     @ObservationIgnored private let links: PendingInvitationStore
     @ObservationIgnored private var linkVersion = 0
@@ -115,6 +116,12 @@ final class AppRuntime {
         else { return }
         invitation = .token(token)
         persist(token)
+    }
+
+    func completeResponse(_ result: RSVPOutcome) {
+        guard session?.status == .authenticated else { return }
+        closeInvitation()
+        responseDestination = result
     }
 
     func closeInvitation() {

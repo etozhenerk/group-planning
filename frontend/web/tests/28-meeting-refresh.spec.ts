@@ -191,9 +191,14 @@ test('one hour cutoff is reflected after server refresh without losing current m
   const guest = await context.newPage();
   await login(guest, 'Лена');
   await guest.goto(new URL(created.invitation_url).pathname);
-  await expect(guest.getByRole('button', { name: 'Приду', exact: true })).toBeDisabled();
+
+  for (const answer of ['Приду', 'Возможно', 'Не смогу']) {
+    await expect(guest.getByRole('button', { name: answer, exact: true })).toHaveCount(0);
+  }
+
+  await expect(guest.getByText('Участие закрыто', { exact: true })).toBeVisible();
   await expect(
-    guest.getByText('Участие закрыто за час до начала встречи.'),
+    guest.getByText('Новых участников больше не принимают.', { exact: true }),
   ).toBeVisible();
   await page.goto(`/meetings/${created.meeting.id}`);
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();

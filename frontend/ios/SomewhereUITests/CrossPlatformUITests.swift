@@ -18,12 +18,6 @@ final class CrossPlatformUITests: XCTestCase {
             app.scrollViews.firstMatch.swipeUp()
         }
         going.tap()
-        let save = app.buttons["rsvp-save"]
-        for _ in 0..<6 {
-            if save.isHittable { break }
-            app.scrollViews.firstMatch.swipeUp()
-        }
-        save.tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 15))
         let caption = message("Правила встречи от web", app: app)
         reveal(caption, app: app)
@@ -99,17 +93,8 @@ final class CrossPlatformUITests: XCTestCase {
             scroll.swipeUp()
         }
         answer.tap()
-        let save = app.buttons["rsvp-save"]
-        for _ in 0..<5 {
-            if save.isHittable { break }
-            scroll.swipeUp()
-        }
-        save.tap()
-        let confirmed = app.staticTexts["confirmed-rsvp"].firstMatch
-        let saved = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS %@", "Вы не сможете прийти"),
-            object: confirmed)
-        XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 10), .completed)
+        XCTAssertTrue(app.scrollViews["rsvp-declined"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вы ответили «Не смогу»"].exists)
         XCTAssertFalse(message("Hello from web", app: app).exists)
         XCTAssertFalse(message("Hello from Android", app: app).exists)
         XCTAssertFalse(app.buttons["message-send"].exists)

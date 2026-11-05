@@ -1,58 +1,24 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { responseContext } from '@/features/respond/model/responseContext';
+import type { ResponseRequest } from '@/features/respond/model/responseRequest';
 import type { Answer } from '@/shared/api';
-import { ApiError } from '@/shared/api';
-import { accessEpoch, applyResponse, saveResponse } from '@/entities/meeting';
-import type { Invitation } from '@/entities/meeting';
-import type { Session } from '@/entities/session';
-import { useIntent } from '@/shared/lib/intent';
 
-export const useRespond = (
-  session: Session,
-  id: string,
-  token: string | undefined,
-  expected: string,
-) => {
-  const client = useQueryClient();
-  const intent = useIntent();
-  const [saved, setSaved] = useState<Answer | null>(null);
+export const useRespond = (input: Omit<ResponseRequest, 'answer'>) => {
+  const controller = useContext(responseContext);
+
+  if (!controller) {
+    throw new Error('ResponseProvider is required');
+  }
+
+  const active =
+    controller.request?.id === input.id &&
+    controller.request.session.user.id === input.session.user.id;
 
   return {
-    saved,
-    mutation: useMutation({
-      mutationFn: async (answer: Answer) => {
-        const epoch = accessEpoch(session.user.id, id);
-        const body = { answer, expected_revision: expected };
-        const result = await saveResponse(
-          token ? { token } : { id },
-          answer,
-          expected,
-          session.csrf,
-          intent(body),
-        );
-
-        if (!applyResponse(client, session.user.id, result, epoch)) {
-          throw new Error('Ответ изменился. Откройте приглашение ещё раз.');
-        }
-
-        return result;
-      },
-      onSuccess: (result) => {
-        setSaved(result.answer);
-        client.setQueriesData<Invitation>(
-          { queryKey: ['invitation', session.user.id] },
-          (old) =>
-            old?.meetingId === result.meetingId
-              ? { ...old, myRsvp: result.answer, myRsvpRevision: result.revision }
-              : old,
-        );
-      },
-      onError: (error) => {
-        if (error instanceof ApiError && error.status === 409) {
-          void client.invalidateQueries({ queryKey: ['invitation'] });
-        }
-      },
-      retry: false,
-    }),
+    mutation: {
+      isPending: active && controller.mutation.isPending,
+      error: active ? controller.mutation.error : null,
+      mutate: (answer: Answer) => controller.submit({ ...input, answer }),
+    },
   };
 };

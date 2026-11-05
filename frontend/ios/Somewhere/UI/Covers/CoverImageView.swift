@@ -6,6 +6,7 @@ struct CoverImageView: View {
     let thumbnail: Bool
     let thumbnailSize: CGFloat
     let settingsThumbnail: Bool
+    let fixedHeight: CGFloat?
     @State private var owner: CoverImageOwner
 
     private struct LoadKey: Hashable {
@@ -15,13 +16,15 @@ struct CoverImageView: View {
 
     init(
         source: CoverImageSource, api: APIClient? = nil, session: SessionStore? = nil,
-        thumbnail: Bool = false, thumbnailSize: CGFloat = 64, settingsThumbnail: Bool = false
+        thumbnail: Bool = false, thumbnailSize: CGFloat = 64, settingsThumbnail: Bool = false,
+        fixedHeight: CGFloat? = nil
     ) {
         self.source = source
         self.session = session
         self.thumbnail = thumbnail
         self.thumbnailSize = thumbnailSize
         self.settingsThumbnail = settingsThumbnail
+        self.fixedHeight = fixedHeight
         _owner = State(initialValue: CoverImageOwner(api: api, session: session))
     }
 
@@ -50,7 +53,17 @@ struct CoverImageView: View {
         .onDisappear { owner.clear() }
     }
 
-    private var image: some View {
+    @ViewBuilder private var image: some View {
+        if let fixedHeight {
+            pixels.frame(height: fixedHeight)
+        } else {
+            pixels.aspectRatio(thumbnail ? 1 : 16.0 / 9.0, contentMode: .fit)
+                .frame(
+                    width: thumbnail ? thumbnailSize : nil, height: thumbnail ? thumbnailSize : nil)
+        }
+    }
+
+    private var pixels: some View {
         GeometryReader { geometry in
             Group {
                 if owner.requestedSource == source, let image = owner.image {
@@ -69,7 +82,5 @@ struct CoverImageView: View {
                 }
             }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
         }
-        .aspectRatio(thumbnail ? 1 : 16.0 / 9.0, contentMode: .fit)
-        .frame(width: thumbnail ? thumbnailSize : nil, height: thumbnail ? thumbnailSize : nil)
     }
 }

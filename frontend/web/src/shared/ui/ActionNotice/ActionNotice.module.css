@@ -1,0 +1,39 @@
+.notice {
+  display: flex;
+  gap: var(--ds-component-invitation-notice-gap);
+  align-items: flex-start;
+  margin: var(--ds-component-invitation-notice-outer-inset)
+    var(--ds-component-invitation-notice-outer-inset)
+    var(--ds-component-invitation-notice-bottom-space);
+}
+
+.icon {
+  width: var(--ds-component-invitation-notice-icon-size);
+  height: var(--ds-component-invitation-notice-icon-size);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--ds-component-invitation-notice-icon-radius);
+  color: var(--ds-color-error);
+  background: var(--ds-color-invitation-notice-background);
+}
+
+.copy {
+  min-width: 0;
+  padding-top: var(--ds-component-invitation-notice-copy-top);
+  display: grid;
+  gap: var(--ds-component-invitation-notice-copy-gap);
+}
+
+.copy strong {
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-component-invitation-notice-title-line-height);
+  font-weight: var(--ds-typography-weight-semibold);
+  color: var(--ds-color-text);
+}
+
+.copy > span {
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-typography-line-height-body);
+  color: var(--ds-color-muted);
+}

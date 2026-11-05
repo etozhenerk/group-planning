@@ -1,0 +1,725 @@
+{
+  "schemaVersion": 1,
+  "id": "meeting-experience-refresh-android-g02",
+  "designVersion": "7.2.0",
+  "phase": "paused",
+  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются. 28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. Прямое поручение пользователя: на всех фронтах убирать клавиатуру по нажатию вне поля сообщения.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/meeting-experience-refresh/qa/design-6.3.0/rsvp-7.0.0/design-review.json",
+  "screens": [
+    {
+      "id": "chat-date-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "keyboard",
+        "error-retry",
+        "close-reopen",
+        "pending-repeat",
+        "access-revoked",
+        "large-text",
+        "reduced-motion",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "two-distinct-options",
+        "third-option-remove",
+        "all-five-settings",
+        "deadline-fields",
+        "localized-date",
+        "deadline-date-no-weekday",
+        "deadline-equal-height-adaptive"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/gathering-activity-feed/ux.md",
+        "openspec/changes/gathering-activity-feed/assets/date-poll-v1/date-poll.css",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-place-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "keyboard",
+        "error-retry",
+        "close-reopen",
+        "pending-repeat",
+        "access-revoked",
+        "large-text",
+        "reduced-motion",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "create-available",
+        "open-poll-blocked",
+        "deadline-date-no-weekday",
+        "deadline-equal-height-adaptive"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-task-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "keyboard",
+        "error-retry",
+        "close-reopen",
+        "pending-repeat",
+        "access-revoked",
+        "large-text",
+        "reduced-motion",
+        "low-height",
+        "landscape",
+        "screen-reader-focus"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-menu-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "dismiss-return-focus",
+        "choose-action",
+        "low-height",
+        "landscape",
+        "screen-reader-focus"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-upload-photo-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "cancel-return",
+        "error-retry",
+        "close-reopen",
+        "picker-before-sheet",
+        "picker-cancel-no-sheet",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-upload-file-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "cancel-return",
+        "error-retry",
+        "close-reopen",
+        "picker-before-sheet",
+        "picker-cancel-no-sheet",
+        "selected-carousel",
+        "overlay-remove",
+        "batch-pending",
+        "partial-retry",
+        "success-auto-dismiss"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/assets/styles.css",
+        "openspec/changes/meeting-experience-refresh/assets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/boardgame.png",
+        "openspec/changes/meeting-experience-refresh/assets/friends.png",
+        "openspec/changes/meeting-experience-refresh/assets/dinner.png",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/assets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/chat-menu.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-file.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/upload-error.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/README.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision-tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/revision.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-chat-sheets/provenance.json",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/index.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-28-media-flow/media.js"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-task-details-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "action",
+        "error-retry",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "proposed-recipient",
+        "proposed-author",
+        "accepted-assignee",
+        "accepted-author",
+        "completed",
+        "decline-confirm",
+        "cancel-confirm",
+        "draft-scroll-preserved",
+        "large-text",
+        "access-revoked"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "meeting-info-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "organizer",
+        "member",
+        "settings-return",
+        "profile-service-links",
+        "participants-expanded-organizer",
+        "participants-expanded-member",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "roster-current-count",
+        "expand-collapse-focus",
+        "share-return-draft",
+        "single-sheet"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.2",
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-share-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "copied",
+        "cancel-return",
+        "low-height",
+        "landscape",
+        "screen-reader-focus"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-settings-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "keyboard",
+        "close-reopen",
+        "error-retry",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "cover-change-remove",
+        "save-visible-low-height",
+        "info-return-draft",
+        "large-text",
+        "access-revoked"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    },
+    {
+      "id": "chat-reaction-people-native",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "open",
+        "close-return",
+        "low-height",
+        "landscape",
+        "screen-reader-focus",
+        "all-filter",
+        "emoji-filter-keyboard-focus",
+        "selection-announced",
+        "draft-scroll-preserved",
+        "large-text",
+        "access-revoked",
+        "chip-long-press-emoji-filter",
+        "chip-hold-does-not-toggle",
+        "chip-tap-toggle",
+        "close-chip-focus"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/meeting-experience-refresh/ux.md",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-telegram-chat.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.html",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/tokens.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/chat.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/panels.css",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/generated/chat.js",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/src",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/source-hashes.json",
+        "openspec/changes/meeting-experience-refresh/assets/brand.svg",
+        "openspec/changes/meeting-experience-refresh/design-publication-2026-10-27-chat-correction-2.0.0.md",
+        "openspec/changes/meeting-experience-refresh/assets/revisions/2026-10-27-telegram-chat/composer-smile.svg"
+      ],
+      "contracts": [
+        "docs/design/components/chat-actions.md",
+        "docs/design/components/navigation.md",
+        "docs/design/platforms.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "0.1"
+        ]
+      }
+    }
+  ]
+}

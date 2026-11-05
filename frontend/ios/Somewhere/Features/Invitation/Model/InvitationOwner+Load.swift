@@ -73,11 +73,12 @@ extension InvitationOwner {
             revision = meeting.myRSVPRevision
             choice = answer
             pending = nil
+            let publicOrganizer = preview?.meetingID == id ? preview?.organizer : nil
             preview = InvitationPreview(
                 meetingID: id, title: meeting.title, description: meeting.description,
                 startsAt: meeting.startsAt, timezone: meeting.timezone, place: meeting.place,
                 coverURL: meeting.coverURL, myRSVP: answer, myRSVPRevision: revision,
-                startsOn: meeting.startsOn)
+                organizer: publicOrganizer, startsOn: meeting.startsOn)
             canAccess = organizer || answer == .going
             guard canAccess else {
                 session.updateMeetingAccess(id, allowed: false)
@@ -91,6 +92,11 @@ extension InvitationOwner {
             guard current, generation == version, !session.privateData.denied.contains(id) else {
                 canAccess = false
                 return
+            }
+            if let organizer = session.privateData.participants[id]?.value?.participants.first(
+                where: { $0.role == "organizer" })?.user
+            {
+                preview?.organizer = organizer
             }
             await MeetingRepository(session: session).loadFeed(id)
             guard current, generation == version, !session.privateData.denied.contains(id) else {

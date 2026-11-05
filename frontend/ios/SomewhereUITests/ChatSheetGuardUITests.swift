@@ -101,9 +101,10 @@ final class ChatSheetGuardUITests: XCTestCase {
         let maybe = app.buttons["rsvp-maybe"]
         MeetingInfoTestSupport.reveal(maybe, app: app)
         maybe.tap()
-        let save = app.buttons["rsvp-save"]
-        MeetingInfoTestSupport.reveal(save, app: app)
-        save.tap()
+        let card = app.buttons["saved-invitation-" + meeting]
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["message-send"].exists)
+        card.tap()
         let scroll = app.scrollViews["invitation-screen"]
         XCTAssertTrue(scroll.waitForExistence(timeout: 10))
         let path = "/api/v1/meetings/" + meeting
@@ -115,9 +116,7 @@ final class ChatSheetGuardUITests: XCTestCase {
         let going = app.buttons["rsvp-going"]
         ChatSheetTestSupport.reveal(going, in: scroll, app: app)
         going.tap()
-        ChatSheetTestSupport.reveal(save, in: scroll, app: app)
-        save.tap()
-        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
     }
 
     private func waitForInvitationPoll(_ trace: URL, path: String) throws {

@@ -37,8 +37,7 @@ import dev.groupplanning.android.ui.theme.DesignTokens
 internal fun InvitationConversation(
     state: InvitationState,
     snapshot: ClientSnapshot,
-    choose: (RsvpAnswer) -> Unit,
-    save: () -> Unit,
+    respond: (RsvpAnswer) -> Unit,
     reload: () -> Unit,
     back: () -> Unit,
     feed: FeedViewModel?,
@@ -154,8 +153,7 @@ internal fun InvitationConversation(
                     state.copy(details = details),
                     people?.value,
                     people?.error != null,
-                    choose,
-                    save,
+                    respond,
                     reload,
                     share = share,
                 ) {

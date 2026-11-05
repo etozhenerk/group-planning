@@ -1,3 +1,4 @@
+import { ResponseProvider } from '@/features/respond';
 import { ServiceFooter } from '@/widgets/service-footer';
 import styles from '@/app/ui/Root/Root.module.css';
 import { Outlet, useLocation, ScrollRestoration } from 'react-router';
@@ -22,7 +23,9 @@ export const Root = () => {
       )}
       <DeletionGate>
         <NavigationMotionProvider>
-          <Outlet />
+          <ResponseProvider>
+            <Outlet />
+          </ResponseProvider>
         </NavigationMotionProvider>
         {location.pathname === '/' && <ServiceFooter />}
       </DeletionGate>

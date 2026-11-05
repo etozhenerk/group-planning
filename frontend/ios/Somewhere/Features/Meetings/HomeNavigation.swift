@@ -18,9 +18,10 @@ struct HomeNavigation: View {
                     VStack(spacing: DesignTokens.componentMobileNavigationIconGap) {
                         ExperienceIcon(
                             kind: icon(item), size: DesignTokens.componentNavigationIcon,
-                            weight: CGFloat(selection == item
-                                ? DesignTokens.componentMobileNavigationSelectedIconStroke
-                                : DesignTokens.componentMobileNavigationIconStroke))
+                            weight: CGFloat(
+                                selection == item
+                                    ? DesignTokens.componentMobileNavigationSelectedIconStroke
+                                    : DesignTokens.componentMobileNavigationIconStroke))
                         Text(item.rawValue)
                             .designFont(DesignTokens.typographySizeNavigationLabel, weight: .medium)
                             .tracking(DesignTokens.typographyTrackingNavigationLabel)
@@ -32,7 +33,8 @@ struct HomeNavigation: View {
                     .foregroundStyle(
                         selection == item
                             ? DesignTokens.colorNavigationSelectedText
-                            : DesignTokens.colorNavigationInactiveText)
+                            : DesignTokens.colorNavigationInactiveText
+                    )
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -76,7 +78,8 @@ struct HomeNavigation: View {
                 .shadow(
                     color: DesignTokens.colorMobileStickyShadow,
                     radius: DesignTokens.componentMobileStickyShadowBlur,
-                    y: -DesignTokens.componentMobileStickyShadowUpOffset)
+                    y: -DesignTokens.componentMobileStickyShadowUpOffset
+                )
                 .ignoresSafeArea(edges: .bottom)
         }
     }

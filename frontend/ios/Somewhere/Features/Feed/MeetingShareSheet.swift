@@ -38,7 +38,15 @@ struct MeetingShareSheet: View {
                         .frame(maxWidth: .infinity, minHeight: DesignTokens.targetIos)
                 }.accessibilityIdentifier("share-invitation")
             } else {
-                OrganizerInvitationView(owner: owner.invitation)
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS16) {
+                    if owner.invitation.shareProblem {
+                        Text("Не удалось получить ссылку приглашения")
+                            .foregroundStyle(AppPalette.error)
+                        Button("Попробовать ещё раз", action: owner.invitation.reload)
+                    } else {
+                        ProgressView("Получаем ссылку…")
+                    }
+                }
             }
         }
     }

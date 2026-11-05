@@ -43,7 +43,6 @@ export const MeetingDetails = ({
           <DetailsContent
             meeting={meeting}
             session={session}
-            close={close}
             edit={surface.edit}
             compact
             showAll={show}
@@ -69,7 +68,6 @@ export const MeetingDetails = ({
           <DetailsContent
             meeting={meeting}
             session={session}
-            close={close}
             edit={surface.edit}
             share={surface.shareAction}
           />

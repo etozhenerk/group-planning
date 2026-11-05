@@ -2,6 +2,7 @@ package dev.groupplanning.android.ui.covers
 
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ internal fun CoverImage(
     thumbnail: Boolean = false,
     thumbnailSize: Dp = DesignTokens.spaceS64,
     cornerRadius: Dp = DesignTokens.radiusCover,
+    fixedHeight: Dp? = null,
 ) {
     val repository = LocalCovers.current
     val model =
@@ -42,6 +44,8 @@ internal fun CoverImage(
                 )
     val size = if (thumbnail) {
         Modifier.size(thumbnailSize)
+    } else if (fixedHeight != null) {
+        Modifier.fillMaxWidth().height(fixedHeight)
     } else {
         Modifier.fillMaxWidth().aspectRatio(16f / 9f)
     }

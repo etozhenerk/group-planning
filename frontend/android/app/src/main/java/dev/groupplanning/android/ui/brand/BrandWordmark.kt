@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -28,13 +28,13 @@ internal fun BrandWordmark(
 
     Row(
         modifier,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalArrangement = Arrangement.spacedBy(DesignTokens.componentMobileBrandGap),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             painterResource(R.drawable.ic_brand_compact),
             null,
-            Modifier.size(34.dp),
+            Modifier.size(DesignTokens.componentMobileBrandMarkSize),
             tint = Palette.text,
         )
         Text(

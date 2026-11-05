@@ -1,3 +1,5 @@
+export { publicInvitation } from '@/entities/meeting/lib/publicInvitation';
+
 export type {
   Meeting,
   MeetingSummary,
@@ -14,7 +16,7 @@ export type {
 export {
   useMeetings,
   useInvitation,
-  useInvitationOrganizer,
+  useInvitationAccess,
   useMeeting,
   useParticipants,
 } from '@/entities/meeting/model/queries';
@@ -24,6 +26,8 @@ export { useConversation } from '@/entities/meeting/model/useConversation';
 export {
   useAccess,
   accessEpoch,
+  accessSessionEpoch,
+  applyConfirmedResponse,
   privateKey,
   clearMeeting,
   denyAccess,

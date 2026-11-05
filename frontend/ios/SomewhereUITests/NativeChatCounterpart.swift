@@ -42,6 +42,11 @@ final class NativeChatCounterpart {
     }
     deinit { session.invalidateAndCancel() }
 
+    func invitationAnswer(token: String) async throws -> String? {
+        let preview = try await request("invitations/" + token)
+        return preview["my_rsvp"] as? String
+    }
+
     func reschedule(start: Date?) async throws {
         let detail = try await request("meetings/" + meeting)
         let revision = try XCTUnwrap(detail["revision"] as? String)

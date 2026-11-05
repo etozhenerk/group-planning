@@ -57,6 +57,11 @@ final class SavedInvitationsOwner {
         operation = Task { await load(more: more) }
     }
 
+    func invalidate() {
+        cancel()
+        page = ResourceState()
+    }
+
     func cancel() {
         operation?.cancel()
         operation = nil

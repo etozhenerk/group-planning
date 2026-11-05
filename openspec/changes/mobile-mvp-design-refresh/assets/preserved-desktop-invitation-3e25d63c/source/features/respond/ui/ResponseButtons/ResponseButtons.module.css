@@ -1,0 +1,78 @@
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 18px;
+  color: var(--text);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 650;
+}
+
+button.primary,
+.button.primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--error);
+}
+
+.error[role='alert']:empty {
+  display: none;
+}
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.response-buttons {
+  display: grid;
+  gap: 10px;
+}
+
+.response-buttons button[aria-pressed='true'] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.meeting .response-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-component-participant-roster-row-gap);
+}
+
+.meeting .response-buttons button {
+  min-height: max(var(--ds-component-button-minimum-height), var(--ds-target-web));
+  padding: var(--ds-component-button-padding-block)
+    var(--ds-component-button-padding-inline);
+  border: var(--ds-space-s1) solid var(--ds-color-subtle-border);
+  border-radius: var(--ds-component-button-radius);
+  background: transparent;
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.meeting .response-buttons button.primary {
+  border-color: var(--ds-color-action);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+}
+
+.meeting .response-buttons button[aria-pressed='true']:not(:focus),
+:root[data-input-modality='pointer']
+  .meeting
+  .response-buttons
+  button[aria-pressed='true'] {
+  outline: none;
+}

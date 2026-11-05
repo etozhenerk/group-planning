@@ -9,6 +9,9 @@ export const useHomeScroll = (
   ready: boolean,
 ) => {
   const viewport = useRef<HTMLDivElement>(null);
+  const day = selection[selection.period];
+  const previous = useRef({ user, period: selection.period, day });
+
   useLayoutEffect(() => {
     const node = viewport.current;
 
@@ -17,6 +20,17 @@ export const useHomeScroll = (
     }
 
     const state = readHomeScroll(user, selection.period);
+    const changedDay =
+      previous.current.user === user &&
+      previous.current.period === selection.period &&
+      previous.current.day !== day;
+
+    previous.current = { user, period: selection.period, day };
+
+    if (changedDay && selection.view === 'calendar') {
+      state.positions.calendar = 0;
+    }
+
     node.scrollTop = state.positions[selection.view];
 
     // Loading skeletons must not replace a saved offset with a clamped zero.
@@ -37,7 +51,7 @@ export const useHomeScroll = (
       saveHomeScroll(user, state);
       node.removeEventListener('scroll', save);
     };
-  }, [user, selection.period, selection.view, mobile, ready]);
+  }, [user, selection.period, selection.view, day, mobile, ready]);
 
   return viewport;
 };

@@ -40,10 +40,12 @@ test('a late message response cannot reopen access after a 403', async ({
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
   const friend = await context.newPage();
   await friend.goto(created.invitation_url);
-  await friend.getByRole('button', { name: 'Войти и ответить' }).click();
+  await friend
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await friend.getByRole('link', { name: 'Войти как Лена' }).click();
   await friend.getByRole('button', { name: 'Приду', exact: true }).click();
-  await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+  await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   const release: { response?: () => void } = {};
   const stored: { response?: () => void } = {};

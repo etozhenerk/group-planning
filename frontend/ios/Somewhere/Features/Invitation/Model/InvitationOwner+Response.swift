@@ -29,6 +29,8 @@ extension InvitationOwner {
             self.pending = nil
             canAccess = false
             session.updateMeetingAccess(result.meetingID, allowed: result.canAccessFeed)
+            completedResponse = RSVPOutcome(
+                answer: result.rsvp, meetingID: result.meetingID, title: preview?.title ?? "")
             if result.canAccessFeed {
                 await loadPrivate(version: version)
             } else {

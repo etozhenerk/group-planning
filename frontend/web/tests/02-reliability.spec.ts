@@ -179,10 +179,12 @@ test('a revoked session closes private content and keeps invitation entry', asyn
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
   const friend = await context.newPage();
   await friend.goto(url);
-  await friend.getByRole('button', { name: 'Войти и ответить' }).click();
+  await friend
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await friend.getByRole('link', { name: 'Войти как Лена' }).click();
   await friend.getByRole('button', { name: 'Приду', exact: true }).click();
-  await friend.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+  await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
   const logout = await friend.request.post('/api/v1/auth/logout', {
     headers: { Origin: new URL(friend.url()).origin, 'X-CSRF-Token': await csrf(friend) },
@@ -208,7 +210,9 @@ test('cancelled invitation sign-in stays on the invitation without an answer', a
   await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await page.goto(url);
-  await page.getByRole('button', { name: 'Войти и ответить' }).click();
+  await page
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await page.getByRole('link', { name: 'Отменить вход' }).click();
   await expect(page).toHaveURL(/\/i\/.*auth_error=cancelled/);
   await expect(page.getByRole('status')).toContainText('Вход отменён');

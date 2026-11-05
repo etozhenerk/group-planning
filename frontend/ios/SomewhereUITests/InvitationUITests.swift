@@ -20,6 +20,7 @@ final class InvitationUITests: XCTestCase {
         app.activate()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         choose("not_going", confirmation: "Вы не сможете прийти", app: app)
+        try open(app)
         waitForGoing(false, app: app)
         XCTAssertTrue(app.staticTexts["Настолки у Саши"].exists)
         capture("cutoff-returning-closed", app)
@@ -35,19 +36,19 @@ final class InvitationUITests: XCTestCase {
         try await control.reschedule(start: Date().addingTimeInterval(86400))
         app.activate()
         waitForGoing(true, app: app)
-        going.tap()
         try await control.reschedule(start: Date().addingTimeInterval(1800))
-        app.buttons["rsvp-save"].tap()
+        going.tap()
         waitForGoing(false, app: app)
         XCTAssertFalse(app.buttons["meeting-info-open"].exists)
         XCTAssertTrue(app.staticTexts["Настолки у Саши"].exists)
         capture("cutoff-stale-server-closed", app)
+        try await control.reschedule(start: Date().addingTimeInterval(86400))
     }
 
     private func waitForGoing(_ enabled: Bool, app: XCUIApplication, timeout: TimeInterval = 10) {
         let expectation = XCTNSPredicateExpectation(
             predicate: NSPredicate(
-                format: "exists == true AND enabled == %@", NSNumber(value: enabled)),
+                format: enabled ? "exists == true AND enabled == true" : "exists == false"),
             object: app.buttons["rsvp-going"])
         XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed)
     }
@@ -93,13 +94,6 @@ final class InvitationUITests: XCTestCase {
             predicate: NSPredicate(format: "enabled == true"), object: button)
         XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 5), .completed)
         button.tap()
-        let save = app.buttons["rsvp-save"]
-        for _ in 0..<4 {
-            if save.isHittable { break }
-            scroll.swipeUp()
-        }
-        XCTAssertTrue(save.waitForExistence(timeout: 3))
-        save.tap()
         if value == "going" {
             let info = app.buttons["meeting-info-open"]
             XCTAssertTrue(info.waitForExistence(timeout: 10))
@@ -108,11 +102,15 @@ final class InvitationUITests: XCTestCase {
             XCTAssertTrue(app.buttons["rsvp-going"].isSelected)
             XCTAssertFalse(app.buttons["rsvp-save"].exists)
             ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
+        } else if value == "maybe" {
+            XCTAssertTrue(app.buttons["Приглашения"].waitForExistence(timeout: 10))
+            XCTAssertTrue(
+                app.buttons["saved-invitation-" + meetingID].waitForExistence(timeout: 10))
+            XCTAssertFalse(app.buttons["message-send"].exists)
         } else {
-            let saved = XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "label CONTAINS %@", confirmation),
-                object: app.staticTexts["confirmed-rsvp"].firstMatch)
-            XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 10), .completed)
+            XCTAssertTrue(app.scrollViews["rsvp-declined"].waitForExistence(timeout: 10))
+            XCTAssertTrue(app.staticTexts["Вы ответили «Не смогу»"].exists)
+            XCTAssertTrue(app.staticTexts["Организатор увидит ваш ответ."].exists)
         }
     }
 
@@ -124,15 +122,15 @@ final class InvitationUITests: XCTestCase {
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
         XCTAssertFalse(app.descendants(matching: .any)["participant-count"].exists)
-        app.buttons["Войти и ответить"].tap()
+        app.buttons["Войти через Яндекс ID"].tap()
         XCTAssertTrue(app.alerts["Не удалось войти"].waitForExistence(timeout: 3))
         app.buttons["Понятно"].tap()
-        XCTAssertTrue(app.buttons["Войти и ответить"].isEnabled)
+        XCTAssertTrue(app.buttons["Войти через Яндекс ID"].isEnabled)
         capture("invitation-anonymous", app)
         app.terminate()
         app.launch()
         XCTAssertTrue(app.staticTexts["Настолки у Саши"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["Войти и ответить"].exists)
+        XCTAssertTrue(app.buttons["Войти через Яндекс ID"].exists)
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
@@ -140,10 +138,12 @@ final class InvitationUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Приглашение недоступно"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["Настолки у Саши"].exists)
         try open(app)
-        XCTAssertTrue(app.buttons["Войти и ответить"].exists)
+        XCTAssertTrue(app.buttons["Войти через Яндекс ID"].exists)
     }
 
-    func testThreeResponsesReentryAndMeetingIDWithdrawal() throws {
+    func testThreeResponsesReentryAndMeetingIDWithdrawal() async throws {
+        let control = try NativeChatCounterpart(actor: "invite-owner", meeting: meetingID)
+        try await control.reschedule(start: Date().addingTimeInterval(86400))
         let app = launch("invite-rsvp")
         try open(app)
         XCTAssertFalse(
@@ -164,6 +164,7 @@ final class InvitationUITests: XCTestCase {
                 .exists)
         XCTAssertFalse(app.descendants(matching: .any)["participant-count"].exists)
         capture("invitation-maybe", app)
+        try open(app)
         choose("not_going", confirmation: "Вы не сможете прийти", app: app)
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
@@ -172,9 +173,9 @@ final class InvitationUITests: XCTestCase {
         app.terminate()
         app.launchEnvironment["SOMEWHERE_UI_REENTRY"] = "1"
         app.launch()
-        XCTAssertTrue(app.staticTexts["confirmed-rsvp"].waitForExistence(timeout: 10))
-        XCTAssertTrue(
-            app.staticTexts["confirmed-rsvp"].firstMatch.label.contains("Вы не сможете прийти"))
+        try open(app)
+        XCTAssertTrue(app.buttons["rsvp-not_going"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["rsvp-not_going"].isSelected)
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
@@ -193,7 +194,7 @@ final class InvitationUITests: XCTestCase {
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["К моим встречам"].tap()
         XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
     }
 
@@ -201,15 +202,16 @@ final class InvitationUITests: XCTestCase {
         let app = launch("invite-error")
         try open(app, token: "QkJCQkJCQkJCQkJCQkJCQg", title: "Проверка повтора")
         app.buttons["rsvp-going"].tap()
-        app.buttons["rsvp-save"].tap()
         XCTAssertTrue(app.staticTexts["rsvp-error"].waitForExistence(timeout: 10))
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
         XCTAssertFalse(app.staticTexts["confirmed-rsvp"].exists)
         capture("invitation-retry", app)
-        let retry = app.buttons["rsvp-save"]
-        XCTAssertEqual(retry.label, "Повторить сохранение")
+        let retry = app.buttons["rsvp-going"]
+        XCTAssertTrue(retry.isEnabled)
+        XCTAssertFalse(app.buttons["rsvp-maybe"].isEnabled)
+        XCTAssertFalse(app.buttons["rsvp-not_going"].isEnabled)
         retry.tap()
         XCTAssertTrue(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch

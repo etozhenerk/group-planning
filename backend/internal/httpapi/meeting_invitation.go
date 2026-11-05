@@ -34,7 +34,22 @@ func (h meetingHandlers) preview(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var organizer *userResponse
+	if h.identity != nil {
+		user, exists, err := h.identity.LookupUser(r.Context(), preview.OrganizerID)
+		if err != nil {
+			h.writeMeetingError(w, err)
+			return
+		}
+
+		if exists {
+			value := publicUserDTO(user)
+			organizer = &value
+		}
+	}
+
 	writeJSON(w, 200, previewResponse{
+		Organizer:          organizer,
 		MeetingID:          preview.MeetingID,
 		Title:              preview.Title,
 		Description:        optionalString(preview.Description),

@@ -2,7 +2,10 @@ import { QueryClient } from '@tanstack/react-query';
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   accessEpoch,
+  accessSessionEpoch,
+  applyConfirmedResponse,
   applyResponse,
+  confirmMeetingAccess,
   denyAccess,
   guarded,
   resetAccess,
@@ -54,6 +57,96 @@ describe('private cache access generation', () => {
         'user',
         { ...response, answer: 'maybe', revision: '0', canAccess: false },
         accessEpoch('user', 'meeting'),
+      ),
+    ).toBe(false);
+  });
+  it('reopens a revoked lease only from a fresh protected read', async () => {
+    const client = new QueryClient();
+    denyAccess(client, 'user', 'meeting', epoch);
+    const revokedEpoch = accessEpoch('user', 'meeting');
+
+    expect(confirmMeetingAccess('user', 'meeting', '1', epoch)).toBe(false);
+    await expect(
+      guarded(client, 'user', 'meeting', revokedEpoch, () => Promise.resolve('private')),
+    ).rejects.toThrow();
+    expect(confirmMeetingAccess('user', 'meeting', '1', revokedEpoch)).toBe(true);
+    await expect(
+      guarded(client, 'user', 'meeting', accessEpoch('user', 'meeting'), () =>
+        Promise.resolve('private'),
+      ),
+    ).resolves.toBe('private');
+  });
+  it('accepts a confirmed revocation ACK after realtime already closed the same session', async () => {
+    const client = new QueryClient();
+    const sessionEpoch = accessSessionEpoch();
+    denyAccess(client, 'user', 'meeting', epoch);
+    expect(
+      applyConfirmedResponse(
+        client,
+        'user',
+        {
+          meetingId: 'meeting',
+          answer: 'maybe',
+          revision: '2',
+          meetingRevision: '3',
+          canAccess: false,
+        },
+        epoch,
+        sessionEpoch,
+      ),
+    ).toBe(true);
+    await expect(
+      guarded(client, 'user', 'meeting', accessEpoch('user', 'meeting'), () =>
+        Promise.resolve('private'),
+      ),
+    ).rejects.toThrow();
+  });
+  it('rejects an old revocation ACK after logout and a newer going response', () => {
+    const client = new QueryClient();
+    const oldSession = accessSessionEpoch();
+    denyAccess(client, 'user', 'meeting', epoch);
+    resetAccess();
+    expect(
+      applyConfirmedResponse(
+        client,
+        'user',
+        {
+          meetingId: 'meeting',
+          answer: 'maybe',
+          revision: '2',
+          meetingRevision: '3',
+          canAccess: false,
+        },
+        epoch,
+        oldSession,
+      ),
+    ).toBe(false);
+    const current = accessEpoch('user', 'meeting');
+    applyResponse(
+      client,
+      'user',
+      {
+        meetingId: 'meeting',
+        answer: 'going',
+        revision: '4',
+        meetingRevision: '5',
+        canAccess: true,
+      },
+      current,
+    );
+    expect(
+      applyConfirmedResponse(
+        client,
+        'user',
+        {
+          meetingId: 'meeting',
+          answer: 'maybe',
+          revision: '2',
+          meetingRevision: '3',
+          canAccess: false,
+        },
+        current,
+        accessSessionEpoch(),
       ),
     ).toBe(false);
   });

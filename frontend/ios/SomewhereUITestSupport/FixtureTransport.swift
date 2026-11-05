@@ -32,7 +32,11 @@ final class FixtureTransport: HTTPTransport, HTTPFileTransport {
                 } catch { print("SOMEWHERE_HTTP_TRACE_WRITE_FAILED") }
             }
         }
-        if scenario != "profile-fields", request.url?.path == "/api/v1/auth/yandex/start" {
+        let controlledLogin = ["success", "cancelled", "hold"].contains(
+            ProcessInfo.processInfo.environment["SOMEWHERE_UI_LOGIN_OUTCOME"] ?? "")
+        if scenario != "profile-fields", !controlledLogin,
+            request.url?.path == "/api/v1/auth/yandex/start"
+        {
             try await Task.sleep(for: .milliseconds(300))
             throw URLError(.notConnectedToInternet)
         }

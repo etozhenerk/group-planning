@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-design-and-feature-checkpoint; final gates pending",
+  "reviewer": "independent-web-checkpoint-7.5-2026-11-05",
+  "reviewedAt": "2026-11-05T13:08:56.420Z",
+  "candidate": {
+    "sourceHash": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+    "artifactHash": "876d9f67aa3d3cb4c7619ca4537e22b31392dea237b22b610bfb0cacafd01b83"
+  },
+  "before": {
+    "sourceHash": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+    "artifactHash": "876d9f67aa3d3cb4c7619ca4537e22b31392dea237b22b610bfb0cacafd01b83",
+    "errors": [],
+    "files": 261,
+    "at": "2026-11-05T13:08:42.209Z"
+  },
+  "after": {
+    "sourceHash": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+    "artifactHash": "876d9f67aa3d3cb4c7619ca4537e22b31392dea237b22b610bfb0cacafd01b83",
+    "errors": [],
+    "files": 261,
+    "at": "2026-11-05T13:08:56.420Z"
+  },
+  "note": "Scope: F1/F2 plus critical3RSVP routes and one real retry in Chromium+WebKit. No208state matrix, final acceptance/gates or checkbox closure. Local OAuth/memory fixtures only; raw/historical reference freshly opened. VoiceOver excluded.",
+  "status": "checkpoint-pass; final gates pending",
+  "findings": [],
+  "checks": [
+    {
+      "id": "F1",
+      "engine": "chromium",
+      "width": 320,
+      "pass": true,
+      "actualScreenshot": "chromium-guest-320-actual.png"
+    },
+    {
+      "id": "F1",
+      "engine": "chromium",
+      "width": 390,
+      "pass": true,
+      "actualScreenshot": "chromium-guest-390-actual.png"
+    },
+    {
+      "id": "F1",
+      "engine": "chromium",
+      "width": 739,
+      "pass": true,
+      "actualScreenshot": "chromium-guest-739-actual.png"
+    },
+    {
+      "id": "F2",
+      "state": "loading",
+      "width": 740,
+      "actualScreenshot": "desktop-loading-740-actual.png",
+      "referenceScreenshot": "desktop-loading-740-reference.png",
+      "pass": true
+    },
+    {
+      "id": "F2",
+      "state": "unavailable",
+      "width": 740,
+      "actualScreenshot": "desktop-unavailable-740-actual.png",
+      "referenceScreenshot": "desktop-unavailable-740-reference.png",
+      "pass": true,
+      "reviewerAssessment": "Actual и historical визуально совпадают; heading/State/About rect одинаковы. Дополнительный actual article прозрачен, padding0/radius0 и не меняет geometry. Первичный ancestry-equality probe был false из-за лишнего семантического ancestor, не UI-дефекта."
+    },
+    {
+      "id": "F2",
+      "state": "loading",
+      "width": 1100,
+      "actualScreenshot": "desktop-loading-1100-actual.png",
+      "referenceScreenshot": "desktop-loading-1100-reference.png",
+      "pass": true
+    },
+    {
+      "id": "F2",
+      "state": "unavailable",
+      "width": 1100,
+      "actualScreenshot": "desktop-unavailable-1100-actual.png",
+      "referenceScreenshot": "desktop-unavailable-1100-reference.png",
+      "pass": true,
+      "reviewerAssessment": "Actual и historical визуально совпадают; heading/State/About rect одинаковы. Дополнительный actual article прозрачен, padding0/radius0 и не меняет geometry. Первичный ancestry-equality probe был false из-за лишнего семантического ancestor, не UI-дефекта."
+    },
+    {
+      "id": "F2",
+      "state": "loading",
+      "width": 1440,
+      "actualScreenshot": "desktop-loading-1440-actual.png",
+      "referenceScreenshot": "desktop-loading-1440-reference.png",
+      "pass": true
+    },
+    {
+      "id": "F2",
+      "state": "unavailable",
+      "width": 1440,
+      "actualScreenshot": "desktop-unavailable-1440-actual.png",
+      "referenceScreenshot": "desktop-unavailable-1440-reference.png",
+      "pass": true,
+      "reviewerAssessment": "Actual и historical визуально совпадают; heading/State/About rect одинаковы. Дополнительный actual article прозрачен, padding0/radius0 и не меняет geometry. Первичный ancestry-equality probe был false из-за лишнего семантического ancestor, не UI-дефекта."
+    },
+    {
+      "id": "TC-RSVP-ROUTE-GOING",
+      "engine": "chromium",
+      "answer": "Приду",
+      "path": "/meetings/9620ae49-e0eb-4634-89e1-82439b72b436",
+      "myRsvp": "going",
+      "screenshot": "chromium-route-chat.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-ROUTE-MAYBE",
+      "engine": "chromium",
+      "answer": "Возможно",
+      "path": "/invitations",
+      "myRsvp": "maybe",
+      "screenshot": "chromium-route-invitations.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-ROUTE-DECLINED",
+      "engine": "chromium",
+      "answer": "Не смогу",
+      "path": "/meetings/99da3846-6a6e-4b31-9189-b5b0b89580bc/declined",
+      "myRsvp": "not_going",
+      "screenshot": "chromium-route-declined.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-UNCONFIRMED",
+      "engine": "chromium",
+      "action": "transport abort before server -> source/error -> Enter retry -> same meeting chat",
+      "sameKey": true,
+      "errorScreenshot": "chromium-retry-error.png",
+      "screenshot": "chromium-retry-success.png",
+      "pass": true
+    },
+    {
+      "id": "F1",
+      "engine": "webkit",
+      "width": 390,
+      "pass": true,
+      "actualScreenshot": "webkit-guest-390-actual.png"
+    },
+    {
+      "id": "TC-RSVP-ROUTE-GOING",
+      "engine": "webkit",
+      "answer": "Приду",
+      "path": "/meetings/f04db159-32b4-40eb-9577-2b6e7f2578ef",
+      "myRsvp": "going",
+      "screenshot": "webkit-route-chat.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-ROUTE-MAYBE",
+      "engine": "webkit",
+      "answer": "Возможно",
+      "path": "/invitations",
+      "myRsvp": "maybe",
+      "screenshot": "webkit-route-invitations.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-ROUTE-DECLINED",
+      "engine": "webkit",
+      "answer": "Не смогу",
+      "path": "/meetings/c1fe24a5-5ad5-4c3d-870c-e071993cefbd/declined",
+      "myRsvp": "not_going",
+      "screenshot": "webkit-route-declined.png",
+      "pass": true
+    },
+    {
+      "id": "TC-RSVP-UNCONFIRMED",
+      "engine": "webkit",
+      "action": "transport abort before server -> source/error -> Enter retry -> same meeting chat",
+      "sameKey": true,
+      "errorScreenshot": "webkit-retry-error.png",
+      "screenshot": "webkit-retry-success.png",
+      "pass": true
+    }
+  ],
+  "visualReview": "Просмотрены fresh actual/reference F1 390, loading740 и unavailable740, критические маршруты Chromium, WebKit guest/Declined/retry. На остальных заявленных размерах подтверждены computed geometry/CTA и historical equality; 208states не повторялись.",
+  "evidence": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-320-actual.png",
+      "sha256": "0b9a6687cad336d62a42b8b0414f49dc31e24e5aa642780a1f37f9f98947c148"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-320-reference.png",
+      "sha256": "b43698534864ea1002402a6ab47dcf3c466d052f1dcf40e0a2968fa34bb50c6b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-390-actual.png",
+      "sha256": "db780c7c6596036cfa611b852cada56deef95a5b5c52ac6c05a9650be722f752"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-390-reference.png",
+      "sha256": "520f140af8a7dddf76fc8ebda4b5e75f13a74e97f87e69b7dd11724b01fd076f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-739-actual.png",
+      "sha256": "5a976a4e6cc1aa7cf5248307fcf4dab4947c00bff3c45ae5d1af01c89d39f19f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-guest-739-reference.png",
+      "sha256": "27732f99e5c33f35fc83932ee14e3137e89485f1b0835a0528d253ccf1414810"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-retry-error.png",
+      "sha256": "5f9cc95002b0f19f0818544b8ee1e40f04e128b9d5c2e0f6d48fff7ce87eba46"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-retry-success.png",
+      "sha256": "aa8544cb582f2dcbe0ea373c0446543ed7f742a6ecc4db11419b942662dfda83"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-route-chat.png",
+      "sha256": "aa8544cb582f2dcbe0ea373c0446543ed7f742a6ecc4db11419b942662dfda83"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-route-declined.png",
+      "sha256": "e4b31a6742e24770dfee680c0092d7640f1449e1b299ebb5c8a3b2b6c7a265ae"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/chromium-route-invitations.png",
+      "sha256": "e329c73eb9d0ddbdb833461e0fdc790e1e715908792191878e216050732b06c3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-1100-actual.png",
+      "sha256": "835ed42697827f04334a315775934240af3c5ea3304baa24de4320bc0c341c17"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-1100-reference.png",
+      "sha256": "835ed42697827f04334a315775934240af3c5ea3304baa24de4320bc0c341c17"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-1440-actual.png",
+      "sha256": "1ef7a893282f734b233ce310690359823335dbafc2655e93cea85d78bb995436"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-1440-reference.png",
+      "sha256": "1ef7a893282f734b233ce310690359823335dbafc2655e93cea85d78bb995436"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-740-actual.png",
+      "sha256": "9f63720a35f41346d34321e34c53efe9d32a9353ef61a209638f98411fae7f27"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-loading-740-reference.png",
+      "sha256": "1459ffca10d0632808c02c0eef60ee52ca44bfe7e88e823ca1796678504c5925"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-1100-actual.png",
+      "sha256": "e91bb4482eaf4f059c5bf6df817755a43f038aac1fc7098fe232a84237bd1a7d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-1100-reference.png",
+      "sha256": "e91bb4482eaf4f059c5bf6df817755a43f038aac1fc7098fe232a84237bd1a7d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-1440-actual.png",
+      "sha256": "aed4ab3f0bdacc60a2252ba64577527d29eaa7b8bef31bf218b515397c431a79"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-1440-reference.png",
+      "sha256": "aed4ab3f0bdacc60a2252ba64577527d29eaa7b8bef31bf218b515397c431a79"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-740-actual.png",
+      "sha256": "0b52c5f2e73b84c99f93866254910cfc90a7ab8cc3f76ac9c2667f02d05505a6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/desktop-unavailable-740-reference.png",
+      "sha256": "0b52c5f2e73b84c99f93866254910cfc90a7ab8cc3f76ac9c2667f02d05505a6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-guest-390-actual.png",
+      "sha256": "087fca38bfd4a56fe88ef7cafce43045c05654b68f722ac85466c2b18fc73784"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-retry-error.png",
+      "sha256": "6ef8728e0c509824399fe6e83d5d6b70e53aab3c2ac4a277de0b00666548b4d7"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-retry-success.png",
+      "sha256": "1ed7e98898e1634dfd0592fd8c681fe4d5ea2e1cc0cb0ca078ee93b9b1675c94"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-route-chat.png",
+      "sha256": "1ed7e98898e1634dfd0592fd8c681fe4d5ea2e1cc0cb0ca078ee93b9b1675c94"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-route-declined.png",
+      "sha256": "da47a49cfa9e3064e432c74a41c284be28cec1f5230dd381d7ee4d59af0960ac"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/webkit-route-invitations.png",
+      "sha256": "05473a2ac309bb38e619e3e27f5a6353efb400c8ebe871780cc93a551053e4ca"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/invitation-checkpoint-7.5.0/web/checkpoint-probes.json",
+      "sha256": "314f914197317f9fb1ad947a5c56c7cbcc2bfe98e4a77dedd768c92fc34a8fc6"
+    }
+  ]
+}

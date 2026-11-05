@@ -309,10 +309,19 @@ func TestMeetingOpenAPIResponses(t *testing.T) {
 		t.Fatal("new invitation is not compact")
 	}
 
-	for _, word := range []string{"organizer_id", "participants", "entries", "display_name"} {
+	for _, word := range []string{"organizer_id", "participants", "entries", "email", "phone", "first_name", "last_name", "birthday", "sex", "login"} {
 		if bytes.Contains(data, []byte(word)) {
 			t.Fatalf("public preview leaked %s", word)
 		}
+	}
+
+	public := decodeMeetingTest[previewResponse](t, data)
+	if public.Organizer == nil || public.Organizer.ID != owner.User.ID || public.Organizer.DisplayName != owner.User.DisplayName {
+		t.Fatal("public organizer does not match the real identity")
+	}
+
+	if public.Organizer.AvatarURL == nil || owner.User.AvatarURL == nil || *public.Organizer.AvatarURL != *owner.User.AvatarURL {
+		t.Fatal("public organizer avatar does not match")
 	}
 
 	h.request(h.anonymous, "PUT", invite+"/rsvp", map[string]string{"answer": "going", "expected_revision": "0"}, nil, 401)

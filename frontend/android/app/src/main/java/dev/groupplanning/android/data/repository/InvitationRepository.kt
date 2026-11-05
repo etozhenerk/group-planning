@@ -81,7 +81,11 @@ internal class InvitationRepository(
             it.copy(details = it.details + (id to ResourceState(ResourcePhase.Ready, meeting)))
         }
         val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile
-        return InvitationDetails(meeting.preview(), meeting, meeting.organizerId == profile?.id)
+        return InvitationDetails(
+            meeting.preview().copy(organizer = preview?.organizer),
+            meeting,
+            meeting.organizerId == profile?.id,
+        )
     }
 
     suspend fun respond(

@@ -29,7 +29,9 @@ import (
 // browserProvider is compiled only into Go tests, never cmd/server.
 type browserProvider struct{ origin string }
 
-var browserProfiles = []struct{ code, name string }{
+type browserProfile struct{ code, name string }
+
+var browserProfiles = []browserProfile{
 	{"sasha", "Саша"},
 	{"lena", "Лена"},
 	{"misha", "Миша"},
@@ -55,7 +57,7 @@ func (p browserProvider) Verify(ctx context.Context, code, verifier string) (ide
 		return profileFieldsLogin(ctx, code, p.origin)
 	}
 
-	for _, profile := range browserProfiles {
+	for _, profile := range browserFixtureProfiles() {
 		if profile.code == code && verifier != "" {
 			return identity.Profile{Subject: "browser-test-" + code, DisplayName: profile.name}, nil
 		}
@@ -173,7 +175,7 @@ func TestBrowserFixture(t *testing.T) {
 			Profiles []struct{ Name, URL string }
 			Cancel   string
 		}{Cancel: "/api/v1/auth/yandex/callback?" + url.Values{"state": {state}, "error": {"access_denied"}}.Encode()}
-		for _, profile := range browserProfiles {
+		for _, profile := range browserFixtureProfiles() {
 			values.Profiles = append(values.Profiles, struct{ Name, URL string }{profile.name, callback(profile.code)})
 		}
 

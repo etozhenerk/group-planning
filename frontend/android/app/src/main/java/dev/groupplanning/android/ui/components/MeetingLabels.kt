@@ -11,7 +11,12 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-internal fun meetingTime(value: ApiInstant?, zone: String, startsOn: String? = null): String {
+internal fun meetingTime(
+    value: ApiInstant?,
+    zone: String,
+    startsOn: String? = null,
+    includeMissingTime: Boolean = true,
+): String {
     if (value == null) {
         if (startsOn == null) return stringResource(R.string.meeting_date_missing)
         val day = try {
@@ -21,7 +26,14 @@ internal fun meetingTime(value: ApiInstant?, zone: String, startsOn: String? = n
         } catch (_: DateTimeException) {
             startsOn
         }
-        return stringResource(R.string.meeting_date_without_time, day)
+        return if (includeMissingTime) {
+            stringResource(
+                R.string.meeting_date_without_time,
+                day,
+            )
+        } else {
+            day
+        }
     }
     return try {
         DateTimeFormatter.ofPattern("d MMMM · HH:mm", Locale.forLanguageTag("ru"))

@@ -99,6 +99,7 @@ const imageColor = async (page: Page) => {
 for (const width of [320, 390, 1440]) {
   test(`cover selection, validation, display and removal at ${width}px`, async ({
     page,
+    browser,
   }) => {
     test.setTimeout(60_000);
     await page.setViewportSize({ width, height: 900 });
@@ -139,12 +140,19 @@ for (const width of [320, 390, 1440]) {
     await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
     const id = page.url().split('/').at(-1) ?? '';
     const invitation = await inviteLink(page);
-    await page.goto(invitation);
-    const pixels = await imageColor(page);
+    const previewContext = await browser.newContext({
+      ignoreHTTPSErrors: true,
+      viewport: { width, height: 900 },
+    });
+
+    const previewPage = await previewContext.newPage();
+
+    await previewPage.goto(invitation);
+    const pixels = await imageColor(previewPage);
     expect(pixels.width).toBe(1600);
     expect(pixels.height).toBe(900);
     expect(pixels.rgb[0]).toBeGreaterThan(pixels.rgb[2] ?? 0);
-    await page.screenshot({
+    await previewPage.screenshot({
       path: `test-results/cover-invitation-${width}.png`,
       animations: 'disabled',
       fullPage: true,
@@ -179,8 +187,8 @@ for (const width of [320, 390, 1440]) {
     );
     await form.getByRole('button', { name: 'Сохранить изменения' }).click();
     await expect(form).not.toBeVisible();
-    await page.goto(invitation);
-    const blue = await imageColor(page);
+    await previewPage.goto(invitation);
+    const blue = await imageColor(previewPage);
     expect(blue.rgb[2]).toBeGreaterThan(blue.rgb[0] ?? 0);
     await page.goto('/meetings');
     const card = page
@@ -195,9 +203,10 @@ for (const width of [320, 390, 1440]) {
     await form.getByRole('button', { name: 'Сохранить изменения' }).click();
     await expect(form).not.toBeVisible();
     expect((await apiMeeting(page, id)).cover_url).toBeNull();
-    await page.goto(invitation);
-    await expect(page.getByTestId('meeting-cover')).toHaveCount(0);
-    await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
+    await previewPage.goto(invitation);
+    await expect(previewPage.getByTestId('meeting-cover')).toHaveCount(0);
+    await expect(previewPage.locator('body')).toHaveJSProperty('scrollWidth', width);
+    await previewContext.close();
   });
 }
 
@@ -363,11 +372,15 @@ test('late private photo cannot reappear after RSVP revokes access', async ({
     latch.received = resolve;
   });
 
+  const latePrivatePhoto = await photo(page, '#315fa1');
+
   await guest.route(`**/meetings/${created.meeting.id}/cover?*`, async (route) => {
     const response = await route.fetch();
     latch.received();
     await waiting;
-    await route.fulfill({ response }).catch(() => undefined);
+    await route
+      .fulfill({ response, body: latePrivatePhoto.buffer })
+      .catch(() => undefined);
   });
 
   try {
@@ -379,8 +392,14 @@ test('late private photo cannot reappear after RSVP revokes access', async ({
     await expect(
       guest.getByRole('textbox', { name: 'Сообщение', exact: true }),
     ).toHaveCount(0);
+    await expect(guest).toHaveURL('/invitations');
     latch.release();
-    await expect(guest.getByRole('img', { name: 'Обложка встречи' })).toHaveCount(0);
+    const publicPixels = await imageColor(guest);
+    expect(publicPixels.rgb[0]).toBeGreaterThan(publicPixels.rgb[2] ?? 0);
+    expect(
+      (await guest.request.get(`/api/v1/meetings/${created.meeting.id}/feed`)).status(),
+    ).toBe(403);
+    expect((await guest.request.get(created.meeting.cover_url ?? '')).status()).toBe(403);
   } finally {
     latch.release();
     await context.close();

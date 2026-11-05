@@ -35,15 +35,11 @@ final class SavedInvitationsUITests: XCTestCase {
         }
         XCTAssertTrue(answer.waitForExistence(timeout: 5))
         answer.tap()
-        let save = app.buttons["rsvp-save"]
-        for _ in 0..<5 {
-            if save.isHittable { break }
-            app.scrollViews.firstMatch.swipeUp()
-        }
-        save.tap()
+
     }
 
-    func testResponsesMoveInvitationOnlyAfterConfirmation() {
+    func testResponsesMoveInvitationOnlyAfterConfirmation() async throws {
+        let server = try NativeChatCounterpart(actor: "saved-invitations")
         let app = launch("saved-invitations")
         app.buttons["Приглашения"].tap()
         let card = app.buttons[cardID]
@@ -51,37 +47,43 @@ final class SavedInvitationsUITests: XCTestCase {
         XCTAssertFalse(app.buttons["Календарь"].exists)
         capture("ios-saved-invitations")
         card.tap()
-        XCTAssertTrue(app.staticTexts["confirmed-rsvp"].waitForExistence(timeout: 10))
+        capture("ios-saved-invitation-open")
+        let hierarchy = XCTAttachment(string: app.debugDescription)
+        hierarchy.name = "ios-saved-invitation-open-hierarchy"
+        hierarchy.lifetime = .keepAlways
+        add(hierarchy)
+        XCTAssertTrue(app.buttons["rsvp-maybe"].waitForExistence(timeout: 10))
         respond("going", app: app)
         XCTAssertTrue(app.staticTexts["rsvp-error"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["meeting-info-open"].exists)
-        XCTAssertTrue(app.staticTexts["confirmed-rsvp"].label.contains("не уверены"))
+        XCTAssertTrue(app.buttons["rsvp-maybe"].isSelected)
         capture("ios-saved-response-error")
-        app.buttons["rsvp-save"].tap()
+        app.buttons["rsvp-going"].tap()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["feed-back"].tap()
-        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
-        app.buttons["Встречи"].tap()
         let meeting = app.buttons["meeting-card-22222222-2222-4222-8222-222222222222"]
         XCTAssertTrue(meeting.waitForExistence(timeout: 10))
+        app.buttons["Приглашения"].tap()
+        XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
+        app.buttons["Встречи"].tap()
         meeting.tap()
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         respond("maybe", app: app)
-        XCTAssertTrue(app.staticTexts["confirmed-rsvp"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.buttons["meeting-info-open"].exists)
-        app.navigationBars.buttons.element(boundBy: 0).tap()
-        XCTAssertTrue(app.buttons["Приглашения"].waitForExistence(timeout: 10))
-        app.buttons["Приглашения"].tap()
+        let confirmed = try await server.invitationAnswer(token: "QUFBQUFBQUFBQUFBQUFBQQ")
+        XCTAssertEqual(confirmed, "maybe")
         XCTAssertTrue(card.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["meeting-info-open"].exists)
         card.tap()
-        XCTAssertTrue(app.staticTexts["confirmed-rsvp"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["rsvp-maybe"].waitForExistence(timeout: 10))
         respond("not_going", app: app)
-        let declined = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS %@", "не сможете"),
-            object: app.staticTexts["confirmed-rsvp"])
-        XCTAssertEqual(XCTWaiter.wait(for: [declined], timeout: 10), .completed)
-        app.buttons["Закрыть"].tap()
+        XCTAssertTrue(app.scrollViews["rsvp-declined"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вы ответили «Не смогу»"].exists)
+        XCTAssertTrue(app.staticTexts["Организатор увидит ваш ответ."].exists)
+        app.buttons["К моим встречам"].tap()
+        XCTAssertTrue(app.buttons["Встречи"].waitForExistence(timeout: 10))
+        XCTAssertFalse(meeting.exists)
+        app.buttons["Приглашения"].tap()
         XCTAssertTrue(app.staticTexts["Пока ничего нет"].waitForExistence(timeout: 10))
         capture("ios-saved-empty")
     }

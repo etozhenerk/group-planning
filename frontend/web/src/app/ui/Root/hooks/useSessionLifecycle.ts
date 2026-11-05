@@ -67,7 +67,7 @@ export const useSessionLifecycle = () => {
 
     const main = document.getElementById('main');
 
-    if (main) {
+    if (main && !main.contains(document.activeElement)) {
       main.tabIndex = -1;
       main.focus({ preventScroll: true });
     }

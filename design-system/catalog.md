@@ -1,4 +1,4 @@
-# Токены somewhere · 7.0.0
+# Токены somewhere · 7.5.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -35,12 +35,14 @@
 | color.error | color | #ffb8b2 | Смысловая роль error |
 | color.fieldBorder | color | #ffffff14 | Ранее согласованный assets/styles.css .field input/.field textarea/.search (строки 432–441) и .field select (2804–2811), border #ffffff14. Сохраняет desktop/noncompact поле; новая mobile-ревизия использует color.borderStrong. |
 | color.focus | color | #d6d1f5 | Смысловая роль focus |
+| color.invitationNoticeBackground | color | #ffb8b21a | Принятый notice: color-mix(error10%,transparent) из raw invite-r3. |
 | color.legacyIosAccent | color | #c5bbd6 | Legacy iOS; не использовать в новых компонентах |
 | color.legacyIosSelectedSegment | color | #46414e | Legacy iOS; не использовать в новых компонентах |
 | color.line | color | #ffffff12 | Смысловая роль line |
 | color.meetingMark | color | #2e3938 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.meetingMarkForeground | color | #dcece5 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.message | color | #33343a | Смысловая роль message |
+| color.mobileInvitationFooterLine | color | #ffffff08 | Внутренняя верхняя линия footer invite-r3: #ffffff08; роль не меняет calendarHover. |
 | color.mobileNavigationAndroidBackground | color | #27282efa | Привязка неизменённого Android baseline фона; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | color.mobileNavigationAndroidBorder | color | #ffffff15 | Привязка неизменённой Android baseline рамки; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | color.mobileNavigationIOSBackground | color | #27282eeb | Привязка неизменённого iOS baseline фона поверх ultraThinMaterial; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
@@ -95,6 +97,7 @@
 | component.action.tabletInset | dimension | 30px | Отступ планшетной формы из styles.css:1276 |
 | component.action.topInset | dimension | 44px | Верхний отступ desktop-формы из styles.css:189 |
 | component.button.borderWidth | dimension | 1px | 4.1.0: граница существующей .button.subtle из styles.css:224–227. В соседней primary резервируется прозрачная граница той же ширины, чтобы перенос текста и смена состояния не меняли высоту ряда. |
+| component.button.disabledOpacity | number | 0.65 | Неизменённый принятый response-routing-r1/source/fixture-source/app/styles/base.css: button:disabled:not(.g-button), opacity0.65. |
 | component.button.iconGap | dimension | 9px | Интервал между иконкой и подписью .button из styles.css:216 |
 | component.button.iconSize | dimension | 21px | Иконка .button из общего svg.icon утверждённого styles.css:81–89 |
 | component.button.minimumHeight | dimension | 46px | Минимальная высота .button из styles.css:218; область нажатия не меньше target платформы |
@@ -180,6 +183,44 @@
 | component.helpDisclosure.symbolStroke | dimension | 2px | FAQ плюс/минус, одобренный макет 28.10.2026 |
 | component.icon.focusOffset | dimension | 5px | Отступ outline при фокусе по клавиатуре из styles.css :focus-visible; для иконки закрытия панели |
 | component.icon.strokeWidth | number | 1.7 | Толщина SVG-штриха из утверждённого styles.css svg.icon; для пиктограмм нового варианта панели |
+| component.invitationDesktop.authSkeletonWidth | dimension | 220px | Прежний InvitationPage3e25d63c: Skeletonwidth220 до проверки входа; desktop сохраняется. |
+| component.invitationDesktop.bottomSpace | dimension | 70px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.cardPadding | dimension | 32px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.cardRadius | dimension | 28px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.columnWidth | dimension | 490px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.insetInline | dimension | 28px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.maximumWidth | dimension | 1120px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.returnInsetBlock | dimension | 11px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.returnInsetInline | dimension | 18px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.returnRadius | dimension | 14px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.returnWeight | number | 650 | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationDesktop.titleSize | dimension | 38px | Сохранение desktop-композиции InvitationPage до изменения3e25d63c; совпадает с исходным baseline ea4cad9b, кроме отдельно принятого результата RSVP. |
+| component.invitationNotice.bottomSpace | dimension | 14px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.copyGap | dimension | 5px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.copyTop | dimension | 1px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.gap | dimension | 11px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.glyphSize | dimension | 18px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.iconRadius | dimension | 11px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.iconSize | dimension | 34px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.outerInset | dimension | 2px | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationNotice.titleLineHeight | number | 1.4 | Привязка неизменённого принятого invite-r3/source/InvitationNotice.module.css; не значение из actual. |
+| component.invitationState.loadingActionHeight | dimension | 44px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingActionWidth | dimension | 190px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingBrightOpacity | number | 0.85 | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingDimOpacity | number | 0.45 | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingGap | dimension | 28px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingLineHeight | dimension | 16px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingLineOneWidth | number | 0.65 | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingLineTwoWidth | number | 0.85 | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingPulse | duration | 1600ms | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingRadius | dimension | 7px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingTitleHeight | dimension | 28px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.loadingTitleWidth | number | 0.72 | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.unavailableActionIcon | dimension | 16px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.unavailableInsetBlock | dimension | 32px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.unavailableInsetInline | dimension | 22px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.unavailableTitleSize | dimension | 24px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
+| component.invitationState.unavailableTopGap | dimension | 32px | Привязка неизменённых invite-r3/source/InvitationPreview.module.css и SkeletonDetails/Skeleton из исходного web bundle для mobile web/iOS/Android. |
 | component.meetingSettings.coverGap | dimension | 12px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-row |
 | component.meetingSettings.coverRadius | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
 | component.meetingSettings.coverSize | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
@@ -257,6 +298,21 @@
 | component.mobileForm.switchThumbSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch::after; web |
 | component.mobileForm.switchWidth | dimension | 38px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch; native использует системный Switch |
 | component.mobileForm.twoFieldGap | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .two-fields |
+| component.mobileInvitation.closedCopyGap | dimension | 5px | Неизменённый invite-r3/source/InvitationClosed и InvitationPreview: icon18, gap5, return ArrowLeft15. |
+| component.mobileInvitation.closedGap | dimension | 22px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.closedGlyph | dimension | 18px | Неизменённый invite-r3/source/InvitationClosed и InvitationPreview: icon18, gap5, return ArrowLeft15. |
+| component.mobileInvitation.closedIconRadius | dimension | 11px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.coverHeight | dimension | 180px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.descriptionFontSize | dimension | 14px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.factsInsetBlock | dimension | 18px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.footerInsetBottom | dimension | 34px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.footerInsetTop | dimension | 18px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.headerHeight | dimension | 56px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.returnIconSize | dimension | 15px | Неизменённый invite-r3/source/InvitationClosed и InvitationPreview: icon18, gap5, return ArrowLeft15. |
+| component.mobileInvitation.titleGap | dimension | 18px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.titleSize | dimension | 30px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.titleWeight | number | 720 | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
+| component.mobileInvitation.topInset | dimension | 62px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
 | component.mobileInvitationCard.answerGap | dimension | 7px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
 | component.mobileInvitationCard.answerInsetBottom | dimension | 15px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
 | component.mobileInvitationCard.answerInsetStart | dimension | 17px | Привязка принятого list-r3/calendar-r7/invitations-r2, без изменения desktop; источники/hash в meetings-state-bindings-6.2.json. |
@@ -449,6 +505,40 @@
 | component.reactionPicker.quickRadius | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .reaction-picker |
 | component.reactionPicker.selectedOutlineWidth | dimension | 2px | Коррекция 2.0.0: selectedOutlineWidth выбранного сообщения/реакционной поверхности |
 | component.reactionPicker.topInset | dimension | 4px | Принятая ревизия 2026-10-27-telegram-chat, src/pages/chat/lib/reactions.ts; резерв верхней границы conversation |
+| component.rsvpResult.brandMarkSize | dimension | 30px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.brandTracking | dimension | 0.8px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.brandWeight | number | 750 | Одобренный мобильный заголовок Declined: font-weight750 |
+| component.rsvpResult.cardPaddingBlock | dimension | 28px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.cardPaddingInline | dimension | 20px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.copyLineHeight | dimension | 23px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.desktopHeadingTracking | dimension | 0.7px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.desktopIconGlyph | dimension | 30px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.desktopWidth | dimension | 480px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.headerBrandGap | dimension | 10px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerBrandLineHeight | dimension | 36px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerBrandSize | dimension | 25px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerBrandTracking | dimension | 1.1px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerCompactHeight | dimension | 780px | Границы принятой шапки нового результата из неизменённого desktop-mvp/invite-r2/PublicHeader.module.css. Старые desktop экраны не меняются. |
+| component.rsvpResult.headerInsetBlock | dimension | 28px | Неизменённый desktop invite-r2/PublicHeader: padding28px; исправление отсутствовавшей роли. |
+| component.rsvpResult.headerMarkSize | dimension | 36px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerMaximumWidth | dimension | 1200px | Существующая шапка одобренного desktop invite-r2/PublicHeader; используется в результате отказа. |
+| component.rsvpResult.headerMediumBreakpoint | dimension | 1000px | Границы принятой шапки нового результата из неизменённого desktop-mvp/invite-r2/PublicHeader.module.css. Старые desktop экраны не меняются. |
+| component.rsvpResult.headerMenuWidth | dimension | 180px | Явно принятая шапка нового результата отказа, desktop-mvp/invite-r2/src/shared/ui/Brand и widgets/public-header; остальные desktop-страницы сохраняются. |
+| component.rsvpResult.headerNarrowBreakpoint | dimension | 850px | Границы принятой шапки нового результата из неизменённого desktop-mvp/invite-r2/PublicHeader.module.css. Старые desktop экраны не меняются. |
+| component.rsvpResult.meetingLineHeight | dimension | 23px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileCardGap | dimension | 44px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileCopyLineHeight | dimension | 21px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileHeadingSize | dimension | 25px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileHeadingTracking | dimension | 0.6px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileIconGlyph | dimension | 26px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.mobileIconSize | dimension | 56px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpResult.topInset | dimension | 60px | Привязка утверждённого response-routing-r1/source/mobile/Declined и desktop-mvp/invite-r2/DeclinedScreen; эталоны не менялись. |
+| component.rsvpSystem.gap | dimension | 3px | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
+| component.rsvpSystem.textLineHeight | dimension | 18px | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
+| component.rsvpSystem.textSize | dimension | 13px | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
+| component.rsvpSystem.timeLineHeight | dimension | 14px | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
+| component.rsvpSystem.timeOpacity | number | 0.85 | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
+| component.rsvpSystem.timeSize | dimension | 11px | Привязка неизменённого response-routing-r1/mobile/chat/frame.html: system-event p13/18, time11/14, gap3, opacity.85; системная строка RSVP. |
 | component.sheet.backdropBlur | dimension | 5px | Размытие фона web-панели из утверждённого date-poll-v1/date-poll.css .poll-overlay |
 | component.taskDetails.actionsGap | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .task-detail-actions |
 | component.taskDetails.actionsInsetTop | dimension | 22px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .task-detail-actions |

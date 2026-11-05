@@ -10,10 +10,18 @@ struct FeedRecordView: View {
                 user: entry.actor, text: text, date: entry.occurredAt.date, own: own,
                 maximumWidth: availableWidth)
         } else {
-            VStack(spacing: 6) {
-                Text(FeedPresentation.event(entry)).font(.footnote).multilineTextAlignment(.center)
-                Text(FeedPresentation.time(entry.occurredAt.date)).font(.caption2)
-            }.foregroundStyle(AppPalette.muted).padding(.vertical, 12)
+            VStack(spacing: DesignTokens.componentRsvpSystemGap) {
+                Text(FeedPresentation.time(entry.occurredAt.date))
+                    .designTokenFont(
+                        DesignTokens.componentRsvpSystemTimeSize,
+                        weight: DesignTokens.typographyWeightRegular, relativeTo: .caption2
+                    ).opacity(DesignTokens.componentRsvpSystemTimeOpacity)
+                Text(FeedPresentation.event(entry))
+                    .designTokenFont(
+                        DesignTokens.componentRsvpSystemTextSize,
+                        weight: DesignTokens.typographyWeightRegular, relativeTo: .footnote
+                    ).multilineTextAlignment(.center)
+            }.foregroundStyle(DesignTokens.colorMuted).padding(.vertical, DesignTokens.spaceS12)
                 .frame(maxWidth: .infinity).accessibilityElement(children: .combine)
         }
     }

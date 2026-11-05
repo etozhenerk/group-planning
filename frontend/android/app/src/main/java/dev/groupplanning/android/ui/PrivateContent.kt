@@ -19,6 +19,7 @@ import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.state.AppRoute
 import dev.groupplanning.android.state.AppViewModel
 import dev.groupplanning.android.ui.create.CreationScreen
+import dev.groupplanning.android.ui.invitation.DeclinedResponseScreen
 import dev.groupplanning.android.ui.invitation.InvitationScreen
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.service.ServiceDialog
@@ -32,6 +33,7 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
     AnimatedContent(route, contentKey = {
         when (it) {
             AppRoute.Home -> "home"
+            is AppRoute.Declined -> it.title
             is AppRoute.Create -> it.model
             is AppRoute.Invitation -> it.model
         }
@@ -42,11 +44,18 @@ internal fun PrivateContent(model: AppViewModel, route: AppRoute, snapshot: Clie
             AppRoute.Home -> holder.SaveableStateProvider("home") {
                 HomeScreen(model, snapshot) { service = it }
             }
+            is AppRoute.Declined -> Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+                DeclinedResponseScreen(destination.title, model::home)
+            }
             is AppRoute.Create -> Box(Modifier.fillMaxSize().safeDrawingPadding()) {
                 CreationScreen(destination.model, model::home, model::created)
             }
-            is AppRoute.Invitation -> Box(Modifier.fillMaxSize().safeDrawingPadding()) {
-                InvitationScreen(destination.model, model::home)
+            is AppRoute.Invitation -> Box(Modifier.fillMaxSize()) {
+                InvitationScreen(
+                    destination.model,
+                    model::home,
+                    response = model::completedResponse,
+                )
             }
         }
     }

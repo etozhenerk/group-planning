@@ -60,14 +60,18 @@ struct FeedTimeline: View {
                                     availableWidth: max(
                                         0, geometry.size.width - DesignTokens.spaceS16 * 2))
                             }
-                            if owner.showEmptyInvitation,
-                                let url = owner.invitation.shareURL
-                            {
-                                VStack(spacing: 12) {
+                            if owner.showEmptyInvitation {
+                                VStack(spacing: DesignTokens.spaceS12) {
                                     Text("Позовём остальных?").font(.headline)
-                                    InvitationShareButton(
-                                        url: url, title: owner.meeting?.title ?? "Встреча")
-                                }.padding(24)
+                                    if let url = owner.invitation.shareURL {
+                                        InvitationShareButton(
+                                            url: url, title: owner.meeting?.title ?? "Встреча")
+                                    } else {
+                                        InvitationShareStatus(
+                                            failed: owner.invitation.shareProblem,
+                                            retry: owner.invitation.reload)
+                                    }
+                                }.padding(DesignTokens.spaceS24)
                             }
 
                         }

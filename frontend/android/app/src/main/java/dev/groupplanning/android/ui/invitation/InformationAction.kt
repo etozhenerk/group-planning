@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,25 +21,47 @@ internal fun InformationAction(
     modifier: Modifier = Modifier,
     primary: Boolean = false,
     enabled: Boolean = true,
+    selected: Boolean = false,
+    small: Boolean = false,
 ) {
+    val textSize = if (small) {
+        DesignTokens.typographySizeSmall
+    } else {
+        DesignTokens.typographySizeButton
+    }
     Surface(
         onClick = action,
         enabled = enabled,
-        modifier = modifier.defaultMinSize(
-            minHeight = maxOf(
-                DesignTokens.targetAndroid,
-                DesignTokens.componentButtonMinimumHeight,
+        modifier = modifier.alpha(if (enabled) 1f else DesignTokens.componentButtonDisabledOpacity)
+            .defaultMinSize(
+                minHeight = maxOf(
+                    DesignTokens.targetAndroid,
+                    DesignTokens.componentButtonMinimumHeight,
+                ),
             ),
-        ),
         shape = RoundedCornerShape(DesignTokens.componentButtonRadius),
-        color = if (primary) DesignTokens.colorAction else Color.Transparent,
-        contentColor = if (primary) DesignTokens.colorActionText else DesignTokens.colorText,
-        border = if (primary) {
+        color = when {
+            selected -> DesignTokens.colorNavigationSelected
+            primary -> DesignTokens.colorAction
+            else -> Color.Transparent
+        },
+        contentColor = when {
+            selected -> DesignTokens.colorNavigationSelectedText
+            primary -> DesignTokens.colorActionText
+            else -> DesignTokens.colorText
+        },
+        border = if (primary && !selected) {
             null
         } else {
             BorderStroke(
                 DesignTokens.spaceS1,
-                DesignTokens.colorSubtleBorder,
+                if (selected) {
+                    DesignTokens.colorAccent
+                } else if (small) {
+                    DesignTokens.colorBorderStrong
+                } else {
+                    DesignTokens.colorSubtleBorder
+                },
             )
         },
     ) {
@@ -48,9 +71,15 @@ internal fun InformationAction(
                 horizontal = DesignTokens.componentButtonPaddingInline,
                 vertical = DesignTokens.componentButtonPaddingBlock,
             ),
-            fontSize = DesignTokens.typographySizeButton,
-            lineHeight = DesignTokens.typographySizeButton * DesignTokens.typographyLineHeightBody,
-            fontWeight = FontWeight(DesignTokens.typographyWeightSemibold.toInt()),
+            fontSize = textSize,
+            lineHeight = textSize * DesignTokens.typographyLineHeightBody,
+            fontWeight = FontWeight(
+                if (small) {
+                    DesignTokens.typographyWeightMedium.toInt()
+                } else {
+                    DesignTokens.typographyWeightSemibold.toInt()
+                },
+            ),
             textAlign = TextAlign.Center,
         )
     }

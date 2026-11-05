@@ -22,7 +22,8 @@ struct AppRootView: View {
             {
                 HomeView(
                     session: session, user: user, drafts: runtime.drafts,
-                    deleteAccount: { runtime.confirmDeletion = true }
+                    deleteAccount: { runtime.confirmDeletion = true },
+                    responseDestination: $runtime.responseDestination
                 ).id(user.id)
             } else if runtime.session?.pendingDeletion != nil {
                 BrandWordmark()
@@ -109,5 +110,6 @@ struct AppRootView: View {
             .modifier(SignInProblemModifier(signIn: runtime.signIn))
             .preferredColorScheme(.dark).presentationDragIndicator(.visible)
         }
+        .environment(\.completeRSVP, RSVPCompletionAction(perform: runtime.completeResponse))
     }
 }

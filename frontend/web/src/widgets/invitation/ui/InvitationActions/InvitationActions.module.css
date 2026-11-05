@@ -1,0 +1,24 @@
+.stack {
+  display: grid;
+  gap: var(--ds-space-s20);
+}
+
+.muted,
+.hint {
+  margin: 0 0 var(--ds-typography-size-body);
+  color: var(--ds-color-muted);
+}
+
+.stack[data-mobile='true'] {
+  gap: var(--ds-space-s12);
+}
+
+.hint {
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.stack[data-mobile='true'] .muted,
+.stack[data-mobile='true'] .hint {
+  margin: 0;
+}

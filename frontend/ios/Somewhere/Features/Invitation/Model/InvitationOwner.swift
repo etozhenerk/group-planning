@@ -16,6 +16,7 @@ final class InvitationOwner {
     var unavailable = false
     var problem: String?
     var responseProblem: String?
+    var completedResponse: RSVPOutcome?
     private var verifiedAccess = false
     private var verifiedOrganizer = false
     var canAccess: Bool {
@@ -81,6 +82,20 @@ final class InvitationOwner {
         guard !saving else { return }
         operation?.cancel()
         operation = Task { await load() }
+    }
+
+    func respond(_ value: RSVPAnswer) {
+        guard current, authenticated, !loading, !saving, !organizer else { return }
+        if let pending {
+            guard pending.input.answer == value else { return }
+        } else {
+            guard !joinClosed else { return }
+            choice = value
+            responseProblem = nil
+            pending = Submission(
+                input: RSVPRequest(answer: value, expectedRevision: revision), key: UUID())
+        }
+        save()
     }
 
     func save() {

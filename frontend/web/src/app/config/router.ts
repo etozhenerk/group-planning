@@ -69,6 +69,12 @@ export const router = createBrowserRouter([
         }),
       },
       {
+        path: '/meetings/:id/declined',
+        lazy: async () => ({
+          Component: (await import('@/pages/response-declined')).DeclinedPage,
+        }),
+      },
+      {
         path: '/meetings/:id',
         lazy: async () => ({ Component: (await import('@/pages/meeting')).MeetingPage }),
       },

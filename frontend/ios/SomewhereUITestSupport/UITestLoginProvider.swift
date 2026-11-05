@@ -10,6 +10,16 @@ final class UITestLoginProvider: YandexLoginProvider {
     init(profileFields: Bool = false) { self.profileFields = profileFields }
 
     func authorize() throws {
+        switch ProcessInfo.processInfo.environment["SOMEWHERE_UI_LOGIN_OUTCOME"] {
+        case "success":
+            result?(.success("profile-fields-full"))
+            return
+        case "cancelled":
+            result?(.failure(.cancelled))
+            return
+        case "hold": return
+        default: break
+        }
         let stages = ["full", "partial", "clear"]
         guard profileFields, nextProfile < stages.count else { throw NativeLoginFailure.failed }
         let token = "profile-fields-" + stages[nextProfile]

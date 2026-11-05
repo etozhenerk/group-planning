@@ -141,43 +141,25 @@ final class MeetingInfoUITests: XCTestCase {
         app.buttons["meeting-people-summary"].tap()
         XCTAssertTrue(app.buttons["meeting-people-collapse"].waitForExistence(timeout: 5))
         XCTAssertTrue(MeetingInfoTestSupport.person(4, app: app).label.contains("Организатор"))
-        let maybe = app.buttons["rsvp-maybe"]
-        MeetingInfoTestSupport.reveal(maybe, app: app)
-        maybe.tap()
-        XCTAssertTrue(maybe.isSelected)
-        let save = app.buttons["rsvp-save"]
-        XCTAssertTrue(save.waitForExistence(timeout: 5))
-        XCTAssertTrue(
-            app.staticTexts[
-                "После сохранения переписка и состав участников будут недоступны."
-            ].exists)
-        ExperienceScreenshot.save("info-member-expanded-response", test: self)
         let collapse = app.buttons["meeting-people-collapse"]
         MeetingInfoTestSupport.reveal(collapse, app: app)
         collapse.tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 5))
-        XCTAssertTrue(maybe.isSelected)
-        XCTAssertTrue(save.exists)
-        MeetingInfoTestSupport.reveal(going, app: app)
-        going.tap()
         XCTAssertTrue(going.isSelected)
-        XCTAssertFalse(save.exists)
-        XCTAssertFalse(app.buttons["edit-meeting"].exists)
+        app.buttons["meeting-people-summary"].tap()
+        let maybe = app.buttons["rsvp-maybe"]
+        MeetingInfoTestSupport.reveal(maybe, app: app)
+        ExperienceScreenshot.save("info-member-expanded-response", test: self)
         maybe.tap()
-        MeetingInfoTestSupport.reveal(save, app: app)
-        save.tap()
-        let confirmed = app.staticTexts["confirmed-rsvp"]
-        XCTAssertTrue(confirmed.waitForExistence(timeout: 10))
-        XCTAssertTrue(confirmed.label.contains("Вы пока не уверены"))
+        let card = app.buttons["saved-invitation-" + MeetingInfoTestSupport.memberMeeting]
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["message-send"].exists)
         XCTAssertFalse(app.staticTexts["meeting-info-header"].exists)
-        XCTAssertTrue(app.images["meeting-cover"].waitForExistence(timeout: 10))
         ExperienceScreenshot.save("info-member-saved-rsvp", test: self)
-        let invitation = app.scrollViews["invitation-screen"]
-        ChatSheetTestSupport.reveal(going, in: invitation, app: app)
-        going.tap()
-        ChatSheetTestSupport.reveal(save, in: invitation, app: app)
-        save.tap()
+        card.tap()
+        XCTAssertTrue(app.buttons["rsvp-maybe"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["rsvp-maybe"].isSelected)
+        app.buttons["rsvp-going"].tap()
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
     }
 

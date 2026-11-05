@@ -12,6 +12,11 @@ struct UITestCaptureContext: ViewModifier {
 
     func body(content: Content) -> some View {
         content.onChange(of: signature, initial: true) { _, _ in record() }
+            .background {
+                GeometryReader { geometry in
+                    Color.clear.onChange(of: geometry.size, initial: true) { _, _ in record() }
+                }.allowsHitTesting(false)
+            }
     }
 
     private func record() {
@@ -23,7 +28,7 @@ struct UITestCaptureContext: ViewModifier {
         let font = UIFont.systemFont(ofSize: DesignTokens.typographySizeSmall)
         let heading = UIFont.systemFont(
             ofSize: DesignTokens.typographySizeMobileActionHeading, weight: .bold)
-        let metadata: [String: Any] = [
+        var metadata: [String: Any] = [
             "capturedAt": ISO8601DateFormatter().string(from: Date()),
             "source": "SwiftUI environment in SomewhereUITestHost",
             "runtime": UIDevice.current.systemVersion,
@@ -43,6 +48,21 @@ struct UITestCaptureContext: ViewModifier {
                 ).pointSize,
             ],
         ]
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let window = scene.windows.first(where: \.isKeyWindow) ?? scene.windows.first
+        {
+            metadata["nativeWindow"] = [
+                "width": window.bounds.width, "height": window.bounds.height,
+                "x": window.frame.minX, "y": window.frame.minY,
+                "safeAreaTop": window.safeAreaInsets.top,
+                "safeAreaBottom": window.safeAreaInsets.bottom,
+                "safeAreaLeft": window.safeAreaInsets.left,
+                "safeAreaRight": window.safeAreaInsets.right,
+            ]
+            metadata["physicalScreen"] = [
+                "width": scene.screen.bounds.width, "height": scene.screen.bounds.height,
+            ]
+        }
         do {
             let data = try JSONSerialization.data(
                 withJSONObject: metadata, options: [.prettyPrinted, .sortedKeys])

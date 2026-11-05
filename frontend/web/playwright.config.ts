@@ -13,6 +13,7 @@ export default defineConfig({
     '55-sheet-controls.spec.ts',
     '56-readers-stability.spec.ts',
     '57-pending-metadata.spec.ts',
+    '64-rsvp-realtime.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,
@@ -54,6 +55,7 @@ export default defineConfig({
         '60-album-download-access.spec.ts',
         '61-composer-outside-focus.spec.ts',
         '62-mobile-meetings.spec.ts',
+        '63-rsvp-routing.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

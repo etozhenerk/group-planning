@@ -29,8 +29,7 @@ for (const width of [320, 390, 739, 1440]) {
       await login(guest, 'Лена');
       await guest.goto(new URL(created.invitation_url).pathname);
       await guest.getByRole('button', { name: 'Возможно', exact: true }).click();
-      await expect(guest.getByRole('status')).toContainText('Вы ответили «Возможно»');
-      await guest.getByRole('link', { name: 'К приглашениям' }).click();
+      await expect(guest).toHaveURL(/\/invitations$/);
       const card = guest
         .getByTestId('saved-invitation')
         .filter({ hasText: created.meeting.title });
@@ -82,18 +81,9 @@ for (const width of [320, 390, 739, 1440]) {
       await guest.unroute(pattern);
       await guest.getByRole('button', { name: 'Приду', exact: true }).click();
 
-      if (width < 740) {
-        await expect(guest.getByRole('status')).toContainText('Вы ответили «Приду»');
-      } else {
-        await expect(guest.getByRole('link', { name: 'Открыть встречу' })).toBeVisible();
-      }
-
-      await guest
-        .getByRole('link', {
-          name: width < 740 ? 'Вернуться к приглашениям' : 'К приглашениям',
-          exact: true,
-        })
-        .click();
+      await expect(guest).toHaveURL(`/meetings/${created.meeting.id}`);
+      await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();
+      await guest.goto('/invitations');
       await expect(card).toHaveCount(0);
       await guest.getByRole('link', { name: 'Встречи', exact: true }).click();
       await expect(
@@ -111,13 +101,16 @@ for (const width of [320, 390, 739, 1440]) {
       expect((await guest.request.get(`${base}/feed`)).status()).toBe(403);
       await card.click();
       await guest.getByRole('button', { name: 'Не смогу', exact: true }).click();
-      await expect(guest.getByRole('status')).toContainText('Вы ответили «Не смогу»');
-      await guest
-        .getByRole('link', {
-          name: width < 740 ? 'Вернуться к приглашениям' : 'К приглашениям',
-          exact: true,
-        })
-        .click();
+      await expect(
+        guest.getByRole('heading', { name: 'Вы ответили «Не смогу»', exact: true }),
+      ).toBeVisible();
+      await guest.reload();
+      await expect(
+        guest.getByRole('heading', { name: 'Вы ответили «Не смогу»', exact: true }),
+      ).toBeVisible();
+      await guest.getByRole('link', { name: 'К моим встречам', exact: true }).click();
+      await expect(guest).toHaveURL(/\/meetings$/);
+      await guest.goto('/invitations');
       await expect(card).toHaveCount(0);
     } finally {
       await guestContext.close();

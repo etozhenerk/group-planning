@@ -5,7 +5,8 @@ struct RequiredMark: View {
         Text("*")
             .designTokenFont(
                 DesignTokens.componentMobileRequiredFontSize,
-                weight: DesignTokens.componentMobileRequiredFontWeight)
+                weight: DesignTokens.componentMobileRequiredFontWeight
+            )
             .foregroundStyle(DesignTokens.colorError)
             .accessibilityHidden(true)
     }

@@ -1,0 +1,97 @@
+.screen {
+  max-width: var(--ds-component-invitation-desktop-maximum-width);
+  margin: 0 auto;
+  padding: 0 var(--ds-component-invitation-desktop-inset-inline);
+}
+
+.header {
+  min-width: 0;
+}
+
+.scroll {
+  max-width: var(--ds-component-invitation-desktop-column-width);
+  margin: var(--ds-space-s40) auto var(--ds-component-invitation-desktop-bottom-space);
+}
+
+.card {
+  display: grid;
+  gap: var(--ds-space-s20);
+  padding: var(--ds-component-invitation-desktop-card-padding);
+  border-radius: var(--ds-component-invitation-desktop-card-radius);
+  background: var(--ds-color-surface);
+}
+
+.card[data-card='false'] {
+  display: block;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.actions {
+  display: block;
+  order: 8;
+}
+
+.screen[data-mobile='true'] {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--invitation-page-top, var(--ds-space-s0)));
+  max-width: none;
+  margin: 0;
+  padding: calc(
+      var(--ds-component-mobile-invitation-top-inset) + env(safe-area-inset-top)
+    )
+    0 0;
+}
+
+.screen[data-mobile='true'] .header {
+  display: flex;
+  flex: none;
+  min-height: var(--ds-component-mobile-invitation-header-height);
+  padding: 0 var(--ds-space-s20) var(--ds-space-s12);
+}
+
+.screen[data-mobile='true'] .scroll {
+  flex: 1;
+  min-height: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: var(--ds-space-s8) var(--ds-space-s20)
+    calc(var(--ds-space-s24) + var(--invitation-footer-height, var(--ds-space-s0)));
+}
+
+.screen[data-mobile='true'] .scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.screen[data-mobile='true'] .card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.screen[data-mobile='true'] .actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--ds-component-mobile-invitation-footer-inset-top) var(--ds-space-s20)
+    calc(
+      var(--ds-component-mobile-invitation-footer-inset-bottom) +
+        env(safe-area-inset-bottom)
+    );
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  background: var(--ds-color-surface);
+  box-shadow:
+    0 calc(-1 * var(--ds-component-mobile-sticky-shadow-up-offset))
+      var(--ds-component-mobile-sticky-shadow-blur) var(--ds-color-mobile-sticky-shadow),
+    inset 0 var(--ds-space-s1) var(--ds-color-mobile-invitation-footer-line);
+  z-index: 10;
+}

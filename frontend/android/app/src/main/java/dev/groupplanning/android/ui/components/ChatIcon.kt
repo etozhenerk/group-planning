@@ -18,8 +18,9 @@ internal fun ChatIcon(
     symbol: ChatSymbol,
     modifier: Modifier = Modifier,
     tint: Color = DesignTokens.colorMuted,
+    strokeWidth: Float = DesignTokens.componentIconStrokeWidth,
 ) {
-    val vector = remember(symbol) {
+    val vector = remember(symbol, strokeWidth) {
         ImageVector.Builder(
             symbol.name,
             DesignTokens.componentChatComposerEmojiIcon,
@@ -29,7 +30,7 @@ internal fun ChatIcon(
         ).addPath(
             pathData = PathParser().parsePathString(symbol.path).toNodes(),
             stroke = SolidColor(DesignTokens.colorText),
-            strokeLineWidth = DesignTokens.componentIconStrokeWidth,
+            strokeLineWidth = strokeWidth,
             strokeLineCap = StrokeCap.Round,
             strokeLineJoin = StrokeJoin.Round,
         ).apply {

@@ -1,0 +1,218 @@
+{
+  "kind": "screen-checkpoint-smoke; NOT final design/feature acceptance",
+  "reviewer": "independent-android-invitation-checkpoint-7.5-2026-11-05",
+  "reviewedAt": "2026-11-05T13:15:31.699670+00:00",
+  "status": "checkpoint-smoke-passed",
+  "candidate": {
+    "kind": "screen-checkpoint; final gates pending",
+    "designVersion": "7.5.0",
+    "platform": "android",
+    "createdAt": "2026-11-05T13:02:54.159Z",
+    "artifact": "/private/tmp/invitation-checkpoint-7.5-J6J8DU/app-qa.apk",
+    "artifactHash": "592e71b71095bb3619d16264c88b48bd40e508fe2486b7932a75c15f4d6b8c16",
+    "sourceHash": "945b549150c1ba70aae325dce4787c4b98be6de064f649af5c7f43e08e6977a4",
+    "files": []
+  },
+  "installedArtifactSha256": "592e71b71095bb3619d16264c88b48bd40e508fe2486b7932a75c15f4d6b8c16",
+  "environment": "emulator-5554 Android16/API36;720x1600px,360x800dp,density2,font1.0; ru-RU/Europe-Moscow; own memory HTTPS overlay; exact frozen target; independent temporary UI driver",
+  "checks": [
+    {
+      "id": "R1-F1",
+      "status": "observed-pass",
+      "actual": "Москва показана, Europe/Moscow отсутствует."
+    },
+    {
+      "id": "R1-F2",
+      "status": "observed-pass",
+      "actual": "После real commit/lost503 ACK есть notice+три RSVP+hint, четвёртой кнопки нет."
+    },
+    {
+      "id": "R1-F3",
+      "status": "observed-pass",
+      "actual": "Все три реальные системные строки содержат Миша ответил «Приду/Возможно/Не смогу»; TextLayoutResult13sp/18, HH:mm11sp/14, timestamps видимы."
+    },
+    {
+      "id": "R1-F4",
+      "status": "observed-pass",
+      "actual": "Busy имеет Disabled semantics и визуально приглушён; read-only pixel alpha≈0.647–0.648, согласуется с0.65 после8-bit округления."
+    },
+    {
+      "id": "critical-routes",
+      "status": "observed-pass",
+      "actual": "Real Going→чат; изменение Going→Maybe→приглашения; reopen и NotGoing→отдельный результат."
+    },
+    {
+      "id": "one-retry",
+      "status": "observed-pass",
+      "actual": "Real Maybe commit/lost503 ACK, повтор того же intent→приглашения; owner API feed содержит одно RSVP event."
+    }
+  ],
+  "designReferences": "Свежие raw no-cover/response-error/system-row просмотрены; проверены только изменённые места. Native Roboto/48dp/system bars — адаптации; собственные title/time отличаются от raw fixture.",
+  "caseSubset": [
+    "TC-RSVP-ROUTE-GOING",
+    "TC-RSVP-ROUTE-MAYBE",
+    "TC-RSVP-ROUTE-DECLINED",
+    "TC-RSVP-UNCONFIRMED",
+    "TC-RSVP-SYSTEM-EVENT"
+  ],
+  "limits": "Короткий smoke одного профиля/размера; полная матрица, OAuth, доступность/VoiceOver, остальные состояния и финальные gates не выполнены и остаются на итоговую приёмку. Это не новый финальный pass старых R1 reports.",
+  "deviceAndCleanup": {
+    "originalSettingsUnchanged": true,
+    "ownFixtureStopped": true,
+    "ownReverseAndConfigRemoved": true,
+    "rootFixturesUntouched": true,
+    "GitUntouched": true
+  },
+  "actions": "actual/result.json",
+  "pixelProof": "disabled-proof.json",
+  "evidence": [
+    {
+      "path": "actual/busy-disabled.actions.json",
+      "sha256": "0c396584473a0bed7c3bb25b2e473d32ee4cf8b8f7cc1811689c704c23aaf74b"
+    },
+    {
+      "path": "actual/busy-disabled.capture.json",
+      "sha256": "e454e0ceb50e794787ecf1ac354d3e5e685c35cb54640fdf08c3dfa04a01e897"
+    },
+    {
+      "path": "actual/busy-disabled.png",
+      "sha256": "324e9b63a0f487ffc76da99c8bbb50ec7a4322d9471eb74fb084978bcd6ba44a"
+    },
+    {
+      "path": "actual/busy-disabled.semantics.txt",
+      "sha256": "19ae257899c0fdfa1e8895f0d6b208586b3559297d3a78153038fc31f10d1421"
+    },
+    {
+      "path": "actual/declined-result.actions.json",
+      "sha256": "f9cbf3537d4bcb7b39fcf4876aca00a8c3ce1c59fe973075becad09eaf196502"
+    },
+    {
+      "path": "actual/declined-result.capture.json",
+      "sha256": "ac20c9f432f6455ef3eab9421d750faca91a6f9c4dbe140583d2765d06ab01e3"
+    },
+    {
+      "path": "actual/declined-result.png",
+      "sha256": "98b6ff775f87b90ee66844ca2829cf4a9261d242ee3f2c6ba411468e88ff2c6d"
+    },
+    {
+      "path": "actual/declined-result.semantics.txt",
+      "sha256": "c27d9b91502494eeeebab72d4fc529a6438f8df41332013e337451b8e372fab2"
+    },
+    {
+      "path": "actual/going-chat.actions.json",
+      "sha256": "e98309ad1480d666d6be1c21f5fa0aa50bcae6afe7673bc53a38d24774f2bd25"
+    },
+    {
+      "path": "actual/going-chat.capture.json",
+      "sha256": "58950669ee80df2ac7edb6c5d794a63fa99687312f6bb87f8329b817a362fe74"
+    },
+    {
+      "path": "actual/going-chat.png",
+      "sha256": "628b9d129bece866ca22dfb464a29bbab47bcd92061e828cc7ed57c254713e43"
+    },
+    {
+      "path": "actual/going-chat.semantics.txt",
+      "sha256": "2a09c81469328529ea571b2e961c0f594fb32e89fb63eb7ba55ac80d3a08dca1"
+    },
+    {
+      "path": "actual/maybe-invitations.actions.json",
+      "sha256": "c61e75aa483397abb6f666e768c284914c71947ced553ec14ae06c905b04b086"
+    },
+    {
+      "path": "actual/maybe-invitations.capture.json",
+      "sha256": "2bd5f08f01074a3cf8f4a6bfcdd7db507d43529ec84362bf9e0ee972fd69486f"
+    },
+    {
+      "path": "actual/maybe-invitations.png",
+      "sha256": "0d12d6218eb21ceed403c947a619f38288b93b434f94793cf2746b1f4a4bf535"
+    },
+    {
+      "path": "actual/maybe-invitations.semantics.txt",
+      "sha256": "ee7df57a1105797441bf2c117b301e5c98d9cc75c94919e3a84eca8c54ac0638"
+    },
+    {
+      "path": "actual/ready-zone.actions.json",
+      "sha256": "e6587d226ff2c19fba7ac11995815a392c6661b90d22500bd682749d8ce0a5af"
+    },
+    {
+      "path": "actual/ready-zone.capture.json",
+      "sha256": "6ba3cdf5da188f413d7866f8e6496f2983735c4a69f3a72a5ff4797214f5791f"
+    },
+    {
+      "path": "actual/ready-zone.png",
+      "sha256": "ab9e511697458782a2b10fd6f1a034bda85e4f8806672bf6d31cdce73d4feb87"
+    },
+    {
+      "path": "actual/ready-zone.semantics.txt",
+      "sha256": "5a5ff40295ecbac33bd8f6827e5014a47b3a39b59ea6d1dc85e64ca5f83a5778"
+    },
+    {
+      "path": "actual/result.json",
+      "sha256": "3e843efd9ee21c9d691533fb9544e9cccc131ba875767af42d160c1324144bfe"
+    },
+    {
+      "path": "actual/retry-invitations.actions.json",
+      "sha256": "e6284011a0f836294f5fa2dbfdba7695e8c2cd26f08ef8ce0d1dedb94b04638a"
+    },
+    {
+      "path": "actual/retry-invitations.capture.json",
+      "sha256": "b98451d5f2918af3aa952b3206673117a8179b4e22b0492261e3ce7c7750439c"
+    },
+    {
+      "path": "actual/retry-invitations.png",
+      "sha256": "f5ba714fe02c8c8478d90b883d9121e92953a2d76f53dbe47d9439b4d65b8f38"
+    },
+    {
+      "path": "actual/retry-invitations.semantics.txt",
+      "sha256": "e662012c124b44588264f15375283eb83a77f94a43f8e91b5417a033cad20058"
+    },
+    {
+      "path": "actual/system-rows.actions.json",
+      "sha256": "eca8362c4a222fcf95453cb7f1d078e602ca903536c6925abfe567c5a7877379"
+    },
+    {
+      "path": "actual/system-rows.capture.json",
+      "sha256": "a70036d80355cc37e79d25db8848d22cc5cef8ce42451313b8d17d8f131dc925"
+    },
+    {
+      "path": "actual/system-rows.png",
+      "sha256": "760c082b362cf750e4e38adee85f0ec9ed996c076a264509696b2d672d7308d7"
+    },
+    {
+      "path": "actual/system-rows.semantics.txt",
+      "sha256": "a8307cbb5117a3ffd671204353e125facaac5e6b26cb7e9b6112e107ea193c48"
+    },
+    {
+      "path": "actual/unknown-three-actions.actions.json",
+      "sha256": "9553ed38bb94660182a419ae83c8811cd304c0b43171f00fbb67e42a7625240f"
+    },
+    {
+      "path": "actual/unknown-three-actions.capture.json",
+      "sha256": "739eece34a2ebaf0dd91bc90f97bb98d932c136aee63371517ab0ad64c46867a"
+    },
+    {
+      "path": "actual/unknown-three-actions.png",
+      "sha256": "d0f86f52af125876f3050e84e9a00f4be6dab4d46363aab45bd32c172d5ea34f"
+    },
+    {
+      "path": "actual/unknown-three-actions.semantics.txt",
+      "sha256": "dc5142d92736ab6b06009b1b04f9a783cbc531b96d7233514799cd0666eed1cf"
+    },
+    {
+      "path": "reference/actions.json",
+      "sha256": "970d9cdbe1f481f4d9cc7e4ca47ff0ebf87d1b40d58434ed33ef38f6433feb75"
+    },
+    {
+      "path": "reference/no-cover.png",
+      "sha256": "af33a6784ff864725a500f22f469daa0e9a71b65b82f0cb636aa95dd76d9bb36"
+    },
+    {
+      "path": "reference/response-error.png",
+      "sha256": "fa19d0d626cf952dfb4e26ba08b829273e523c42c1804f86e025ad0c338382c7"
+    },
+    {
+      "path": "reference/system-row.png",
+      "sha256": "2b2f2c85c2d528dd71e3635c368cb7c10974964019f24e288bd70b265fa2529d"
+    }
+  ]
+}

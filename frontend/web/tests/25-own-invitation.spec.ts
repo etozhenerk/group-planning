@@ -16,37 +16,25 @@ test('organizer opens own invitation after login without RSVP or duplicate membe
   await page.getByRole('button', { name: 'Выйти из аккаунта' }).click();
   await expect(page.getByRole('button', { name: 'Войти', exact: true })).toBeVisible();
   await page.goto(created.invitation_url);
-  await page.getByRole('button', { name: 'Войти и ответить' }).click();
+  await page
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await page.getByRole('link', { name: 'Войти как Саша' }).click();
-  await expect(page).toHaveURL(created.invitation_url);
-  await expect(page.getByText('Вы организуете эту встречу.')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Приду', exact: true })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Возможно', exact: true })).toHaveCount(
-    0,
-  );
-  await expect(page.getByRole('button', { name: 'Не смогу', exact: true })).toHaveCount(
-    0,
-  );
-  await page.reload();
-  await expect(page.getByText('Вы организуете эту встречу.')).toBeVisible();
+  await expect(page).toHaveURL(`/meetings/${created.meeting.id}`);
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 
   for (const width of [320, 390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect(page.getByRole('link', { name: 'Открыть встречу' })).toBeVisible();
+    await page.goto(created.invitation_url);
+    await expect(page).toHaveURL(`/meetings/${created.meeting.id}`);
+    await expect(page.getByRole('link', { name: 'Открыть встречу' })).toHaveCount(0);
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(width);
-    await page.screenshot({
-      path: `test-results/own-invitation-${width}.png`,
-      fullPage: true,
-    });
+    await page.reload();
+    await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   }
 
-  const open = page.getByRole('link', { name: 'Открыть встречу', exact: true });
-  await open.focus();
-  await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(`/meetings/${created.meeting.id}`);
-  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
   const saved = await apiMeeting(page, created.meeting.id);
   expect(saved.participant_count).toBe(1);
   expect(saved.my_rsvp).toBeNull();
@@ -80,5 +68,6 @@ test('role check shows a skeleton and retries a network failure before offering 
   await expect(page.getByRole('button', { name: 'Приду', exact: true })).toHaveCount(0);
   await page.unroute(`**/api/v1/meetings/${created.meeting.id}`);
   await page.getByRole('button', { name: 'Попробовать снова' }).click();
-  await expect(page.getByRole('link', { name: 'Открыть встречу' })).toBeVisible();
+  await expect(page).toHaveURL(`/meetings/${created.meeting.id}`);
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 });

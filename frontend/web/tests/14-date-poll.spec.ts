@@ -12,10 +12,12 @@ import { datePollSchema } from '@/shared/api';
 
 const join = async (page: Page, url: string) => {
   await page.goto(url);
-  await page.getByRole('button', { name: 'Войти и ответить' }).click();
+  await page
+    .getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ })
+    .click();
   await page.getByRole('link', { name: 'Войти как Лена' }).click();
   await page.getByRole('button', { name: 'Приду', exact: true }).click();
-  await page.getByRole('link', { name: 'Открыть встречу', exact: true }).click();
+  await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
 };
 
 const read = async (page: Page, id: string, poll: string) =>

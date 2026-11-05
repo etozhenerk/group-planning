@@ -46,8 +46,7 @@ internal fun eventText(entry: FeedEntry): String {
             )
         }
         "meeting_created" -> stringResource(R.string.feed_created, name)
-        "participant_joined" -> stringResource(R.string.feed_joined, name)
-        "participant_left", "rsvp_changed" -> {
+        "participant_joined", "participant_left", "rsvp_changed" -> {
             val answer = when (entry.payload.text("answer")) {
                 "going" -> R.string.rsvp_going
                 "maybe" -> R.string.rsvp_maybe

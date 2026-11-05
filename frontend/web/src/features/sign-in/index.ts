@@ -1,3 +1,5 @@
+export { AccountMenu } from '@/features/sign-in/ui/AccountMenu';
+
 export { SignInButton } from '@/features/sign-in/ui/SignInButton';
 
 export { LogoutButton } from '@/features/sign-in/ui/LogoutButton';

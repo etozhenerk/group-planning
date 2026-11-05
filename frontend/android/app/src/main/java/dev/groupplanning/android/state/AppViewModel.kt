@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dev.groupplanning.android.data.ClientRuntime
 import dev.groupplanning.android.data.api.ClientFailure
 import dev.groupplanning.android.data.api.models.CreatedMeeting
+import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.auth.AuthContext
 import dev.groupplanning.android.data.links.InvitationTarget
 import dev.groupplanning.android.data.repository.CalendarRepository
@@ -99,6 +100,14 @@ internal class AppViewModel(
                 if (initialLink != null) {
                     acceptLink(initialLink)
                 } else {
+                    val declined = savedHome.get<String>("rsvp-declined-title")
+                    val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile
+                    if (declined != null &&
+                        profile?.id?.toString() == savedHome.get<String>("rsvp-declined-user")
+                    ) {
+                        mutableRoute.value = AppRoute.Declined(declined)
+                        return@launch
+                    }
                     val meeting = savedHome.get<String>("open-meeting")?.let {
                         runCatching { UUID.fromString(it) }.getOrNull()
                     }
@@ -220,6 +229,42 @@ internal class AppViewModel(
         model.load()
     }
 
+    fun completedResponse(outcome: RsvpOutcome) {
+        val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile ?: return
+        if (profile.id != outcome.profileId) return
+        viewModelScope.launch {
+            try {
+                runtime.invitationContext.save(null)
+            } catch (_: ClientFailure) {
+                mutableLinkProblem.value = LinkIssue.Storage
+            }
+            if ((snapshot.value.session as? SessionState.Authenticated)?.profile?.id !=
+                outcome.profileId
+            ) {
+                return@launch
+            }
+            savedHome.remove<String>("open-meeting")
+            when (outcome.answer) {
+                RsvpAnswer.Going -> {
+                    selectHomeTab(0)
+                    open(outcome.meetingId)
+                }
+                RsvpAnswer.Maybe -> {
+                    clearRoute()
+                    selectHomeTab(1)
+                    savedInvitations?.refresh()
+                }
+                RsvpAnswer.NotGoing -> {
+                    clearRoute()
+                    selectHomeTab(0)
+                    savedHome["rsvp-declined-title"] = outcome.title
+                    savedHome["rsvp-declined-user"] = outcome.profileId.toString()
+                    mutableRoute.value = AppRoute.Declined(outcome.title)
+                }
+            }
+        }
+    }
+
     fun home() {
         val previous = navigation
         navigation = viewModelScope.launch {
@@ -236,10 +281,12 @@ internal class AppViewModel(
     }
 
     private fun clearRoute() {
+        savedHome.remove<String>("rsvp-declined-title")
+        savedHome.remove<String>("rsvp-declined-user")
         when (val current = route.value) {
             is AppRoute.Create -> current.model.stop()
             is AppRoute.Invitation -> current.model.stop()
-            AppRoute.Home -> Unit
+            AppRoute.Home, is AppRoute.Declined -> Unit
         }
         mutableRoute.value = AppRoute.Home
     }

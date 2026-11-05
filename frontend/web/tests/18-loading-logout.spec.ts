@@ -113,9 +113,11 @@ test('invitation skeleton transitions to an error and can be retried', async ({
   ).toBeVisible();
   await expect(loading).toHaveCount(0);
   await page.unroute('**/api/v1/invitations/*');
-  await page.getByRole('button', { name: 'Попробовать снова' }).click();
+  await page.getByRole('button', { name: 'Повторить загрузку' }).click();
   await expect(page.getByRole('heading', { name: 'Загрузка приглашения' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Войти и ответить' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: /^Войти (и ответить|через Яндекс ID)$/ }),
+  ).toBeVisible();
 });
 
 test('cold logout never renders the sign-in gate while landing loads and clears private state', async ({

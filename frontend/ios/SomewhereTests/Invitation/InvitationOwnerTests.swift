@@ -5,6 +5,24 @@ import Testing
 
 @MainActor
 struct InvitationOwnerTests {
+    @Test func sameMaybeButtonReconfirmsBeforeNavigating() async throws {
+        let context = try await InvitationTestContext()
+        let revision = try ServerCounter("1")
+        try await context.enqueuePublic(.maybe, revision: revision)
+        await context.owner.load()
+        await context.harness.transport.enqueue(
+            context.path + "/rsvp",
+            data: try APICoding.encode(context.response(.maybe, revision: revision)))
+        try await context.enqueuePublic(.maybe, revision: revision)
+        try await context.enqueueList()
+        context.owner.respond(.maybe)
+        await context.owner.operation?.value
+        #expect(context.owner.completedResponse == .maybe)
+        #expect(context.owner.revision == revision && context.owner.pending == nil)
+        let writes = await context.harness.transport.requests.filter { $0.httpMethod == "PUT" }
+        #expect(writes.count == 1)
+    }
+
     @Test func anonymousPreviewNeverReadsPrivateDataOrSavesReply() async throws {
         let harness = try SessionHarness()
         let owner = InvitationOwner(
@@ -32,7 +50,8 @@ struct InvitationOwnerTests {
         await context.harness.transport.enqueue(context.path + "/rsvp", status: 503)
         await context.owner.submit()
         #expect(
-            context.owner.answer == nil && !context.owner.canAccess && context.owner.pending != nil)
+            context.owner.answer == nil && !context.owner.canAccess && context.owner.pending != nil
+                && context.owner.completedResponse == nil)
         let one = try ServerCounter("1")
         await context.harness.transport.enqueue(
             context.path + "/rsvp",
@@ -42,7 +61,8 @@ struct InvitationOwnerTests {
         await context.owner.submit()
         #expect(
             context.owner.answer == .going && context.owner.canAccess
-                && context.owner.pending == nil)
+                && context.owner.pending == nil
+                && context.owner.completedResponse == .going(context.id))
         let requests = await context.harness.transport.requests.filter { $0.httpMethod == "PUT" }
         #expect(requests.count == 2 && requests.first?.httpBody == requests.last?.httpBody)
         #expect(
@@ -71,10 +91,26 @@ struct InvitationOwnerTests {
         await context.owner.submit()
         await gate.release()
         await pending.value
-        #expect(context.owner.answer == .maybe && !context.owner.canAccess)
+        #expect(
+            context.owner.answer == .maybe && !context.owner.canAccess
+                && context.owner.completedResponse == .maybe)
         #expect(context.harness.session.privateData.feeds[context.id] == nil)
         #expect(context.harness.session.privateData.participants[context.id] == nil)
         #expect(context.harness.session.privateData.denied.contains(context.id))
+    }
+    @Test func firstDeclineHasItsOwnConfirmedDestination() async throws {
+        let context = try await InvitationTestContext()
+        try await context.enqueuePublic()
+        await context.owner.load()
+        context.select(.notGoing)
+        await context.harness.transport.enqueue(
+            context.path + "/rsvp",
+            data: try APICoding.encode(context.response(.notGoing, revision: ServerCounter("1"))))
+        try await context.enqueueList()
+        await context.owner.submit()
+        #expect(context.owner.completedResponse == .declined("Настолки"))
+        #expect(!context.owner.canAccess)
+        #expect(await context.harness.transport.count(context.path + "/rsvp") == 1)
     }
     @Test func conflictReloadsCurrentAnswerWithoutAutomaticOverwrite() async throws {
         let context = try await InvitationTestContext()
@@ -104,7 +140,9 @@ struct InvitationOwnerTests {
         try await context.harness.login(name: "Другой профиль")
         await gate.release()
         await operation.value
-        #expect(!context.owner.current && !context.owner.canAccess)
+        #expect(
+            !context.owner.current && !context.owner.canAccess
+                && context.owner.completedResponse == nil)
         #expect(context.harness.session.privateData.feeds.isEmpty)
     }
     @Test func expiredSessionClosesAccess() async throws {

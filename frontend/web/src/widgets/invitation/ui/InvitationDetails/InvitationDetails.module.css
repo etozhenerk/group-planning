@@ -1,0 +1,95 @@
+.eyebrow {
+  order: 1;
+  margin: 0 0 var(--ds-typography-size-small);
+  color: var(--ds-color-muted);
+  font-weight: var(--ds-component-invitation-desktop-return-weight);
+  font-size: var(--ds-typography-size-small);
+}
+
+.title {
+  order: 2;
+  margin: 0 0 var(--ds-space-s8);
+  font-size: var(--ds-component-invitation-desktop-title-size);
+  overflow-wrap: anywhere;
+}
+
+.hero {
+  order: 3;
+}
+
+.facts {
+  order: 4;
+}
+
+.description {
+  order: 5;
+  color: var(--ds-color-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.description p {
+  margin: 0 0 var(--ds-typography-size-body);
+}
+
+.organizer {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s10);
+  order: 4;
+  margin-bottom: var(--ds-space-s24);
+  font-size: var(--ds-typography-size-small);
+  color: var(--ds-color-muted);
+}
+
+.organizer strong {
+  color: var(--ds-color-text);
+  font-weight: var(--ds-typography-weight-medium);
+}
+
+.closed {
+  order: 5;
+}
+
+.eyebrow[data-mobile='true'] {
+  order: 2;
+  margin: 0 0 var(--ds-space-s8);
+  font-size: var(--ds-typography-size-label);
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.title[data-mobile='true'] {
+  order: 3;
+  margin: 0 0 var(--ds-component-mobile-invitation-title-gap);
+  font-size: var(--ds-component-mobile-invitation-title-size);
+  font-weight: var(--ds-component-mobile-invitation-title-weight);
+  line-height: var(--ds-component-action-heading-line-height);
+  letter-spacing: calc(-1 * var(--ds-component-action-heading-tracking-mobile));
+}
+
+.hero[data-mobile='true'] {
+  order: 1;
+  height: var(--ds-component-mobile-invitation-cover-height);
+  margin-bottom: var(--ds-space-s24);
+  border-radius: var(--ds-radius-card);
+  overflow: hidden;
+  background: var(--ds-color-surface);
+}
+
+.facts[data-mobile='true'] {
+  order: 6;
+  padding-block: var(--ds-component-mobile-invitation-facts-inset-block);
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+  border-bottom: var(--ds-space-s1) solid var(--ds-color-line);
+}
+
+.description[data-mobile='true'] {
+  order: 7;
+  padding-top: var(--ds-space-s20);
+  font-size: var(--ds-component-mobile-invitation-description-font-size);
+  line-height: var(--ds-typography-line-height-meeting-description);
+}
+
+.description[data-mobile='true'] p {
+  margin-bottom: var(--ds-space-s12);
+}

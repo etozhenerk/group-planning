@@ -42,10 +42,21 @@ export const meetingRoster = async (browser: Browser, organizer: Page) => {
       contexts.push(context);
       const page = await context.newPage();
       await page.goto(result.invitation_url);
-      await page.getByRole('button', { name: 'Войти и ответить', exact: true }).click();
+      await page
+        .getByRole('button', {
+          name: /^Войти (и ответить|через Яндекс ID)$/,
+          exact: true,
+        })
+        .click();
       await page.getByRole('link', { name: `Войти как ${name}`, exact: true }).click();
       await page.getByRole('button', { name: answer, exact: true }).click();
-      await expect(page.getByRole('status')).toContainText(`Вы ответили «${answer}»`);
+      await expect(page).toHaveURL(
+        answer === 'Приду'
+          ? `/meetings/${result.meeting.id}`
+          : answer === 'Возможно'
+            ? '/invitations'
+            : `/meetings/${result.meeting.id}/declined`,
+      );
 
       if (name === 'Лена') {
         member = page;

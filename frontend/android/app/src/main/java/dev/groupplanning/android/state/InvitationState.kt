@@ -20,6 +20,7 @@ internal data class RsvpSubmission(val input: RsvpRequest, val key: UUID = UUID.
 
 internal data class InvitationState(
     val details: InvitationDetails? = null,
+    val completedResponse: RsvpOutcome? = null,
     val profileId: UUID? = null,
     val choice: RsvpAnswer? = null,
     val loading: Boolean = false,

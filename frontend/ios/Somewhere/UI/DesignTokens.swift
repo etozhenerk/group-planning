@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.0.0. Do not edit.
+// Generated from design-system/tokens.json · 7.5.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -179,6 +179,13 @@ enum DesignTokens {
         blue: 0.9607843137254902,
         opacity: 1
     )
+    static let colorInvitationNoticeBackground = Color(
+        .sRGB,
+        red: 1,
+        green: 0.7215686274509804,
+        blue: 0.6980392156862745,
+        opacity: 0.1
+    )
     static let colorLegacyIosAccent = Color(
         .sRGB,
         red: 0.7725490196078432,
@@ -220,6 +227,13 @@ enum DesignTokens {
         green: 0.20392156862745098,
         blue: 0.22745098039215686,
         opacity: 1
+    )
+    static let colorMobileInvitationFooterLine = Color(
+        .sRGB,
+        red: 1,
+        green: 1,
+        blue: 1,
+        opacity: 0.03137254901960784
     )
     static let colorMobileNavigationAndroidBackground = Color(
         .sRGB,
@@ -539,6 +553,7 @@ enum DesignTokens {
     static let componentActionTabletInset = CGFloat(30)
     static let componentActionTopInset = CGFloat(44)
     static let componentButtonBorderWidth = CGFloat(1)
+    static let componentButtonDisabledOpacity = 0.65
     static let componentButtonIconGap = CGFloat(9)
     static let componentButtonIconSize = CGFloat(21)
     static let componentButtonMinimumHeight = CGFloat(46)
@@ -624,6 +639,44 @@ enum DesignTokens {
     static let componentHelpDisclosureSymbolStroke = CGFloat(2)
     static let componentIconFocusOffset = CGFloat(5)
     static let componentIconStrokeWidth = 1.7
+    static let componentInvitationDesktopAuthSkeletonWidth = CGFloat(220)
+    static let componentInvitationDesktopBottomSpace = CGFloat(70)
+    static let componentInvitationDesktopCardPadding = CGFloat(32)
+    static let componentInvitationDesktopCardRadius = CGFloat(28)
+    static let componentInvitationDesktopColumnWidth = CGFloat(490)
+    static let componentInvitationDesktopInsetInline = CGFloat(28)
+    static let componentInvitationDesktopMaximumWidth = CGFloat(1120)
+    static let componentInvitationDesktopReturnInsetBlock = CGFloat(11)
+    static let componentInvitationDesktopReturnInsetInline = CGFloat(18)
+    static let componentInvitationDesktopReturnRadius = CGFloat(14)
+    static let componentInvitationDesktopReturnWeight = 650
+    static let componentInvitationDesktopTitleSize = CGFloat(38)
+    static let componentInvitationNoticeBottomSpace = CGFloat(14)
+    static let componentInvitationNoticeCopyGap = CGFloat(5)
+    static let componentInvitationNoticeCopyTop = CGFloat(1)
+    static let componentInvitationNoticeGap = CGFloat(11)
+    static let componentInvitationNoticeGlyphSize = CGFloat(18)
+    static let componentInvitationNoticeIconRadius = CGFloat(11)
+    static let componentInvitationNoticeIconSize = CGFloat(34)
+    static let componentInvitationNoticeOuterInset = CGFloat(2)
+    static let componentInvitationNoticeTitleLineHeight = 1.4
+    static let componentInvitationStateLoadingActionHeight = CGFloat(44)
+    static let componentInvitationStateLoadingActionWidth = CGFloat(190)
+    static let componentInvitationStateLoadingBrightOpacity = 0.85
+    static let componentInvitationStateLoadingDimOpacity = 0.45
+    static let componentInvitationStateLoadingGap = CGFloat(28)
+    static let componentInvitationStateLoadingLineHeight = CGFloat(16)
+    static let componentInvitationStateLoadingLineOneWidth = 0.65
+    static let componentInvitationStateLoadingLineTwoWidth = 0.85
+    static let componentInvitationStateLoadingPulse = 1.6
+    static let componentInvitationStateLoadingRadius = CGFloat(7)
+    static let componentInvitationStateLoadingTitleHeight = CGFloat(28)
+    static let componentInvitationStateLoadingTitleWidth = 0.72
+    static let componentInvitationStateUnavailableActionIcon = CGFloat(16)
+    static let componentInvitationStateUnavailableInsetBlock = CGFloat(32)
+    static let componentInvitationStateUnavailableInsetInline = CGFloat(22)
+    static let componentInvitationStateUnavailableTitleSize = CGFloat(24)
+    static let componentInvitationStateUnavailableTopGap = CGFloat(32)
     static let componentMeetingSettingsCoverGap = CGFloat(12)
     static let componentMeetingSettingsCoverRadius = CGFloat(10)
     static let componentMeetingSettingsCoverSize = CGFloat(52)
@@ -701,6 +754,21 @@ enum DesignTokens {
     static let componentMobileFormSwitchThumbSize = CGFloat(18)
     static let componentMobileFormSwitchWidth = CGFloat(38)
     static let componentMobileFormTwoFieldGap = CGFloat(10)
+    static let componentMobileInvitationClosedCopyGap = CGFloat(5)
+    static let componentMobileInvitationClosedGap = CGFloat(22)
+    static let componentMobileInvitationClosedGlyph = CGFloat(18)
+    static let componentMobileInvitationClosedIconRadius = CGFloat(11)
+    static let componentMobileInvitationCoverHeight = CGFloat(180)
+    static let componentMobileInvitationDescriptionFontSize = CGFloat(14)
+    static let componentMobileInvitationFactsInsetBlock = CGFloat(18)
+    static let componentMobileInvitationFooterInsetBottom = CGFloat(34)
+    static let componentMobileInvitationFooterInsetTop = CGFloat(18)
+    static let componentMobileInvitationHeaderHeight = CGFloat(56)
+    static let componentMobileInvitationReturnIconSize = CGFloat(15)
+    static let componentMobileInvitationTitleGap = CGFloat(18)
+    static let componentMobileInvitationTitleSize = CGFloat(30)
+    static let componentMobileInvitationTitleWeight = 720
+    static let componentMobileInvitationTopInset = CGFloat(62)
     static let componentMobileInvitationCardAnswerGap = CGFloat(7)
     static let componentMobileInvitationCardAnswerInsetBottom = CGFloat(15)
     static let componentMobileInvitationCardAnswerInsetStart = CGFloat(17)
@@ -893,6 +961,40 @@ enum DesignTokens {
     static let componentReactionPickerQuickRadius = CGFloat(18)
     static let componentReactionPickerSelectedOutlineWidth = CGFloat(2)
     static let componentReactionPickerTopInset = CGFloat(4)
+    static let componentRsvpResultBrandMarkSize = CGFloat(30)
+    static let componentRsvpResultBrandTracking = CGFloat(0.8)
+    static let componentRsvpResultBrandWeight = 750
+    static let componentRsvpResultCardPaddingBlock = CGFloat(28)
+    static let componentRsvpResultCardPaddingInline = CGFloat(20)
+    static let componentRsvpResultCopyLineHeight = CGFloat(23)
+    static let componentRsvpResultDesktopHeadingTracking = CGFloat(0.7)
+    static let componentRsvpResultDesktopIconGlyph = CGFloat(30)
+    static let componentRsvpResultDesktopWidth = CGFloat(480)
+    static let componentRsvpResultHeaderBrandGap = CGFloat(10)
+    static let componentRsvpResultHeaderBrandLineHeight = CGFloat(36)
+    static let componentRsvpResultHeaderBrandSize = CGFloat(25)
+    static let componentRsvpResultHeaderBrandTracking = CGFloat(1.1)
+    static let componentRsvpResultHeaderCompactHeight = CGFloat(780)
+    static let componentRsvpResultHeaderInsetBlock = CGFloat(28)
+    static let componentRsvpResultHeaderMarkSize = CGFloat(36)
+    static let componentRsvpResultHeaderMaximumWidth = CGFloat(1200)
+    static let componentRsvpResultHeaderMediumBreakpoint = CGFloat(1000)
+    static let componentRsvpResultHeaderMenuWidth = CGFloat(180)
+    static let componentRsvpResultHeaderNarrowBreakpoint = CGFloat(850)
+    static let componentRsvpResultMeetingLineHeight = CGFloat(23)
+    static let componentRsvpResultMobileCardGap = CGFloat(44)
+    static let componentRsvpResultMobileCopyLineHeight = CGFloat(21)
+    static let componentRsvpResultMobileHeadingSize = CGFloat(25)
+    static let componentRsvpResultMobileHeadingTracking = CGFloat(0.6)
+    static let componentRsvpResultMobileIconGlyph = CGFloat(26)
+    static let componentRsvpResultMobileIconSize = CGFloat(56)
+    static let componentRsvpResultTopInset = CGFloat(60)
+    static let componentRsvpSystemGap = CGFloat(3)
+    static let componentRsvpSystemTextLineHeight = CGFloat(18)
+    static let componentRsvpSystemTextSize = CGFloat(13)
+    static let componentRsvpSystemTimeLineHeight = CGFloat(14)
+    static let componentRsvpSystemTimeOpacity = 0.85
+    static let componentRsvpSystemTimeSize = CGFloat(11)
     static let componentSheetBackdropBlur = CGFloat(5)
     static let componentTaskDetailsActionsGap = CGFloat(10)
     static let componentTaskDetailsActionsInsetTop = CGFloat(22)

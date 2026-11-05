@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.0.0. Do not edit.
+// Generated from design-system/tokens.json · 7.5.0. Do not edit.
 export const mobileComponentTokens = {
   componentMobileAvatarFallbackOpacity: '0.7',
   componentMobileAvatarFallbackRatio: '0.72',
@@ -37,6 +37,21 @@ export const mobileComponentTokens = {
   componentMobileFormSwitchThumbSize: '18px',
   componentMobileFormSwitchWidth: '38px',
   componentMobileFormTwoFieldGap: '10px',
+  componentMobileInvitationClosedCopyGap: '5px',
+  componentMobileInvitationClosedGap: '22px',
+  componentMobileInvitationClosedGlyph: '18px',
+  componentMobileInvitationClosedIconRadius: '11px',
+  componentMobileInvitationCoverHeight: '180px',
+  componentMobileInvitationDescriptionFontSize: '14px',
+  componentMobileInvitationFactsInsetBlock: '18px',
+  componentMobileInvitationFooterInsetBottom: '34px',
+  componentMobileInvitationFooterInsetTop: '18px',
+  componentMobileInvitationHeaderHeight: '56px',
+  componentMobileInvitationReturnIconSize: '15px',
+  componentMobileInvitationTitleGap: '18px',
+  componentMobileInvitationTitleSize: '30px',
+  componentMobileInvitationTitleWeight: '720',
+  componentMobileInvitationTopInset: '62px',
   componentMobileInvitationCardAnswerGap: '7px',
   componentMobileInvitationCardAnswerInsetBottom: '15px',
   componentMobileInvitationCardAnswerInsetStart: '17px',

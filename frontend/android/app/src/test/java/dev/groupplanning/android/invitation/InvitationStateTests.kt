@@ -10,6 +10,7 @@ import dev.groupplanning.android.data.repository.ResourcePhase
 import dev.groupplanning.android.data.repository.ResourceState
 import dev.groupplanning.android.state.InvitationIssue
 import dev.groupplanning.android.state.InvitationViewModel
+import dev.groupplanning.android.state.RsvpOutcome
 import dev.groupplanning.android.support.Fixtures
 import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,43 @@ import org.junit.Test
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class InvitationStateTests {
+    @Test fun sameMaybeButtonReconfirmsServerRevisionBeforeRouting() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val h = InvitationHarness(dispatcher)
+        h.login()
+        h.loadDenied(RsvpAnswer.Maybe, "1")
+        val model = InvitationViewModel(
+            h.target,
+            h.repository,
+            CoroutineScope(
+                SupervisorJob() + dispatcher,
+            ),
+        )
+        try {
+            runCurrent()
+            h.transport.enqueue(
+                "invitations/${h.token}/rsvp",
+                apiJson.encodeToString(
+                    RsvpResult(
+                        h.id,
+                        RsvpAnswer.Maybe,
+                        ServerCounter("1"),
+                        false,
+                        ServerCounter("1"),
+                    ),
+                ),
+            )
+            h.transport.enqueue("meetings", apiJson.encodeToString(MeetingsPage(emptyList(), null)))
+            model.respond(RsvpAnswer.Maybe)
+            runCurrent()
+            assertEquals(RsvpAnswer.Maybe, model.state.value.completedResponse?.answer)
+            assertEquals(ServerCounter("1"), model.state.value.details?.preview?.myRsvpRevision)
+            assertEquals(1, h.transport.requests.count { it.method == "PUT" })
+        } finally {
+            model.stop()
+        }
+    }
+
     @Test fun anonymousPreviewNeverReadsPrivateDataOrSavesResponse() = runTest {
         val h = InvitationHarness(StandardTestDispatcher(testScheduler))
         h.transport.enqueue("invitations/${h.token}", apiJson.encodeToString(h.preview()))
@@ -56,6 +94,7 @@ class InvitationStateTests {
             runCurrent()
             assertEquals(InvitationIssue.Unconfirmed, model.state.value.issue)
             assertNull(model.state.value.answer)
+            assertNull(model.state.value.completedResponse)
             val pending = checkNotNull(model.state.value.pending)
             h.transport.enqueue(
                 "invitations/${h.token}/rsvp",
@@ -73,6 +112,10 @@ class InvitationStateTests {
             model.save()
             runCurrent()
             assertEquals(RsvpAnswer.Maybe, model.state.value.answer)
+            assertEquals(
+                RsvpOutcome(Fixtures.user.id, h.id, RsvpAnswer.Maybe, "Настолки"),
+                model.state.value.completedResponse,
+            )
             assertNull(model.state.value.pending)
             val writes = h.transport.requests.filter { it.method == "PUT" }
             assertEquals(2, writes.size)

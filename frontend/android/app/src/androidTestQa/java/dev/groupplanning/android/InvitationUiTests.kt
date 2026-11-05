@@ -5,8 +5,10 @@ import android.net.Uri
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
-import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithContentDescription
@@ -17,6 +19,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
@@ -62,14 +65,17 @@ class InvitationUiTests {
         }
         fun waitGoing(enabled: Boolean, timeout: Long = 15000) {
             compose.waitUntil(timeout) {
-                compose.onAllNodes(hasText("Приду") and hasClickAction())
-                    .fetchSemanticsNodes().singleOrNull()?.config
-                    ?.contains(SemanticsProperties.Disabled) == !enabled
+                val nodes = compose.onAllNodes(hasTestTag("rsvp-Going")).fetchSemanticsNodes()
+                if (enabled) {
+                    nodes.singleOrNull()?.config?.contains(SemanticsProperties.Disabled) == false
+                } else {
+                    nodes.isEmpty()
+                }
             }
         }
         reschedule(null)
         fixture.launch("invite-rsvp", fixture.token).use { activity ->
-            fixture.waitText("Сможете прийти?")
+            fixture.waitTag("rsvp-Going")
             waitGoing(true)
             respond("Приду")
             fixture.waitTag("invitation-conversation")
@@ -79,7 +85,8 @@ class InvitationUiTests {
             fixture.waitTag("invitation-conversation")
             openInformation()
             respond("Не смогу")
-            fixture.waitText("Вы не сможете прийти")
+            fixture.waitTag("rsvp-declined")
+            reopen(activity)
             waitGoing(false)
             assertClosed()
             fixture.screenshot("cutoff-returning-closed")
@@ -95,22 +102,22 @@ class InvitationUiTests {
             reschedule(86400)
             activity.moveToState(Lifecycle.State.RESUMED)
             waitGoing(true)
-            compose.onNode(hasText("Приду") and hasClickAction()).performScrollTo().performClick()
             reschedule(1800)
-            compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+            compose.onNodeWithTag("rsvp-Going").performClick()
             waitGoing(false)
             assertClosed()
             fixture.screenshot("cutoff-stale-server-closed")
         }
+        reschedule(86400)
     }
 
     @Test fun publicInvitationPersistsWithoutLoginOrAutomaticResponse() {
         fixture.launch("invite-anonymous", fixture.token).use { activity ->
-            fixture.waitText("Ответьте на приглашение")
+            fixture.waitText("Войти через Яндекс ID")
             compose.onAllNodes(hasTestTag("invitation-conversation")).assertCountEquals(0)
             compose.onAllNodesWithText("Лена").assertCountEquals(0)
             fixture.screenshot("invitation-anonymous")
-            compose.onNodeWithText("Войти и ответить").performScrollTo().performClick()
+            compose.onNodeWithText("Войти через Яндекс ID").performClick()
             fixture.waitText("Не удалось войти")
             compose.onNodeWithText("Понятно").performClick()
             activity.recreate()
@@ -125,12 +132,17 @@ class InvitationUiTests {
     }
 
     @Test fun allResponsesControlPeopleAndChatAcrossReentry() {
-        fixture.launch("invite-rsvp", fixture.token).use {
-            fixture.waitText("Сможете прийти?")
+        fixture.launch("invite-rsvp", fixture.token).use { activity ->
+            fixture.waitTag("rsvp-Going")
             respond("Возможно")
-            fixture.waitText("Вы пока не уверены")
+            fixture.waitTag("home-invitations")
+            compose.onNodeWithTag("home-invitations").assertIsSelected()
+            fixture.waitTag("saved-invitation-22222222-2222-4222-8222-222222222222")
             assertClosed()
             fixture.screenshot("invitation-maybe")
+            reopen(activity)
+            fixture.waitTag("rsvp-Maybe")
+            compose.onNodeWithTag("rsvp-Maybe").assertIsSelected()
             respond("Приду")
             fixture.waitTag("invitation-conversation")
             fixture.waitText("Возьмите настолки, пиццу закажу я.")
@@ -147,34 +159,48 @@ class InvitationUiTests {
             ).performScrollTo().assertIsDisplayed()
             fixture.screenshot("invitation-people")
             respond("Не смогу")
-            fixture.waitText("Вы не сможете прийти")
+            fixture.waitTag("rsvp-declined")
+            fixture.waitText("Вы ответили «Не смогу»")
+            compose.onNodeWithText("Организатор увидит ваш ответ.").assertIsDisplayed()
             assertClosed()
             fixture.screenshot("invitation-declined")
-            fixture.device.pressBack()
+            compose.onNodeWithText("К моим встречам").performScrollTo().performClick()
             fixture.waitText("С чего начнём?")
         }
         fixture.launch("invite-rsvp-reentry", fixture.token).use {
-            fixture.waitText("Вы не сможете прийти")
+            fixture.waitTag("rsvp-NotGoing")
+            compose.onNodeWithTag("rsvp-NotGoing").assertIsSelected()
             respond("Приду")
             fixture.waitTag("invitation-conversation")
             openInformation()
             respond("Возможно")
-            fixture.waitText("Вы пока не уверены")
+            fixture.waitTag("home-invitations")
+            compose.onNodeWithTag("home-invitations").assertIsSelected()
+            fixture.waitTag("saved-invitation-22222222-2222-4222-8222-222222222222")
             assertClosed()
         }
     }
 
     @Test fun lostResponseRetriesOriginalRequestAfterRecreation() {
         fixture.launch("invite-error", "QkJCQkJCQkJCQkJCQkJCQg").use { activity ->
-            fixture.waitText("Сможете прийти?")
+            fixture.waitTag("rsvp-Going")
             respond("Возможно")
-            fixture.waitText("Повторить сохранение")
+            fixture.waitText(
+                "Сохранение не подтверждено. Повторите запрос.",
+            )
             assertClosed()
             fixture.screenshot("invitation-retry")
             activity.recreate()
-            fixture.waitText("Повторить сохранение")
-            compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
-            fixture.waitText("Вы пока не уверены")
+            fixture.waitText(
+                "Сохранение не подтверждено. Повторите запрос.",
+            )
+            compose.onNodeWithTag("rsvp-Maybe").assertIsEnabled()
+            compose.onNodeWithTag("rsvp-Going").assertIsNotEnabled()
+            compose.onNodeWithTag("rsvp-NotGoing").assertIsNotEnabled()
+            compose.onNodeWithTag("rsvp-Maybe").performClick()
+            fixture.waitTag("home-invitations")
+            compose.onNodeWithTag("home-invitations").assertIsSelected()
+            fixture.waitTag("saved-invitation-55555555-5555-4555-8555-555555555555")
             assertClosed()
         }
     }
@@ -228,8 +254,8 @@ class InvitationUiTests {
         try {
             fixture.shell("settings put system font_scale 1.8")
             fixture.launch("invite-anonymous", fixture.token).use {
-                fixture.waitText("Ответьте на приглашение")
-                compose.onNodeWithText("Войти и ответить").performScrollTo().assertIsDisplayed()
+                fixture.waitText("Войти через Яндекс ID")
+                compose.onNodeWithText("Войти через Яндекс ID").assertIsDisplayed()
                 fixture.screenshot("invitation-large-text")
             }
         } finally {
@@ -243,8 +269,33 @@ class InvitationUiTests {
     }
 
     private fun respond(answer: String) {
-        compose.onNode(hasText(answer) and hasClickAction()).performScrollTo().performClick()
-        compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+        val name = when (answer) {
+            "Приду" -> "Going"
+            "Возможно" -> "Maybe"
+            else -> "NotGoing"
+        }
+        val public = compose.onAllNodes(hasTestTag("rsvp-$name")).fetchSemanticsNodes().isNotEmpty()
+        val action = compose.onNodeWithTag(if (public) "rsvp-$name" else "information-rsvp-$name")
+        if (!public) action.performScrollTo()
+        action.performClick()
+    }
+
+    private fun reopen(activity: ActivityScenario<MainActivity>) {
+        lateinit var original: Intent
+        lateinit var launched: MainActivity
+        activity.onActivity {
+            launched = it
+            original = Intent(it.intent)
+            it.startActivity(
+                Intent(it, MainActivity::class.java).apply {
+                    action = Intent.ACTION_VIEW
+                    data = Uri.parse("group-planning-android-qa://i/${fixture.token}")
+                    addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                },
+            )
+        }
+        fixture.waitText("Настолки у Саши")
+        InstrumentationRegistry.getInstrumentation().runOnMainSync { launched.intent = original }
     }
 
     private fun openInformation() {

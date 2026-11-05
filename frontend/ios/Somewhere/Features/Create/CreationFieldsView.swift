@@ -107,7 +107,8 @@ struct CreationFieldsView: View {
                     Spacer(minLength: 4)
                     ExperienceIcon(kind: .calendar, size: 13)
                 }.frame(maxWidth: .infinity, alignment: .leading).meetingField()
-            }.accessibilityLabel("Дата").accessibilityHint("Обязательное поле").accessibilityValue(MeetingLabels.day(owner.value.day))
+            }.accessibilityLabel("Дата").accessibilityHint("Обязательное поле").accessibilityValue(
+                MeetingLabels.day(owner.value.day))
         }
     }
     private var clock: some View {

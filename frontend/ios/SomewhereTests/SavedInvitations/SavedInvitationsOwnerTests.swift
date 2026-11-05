@@ -82,6 +82,23 @@ struct SavedInvitationsOwnerTests {
         #expect(owner.items.isEmpty && owner.page.value == nil)
     }
 
+    @Test func confirmedResponseInvalidatesAnOlderEmptyList() async throws {
+        let h = try SessionHarness()
+        try await h.login()
+        let owner = SavedInvitationsOwner(session: h.session)
+        let gate = TestGate()
+        await h.transport.enqueue("/api/v1/invitations", data: try page(ids: []), gate: gate)
+        let older = Task { await owner.load() }
+        try await h.transport.waitFor("/api/v1/invitations")
+        owner.invalidate()
+        let id = UUID()
+        await h.transport.enqueue("/api/v1/invitations", data: try page(ids: [id]))
+        await owner.load()
+        await gate.release()
+        await older.value
+        #expect(owner.items.map(\.id) == [id] && owner.page.error == nil)
+    }
+
     @Test func unexpectedAnswerCannotBecomeSavedInvitation() async throws {
         let h = try SessionHarness()
         try await h.login()

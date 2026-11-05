@@ -41,14 +41,13 @@ enum FeedPresentation {
             return String(
                 localized: "Встреча перенесена на \(label) — эту дату выбрало большинство.")
         case "meeting_created": return name + " создаёт встречу"
-        case "participant_joined": return name + " присоединяется к встрече"
-        case "participant_left", "rsvp_changed":
+        case "participant_joined", "participant_left", "rsvp_changed":
             guard case .string(let answer) = entry.payload["answer"],
                 let value = RSVPAnswer(rawValue: answer)
             else {
                 return "Событие пока не поддерживается"
             }
-            return name + ": «" + RSVPLabels.title(value) + "»"
+            return String(localized: "\(name) ответил «\(RSVPLabels.title(value))»")
         case "meeting_updated":
             guard case .object(let before) = entry.payload["previous"],
                 case .object(let after) = entry.payload["current"]

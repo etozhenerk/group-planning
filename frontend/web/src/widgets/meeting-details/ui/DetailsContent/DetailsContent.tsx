@@ -5,7 +5,7 @@ import styles from '@/widgets/meeting-details/ui/DetailsContent/DetailsContent.m
 import type { Meeting } from '@/entities/meeting';
 import { MeetingFacts, MeetingCover } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { ResponseButtons } from '@/features/respond';
+import { DetailsResponse } from '@/widgets/meeting-details/ui/DetailsResponse';
 import { ShareInvitation } from '@/features/share-invitation';
 import { ParticipantList } from '@/widgets/meeting-details/ui/ParticipantList';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
@@ -13,7 +13,6 @@ import { ChatIcon } from '@/shared/ui/ChatIcon';
 export type DetailsContentProps = {
   meeting: Meeting;
   session: Session;
-  close: () => void;
   edit: MouseEventHandler<HTMLButtonElement>;
   compact?: boolean;
   showAll?: () => void;
@@ -23,7 +22,6 @@ export type DetailsContentProps = {
 export const DetailsContent = ({
   meeting,
   session,
-  close,
   edit,
   compact = false,
   showAll,
@@ -84,17 +82,7 @@ export const DetailsContent = ({
             {mobile && <ChatIcon name="right" />}
           </button>
         ) : (
-          <section className={styles.response}>
-            <h3>Ваш ответ</h3>
-            <ResponseButtons
-              session={session}
-              id={meeting.id}
-              expected={meeting.myRsvpRevision}
-              current={meeting.myRsvp}
-              onSaved={close}
-              inMeeting
-            />
-          </section>
+          <DetailsResponse meeting={meeting} session={session} />
         ))}
     </div>
   );

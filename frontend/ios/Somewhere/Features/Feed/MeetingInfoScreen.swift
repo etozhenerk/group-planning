@@ -41,6 +41,10 @@ struct MeetingInfoScreen: View {
                                     .contentShape(Rectangle())
                             }.buttonStyle(ChatPressStyle()).accessibilityIdentifier(
                                 "meeting-info-share")
+                        } else {
+                            InvitationShareStatus(
+                                failed: owner.invitation.shareProblem,
+                                retry: owner.invitation.reload)
                         }
                         action(
                             "Настройки встречи", icon: .settings, route: .settings,

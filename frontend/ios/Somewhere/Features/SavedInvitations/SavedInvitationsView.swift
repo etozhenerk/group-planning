@@ -62,8 +62,8 @@ struct SavedInvitationsView: View {
         .accessibilityIdentifier("saved-invitations-list")
         .background(AppPalette.background)
         .refreshable { await owner.load() }
-        .task(id: "\(phase)-\(target?.id ?? "")") {
-            if phase == .active && target == nil { await owner.load() }
+        .onChange(of: target?.id) { old, new in
+            if old != nil && new == nil && phase == .active { owner.refresh() }
         }
         .onDisappear { owner.cancel() }
         .sheet(item: $target) { target in

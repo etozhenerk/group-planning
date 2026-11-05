@@ -41,7 +41,7 @@ final class AccessibilityUITests: XCTestCase {
         let url = try XCTUnwrap(URL(string: "group-planning-ios-ui://i/QUFBQUFBQUFBQUFBQUFBQQ"))
         let anonymous = launch("invite-anonymous")
         anonymous.open(url)
-        XCTAssertTrue(anonymous.buttons["Войти и ответить"].waitForExistence(timeout: 10))
+        XCTAssertTrue(anonymous.buttons["Войти через Яндекс ID"].waitForExistence(timeout: 10))
         try audit("audit-invitation", anonymous)
         XCTAssertFalse(anonymous.buttons["message-send"].exists)
         anonymous.terminate()

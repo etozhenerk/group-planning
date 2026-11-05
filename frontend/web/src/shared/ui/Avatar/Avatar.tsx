@@ -6,6 +6,7 @@ export type AvatarProps = {
   name: string;
   size?: 'tiny' | 'small' | 'normal' | 'large' | 'chat' | 'mobile-chat';
   own?: boolean;
+  silhouette?: boolean;
   tone?: 'sand' | 'lilac' | 'mint' | 'blue';
   src?: string | null;
   mobileSrc?: string | null;
@@ -15,6 +16,7 @@ export const Avatar = ({
   name,
   size = 'normal',
   own = false,
+  silhouette = false,
   src = null,
   tone,
   mobileSrc,
@@ -37,7 +39,7 @@ export const Avatar = ({
         .join(' ')}
       data-testid="avatar"
       data-tone={tone}
-      data-mobile={mobile}
+      data-mobile={mobile || silhouette}
       aria-hidden="true"
     >
       {source && source !== failedSource ? (
@@ -48,7 +50,7 @@ export const Avatar = ({
           referrerPolicy="no-referrer"
           onError={() => setFailedSource(source)}
         />
-      ) : mobile ? (
+      ) : mobile || silhouette ? (
         <svg className={styles.silhouette} viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="8" r="4" fill="currentColor" />
           <path d="M4 22v-2a8 8 0 0 1 16 0v2Z" fill="currentColor" />

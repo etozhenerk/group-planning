@@ -3,9 +3,7 @@ package dev.groupplanning.android
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
@@ -48,7 +46,11 @@ class ChatActionRevocationUiTests {
                 fixture.waitAbsent("chat-action-sheet")
                 fixture.waitAbsent("message-composer")
                 compose.onNodeWithTag("preparation-title").assertDoesNotExist()
-                fixture.waitText(fixture.context.getString(R.string.rsvp_confirmed_not_going))
+                fixture.waitTag("rsvp-NotGoing")
+                compose.waitUntil(15_000) {
+                    compose.onNodeWithTag("rsvp-NotGoing").fetchSemanticsNode()
+                        .config[SemanticsProperties.Selected]
+                }
                 fixture.screenshot("sheet-access-revoked")
                 join()
                 openTask()
@@ -67,10 +69,7 @@ class ChatActionRevocationUiTests {
 
     private fun join() {
         fixture.waitText(fixture.context.getString(R.string.rsvp_going))
-        compose.onNodeWithText(fixture.context.getString(R.string.rsvp_going))
-            .performScrollTo().performClick()
-        fixture.waitTag("rsvp-save")
-        compose.onNodeWithTag("rsvp-save").performScrollTo().performClick()
+        compose.onNodeWithTag("rsvp-Going").performClick()
         fixture.waitTag("meeting-add")
     }
 
