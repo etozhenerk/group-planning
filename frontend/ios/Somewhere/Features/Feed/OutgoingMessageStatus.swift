@@ -15,15 +15,19 @@ struct OutgoingMessageStatus: View {
                     .accessibilityIdentifier("retry-message")
             }
         case .rejected:
-            HStack {
-                Text("Не удалось отправить").font(.caption).foregroundStyle(AppPalette.error)
-                Button("Повторить") { owner.retry(value.id) }
-                    .font(.caption).frame(minHeight: DesignTokens.targetIos)
+            Menu {
+                Button("Повторить отправку") { owner.retry(value.id) }
                     .accessibilityIdentifier("retry-message")
-                Button("Вернуть текст") { owner.restoreRejected(value.id) }
-                    .font(.caption).frame(minHeight: DesignTokens.targetIos)
+                Button("Вернуть текст в поле") { owner.restoreRejected(value.id) }
                     .disabled(!owner.draft.isEmpty)
+            } label: {
+                Image(systemName: "exclamationmark.circle")
+                    .font(.system(size: DesignTokens.componentMobileChatIconSize))
+                    .foregroundStyle(DesignTokens.colorError)
+                    .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                    .contentShape(Rectangle())
             }
+            .accessibilityLabel("Не удалось отправить. Действия с сообщением")
         }
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.FeedEntry
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.state.feed.ReactionController
 import dev.groupplanning.android.ui.theme.DesignTokens
 
@@ -24,6 +25,8 @@ internal fun MessageReactions(
     model: ReactionController,
     anchor: ReactionAnchor,
     readers: (() -> Unit)? = null,
+    readStatus: Boolean = false,
+    readCount: ServerCounter? = null,
 ) {
     val state by model.state.collectAsStateWithLifecycle()
     val presentation = LocalChatPresentation.current
@@ -74,6 +77,8 @@ internal fun MessageReactions(
                 anchor.focus.requestFocus()
             }
         },
+        readStatus = readStatus,
+        readCount = readCount,
         readers = readers?.let { _ ->
             {
                 readAfterClose = true

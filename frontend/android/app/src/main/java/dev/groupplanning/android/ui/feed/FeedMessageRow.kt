@@ -49,15 +49,28 @@ internal fun FeedMessageRow(
         react = entry?.let { { openReaction(it) } },
         highlighted = entry != null && presentation.reaction == entry.id,
         reactionAnchor = anchor,
-        delivery = { PendingMessageIndicator(pending) },
-        status = {
+        delivery = {
             if (pending != null) {
+                PendingMessageIndicator(pending)
+            } else if (entry != null && entry.actor.id == profileId) {
+                receipt(entry, anchor)
+            }
+        },
+        footer = { if (entry != null) reaction(entry, anchor) },
+        failure = {
+            if (pending?.rejected ==
+                true
+            ) {
                 OutgoingStatus(pending, canRecover, {
                     retry(pending.key)
                 }, { recover(pending.key) })
-            } else if (entry != null) {
-                reaction(entry, anchor)
-                if (entry.actor.id == profileId) receipt(entry, anchor)
+            }
+        },
+        status = {
+            if (pending != null && !pending.rejected) {
+                OutgoingStatus(pending, canRecover, {
+                    retry(pending.key)
+                }, { recover(pending.key) })
             }
         },
         body = entry?.attachments?.takeIf { it.isNotEmpty() }?.let { media ->

@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { RefObject } from 'react';
 import type { Reaction } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
@@ -20,6 +21,7 @@ export type MessageReactionsProps = {
   boundary: RefObject<HTMLElement | null>;
   context: string;
   readers?: (() => void) | undefined;
+  readStatus?: { count: string | undefined } | undefined;
   people: { open: boolean; show: () => void; close: () => void };
 };
 
@@ -35,7 +37,9 @@ export const MessageReactions = ({
   context,
   people,
   readers,
+  readStatus,
 }: MessageReactionsProps) => {
+  const mobile = useMobileLayout();
   const action = useMessageReactions(id, entry, session, reactions, change, anchor);
 
   if (action.denied) {
@@ -43,7 +47,11 @@ export const MessageReactions = ({
   }
 
   return (
-    <div className={styles.reactions} data-empty={action.displayed.length === 0}>
+    <div
+      className={styles.reactions}
+      data-mobile={mobile}
+      data-empty={action.displayed.length === 0}
+    >
       {action.displayed.map((reaction) => (
         <ReactionChip
           key={reaction.emoji}
@@ -58,7 +66,9 @@ export const MessageReactions = ({
         />
       ))}
       <ReactionPopover
+        mobile={mobile}
         readers={readers}
+        readStatus={readStatus}
         open={open}
         change={change}
         choose={action.choose}

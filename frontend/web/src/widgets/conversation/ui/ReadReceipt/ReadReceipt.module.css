@@ -8,3 +8,32 @@
   font-size: var(--ds-typography-size-caption);
   background: transparent;
 }
+
+.receipt[data-mobile] {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--ds-component-mobile-message-receipt-width);
+  height: var(--ds-component-mobile-message-receipt-height);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ds-color-own-text);
+  opacity: var(--ds-component-mobile-message-receipt-muted-opacity);
+}
+
+.receipt[data-mobile]::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--ds-space-s12)) calc(-1 * var(--ds-space-s12));
+}
+
+.receipt[data-mobile] svg {
+  width: var(--ds-space-s20);
+  height: calc(var(--ds-space-s16) - var(--ds-space-s1));
+}
+
+.receipt[data-read='true'] {
+  opacity: 1;
+}

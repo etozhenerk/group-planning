@@ -1,5 +1,6 @@
 package dev.groupplanning.android.ui.feed
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +49,12 @@ internal fun MeetingActions(
             enabled = enabled,
             modifier = Modifier.size(
                 DesignTokens.targetAndroid,
-            ).focusProperties { canFocus = true }.focusRequester(opener).testTag("meeting-add")
+            ).border(
+                DesignTokens.spaceS1,
+                DesignTokens.colorLine,
+                RoundedCornerShape(DesignTokens.componentMobileMessageComposerActionRadius),
+            )
+                .focusProperties { canFocus = true }.focusRequester(opener).testTag("meeting-add")
                 .semantics { contentDescription = label },
         ) { ChatIcon(ChatSymbol.Plus) }
         FloatingPanel(open, {

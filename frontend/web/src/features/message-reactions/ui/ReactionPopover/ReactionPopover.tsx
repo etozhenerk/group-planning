@@ -6,6 +6,7 @@ import styles from '@/features/message-reactions/ui/ReactionPopover/ReactionPopo
 
 export type ReactionPopoverProps = {
   open: boolean;
+  mobile?: boolean;
   change: (value: boolean) => void;
   choose: (emoji: string) => void;
   pending: boolean;
@@ -14,10 +15,12 @@ export type ReactionPopoverProps = {
   context: string;
   selected: string[];
   readers?: (() => void) | undefined;
+  readStatus?: { count: string | undefined } | undefined;
 };
 
 export const ReactionPopover = ({
   open,
+  mobile = false,
   change,
   choose,
   pending,
@@ -26,6 +29,7 @@ export const ReactionPopover = ({
   context,
   selected,
   readers,
+  readStatus,
 }: ReactionPopoverProps) => {
   const popover = useReactionPopover(open, change, anchor, boundary);
 
@@ -45,11 +49,13 @@ export const ReactionPopover = ({
           aria-label="Реакция"
           data-chat-overlay="reaction"
           data-closing={!open}
+          data-mobile={mobile}
           {...popover.getFloatingProps()}
         >
           <div style={popover.transition.styles} className={styles.surface}>
             <ReactionChooser
               readers={readers}
+              readStatus={readStatus}
               choose={choose}
               pending={pending}
               close={() => change(false)}

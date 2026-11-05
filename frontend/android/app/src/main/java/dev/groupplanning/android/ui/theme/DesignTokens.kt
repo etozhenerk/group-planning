@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.6.0. Do not edit.
+// Generated from design-system/tokens.json · 7.7.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -41,6 +41,8 @@ internal object DesignTokens {
     val colorMeetingMarkForeground = Color(0xffdcece5)
     val colorMessage = Color(0xff33343a)
     val colorMobileInvitationFooterLine = Color(0x08ffffff)
+    val colorMobileMessageOwnMetadata = Color(0xff685f75)
+    val colorMobileMessageShadow = Color(0x11000000)
     val colorMobileNavigationAndroidBackground = Color(0xfa27282e)
     val colorMobileNavigationAndroidBorder = Color(0x15ffffff)
     val colorMobileNavigationIOSBackground = Color(0xeb27282e)
@@ -153,6 +155,9 @@ internal object DesignTokens {
     val componentChatComposerPaddingInline = 10.dp
     val componentChatComposerPaddingTop = 8.dp
     val componentChatComposerRadius = 22.dp
+    val componentDesktopMessageCornerRadius = 5.dp
+    val componentDesktopMessageLineHeight = 1.6f
+    val componentDesktopMessageRadius = 18.dp
     val componentEmojiDockCategoryIconSize = 23.dp
     val componentEmojiDockCategoryIndicator = 2.dp
     val componentEmojiDockChoiceInset = 3.dp
@@ -307,6 +312,12 @@ internal object DesignTokens {
     val componentMobileFormSwitchThumbSize = 18.dp
     val componentMobileFormSwitchWidth = 38.dp
     val componentMobileFormTwoFieldGap = 10.dp
+    val componentMobileInfoCoverHeight = 156.dp
+    val componentMobileInfoOrganizerAvatarSize = 32.dp
+    val componentMobileInfoResponseIconSize = 36.dp
+    val componentMobileInfoTitleLineHeight = 31.dp
+    val componentMobileInfoTitleSize = 25.dp
+    val componentMobileInfoTitleTracking = -0.5f
     val componentMobileInvitationClosedCopyGap = 5.dp
     val componentMobileInvitationClosedGap = 22.dp
     val componentMobileInvitationClosedGlyph = 18.dp
@@ -368,6 +379,38 @@ internal object DesignTokens {
     val componentMobileMeetingsUndatedInset = 14.dp
     val componentMobileMeetingsUndatedMargin = 14.dp
     val componentMobileMeetingsViewIconSize = 20.dp
+    val componentMobileMessageComposerActionRadius = 14.dp
+    val componentMobileMessageComposerInputRadius = 14.dp
+    val componentMobileMessageCornerRadius = 4.dp
+    val componentMobileMessageErrorOffset = 38.dp
+    val componentMobileMessageErrorSize = 32.dp
+    val componentMobileMessageFooterGap = 12.dp
+    val componentMobileMessageFooterInsetTop = 3.dp
+    val componentMobileMessageInsetBottom = 7.dp
+    val componentMobileMessageInsetInline = 13.dp
+    val componentMobileMessageInsetTop = 10.dp
+    val componentMobileMessageMaximumWidthRatio = 0.94f
+    val componentMobileMessageMenuCardRadius = 16.dp
+    val componentMobileMessageMenuQuickRadius = 30.dp
+    val componentMobileMessageMenuReadHeight = 52.dp
+    val componentMobileMessageMenuWidth = 316.dp
+    val componentMobileMessageMetadataGap = 7.dp
+    val componentMobileMessageMetadataLineHeight = 14.dp
+    val componentMobileMessageMetadataSize = 10.dp
+    val componentMobileMessageMinimumWidth = 120.dp
+    val componentMobileMessageReactionGap = 5.dp
+    val componentMobileMessageReactionHeight = 28.dp
+    val componentMobileMessageReactionInsetBlock = 3.dp
+    val componentMobileMessageReactionInsetInline = 9.dp
+    val componentMobileMessageReactionRadius = 14.dp
+    val componentMobileMessageReceiptHeight = 18.dp
+    val componentMobileMessageReceiptMutedOpacity = 0.48f
+    val componentMobileMessageReceiptReadStroke = 1.9f
+    val componentMobileMessageReceiptSentStroke = 1.5f
+    val componentMobileMessageReceiptWidth = 22.dp
+    val componentMobileMessageShadowBlur = 1.dp
+    val componentMobileMessageShadowOffset = 2.dp
+    val componentMobileMessageSmileStroke = 1.45f
     val componentMobileNavigationAndroidLabelLineHeight = 13.5.dp
     val componentMobileNavigationIconGap = 3.dp
     val componentMobileNavigationIconStroke = 1.7f

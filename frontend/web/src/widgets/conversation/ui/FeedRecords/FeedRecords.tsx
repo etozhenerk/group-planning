@@ -63,6 +63,7 @@ export const FeedRecords = ({
             key={item.key}
             className={styles.row}
             data-index={item.index}
+            data-selected={surface.mobile && surface.panel === `reaction:${entry.id}`}
             data-entry-id={entry.id}
             data-protected={viewport.hidden.has(entry.id)}
             ref={viewport.virtual.measureElement}

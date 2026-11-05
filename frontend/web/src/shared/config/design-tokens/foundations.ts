@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.6.0. Do not edit.
+// Generated from design-system/tokens.json · 7.7.0. Do not edit.
 export const foundationTokens = {
   breakpointChatCompactHeight: '500px',
   breakpointChatNarrowWidth: '350px',
@@ -37,6 +37,8 @@ export const foundationTokens = {
   colorMeetingMarkForeground: '#dcece5',
   colorMessage: '#33343a',
   colorMobileInvitationFooterLine: '#ffffff08',
+  colorMobileMessageOwnMetadata: '#685f75',
+  colorMobileMessageShadow: '#00000011',
   colorMobileNavigationAndroidBackground: '#27282efa',
   colorMobileNavigationAndroidBorder: '#ffffff15',
   colorMobileNavigationIOSBackground: '#27282eeb',

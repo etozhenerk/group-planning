@@ -24,16 +24,16 @@ internal fun ComposerSmile(modifier: Modifier = Modifier) {
             24f,
         ).addPath(
             pathData = PathParser().parsePathString(
-                "M12,3 A9,9 0,1 0,12 21 A9,9 0,1 0,12 3 M8,14 Q12,18 16,14",
+                "M12,3.5 A8.5,8.5 0,1 0,12 20.5 A8.5,8.5 0,1 0,12 3.5 M9,14 Q12,16.4 15,14",
             ).toNodes(),
             stroke = SolidColor(DesignTokens.colorText),
-            strokeLineWidth = DesignTokens.componentIconStrokeWidth,
+            strokeLineWidth = DesignTokens.componentMobileMessageSmileStroke,
             strokeLineCap = StrokeCap.Round,
             strokeLineJoin = StrokeJoin.Round,
         ).addPath(
             pathData = PathParser().parsePathString(
-                "M8.5,8.6 A0.9,0.9 0,1 0,8.5 10.4 A0.9,0.9 0,1 0,8.5 8.6 " +
-                    "M15.5,8.6 A0.9,0.9 0,1 0,15.5 10.4 A0.9,0.9 0,1 0,15.5 8.6",
+                "M9,9.3 A0.7,0.7 0,1 0,9 10.7 A0.7,0.7 0,1 0,9 9.3 " +
+                    "M15,9.3 A0.7,0.7 0,1 0,15 10.7 A0.7,0.7 0,1 0,15 9.3",
             ).toNodes(),
             fill = SolidColor(DesignTokens.colorText),
         ).build()

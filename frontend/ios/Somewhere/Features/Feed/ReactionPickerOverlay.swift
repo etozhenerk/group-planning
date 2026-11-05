@@ -6,9 +6,11 @@ struct ReactionPickerOverlay: View {
     let frame: CGRect
     let size: CGSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var readStatusHeight: CGFloat = 0
+    private var own: Bool { entry.actor.id == owner.session.profile?.id }
     @ScaledMetric private var quickHeight = DesignTokens.targetIos
 
-    private var canRead: Bool { owner.reads.enabled && entry.actor.id == owner.session.profile?.id }
+    private var canRead: Bool { owner.reads.enabled && own && owner.reads.counts[entry.id] != nil }
     private var pickerHeight: CGFloat {
         let available = max(0, size.height - DesignTokens.componentReactionPickerEdgeInset * 2)
         return min(
@@ -16,7 +18,7 @@ struct ReactionPickerOverlay: View {
             owner.reactionExpanded
                 ? DesignTokens.componentReactionPickerPreferredFullHeight
                 : quickHeight + DesignTokens.componentReactionPickerQuickInset * 2
-                    + (canRead ? quickHeight + DesignTokens.spaceS1 : 0))
+                    + (own ? max(quickHeight, readStatusHeight) : 0))
     }
 
     private var pickerWidth: CGFloat {
@@ -57,16 +59,37 @@ struct ReactionPickerOverlay: View {
                     owner.reactionExpanded = true
                 }
             }
-            if canRead {
-                Rectangle().fill(DesignTokens.colorBorderStrong).frame(height: DesignTokens.spaceS1)
-                Button(action: openReaders) {
-                    Text("Кто прочитал").designFont(DesignTokens.typographySizeBody)
-                        .foregroundStyle(DesignTokens.colorText)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, DesignTokens.spaceS16)
-                        .padding(.vertical, DesignTokens.spaceS12)
-                        .frame(minHeight: quickHeight)
-                }.buttonStyle(.plain).accessibilityIdentifier("message-readers-action")
+            if own {
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                    Rectangle().fill(DesignTokens.colorBorderStrong).frame(
+                        height: DesignTokens.spaceS1)
+                    if canRead, let count = owner.reads.counts[entry.id] {
+                        Button(action: openReaders) {
+                            Text(count > .zero ? "Прочитали " + count.rawValue : "Кто прочитал")
+                                .designFont(DesignTokens.typographySizeBody)
+                                .foregroundStyle(DesignTokens.colorText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, DesignTokens.spaceS16)
+                                .padding(.vertical, DesignTokens.spaceS12)
+                                .frame(minHeight: quickHeight)
+                        }.buttonStyle(.plain).accessibilityIdentifier("message-readers-action")
+                    } else {
+                        VStack(alignment: .leading, spacing: DesignTokens.spaceS3) {
+                            Text("Отправлено").designFont(
+                                DesignTokens.typographySizeSmall, weight: .semibold)
+                            Text("Подтверждения прочтения пока нет")
+                                .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                                    DesignTokens.colorMuted)
+                        }.padding(.horizontal, DesignTokens.spaceS16)
+                            .padding(.vertical, DesignTokens.spaceS8)
+                            .frame(maxWidth: .infinity, minHeight: quickHeight, alignment: .leading)
+                    }
+                }.fixedSize(horizontal: false, vertical: true)
+                    .onGeometryChange(for: CGFloat.self) {
+                        $0.size.height
+                    } action: {
+                        readStatusHeight = $0
+                    }
             }
         }.frame(width: pickerWidth, height: pickerHeight)
             .background(DesignTokens.colorSurface)

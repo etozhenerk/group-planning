@@ -24,7 +24,7 @@ internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
     Down("M6,9l6,6 6,-6"),
     Left("M14,6l-6,6 6,6"),
     Right("M9,6l6,6 -6,6"),
-    Send("M12,19V5 M6,11l6,-6 6,6"),
+    Send("M12,18V6 M7.5,10.5L12,6l4.5,4.5"),
     Pin(
         "M19,10c0,5 -7,11 -7,11S5,15 5,10a7,7 0,0 1,14 0Z M14.5,10a2.5,2.5 0,1 0,-5 0a2.5,2.5 0,1 0,5 0Z",
     ),

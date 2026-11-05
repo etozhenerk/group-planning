@@ -1,0 +1,44 @@
+.indicator {
+  position: absolute;
+  left: calc(-1 * var(--ds-component-mobile-message-error-offset));
+  bottom: 0;
+  width: var(--ds-component-mobile-message-error-size);
+  height: var(--ds-component-mobile-message-error-size);
+  min-height: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ds-color-error);
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--ds-space-s6));
+}
+
+.menu {
+  display: grid;
+  min-width: var(--ds-component-mobile-message-minimum-width);
+  max-width: calc(100vw - var(--ds-space-s40));
+  padding: var(--ds-space-s8);
+  background: var(--ds-color-surface);
+  border-radius: var(--ds-component-mobile-message-menu-card-radius);
+}
+
+.menu button {
+  min-height: var(--ds-target-web);
+  padding: var(--ds-space-s8) var(--ds-space-s12);
+  background: transparent;
+  color: var(--ds-color-text);
+  text-align: start;
+  font-size: var(--ds-typography-size-small);
+}
+
+.menu p {
+  margin: var(--ds-space-s8);
+  color: var(--ds-color-error);
+  font-size: var(--ds-typography-size-caption);
+}

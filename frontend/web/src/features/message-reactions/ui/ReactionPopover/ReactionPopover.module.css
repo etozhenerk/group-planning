@@ -13,3 +13,10 @@
 .surface {
   transform-origin: center;
 }
+
+.panel[data-mobile='true']:not(:has([data-reaction-expanded])) {
+  width: min(
+    var(--ds-component-mobile-message-menu-width),
+    var(--reaction-available-width, calc(100vw - var(--ds-space-s24)))
+  );
+}

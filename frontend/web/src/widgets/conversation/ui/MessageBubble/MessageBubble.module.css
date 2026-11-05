@@ -1,0 +1,65 @@
+.bubble {
+  padding: var(--ds-space-s12) var(--ds-space-s16);
+  background: var(--surface);
+  border-radius: var(--ds-component-desktop-message-radius)
+    var(--ds-component-desktop-message-radius) var(--ds-component-desktop-message-radius)
+    var(--ds-component-desktop-message-corner-radius);
+  font-size: var(--ds-typography-size-chat-message);
+  line-height: var(--ds-component-desktop-message-line-height);
+}
+
+.bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bubble[data-own='true'] {
+  border-radius: var(--ds-component-desktop-message-radius)
+    var(--ds-component-desktop-message-radius)
+    var(--ds-component-desktop-message-corner-radius)
+    var(--ds-component-desktop-message-radius);
+  background: var(--ds-color-own-message);
+  color: var(--ds-color-own-text);
+}
+
+.bubble[data-mobile='true'] {
+  padding: var(--ds-component-mobile-message-inset-top)
+    var(--ds-component-mobile-message-inset-inline)
+    var(--ds-component-mobile-message-inset-bottom);
+  min-width: min(var(--ds-component-mobile-message-minimum-width), 100%);
+  background: var(--ds-color-surface);
+  border-radius: var(--ds-component-mobile-message-corner-radius)
+    var(--ds-component-mobile-chat-bubble-radius)
+    var(--ds-component-mobile-chat-bubble-radius)
+    var(--ds-component-mobile-chat-bubble-radius);
+  box-shadow: 0 var(--ds-component-mobile-message-shadow-offset)
+    var(--ds-component-mobile-message-shadow-blur) var(--ds-color-mobile-message-shadow);
+  font-size: var(--ds-typography-size-chat-message);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.bubble[data-mobile='true'][data-own='true'] {
+  border-radius: var(--ds-component-mobile-chat-bubble-radius)
+    var(--ds-component-mobile-message-corner-radius)
+    var(--ds-component-mobile-chat-bubble-radius)
+    var(--ds-component-mobile-chat-bubble-radius);
+  background: var(--ds-color-own-message);
+}
+
+.author {
+  display: block;
+  margin-bottom: var(--ds-space-s3);
+  font-size: var(--ds-typography-size-caption);
+  font-weight: var(--ds-typography-weight-semibold);
+  line-height: var(--ds-typography-line-height-label);
+  color: var(--ds-color-accent);
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ds-component-mobile-message-footer-gap);
+  margin-top: var(--ds-component-mobile-message-footer-inset-top);
+}

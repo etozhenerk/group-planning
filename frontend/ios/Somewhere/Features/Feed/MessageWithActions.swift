@@ -41,16 +41,10 @@ struct MessageWithActions: View {
                 }
                 .accessibilityIdentifier(messageIdentifier)
                 .accessibilityFocused($messageFocused)
-            if let outgoing { OutgoingMessageStatus(value: outgoing, owner: owner) }
-            if let entry, own, owner.reads.enabled,
-                let count = owner.reads.counts[entry.id], count > .zero
-            {
-                Button("Прочитали " + count.rawValue) { owner.openReaders(entry) }
-                    .font(.caption).foregroundStyle(DesignTokens.colorMuted)
-                    .frame(minHeight: DesignTokens.targetIos)
-                    .accessibilityIdentifier("message-readers-" + entry.id.uuidString.lowercased())
+            if let outgoing, outgoing.status != .rejected {
+                OutgoingMessageStatus(value: outgoing, owner: owner)
             }
-            if !reactions.isEmpty {
+            if !reactions.isEmpty, let entry, !entry.attachments.isEmpty {
                 reactionRow
                     .padding(
                         .leading,
@@ -137,7 +131,20 @@ struct MessageWithActions: View {
                 text: entry?.messageText ?? outgoing?.text ?? "",
                 date: entry?.occurredAt.date ?? outgoing?.createdAt ?? .distantPast,
                 own: own, entryID: entry?.id, selected: selected,
-                pendingSince: outgoing?.pendingSince, maximumWidth: availableWidth)
+                pendingSince: outgoing?.pendingSince, maximumWidth: availableWidth,
+                reactions: reactions.isEmpty ? nil : AnyView(reactionRow),
+                receipt: entry.map { value in
+                    AnyView(
+                        MessageReceiptBadge(
+                            count: owner.reads.counts[value.id], open: openReactions
+                        )
+                        .accessibilityIdentifier(
+                            "message-readers-" + value.id.uuidString.lowercased()))
+                },
+                failure: outgoing.flatMap {
+                    $0.status == .rejected
+                        ? AnyView(OutgoingMessageStatus(value: $0, owner: owner)) : nil
+                })
         }
     }
 

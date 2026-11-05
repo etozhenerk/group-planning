@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useNavigate } from 'react-router';
 import { ActionMenu } from '@/widgets/conversation/ui/ActionMenu';
@@ -22,6 +23,7 @@ export const ConversationActions = ({
   toggle,
   close,
 }: ConversationActionsProps) => {
+  const mobile = useMobileLayout();
   const navigate = useNavigate();
   const meeting = useMeeting(id, session.user.id);
   const ref = useActionMenu(menu, close);
@@ -43,6 +45,7 @@ export const ConversationActions = ({
       <button
         type="button"
         className={styles.add}
+        data-mobile={mobile}
         aria-label="Добавить к встрече"
         aria-expanded={menu}
         data-chat-surface-trigger

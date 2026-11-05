@@ -1,15 +1,10 @@
+import {
+  isConversationPanel,
+  type ConversationPanel,
+} from '@/widgets/conversation/model/conversationPanel';
 import { useRef } from 'react';
 import { usePanelHistory } from '@/shared/lib/panel-history';
 import { useMobileLayout } from '@/shared/lib/media';
-
-type ConversationPanel =
-  'add' | 'emoji' | `reaction:${string}` | `people:${string}` | `readers:${string}`;
-
-const isConversationPanel = (value: unknown): value is ConversationPanel =>
-  typeof value === 'string' &&
-  (value === 'add' ||
-    value === 'emoji' ||
-    /^(reaction|people|readers):[a-zA-Z0-9-]+$/.test(value));
 
 export const useConversationSurface = (meeting: string, user: string) => {
   const history = usePanelHistory(`conversation:${user}:${meeting}`, isConversationPanel);

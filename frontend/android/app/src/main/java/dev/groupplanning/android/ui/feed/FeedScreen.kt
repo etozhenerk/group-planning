@@ -262,6 +262,8 @@ internal fun FeedScreen(
                         entry,
                         model.reactions,
                         anchor,
+                        readStatus = entry.actor.id == profile.id,
+                        readCount = reading.counts[entry.id],
                         readers = if (reading.enabled && entry.actor.id == profile.id) {
                             { openReaders(entry, anchor) }
                         } else {
@@ -270,11 +272,7 @@ internal fun FeedScreen(
                     )
                 },
                 receipt = { entry, anchor ->
-                    if (reading.enabled) {
-                        ChatReceipt(reading.counts[entry.id]) {
-                            openReaders(entry, anchor)
-                        }
-                    }
+                    ChatReceipt(reading.counts[entry.id]) { presentation.react(entry.id) }
                 },
                 readVisible = model.reading::visible,
                 readEligible = readEligible,

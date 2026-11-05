@@ -34,6 +34,12 @@ struct MessageComposer: View {
                 } label: {
                     ChatIcon(kind: owner.panel == .actions ? .close : .plus)
                         .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: DesignTokens
+                                    .componentMobileMessageComposerActionRadius
+                            ).strokeBorder(DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
+                        }
                         .contentShape(Rectangle())
                 }.accessibilityLabel("Добавить к встрече").accessibilityIdentifier("meeting-add")
                     .accessibilityFocused($addFocused)
@@ -57,17 +63,26 @@ struct MessageComposer: View {
                     .accessibilityFocused($emojiFocused)
                 }
                 .background(
-                    DesignTokens.colorSurface,
-                    in: RoundedRectangle(cornerRadius: DesignTokens.componentChatComposerRadius)
+                    DesignTokens.colorBackground,
+                    in: RoundedRectangle(
+                        cornerRadius: DesignTokens.componentMobileMessageComposerInputRadius)
                 )
-                .overlay {
-                    RoundedRectangle(cornerRadius: DesignTokens.componentChatComposerRadius)
-                        .strokeBorder(DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
-                }
                 Button(action: owner.sendDraft) {
-                    ChatIcon(kind: .send).foregroundStyle(DesignTokens.colorActionText)
+                    ChatIcon(kind: .send, size: DesignTokens.componentMobileChatSendIconSize)
+                        .foregroundStyle(
+                            owner.canSend ? DesignTokens.colorActionText : DesignTokens.colorMuted
+                        )
+                        .frame(
+                            width: DesignTokens.componentMobileChatSendCircleSize,
+                            height: DesignTokens.componentMobileChatSendCircleSize
+                        )
+                        .background(owner.canSend ? DesignTokens.colorAction : .clear, in: Circle())
+                        .animation(
+                            ChatMotion.animation(
+                                DesignTokens.motionDurationFast, reduceMotion: reduceMotion),
+                            value: owner.canSend
+                        )
                         .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
-                        .background(DesignTokens.colorAction, in: Circle())
                         .contentShape(Rectangle())
                 }.buttonStyle(ChatPressStyle()).disabled(!owner.canSend)
                     .accessibilityLabel("Отправить сообщение").accessibilityIdentifier(
@@ -86,9 +101,6 @@ struct MessageComposer: View {
                     ? DesignTokens.componentChatComposerCompactPaddingBlock
                     : DesignTokens.componentChatComposerPaddingBottom
             )
-            .overlay(alignment: .top) {
-                Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
-            }
             .overlay(alignment: .bottomLeading) {
                 ZStack(alignment: .bottomLeading) {
                     if owner.panel == .actions {
@@ -120,7 +132,17 @@ struct MessageComposer: View {
                         emoji, into: &owner.draft, selection: &owner.composerSelection)
                 }
             }
-        }.background(DesignTokens.colorBackground).zIndex(10)
+        }.background {
+            UnevenRoundedRectangle(
+                topLeadingRadius: DesignTokens.componentMobileStickyRadius,
+                topTrailingRadius: DesignTokens.componentMobileStickyRadius
+            )
+            .fill(DesignTokens.colorSurface).ignoresSafeArea(edges: [.horizontal, .bottom])
+            .shadow(
+                color: DesignTokens.colorMobileStickyShadow,
+                radius: DesignTokens.componentMobileStickyShadowBlur,
+                y: -DesignTokens.componentMobileStickyShadowUpOffset)
+        }.zIndex(10)
             .animation(
                 ChatMotion.animation(
                     owner.panel == nil

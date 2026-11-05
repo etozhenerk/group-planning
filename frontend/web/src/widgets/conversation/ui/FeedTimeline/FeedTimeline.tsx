@@ -1,3 +1,4 @@
+import { FeedCanvas } from '@/widgets/conversation/ui/FeedCanvas';
 import { useEffect } from 'react';
 import { newMessagesLabel } from '@/widgets/conversation/lib/feedKey';
 import { InvitePrompt } from '@/widgets/conversation/ui/InvitePrompt';
@@ -45,47 +46,49 @@ export const FeedTimeline = ({
 
   return (
     <>
-      <div
-        className={styles['feed-scroll']}
-        ref={viewport.ref}
-        onScrollCapture={viewport.scroll}
-        data-mobile={surface.mobile}
-        data-history={viewport.unread}
-        data-server-count={query.data.entries.length}
-        data-has-older={query.data.hasOlder}
-        data-window-first={query.data.entries[0]?.sequence}
-        data-window-last={query.data.entries.at(-1)?.sequence}
-      >
-        <FeedHistory
-          hasOlder={query.data.hasOlder}
-          loading={query.loadingOlder}
-          error={!!query.historyError}
-          older={() => void viewport.older()}
-        />
-        <FeedRecords
-          read={read}
-          error={!!reactions.error}
-          retry={() => void reactions.refetch()}
-          entries={entries}
-          viewport={viewport}
-          session={session}
-          reactions={reactions.data ?? []}
-          surface={surface}
-        />
-        {organizer && empty && <InvitePrompt id={id} />}
-        <FeedHistory
-          hasOlder={!!query.data.window?.hasNewer}
-          loading={query.loadingNewer}
-          error={!!query.newerError}
-          older={() => void query.loadNewer()}
-          newer
-        />
-        {query.error && (
-          <p className={styles['error']} role="status">
-            Не удалось обновить разговор. Повторим запрос.
-          </p>
-        )}
-      </div>
+      <FeedCanvas surface={surface}>
+        <div
+          className={styles['feed-scroll']}
+          ref={viewport.ref}
+          onScrollCapture={viewport.scroll}
+          data-mobile={surface.mobile}
+          data-history={viewport.unread}
+          data-server-count={query.data.entries.length}
+          data-has-older={query.data.hasOlder}
+          data-window-first={query.data.entries[0]?.sequence}
+          data-window-last={query.data.entries.at(-1)?.sequence}
+        >
+          <FeedHistory
+            hasOlder={query.data.hasOlder}
+            loading={query.loadingOlder}
+            error={!!query.historyError}
+            older={() => void viewport.older()}
+          />
+          <FeedRecords
+            read={read}
+            error={!!reactions.error}
+            retry={() => void reactions.refetch()}
+            entries={entries}
+            viewport={viewport}
+            session={session}
+            reactions={reactions.data ?? []}
+            surface={surface}
+          />
+          {organizer && empty && <InvitePrompt id={id} />}
+          <FeedHistory
+            hasOlder={!!query.data.window?.hasNewer}
+            loading={query.loadingNewer}
+            error={!!query.newerError}
+            older={() => void query.loadNewer()}
+            newer
+          />
+          {query.error && (
+            <p className={styles['error']} role="status">
+              Не удалось обновить разговор. Повторим запрос.
+            </p>
+          )}
+        </div>
+      </FeedCanvas>
       {viewport.unread && (
         <div className={styles['new-messages-position']}>
           <button

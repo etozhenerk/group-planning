@@ -1,5 +1,4 @@
-import { FeedRecordActions } from '@/widgets/conversation/ui/FeedRecordActions';
-import { FeedMessageContent } from '@/widgets/conversation/ui/FeedMessageContent';
+import { FeedRecordContent } from '@/widgets/conversation/ui/FeedRecordContent';
 import { useReactionGesture } from '@/widgets/conversation/ui/FeedRecord/hooks/useReactionGesture';
 import { useEntrySurface } from '@/widgets/conversation/ui/FeedRecord/hooks/useEntrySurface';
 import type { ConversationSurface } from '@/widgets/conversation/model/useConversationSurface';
@@ -8,7 +7,6 @@ import styles from '@/widgets/conversation/ui/FeedRecord/FeedRecord.module.css';
 import type { Session } from '@/entities/session';
 import type { FeedEntry } from '@/entities/meeting';
 import { Avatar } from '@/shared/ui/Avatar';
-import { FeedMessageMetadata } from '@/widgets/conversation/ui/FeedMessageMetadata';
 
 export type FeedRecordProps = {
   read?:
@@ -55,43 +53,16 @@ export const FeedRecord = ({
         own={own}
         size={surface.mobile ? 'mobile-chat' : 'chat'}
       />
-      <div className={styles['message-content']}>
-        <FeedMessageMetadata entry={entry} own={own} />
-        <div
-          ref={gesture.anchor}
-          className={styles.target}
-          data-testid="message-actions"
-          data-read-sequence={interactive ? entry.sequence : undefined}
-          data-chat-surface-trigger
-          data-pressing={gesture.pressed}
-          tabIndex={interactive ? 0 : undefined}
-          role={interactive ? 'group' : undefined}
-          aria-label={
-            entry.kind === 'message'
-              ? `Реакции на сообщение: ${entry.text ?? 'Вложение'}`
-              : undefined
-          }
-          aria-haspopup={interactive ? 'dialog' : undefined}
-          aria-expanded={interactive ? panel.active : undefined}
-          aria-keyshortcuts={interactive ? 'Enter Space Shift+F10' : undefined}
-          {...gesture.events}
-        >
-          <FeedMessageContent entry={entry} session={session} own={own}>
-            <p className={styles['message-bubble']} data-testid="message-bubble">
-              {entry.text ?? entry.event}
-            </p>
-          </FeedMessageContent>
-        </div>
-        <FeedRecordActions
-          entry={entry}
-          session={session}
-          reactions={reactions}
-          surface={surface}
-          panel={panel}
-          anchor={gesture.anchor}
-          read={read}
-        />
-      </div>
+      <FeedRecordContent
+        entry={entry}
+        session={session}
+        reactions={reactions}
+        surface={surface}
+        read={read}
+        own={own}
+        panel={panel}
+        gesture={gesture}
+      />
     </li>
   );
 };

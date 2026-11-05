@@ -1,0 +1,22 @@
+.content {
+  max-width: calc(100% - var(--ds-space-s40));
+  min-width: 0;
+  position: relative;
+}
+
+.content[data-mobile='true'] {
+  max-width: calc(
+    100% - var(--ds-component-mobile-chat-message-avatar) -
+      var(--ds-component-mobile-chat-message-gap)
+  );
+}
+
+.attachmentMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-s8);
+  font-size: var(--ds-typography-size-label);
+  color: var(--ds-color-muted);
+  margin-top: var(--ds-space-s4);
+}

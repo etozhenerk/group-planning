@@ -28,6 +28,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.FeedEntry
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.ui.components.ChatIcon
 import dev.groupplanning.android.ui.components.ChatSymbol
 import dev.groupplanning.android.ui.theme.DesignTokens
@@ -43,6 +44,8 @@ internal fun ReactionPicker(
     close: () -> Unit,
     closed: () -> Unit,
     readers: (() -> Unit)? = null,
+    readStatus: Boolean = false,
+    readCount: ServerCounter? = null,
 ) {
     val density = LocalDensity.current
     val edge = with(density) { DesignTokens.componentReactionPickerEdgeInset.roundToPx() }
@@ -104,7 +107,13 @@ internal fun ReactionPicker(
                         ) { ChatIcon(ChatSymbol.Close) }
                     }
                     EmojiPicker(choose, Modifier.weight(1f), selectedEmoji)
-                    readers?.let { ReadContextAction(open, it) }
+                    if (readStatus) {
+                        ReadContextAction(open, readCount, readers)
+                    } else {
+                        readers?.let {
+                            ReadContextAction(open, null, it, false)
+                        }
+                    }
                 }
             } else {
                 Column {
@@ -129,7 +138,13 @@ internal fun ReactionPicker(
                             },
                         ) { ChatIcon(ChatSymbol.More) }
                     }
-                    readers?.let { ReadContextAction(open, it) }
+                    if (readStatus) {
+                        ReadContextAction(open, readCount, readers)
+                    } else {
+                        readers?.let {
+                            ReadContextAction(open, null, it, false)
+                        }
+                    }
                 }
             }
         }

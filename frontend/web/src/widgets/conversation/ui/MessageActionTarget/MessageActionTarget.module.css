@@ -1,0 +1,28 @@
+.target {
+  border-radius: var(--ds-component-mobile-chat-bubble-radius);
+  outline: var(--ds-component-reaction-picker-selected-outline-width) solid transparent;
+  outline-offset: var(--ds-component-mobile-chat-bubble-focus-offset);
+  transition:
+    transform var(--ds-motion-duration-reaction-feedback) var(--ds-motion-easing-standard),
+    outline-color var(--ds-motion-duration-reaction-feedback)
+      var(--ds-motion-easing-standard);
+  -webkit-touch-callout: none;
+}
+
+.target[data-pressing='true'] {
+  transform: scale(var(--ds-component-reaction-picker-pressed-scale));
+}
+
+:root:not([data-input-modality='pointer']) .target:focus {
+  outline-color: var(--ds-color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target {
+    transition: none;
+  }
+
+  .target[data-pressing='true'] {
+    transform: none;
+  }
+}

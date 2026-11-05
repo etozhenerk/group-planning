@@ -11,30 +11,33 @@ struct ReactionChip: View {
         Button {
             if !updating { toggle() }
         } label: {
-            HStack(spacing: DesignTokens.componentReactionChipGap) {
-                Text(reaction.emoji).designFont(DesignTokens.typographySizeBody)
+            HStack(spacing: DesignTokens.componentMobileMessageReactionGap) {
+                Text(reaction.emoji).designFont(DesignTokens.typographySizeChatMessage)
                 Text(String(reaction.count)).designFont(DesignTokens.typographySizeLabel)
                     .contentTransition(.numericText())
-                if reaction.mine {
-                    Image(systemName: "checkmark")
-                        .designFont(
-                            DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2
-                        )
-                        .foregroundStyle(DesignTokens.colorAccent)
-                }
             }
-            .padding(.horizontal, DesignTokens.componentReactionChipPaddingInline)
-            .padding(.vertical, DesignTokens.componentReactionChipPaddingBlock)
-            .frame(minWidth: DesignTokens.targetIos, minHeight: DesignTokens.targetIos)
+            .padding(.horizontal, DesignTokens.componentMobileMessageReactionInsetInline)
+            .padding(.vertical, DesignTokens.componentMobileMessageReactionInsetBlock)
+            .frame(
+                minWidth: DesignTokens.targetIos,
+                minHeight: DesignTokens.componentMobileMessageReactionHeight
+            )
             .background(
-                reaction.mine ? DesignTokens.colorSelectedSegment : DesignTokens.colorSurface,
-                in: Capsule()
+                reaction.mine ? DesignTokens.colorAccent : DesignTokens.colorBackground,
+                in: RoundedRectangle(
+                    cornerRadius: DesignTokens.componentMobileMessageReactionRadius)
             )
             .overlay {
-                Capsule().strokeBorder(
-                    reaction.mine ? DesignTokens.colorAccent : .clear,
-                    lineWidth: DesignTokens.componentReactionChipBorderWidth)
+                RoundedRectangle(cornerRadius: DesignTokens.componentMobileMessageReactionRadius)
+                    .strokeBorder(
+                        reaction.mine ? DesignTokens.colorAccent : DesignTokens.colorLine,
+                        lineWidth: DesignTokens.componentReactionChipBorderWidth)
             }
+            .foregroundStyle(reaction.mine ? DesignTokens.colorBackground : DesignTokens.colorText)
+            .frame(
+                minWidth: DesignTokens.targetIos, minHeight: DesignTokens.targetIos,
+                alignment: .leading
+            )
             .contentShape(Rectangle())
         }
         .buttonStyle(ChatPressStyle())

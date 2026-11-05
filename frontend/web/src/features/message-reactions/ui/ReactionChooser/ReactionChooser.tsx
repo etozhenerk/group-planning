@@ -1,3 +1,4 @@
+import { ReceiptContext } from '@/features/message-reactions/ui/ReceiptContext';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useLayoutEffect, useState } from 'react';
 import { EmojiDock } from '@/shared/ui/EmojiDock';
@@ -12,6 +13,7 @@ export type ReactionChooserProps = {
   context: string;
   resize: () => void;
   readers?: (() => void) | undefined;
+  readStatus?: { count: string | undefined } | undefined;
 };
 
 export const ReactionChooser = ({
@@ -22,6 +24,7 @@ export const ReactionChooser = ({
   context,
   resize,
   readers,
+  readStatus,
 }: ReactionChooserProps) => {
   const [all, setAll] = useState(false);
   const mobile = useMobileLayout();
@@ -42,32 +45,43 @@ export const ReactionChooser = ({
           pending={pending}
         />
       </div>
-      {readers && (
-        <button type="button" className={styles.readers} onClick={readers}>
-          Кто прочитал
-        </button>
-      )}
+      <ReceiptContext
+        own={readStatus !== undefined}
+        count={readStatus?.count}
+        open={readers}
+      />
     </div>
   ) : (
-    <div className={styles.quick} data-mobile={mobile}>
-      {['❤️', '👍', '😂', '🔥', '🎉'].map((emoji) => (
-        <button
-          key={emoji}
-          type="button"
-          onClick={() => choose(emoji)}
-          disabled={pending}
-          aria-pressed={selected.includes(emoji)}
-        >
-          {emoji}
+    <div className={styles.wrapper} data-mobile={mobile}>
+      <div className={styles.quick} data-mobile={mobile}>
+        {['❤️', '👍', '😂', '🔥', '🎉'].map((emoji) => (
+          <button
+            key={emoji}
+            type="button"
+            onClick={() => choose(emoji)}
+            disabled={pending}
+            aria-pressed={selected.includes(emoji)}
+          >
+            {emoji}
+          </button>
+        ))}
+        <button type="button" onClick={() => setAll(true)} aria-label="Все эмодзи">
+          <ChatIcon name="down" aria-hidden="true" />
         </button>
-      ))}
-      <button type="button" onClick={() => setAll(true)} aria-label="Все эмодзи">
-        <ChatIcon name="down" aria-hidden="true" />
-      </button>
-      {readers && (
-        <button type="button" className={styles.readers} onClick={readers}>
-          Кто прочитал
-        </button>
+        {!mobile && (
+          <ReceiptContext
+            own={readStatus !== undefined}
+            count={readStatus?.count}
+            open={readers}
+          />
+        )}
+      </div>
+      {mobile && (
+        <ReceiptContext
+          own={readStatus !== undefined}
+          count={readStatus?.count}
+          open={readers}
+        />
       )}
     </div>
   );

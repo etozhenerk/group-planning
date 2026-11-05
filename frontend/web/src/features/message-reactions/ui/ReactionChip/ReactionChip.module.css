@@ -49,3 +49,35 @@
     transform: none;
   }
 }
+
+.chip[data-mobile='true'] {
+  position: relative;
+  border-radius: var(--ds-component-mobile-message-reaction-radius);
+  min-height: var(--ds-component-mobile-message-reaction-height);
+  padding: var(--ds-component-mobile-message-reaction-inset-block)
+    var(--ds-component-mobile-message-reaction-inset-inline);
+  gap: var(--ds-component-mobile-message-reaction-gap);
+  font-size: var(--ds-typography-size-chat-message);
+  background: var(--ds-color-background);
+  border-color: var(--ds-color-line);
+}
+
+.chip[data-mobile='true']::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--ds-space-s8)) 0;
+}
+
+.chip[data-mobile='true'][aria-pressed='true'] {
+  background: var(--ds-color-accent);
+  border-color: var(--ds-color-accent);
+  color: var(--ds-color-background);
+}
+
+.chip[data-mobile='true'] .check {
+  display: none;
+}
+
+.chip[data-mobile='true'] .count {
+  font-size: var(--ds-typography-size-label);
+}

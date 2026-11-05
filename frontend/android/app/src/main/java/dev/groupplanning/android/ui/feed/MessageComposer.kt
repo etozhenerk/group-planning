@@ -1,21 +1,26 @@
 package dev.groupplanning.android.ui.feed
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +32,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -51,10 +59,12 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.feed.MessageState
 import dev.groupplanning.android.ui.components.ChatIcon
 import dev.groupplanning.android.ui.components.ChatSymbol
+import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
@@ -69,6 +79,11 @@ internal fun MessageComposer(
     openPhoto: () -> Unit = {},
     openFile: () -> Unit = {},
 ) {
+    val sendSurface by animateColorAsState(
+        if (state.canSend) DesignTokens.colorAction else Color.Transparent,
+        tween(if (LocalMotionEnabled.current) DesignTokens.motionDurationFast else 0),
+        label = "send-surface",
+    )
     val presentation = LocalChatPresentation.current
     var field by rememberSaveable(
         state.ready,
@@ -117,16 +132,37 @@ internal fun MessageComposer(
         lineHeight = DesignTokens.typographySizeBody * DesignTokens.typographyLineHeightBody,
     )
     Column(
-        Modifier.onPreviewKeyEvent {
-            if (emojiOpen && it.key == Key.Escape && it.type == KeyEventType.KeyUp) {
-                dismiss()
-                true
-            } else {
-                false
-            }
-        },
+        Modifier.dropShadow(
+            RoundedCornerShape(
+                topStart = DesignTokens.componentMobileStickyRadius,
+                topEnd = DesignTokens.componentMobileStickyRadius,
+            ),
+            Shadow(
+                radius = DesignTokens.componentMobileStickyShadowBlur,
+                color = DesignTokens.colorMobileStickyShadow,
+                offset = DpOffset(
+                    DesignTokens.spaceS0,
+                    -DesignTokens.componentMobileStickyShadowUpOffset,
+                ),
+            ),
+        )
+            .background(
+                DesignTokens.colorSurface,
+                RoundedCornerShape(
+                    topStart = DesignTokens.componentMobileStickyRadius,
+                    topEnd = DesignTokens.componentMobileStickyRadius,
+                ),
+            )
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+            .onPreviewKeyEvent {
+                if (emojiOpen && it.key == Key.Escape && it.type == KeyEventType.KeyUp) {
+                    dismiss()
+                    true
+                } else {
+                    false
+                }
+            },
     ) {
-        HorizontalDivider(color = DesignTokens.colorLine)
         Row(
             Modifier.fillMaxWidth().padding(
                 start = DesignTokens.componentChatComposerPaddingInline,
@@ -145,19 +181,15 @@ internal fun MessageComposer(
             }, openPhoto, openFile, openPoll, openPlace, openTask)
             Row(
                 Modifier.weight(1f).background(
-                    DesignTokens.colorSurface,
-                    RoundedCornerShape(DesignTokens.componentChatComposerRadius),
-                ).border(
-                    DesignTokens.spaceS1,
-                    DesignTokens.colorLine,
-                    RoundedCornerShape(DesignTokens.componentChatComposerRadius),
+                    DesignTokens.colorBackground,
+                    RoundedCornerShape(DesignTokens.componentMobileMessageComposerInputRadius),
                 ),
                 verticalAlignment = Alignment.Bottom,
             ) {
                 BasicTextField(
                     field,
                     { next ->
-                        // Compose collapses selection on blur; outside taps keep the insertion range.
+                        // Keep the insertion range when Compose collapses selection on blur.
                         if (presentation.composerPanel != "emoji" &&
                             (!presentation.preserveComposerSelection || next.text != field.text)
                         ) {
@@ -230,10 +262,28 @@ internal fun MessageComposer(
             IconButton(
                 send,
                 Modifier.size(DesignTokens.targetAndroid)
-                    .background(DesignTokens.colorAction, CircleShape)
                     .testTag("message-send").semantics { contentDescription = sendLabel },
                 enabled = state.canSend,
-            ) { ChatIcon(ChatSymbol.Send, tint = DesignTokens.colorActionText) }
+            ) {
+                Box(
+                    Modifier.size(DesignTokens.componentMobileChatSendCircleSize)
+                        .background(
+                            if (state.canSend) DesignTokens.colorAction else Color.Transparent,
+                            CircleShape,
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    ChatIcon(
+                        ChatSymbol.Send,
+                        Modifier.size(DesignTokens.componentMobileChatSendIconSize),
+                        tint = if (state.canSend) {
+                            DesignTokens.colorActionText
+                        } else {
+                            DesignTokens.colorMuted
+                        },
+                    )
+                }
+            }
         }
         EmojiDock(emojiOpen) {
             EmojiPicker(

@@ -1,8 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { privateKey, useAccess } from '@/entities/meeting';
-import { outgoingError } from '@/features/send-message/lib/outgoingError';
 import { useState } from 'react';
-import { changeOutgoing } from '@/features/send-message/model/changeOutgoing';
+import { useMessageDelivery } from '@/features/send-message/model/useMessageDelivery';
+import { CompactDelivery } from '@/features/send-message/ui/CompactDelivery';
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/features/send-message/ui/MessageDelivery/MessageDelivery.module.css';
 
 export type MessageDeliveryProps = {
@@ -10,19 +9,30 @@ export type MessageDeliveryProps = {
   meeting: string;
   id: string;
   state: 'uncertain' | 'rejected';
+  panel?: { open: boolean; change: (open: boolean) => void } | undefined;
 };
 
-export const MessageDelivery = ({ user, meeting, id, state }: MessageDeliveryProps) => {
-  const access = useAccess(user, meeting);
-  const occupied = useQuery<boolean>({
-    queryKey: privateKey(user, meeting, access.epoch, 'draft-occupied'),
-    enabled: false,
-    initialData: false,
-  });
+export const MessageDelivery = ({
+  user,
+  meeting,
+  id,
+  state,
+  panel,
+}: MessageDeliveryProps) => {
+  const action = useMessageDelivery(user, meeting, id);
+  const mobile = useMobileLayout();
+  const [open, change] = useState(false);
 
-  const [error, setError] = useState<string | null>(null);
-
-  return (
+  return mobile && state === 'rejected' ? (
+    <CompactDelivery
+      open={panel?.open ?? open}
+      change={panel?.change ?? change}
+      blocked={action.occupied}
+      error={action.error}
+      retry={() => action.perform('retry')}
+      restore={() => action.perform('restore')}
+    />
+  ) : (
     <div className={styles.status} data-testid="message-delivery">
       <span role="status">
         {state === 'rejected' ? 'Не удалось отправить' : 'Проверяем отправку'}
@@ -32,27 +42,23 @@ export const MessageDelivery = ({ user, meeting, id, state }: MessageDeliveryPro
           <button
             type="button"
             onClick={() => {
-              void changeOutgoing(user, meeting, id, 'retry').catch((failure: unknown) =>
-                setError(outgoingError(failure)),
-              );
+              void action.perform('retry');
             }}
           >
             Повторить
           </button>
           <button
             type="button"
-            disabled={occupied.data}
+            disabled={action.occupied}
             onClick={() => {
-              void changeOutgoing(user, meeting, id, 'restore').catch(
-                (failure: unknown) => setError(outgoingError(failure)),
-              );
+              void action.perform('restore');
             }}
           >
             Вернуть текст
           </button>
         </>
       )}
-      {error && <span role="alert">{error}</span>}
+      {action.error && <span role="alert">{action.error}</span>}
     </div>
   );
 };

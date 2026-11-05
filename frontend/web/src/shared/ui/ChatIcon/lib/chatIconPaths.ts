@@ -1,4 +1,9 @@
 export const chatIconPaths = {
+  sendError:
+    '<circle cx="12" cy="12" r="10" fill="currentColor" stroke="none"/><path d="M12 6.5v7" stroke="var(--ds-color-background)"/><circle cx="12" cy="17" r="1" fill="var(--ds-color-background)" stroke="none"/>',
+  smileSoft:
+    '<circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r=".7" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".7" fill="currentColor" stroke="none"/><path d="M9 14q3 2.4 6 0"/>',
+  sendUp: '<path d="M12 18V6m-4.5 4.5L12 6l4.5 4.5"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
   close: '<path d="m6 6 12 12M18 6 6 18"/>',
   down: '<path d="m6 9 6 6 6-6"/>',

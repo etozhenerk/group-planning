@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useRef } from 'react';
 import type { Reaction } from '@/entities/meeting';
@@ -17,6 +18,7 @@ export const ReactionChip = ({
   choose,
   people,
 }: ReactionChipProps) => {
+  const mobile = useMobileLayout();
   const trigger = useRef<HTMLButtonElement>(null);
   const gesture = useHoldGesture<HTMLButtonElement>(!pending, () => {
     if (trigger.current) {
@@ -34,6 +36,7 @@ export const ReactionChip = ({
       aria-description="Нажмите, чтобы изменить свою реакцию. Удерживайте или откройте контекстное меню, чтобы увидеть участников."
       aria-keyshortcuts="Shift+F10"
       aria-pressed={reaction.mine}
+      data-mobile={mobile}
       data-reaction-chip
       data-pressing={gesture.pressed}
       disabled={pending}

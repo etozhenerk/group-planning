@@ -25,7 +25,8 @@ export const FeedRecordActions = ({
 
   return (
     <>
-      {(entry.delivery === 'uncertain' || entry.delivery === 'rejected') &&
+      {!surface.mobile &&
+        (entry.delivery === 'uncertain' || entry.delivery === 'rejected') &&
         entry.clientRequestId && (
           <MessageDelivery
             user={session.user.id}
@@ -44,6 +45,7 @@ export const FeedRecordActions = ({
           change={panel.change}
           people={panel.people}
           readers={own && read?.enabled ? panel.readers.show : undefined}
+          readStatus={surface.mobile && own ? { count: read?.count } : undefined}
           anchor={anchor}
           boundary={surface.boundary}
           context={entry.text ?? 'Вложение'}
@@ -51,7 +53,9 @@ export const FeedRecordActions = ({
       )}
       {interactive && own && read?.enabled && (
         <>
-          <ReadReceipt count={read.count} open={panel.readers.show} />
+          {!surface.mobile && (
+            <ReadReceipt count={read.count} open={panel.readers.show} />
+          )}
           <ReadersDialog
             meeting={entry.meetingId}
             user={session.user.id}

@@ -20,3 +20,21 @@
 .metadata[data-own='true'] {
   justify-content: flex-end;
 }
+
+.metadata[data-mobile='true'] {
+  margin: 0 0 0 auto;
+  flex-shrink: 0;
+  align-self: flex-end;
+  justify-content: flex-end;
+  gap: var(--ds-component-mobile-message-metadata-gap);
+  font-size: var(--ds-component-mobile-message-metadata-size);
+  line-height: var(--ds-component-mobile-message-metadata-line-height);
+}
+
+.metadata[data-mobile='true'][data-own='true'] {
+  color: var(--ds-color-mobile-message-own-metadata);
+}
+
+.metadata[data-mobile='true'] time {
+  color: inherit;
+}

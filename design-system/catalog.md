@@ -1,4 +1,4 @@
-# Токены somewhere · 7.6.0
+# Токены somewhere · 7.7.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -43,6 +43,8 @@
 | color.meetingMarkForeground | color | #dcece5 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.message | color | #33343a | Смысловая роль message |
 | color.mobileInvitationFooterLine | color | #ffffff08 | Внутренняя верхняя линия footer invite-r3: #ffffff08; роль не меняет calendarHover. |
+| color.mobileMessageOwnMetadata | color | #685f75 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| color.mobileMessageShadow | color | #00000011 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
 | color.mobileNavigationAndroidBackground | color | #27282efa | Привязка неизменённого Android baseline фона; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | color.mobileNavigationAndroidBorder | color | #ffffff15 | Привязка неизменённой Android baseline рамки; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | color.mobileNavigationIOSBackground | color | #27282eeb | Привязка неизменённого iOS baseline фона поверх ultraThinMaterial; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
@@ -155,6 +157,9 @@
 | component.chatComposer.paddingInline | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .composer padding |
 | component.chatComposer.paddingTop | dimension | 8px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .composer padding |
 | component.chatComposer.radius | dimension | 22px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .text-entry |
+| component.desktopMessage.cornerRadius | dimension | 5px | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
+| component.desktopMessage.lineHeight | number | 1.6 | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
+| component.desktopMessage.radius | dimension | 18px | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
 | component.emojiDock.categoryIconSize | dimension | 23px | Единый SVG viewBox категорий эмодзи iOS; прежний видимый размер23, центр target44. |
 | component.emojiDock.categoryIndicator | dimension | 2px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-categories .active::after |
 | component.emojiDock.choiceInset | dimension | 3px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .emoji-choice |
@@ -309,6 +314,12 @@
 | component.mobileForm.switchThumbSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch::after; web |
 | component.mobileForm.switchWidth | dimension | 38px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch; native использует системный Switch |
 | component.mobileForm.twoFieldGap | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .two-fields |
+| component.mobileInfo.coverHeight | dimension | 156px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.organizerAvatarSize | dimension | 32px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.responseIconSize | dimension | 36px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.titleLineHeight | dimension | 31px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.titleSize | dimension | 25px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.titleTracking | number | -0.5 | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
 | component.mobileInvitation.closedCopyGap | dimension | 5px | Неизменённый invite-r3/source/InvitationClosed и InvitationPreview: icon18, gap5, return ArrowLeft15. |
 | component.mobileInvitation.closedGap | dimension | 22px | Утверждённый invite-r3/source/InvitationPreview, InvitationActions и InvitationClosed; прежние raw не меняются. |
 | component.mobileInvitation.closedGlyph | dimension | 18px | Неизменённый invite-r3/source/InvitationClosed и InvitationPreview: icon18, gap5, return ArrowLeft15. |
@@ -370,6 +381,38 @@
 | component.mobileMeetings.undatedInset | dimension | 14px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
 | component.mobileMeetings.undatedMargin | dimension | 14px | Принятый calendar-r7: CalendarScreen.undated/CalendarList.month/CalendarAgenda.empty; source/hash в meetings-state-bindings-6.2.json. |
 | component.mobileMeetings.viewIconSize | dimension | 20px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileMessage.composerActionRadius | dimension | 14px | Неизменённый chat-r6: add-control44 и radius14, внутри общей sticky-панели. |
+| component.mobileMessage.composerInputRadius | dimension | 14px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.cornerRadius | dimension | 4px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.errorOffset | dimension | 38px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.errorSize | dimension | 32px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.footerGap | dimension | 12px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.footerInsetTop | dimension | 3px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.insetBottom | dimension | 7px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.insetInline | dimension | 13px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.insetTop | dimension | 10px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.maximumWidthRatio | number | 0.94 | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
+| component.mobileMessage.menuCardRadius | dimension | 16px | Неизменённый chat-r6/source/MessageMenu.module.css: quickpill30, card16, width316 и interval8. |
+| component.mobileMessage.menuQuickRadius | dimension | 30px | Неизменённый chat-r6/source/MessageMenu.module.css: quickpill30, card16, width316 и interval8. |
+| component.mobileMessage.menuReadHeight | dimension | 52px | Неизменённый chat-r6/source/MessageMenu.module.css: quickpill30, card16, width316 и interval8. |
+| component.mobileMessage.menuWidth | dimension | 316px | Неизменённый chat-r6/source/MessageMenu.module.css: quickpill30, card16, width316 и interval8. |
+| component.mobileMessage.metadataGap | dimension | 7px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.metadataLineHeight | dimension | 14px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.metadataSize | dimension | 10px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.minimumWidth | dimension | 120px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.reactionGap | dimension | 5px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.reactionHeight | dimension | 28px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.reactionInsetBlock | dimension | 3px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.reactionInsetInline | dimension | 9px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.reactionRadius | dimension | 14px | Неизменённый chat-r6/source/build.mjs: overrides ReactionChip и SendMessage; visual reaction28/radius14, transparent44/48 hit target. |
+| component.mobileMessage.receiptHeight | dimension | 18px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.receiptMutedOpacity | number | 0.48 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.receiptReadStroke | number | 1.9 | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
+| component.mobileMessage.receiptSentStroke | number | 1.5 | Неизменённый approved chat-r6/source/MessageReceipt и baseline desktop FeedRecord до мобильного переноса. |
+| component.mobileMessage.receiptWidth | dimension | 22px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.shadowBlur | dimension | 1px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.shadowOffset | dimension | 2px | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
+| component.mobileMessage.smileStroke | number | 1.45 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
 | component.mobileNavigation.androidLabelLineHeight | dimension | 13.5px | Привязка Android baseline lineHeight13.5; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | component.mobileNavigation.iconGap | dimension | 3px | Привязка iOS/Android baseline gap3; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | component.mobileNavigation.iconStroke | number | 1.7 | Привязка iOS baseline обычного navigation icon; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |

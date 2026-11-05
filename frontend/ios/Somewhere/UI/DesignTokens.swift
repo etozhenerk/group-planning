@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.6.0. Do not edit.
+// Generated from design-system/tokens.json · 7.7.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -234,6 +234,20 @@ enum DesignTokens {
         green: 1,
         blue: 1,
         opacity: 0.03137254901960784
+    )
+    static let colorMobileMessageOwnMetadata = Color(
+        .sRGB,
+        red: 0.40784313725490196,
+        green: 0.37254901960784315,
+        blue: 0.4588235294117647,
+        opacity: 1
+    )
+    static let colorMobileMessageShadow = Color(
+        .sRGB,
+        red: 0,
+        green: 0,
+        blue: 0,
+        opacity: 0.06666666666666667
     )
     static let colorMobileNavigationAndroidBackground = Color(
         .sRGB,
@@ -611,6 +625,9 @@ enum DesignTokens {
     static let componentChatComposerPaddingInline = CGFloat(10)
     static let componentChatComposerPaddingTop = CGFloat(8)
     static let componentChatComposerRadius = CGFloat(22)
+    static let componentDesktopMessageCornerRadius = CGFloat(5)
+    static let componentDesktopMessageLineHeight = 1.6
+    static let componentDesktopMessageRadius = CGFloat(18)
     static let componentEmojiDockCategoryIconSize = CGFloat(23)
     static let componentEmojiDockCategoryIndicator = CGFloat(2)
     static let componentEmojiDockChoiceInset = CGFloat(3)
@@ -765,6 +782,12 @@ enum DesignTokens {
     static let componentMobileFormSwitchThumbSize = CGFloat(18)
     static let componentMobileFormSwitchWidth = CGFloat(38)
     static let componentMobileFormTwoFieldGap = CGFloat(10)
+    static let componentMobileInfoCoverHeight = CGFloat(156)
+    static let componentMobileInfoOrganizerAvatarSize = CGFloat(32)
+    static let componentMobileInfoResponseIconSize = CGFloat(36)
+    static let componentMobileInfoTitleLineHeight = CGFloat(31)
+    static let componentMobileInfoTitleSize = CGFloat(25)
+    static let componentMobileInfoTitleTracking = -0.5
     static let componentMobileInvitationClosedCopyGap = CGFloat(5)
     static let componentMobileInvitationClosedGap = CGFloat(22)
     static let componentMobileInvitationClosedGlyph = CGFloat(18)
@@ -826,6 +849,38 @@ enum DesignTokens {
     static let componentMobileMeetingsUndatedInset = CGFloat(14)
     static let componentMobileMeetingsUndatedMargin = CGFloat(14)
     static let componentMobileMeetingsViewIconSize = CGFloat(20)
+    static let componentMobileMessageComposerActionRadius = CGFloat(14)
+    static let componentMobileMessageComposerInputRadius = CGFloat(14)
+    static let componentMobileMessageCornerRadius = CGFloat(4)
+    static let componentMobileMessageErrorOffset = CGFloat(38)
+    static let componentMobileMessageErrorSize = CGFloat(32)
+    static let componentMobileMessageFooterGap = CGFloat(12)
+    static let componentMobileMessageFooterInsetTop = CGFloat(3)
+    static let componentMobileMessageInsetBottom = CGFloat(7)
+    static let componentMobileMessageInsetInline = CGFloat(13)
+    static let componentMobileMessageInsetTop = CGFloat(10)
+    static let componentMobileMessageMaximumWidthRatio = 0.94
+    static let componentMobileMessageMenuCardRadius = CGFloat(16)
+    static let componentMobileMessageMenuQuickRadius = CGFloat(30)
+    static let componentMobileMessageMenuReadHeight = CGFloat(52)
+    static let componentMobileMessageMenuWidth = CGFloat(316)
+    static let componentMobileMessageMetadataGap = CGFloat(7)
+    static let componentMobileMessageMetadataLineHeight = CGFloat(14)
+    static let componentMobileMessageMetadataSize = CGFloat(10)
+    static let componentMobileMessageMinimumWidth = CGFloat(120)
+    static let componentMobileMessageReactionGap = CGFloat(5)
+    static let componentMobileMessageReactionHeight = CGFloat(28)
+    static let componentMobileMessageReactionInsetBlock = CGFloat(3)
+    static let componentMobileMessageReactionInsetInline = CGFloat(9)
+    static let componentMobileMessageReactionRadius = CGFloat(14)
+    static let componentMobileMessageReceiptHeight = CGFloat(18)
+    static let componentMobileMessageReceiptMutedOpacity = 0.48
+    static let componentMobileMessageReceiptReadStroke = 1.9
+    static let componentMobileMessageReceiptSentStroke = 1.5
+    static let componentMobileMessageReceiptWidth = CGFloat(22)
+    static let componentMobileMessageShadowBlur = CGFloat(1)
+    static let componentMobileMessageShadowOffset = CGFloat(2)
+    static let componentMobileMessageSmileStroke = 1.45
     static let componentMobileNavigationAndroidLabelLineHeight = CGFloat(13.5)
     static let componentMobileNavigationIconGap = CGFloat(3)
     static let componentMobileNavigationIconStroke = 1.7

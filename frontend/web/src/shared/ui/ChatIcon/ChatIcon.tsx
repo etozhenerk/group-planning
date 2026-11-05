@@ -21,7 +21,11 @@ export const ChatIcon = ({
     height={size}
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.7"
+    strokeWidth={
+      name === 'smileSoft'
+        ? designTokens.componentMobileMessageSmileStroke
+        : designTokens.componentIconStrokeWidth
+    }
     strokeLinecap="round"
     strokeLinejoin="round"
     aria-hidden="true"

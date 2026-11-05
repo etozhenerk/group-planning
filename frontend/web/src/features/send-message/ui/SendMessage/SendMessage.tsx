@@ -1,3 +1,4 @@
+import { SendMessageSubmit } from '@/features/send-message/ui/SendMessageSubmit';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { useComposer } from '@/features/send-message/ui/SendMessage/hooks/useComposer';
 import { EmojiPicker } from '@/shared/ui/EmojiPicker';
@@ -76,17 +77,14 @@ export const SendMessage = ({
             aria-expanded={emojiOpen}
             onClick={togglePanel}
           >
-            <ChatIcon name={emojiOpen ? 'keyboard' : 'smile'} />
+            <ChatIcon name={emojiOpen ? 'keyboard' : mobile ? 'smileSoft' : 'smile'} />
           </button>
         </div>
-        <button
-          type="submit"
-          className={[styles['icon'], styles['primary']].join(' ')}
-          aria-label="Отправить сообщение"
+        <SendMessageSubmit
+          mobile={mobile}
           disabled={!action.text.trim() || action.disabled}
-        >
-          <ChatIcon name="send" aria-hidden="true" size={22} />
-        </button>
+          className={[styles.icon, styles.primary].join(' ')}
+        />
       </form>
       {presence.visible && mobile && (
         <div className={styles.dock} {...presence.props}>
