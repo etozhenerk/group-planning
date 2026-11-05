@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.7.0. Do not edit.
+// Generated from design-system/tokens.json · 7.8.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -782,6 +782,16 @@ enum DesignTokens {
     static let componentMobileFormSwitchThumbSize = CGFloat(18)
     static let componentMobileFormSwitchWidth = CGFloat(38)
     static let componentMobileFormTwoFieldGap = CGFloat(10)
+    static let componentMobileInfoCompanyAllInsetTop = CGFloat(2)
+    static let componentMobileInfoCompanyAllMinimumHeight = CGFloat(32)
+    static let componentMobileInfoCompanyChipGap = CGFloat(6)
+    static let componentMobileInfoCompanyChipHeight = CGFloat(36)
+    static let componentMobileInfoCompanyChipInsetBlock = CGFloat(6)
+    static let componentMobileInfoCompanyChipInsetEnd = CGFloat(10)
+    static let componentMobileInfoCompanyChipInsetStart = CGFloat(6)
+    static let componentMobileInfoCompanyChipOverlap = CGFloat(4)
+    static let componentMobileInfoCompanyChipRadius = CGFloat(12)
+    static let componentMobileInfoCompanyMoreMinimumWidth = CGFloat(40)
     static let componentMobileInfoCoverHeight = CGFloat(156)
     static let componentMobileInfoOrganizerAvatarSize = CGFloat(32)
     static let componentMobileInfoResponseIconSize = CGFloat(36)

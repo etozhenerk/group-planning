@@ -36,7 +36,7 @@ export const ParticipantList = ({
           : mobile
             ? expanded
               ? 'Все ответы'
-              : 'Компания'
+              : 'Кто придёт'
             : expanded
               ? 'Участники'
               : 'Кто придёт'}

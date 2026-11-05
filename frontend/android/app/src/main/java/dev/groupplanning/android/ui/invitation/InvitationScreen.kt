@@ -16,6 +16,7 @@ import dev.groupplanning.android.data.links.InvitationTarget
 import dev.groupplanning.android.data.session.SessionState
 import dev.groupplanning.android.state.InvitationViewModel
 import dev.groupplanning.android.state.RsvpOutcome
+import java.util.UUID
 import kotlinx.coroutines.delay
 
 @Composable
@@ -36,26 +37,29 @@ internal fun InvitationScreen(
         authenticated &&
             details?.canAccess == true &&
             details.preview.meetingId !in snapshot.data.denied
-    var routed by remember(model) { mutableStateOf(false) }
-    LaunchedEffect(state.completedResponse, access) {
-        if (!routed && authenticated) {
-            val outcome =
-                state.completedResponse
-                    ?: if (access &&
-                        model.target is InvitationTarget.Token
-                    ) {
-                        RsvpOutcome(
-                            profile.id,
-                            details.preview.meetingId,
-                            RsvpAnswer.Going,
-                            details.preview.title,
-                        )
-                    } else {
-                        null
-                    }
-            if (outcome != null) {
-                routed = true
+    var automaticRouteCompleted by remember(model) { mutableStateOf(false) }
+    var routedResponseID by remember(model) { mutableStateOf<UUID?>(null) }
+    LaunchedEffect(state.completedResponseID, access) {
+        if (authenticated) {
+            val requestID = state.completedResponseID
+            val outcome = state.completedResponse
+            if (requestID != null && outcome != null && routedResponseID != requestID) {
+                routedResponseID = requestID
                 response(outcome)
+            } else if (requestID == null &&
+                !automaticRouteCompleted &&
+                access &&
+                model.target is InvitationTarget.Token
+            ) {
+                automaticRouteCompleted = true
+                response(
+                    RsvpOutcome(
+                        profile.id,
+                        details.preview.meetingId,
+                        RsvpAnswer.Going,
+                        details.preview.title,
+                    ),
+                )
             }
         }
     }

@@ -2,6 +2,7 @@ import Foundation
 
 enum ChatSheetRoute: Hashable {
     case information
+    case response
     case share
     case settings
     case date

@@ -21,6 +21,21 @@ struct InvitationOwnerTests {
         #expect(context.owner.revision == revision && context.owner.pending == nil)
         let writes = await context.harness.transport.requests.filter { $0.httpMethod == "PUT" }
         #expect(writes.count == 1)
+        let firstID = try #require(context.owner.completedResponseID)
+        #expect(
+            UUID(uuidString: writes.first?.value(forHTTPHeaderField: "Idempotency-Key") ?? "")
+                == firstID)
+        await context.harness.transport.enqueue(
+            context.path + "/rsvp",
+            data: try APICoding.encode(context.response(.maybe, revision: revision)))
+        try await context.enqueuePublic(.maybe, revision: revision)
+        try await context.enqueueList()
+        context.owner.respond(.maybe)
+        await context.owner.operation?.value
+        #expect(context.owner.completedResponse == .maybe)
+        #expect(
+            context.owner.completedResponseID != nil && context.owner.completedResponseID != firstID
+        )
     }
 
     @Test func anonymousPreviewNeverReadsPrivateDataOrSavesReply() async throws {

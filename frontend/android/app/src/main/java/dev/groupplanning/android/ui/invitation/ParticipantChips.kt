@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import dev.groupplanning.android.ui.theme.DesignTokens
 internal fun ParticipantChips(
     participants: List<Participant>,
     focus: FocusRequester,
+    information: Boolean = false,
     expand: () -> Unit,
 ) {
     val preview = participants.filter {
@@ -60,20 +62,61 @@ internal fun ParticipantChips(
     ) {
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(
-                -DesignTokens.componentMobilePeopleChipOverlap,
+                if (information) {
+                    DesignTokens.componentMobileInfoCompanyChipGap -
+                        DesignTokens.componentMobileInfoCompanyChipOverlap
+                } else {
+                    -DesignTokens.componentMobilePeopleChipOverlap
+                },
             ),
             verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS8),
         ) {
             preview.forEachIndexed { index, participant ->
-                ParticipantNameChip(participant.user, colors[index])
+                ParticipantNameChip(participant.user, colors[index], information)
             }
             if (remaining > 0 || preview.isEmpty()) {
-                val shape = RoundedCornerShape(DesignTokens.componentParticipantChipRadius)
+                val shape =
+                    RoundedCornerShape(
+                        if (information) {
+                            DesignTokens.componentMobileInfoCompanyChipRadius
+                        } else {
+                            DesignTokens.componentParticipantChipRadius
+                        },
+                    )
                 Box(
                     Modifier.align(Alignment.CenterVertically)
-                        .heightIn(min = DesignTokens.componentParticipantChipHeight)
-                        .clip(shape).background(DesignTokens.colorParticipantChipMore)
-                        .border(DesignTokens.spaceS2, DesignTokens.colorSurface, shape).padding(
+                        .heightIn(
+                            min = if (information) {
+                                DesignTokens.componentMobileInfoCompanyChipHeight
+                            } else {
+                                DesignTokens.componentParticipantChipHeight
+                            },
+                        )
+                        .widthIn(
+                            min = if (information) {
+                                DesignTokens.componentMobileInfoCompanyMoreMinimumWidth
+                            } else {
+                                DesignTokens.spaceS0
+                            },
+                        )
+                        .clip(
+                            shape,
+                        ).background(
+                            if (information) {
+                                DesignTokens.colorBackground
+                            } else {
+                                DesignTokens.colorParticipantChipMore
+                            },
+                        )
+                        .border(
+                            if (information) DesignTokens.spaceS1 else DesignTokens.spaceS2,
+                            if (information) {
+                                DesignTokens.colorBorderStrong
+                            } else {
+                                DesignTokens.colorSurface
+                            },
+                            shape,
+                        ).padding(
                             horizontal = DesignTokens.componentMobilePeopleChipMoreInsetInline,
                             vertical = DesignTokens.componentMobilePeopleChipMoreInsetBlock,
                         ),

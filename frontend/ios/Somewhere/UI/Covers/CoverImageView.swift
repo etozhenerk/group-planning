@@ -7,6 +7,7 @@ struct CoverImageView: View {
     let thumbnailSize: CGFloat
     let settingsThumbnail: Bool
     let fixedHeight: CGFloat?
+    let cornerRadius: CGFloat
     @State private var owner: CoverImageOwner
 
     private struct LoadKey: Hashable {
@@ -17,7 +18,8 @@ struct CoverImageView: View {
     init(
         source: CoverImageSource, api: APIClient? = nil, session: SessionStore? = nil,
         thumbnail: Bool = false, thumbnailSize: CGFloat = 64, settingsThumbnail: Bool = false,
-        fixedHeight: CGFloat? = nil
+        fixedHeight: CGFloat? = nil,
+        cornerRadius: CGFloat = DesignTokens.componentMobileMessageComposerInputRadius
     ) {
         self.source = source
         self.session = session
@@ -25,6 +27,7 @@ struct CoverImageView: View {
         self.thumbnailSize = thumbnailSize
         self.settingsThumbnail = settingsThumbnail
         self.fixedHeight = fixedHeight
+        self.cornerRadius = cornerRadius
         _owner = State(initialValue: CoverImageOwner(api: api, session: session))
     }
 
@@ -46,7 +49,7 @@ struct CoverImageView: View {
                 )
             } else {
                 image
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             }
         }
         .task(id: key) { await owner.load(source) }

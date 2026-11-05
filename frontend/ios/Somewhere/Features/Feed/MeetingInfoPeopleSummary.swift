@@ -5,8 +5,11 @@ struct MeetingInfoPeopleSummary: View {
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(spacing: -DesignTokens.componentMobilePeopleChipOverlap) { chips }
-                .fixedSize(horizontal: true, vertical: true)
+            HStack(
+                spacing: DesignTokens.componentMobileInfoCompanyChipGap
+                    - DesignTokens.componentMobileInfoCompanyChipOverlap
+            ) { chips }
+            .fixedSize(horizontal: true, vertical: true)
             VStack(alignment: .leading, spacing: DesignTokens.componentMobilePeopleChipGap) {
                 chips
             }
@@ -21,17 +24,22 @@ struct MeetingInfoPeopleSummary: View {
             Text(people.isEmpty ? ExperienceDate.participants(0) : "+\(people.count - 3)")
                 .designFont(DesignTokens.typographySizeLabel)
                 .foregroundStyle(DesignTokens.colorText)
-                .padding(.horizontal, DesignTokens.componentMobilePeopleChipMoreInsetInline)
-                .padding(.vertical, DesignTokens.componentMobilePeopleChipMoreInsetBlock)
-                .frame(minWidth: DesignTokens.componentMobilePeopleChipMoreWidth)
+                .padding(.horizontal, DesignTokens.componentMobileInfoCompanyChipInsetEnd)
+                .padding(.vertical, DesignTokens.componentMobileInfoCompanyChipInsetBlock)
+                .frame(
+                    minWidth: DesignTokens.componentMobileInfoCompanyMoreMinimumWidth,
+                    minHeight: DesignTokens.componentMobileInfoCompanyChipHeight
+                )
                 .background(
-                    DesignTokens.colorParticipantChipMore,
-                    in: Capsule()
+                    DesignTokens.colorBackground,
+                    in: RoundedRectangle(
+                        cornerRadius: DesignTokens.componentMobileInfoCompanyChipRadius)
                 )
                 .overlay {
-                    Capsule()
-                        .strokeBorder(
-                            DesignTokens.colorSurface, lineWidth: DesignTokens.spaceS2)
+                    RoundedRectangle(
+                        cornerRadius: DesignTokens.componentMobileInfoCompanyChipRadius
+                    )
+                    .strokeBorder(DesignTokens.colorBorderStrong, lineWidth: DesignTokens.spaceS1)
                 }
         }
     }

@@ -1,8 +1,18 @@
-// Generated from design-system/tokens.json · 7.7.0. Do not edit.
+// Generated from design-system/tokens.json · 7.8.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',
   componentDesktopMessageRadius: '18px',
+  componentMobileInfoCompanyAllInsetTop: '2px',
+  componentMobileInfoCompanyAllMinimumHeight: '32px',
+  componentMobileInfoCompanyChipGap: '6px',
+  componentMobileInfoCompanyChipHeight: '36px',
+  componentMobileInfoCompanyChipInsetBlock: '6px',
+  componentMobileInfoCompanyChipInsetEnd: '10px',
+  componentMobileInfoCompanyChipInsetStart: '6px',
+  componentMobileInfoCompanyChipOverlap: '4px',
+  componentMobileInfoCompanyChipRadius: '12px',
+  componentMobileInfoCompanyMoreMinimumWidth: '40px',
   componentMobileInfoCoverHeight: '156px',
   componentMobileInfoOrganizerAvatarSize: '32px',
   componentMobileInfoResponseIconSize: '36px',

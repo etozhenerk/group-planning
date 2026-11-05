@@ -7,11 +7,13 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     'info',
     'settings',
     'share',
+    'response',
   ]);
 
   const info = useRef<HTMLDivElement>(null);
   const settings = useRef<HTMLDivElement>(null);
   const share = useRef<HTMLDivElement>(null);
+  const response = useRef<HTMLDivElement>(null);
   const origin = useRef<HTMLElement | null>(null);
   const previous = useRef(history.panel);
   const [visited, setVisited] = useState(false);
@@ -24,7 +26,7 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
   }, [history.panel]);
   useLayoutEffect(() => {
     if (previous.current && previous.current !== history.panel && history.panel) {
-      const container = { info, settings, share }[history.panel].current;
+      const container = { info, settings, share, response }[history.panel].current;
       const target = history.panel === 'info' ? origin.current : container;
 
       if (target?.isConnected && !target.closest('[hidden]')) {
@@ -35,7 +37,10 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     previous.current = history.panel;
   }, [history.panel]);
 
-  const openChild = (panel: 'settings' | 'share', opener: HTMLButtonElement) => {
+  const openChild = (
+    panel: 'settings' | 'share' | 'response',
+    opener: HTMLButtonElement,
+  ) => {
     origin.current = opener;
     history.show(panel);
   };
@@ -47,16 +52,21 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
         ? 'Настройки встречи'
         : history.panel === 'share'
           ? 'Пригласить друзей'
-          : title,
+          : history.panel === 'response'
+            ? 'Изменить ответ'
+            : title,
     info,
     settings,
     share,
+    response,
     visited,
     generation,
     edit: (event: MouseEvent<HTMLButtonElement>) =>
       openChild('settings', event.currentTarget),
     shareAction: (event: MouseEvent<HTMLButtonElement>) =>
       openChild('share', event.currentTarget),
+    responseAction: (event: MouseEvent<HTMLButtonElement>) =>
+      openChild('response', event.currentTarget),
     saved: () => {
       setGeneration((value) => value + 1);
 

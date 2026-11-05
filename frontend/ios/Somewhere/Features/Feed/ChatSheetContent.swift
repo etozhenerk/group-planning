@@ -7,6 +7,7 @@ struct ChatSheetContent: View {
         Group {
             switch owner.sheets.last {
             case .information: MeetingInfoScreen(owner: owner)
+            case .response: MeetingResponseSheet(owner: owner)
             case .share: MeetingShareSheet(owner: owner)
             case .settings:
                 if let meeting = owner.meeting {

@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.7.0. Do not edit.
+// Generated from design-system/tokens.json · 7.8.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -312,6 +312,16 @@ internal object DesignTokens {
     val componentMobileFormSwitchThumbSize = 18.dp
     val componentMobileFormSwitchWidth = 38.dp
     val componentMobileFormTwoFieldGap = 10.dp
+    val componentMobileInfoCompanyAllInsetTop = 2.dp
+    val componentMobileInfoCompanyAllMinimumHeight = 32.dp
+    val componentMobileInfoCompanyChipGap = 6.dp
+    val componentMobileInfoCompanyChipHeight = 36.dp
+    val componentMobileInfoCompanyChipInsetBlock = 6.dp
+    val componentMobileInfoCompanyChipInsetEnd = 10.dp
+    val componentMobileInfoCompanyChipInsetStart = 6.dp
+    val componentMobileInfoCompanyChipOverlap = 4.dp
+    val componentMobileInfoCompanyChipRadius = 12.dp
+    val componentMobileInfoCompanyMoreMinimumWidth = 40.dp
     val componentMobileInfoCoverHeight = 156.dp
     val componentMobileInfoOrganizerAvatarSize = 32.dp
     val componentMobileInfoResponseIconSize = 36.dp

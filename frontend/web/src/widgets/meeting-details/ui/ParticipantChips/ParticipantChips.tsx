@@ -48,7 +48,7 @@ export const ParticipantChips = ({
             <Avatar
               name={person.user.displayName}
               src={person.user.avatarUrl ?? null}
-              size="tiny"
+              size="info-chip"
             />
           ) : (
             <span className={styles.initial} aria-hidden="true">
@@ -63,6 +63,9 @@ export const ParticipantChips = ({
           {mobile ? '+' : 'ещё '}
           {attending.length - 3}
         </span>
+      )}
+      {mobile && controls && expanded === false && (
+        <span className={styles.all}>Все ответы · {people.length} →</span>
       )}
     </button>
   );

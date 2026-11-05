@@ -31,6 +31,7 @@ extension InvitationOwner {
             session.updateMeetingAccess(result.meetingID, allowed: result.canAccessFeed)
             completedResponse = RSVPOutcome(
                 answer: result.rsvp, meetingID: result.meetingID, title: preview?.title ?? "")
+            completedResponseID = pending.key
             if result.canAccessFeed {
                 await loadPrivate(version: version)
             } else {

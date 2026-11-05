@@ -60,7 +60,7 @@ struct FeedTimeline: View {
                                     availableWidth: max(
                                         0, geometry.size.width - DesignTokens.spaceS16 * 2))
                             }
-                            if owner.showEmptyInvitation {
+                            if owner.showEmptyInvitation, owner.sheets.isEmpty {
                                 VStack(spacing: DesignTokens.spaceS12) {
                                     Text("Позовём остальных?").font(.headline)
                                     if let url = owner.invitation.shareURL {

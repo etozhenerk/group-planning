@@ -1,0 +1,43 @@
+.information,
+.form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.information[data-mobile='true'] {
+  flex: 1;
+}
+
+.content {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.content[data-mobile='true'] {
+  padding: var(--ds-component-mobile-sheet-content-inset-top)
+    var(--ds-component-mobile-sheet-content-inset-inline)
+    var(--ds-component-mobile-sheet-content-inset-bottom);
+}
+
+.information[hidden],
+.content[hidden],
+.form[hidden] {
+  display: none;
+}
+
+.content:focus,
+.form:focus {
+  outline: none;
+}
+
+.back {
+  min-height: var(--ds-target-web);
+  flex-shrink: 0;
+  padding-inline: var(--ds-component-mobile-sheet-content-inset-inline);
+  text-align: start;
+  background: transparent;
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-caption);
+}

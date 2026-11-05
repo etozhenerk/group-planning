@@ -9,9 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.state.InvitationIssue
@@ -30,10 +27,9 @@ internal fun MeetingInformationRsvp(
         verticalArrangement = Arrangement.spacedBy(DesignTokens.componentParticipantRosterStackGap),
     ) {
         Text(
-            stringResource(R.string.participants_my_answer),
-            Modifier.semantics { heading() },
-            fontSize = DesignTokens.typographySizeSectionHeading,
-            fontWeight = FontWeight(DesignTokens.typographyWeightBold.toInt()),
+            stringResource(R.string.info_response_warning),
+            fontSize = DesignTokens.typographySizeSmall,
+            color = DesignTokens.colorMuted,
         )
         state.issue?.takeIf {
             it in

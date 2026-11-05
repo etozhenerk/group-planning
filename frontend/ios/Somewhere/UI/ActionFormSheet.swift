@@ -8,6 +8,7 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
     var headerIdentifier = "action-form-header"
     var scrollOffset: Binding<CGFloat>?
     var fixedContentHeight: CGFloat?
+    var stickyFooter = false
     @ViewBuilder let content: () -> Content
     @ViewBuilder let footer: () -> Footer
     @Environment(\.dynamicTypeSize) private var typeSize
@@ -145,11 +146,32 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
         if Footer.self != EmptyView.self {
             footer()
                 .padding(.horizontal, DesignTokens.componentMobileSheetContentInsetInline)
-                .padding(.top, DesignTokens.componentMobileSheetFooterInsetBlock)
+                .padding(
+                    .top,
+                    stickyFooter
+                        ? DesignTokens.componentMobileStickyInsetTop
+                        : DesignTokens.componentMobileSheetFooterInsetBlock
+                )
                 .padding(.bottom, DesignTokens.componentMobileSheetFooterInsetBottom)
-                .frame(maxWidth: .infinity).background(DesignTokens.colorSurface)
+                .frame(maxWidth: .infinity)
+                .background {
+                    if stickyFooter {
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: DesignTokens.componentMobileStickyRadius,
+                            topTrailingRadius: DesignTokens.componentMobileStickyRadius
+                        ).fill(DesignTokens.colorSurface).ignoresSafeArea(edges: .bottom)
+                            .shadow(
+                                color: DesignTokens.colorMobileStickyShadow,
+                                radius: DesignTokens.componentMobileStickyShadowBlur,
+                                y: -DesignTokens.componentMobileStickyShadowUpOffset)
+                    } else {
+                        DesignTokens.colorSurface
+                    }
+                }
                 .overlay(alignment: .top) {
-                    Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+                    if !stickyFooter {
+                        Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+                    }
                 }
                 .onGeometryChange(for: CGFloat.self) {
                     $0.size.height

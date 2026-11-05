@@ -3,14 +3,14 @@ import SwiftUI
 struct MeetingInfoScreen: View {
     let owner: FeedOwner
     @State private var reloadID = UUID()
-    @AccessibilityFocusState private var restoredAction: ChatSheetRoute?
 
     var body: some View {
         ActionFormSheet(
-            title: owner.meeting?.title ?? "О встрече", scrollIdentifier: "meeting-info",
+            title: "О встрече", scrollIdentifier: "meeting-info",
             headerIdentifier: "meeting-info-header",
             scrollOffset: Binding(
-                get: { owner.informationScrollOffset }, set: { owner.informationScrollOffset = $0 })
+                get: { owner.informationScrollOffset }, set: { owner.informationScrollOffset = $0 }),
+            stickyFooter: true
         ) {
             if owner.current {
                 if owner.session.privateData.details[owner.id]?.error != nil {
@@ -20,69 +20,32 @@ struct MeetingInfoScreen: View {
                 }
             }
             if owner.current, let meeting = owner.meeting {
+                MeetingInfoHeading(owner: owner, meeting: meeting)
                 MeetingInfoFacts(meeting: meeting)
+                if let text = meeting.description, !text.isEmpty {
+                    Text(text).designFont(DesignTokens.typographySizeSmall)
+                        .lineSpacing(DesignTokens.spaceS4).foregroundStyle(DesignTokens.colorMuted)
+                        .textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
+                }
                 MeetingInfoPeople(
                     id: owner.id, session: owner.session,
                     expanded: Binding(
                         get: { owner.informationExpanded }, set: { owner.informationExpanded = $0 })
-                )
-                if owner.invitation.organizer {
-                    VStack(spacing: DesignTokens.spaceS0) {
-                        if let url = owner.invitation.shareURL {
-                            ShareLink(item: url, preview: SharePreview(meeting.title)) {
-                                HStack(spacing: DesignTokens.spaceS12) {
-                                    ChatIcon(kind: .share)
-                                    Text("Пригласить друзей")
-                                    Spacer(minLength: DesignTokens.spaceS0)
-                                }.designFont(DesignTokens.typographySizeButton)
-                                    .frame(
-                                        minHeight: DesignTokens.componentMobileRosterActionHeight
-                                    )
-                                    .contentShape(Rectangle())
-                            }.buttonStyle(ChatPressStyle()).accessibilityIdentifier(
-                                "meeting-info-share")
-                        } else {
-                            InvitationShareStatus(
-                                failed: owner.invitation.shareProblem,
-                                retry: owner.invitation.reload)
-                        }
-                        action(
-                            "Настройки встречи", icon: .settings, route: .settings,
-                            identifier: "edit-meeting")
-                    }.overlay(alignment: .top) {
+                ).padding(.top, DesignTokens.spaceS20)
+                    .overlay(alignment: .top) {
                         Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
                     }
-                } else {
-                    RSVPFormView(owner: owner.invitation, compact: true)
-                }
             }
-        }.task(id: reloadID) {
-            if let route = owner.informationReturn {
-                restoredAction = route
+        } footer: {
+            if owner.current, owner.meeting != nil { MeetingInfoFooter(owner: owner) }
+        }
+        .task(id: reloadID) {
+            if owner.informationReturn != nil {
                 owner.informationReturn = nil
             } else {
                 await owner.reloadDetails(version: owner.generation)
                 await owner.openInfo()
             }
         }
-    }
-
-    private func action(
-        _ title: String, icon: ChatIcon.Kind, route: ChatSheetRoute, identifier: String
-    ) -> some View {
-        Button {
-            owner.openSheet(route, child: true)
-        } label: {
-            HStack(spacing: DesignTokens.spaceS12) {
-                ChatIcon(kind: icon, size: DesignTokens.componentMobileRosterActionIcon)
-                    .foregroundStyle(DesignTokens.colorMuted)
-                Text(title).designFont(DesignTokens.typographySizeButton)
-                Spacer(minLength: DesignTokens.spaceS0)
-                ChatIcon(kind: .right, size: DesignTokens.componentMobileRosterActionIcon)
-                    .foregroundStyle(DesignTokens.colorMuted)
-            }.frame(minHeight: DesignTokens.componentMobileRosterActionHeight).contentShape(
-                Rectangle())
-        }.buttonStyle(ChatPressStyle()).accessibilityIdentifier(identifier).accessibilityFocused(
-            $restoredAction, equals: route)
     }
 }

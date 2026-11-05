@@ -81,28 +81,41 @@
 .people[data-mobile='true'] {
   min-height: var(--ds-component-mobile-people-chip-opener-height);
   margin-top: 0;
+  gap: var(--ds-component-mobile-info-company-chip-gap);
 }
 
 .people[data-mobile='true'] .person,
 .people[data-mobile='true'] .more {
-  height: auto;
-  min-height: 0;
-  gap: var(--ds-component-mobile-people-chip-gap);
-  border-width: var(--ds-component-mobile-people-chip-border-width);
-  padding: var(--ds-component-mobile-people-chip-inset-block)
-    var(--ds-component-mobile-people-chip-inset-end)
-    var(--ds-component-mobile-people-chip-inset-block)
-    var(--ds-component-mobile-people-chip-inset-start);
+  height: var(--ds-component-mobile-info-company-chip-height);
+  border-radius: var(--ds-component-mobile-info-company-chip-radius);
+  gap: var(--ds-component-participant-chip-content-gap);
+  border: 0;
+  padding: var(--ds-component-mobile-info-company-chip-inset-block)
+    var(--ds-component-mobile-info-company-chip-inset-end)
+    var(--ds-component-mobile-info-company-chip-inset-block)
+    var(--ds-component-mobile-info-company-chip-inset-start);
   font-size: var(--ds-typography-size-label);
+  line-height: var(--ds-typography-line-height-body);
 }
 
 .people[data-mobile='true'] .person + .person,
 .people[data-mobile='true'] .more {
-  margin-left: calc(-1 * var(--ds-component-mobile-people-chip-overlap));
+  margin-left: calc(-1 * var(--ds-component-mobile-info-company-chip-overlap));
 }
 
 .people[data-mobile='true'] .more {
-  min-width: var(--ds-component-mobile-people-chip-more-width);
-  padding: var(--ds-component-mobile-people-chip-more-inset-block)
-    var(--ds-component-mobile-people-chip-more-inset-inline);
+  min-width: var(--ds-component-mobile-info-company-more-minimum-width);
+  padding-inline: var(--ds-component-mobile-info-company-chip-inset-end);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  background: var(--ds-color-background);
+}
+
+.all {
+  flex-basis: 100%;
+  min-height: var(--ds-component-mobile-info-company-all-minimum-height);
+  text-align: start;
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-typography-line-height-body);
+  padding-top: var(--ds-component-mobile-info-company-all-inset-top);
 }

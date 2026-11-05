@@ -8,6 +8,7 @@ import type { Session } from '@/entities/session';
 import { DetailsResponse } from '@/widgets/meeting-details/ui/DetailsResponse';
 import { ShareInvitation } from '@/features/share-invitation';
 import { ParticipantList } from '@/widgets/meeting-details/ui/ParticipantList';
+import { MobileDetails } from '@/widgets/meeting-details/ui/MobileDetails';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 
 export type DetailsContentProps = {
@@ -28,6 +29,10 @@ export const DetailsContent = ({
   share,
 }: DetailsContentProps) => {
   const mobile = useMobileLayout();
+
+  if (mobile && !compact) {
+    return <MobileDetails meeting={meeting} session={session} edit={edit} />;
+  }
 
   return (
     <div

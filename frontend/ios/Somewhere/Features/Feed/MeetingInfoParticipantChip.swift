@@ -11,7 +11,7 @@ struct MeetingInfoParticipantChip: View {
     var body: some View {
         HStack(spacing: DesignTokens.componentMobilePeopleChipGap) {
             MeetingInfoAvatar(
-                user: person.user, size: DesignTokens.componentMobilePeopleChipAvatarSize,
+                user: person.user, size: DesignTokens.componentParticipantChipAvatarSize,
                 color: DesignTokens.colorParticipantChipAvatar,
                 foregroundColor: DesignTokens.colorParticipantChipText)
             Text(person.user.displayName)
@@ -19,17 +19,14 @@ struct MeetingInfoParticipantChip: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(DesignTokens.colorParticipantChipText)
-        .padding(.leading, DesignTokens.componentMobilePeopleChipInsetStart)
-        .padding(.trailing, DesignTokens.componentMobilePeopleChipInsetEnd)
-        .padding(.vertical, DesignTokens.componentMobilePeopleChipInsetBlock)
+        .padding(.leading, DesignTokens.componentMobileInfoCompanyChipInsetStart)
+        .padding(.trailing, DesignTokens.componentMobileInfoCompanyChipInsetEnd)
+        .padding(.vertical, DesignTokens.componentMobileInfoCompanyChipInsetBlock)
 
+        .frame(minHeight: DesignTokens.componentMobileInfoCompanyChipHeight)
         .background(
             colors[index % colors.count],
-            in: Capsule()
+            in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileInfoCompanyChipRadius)
         )
-        .overlay {
-            Capsule()
-                .strokeBorder(DesignTokens.colorSurface, lineWidth: DesignTokens.spaceS2)
-        }
     }
 }

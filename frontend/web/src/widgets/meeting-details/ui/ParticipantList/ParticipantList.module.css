@@ -47,15 +47,15 @@
 }
 
 .section[data-mobile='true'] {
-  gap: 0;
+  gap: var(--ds-space-s12);
 }
 
 .section[data-mobile='true'] h3 {
   display: flex;
   justify-content: space-between;
-  font-size: var(--ds-typography-size-caption);
-  font-weight: var(--ds-typography-weight-medium);
-  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-section-heading);
+  font-weight: var(--ds-typography-weight-semibold);
+  color: var(--ds-color-text);
 }
 
 .section[data-mobile='true'] .participants {
@@ -64,4 +64,10 @@
 
 .section[data-mobile='true'] .collapse {
   order: 1;
+}
+
+.section[data-mobile='true'] h3 > span {
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-regular);
+  color: var(--ds-color-muted);
 }

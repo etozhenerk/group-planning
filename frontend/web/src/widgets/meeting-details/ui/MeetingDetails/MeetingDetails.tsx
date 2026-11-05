@@ -2,8 +2,7 @@ import styles from '@/widgets/meeting-details/ui/MeetingDetails/MeetingDetails.m
 import type { RefObject } from 'react';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { EditMeetingForm } from '@/features/edit-meeting';
-import { ShareForm } from '@/features/share-invitation';
+import { DetailsPanels } from '@/widgets/meeting-details/ui/DetailsPanels';
 import { Dialog } from '@/shared/ui/Dialog';
 import { useMobileLayout } from '@/shared/lib/media';
 import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
@@ -28,8 +27,13 @@ export const MeetingDetails = ({
   show,
   returnFocus,
 }: MeetingDetailsProps) => {
-  const surface = useMeetingDetailsPanel(meeting.id, session.user.id, meeting.title);
   const mobile = useMobileLayout();
+  const surface = useMeetingDetailsPanel(
+    meeting.id,
+    session.user.id,
+    mobile ? 'О встрече' : meeting.title,
+  );
+
   const panel = surface.panel ?? (open ? 'info' : null);
 
   return (
@@ -57,44 +61,13 @@ export const MeetingDetails = ({
         formLayout
         returnFocus={returnFocus}
       >
-        <div
-          className={styles.content}
-          data-mobile={mobile}
-          hidden={panel !== 'info'}
-          data-testid="meeting-info-scroll"
-          ref={surface.info}
-          tabIndex={-1}
-        >
-          <DetailsContent
-            meeting={meeting}
-            session={session}
-            edit={surface.edit}
-            share={surface.shareAction}
-          />
-        </div>
-        <div
-          className={styles.form}
-          hidden={panel !== 'settings'}
-          ref={surface.settings}
-          tabIndex={-1}
-        >
-          {(surface.visited || panel === 'settings') && (
-            <EditMeetingForm
-              key={surface.generation}
-              meeting={meeting}
-              session={session}
-              onSaved={surface.saved}
-            />
-          )}
-        </div>
-        <div
-          className={styles.content}
-          hidden={panel !== 'share'}
-          ref={surface.share}
-          tabIndex={-1}
-        >
-          {panel === 'share' && <ShareForm id={meeting.id} meeting={meeting} />}
-        </div>
+        <DetailsPanels
+          meeting={meeting}
+          session={session}
+          mobile={mobile}
+          panel={panel}
+          surface={surface}
+        />
       </Dialog>
     </>
   );

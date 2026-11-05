@@ -32,7 +32,7 @@ import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun InvitationParticipants(value: Participants) {
+internal fun InvitationParticipants(value: Participants, information: Boolean = false) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var requestedFocus by remember { mutableStateOf(false) }
     val expandFocus = remember { FocusRequester() }
@@ -46,12 +46,22 @@ internal fun InvitationParticipants(value: Participants) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 stringResource(
-                    if (expanded) R.string.participants_heading else R.string.participants_going,
+                    if (expanded) {
+                        R.string.participants_heading
+                    } else if (information) {
+                        R.string.info_attending
+                    } else {
+                        R.string.participants_going
+                    },
                 ),
                 Modifier.weight(1f).semantics { heading() },
-                fontSize = DesignTokens.typographySizeCaption,
-                color = DesignTokens.colorMuted,
-                fontWeight = FontWeight(DesignTokens.typographyWeightMedium.toInt()),
+                fontSize = if (information) {
+                    DesignTokens.typographySizeSectionHeading
+                } else {
+                    DesignTokens.typographySizeCaption
+                },
+                color = if (information) DesignTokens.colorText else DesignTokens.colorMuted,
+                fontWeight = if (information) FontWeight.SemiBold else FontWeight.Medium,
             )
             Text(
                 if (expanded) {
@@ -62,12 +72,31 @@ internal fun InvitationParticipants(value: Participants) {
                     }.toString()
                 },
                 color = DesignTokens.colorMuted,
-                fontSize = DesignTokens.typographySizeCaption,
+                fontSize = if (information) {
+                    DesignTokens.typographySizeSmall
+                } else {
+                    DesignTokens.typographySizeCaption
+                },
             )
         }
-        ParticipantChips(value.participants, expandFocus) {
+        ParticipantChips(value.participants, expandFocus, information) {
             requestedFocus = true
             expanded = !expanded
+        }
+        if (information && !expanded) {
+            androidx.compose.material3.TextButton({
+                requestedFocus = true
+                expanded = true
+            }) {
+                Text(
+                    stringResource(R.string.info_all_responses, value.participants.size),
+                    color = DesignTokens.colorAccent,
+                    fontSize = DesignTokens.typographySizeCaption,
+                    lineHeight =
+                    DesignTokens.typographySizeCaption * DesignTokens.typographyLineHeightBody,
+                    fontWeight = FontWeight.Normal,
+                )
+            }
         }
         if (expanded) {
             val colors = listOf(

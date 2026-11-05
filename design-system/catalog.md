@@ -1,4 +1,4 @@
-# Токены somewhere · 7.7.0
+# Токены somewhere · 7.8.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -314,6 +314,16 @@
 | component.mobileForm.switchThumbSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch::after; web |
 | component.mobileForm.switchWidth | dimension | 38px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .switch; native использует системный Switch |
 | component.mobileForm.twoFieldGap | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .two-fields |
+| component.mobileInfo.companyAllInsetTop | dimension | 2px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyAllMinimumHeight | dimension | 32px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipGap | dimension | 6px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipHeight | dimension | 36px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipInsetBlock | dimension | 6px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipInsetEnd | dimension | 10px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipInsetStart | dimension | 6px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipOverlap | dimension | 4px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyChipRadius | dimension | 12px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
+| component.mobileInfo.companyMoreMinimumWidth | dimension | 40px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
 | component.mobileInfo.coverHeight | dimension | 156px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
 | component.mobileInfo.organizerAvatarSize | dimension | 32px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
 | component.mobileInfo.responseIconSize | dimension | 36px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |

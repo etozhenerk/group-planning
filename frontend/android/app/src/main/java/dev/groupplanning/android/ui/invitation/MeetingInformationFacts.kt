@@ -1,9 +1,15 @@
 package dev.groupplanning.android.ui.invitation
 
+import android.icu.text.TimeZoneNames
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,11 +22,22 @@ import dev.groupplanning.android.ui.components.ChatIcon
 import dev.groupplanning.android.ui.components.ChatSymbol
 import dev.groupplanning.android.ui.components.meetingTime
 import dev.groupplanning.android.ui.theme.DesignTokens
+import java.util.Locale
 
 @Composable
 internal fun MeetingInformationFacts(value: InvitationPreview) {
     Column(
-        Modifier.testTag("meeting-information-facts"),
+        Modifier.fillMaxWidth().testTag("meeting-information-facts")
+            .background(
+                DesignTokens.colorBackground,
+                RoundedCornerShape(DesignTokens.componentMobileChatBubbleRadius),
+            )
+            .border(
+                DesignTokens.spaceS1,
+                DesignTokens.colorLine,
+                RoundedCornerShape(DesignTokens.componentMobileChatBubbleRadius),
+            )
+            .padding(horizontal = DesignTokens.spaceS16, vertical = DesignTokens.spaceS20),
         verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS16),
     ) {
         listOf(
@@ -32,23 +49,30 @@ internal fun MeetingInformationFacts(value: InvitationPreview) {
                 verticalAlignment = Alignment.Top,
             ) {
                 ChatIcon(icon, Modifier.size(DesignTokens.componentMobileFieldIconSize))
-                Text(
-                    text,
-                    fontSize = DesignTokens.typographySizeButton,
-                    lineHeight =
-                    DesignTokens.typographySizeButton * DesignTokens.typographyLineHeightBody,
-                )
+                Column {
+                    Text(
+                        text,
+                        fontSize = DesignTokens.typographySizeButton,
+                        lineHeight =
+                        DesignTokens.typographySizeButton *
+                            DesignTokens.typographyLineHeightBody,
+                    )
+                    if (icon == ChatSymbol.Calendar) {
+                        Text(
+                            if (value.startsAt ==
+                                null
+                            ) {
+                                stringResource(R.string.info_time_unknown)
+                            } else {
+                                TimeZoneNames.getInstance(Locale.forLanguageTag("ru"))
+                                    .getExemplarLocationName(value.timezone) ?: value.timezone
+                            },
+                            fontSize = DesignTokens.typographySizeCaption,
+                            color = DesignTokens.colorMuted,
+                        )
+                    }
+                }
             }
-        }
-        value.description?.takeIf { it.isNotBlank() }?.let {
-            Text(
-                it,
-                fontSize = DesignTokens.typographySizeSmall,
-                lineHeight =
-                DesignTokens.typographySizeSmall *
-                    DesignTokens.typographyLineHeightMeetingDescription,
-                color = DesignTokens.colorMuted,
-            )
         }
     }
 }

@@ -53,6 +53,7 @@ internal fun ActionSheet(
     closeRequested: Boolean = false,
     canDismiss: Boolean = canClose,
     contentViewport: Dp? = null,
+    stickyActions: Boolean = false,
     actions: (@Composable ColumnScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -155,12 +156,16 @@ internal fun ActionSheet(
                     )
                 }
                 if (actions != null) {
-                    HorizontalDivider(color = DesignTokens.colorLine)
+                    if (!stickyActions) HorizontalDivider(color = DesignTokens.colorLine)
                     Column(
-                        Modifier.fillMaxWidth().padding(
+                        Modifier.fillMaxWidth().sheetFooter(stickyActions).padding(
                             start = DesignTokens.componentMobileSheetContentInsetInline,
                             end = DesignTokens.componentMobileSheetContentInsetInline,
-                            top = DesignTokens.componentMobileSheetFooterInsetBlock,
+                            top = if (stickyActions) {
+                                DesignTokens.componentMobileStickyInsetTop
+                            } else {
+                                DesignTokens.componentMobileSheetFooterInsetBlock
+                            },
                             bottom = DesignTokens.componentMobileSheetFooterInsetBottom,
                         ),
                         verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS8),

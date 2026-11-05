@@ -7,6 +7,10 @@ struct MeetingShareSheet: View {
 
     var body: some View {
         ActionFormSheet(title: "Пригласить друзей", headerIdentifier: "meeting-share-header") {
+            if owner.sheets.count > 1 {
+                Button("← К деталям встречи") { owner.closeSheet() }
+                    .frame(minHeight: DesignTokens.targetIos)
+            }
             if let url = owner.invitation.shareURL {
                 VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
                     Text(owner.meeting?.title ?? "Встреча").designFont(

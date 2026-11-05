@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "id": "shared-rsvp-routing-web",
+  "designVersion": "7.7.0",
+  "phase": "checkpoint",
+  "approval": "05.11.2026: прямое решение пользователя для всех поверхностей, затем «окаю дизайн». На сегодня пользователь остановил дальнейшую работу.",
+  "implementer": "codex-mobile-apply-2026-11-05",
+  "report": "openspec/changes/mobile-mvp-design-refresh/qa/design-7.7.0/rsvp-web-final/design-review.json",
+  "screens": [
+    {
+      "id": "response-route",
+      "states": [
+        "going-chat-w320",
+        "going-chat-w390",
+        "going-chat-w739",
+        "going-chat-w740",
+        "going-chat-w1100",
+        "going-chat-w1440",
+        "maybe-invitations-w320",
+        "maybe-invitations-w390",
+        "maybe-invitations-w739",
+        "maybe-invitations-w740",
+        "maybe-invitations-w1100",
+        "maybe-invitations-w1440",
+        "declined-confirmation-w320",
+        "declined-confirmation-w390",
+        "declined-confirmation-w739",
+        "declined-confirmation-w740",
+        "declined-confirmation-w1100",
+        "declined-confirmation-w1440",
+        "busy-stays-w320",
+        "busy-stays-w390",
+        "busy-stays-w739",
+        "busy-stays-w740",
+        "busy-stays-w1100",
+        "busy-stays-w1440",
+        "error-stays-w320",
+        "error-stays-w390",
+        "error-stays-w739",
+        "error-stays-w740",
+        "error-stays-w1100",
+        "error-stays-w1440",
+        "unknown-stays-w320",
+        "unknown-stays-w390",
+        "unknown-stays-w739",
+        "unknown-stays-w740",
+        "unknown-stays-w1100",
+        "unknown-stays-w1440",
+        "member-chat-w320",
+        "member-chat-w390",
+        "member-chat-w739",
+        "member-chat-w740",
+        "member-chat-w1100",
+        "member-chat-w1440",
+        "organizer-chat-w320",
+        "organizer-chat-w390",
+        "organizer-chat-w739",
+        "organizer-chat-w740",
+        "organizer-chat-w1100",
+        "organizer-chat-w1440",
+        "closed-no-response-w320",
+        "closed-no-response-w390",
+        "closed-no-response-w739",
+        "closed-no-response-w740",
+        "closed-no-response-w1100",
+        "closed-no-response-w1440",
+        "auth-no-rsvp-w320",
+        "auth-no-rsvp-w390",
+        "auth-no-rsvp-w739",
+        "auth-no-rsvp-w740",
+        "auth-no-rsvp-w1100",
+        "auth-no-rsvp-w1440",
+        "repeat-no-duplicate-w320",
+        "repeat-no-duplicate-w390",
+        "repeat-no-duplicate-w739",
+        "repeat-no-duplicate-w740",
+        "repeat-no-duplicate-w1100",
+        "repeat-no-duplicate-w1440"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
+        "docs/design/desktop-mvp/invitations-r2/preview.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-baseline.json",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/closed-response-reference.tsx"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "declined-result",
+      "states": [
+        "confirmed-w320",
+        "confirmed-w390",
+        "confirmed-w739",
+        "confirmed-w740",
+        "confirmed-w1100",
+        "confirmed-w1440",
+        "long-title-w320",
+        "long-title-w390",
+        "long-title-w739",
+        "long-title-w740",
+        "long-title-w1100",
+        "long-title-w1440",
+        "meetings-action-w320",
+        "meetings-action-w390",
+        "meetings-action-w739",
+        "meetings-action-w740",
+        "meetings-action-w1100",
+        "meetings-action-w1440"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
+        "docs/design/desktop-mvp/invite-r2/preview.html"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "rsvp-system-event",
+      "states": [
+        "going-w320",
+        "going-w390",
+        "going-w739",
+        "going-w740",
+        "going-w1100",
+        "going-w1440",
+        "maybe-w320",
+        "maybe-w390",
+        "maybe-w739",
+        "maybe-w740",
+        "maybe-w1100",
+        "maybe-w1440",
+        "not-going-w320",
+        "not-going-w390",
+        "not-going-w739",
+        "not-going-w740",
+        "not-going-w1100",
+        "not-going-w1440",
+        "retry-dedup-w320",
+        "retry-dedup-w390",
+        "retry-dedup-w739",
+        "retry-dedup-w740",
+        "retry-dedup-w1100",
+        "retry-dedup-w1440",
+        "reopen-no-event-w320",
+        "reopen-no-event-w390",
+        "reopen-no-event-w739",
+        "reopen-no-event-w740",
+        "reopen-no-event-w1100",
+        "reopen-no-event-w1440",
+        "no-access-after-change-w320",
+        "no-access-after-change-w390",
+        "no-access-after-change-w739",
+        "no-access-after-change-w740",
+        "no-access-after-change-w1100",
+        "no-access-after-change-w1440"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
+        "docs/design/desktop-mvp/chat-r4/preview.html"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "response-recovery",
+      "states": [
+        "pending-w320",
+        "pending-w390",
+        "pending-w739",
+        "pending-w740",
+        "pending-w1100",
+        "pending-w1440",
+        "error-w320",
+        "error-w390",
+        "error-w739",
+        "error-w740",
+        "error-w1100",
+        "error-w1440",
+        "retry-w320",
+        "retry-w390",
+        "retry-w739",
+        "retry-w740",
+        "retry-w1100",
+        "retry-w1440"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/preserved-desktop-invitation-3e25d63c/baseline.json",
+        "docs/design/components/invitation-response.md"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    },
+    {
+      "id": "declined-account-menu",
+      "states": [
+        "keyboard-open-w740",
+        "keyboard-open-w1100",
+        "keyboard-open-w1440",
+        "escape-focus-w740",
+        "escape-focus-w1100",
+        "escape-focus-w1440"
+      ],
+      "references": [
+        "docs/design/desktop-mvp/invite-r2/src/widgets/public-header",
+        "docs/design/components/invitation-response.md"
+      ],
+      "platforms": [
+        "web"
+      ],
+      "inputs": [
+        "frontend/web",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "web": [
+          "15.2",
+          "15.5"
+        ]
+      }
+    }
+  ]
+}

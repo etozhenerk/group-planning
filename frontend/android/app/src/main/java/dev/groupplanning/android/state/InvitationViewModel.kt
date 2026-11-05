@@ -146,7 +146,13 @@ internal class InvitationViewModel(
             if (epoch != version) return
             val privateAccess = details.canAccess &&
                 details.preview.meetingId !in snapshot.value.data.denied
+            val completed = state.value.completedResponse.takeIf {
+                it?.profileId ==
+                    (snapshot.value.session as? SessionState.Authenticated)?.profile?.id
+            }
             mutable.value = InvitationState(
+                completedResponse = completed,
+                completedResponseID = state.value.completedResponseID.takeIf { completed != null },
                 details = details,
                 choice = draft ?: details.preview.myRsvp,
                 loading = true,
@@ -242,6 +248,7 @@ internal class InvitationViewModel(
                         result.rsvp,
                         details.preview.title,
                     ),
+                    completedResponseID = pending.key,
                     pending = null,
                     saving = false,
                 )

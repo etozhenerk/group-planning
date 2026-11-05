@@ -20,26 +20,61 @@ import dev.groupplanning.android.ui.components.UserAvatar
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun ParticipantNameChip(user: UserProfile, color: Color) {
-    val shape = RoundedCornerShape(DesignTokens.componentParticipantChipRadius)
-    val avatarSize = with(LocalDensity.current) {
-        maxOf(
-            DesignTokens.componentMobilePeopleChipAvatarSize,
-            (
-                DesignTokens.typographySizeMobilePeopleInitial *
-                    DesignTokens.typographyLineHeightBody
-                ).toDp(),
+internal fun ParticipantNameChip(user: UserProfile, color: Color, information: Boolean = false) {
+    val shape =
+        RoundedCornerShape(
+            if (information) {
+                DesignTokens.componentMobileInfoCompanyChipRadius
+            } else {
+                DesignTokens.componentParticipantChipRadius
+            },
         )
+    val avatarSize = if (information) {
+        DesignTokens.componentParticipantChipAvatarSize
+    } else {
+        with(LocalDensity.current) {
+            maxOf(
+                DesignTokens.componentMobilePeopleChipAvatarSize,
+                (
+                    DesignTokens.typographySizeMobilePeopleInitial *
+                        DesignTokens.typographyLineHeightBody
+                    ).toDp(),
+            )
+        }
     }
     Row(
         Modifier.testTag("participant-name-chip").heightIn(
-            min = DesignTokens.componentParticipantChipHeight,
+            min = if (information) {
+                DesignTokens.componentMobileInfoCompanyChipHeight
+            } else {
+                DesignTokens.componentParticipantChipHeight
+            },
         ).clip(shape).background(color)
-            .border(DesignTokens.spaceS2, DesignTokens.colorSurface, shape).padding(
-                start = DesignTokens.componentMobilePeopleChipInsetStart,
-                end = DesignTokens.componentMobilePeopleChipInsetEnd,
-                top = DesignTokens.componentMobilePeopleChipInsetBlock,
-                bottom = DesignTokens.componentMobilePeopleChipInsetBlock,
+            .border(
+                if (information) DesignTokens.spaceS0 else DesignTokens.spaceS2,
+                DesignTokens.colorSurface,
+                shape,
+            ).padding(
+                start = if (information) {
+                    DesignTokens.componentMobileInfoCompanyChipInsetStart
+                } else {
+                    DesignTokens.componentMobilePeopleChipInsetStart
+                },
+                end = if (information) {
+                    DesignTokens.componentMobileInfoCompanyChipInsetEnd
+                } else {
+                    DesignTokens.componentMobilePeopleChipInsetEnd
+                },
+                top = if (information) {
+                    DesignTokens.componentMobileInfoCompanyChipInsetBlock
+                } else {
+                    DesignTokens.componentMobilePeopleChipInsetBlock
+                },
+                bottom = if (information) {
+                    DesignTokens.componentMobileInfoCompanyChipInsetBlock
+                } else {
+                    DesignTokens.componentMobilePeopleChipInsetBlock
+                },
             ),
         horizontalArrangement = Arrangement.spacedBy(
             DesignTokens.componentMobilePeopleChipGap,

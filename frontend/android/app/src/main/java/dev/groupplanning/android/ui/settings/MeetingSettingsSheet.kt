@@ -32,6 +32,8 @@ internal fun MeetingSettingsSheet(
     close: () -> Unit,
     saved: () -> Unit,
     parentTitle: String,
+    parentHasChild: Boolean = false,
+    parentActions: (@Composable ColumnScope.() -> Unit)? = null,
     parentContent: @Composable ColumnScope.() -> Unit,
 ) {
     val state = model?.state?.collectAsStateWithLifecycle()?.value
@@ -59,7 +61,9 @@ internal fun MeetingSettingsSheet(
         requestClose,
         Modifier.testTag(if (model == null) "meeting-information" else "meeting-settings"),
         canClose = canClose,
-        canDismiss = canClose && state?.dirty != true && !confirm,
+        canDismiss =
+        canClose && state?.dirty != true && !confirm && model == null && !parentHasChild,
+        stickyActions = model == null,
         actions = if (model != null && state != null) {
             {
                 if (confirm) {
@@ -95,7 +99,7 @@ internal fun MeetingSettingsSheet(
                 }
             }
         } else {
-            null
+            parentActions
         },
     ) {
         if (confirm) {

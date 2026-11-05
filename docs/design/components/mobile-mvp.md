@@ -161,3 +161,11 @@ Info-r2: cover156, заголовок25/31, organizer/avatar32, факты и з
 что Create; необязательность у обложки в настройках не повторяется. Dirty,
 unknown, conflict-review и forbidden — состояния той же поверхности.
 Нативные targets44/48 и адаптация крупного шрифта сохраняются.
+
+## Компания в информации · привязки7.8
+
+Источник — published nav-info из approved-designs (основа info-r2). Компания:
+heading16/600/text, chip36/radius12/inset6/10/6/6, avatar20, gap6/overlap4;
+дополнительное число min40/background/strong border1, «Все ответы»12/18,
+минимум32/верхний inset2, targets44/48 вокруг видимых элементов.
+Раскрытый состав остаётся реальным, без ограничения числа строк.

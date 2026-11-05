@@ -60,6 +60,36 @@ class InvitationStateTests {
             assertEquals(RsvpAnswer.Maybe, model.state.value.completedResponse?.answer)
             assertEquals(ServerCounter("1"), model.state.value.details?.preview?.myRsvpRevision)
             assertEquals(1, h.transport.requests.count { it.method == "PUT" })
+            val firstID = checkNotNull(model.state.value.completedResponseID)
+            assertEquals(
+                firstID.toString(),
+                h.transport.requests.first {
+                    it.method == "PUT"
+                }.header("Idempotency-Key"),
+            )
+            h.loadDenied(RsvpAnswer.Maybe, "1")
+            model.reload()
+            runCurrent()
+            assertEquals(firstID, model.state.value.completedResponseID)
+            h.transport.enqueue(
+                "invitations/${h.token}/rsvp",
+                apiJson.encodeToString(
+                    RsvpResult(
+                        h.id,
+                        RsvpAnswer.Maybe,
+                        ServerCounter("1"),
+                        false,
+                        ServerCounter("1"),
+                    ),
+                ),
+            )
+            h.transport.enqueue("meetings", apiJson.encodeToString(MeetingsPage(emptyList(), null)))
+            model.respond(RsvpAnswer.Maybe)
+            runCurrent()
+            assertTrue(
+                model.state.value.completedResponseID != null &&
+                    model.state.value.completedResponseID != firstID,
+            )
         } finally {
             model.stop()
         }
@@ -117,6 +147,7 @@ class InvitationStateTests {
                 model.state.value.completedResponse,
             )
             assertNull(model.state.value.pending)
+            assertEquals(pending.key, model.state.value.completedResponseID)
             val writes = h.transport.requests.filter { it.method == "PUT" }
             assertEquals(2, writes.size)
             writes.forEach {

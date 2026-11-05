@@ -6,14 +6,21 @@ struct MeetingInfoFacts: View {
         VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
             fact(
                 "calendar", text: timeLabel,
-                detail: meeting.startsAt == nil ? "Время пока не выбрано" : meeting.timezone)
+                detail: meeting.startsAt == nil
+                    ? "Время пока не выбрано" : MeetingLabels.zone(meeting.timezone))
             fact("mappin.and.ellipse", text: meeting.place ?? "Место пока не выбрано")
-            if let text = meeting.description, !text.isEmpty {
-                Text(text).lineSpacing(DesignTokens.spaceS4).textSelection(.enabled)
-            }
         }.designFont(DesignTokens.typographySizeCaption).foregroundStyle(DesignTokens.colorMuted)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, DesignTokens.spaceS20).padding(.horizontal, DesignTokens.spaceS16)
+            .background(
+                DesignTokens.colorBackground,
+                in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatBubbleRadius)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatBubbleRadius).stroke(
+                    DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
+            }
     }
 
     private func fact(_ icon: String, text: String, detail: String? = nil) -> some View {

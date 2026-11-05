@@ -17,6 +17,7 @@ final class InvitationOwner {
     var problem: String?
     var responseProblem: String?
     var completedResponse: RSVPOutcome?
+    var completedResponseID: UUID?
     private var verifiedAccess = false
     private var verifiedOrganizer = false
     var canAccess: Bool {

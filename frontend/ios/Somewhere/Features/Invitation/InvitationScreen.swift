@@ -4,7 +4,8 @@ struct InvitationScreen: View {
     @State private var owner: InvitationOwner
     @Environment(\.scenePhase) private var phase
     @Environment(\.completeRSVP) private var completion
-    @State private var routed = false
+    @State private var automaticRouteCompleted = false
+    @State private var routedResponseID: UUID?
     var responseCompleted: () -> Void
     var warning: String?
     let allowsPullToRefresh: Bool
@@ -56,11 +57,15 @@ struct InvitationScreen: View {
                 }
             }
         }
-        .onChange(of: owner.completedResponse) { _, value in
-            if let value { complete(value) }
+        .onChange(of: owner.completedResponseID) { _, requestID in
+            if let requestID, let outcome = owner.completedResponse {
+                complete(outcome, requestID: requestID)
+            }
         }
         .onChange(of: owner.canAccess) { _, allowed in
-            if allowed, case .token = owner.target, let id = owner.preview?.meetingID {
+            if allowed, owner.completedResponseID == nil, case .token = owner.target,
+                let id = owner.preview?.meetingID
+            {
                 complete(.going(id))
             }
         }
@@ -73,9 +78,15 @@ struct InvitationScreen: View {
         }
         .onDisappear { owner.cancel() }
     }
-    private func complete(_ outcome: RSVPOutcome) {
-        guard !routed, owner.current, owner.authenticated, let completion else { return }
-        routed = true
+    private func complete(_ outcome: RSVPOutcome, requestID: UUID? = nil) {
+        guard owner.current, owner.authenticated, let completion else { return }
+        if let requestID {
+            guard routedResponseID != requestID else { return }
+            routedResponseID = requestID
+        } else {
+            guard !automaticRouteCompleted else { return }
+            automaticRouteCompleted = true
+        }
         responseCompleted()
         completion.perform(outcome)
     }

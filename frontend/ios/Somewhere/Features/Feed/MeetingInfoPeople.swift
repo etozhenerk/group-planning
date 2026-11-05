@@ -18,12 +18,15 @@ struct MeetingInfoPeople: View {
             if let people = session.privateData.participants[id]?.value?.participants {
                 let going = people.filter { $0.role == "organizer" || $0.rsvp == .going }
                 HStack(spacing: DesignTokens.spaceS6) {
-                    Text(expanded ? "Все ответы" : "Компания")
+                    Text(expanded ? "Все ответы" : "Кто придёт")
                         .accessibilityAddTraits(.isHeader).accessibilityIdentifier(
                             "participant-count")
-                    Text(String(expanded ? people.count : going.count)).foregroundStyle(
-                        DesignTokens.colorMuted)
-                }.designFont(DesignTokens.typographySizeCaption, weight: .medium)
+                    Spacer(minLength: DesignTokens.spaceS8)
+                    Text(String(expanded ? people.count : going.count))
+                        .designFont(DesignTokens.typographySizeSmall, weight: .regular)
+                        .foregroundStyle(
+                            DesignTokens.colorMuted)
+                }.designFont(DesignTokens.typographySizeSectionHeading, weight: .semibold)
                 Button {
                     expanded.toggle()
                     if !expanded { restoreSummaryFocus = true }
@@ -45,6 +48,13 @@ struct MeetingInfoPeople: View {
                         summaryFocused = true
                         restoreSummaryFocus = false
                     }
+                }
+                if !expanded {
+                    Button("Все ответы · \(people.count) →") { expanded = true }
+                        .designFont(DesignTokens.typographySizeCaption)
+                        .foregroundStyle(DesignTokens.colorAccent)
+                        .frame(minHeight: DesignTokens.targetIos)
+                        .accessibilityIdentifier("meeting-people-all")
                 }
                 if expanded {
                     ForEach(Array(people.enumerated()), id: \.element.user.id) { index, person in
