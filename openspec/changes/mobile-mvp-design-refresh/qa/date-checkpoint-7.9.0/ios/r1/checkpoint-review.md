@@ -1,0 +1,20 @@
+# «Предложить дату» iOS R1 — короткая независимая проверка
+
+Вердикт: **needs-fixes**, два замечания ниже. Это экранный checkpoint; полные suites и финальные gates не запускались.
+
+Точный [candidate/binding](artifact-binding.json): DS 7.9.0; artifact `fd2c1066aed3df47212fe9aa904bb871c095a77fb41e7b565c0a686d9632bc0d`, source `495606cb0f89fc6454771a850143fccf83f8e1bd6fb2191ec4c76a4bee9644b5`. Все 20 файлов frozen и подставленного host проверены по SHA перед обоими запусками. Authority: approved date → `assets/navigation-r2/nav-date/frame.html`, normalized date, UX date-r1; исходный [date-form](../../../../assets/date-r1/date-form.png) / [date-poll](../../../../assets/date-r1/date-poll.png).
+
+## Замечания одной пачкой
+
+1. **Карточка опроса сохраняет старую композицию.** После реального создания/голоса видны «Новая дата встречи», plain варианты с объединённой датой/днём недели и списком имён. Отсутствуют принятые «Когда встретимся?», пояснение выбора, тональные option-строки и постоянный тип опроса в footer; структура actor/time также отличается. [Actual](actual/created-card-and-vote.png). Код: `frontend/ios/Somewhere/Features/DatePoll/DatePollCard.swift:27`, `DatePollBallot.swift:17`. Нужен перенос опубликованной карточки; новые матрицы явно старой композиции не запускались.
+2. **После исправления duplicate появляется ложная общая ошибка.** Выбрать во втором варианте дату первого → «Создать опрос» → локальные duplicate hints; затем вернуть вторую дату с 14 на 15 ноября. Inline hints исчезают, но footer теперь показывает «Предложите хотя бы две разные даты» и «Попробовать снова», хотя в форме две разные даты. [Actual с разными датами и старой ошибкой](actual/five-settings-and-deadline.png), [duplicate до исправления](actual/duplicate-inline.png). `DatePollFormOwner.swift:53` меняет дату без очистки `operation.problem`, установленной на строке76; `CreateDatePollScreen.swift:48` выводит её именно после исчезновения `dateError`. Ожидается убрать исправленную validation-ошибку и вернуть «Создать опрос» без ложного общего notice.
+
+## Что фактически выполнено
+
+- Normal402: обязательная группа вариантов и легенда; добавить третий вариант и удалить; native picker → duplicate → inline hints → исправление. Все пять параметров переключены туда/обратно с проверкой значений; дата/время окончания и московский пояс достижимы. На402 дата/время в строке, на320 в колонке. 390 отдельно не запускался.
+- Dirty: изменение анонимности → свайп закрытия → подтверждение в той же панели → «Продолжить редактирование» сохраняет значение → повтор закрытия → «Выйти без сохранения» возвращает в чат. [Actual](actual/dirty-confirm-same-panel.png).
+- На320 реальный POST прошёл в собственную memory fixture, QA gate `unavailable` заменил уже полученный HTTP ответ на503. Unknown notice появился, переключатель заблокирован. После снятия gate «Повторить отправку» вернул ту же запись и revision, в feed остался ровно один `date_poll_created`. Затем выбор даты и реальный голос подтверждены API. [Unknown actual](actual/unknown-frozen.png), [commit](actual/unknown-server-commit.json), [тот же poll/revision](actual/retry-same-poll-and-revision.json), [голос](actual/confirmed-vote.json). Это controlled transport fault над реальным API, не внешний сервис.
+
+Метод B прошёл за28.629с в [исходном журнале](smoke-independent.log). Первый метод A остановился на QA-selector нативного календаря: actual label был «суббота, 14 ноября», исходный selector искал начало с14. После уточнения по сохранённому AX повторялся только A: **PASS66.672с**, [журнал](smoke-targeted-A.log), [driver](driver-targeted.swift). Этот pass описывает выполненные действия, замечания выше остаются needs-fixes.
+
+Actual/AX/context сохранены рядом. iOS27.0, симулятор31262733-50DC-46A5-938E-4C462D70F109, обычный текст L. Normal UIWindow402×874; narrow QA UIWindow320×568 на том же physical screen402×874, не отдельное устройство. Набор hidden/anonymous/resolution/error-vote, Large Text и прочие матрицы не проходился. VoiceOver не читался и не включался. Собственная fixture остановлена, приложение завершено runner, lock освобождён; код, cases, manifests, tasks и Git не менялись.

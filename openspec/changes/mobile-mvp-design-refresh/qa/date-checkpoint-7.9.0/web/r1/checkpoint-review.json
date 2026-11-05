@@ -1,0 +1,64 @@
+{
+  "kind": "independent short date checkpoint; not final gate",
+  "candidate": {
+    "sourceHash": "a081de0ab392fbc6c989f598535ab0b16fd1aa78968e4e566267d15db215de12",
+    "artifactHash": "a5a45b2992738b2adee617a05fc642c4ee2fee11cff02b4934a07a9e43829888",
+    "candidateSha256": "a21fac4111dfe503f4ef1ba28ae3a026a7cc69912850b0b68837c1e02f5a6119"
+  },
+  "sourceBefore": "a081de0ab392fbc6c989f598535ab0b16fd1aa78968e4e566267d15db215de12",
+  "sourceAfter": "a081de0ab392fbc6c989f598535ab0b16fd1aa78968e4e566267d15db215de12",
+  "findings": [
+    {
+      "id": "D1",
+      "severity": "P2",
+      "summary": "DatePollCard remains old composition/copy; root-known remaining transfer",
+      "evidence": [
+        "created-card-actual.png",
+        "real-vote-actual.png",
+        "checkpoint-probes-menu-fix.json"
+      ]
+    },
+    {
+      "id": "D2",
+      "severity": "P2",
+      "summary": "Deadline grid stacks at320/unequal390; switch rows48/font14 vsraw44/font13",
+      "evidence": [
+        "deadline320-actual.png",
+        "deadline320-reference.png",
+        "form-metrics.json"
+      ]
+    },
+    {
+      "id": "D3",
+      "severity": "P2",
+      "summary": "Missing deadline Date produces footer-only generic error; no invalid/error association/first focus",
+      "evidence": [
+        "deadline-date-required-actual.png",
+        "deadline-validation.json"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "form390/320 no horizontal overflow",
+    "add/remove/duplicate focus",
+    "five toggle defaults and changes",
+    "dirty Stay/Leave same Dialog",
+    "deadline date/time required and Moscow local→UTC",
+    "known429→real commit/lostACK→exact same body/key retry one poll/feed entry",
+    "real anonymous vote counts/voters privacy"
+  ],
+  "probeCount": 16,
+  "driverErrors": [],
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 38,
+    "allMatch": true
+  },
+  "limits": [
+    "hidden-results privacy not independently accepted",
+    "no majority/tie/deadline closure/full combinations/nativeIME/VO/platform matrix/gates"
+  ],
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "released": true
+}

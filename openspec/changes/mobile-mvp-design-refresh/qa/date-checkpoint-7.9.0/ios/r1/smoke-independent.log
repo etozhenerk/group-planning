@@ -1,0 +1,336 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/date79-r1-independent-20261105.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/DateCheckpoint79Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/date79-r1-independent-20261105.xcresult
+
+2026-11-05 22:22:22.189 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:22:23.541560+0300 SomewhereUITests-Runner[97529:20796390] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 22:22:26.663.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 22:22:26.664.
+Test Suite 'DateCheckpoint79Tests' started at 2026-11-05 22:22:26.664.
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testAOptionsSettingsDeadlineAndDirty]' started.
+    t =     0.00s Start Test at 2026-11-05 22:22:26.666
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 22:22:26.763 xcodebuild[97018:20795185] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 22:22:26.763 xcodebuild[97018:20795185] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 22:22:26.795 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[97529]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x103d68398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x104a8c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.93s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.33s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.36s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.36s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.47s Tap "period-upcoming" Button
+    t =     5.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.47s     Find the "period-upcoming" Button
+    t =     5.50s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     5.53s     Synthesize event
+    t =     5.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.86s Find the "period-upcoming" Button
+    t =     5.89s Find the "period-past" Button
+    t =     5.92s Find the "home-tab-calendar" Button
+    t =     5.95s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.98s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.99s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.01s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.04s     Synthesize event
+    t =     6.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =     7.74s Checking `Expect predicate `exists == 1` for object "meeting-add" Button`
+    t =     7.74s     Checking existence of `"meeting-add" Button`
+    t =     7.78s Tap "meeting-add" Button
+    t =     7.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.78s     Find the "meeting-add" Button
+    t =     7.80s     Check for interrupting elements affecting "meeting-add" Button
+    t =     7.83s     Synthesize event
+    t =     8.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.16s Checking `Expect predicate `exists == 1` for object "new-date-poll" Button`
+    t =     9.16s     Checking existence of `"new-date-poll" Button`
+    t =     9.18s Tap "new-date-poll" Button
+    t =     9.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.19s     Find the "new-date-poll" Button
+    t =     9.21s     Check for interrupting elements affecting "new-date-poll" Button
+    t =     9.24s     Synthesize event
+    t =     9.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.64s Checking `Expect predicate `exists == 1` for object "action-form-header" StaticText`
+    t =    10.64s     Checking existence of `"action-form-header" StaticText`
+    t =    11.75s Checking `Expect predicate `exists == 1` for object "poll-create" Button`
+    t =    11.75s     Checking existence of `"poll-create" Button`
+    t =    12.81s Checking `Expect predicate `exists == 1` for object "Варианты даты" StaticText`
+    t =    12.81s     Checking existence of `"Варианты даты" StaticText`
+    t =    12.85s Requesting snapshot of accessibility hierarchy for app with pid 97549
+    t =    13.04s Requesting snapshot of accessibility hierarchy for app with pid 97549
+    t =    13.50s Find the Window (First Match)
+    t =    13.67s Added attachment named 'date79-normal-options'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-normal-options.png
+    t =    13.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.70s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.72s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-normal-options.json
+    t =    13.79s Tap "Добавить дату" Button
+    t =    13.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.79s     Find the "Добавить дату" Button
+    t =    13.83s     Check for interrupting elements affecting "Добавить дату" Button
+    t =    13.86s     Synthesize event
+    t =    14.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.23s Checking `Expect predicate `exists == 1` for object "Вариант 3" Button`
+    t =    15.23s     Checking existence of `"Вариант 3" Button`
+    t =    15.27s Tap "Удалить вариант 3" Button
+    t =    15.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.27s     Find the "Удалить вариант 3" Button
+    t =    15.31s     Check for interrupting elements affecting "Удалить вариант 3" Button
+    t =    15.34s     Synthesize event
+    t =    15.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.64s Checking existence of `"Вариант 3" Button`
+    t =    15.67s Find the "Вариант 1" Button
+    t =    15.70s Find the "Вариант 2" Button
+    t =    15.73s Checking existence of `"Вариант 2" Button`
+    t =    15.76s Find the "action-form-header" StaticText
+    t =    15.80s Find the "poll-create" Button
+    t =    15.83s Find the "Вариант 2" Button
+    t =    15.87s Find the "Вариант 2" Button
+    t =    15.90s Find the "Вариант 2" Button
+    t =    15.94s Tap "Вариант 2" Button
+    t =    15.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.94s     Find the "Вариант 2" Button
+    t =    15.97s     Check for interrupting elements affecting "Вариант 2" Button
+    t =    16.00s     Synthesize event
+    t =    16.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.36s Checking `Expect predicate `exists == 1` for object "picker-header" StaticText`
+    t =    17.36s     Checking existence of `"picker-header" StaticText`
+    t =    17.46s Requesting snapshot of accessibility hierarchy for app with pid 97549
+    t =    17.95s Requesting snapshot of accessibility hierarchy for app with pid 97549
+    t =    18.47s Find the Window (First Match)
+    t =    18.59s Added attachment named 'date79-native-picker-2-day-14'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-native-picker-2-day-14.png
+    t =    18.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.64s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    18.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-native-picker-2-day-14.json
+    t =    18.78s Get number of matches for: Elements matching predicate 'label == "14" OR label BEGINSWITH "14,"'
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/DateCheckpoint79Tests.swift:76: error: -[SomewhereUITests.DateCheckpoint79Tests testAOptionsSettingsDeadlineAndDirty] : XCTAssertEqual failed: ("0") is not equal to ("1") - Picker day must be unambiguous; do not silently select another date
+    t =    19.18s Tear Down
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testAOptionsSettingsDeadlineAndDirty]' failed (19.458 seconds).
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testBNarrowUnknownExactRetryCreateAndVote]' started.
+    t =     0.00s Start Test at 2026-11-05 22:22:46.126
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.04s         Terminate dev.groupplanning.ios.uitesthost:97549
+2026-11-05 22:22:46.172 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:22:46.173 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:22:46.173 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:22:47.209 xcodebuild[97018:20795185] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 22:22:47.209 xcodebuild[97018:20795185] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 22:22:47.218 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.29s         Setting up automation session
+    t =     3.62s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.01s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     6.04s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.04s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.12s Tap "period-upcoming" Button
+    t =     6.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.12s     Find the "period-upcoming" Button
+    t =     6.15s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     6.17s     Synthesize event
+    t =     6.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.50s Find the "period-upcoming" Button
+    t =     6.53s Find the "period-past" Button
+    t =     6.56s Find the "home-tab-calendar" Button
+    t =     6.58s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.61s Find the Window (First Match)
+    t =     6.62s Find the Window (First Match)
+    t =     6.62s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 371.0) for 0.4 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 180.9) with velocity of 250.00 pixels per second, and then hold for 1.0 seconds 
+    t =     6.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.63s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.64s     Check for interrupting elements affecting "somewhere QA" Application
+    t =     6.67s     Synthesize event
+    t =     6.67s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.69s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.73s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.75s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.20s Find the "period-upcoming" Button
+    t =     9.23s Find the "period-past" Button
+    t =     9.25s Find the "home-tab-calendar" Button
+    t =     9.28s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.31s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.31s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.33s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     9.36s     Synthesize event
+    t =     9.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =    11.04s Checking `Expect predicate `exists == 1` for object "meeting-add" Button`
+    t =    11.04s     Checking existence of `"meeting-add" Button`
+    t =    11.07s Tap "meeting-add" Button
+    t =    11.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.08s     Find the "meeting-add" Button
+    t =    11.10s     Check for interrupting elements affecting "meeting-add" Button
+    t =    11.12s     Synthesize event
+    t =    11.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.46s Checking `Expect predicate `exists == 1` for object "new-date-poll" Button`
+    t =    12.46s     Checking existence of `"new-date-poll" Button`
+    t =    12.49s Tap "new-date-poll" Button
+    t =    12.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.49s     Find the "new-date-poll" Button
+    t =    12.52s     Check for interrupting elements affecting "new-date-poll" Button
+    t =    12.54s     Synthesize event
+    t =    12.84s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.88s Checking `Expect predicate `exists == 1` for object "action-form-header" StaticText`
+    t =    13.88s     Checking existence of `"action-form-header" StaticText`
+    t =    14.98s Checking `Expect predicate `exists == 1` for object "poll-create" Button`
+    t =    14.98s     Checking existence of `"poll-create" Button`
+    t =    15.01s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    15.21s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    16.26s Find the Window (First Match)
+    t =    16.38s Added attachment named 'date79-narrow-options'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-narrow-options.png
+    t =    16.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.44s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-narrow-options.json
+    t =    16.46s Checking existence of `"Время" Button`
+    t =    16.49s Find the "action-form-header" StaticText
+    t =    16.52s Find the "poll-create" Button
+    t =    16.56s Find the "Время" Button
+    t =    16.60s Find the "Время" Button
+    t =    16.63s Swipe up "action-form-scroll" ScrollView
+    t =    16.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.64s     Find the "action-form-scroll" ScrollView
+    t =    16.67s     Check for interrupting elements affecting "action-form-scroll" ScrollView
+    t =    16.70s     Synthesize event
+    t =    17.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.85s Checking existence of `"Время" Button`
+    t =    17.88s Find the "action-form-header" StaticText
+    t =    17.91s Find the "poll-create" Button
+    t =    17.95s Find the "Время" Button
+    t =    17.99s Find the "Время" Button
+    t =    18.02s Find the "Время" Button
+    t =    18.05s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    18.23s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    19.28s Find the Window (First Match)
+    t =    19.40s Added attachment named 'date79-narrow-deadline-and-footer'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-narrow-deadline-and-footer.png
+    t =    19.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.43s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-narrow-deadline-and-footer.json
+    t =    19.49s Tap "poll-create" Button
+    t =    19.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.50s     Find the "poll-create" Button
+    t =    19.53s     Check for interrupting elements affecting "poll-create" Button
+    t =    19.56s     Synthesize event
+    t =    19.86s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.88s Checking `Expect predicate `exists == 1` for object "Создание опроса не подтверждено" StaticText`
+    t =    20.88s     Checking existence of `"Создание опроса не подтверждено" StaticText`
+    t =    20.91s Find the "Несколько ответов" Switch
+    t =    20.94s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    21.12s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    22.17s Find the Window (First Match)
+    t =    22.28s Added attachment named 'date79-unknown-frozen'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-unknown-frozen.png
+    t =    22.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.30s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-unknown-frozen.json
+    t =    22.42s Tap "poll-create" Button
+    t =    22.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.43s     Find the "poll-create" Button
+    t =    22.46s     Check for interrupting elements affecting "poll-create" Button
+    t =    22.49s     Synthesize event
+    t =    22.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.17s Checking `Expect predicate `exists == 1` for object "meeting-add" Button`
+    t =    24.17s     Checking existence of `"meeting-add" Button`
+    t =    24.21s Find the "feed-timeline" ScrollView
+    t =    24.24s Find the "meeting-heading" Button
+    t =    24.26s Find the "feed-timeline" ScrollView
+    t =    24.29s Find the "message-input" TextView
+    t =    24.32s Checking existence of `"poll-option-2026-11-14" Button`
+    t =    24.34s Find the "poll-option-2026-11-14" Button
+    t =    24.38s Find the "poll-option-2026-11-14" Button
+    t =    24.41s Find the "poll-option-2026-11-14" Button
+    t =    24.44s Tap "poll-option-2026-11-14" Button
+    t =    24.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.44s     Find the "poll-option-2026-11-14" Button
+    t =    24.46s     Check for interrupting elements affecting "poll-option-2026-11-14" Button
+    t =    24.49s     Synthesize event
+    t =    24.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.52s Find the "feed-timeline" ScrollView
+    t =    25.55s Find the "meeting-heading" Button
+    t =    25.59s Find the "feed-timeline" ScrollView
+    t =    25.62s Find the "message-input" TextView
+    t =    25.65s Checking existence of `"Проголосовать" Button`
+    t =    25.67s Find the "Проголосовать" Button
+    t =    25.72s Find the "Проголосовать" Button
+    t =    25.77s Find the "Проголосовать" Button
+    t =    25.81s Tap "Проголосовать" Button
+    t =    25.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.82s     Find the "Проголосовать" Button
+    t =    25.85s     Check for interrupting elements affecting "Проголосовать" Button
+    t =    25.88s     Synthesize event
+    t =    26.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.19s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    26.32s Requesting snapshot of accessibility hierarchy for app with pid 97708
+    t =    27.36s Find the Window (First Match)
+    t =    27.46s Added attachment named 'date79-created-card-and-vote'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-created-card-and-vote.png
+    t =    27.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DE2A086E-8DF9-4D50-9FC9-E9D4EB83FF97/tmp/somewhere-design-verification/date79-created-card-and-vote.json
+    t =    27.54s Terminate dev.groupplanning.ios.uitesthost:97708
+2026-11-05 22:23:13.680 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:23:13.681 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:23:13.682 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    28.58s Tear Down
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testBNarrowUnknownExactRetryCreateAndVote]' passed (28.629 seconds).
+Test Suite 'DateCheckpoint79Tests' failed at 2026-11-05 22:23:14.755.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 48.087 (48.091) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-11-05 22:23:14.755.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 48.087 (48.091) seconds
+Test Suite 'Selected tests' failed at 2026-11-05 22:23:14.755.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 48.087 (48.092) seconds
+2026-11-05 22:23:14.782 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:23:14.782 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:23:14.783 xcodebuild[97018:20795185] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:23:15.049 xcodebuild[97018:20795185] [MT] IDETestOperationsObserverDebug: 52.901 elapsed -- Testing started completed.
+2026-11-05 22:23:15.049 xcodebuild[97018:20795185] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 22:23:15.049 xcodebuild[97018:20795185] [MT] IDETestOperationsObserverDebug: 52.901 sec, +52.901 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/date79-r1-independent-20261105.xcresult
+
+Failing tests:
+	DateCheckpoint79Tests.testAOptionsSettingsDeadlineAndDirty()
+
+** TEST EXECUTE FAILED **
+
+Testing started

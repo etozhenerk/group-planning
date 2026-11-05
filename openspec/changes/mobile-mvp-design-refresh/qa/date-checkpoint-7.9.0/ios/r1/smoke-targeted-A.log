@@ -1,0 +1,441 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/date79-r1-independent-A2-20261105.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/DateCheckpoint79Tests/testAOptionsSettingsDeadlineAndDirty"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+
+Writing result bundle at path:
+	/private/tmp/date79-r1-independent-A2-20261105.xcresult
+
+2026-11-05 22:24:19.240 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:24:20.527202+0300 SomewhereUITests-Runner[99850:20805428] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 22:24:23.313.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 22:24:23.314.
+Test Suite 'DateCheckpoint79Tests' started at 2026-11-05 22:24:23.314.
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testAOptionsSettingsDeadlineAndDirty]' started.
+    t =     0.00s Start Test at 2026-11-05 22:24:23.316
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 22:24:23.410 xcodebuild[99815:20805125] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 22:24:23.410 xcodebuild[99815:20805125] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 22:24:23.450 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.52s         Setting up automation session
+objc[99850]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x101c44398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x102b20310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.87s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.91s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.94s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.94s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     6.09s Tap "period-upcoming" Button
+    t =     6.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.10s     Find the "period-upcoming" Button
+    t =     6.13s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     6.16s     Synthesize event
+    t =     6.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.49s Find the "period-upcoming" Button
+    t =     6.53s Find the "period-past" Button
+    t =     6.57s Find the "home-tab-calendar" Button
+    t =     6.60s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.64s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.65s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.70s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.79s     Synthesize event
+    t =     7.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =     8.53s Checking `Expect predicate `exists == 1` for object "meeting-add" Button`
+    t =     8.53s     Checking existence of `"meeting-add" Button`
+    t =     8.59s Tap "meeting-add" Button
+    t =     8.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.59s     Find the "meeting-add" Button
+    t =     8.62s     Check for interrupting elements affecting "meeting-add" Button
+    t =     8.65s     Synthesize event
+    t =     8.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.98s Checking `Expect predicate `exists == 1` for object "new-date-poll" Button`
+    t =     9.98s     Checking existence of `"new-date-poll" Button`
+    t =    10.01s Tap "new-date-poll" Button
+    t =    10.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.02s     Find the "new-date-poll" Button
+    t =    10.06s     Check for interrupting elements affecting "new-date-poll" Button
+    t =    10.09s     Synthesize event
+    t =    10.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.48s Checking `Expect predicate `exists == 1` for object "action-form-header" StaticText`
+    t =    11.48s     Checking existence of `"action-form-header" StaticText`
+    t =    12.56s Checking `Expect predicate `exists == 1` for object "poll-create" Button`
+    t =    12.56s     Checking existence of `"poll-create" Button`
+    t =    13.63s Checking `Expect predicate `exists == 1` for object "Варианты даты" StaticText`
+    t =    13.63s     Checking existence of `"Варианты даты" StaticText`
+    t =    13.69s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    13.88s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    14.34s Find the Window (First Match)
+    t =    14.50s Added attachment named 'date79-normal-options'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-normal-options.png
+    t =    14.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.53s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-normal-options.json
+    t =    14.62s Tap "Добавить дату" Button
+    t =    14.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.62s     Find the "Добавить дату" Button
+    t =    14.65s     Check for interrupting elements affecting "Добавить дату" Button
+    t =    14.68s     Synthesize event
+    t =    14.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.06s Checking `Expect predicate `exists == 1` for object "Вариант 3" Button`
+    t =    16.06s     Checking existence of `"Вариант 3" Button`
+    t =    16.09s Tap "Удалить вариант 3" Button
+    t =    16.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.09s     Find the "Удалить вариант 3" Button
+    t =    16.13s     Check for interrupting elements affecting "Удалить вариант 3" Button
+    t =    16.16s     Synthesize event
+    t =    16.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.46s Checking existence of `"Вариант 3" Button`
+    t =    16.48s Find the "Вариант 1" Button
+    t =    16.51s Find the "Вариант 2" Button
+    t =    16.54s Checking existence of `"Вариант 2" Button`
+    t =    16.57s Find the "action-form-header" StaticText
+    t =    16.60s Find the "poll-create" Button
+    t =    16.63s Find the "Вариант 2" Button
+    t =    16.67s Find the "Вариант 2" Button
+    t =    16.70s Find the "Вариант 2" Button
+    t =    16.74s Tap "Вариант 2" Button
+    t =    16.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.74s     Find the "Вариант 2" Button
+    t =    16.77s     Check for interrupting elements affecting "Вариант 2" Button
+    t =    16.80s     Synthesize event
+    t =    17.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.61s Checking `Expect predicate `exists == 1` for object "picker-header" StaticText`
+    t =    18.61s     Checking existence of `"picker-header" StaticText`
+    t =    18.72s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    19.21s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    19.73s Find the Window (First Match)
+    t =    19.88s Added attachment named 'date79-native-picker-2-day-14'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-native-picker-2-day-14.png
+    t =    19.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-native-picker-2-day-14.json
+    t =    20.06s Get number of matches for: Elements matching predicate 'label MATCHES ".*, 14 [^ ]+"'
+    t =    20.14s Tap Button (First Match)
+    t =    20.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.14s     Find the Button (First Match)
+    t =    20.24s     Check for interrupting elements affecting "суббота, 14 ноября" Button
+    t =    20.29s     Synthesize event
+    t =    20.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.61s Tap "picker-done" Button
+    t =    20.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.61s     Find the "picker-done" Button
+    t =    20.70s     Check for interrupting elements affecting "picker-done" Button
+    t =    20.76s     Synthesize event
+    t =    21.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.46s Checking `Expect predicate `exists == 1` for object "Вариант 2" Button`
+    t =    22.47s     Checking existence of `"Вариант 2" Button`
+    t =    22.52s Tap "poll-create" Button
+    t =    22.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.52s     Find the "poll-create" Button
+    t =    22.56s     Check for interrupting elements affecting "poll-create" Button
+    t =    22.59s     Synthesize event
+    t =    22.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.93s Checking `Expect predicate `exists == 1` for object "Эта дата уже есть в опросе." StaticText`
+    t =    23.94s     Checking existence of `"Эта дата уже есть в опросе." StaticText`
+    t =    23.98s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    24.17s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    24.62s Find the Window (First Match)
+    t =    24.76s Added attachment named 'date79-duplicate-inline'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-duplicate-inline.png
+    t =    24.76s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.78s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.82s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-duplicate-inline.json
+    t =    24.84s Checking existence of `"Вариант 2" Button`
+    t =    24.87s Find the "action-form-header" StaticText
+    t =    24.90s Find the "poll-create" Button
+    t =    24.93s Find the "Вариант 2" Button
+    t =    24.97s Find the "Вариант 2" Button
+    t =    25.00s Find the "Вариант 2" Button
+    t =    25.04s Tap "Вариант 2" Button
+    t =    25.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.04s     Find the "Вариант 2" Button
+    t =    25.07s     Check for interrupting elements affecting "Вариант 2" Button
+    t =    25.10s     Synthesize event
+    t =    25.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.86s Checking `Expect predicate `exists == 1` for object "picker-header" StaticText`
+    t =    26.86s     Checking existence of `"picker-header" StaticText`
+    t =    26.95s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    27.44s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    27.96s Find the Window (First Match)
+    t =    28.07s Added attachment named 'date79-native-picker-2-day-15'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-native-picker-2-day-15.png
+    t =    28.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-native-picker-2-day-15.json
+    t =    28.26s Get number of matches for: Elements matching predicate 'label MATCHES ".*, 15 [^ ]+"'
+    t =    28.34s Tap Button (First Match)
+    t =    28.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.34s     Find the Button (First Match)
+    t =    28.45s     Check for interrupting elements affecting "воскресенье, 15 ноября" Button
+    t =    28.51s     Synthesize event
+    t =    28.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.82s Tap "picker-done" Button
+    t =    28.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.83s     Find the "picker-done" Button
+    t =    28.91s     Check for interrupting elements affecting "picker-done" Button
+    t =    28.97s     Synthesize event
+    t =    29.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.65s Checking `Expect predicate `exists == 1` for object "Вариант 2" Button`
+    t =    30.65s     Checking existence of `"Вариант 2" Button`
+    t =    30.71s Checking existence of `"Несколько ответов" Switch`
+    t =    30.75s Find the "action-form-header" StaticText
+    t =    30.78s Find the "poll-create" Button
+    t =    30.82s Find the "Несколько ответов" Switch
+    t =    30.86s Find the "Несколько ответов" Switch
+    t =    30.89s Find the "Несколько ответов" Switch
+    t =    30.92s Find the "Несколько ответов" Switch
+    t =    30.95s Tap "Несколько ответов" Switch
+    t =    30.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    30.96s     Find the "Несколько ответов" Switch
+    t =    30.99s     Check for interrupting elements affecting "Несколько ответов" Switch
+    t =    31.01s     Synthesize event
+    t =    31.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.62s Find the "Несколько ответов" Switch
+    t =    32.65s Tap "Несколько ответов" Switch
+    t =    32.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.66s     Find the "Несколько ответов" Switch
+    t =    32.69s     Check for interrupting elements affecting "Несколько ответов" Switch
+    t =    32.72s     Synthesize event
+    t =    33.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.32s Find the "Несколько ответов" Switch
+    t =    34.35s Checking existence of `"Можно изменить голос" Switch`
+    t =    34.38s Find the "action-form-header" StaticText
+    t =    34.42s Find the "poll-create" Button
+    t =    34.45s Find the "Можно изменить голос" Switch
+    t =    34.49s Find the "Можно изменить голос" Switch
+    t =    34.52s Find the "Можно изменить голос" Switch
+    t =    34.56s Find the "Можно изменить голос" Switch
+    t =    34.59s Tap "Можно изменить голос" Switch
+    t =    34.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.59s     Find the "Можно изменить голос" Switch
+    t =    34.62s     Check for interrupting elements affecting "Можно изменить голос" Switch
+    t =    34.65s     Synthesize event
+    t =    34.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    36.26s Find the "Можно изменить голос" Switch
+    t =    36.31s Tap "Можно изменить голос" Switch
+    t =    36.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    36.31s     Find the "Можно изменить голос" Switch
+    t =    36.35s     Check for interrupting elements affecting "Можно изменить голос" Switch
+    t =    36.38s     Synthesize event
+    t =    36.69s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    37.99s Find the "Можно изменить голос" Switch
+    t =    38.02s Checking existence of `"Можно добавлять варианты" Switch`
+    t =    38.06s Find the "action-form-header" StaticText
+    t =    38.09s Find the "poll-create" Button
+    t =    38.12s Find the "Можно добавлять варианты" Switch
+    t =    38.16s Find the "Можно добавлять варианты" Switch
+    t =    38.20s Find the "Можно добавлять варианты" Switch
+    t =    38.23s Find the "Можно добавлять варианты" Switch
+    t =    38.26s Tap "Можно добавлять варианты" Switch
+    t =    38.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.26s     Find the "Можно добавлять варианты" Switch
+    t =    38.29s     Check for interrupting elements affecting "Можно добавлять варианты" Switch
+    t =    38.32s     Synthesize event
+    t =    38.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    39.94s Find the "Можно добавлять варианты" Switch
+    t =    39.99s Tap "Можно добавлять варианты" Switch
+    t =    39.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    39.99s     Find the "Можно добавлять варианты" Switch
+    t =    40.03s     Check for interrupting elements affecting "Можно добавлять варианты" Switch
+    t =    40.06s     Synthesize event
+    t =    40.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.67s Find the "Можно добавлять варианты" Switch
+    t =    41.70s Checking existence of `"Анонимный опрос" Switch`
+    t =    41.73s Find the "action-form-header" StaticText
+    t =    41.76s Find the "poll-create" Button
+    t =    41.79s Find the "Анонимный опрос" Switch
+    t =    41.83s Find the "Анонимный опрос" Switch
+    t =    41.86s Find the "Анонимный опрос" Switch
+    t =    41.89s Find the "Анонимный опрос" Switch
+    t =    41.92s Tap "Анонимный опрос" Switch
+    t =    41.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.92s     Find the "Анонимный опрос" Switch
+    t =    41.95s     Check for interrupting elements affecting "Анонимный опрос" Switch
+    t =    41.98s     Synthesize event
+    t =    42.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    43.59s Find the "Анонимный опрос" Switch
+    t =    43.62s Tap "Анонимный опрос" Switch
+    t =    43.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    43.63s     Find the "Анонимный опрос" Switch
+    t =    43.66s     Check for interrupting elements affecting "Анонимный опрос" Switch
+    t =    43.69s     Synthesize event
+    t =    44.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    45.30s Find the "Анонимный опрос" Switch
+    t =    45.33s Checking existence of `"Скрыть итоги до завершения" Switch`
+    t =    45.37s Find the "action-form-header" StaticText
+    t =    45.40s Find the "poll-create" Button
+    t =    45.44s Find the "Скрыть итоги до завершения" Switch
+    t =    45.48s Find the "Скрыть итоги до завершения" Switch
+    t =    45.52s Find the "Скрыть итоги до завершения" Switch
+    t =    45.56s Find the "Скрыть итоги до завершения" Switch
+    t =    45.59s Tap "Скрыть итоги до завершения" Switch
+    t =    45.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    45.59s     Find the "Скрыть итоги до завершения" Switch
+    t =    45.62s     Check for interrupting elements affecting "Скрыть итоги до завершения" Switch
+    t =    45.65s     Synthesize event
+    t =    45.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    47.25s Find the "Скрыть итоги до завершения" Switch
+    t =    47.29s Tap "Скрыть итоги до завершения" Switch
+    t =    47.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    47.29s     Find the "Скрыть итоги до завершения" Switch
+    t =    47.32s     Check for interrupting elements affecting "Скрыть итоги до завершения" Switch
+    t =    47.35s     Synthesize event
+    t =    47.66s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    48.97s Find the "Скрыть итоги до завершения" Switch
+    t =    49.01s Checking existence of `"Время" Button`
+    t =    49.05s Find the "action-form-header" StaticText
+    t =    49.09s Find the "poll-create" Button
+    t =    49.12s Find the "Время" Button
+    t =    49.17s Find the "Время" Button
+    t =    49.20s Swipe up "action-form-scroll" ScrollView
+    t =    49.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    49.20s     Find the "action-form-scroll" ScrollView
+    t =    49.24s     Check for interrupting elements affecting "action-form-scroll" ScrollView
+    t =    49.29s     Synthesize event
+    t =    49.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    50.23s Checking existence of `"Время" Button`
+    t =    50.27s Find the "action-form-header" StaticText
+    t =    50.31s Find the "poll-create" Button
+    t =    50.34s Find the "Время" Button
+    t =    50.38s Find the "Время" Button
+    t =    50.42s Find the "Время" Button
+    t =    51.46s Checking `Expect predicate `exists == 1` for object "Дата" Button`
+    t =    51.46s     Checking existence of `"Дата" Button`
+    t =    52.55s Checking `Expect predicate `exists == 1` for object "По московскому времени" StaticText`
+    t =    52.55s     Checking existence of `"По московскому времени" StaticText`
+    t =    52.59s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    52.77s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    53.22s Find the Window (First Match)
+    t =    53.34s Added attachment named 'date79-five-settings-and-deadline'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-five-settings-and-deadline.png
+    t =    53.34s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    53.36s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    53.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    53.40s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-five-settings-and-deadline.json
+    t =    53.42s Checking existence of `"Анонимный опрос" Switch`
+    t =    53.45s Find the "action-form-header" StaticText
+    t =    53.48s Find the "poll-create" Button
+    t =    53.51s Find the "Анонимный опрос" Switch
+    t =    53.55s Find the "Анонимный опрос" Switch
+    t =    53.58s Find the "Анонимный опрос" Switch
+    t =    53.61s Tap "Анонимный опрос" Switch
+    t =    53.62s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    53.62s     Find the "Анонимный опрос" Switch
+    t =    53.65s     Check for interrupting elements affecting "Анонимный опрос" Switch
+    t =    53.68s     Synthesize event
+    t =    53.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    55.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.31s Find the "action-form-header" StaticText
+    t =    55.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.38s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 94.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    55.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    55.39s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.41s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    55.43s     Synthesize event
+    t =    55.44s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.46s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.48s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.50s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    55.52s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    57.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    58.75s Checking `Expect predicate `exists == 1` for object "Продолжить редактирование" Button`
+    t =    58.75s     Checking existence of `"Продолжить редактирование" Button`
+    t =    58.78s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    58.90s Requesting snapshot of accessibility hierarchy for app with pid 99866
+    t =    59.34s Find the Window (First Match)
+    t =    59.45s Added attachment named 'date79-dirty-confirm-same-panel'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-dirty-confirm-same-panel.png
+    t =    59.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    59.46s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    59.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    59.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/DB0BC486-C1FD-410B-A897-BA787EA20105/tmp/somewhere-design-verification/date79-dirty-confirm-same-panel.json
+    t =    59.50s Tap "Продолжить редактирование" Button
+    t =    59.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    59.51s     Find the "Продолжить редактирование" Button
+    t =    59.53s     Check for interrupting elements affecting "Продолжить редактирование" Button
+    t =    59.55s     Synthesize event
+    t =    59.85s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    60.88s Checking `Expect predicate `exists == 1` for object "poll-create" Button`
+    t =    60.88s     Checking existence of `"poll-create" Button`
+    t =    60.92s Checking existence of `"Анонимный опрос" Switch`
+    t =    60.96s Find the "action-form-header" StaticText
+    t =    60.99s Find the "poll-create" Button
+    t =    61.03s Find the "Анонимный опрос" Switch
+    t =    61.06s Find the "Анонимный опрос" Switch
+    t =    61.10s Find the "Анонимный опрос" Switch
+    t =    61.13s Find the "Анонимный опрос" Switch
+    t =    61.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.18s Find the "action-form-header" StaticText
+    t =    61.23s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.28s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 94.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 854.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    61.28s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    61.28s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.30s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    61.33s     Synthesize event
+    t =    61.34s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.36s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.38s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.40s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    61.42s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    63.32s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    63.63s Tap "Выйти без сохранения" Button
+    t =    63.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    63.64s     Find the "Выйти без сохранения" Button
+    t =    63.67s     Check for interrupting elements affecting "Выйти без сохранения" Button
+    t =    63.70s     Synthesize event
+    t =    64.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    65.34s Checking `Expect predicate `exists == 1` for object "meeting-add" Button`
+    t =    65.34s     Checking existence of `"meeting-add" Button`
+    t =    65.38s Terminate dev.groupplanning.ios.uitesthost:99866
+2026-11-05 22:25:28.731 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:25:28.737 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:25:28.744 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    66.46s Tear Down
+Test Case '-[SomewhereUITests.DateCheckpoint79Tests testAOptionsSettingsDeadlineAndDirty]' passed (66.672 seconds).
+Test Suite 'DateCheckpoint79Tests' passed at 2026-11-05 22:25:29.988.
+	 Executed 1 test, with 0 failures (0 unexpected) in 66.672 (66.674) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-05 22:25:29.989.
+	 Executed 1 test, with 0 failures (0 unexpected) in 66.672 (66.676) seconds
+Test Suite 'Selected tests' passed at 2026-11-05 22:25:29.990.
+	 Executed 1 test, with 0 failures (0 unexpected) in 66.672 (66.677) seconds
+2026-11-05 22:25:30.027 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:25:30.027 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:25:30.028 xcodebuild[99815:20805125] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 22:25:30.293 xcodebuild[99815:20805125] [MT] IDETestOperationsObserverDebug: 71.090 elapsed -- Testing started completed.
+2026-11-05 22:25:30.294 xcodebuild[99815:20805125] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 22:25:30.294 xcodebuild[99815:20805125] [MT] IDETestOperationsObserverDebug: 71.090 sec, +71.090 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/date79-r1-independent-A2-20261105.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
