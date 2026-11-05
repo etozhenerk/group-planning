@@ -1,0 +1,51 @@
+[
+  {
+    action: 'fresh actual/raw cover geometry',
+    actual: {
+      section: [Object],
+      padding: '16px 0px 0px',
+      background: 'rgba(0, 0, 0, 0)',
+      border: '',
+      children: [Array]
+    },
+    reference: {
+      section: [Object],
+      padding: '14px',
+      background: 'rgb(48, 49, 56)',
+      border: '1px solid rgba(255, 255, 255, 0.07)',
+      children: [Array]
+    }
+  },
+  {
+    action: 'real viewport390x430; known-error footer and scroll to end',
+    panel: {
+      x: 0,
+      y: 283.8125,
+      width: 390,
+      height: 146.1875,
+      top: 283.8125,
+      right: 390,
+      bottom: 430,
+      left: 0
+    },
+    description: { x: 20, y: 158.6875, width: 350, height: 80 },
+    descriptionAbovePanel: true,
+    viewport: { width: 390, height: 430, scrollWidth: 390 }
+  },
+  {
+    action: 'open date popup at390x430',
+    popup: { x: 20, y: 243, width: 346, height: 398 },
+    bounded: false
+  },
+  {
+    action: 'short popup Done bounds before/after inner scroll',
+    before: { x: 287.828125, y: 671, width: 66.171875, height: 44 }
+  },
+  {
+    action: 'short popup Done after inner scroll',
+    done: { x: 287.828125, y: 585, width: 66.171875, height: 44 },
+    popup: { x: 20, y: 243, width: 346, height: 398 }
+  },
+  { action: 'Escape restores date focus', dateFocused: true },
+  { action: 'dirty guard confirmed Leave', destination: '/meetings' }
+]

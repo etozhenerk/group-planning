@@ -103,7 +103,13 @@ internal class CreationViewModel(
         ) {
             return
         }
-        mutable.value = state.value.copy(busy = true, problem = null)
+        mutable.value =
+            state.value.copy(
+                busy = true,
+                problem = null,
+                validationAttempt =
+                state.value.validationAttempt + 1,
+            )
         persistence?.cancel()
         operation = viewModelScope.launch { performSubmit() }
     }
@@ -118,7 +124,13 @@ internal class CreationViewModel(
                 val checked = record.value.validate()
                 if (checked.issue != null) {
                     mutable.value = state.value.copy(
-                        problem = checked.issue.text,
+                        problem = if (record.value.title.trim().isEmpty() ||
+                            record.value.day == null
+                        ) {
+                            null
+                        } else {
+                            checked.issue.text
+                        },
                         ambiguous = checked.issue == DraftIssue.Ambiguous,
                     )
                     return

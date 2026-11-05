@@ -1,0 +1,481 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData -resultBundlePath /private/tmp/create-checkpoint76-independent.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/CreateCheckpoint76Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/create-checkpoint76-independent.xcresult
+
+2026-11-05 18:53:19.675 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:53:21.045155+0300 SomewhereUITests-Runner[63049:20258571] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 18:53:23.922.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 18:53:23.922.
+Test Suite 'CreateCheckpoint76Tests' started at 2026-11-05 18:53:23.922.
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testAValidationDirtyAndDateOnlyCreation]' started.
+    t =     0.00s Start Test at 2026-11-05 18:53:23.924
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 18:53:24.016 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 18:53:24.016 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 18:53:24.046 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[63049]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106f94398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a478310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.84s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.30s Checking `Expect predicate `exists == 1` for object "Создать встречу" Button`
+    t =     5.30s     Checking existence of `"Создать встречу" Button`
+    t =     5.38s Tap "Создать встречу" Button
+    t =     5.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.38s     Find the "Создать встречу" Button
+    t =     5.40s     Check for interrupting elements affecting "meetings-empty" Button
+    t =     5.42s     Synthesize event
+    t =     5.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.20s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =     7.20s     Checking existence of `"meeting-title" TextField`
+    t =     7.37s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =     7.54s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =     8.00s Find the Window (First Match)
+    t =     8.11s Added attachment named 'create-normal-empty'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-empty.png
+    t =     8.12s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-empty.json
+    t =     8.22s Tap "create-submit" Button
+    t =     8.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.23s     Find the "create-submit" Button
+    t =     8.26s     Check for interrupting elements affecting "create-submit" Button
+    t =     8.29s     Synthesize event
+    t =     8.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.CreateCheckpoint76Tests testAValidationDirtyAndDateOnlyCreation] : Invalid frame dimension (negative or non-finite).
+    t =    10.00s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    10.00s     Checking existence of `"Введите название встречи" StaticText`
+    t =    11.17s Checking `Expect predicate `exists == 1` for object Keyboard (First Match)`
+    t =    11.17s     Checking existence of `Keyboard (First Match)`
+    t =    11.19s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    11.51s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    11.99s Find the Window (First Match)
+    t =    12.11s Added attachment named 'create-normal-required-focused'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-required-focused.png
+    t =    12.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.15s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-required-focused.json
+    t =    12.24s Type 'Независимая встреч...' into "meeting-title" TextField
+    t =    12.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.24s     Find the "meeting-title" TextField
+    t =    12.29s     Check for interrupting elements affecting "meeting-title" TextField
+    t =    12.34s     Synthesize event
+    t =    13.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.08s Tap "creation-keyboard-done" Button
+    t =    13.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.08s     Find the "creation-keyboard-done" Button
+    t =    13.14s     Check for interrupting elements affecting "creation-keyboard-done" Button
+    t =    13.18s     Synthesize event
+    t =    13.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.75s Checking existence of `"Введите название встречи" StaticText`
+    t =    13.80s Tap "create-submit" Button
+    t =    13.80s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.80s     Find the "create-submit" Button
+    t =    13.83s     Check for interrupting elements affecting "create-submit" Button
+    t =    13.87s     Synthesize event
+    t =    14.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.25s Checking `Expect predicate `exists == 1` for object "Выберите дату встречи" StaticText`
+    t =    15.25s     Checking existence of `"Выберите дату встречи" StaticText`
+    t =    15.29s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    15.46s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    15.93s Find the Window (First Match)
+    t =    16.04s Added attachment named 'create-normal-date-required'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-date-required.png
+    t =    16.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.10s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-date-required.json
+    t =    16.13s Swipe down "create-form" ScrollView
+    t =    16.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.13s     Find the "create-form" ScrollView
+    t =    16.16s     Check for interrupting elements affecting "create-form" ScrollView
+    t =    16.19s     Synthesize event
+    t =    16.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.19s Checking `Expect predicate `exists == 1` for object "Вернуться к встречам" Button`
+    t =    18.19s     Checking existence of `"Вернуться к встречам" Button`
+    t =    18.23s Tap "Вернуться к встречам" Button
+    t =    18.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.36s     Find the "Вернуться к встречам" Button
+    t =    18.40s     Check for interrupting elements affecting "Вернуться к встречам" Button
+    t =    18.44s     Synthesize event
+    t =    18.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.14s Checking `Expect predicate `exists == 1` for object "Продолжить редактирование" Button`
+    t =    20.14s     Checking existence of `"Продолжить редактирование" Button`
+    t =    20.19s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    20.43s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    20.90s Find the Window (First Match)
+    t =    21.01s Added attachment named 'create-dirty-return-dialog'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-dirty-return-dialog.png
+    t =    21.01s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.04s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-dirty-return-dialog.json
+    t =    21.12s Tap "Продолжить редактирование" Button
+    t =    21.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.12s     Find the "Продолжить редактирование" Button
+    t =    21.16s     Check for interrupting elements affecting "Продолжить редактирование" Button
+    t =    21.21s     Synthesize event
+    t =    21.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.75s Find the "meeting-title" TextField
+    t =    21.79s Find the "Дата" Button
+    t =    21.83s Find the "Дата" Button
+    t =    21.86s Find the "create-submit" Button
+    t =    21.90s Tap "Дата" Button
+    t =    21.90s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.90s     Find the "Дата" Button
+    t =    21.93s     Check for interrupting elements affecting "Дата" Button
+    t =    21.96s     Synthesize event
+    t =    22.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.40s Checking `Expect predicate `exists == 1` for object "picker-done" Button`
+    t =    23.40s     Checking existence of `"picker-done" Button`
+    t =    23.51s Tap "picker-done" Button
+    t =    23.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.51s     Find the "picker-done" Button
+    t =    23.58s     Check for interrupting elements affecting "picker-done" Button
+    t =    23.64s     Synthesize event
+    t =    23.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.31s Find the "Время" Button
+    t =    24.35s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    24.54s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    25.00s Find the Window (First Match)
+    t =    25.11s Added attachment named 'create-normal-date-only-ready'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-date-only-ready.png
+    t =    25.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.18s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-date-only-ready.json
+    t =    25.20s Tap "create-submit" Button
+    t =    25.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.21s     Find the "create-submit" Button
+    t =    25.24s     Check for interrupting elements affecting "create-submit" Button
+    t =    25.28s     Synthesize event
+    t =    25.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.19s Checking `Expect predicate `exists == 1` for object "feed-title" StaticText`
+    t =    27.19s     Checking existence of `"feed-title" StaticText`
+    t =    27.22s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    27.32s Requesting snapshot of accessibility hierarchy for app with pid 63073
+    t =    27.76s Find the Window (First Match)
+    t =    27.86s Added attachment named 'create-normal-created-chat'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-created-chat.png
+    t =    27.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-normal-created-chat.json
+    t =    27.92s Terminate dev.groupplanning.ios.uitesthost:63073
+2026-11-05 18:53:51.856 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:53:51.856 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:53:51.856 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    29.02s Tear Down
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testAValidationDirtyAndDateOnlyCreation]' passed (29.104 seconds).
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testBLostAcknowledgementRetry]' started.
+    t =     0.00s Start Test at 2026-11-05 18:53:53.029
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.02s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 18:53:53.054 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 18:53:53.054 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 18:53:53.061 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.24s         Setting up automation session
+    t =     2.52s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.00s Checking `Expect predicate `exists == 1` for object "Создать встречу" Button`
+    t =     5.00s     Checking existence of `"Создать встречу" Button`
+    t =     5.07s Tap "Создать встречу" Button
+    t =     5.07s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.07s     Find the "Создать встречу" Button
+    t =     5.09s     Check for interrupting elements affecting "meetings-empty" Button
+    t =     5.11s     Synthesize event
+    t =     5.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.84s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =     6.84s     Checking existence of `"meeting-title" TextField`
+    t =     6.88s Tap "meeting-title" TextField
+    t =     6.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.89s     Find the "meeting-title" TextField
+    t =     6.92s     Check for interrupting elements affecting "meeting-title" TextField
+    t =     6.95s     Synthesize event
+    t =     7.24s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.CreateCheckpoint76Tests testBLostAcknowledgementRetry] : Invalid frame dimension (negative or non-finite).
+    t =     7.51s Type 'Встреча после неза...' into "meeting-title" TextField
+    t =     7.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.88s     Find the "meeting-title" TextField
+    t =     7.96s     Check for interrupting elements affecting "meeting-title" TextField
+    t =     8.01s     Synthesize event
+    t =     8.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.79s Tap "creation-keyboard-done" Button
+    t =     8.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.79s     Find the "creation-keyboard-done" Button
+    t =     8.85s     Check for interrupting elements affecting "creation-keyboard-done" Button
+    t =     8.89s     Synthesize event
+    t =     9.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.43s Find the "Дата" Button
+    t =     9.48s Find the "Дата" Button
+    t =     9.52s Find the "create-submit" Button
+    t =     9.55s Tap "Дата" Button
+    t =     9.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.55s     Find the "Дата" Button
+    t =     9.58s     Check for interrupting elements affecting "Дата" Button
+    t =     9.61s     Synthesize event
+    t =     9.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.48s Checking `Expect predicate `exists == 1` for object "picker-done" Button`
+    t =    11.48s     Checking existence of `"picker-done" Button`
+    t =    11.57s Tap "picker-done" Button
+    t =    11.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.58s     Find the "picker-done" Button
+    t =    11.66s     Check for interrupting elements affecting "picker-done" Button
+    t =    11.72s     Synthesize event
+    t =    12.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.40s Tap "create-submit" Button
+    t =    12.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.42s     Find the "create-submit" Button
+    t =    12.46s     Check for interrupting elements affecting "create-submit" Button
+    t =    12.49s     Synthesize event
+    t =    12.79s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.84s Checking `Expect predicate `exists == 1` for object "Не удалось подтвердить создание" StaticText`
+    t =    13.84s     Checking existence of `"Не удалось подтвердить создание" StaticText`
+    t =    13.88s Find the "create-submit" Button
+    t =    13.91s Find the "meeting-title" TextField
+    t =    13.94s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    14.12s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    14.58s Find the Window (First Match)
+    t =    14.69s Added attachment named 'create-unknown-response-retry'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-response-retry.png
+    t =    14.69s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.73s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.75s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-response-retry.json
+    t =    14.77s Tap "create-submit" Button
+    t =    14.77s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.78s     Find the "create-submit" Button
+    t =    14.81s     Check for interrupting elements affecting "create-submit" Button
+    t =    14.84s     Synthesize event
+    t =    15.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.69s Checking `Expect predicate `exists == 1` for object "feed-title" StaticText`
+    t =    16.69s     Checking existence of `"feed-title" StaticText`
+    t =    16.71s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    16.81s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    17.25s Find the Window (First Match)
+    t =    17.35s Added attachment named 'create-unknown-recovered-chat'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-recovered-chat.png
+    t =    17.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-recovered-chat.json
+    t =    17.40s Tap "feed-back" Button
+    t =    17.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.40s     Find the "feed-back" Button
+    t =    17.42s     Check for interrupting elements affecting "feed-back" Button
+    t =    17.44s     Synthesize event
+    t =    17.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.11s Checking `Expect predicate `exists == 1` for object Button (First Match)`
+    t =    19.12s     Checking existence of `Button (First Match)`
+    t =    19.15s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "meeting-card-"'
+    t =    19.16s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    19.26s Requesting snapshot of accessibility hierarchy for app with pid 63163
+    t =    19.70s Find the Window (First Match)
+    t =    19.83s Added attachment named 'create-unknown-single-created-card'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-single-created-card.png
+    t =    19.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-unknown-single-created-card.json
+    t =    19.89s Terminate dev.groupplanning.ios.uitesthost:63163
+2026-11-05 18:54:12.931 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:12.931 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:12.931 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    20.97s Tear Down
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testBLostAcknowledgementRetry]' passed (21.018 seconds).
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testCShortAndLargeSpots]' started.
+    t =     0.00s Start Test at 2026-11-05 18:54:14.047
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 18:54:14.073 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 18:54:14.073 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 18:54:14.082 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.24s         Setting up automation session
+    t =     2.48s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.85s Checking `Expect predicate `exists == 1` for object "Создать встречу" Button`
+    t =     4.85s     Checking existence of `"Создать встречу" Button`
+    t =     4.92s Tap "Создать встречу" Button
+    t =     4.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.92s     Find the "Создать встречу" Button
+    t =     4.94s     Check for interrupting elements affecting "meetings-empty" Button
+    t =     4.96s     Synthesize event
+    t =     5.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.70s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =     6.70s     Checking existence of `"meeting-title" TextField`
+    t =     6.76s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =     6.92s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =     7.38s Find the Window (First Match)
+    t =     7.49s Added attachment named 'create-short-normal-top'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-top.png
+    t =     7.50s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.52s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-top.json
+    t =     7.58s Find the "create-submit" Button
+    t =     7.61s Find the "create-submit" Button
+    t =     7.64s Swipe up "create-form" ScrollView
+    t =     7.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.65s     Find the "create-form" ScrollView
+    t =     7.68s     Check for interrupting elements affecting "create-form" ScrollView
+    t =     7.71s     Synthesize event
+    t =     8.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.68s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =     8.86s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =     9.32s Find the Window (First Match)
+    t =     9.44s Added attachment named 'create-short-normal-bottom'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-bottom.png
+    t =     9.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.47s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.49s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-bottom.json
+    t =     9.53s Find the "create-submit" Button
+    t =     9.57s Tap "create-submit" Button
+    t =     9.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.57s     Find the "create-submit" Button
+    t =     9.61s     Check for interrupting elements affecting "create-submit" Button
+    t =     9.63s     Synthesize event
+    t =     9.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.CreateCheckpoint76Tests testCShortAndLargeSpots] : Invalid frame dimension (negative or non-finite).
+    t =    11.33s Checking `Expect predicate `exists == 1` for object Keyboard (First Match)`
+    t =    11.33s     Checking existence of `Keyboard (First Match)`
+    t =    11.35s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =    11.68s Requesting snapshot of accessibility hierarchy for app with pid 63707
+    t =    12.17s Find the Window (First Match)
+    t =    12.28s Added attachment named 'create-short-normal-required-keyboard'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-required-keyboard.png
+    t =    12.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.32s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.38s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/6CB05F59-8174-4609-9BD8-1F4829919584/tmp/somewhere-design-verification/create-short-normal-required-keyboard.json
+    t =    12.41s Type 'Исправлено' into "meeting-title" TextField
+    t =    12.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.42s     Find the "meeting-title" TextField
+    t =    12.46s     Check for interrupting elements affecting "meeting-title" TextField
+    t =    12.51s     Synthesize event
+    t =    12.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.02s Tap "creation-keyboard-done" Button
+    t =    13.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.04s     Find the "creation-keyboard-done" Button
+    t =    13.09s     Check for interrupting elements affecting "creation-keyboard-done" Button
+    t =    13.13s     Synthesize event
+    t =    13.44s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.69s Find the "meeting-title" TextField
+    t =    13.73s Terminate dev.groupplanning.ios.uitesthost:63707
+2026-11-05 18:54:27.797 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:27.798 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:27.798 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    14.80s Open dev.groupplanning.ios.uitesthost
+    t =    14.80s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 18:54:28.851 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 18:54:28.852 xcodebuild[63008:20258243] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 18:54:28.863 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    15.02s         Setting up automation session
+    t =    17.23s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.57s Checking `Expect predicate `exists == 1` for object "Создать встречу" Button`
+    t =    19.57s     Checking existence of `"Создать встречу" Button`
+    t =    19.64s Tap "Создать встречу" Button
+    t =    19.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.64s     Find the "Создать встречу" Button
+    t =    19.66s     Check for interrupting elements affecting "meetings-empty" Button
+    t =    19.68s     Synthesize event
+    t =    19.71s         Scroll element to visible
+    t =    19.72s         Find the "meetings-empty" Button
+    t =    19.74s         Computed hit point {119.1333354185025, 508.09994825075069} after scrolling to visible
+    t =    20.03s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.07s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    21.07s     Checking existence of `"meeting-title" TextField`
+    t =    21.08s     Capturing element debug description
+    t =    22.13s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    22.13s     Checking existence of `"meeting-title" TextField`
+    t =    22.14s     Capturing element debug description
+    t =    23.08s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    23.08s     Checking existence of `"meeting-title" TextField`
+    t =    23.11s     Capturing element debug description
+    t =    24.13s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    24.13s     Checking existence of `"meeting-title" TextField`
+    t =    24.16s     Capturing element debug description
+    t =    25.10s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    25.10s     Checking existence of `"meeting-title" TextField`
+    t =    25.13s     Capturing element debug description
+    t =    26.08s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    26.08s     Checking existence of `"meeting-title" TextField`
+    t =    26.09s     Capturing element debug description
+    t =    27.12s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    27.12s     Checking existence of `"meeting-title" TextField`
+    t =    27.13s     Capturing element debug description
+    t =    28.08s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    28.09s     Checking existence of `"meeting-title" TextField`
+    t =    28.12s     Capturing element debug description
+    t =    29.05s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    29.05s     Checking existence of `"meeting-title" TextField`
+    t =    29.07s     Capturing element debug description
+    t =    30.13s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    30.13s     Checking existence of `"meeting-title" TextField`
+    t =    30.15s     Capturing element debug description
+    t =    31.07s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    31.07s     Checking existence of `"meeting-title" TextField`
+    t =    31.08s     Capturing element debug description
+    t =    32.04s Checking `Expect predicate `exists == 1` for object "meeting-title" TextField`
+    t =    32.04s     Checking existence of `"meeting-title" TextField`
+    t =    32.06s     Capturing element debug description
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/CreateCheckpoint76Tests.swift:25: error: -[SomewhereUITests.CreateCheckpoint76Tests testCShortAndLargeSpots] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)")
+    t =    32.22s Tear Down
+Test Case '-[SomewhereUITests.CreateCheckpoint76Tests testCShortAndLargeSpots]' failed (32.504 seconds).
+Test Suite 'CreateCheckpoint76Tests' failed at 2026-11-05 18:54:46.551.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 82.625 (82.629) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-11-05 18:54:46.552.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 82.625 (82.629) seconds
+Test Suite 'Selected tests' failed at 2026-11-05 18:54:46.552.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 82.625 (82.630) seconds
+2026-11-05 18:54:46.582 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.582 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.583 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.593 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.594 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.595 xcodebuild[63008:20258243] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 18:54:46.858 xcodebuild[63008:20258243] [MT] IDETestOperationsObserverDebug: 87.232 elapsed -- Testing started completed.
+2026-11-05 18:54:46.858 xcodebuild[63008:20258243] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 18:54:46.858 xcodebuild[63008:20258243] [MT] IDETestOperationsObserverDebug: 87.232 sec, +87.232 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/create-checkpoint76-independent.xcresult
+
+Failing tests:
+	CreateCheckpoint76Tests.testCShortAndLargeSpots()
+
+** TEST EXECUTE FAILED **
+
+Testing started

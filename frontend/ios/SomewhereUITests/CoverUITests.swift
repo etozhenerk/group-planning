@@ -87,7 +87,7 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Создать встречу"].waitForExistence(timeout: 15))
         app.buttons["Создать встречу"].tap()
         reveal(app.buttons["create-submit"], app)
-        XCTAssertEqual(app.buttons["create-submit"].label, "Повторить сохранение")
+        XCTAssertEqual(app.buttons["create-submit"].label, "Повторить отправку")
         app.buttons["create-submit"].tap()
         XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))

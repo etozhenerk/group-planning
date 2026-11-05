@@ -1,6 +1,16 @@
 import Foundation
 
 enum MeetingLabels {
+    static func zone(_ identifier: String) -> String {
+        guard let zone = TimeZone(identifier: identifier) else { return identifier }
+        if ["UTC", "GMT", "Etc/UTC", "Etc/GMT"].contains(identifier) { return "UTC" }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.timeZone = zone
+        formatter.dateFormat = "VVV"
+        return formatter.string(from: Date())
+    }
+
     static func time(_ instant: APIInstant?, timezone: String, startsOn: String? = nil) -> String {
         guard let instant else {
             guard let startsOn else { return String(localized: "Дата ещё выбирается") }

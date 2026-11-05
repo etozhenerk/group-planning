@@ -58,16 +58,16 @@ class CoverUiTests {
             }
             fixture.waitTag("meeting-cover")
             compose.onNodeWithTag("meeting-cover").assertExists()
-            compose.onNodeWithTag("create-submit").performScrollTo().performClick()
-            fixture.waitText(fixture.context.getString(R.string.create_retry))
+            compose.onNodeWithTag("create-submit").performClick()
+            fixture.waitText(fixture.context.getString(R.string.create_send_again))
             compose.onNodeWithTag("cover-select").assertIsNotEnabled()
             fixture.screenshot("android-cover-create-retry")
             activity.recreate()
-            fixture.waitText(fixture.context.getString(R.string.create_retry))
+            fixture.waitText(fixture.context.getString(R.string.create_send_again))
             compose.onNodeWithContentDescription(
                 "Название",
             ).assertTextContains("Встреча с обложкой")
-            compose.onNodeWithTag("create-submit").performScrollTo().performClick()
+            compose.onNodeWithTag("create-submit").performClick()
             fixture.waitTag("feed-timeline")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
             fixture.waitTag("meeting-information")

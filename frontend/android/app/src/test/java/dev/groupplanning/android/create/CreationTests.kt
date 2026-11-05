@@ -134,7 +134,8 @@ class CreationTests {
         runCurrent()
         model.submit()
         runCurrent()
-        assertNotNull(model.state.value.problem)
+        assertNull(model.state.value.problem)
+        assertEquals(1, model.state.value.validationAttempt)
         assertEquals(0, h.api.transport.requests.count { it.method == "POST" })
         model.change { it.copy(title = "Настолки", day = "2026-10-24", time = "19:00") }
         h.api.transport.enqueue("meetings", status = 422)

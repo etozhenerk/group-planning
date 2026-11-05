@@ -11,14 +11,16 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun RequiredLegend() {
+internal fun RequiredLegend(sentence: Boolean = false) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS4),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RequiredMark(Modifier.alignByBaseline())
         Text(
-            stringResource(R.string.required_fields),
+            stringResource(
+                if (sentence) R.string.create_required_legend else R.string.required_fields,
+            ),
             Modifier.alignByBaseline(),
             fontSize = DesignTokens.typographySizeCaption,
             color = DesignTokens.colorMuted,

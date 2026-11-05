@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.5.0. Do not edit.
+// Generated from design-system/tokens.json · 7.6.0. Do not edit.
 export const componentTokens = {
   componentActionColumnWidth: '700px',
   componentActionFieldGap: '18px',

@@ -14,6 +14,7 @@ export type MeetingTimeFieldsProps = {
   disabled?: boolean;
   mobileSheet?: boolean;
   dateRequired?: boolean;
+  creation?: boolean;
 };
 
 export const MeetingTimeFields = ({
@@ -23,6 +24,7 @@ export const MeetingTimeFields = ({
   disabled = false,
   mobileSheet = false,
   dateRequired = true,
+  creation = false,
 }: MeetingTimeFieldsProps) => {
   const mobile = useMobileLayout();
   const narrow = useMediaQuery(`(max-width: ${designTokens.breakpointChatNarrowWidth})`);
@@ -33,6 +35,7 @@ export const MeetingTimeFields = ({
       className={styles['time-fields']}
       data-sheet={mobileSheet && mobile}
       data-narrow={narrow}
+      data-create={creation && mobile}
     >
       <div className={styles['form-time']}>
         <DateInput

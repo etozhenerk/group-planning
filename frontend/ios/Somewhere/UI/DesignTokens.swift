@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.5.0. Do not edit.
+// Generated from design-system/tokens.json · 7.6.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -737,6 +737,17 @@ enum DesignTokens {
     static let componentMobileChatNarrowMarkWidth = CGFloat(30)
     static let componentMobileChatSendCircleSize = CGFloat(38)
     static let componentMobileChatSendIconSize = CGFloat(20)
+    static let componentMobileCreationCoverIconSize = CGFloat(28)
+    static let componentMobileCreationCoverSize = CGFloat(86)
+    static let componentMobileCreationFieldHeight = CGFloat(48)
+    static let componentMobileCreationFieldRadius = CGFloat(13)
+    static let componentMobileCreationHintIconSize = CGFloat(14)
+    static let componentMobileCreationInvalidBackgroundMix = 0.03
+    static let componentMobileCreationInvalidBorderMix = 0.65
+    static let componentMobileCreationInvalidRingOpacity = 0.07
+    static let componentMobileCreationInvalidRingWidth = CGFloat(3)
+    static let componentMobileCreationLabelSize = CGFloat(14)
+    static let componentMobileCreationTitleLineHeight = 1.2
     static let componentMobileFieldGap = CGFloat(7)
     static let componentMobileFieldIconSize = CGFloat(18)
     static let componentMobileFieldInsetBlock = CGFloat(10)

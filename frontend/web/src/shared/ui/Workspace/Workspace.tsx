@@ -12,6 +12,7 @@ export type WorkspaceProps = {
   children: ReactNode;
   conversation?: boolean;
   screen?: boolean;
+  mobileBrand?: boolean;
 };
 
 export const Workspace = ({
@@ -19,6 +20,7 @@ export const Workspace = ({
   children,
   conversation = false,
   screen = false,
+  mobileBrand = true,
 }: WorkspaceProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const navigationRef = useRef<HTMLDivElement>(null);
@@ -47,9 +49,11 @@ export const Workspace = ({
           ' ',
         )}
       >
-        <div className={styles.mobileBrand}>
-          <Brand variant="header" />
-        </div>
+        {mobileBrand && (
+          <div className={styles.mobileBrand}>
+            <Brand variant="header" />
+          </div>
+        )}
         {children}
       </div>
     </div>

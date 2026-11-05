@@ -23,3 +23,11 @@
   min-height: 44px;
   padding: 10px 12px;
 }
+
+@media (width < design-token(breakpoint.mobile)) {
+  .content {
+    max-height: calc(100dvh - var(--ds-space-s16) * 2);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

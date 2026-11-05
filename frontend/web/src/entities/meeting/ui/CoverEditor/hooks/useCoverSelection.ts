@@ -7,12 +7,15 @@ export const useCoverSelection = (
   onChange: (cover: PreparedCover | null) => void,
   onBusy: (busy: boolean) => void,
 ) => {
+  const input = useRef<HTMLInputElement>(null);
   const controller = useRef<AbortController | null>(null);
   const [problem, setProblem] = useState('');
   const [busy, setBusy] = useState(false);
   useEffect(() => () => controller.current?.abort(), []);
 
   return {
+    input,
+    open: () => input.current?.click(),
     problem,
     busy,
     choose: async (event: ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,4 @@
-# Токены somewhere · 7.5.0
+# Токены somewhere · 7.6.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -281,6 +281,17 @@
 | component.mobileChat.narrowMarkWidth | dimension | 30px | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css @media max-width350 .meeting-mark |
 | component.mobileChatSend.circleSize | dimension | 38px | chat-r6: круг внутри target44 |
 | component.mobileChatSend.iconSize | dimension | 20px | chat-r6: вертикальная стрелка |
+| component.mobileCreation.coverIconSize | dimension | 28px | Неизменённый create-r5: media svg28. |
+| component.mobileCreation.coverSize | dimension | 86px | Утверждённый create-r5/source/CoverEditor.module.css: квадрат86, не settingscompact52. |
+| component.mobileCreation.fieldHeight | dimension | 48px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.fieldRadius | dimension | 13px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.hintIconSize | dimension | 14px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.invalidBackgroundMix | number | 0.03 | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.invalidBorderMix | number | 0.65 | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.invalidRingOpacity | number | 0.07 | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.invalidRingWidth | dimension | 3px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.labelSize | dimension | 14px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
+| component.mobileCreation.titleLineHeight | number | 1.2 | Неизменённый create-r5/source/CreatePreview.module.css: header h1 line-height1.2. |
 | component.mobileField.gap | dimension | 7px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |
 | component.mobileField.iconSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .date-field/.input-with-icon |
 | component.mobileField.insetBlock | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |

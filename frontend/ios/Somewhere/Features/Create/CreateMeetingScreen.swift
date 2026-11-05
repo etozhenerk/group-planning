@@ -23,7 +23,6 @@ struct CreateMeetingScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppPalette.background)
                 .toolbar(.hidden, for: .navigationBar)
-                .safeAreaInset(edge: .top, spacing: 0) { ServicePageHeader() }
 
         }
         .foregroundStyle(AppPalette.text).tint(AppPalette.accent).preferredColorScheme(.dark)

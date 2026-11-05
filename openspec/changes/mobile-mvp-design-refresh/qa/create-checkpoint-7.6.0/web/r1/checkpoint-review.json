@@ -1,0 +1,118 @@
+{
+  "kind": "independent limited screen checkpoint; not final acceptance",
+  "designVersion": "7.6.0",
+  "platform": "web",
+  "at": "2026-11-05T15:57:05.519Z",
+  "candidate": {
+    "sourceHash": "d6e808bf33750b903dd6171657adc3eb1ee617d26b1809a80a2d1e40fe008be6",
+    "artifactHash": "f33a944d52395fca3b11cb0df918e408254255da931b082473f3b60aa43bb419",
+    "designInputHash": "a5833550cde0a190ba22a8998aa5078fe9598ade845b3f2ea0ee43ae355231a5",
+    "url": "https://127.0.0.1:8893",
+    "candidateSha256": "6f4749cc08cc4bda741a01e9f44e61a64ac2cdda4c7e5dcad922d67569fde7fe"
+  },
+  "binding": {
+    "artifactMatches": true,
+    "diskFileCount": 261,
+    "liveAssetCount": 40,
+    "liveMatches": true,
+    "mainProbeSourceBefore": "d6e808bf33750b903dd6171657adc3eb1ee617d26b1809a80a2d1e40fe008be6",
+    "mainProbeSourceAfter": "d6e808bf33750b903dd6171657adc3eb1ee617d26b1809a80a2d1e40fe008be6"
+  },
+  "scope": {
+    "chromium": [
+      [
+        320,
+        760
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        390,
+        430
+      ]
+    ],
+    "webkit": [
+      [
+        390,
+        844
+      ]
+    ],
+    "desktopHistoricalSpot": [
+      [
+        1100,
+        900
+      ]
+    ],
+    "excluded": [
+      "maps",
+      "VoiceOver",
+      "OAuth/RSVP",
+      "full matrix",
+      "final design/feature gates"
+    ]
+  },
+  "findings": [
+    {
+      "id": "C2",
+      "severity": "P2",
+      "status": "remaining",
+      "summary": "Settings52 cover instead of approved create86 surface-card; mobile brand row absent in approved frame",
+      "evidence": [
+        "empty-390-actual.png",
+        "empty-390-reference.png",
+        "cover-selected-filled-actual.png",
+        "cover-selected-filled-reference.png",
+        "webkit-filled-actual.png",
+        "short-viewport.json"
+      ]
+    },
+    {
+      "id": "C3",
+      "severity": "P2",
+      "status": "remaining",
+      "summary": "Validation misaligns Date/Time centers22px at320 and13px at390; Date minimum47 rather than48. Approved title placeholder and legend spacing remain.",
+      "evidence": [
+        "validation-320-actual.png",
+        "validation-320-reference.png",
+        "validation-390-actual.png",
+        "validation-390-reference.png",
+        "checkpoint-probes.json"
+      ]
+    },
+    {
+      "id": "C4",
+      "severity": "P2",
+      "status": "remaining at short viewport",
+      "summary": "390x430 popup y243 height398 extends below viewport; Done remains offscreen even after inner scroll",
+      "evidence": [
+        "short-date-open-actual.png",
+        "short-date-scrolled-actual.png",
+        "short-viewport.json"
+      ]
+    }
+  ],
+  "resolvedWithinScope": [
+    "C1 sticky footer, notices, known and unknown retry; footer reserves enough scroll space"
+  ],
+  "functionalObservations": {
+    "mainProbeCount": 16,
+    "driverErrors": [],
+    "paths": [
+      "required validation/focus",
+      "PNG worker invalid+valid/remove/reselect",
+      "dirty Stay and Leave",
+      "known429 retry",
+      "committed lostACK retry same key exactly one meeting to same chat",
+      "date-only Chromium to chat",
+      "date-only PNG manual place WebKit to chat",
+      "Escape restores Date focus"
+    ],
+    "desktopFormAndFieldsEqualHistorical": true
+  },
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "finalGate": "not run; not claimed",
+  "writes": "QA only; app/manifests/tasks/Git untouched"
+}

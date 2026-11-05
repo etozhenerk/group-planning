@@ -75,7 +75,90 @@
   font-size: var(--ds-typography-size-mobile-web-input);
 }
 
+.form-fields[data-create='true'] {
+  --field-label-weight: var(--ds-typography-weight-medium);
+  --field-label-size: var(--ds-component-mobile-creation-label-size);
+  gap: var(--ds-space-s20);
+}
+
+.form-fields[data-create='true'] label {
+  color: var(--ds-color-text);
+  font-size: var(--ds-component-mobile-creation-label-size);
+  font-weight: var(--ds-typography-weight-medium);
+}
+
+.form-fields[data-create='true'] input,
+.form-fields[data-create='true'] textarea {
+  min-height: var(--ds-component-mobile-creation-field-height);
+  padding: var(--ds-space-s12) calc(var(--ds-space-s12) + var(--ds-space-s2));
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-creation-field-radius);
+  background: var(--ds-color-navigation);
+  color: var(--ds-color-text);
+  font-size: var(--ds-typography-size-mobile-web-input);
+}
+
+.form-fields[data-create='true'] textarea {
+  min-height: calc(var(--ds-space-s40) * 2);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.form-fields[data-create='true'] input[aria-invalid='true'] {
+  border-color: color-mix(
+    in srgb,
+    var(--ds-color-error)
+      calc(var(--ds-component-mobile-creation-invalid-border-mix) * 100%),
+    var(--ds-color-border-strong)
+  );
+  box-shadow: 0 0 0 var(--ds-component-mobile-creation-invalid-ring-width)
+    color-mix(
+      in srgb,
+      var(--ds-color-error)
+        calc(var(--ds-component-mobile-creation-invalid-ring-opacity) * 100%),
+      transparent
+    );
+  background: color-mix(
+    in srgb,
+    var(--ds-color-error)
+      calc(var(--ds-component-mobile-creation-invalid-background-mix) * 100%),
+    var(--ds-color-navigation)
+  );
+}
+
+.form-fields[data-create='true'] :global(.g-text-input__control) {
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 .form-fields[data-mobile='true'] textarea {
   min-height: var(--ds-component-mobile-field-text-area-minimum-height);
   line-height: var(--ds-typography-line-height-mobile-field-description);
+}
+
+.form-fields[data-create='true'] .group > [role='alert'] {
+  margin-top: calc(-1 * var(--ds-space-s12));
+}
+
+.form-fields[data-create='true'] button[aria-haspopup='dialog'] {
+  min-height: var(--ds-component-mobile-creation-field-height);
+  padding: var(--ds-space-s12) calc(var(--ds-space-s12) + var(--ds-space-s2));
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-creation-field-radius);
+  background: var(--ds-color-navigation);
+  font-size: var(--ds-typography-size-mobile-web-input);
+}
+
+.form-fields[data-create='true'] :global(.g-text-input) {
+  --g-text-input-height: var(--ds-component-mobile-creation-field-height);
+  --g-text-input-border-radius: var(--ds-component-mobile-creation-field-radius);
+}
+
+@media (width < design-token(breakpoint.chatNarrowWidth)) {
+  .form-fields[data-create='true'] button[aria-haspopup='dialog'] {
+    min-width: 0;
+    padding-inline: var(--ds-space-s8);
+    gap: var(--ds-space-s4);
+  }
 }

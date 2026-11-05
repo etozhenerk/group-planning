@@ -9,6 +9,8 @@ import type { Session } from '@/entities/session';
 import { MeetingFields, CoverEditor } from '@/entities/meeting';
 import { useCreateMeeting } from '@/features/create-meeting/model/useCreateMeeting';
 import { DiscardDialog } from '@/features/create-meeting/ui/DiscardDialog';
+import { ActionNotice } from '@/shared/ui/ActionNotice';
+import { useCreationFooter } from '@/features/create-meeting/ui/CreateMeetingForm/hooks/useCreationFooter';
 
 export type CreateMeetingFormProps = { session: Session };
 
@@ -16,7 +18,13 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
   const form = useCreateMeeting(session);
   const mobile = useMobileLayout();
   const formRef = useRef<HTMLFormElement>(null);
+  const footer = useCreationFooter(formRef, mobile);
   useInvalidFocus(formRef, form.validationAttempt);
+  const submitLabel = form.uncertain
+    ? 'Повторить отправку'
+    : mobile && form.problem
+      ? 'Попробовать снова'
+      : 'Создать встречу';
 
   return (
     <>
@@ -26,26 +34,47 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
           className={styles['stack']}
           noValidate={mobile}
           ref={formRef}
+          data-mobile={mobile}
         >
+          {mobile && <RequiredLegend sentence />}
           <CoverEditor
             value={form.value.cover}
             onChange={(cover) => form.change({ ...form.value, cover })}
             onBusy={form.setPreparing}
             disabled={form.locked}
             invalid={!!form.errors.cover}
-            prominent
+            prominent={!mobile}
+            compact={mobile}
+            creation={mobile}
           />
-          <RequiredLegend />
+          {!mobile && <RequiredLegend />}
           <MeetingFields
+            creation
             value={form.value}
             onChange={form.change}
             disabled={form.locked}
             errors={form.errors}
           />
-          <p className={styles['error']} role="alert">
-            {form.problem}
-          </p>
-          <div className={styles.actions}>
+          {!mobile && (
+            <p className={styles['error']} role="alert">
+              {form.problem}
+            </p>
+          )}
+          <div className={styles.actions} ref={footer}>
+            {mobile && form.problem && (
+              <ActionNotice
+                title={
+                  form.uncertain
+                    ? 'Не удалось подтвердить создание'
+                    : 'Не удалось создать встречу'
+                }
+                text={
+                  form.uncertain
+                    ? 'Повторите отправку — данные менять не нужно.'
+                    : form.problem
+                }
+              />
+            )}
             <Link to="/meetings" className={styles.cancel}>
               Отмена
             </Link>
@@ -53,16 +82,10 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
               type="submit"
               className={styles['primary']}
               disabled={form.pending || form.preparing}
-              aria-label={form.uncertain ? 'Повторить отправку' : 'Создать встречу'}
+              aria-label={submitLabel}
               aria-busy={form.pending}
             >
-              {form.pending ? (
-                <ButtonSpinner />
-              ) : form.uncertain ? (
-                'Повторить отправку'
-              ) : (
-                'Создать встречу'
-              )}
+              {form.pending ? <ButtonSpinner /> : submitLabel}
             </button>
           </div>
         </form>

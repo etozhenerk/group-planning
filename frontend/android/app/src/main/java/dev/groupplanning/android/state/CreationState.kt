@@ -11,6 +11,7 @@ internal data class CreationState(
     val problem: String? = null,
     val warning: String? = null,
     val ambiguous: Boolean = false,
+    val validationAttempt: Int = 0,
     val created: CreatedMeeting? = null,
     val closed: Boolean = false,
 ) {

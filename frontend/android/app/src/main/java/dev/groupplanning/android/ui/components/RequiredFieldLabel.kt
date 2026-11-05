@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import dev.groupplanning.android.ui.theme.DesignTokens
 
@@ -17,6 +18,7 @@ internal fun RequiredFieldLabel(
     fontSize: TextUnit = DesignTokens.typographySizeSmall,
     color: Color = Color.Unspecified,
     lineHeight: TextUnit = TextUnit.Unspecified,
+    fontWeight: FontWeight? = null,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS4),
@@ -26,6 +28,7 @@ internal fun RequiredFieldLabel(
             label,
             Modifier.alignByBaseline(),
             fontSize = fontSize,
+            fontWeight = fontWeight,
             lineHeight = lineHeight,
             color = color,
         )

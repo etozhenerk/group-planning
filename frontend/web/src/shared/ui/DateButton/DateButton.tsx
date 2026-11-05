@@ -81,6 +81,7 @@ export const DateButton = ({
           floatingRef={control.popupLabel}
           role="dialog"
           className={styles.popup ?? ''}
+          floatingStyles={control.popupStyles}
         >
           <DateCalendar
             label={label}

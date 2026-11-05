@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "meeting-experience-refresh-ios-g03",
+  "designVersion": "7.5.0",
+  "phase": "paused",
+  "approval": "27.10.2026: «давай» на исправления: desktop модалки всех действий +, mobile bottom sheets, native long press message/chip, tap toggle, без постоянных smile/people кнопок, заметные selected/pressed/motion, smile и caret/date layout. 28.10.2026: пользователь подтвердил «Нет, на десктопе только клавиатура». Desktop удаляет grapheme через Backspace в composer; отдельная кнопка в панели отклонена. Мобильная кнопка и все значения токенов сохраняются. 28.10.2026: пользователь потребовал исправить web-выбор фото/файлов, повторную отмену, фокус кнопки, прямое добавление в вайб, desktop-форму и полный просмотр без обрезки. Прямое поручение пользователя: на всех фронтах убирать клавиатуру по нажатию вне поля сообщения.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/meeting-experience-refresh/qa/design-6.3.0/rsvp-7.0.0/design-review.json",
+  "screens": [
+    {
+      "id": "onboarding-service-correction-ios",
+      "platforms": [
+        "ios"
+      ],
+      "states": [
+        "first-slide-no-service-entry",
+        "skip-to-last",
+        "large-text-no-overlap"
+      ],
+      "inputs": [
+        "frontend/ios/Somewhere",
+        "package.json",
+        "package-lock.json",
+        "frontend/ios/Config",
+        "frontend/ios/Somewhere.xcodeproj",
+        "frontend/ios/SomewhereUITests",
+        "frontend/ios/SomewhereUITestSupport",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/ios/scripts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "docs/design/mobile-onboarding.md",
+        "openspec/changes/gathering-activity-feed/assets/ios-entry-onboarding-1.png"
+      ],
+      "contracts": [
+        "docs/design/components/navigation.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "ios": [
+          "0.4"
+        ]
+      }
+    }
+  ]
+}

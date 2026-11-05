@@ -4,13 +4,17 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -25,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.drafts.CoverDraft
@@ -48,6 +51,7 @@ internal fun CoverEditor(
     meetingId: UUID? = null,
     compact: Boolean = false,
     prominent: Boolean = false,
+    creation: Boolean = false,
 ) {
     val repository = LocalCovers.current
     val model = remember { CoverSelectionViewModel() }
@@ -78,8 +82,32 @@ internal fun CoverEditor(
             } else {
                 null
             }
+    val mediaSize = if (creation) {
+        DesignTokens.componentMobileCreationCoverSize
+    } else {
+        DesignTokens.componentMeetingSettingsCoverSize
+    }
+    val mediaRadius = if (creation) {
+        DesignTokens.spaceS16
+    } else {
+        DesignTokens.componentMeetingSettingsCoverRadius
+    }
+    val mediaGap = if (creation) {
+        DesignTokens.spaceS16
+    } else {
+        DesignTokens.componentMeetingSettingsCoverGap
+    }
+    val mediaIcon = if (creation) {
+        DesignTokens.componentMobileCreationCoverIconSize
+    } else {
+        DesignTokens.componentMobileFieldIconSize
+    }
     val actions: @Composable () -> Unit = {
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(
+                if (creation) DesignTokens.spaceS8 else DesignTokens.spaceS12,
+            ),
+        ) {
             val select = {
                 val adapter = repository?.selection
                 if (adapter != null) {
@@ -112,8 +140,33 @@ internal fun CoverEditor(
                 TextButton(
                     select,
                     enabled = enabled && !state.busy && repository != null,
-                    modifier = Modifier.testTag("cover-select"),
-                ) { Text(label) }
+                    modifier = Modifier.testTag(
+                        "cover-select",
+                    ).heightIn(min = DesignTokens.targetAndroid),
+                    contentPadding = if (creation) {
+                        PaddingValues(
+                            DesignTokens.spaceS0,
+                        )
+                    } else {
+                        PaddingValues(DesignTokens.spaceS8)
+                    },
+                ) {
+                    if (creation) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS6),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AppIcon(R.drawable.ic_photo, Modifier.size(DesignTokens.spaceS16))
+                            Text(
+                                label,
+                                fontSize = DesignTokens.typographySizeCaption,
+                                fontWeight = FontWeight.Medium,
+                            )
+                        }
+                    } else {
+                        Text(label)
+                    }
+                }
             }
             if (source != null) {
                 TextButton(
@@ -130,34 +183,58 @@ internal fun CoverEditor(
         }
     }
     Column(
-        modifier,
+        if (creation) {
+            modifier.fillMaxWidth()
+                .background(DesignTokens.colorSurface, RoundedCornerShape(DesignTokens.radiusCard))
+                .border(
+                    DesignTokens.spaceS1,
+                    DesignTokens.colorLine,
+                    RoundedCornerShape(DesignTokens.radiusCard),
+                )
+                .padding(DesignTokens.spaceS12 + DesignTokens.spaceS2)
+        } else {
+            modifier
+        },
         verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMeetingSettingsCoverGap),
     ) {
         if (compact) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(
-                    DesignTokens.componentMeetingSettingsCoverGap,
+                    mediaGap,
                 ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    Modifier.size(DesignTokens.componentMeetingSettingsCoverSize).background(
+                    Modifier.size(
+                        mediaSize,
+                    ).background(
                         DesignTokens.colorBackground,
-                        RoundedCornerShape(DesignTokens.componentMeetingSettingsCoverRadius),
+                        RoundedCornerShape(
+                            mediaRadius,
+                        ),
                     ),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (state.busy) {
-                        CoverSkeleton(Modifier.size(DesignTokens.componentMeetingSettingsCoverSize))
+                        CoverSkeleton(
+                            Modifier.size(
+                                mediaSize,
+                            ),
+                        )
                     } else if (source != null) {
                         CoverImage(
                             source,
                             thumbnail = true,
-                            thumbnailSize = DesignTokens.componentMeetingSettingsCoverSize,
-                            cornerRadius = DesignTokens.componentMeetingSettingsCoverRadius,
+                            thumbnailSize = mediaSize,
+                            cornerRadius = mediaRadius,
                         )
                     } else {
-                        AppIcon(R.drawable.ic_photo)
+                        AppIcon(
+                            R.drawable.ic_photo,
+                            Modifier.size(
+                                mediaIcon,
+                            ),
+                        )
                     }
                 }
                 Column(Modifier.weight(1f)) {
@@ -165,6 +242,13 @@ internal fun CoverEditor(
                         stringResource(R.string.cover_title),
                         fontSize = DesignTokens.typographySizeSmall,
                     )
+                    if (creation) {
+                        Text(
+                            stringResource(R.string.create_cover_optional),
+                            fontSize = DesignTokens.typographySizeLabel,
+                            color = DesignTokens.colorMuted,
+                        )
+                    }
                     actions()
                 }
             }

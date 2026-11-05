@@ -6,6 +6,10 @@ export const designMediaPlugin = (): Plugin => ({
   AtRule: {
     media: (rule) => {
       rule.params = rule.params.replace(/design-token\(([^)]+)\)/g, (_, role: string) => {
+        if (role === 'breakpoint.chatNarrowWidth') {
+          return foundationTokens.breakpointChatNarrowWidth;
+        }
+
         if (role !== 'breakpoint.mobile') {
           throw rule.error(`Unknown media design token: ${role}`);
         }

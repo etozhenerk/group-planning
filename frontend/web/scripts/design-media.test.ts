@@ -22,4 +22,16 @@ describe('published media breakpoint', () => {
       ),
     ).rejects.toThrow('Unknown media design token');
   });
+
+  it('resolves the published narrow breakpoint for compact form controls', async () => {
+    const result = await postcss([designMediaPlugin()]).process(
+      '@media (width < design-token(breakpoint.chatNarrowWidth)) {.date {gap: 4px}}',
+      { from: undefined },
+    );
+
+    expect(result.css).toContain(
+      `@media (width < ${foundationTokens.breakpointChatNarrowWidth})`,
+    );
+    expect(result.css).not.toContain('design-token(');
+  });
 });

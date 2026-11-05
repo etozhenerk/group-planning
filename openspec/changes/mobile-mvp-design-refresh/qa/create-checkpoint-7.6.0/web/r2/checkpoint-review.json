@@ -1,0 +1,85 @@
+{
+  "kind": "independent targeted C2 C3 C4 checkpoint; not final acceptance",
+  "at": "2026-11-05T16:12:43.483Z",
+  "candidate": {
+    "sourceHash": "e7e96c7755688255123120bf7891bdcd997e272d1f68648621c767879c38d89f",
+    "artifactHash": "6b26035218962a3b8937c74a84a07d0630e9acd5b7fc486f78fbcbfcf54044d5",
+    "designInputHash": "a409406b1862feb5a6110d6e572bc54e5b6a73c5b29f9cc3e19c787b608cd594",
+    "candidateSha256": "29b0bbeb5aee483cfab3d0bfdd2acb043e72d6d267c7c563e066ba5e0bcb9929"
+  },
+  "scope": {
+    "chromium": [
+      [
+        320,
+        760
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        390,
+        430
+      ]
+    ],
+    "webkit": [
+      [
+        390,
+        430
+      ]
+    ],
+    "desktopHistorical": [
+      [
+        1100,
+        900
+      ]
+    ]
+  },
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 40,
+    "allMatch": true,
+    "sourceBefore": "e7e96c7755688255123120bf7891bdcd997e272d1f68648621c767879c38d89f",
+    "sourceAfter": "e7e96c7755688255123120bf7891bdcd997e272d1f68648621c767879c38d89f"
+  },
+  "findings": [
+    {
+      "id": "C3",
+      "severity": "P2",
+      "summary": "320 Date width145.28 exceeds intended133.28 column; gap to Time input2.72px rather than14.72px",
+      "states": [
+        "empty320",
+        "validation320"
+      ],
+      "evidence": [
+        "empty-320-actual.png",
+        "empty-320-reference.png",
+        "validation-320-actual.png",
+        "validation-320-reference.png",
+        "targeted-probes.json"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "C2 cover86/card14/optional; PNG select/remove; brand hidden",
+    "C3 validation centers aligned at320/390; Date50/font16/radius13; approved placeholder",
+    "C4 bounded390x430 popup with scroll-reachable Done; actual selected date returns to form with focus",
+    "WebKit390x430 popup close",
+    "Desktop1100 form and inputs equal historical8878"
+  ],
+  "probeCount": 12,
+  "driverErrors": [],
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "finalGate": "not run; not claimed",
+  "excluded": [
+    "lostACK",
+    "dirty",
+    "create",
+    "OAuth acceptance",
+    "RSVP",
+    "full matrix",
+    "gates"
+  ],
+  "writes": "QA only"
+}

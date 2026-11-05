@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -37,6 +38,9 @@ internal fun DateTimeField(
     enabled: Boolean,
     modifier: Modifier = Modifier,
     required: Boolean = false,
+    creation: Boolean = false,
+    errorText: String? = null,
+    controlModifier: Modifier = Modifier,
     open: () -> Unit,
 ) {
     val requiredHint = stringResource(R.string.required_field_hint)
@@ -50,19 +54,25 @@ internal fun DateTimeField(
         RequiredFieldLabel(
             label,
             required,
-            fontSize = DesignTokens.typographySizeCaption,
-            color = DesignTokens.colorMuted,
+            fontSize = if (creation) {
+                DesignTokens.componentMobileCreationLabelSize.value.sp
+            } else {
+                DesignTokens.typographySizeCaption
+            },
+            color = if (creation) DesignTokens.colorText else DesignTokens.colorMuted,
         )
         Surface(
             open,
-            Modifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid).semantics {
+            controlModifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid).semantics {
                 contentDescription = label
                 if (required) stateDescription = requiredHint
             },
             enabled = enabled,
             color = if (compact) DesignTokens.colorBackground else DesignTokens.colorNavigation,
             shape = RoundedCornerShape(
-                if (compact) {
+                if (creation) {
+                    DesignTokens.componentMobileCreationFieldRadius
+                } else if (compact) {
                     DesignTokens.componentMobileFieldRadius
                 } else {
                     DesignTokens.radiusControl
@@ -70,7 +80,21 @@ internal fun DateTimeField(
             ),
             border = BorderStroke(
                 DesignTokens.spaceS1,
-                if (compact) DesignTokens.colorBorderStrong else DesignTokens.colorFieldBorder,
+                if (errorText !=
+                    null
+                ) {
+                    lerp(
+                        DesignTokens.colorBorderStrong,
+                        DesignTokens.colorError,
+                        DesignTokens.componentMobileCreationInvalidBorderMix.toFloat(),
+                    )
+                } else if (compact ||
+                    creation
+                ) {
+                    DesignTokens.colorBorderStrong
+                } else {
+                    DesignTokens.colorFieldBorder
+                },
             ),
         ) {
             Row(
@@ -90,7 +114,7 @@ internal fun DateTimeField(
                         DesignTokens.typographySizeSmall
                     },
                     lineHeight = 20.sp,
-                    maxLines = if (compact) Int.MAX_VALUE else 1,
+                    maxLines = if (compact || creation) Int.MAX_VALUE else 1,
                     color = Palette.text,
                 )
                 val symbol = when (icon) {
@@ -105,5 +129,6 @@ internal fun DateTimeField(
                 }
             }
         }
+        if (errorText != null) CreationFieldHint(errorText)
     }
 }

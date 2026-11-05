@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.5.0. Do not edit.
+// Generated from design-system/tokens.json · 7.6.0. Do not edit.
 export const mobileComponentTokens = {
   componentMobileAvatarFallbackOpacity: '0.7',
   componentMobileAvatarFallbackRatio: '0.72',
@@ -20,6 +20,17 @@ export const mobileComponentTokens = {
   componentMobileCalendarTitleTracking: '0.5px',
   componentMobileChatSendCircleSize: '38px',
   componentMobileChatSendIconSize: '20px',
+  componentMobileCreationCoverIconSize: '28px',
+  componentMobileCreationCoverSize: '86px',
+  componentMobileCreationFieldHeight: '48px',
+  componentMobileCreationFieldRadius: '13px',
+  componentMobileCreationHintIconSize: '14px',
+  componentMobileCreationInvalidBackgroundMix: '0.03',
+  componentMobileCreationInvalidBorderMix: '0.65',
+  componentMobileCreationInvalidRingOpacity: '0.07',
+  componentMobileCreationInvalidRingWidth: '3px',
+  componentMobileCreationLabelSize: '14px',
+  componentMobileCreationTitleLineHeight: '1.2',
   componentMobileFieldGap: '7px',
   componentMobileFieldIconSize: '18px',
   componentMobileFieldInsetBlock: '10px',

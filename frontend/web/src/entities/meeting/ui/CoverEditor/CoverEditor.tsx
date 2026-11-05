@@ -1,9 +1,8 @@
+import { CoverEditorLabel } from '@/entities/meeting/ui/CoverEditorLabel';
 import { CoverActions } from '@/entities/meeting/ui/CoverActions';
 import { ImagePlus } from 'lucide-react';
 import { useMobileLayout } from '@/shared/lib/media';
-import { useRef } from 'react';
-import type { PreparedCover } from '@/entities/meeting/model/cover';
-import { coverDataURL } from '@/entities/meeting/model/cover';
+import { coverDataURL, type PreparedCover } from '@/entities/meeting/model/cover';
 import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
 import { useCoverSelection } from '@/entities/meeting/ui/CoverEditor/hooks/useCoverSelection';
 import styles from '@/entities/meeting/ui/CoverEditor/CoverEditor.module.css';
@@ -17,6 +16,7 @@ export type CoverEditorProps = {
   invalid?: boolean;
   compact?: boolean;
   prominent?: boolean;
+  creation?: boolean;
 };
 
 export const CoverEditor = ({
@@ -28,9 +28,9 @@ export const CoverEditor = ({
   invalid = false,
   compact = false,
   prominent = false,
+  creation = false,
 }: CoverEditorProps) => {
   const mobile = useMobileLayout() && compact;
-  const input = useRef<HTMLInputElement>(null);
   const selection = useCoverSelection(onChange, onBusy);
   const existing = value === undefined ? original : undefined;
   const hasPhoto = !!value || !!existing?.url;
@@ -41,13 +41,14 @@ export const CoverEditor = ({
       aria-label="Обложка"
       data-compact={mobile}
       data-prominent={prominent}
+      data-create={creation && mobile}
     >
-      <span className={styles.label}>
-        Обложка{' '}
-        <small>
-          {mobile ? (hasPhoto ? 'Фото встречи' : 'Не добавлена') : 'необязательно'}
-        </small>
-      </span>
+      <CoverEditorLabel
+        className={styles.label ?? ''}
+        compact={mobile}
+        creation={creation}
+        hasPhoto={hasPhoto}
+      />
       <div className={styles.media}>
         {selection.busy ? (
           <div
@@ -74,7 +75,7 @@ export const CoverEditor = ({
         ) : null}
       </div>
       <input
-        ref={input}
+        ref={selection.input}
         type="file"
         accept="image/jpeg,image/png"
         aria-label="Выбрать фото"
@@ -85,9 +86,10 @@ export const CoverEditor = ({
       <CoverActions
         compact={mobile}
         prominent={prominent}
+        creation={creation && mobile}
         hasPhoto={hasPhoto}
         disabled={disabled || selection.busy}
-        choose={() => input.current?.click()}
+        choose={selection.open}
         remove={selection.remove}
       />
       {(selection.problem || invalid) && (

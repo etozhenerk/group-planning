@@ -7,6 +7,7 @@ struct CoverEditor: View {
     var meetingID: UUID?
     var session: SessionStore?
     var compact = false
+    var creation = false
     let disabled: Bool
     let onBusy: (Bool) -> Void
     let onChange: (CoverDraft) -> Void
@@ -19,7 +20,39 @@ struct CoverEditor: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMeetingSettingsCoverGap) {
-            if compact {
+            if creation {
+                HStack(spacing: DesignTokens.spaceS16) {
+                    preview.frame(
+                        width: DesignTokens.componentMobileCreationCoverSize,
+                        height: DesignTokens.componentMobileCreationCoverSize
+                    )
+                    .clipped().clipShape(RoundedRectangle(cornerRadius: DesignTokens.spaceS16))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: DesignTokens.spaceS16)
+                            .stroke(DesignTokens.colorBorderStrong, lineWidth: DesignTokens.spaceS1)
+                    }
+                    VStack(alignment: .leading, spacing: DesignTokens.spaceS3) {
+                        Text("Обложка").designFont(DesignTokens.typographySizeSmall)
+                        Text("необязательно").designFont(DesignTokens.typographySizeLabel)
+                            .foregroundStyle(DesignTokens.colorMuted)
+                        ViewThatFits(in: .horizontal) {
+                            HStack(spacing: DesignTokens.spaceS8) { creationControls }
+                            VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                                creationControls
+                            }
+                        }
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(DesignTokens.spaceS12 + DesignTokens.spaceS2)
+                .background(
+                    DesignTokens.colorSurface,
+                    in: RoundedRectangle(cornerRadius: DesignTokens.radiusCard)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignTokens.radiusCard)
+                        .stroke(DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
+                }
+            } else if compact {
                 HStack(spacing: DesignTokens.componentMeetingSettingsCoverGap) {
                     Group {
                         if hasPhoto {
@@ -94,17 +127,46 @@ struct CoverEditor: View {
         } else if let image = value?.image {
             CoverImageView(
                 source: .prepared(image), thumbnail: compact,
-                thumbnailSize: DesignTokens.componentMeetingSettingsCoverSize,
+                thumbnailSize: creation
+                    ? DesignTokens.componentMobileCreationCoverSize
+                    : DesignTokens.componentMeetingSettingsCoverSize,
                 settingsThumbnail: compact)
         } else if value == nil, let original, let meetingID {
             CoverImageView(
                 source: .remote(original, meetingID), api: session?.api, session: session,
-                thumbnail: compact, thumbnailSize: DesignTokens.componentMeetingSettingsCoverSize,
+                thumbnail: compact,
+                thumbnailSize: creation
+                    ? DesignTokens.componentMobileCreationCoverSize
+                    : DesignTokens.componentMeetingSettingsCoverSize,
                 settingsThumbnail: compact)
         } else {
-            Image(systemName: "photo").foregroundStyle(DesignTokens.colorMuted)
+            Image(systemName: creation ? "photo.badge.plus" : "photo")
+                .font(
+                    .system(
+                        size: creation
+                            ? DesignTokens.componentMobileCreationCoverIconSize
+                            : DesignTokens.componentMobileFieldIconSize)
+                )
+                .foregroundStyle(creation ? DesignTokens.colorAccent : DesignTokens.colorMuted)
                 .frame(maxWidth: .infinity, maxHeight: .infinity).background(
                     DesignTokens.colorBackground)
+        }
+    }
+
+    @ViewBuilder private var creationControls: some View {
+        Button(action: selectPhoto) {
+            Label(hasPhoto ? "Заменить" : "Добавить фото", systemImage: "photo.badge.plus")
+                .designFont(DesignTokens.typographySizeCaption, weight: .medium)
+                .frame(minHeight: DesignTokens.targetIos)
+        }.accessibilityIdentifier("cover-select").disabled(disabled || owner.busy)
+        if hasPhoto {
+            Button("Убрать фото") {
+                owner.remove()
+                onChange(.removed)
+            }
+            .designFont(DesignTokens.typographySizeCaption, weight: .medium)
+            .frame(minHeight: DesignTokens.targetIos)
+            .accessibilityIdentifier("cover-remove").disabled(disabled || owner.busy)
         }
     }
 

@@ -10,7 +10,7 @@ export type CreateViewProps = { session: Session };
 
 export const CreateView = ({ session }: CreateViewProps) => {
   return (
-    <Workspace navigation={<Navigation session={session} />}>
+    <Workspace navigation={<Navigation session={session} />} mobileBrand={false}>
       <main id="main" className={styles['page-content']}>
         <PageBack to="/meetings" label="Вернуться к встречам" variant="create">
           <ChevronLeft aria-hidden="true" size={18} />

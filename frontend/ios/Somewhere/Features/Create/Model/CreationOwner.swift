@@ -12,6 +12,14 @@ final class CreationOwner {
     private(set) var created: CreatedMeeting?
     private(set) var dismissed = false
     private(set) var needsTimeChoice = false
+    private(set) var validationAttempt = 0
+    var titleError: String? {
+        validationAttempt > 0 && value.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? "Введите название встречи" : nil
+    }
+    var dayError: String? {
+        validationAttempt > 0 && value.day == nil ? "Выберите дату встречи" : nil
+    }
     var confirmDiscard = false
     var closeFailed = false
     let session: SessionStore
@@ -113,6 +121,7 @@ final class CreationOwner {
 
     func submit() async {
         guard current, ready, !busy, !preparingCover, let draftLease else { return }
+        validationAttempt += 1
         busy = true
         problem = nil
         persistence?.cancel()
@@ -136,7 +145,7 @@ final class CreationOwner {
         } catch let issue as DraftIssue {
             record.submission = nil
             needsTimeChoice = issue == .ambiguous
-            problem = issue.text
+            problem = titleError != nil || dayError != nil ? nil : issue.text
         } catch {
             guard current else { return }
             if let status = (error as? ClientFailure)?.statusCode,

@@ -95,7 +95,7 @@ export const DateInput = ({
         </div>
       )}
       <RequiredHint id={`${field.id}-required`} required={required} />
-      <FieldError id={`${field.id}-error`} error={error} />
+      <FieldError id={`${field.id}-error`} error={error} decorated={mobile} />
     </div>
   );
 };

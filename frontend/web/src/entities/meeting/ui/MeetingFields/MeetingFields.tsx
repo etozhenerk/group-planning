@@ -1,5 +1,7 @@
+import { MeetingDescription } from '@/entities/meeting/ui/MeetingDescription';
 import { useId } from 'react';
 import { RequiredMark } from '@/shared/ui/RequiredMark';
+import { FieldError } from '@/shared/ui/FieldError';
 import styles from '@/entities/meeting/ui/MeetingFields/MeetingFields.module.css';
 import { MeetingTimeFields } from '@/entities/meeting/ui/MeetingTimeFields';
 import { useMobileLayout } from '@/shared/lib/media';
@@ -12,6 +14,7 @@ export type MeetingFieldsProps = {
   errors?: Record<string, string>;
   settings?: boolean;
   dateRequired?: boolean;
+  creation?: boolean;
 };
 
 export const MeetingFields = ({
@@ -21,25 +24,25 @@ export const MeetingFields = ({
   errors = {},
   settings = false,
   dateRequired = true,
+  creation = false,
 }: MeetingFieldsProps) => {
   const mobileLayout = useMobileLayout();
   const mobile = mobileLayout && settings;
   const titleError = useId();
   const description = (
-    <label>
-      Описание
-      <textarea
-        maxLength={4000}
-        value={value.description}
-        onChange={(event) => onChange({ ...value, description: event.target.value })}
-        placeholder="Что стоит знать друзьям"
-        rows={2}
-      />
-    </label>
+    <MeetingDescription
+      value={value.description}
+      change={(description) => onChange({ ...value, description })}
+    />
   );
 
   return (
-    <fieldset className={styles['form-fields']} disabled={disabled} data-mobile={mobile}>
+    <fieldset
+      className={styles['form-fields']}
+      disabled={disabled}
+      data-mobile={mobile}
+      data-create={mobileLayout && creation}
+    >
       <div className={styles.group}>
         <label>
           Название <RequiredMark />
@@ -51,20 +54,29 @@ export const MeetingFields = ({
             aria-invalid={!!errors.title}
             aria-describedby={errors.title ? titleError : undefined}
             autoComplete="off"
-            placeholder="Например, вечер настольных игр"
+            placeholder={
+              creation && mobileLayout
+                ? 'Ужин в пятницу'
+                : 'Например, вечер настольных игр'
+            }
           />
         </label>
         {errors.title && (
-          <span className={styles.error} id={titleError} role="alert">
-            {mobileLayout
-              ? 'Введите название встречи'
-              : 'Проверьте название: от 1 до 120 символов.'}
-          </span>
+          <FieldError
+            decorated={mobileLayout && creation}
+            id={titleError}
+            error={
+              mobileLayout
+                ? 'Введите название встречи'
+                : 'Проверьте название: от 1 до 120 символов.'
+            }
+          />
         )}
         {mobile && description}
       </div>
       <div className={styles.group}>
         <MeetingTimeFields
+          creation={creation}
           value={value}
           onChange={onChange}
           errors={errors}

@@ -2,59 +2,46 @@ import SwiftUI
 
 struct CreationFormView: View {
     let owner: CreationOwner
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                PageBackButton(
-                    label: "Вернуться к встречам", enabled: !owner.busy && !owner.preparingCover,
-                    action: owner.requestClose)
-                Text("Новая встреча").designFont(28, weight: .bold).tracking(-0.9).padding(
-                    .bottom, 24)
-                VStack(alignment: .leading, spacing: 18) {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS20 + DesignTokens.spaceS2) {
+                    VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                        PageBackButton(
+                            label: "Вернуться к встречам",
+                            enabled: !owner.busy && !owner.preparingCover,
+                            action: owner.requestClose)
+                        Text("Новая встреча")
+                            .designFont(
+                                DesignTokens.typographySizeMobileActionHeading, weight: .bold
+                            )
+                            .padding(.bottom, DesignTokens.spaceS12)
+                        RequiredLegend(sentence: true)
+                    }
                     CoverEditor(
-                        value: owner.value.cover, disabled: !owner.editable,
+                        value: owner.value.cover, compact: true, creation: true,
+                        disabled: !owner.editable,
                         onBusy: { owner.preparingCover = $0 },
                         onChange: { cover in owner.change { $0.cover = cover } })
-                    RequiredLegend()
                     CreationFieldsView(owner: owner)
-                    if let problem = owner.problem {
-                        Text(problem).designFont(12).foregroundStyle(AppPalette.error)
-                            .accessibilityIdentifier("create-problem")
-                    }
-                    if let warning = owner.draftWarning {
-                        Text(warning).designFont(12).foregroundStyle(AppPalette.error)
-                    }
-                    HStack(spacing: 14) {
-                        Button(action: owner.requestClose) {
-                            Text("Отмена").font(
-                                .system(size: DesignTokens.typographySizeButton, weight: .semibold)
-                            )
-                            .padding(.horizontal, 18).frame(minHeight: 47)
-                            .contentShape(Rectangle())
-                        }
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 13).stroke(
-                                .white.opacity(0.125), lineWidth: 1)
-                        }
-                        .disabled(owner.busy || owner.preparingCover)
-                        Spacer(minLength: 0)
-                        Button(action: owner.startSubmit) {
-                            Group {
-                                if owner.busy {
-                                    ProgressView()
-                                } else {
-                                    Text(owner.frozen ? "Повторить сохранение" : "Создать встречу")
-                                }
-                            }
-                            .designFont(14, weight: .semibold).padding(.horizontal, 18)
-                            .frame(minHeight: 47)
-                            .foregroundStyle(AppPalette.actionText).background(
-                                AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-                        }.disabled(owner.preparingCover || owner.busy).accessibilityIdentifier(
-                            "create-submit")
-                    }
-                }.padding(20).background(AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
-        }.scrollDismissesKeyboard(.interactively).accessibilityIdentifier("create-form")
+                }
+                .padding(.horizontal, DesignTokens.spaceS20)
+                .padding(.top, DesignTokens.spaceS0)
+                .padding(.bottom, DesignTokens.spaceS12)
+            }
+            .scrollDismissesKeyboard(.interactively)
+            .accessibilityIdentifier("create-form")
+            .onChange(of: owner.validationAttempt) { _, _ in
+                if owner.titleError != nil {
+                    proxy.scrollTo("creation-title", anchor: .center)
+                } else if owner.dayError != nil {
+                    proxy.scrollTo("creation-day", anchor: .center)
+                }
+            }
+            .safeAreaInset(edge: .bottom, spacing: DesignTokens.spaceS0) {
+                CreationSubmissionFooter(owner: owner)
+            }
+        }
     }
 }

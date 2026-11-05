@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.5.0. Do not edit.
+// Generated from design-system/tokens.json · 7.6.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -279,6 +279,17 @@ internal object DesignTokens {
     val componentMobileChatNarrowMarkWidth = 30.dp
     val componentMobileChatSendCircleSize = 38.dp
     val componentMobileChatSendIconSize = 20.dp
+    val componentMobileCreationCoverIconSize = 28.dp
+    val componentMobileCreationCoverSize = 86.dp
+    val componentMobileCreationFieldHeight = 48.dp
+    val componentMobileCreationFieldRadius = 13.dp
+    val componentMobileCreationHintIconSize = 14.dp
+    val componentMobileCreationInvalidBackgroundMix = 0.03f
+    val componentMobileCreationInvalidBorderMix = 0.65f
+    val componentMobileCreationInvalidRingOpacity = 0.07f
+    val componentMobileCreationInvalidRingWidth = 3.dp
+    val componentMobileCreationLabelSize = 14.dp
+    val componentMobileCreationTitleLineHeight = 1.2f
     val componentMobileFieldGap = 7.dp
     val componentMobileFieldIconSize = 18.dp
     val componentMobileFieldInsetBlock = 10.dp

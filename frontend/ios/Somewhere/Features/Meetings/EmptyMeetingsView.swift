@@ -29,7 +29,9 @@ struct EmptyMeetingsView: View {
                         ExperienceIcon(
                             kind: .plus, size: DesignTokens.componentMobileMeetingsCreateIconSize)
                         Text("Создать встречу").designFont(
-                            DesignTokens.typographySizeSmall, weight: .semibold)
+                            DesignTokens.typographySizeSmall, weight: .semibold
+                        )
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.horizontal, DesignTokens.componentMobileMeetingsEmptyActionInline)
                     .frame(minHeight: DesignTokens.targetIos)
@@ -41,6 +43,7 @@ struct EmptyMeetingsView: View {
             }
         }
         .multilineTextAlignment(.center).frame(maxWidth: .infinity)
+        .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, DesignTokens.componentMobileMeetingsEmptyInset)
         .padding(.top, DesignTokens.componentMobileMeetingsEmptyTop)
         .accessibilityIdentifier("meetings-empty")
