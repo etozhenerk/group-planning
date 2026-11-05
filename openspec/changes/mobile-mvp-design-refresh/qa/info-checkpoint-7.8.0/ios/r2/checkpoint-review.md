@@ -1,0 +1,12 @@
+# iOS Info 7.8 r2 — только F1/F2/F3
+
+**F1/F2 исправлены. Геометрия F3 исправлена; остаются мелкие расхождения заголовка, счётчика и указателя. Verdict: needs-fixes по F3.** Два targeted метода прошли:28.034s и16.489s; финальные gates не запускались.
+
+Frozen artifact `f5c894133cce27d300af5ec50f5657b7e731c7cdd6c2559804e845de1c689b0d`, source `c1fac0ec88414fc36778503c8afae7211e417387ce4c2eefaaa8048af81a3a50`; [binding](artifact-binding.json). Reviewer `/root/rsvp_web_feature_r2`, 05.11.2026. iOS27.0, simulator31262733-50DC-46A5-938E-4C462D70F109, physical402×874; normal UIWindow402×874 и QA UIWindow320×568 на том же устройстве. Это не физический320device; actual context сохранён рядом с кадрами.
+
+- **F1 PASS:** настоящая обложка загрузилась в Info. На normal показана пицца из API, placeholder отсутствует; narrow organizer также дождался meeting-cover. [Normal cover](actual/normal-real-cover.png).
+- **F2 PASS:** Info → Going → чат → повторный Info → Maybe → видимая карточка в приглашениях. Оба ответа независимо подтверждены GET: [going](actual/going-api.json), [maybe](actual/maybe-api.json). [Чат после Going](actual/going-canonical-chat.png), [приглашения после следующего Maybe](actual/consecutive-maybe-canonical-invitations.png). Приватные Info/chat controls после Maybe отсутствуют. Старый pass не переносился.
+- **F3 geometry PASS:** чипы теперь36/radius12/avatar20 вместо Capsule, читаемы на402и320, pinned footer не перекрывает компанию. [Normal company](actual/normal-company.png), [320 layout](actual/narrow-company-layout.png).
+- **F3 остаётся:** published `assets/navigation-r2/nav-info/frame.html` и normalized Info содержат «Кто придёт», в actual всё ещё «Компания». Счётчик стоит сразу после heading вместо правого края и наследует16/600 вместо13/400/muted; у «Все ответы» отсутствует указатель вправо. Эти точные расхождения видны на обоих кадрах компании; автор принял их в последнюю маленькую r3-пачку. Для следующего повтора нужны только эти детали, без повторения F1/F2.
+
+[Единственный action log](smoke-independent.log), [driver](driver.swift), [build](build-independent.log). Проверены только переданные исправления: roster/share/settings, общий chat/read/Create и прежние успешные сценарии не повторялись. VoiceOver, полная AX-матрица и gates не запускались. Продукт/Git/tasks/manifests не менялись. Собственная memory-fixture остановлена, app завершено, simulator lock освобождён; настройки устройства не менялись, device свободен.

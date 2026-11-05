@@ -1,0 +1,57 @@
+{
+  "kind": "independent targeted company-only checkpoint; not final gate",
+  "at": "2026-11-05T18:06:26.516Z",
+  "candidate": {
+    "sourceHash": "f89dad1fdd4fe31f12a85901fbd951d81b3b112dd63aade0fd3608d48440f9f7",
+    "artifactHash": "d577c916477f495a76c7c64b14e23140c30bbb3a66dc8a73b2197947fdcca7c4",
+    "candidateSha256": "df20ad3c9c3cf82e11f04be192cbab61d74132a9c08b199007591e0035a02fb0"
+  },
+  "sourceBefore": "f89dad1fdd4fe31f12a85901fbd951d81b3b112dd63aade0fd3608d48440f9f7",
+  "sourceAfter": "f89dad1fdd4fe31f12a85901fbd951d81b3b112dd63aade0fd3608d48440f9f7",
+  "scope": [
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      760
+    ]
+  ],
+  "findings": [
+    {
+      "id": "I1-count",
+      "severity": "P3",
+      "summary": "Counter16/600/text instead of reference13/400/muted",
+      "evidence": [
+        "company390-actual.png",
+        "company320-actual.png",
+        "targeted-probes.json"
+      ]
+    },
+    {
+      "id": "I1-all-arrow",
+      "severity": "P3",
+      "summary": "All responses row misses reference right arrow; text/layout/action correct",
+      "evidence": [
+        "targeted-probes.json"
+      ]
+    }
+  ],
+  "confirmedWithinScope": [
+    "main I1 heading/chip/+N/all styles corrected",
+    "actual5going/1maybe yields+2/all6",
+    "6roster rows expand/collapse on390/320; focus restored",
+    "last row above footer; no overflow"
+  ],
+  "binding": {
+    "diskFiles": 261,
+    "liveAssets": 38,
+    "allMatch": true
+  },
+  "driverErrors": [],
+  "report": "checkpoint-review.md",
+  "evidenceHashes": "evidence-sha256.json",
+  "released": true,
+  "writes": "QA only"
+}
