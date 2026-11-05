@@ -1,0 +1,31 @@
+.track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateX(calc(-100% + var(--offset)));
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+  padding-bottom: max(var(--ds-space-s32), env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.track[data-phase='exiting'] {
+  transition: transform var(--ds-motion-duration-vibe-viewer)
+    var(--ds-motion-easing-vibe-gesture);
+}
+
+.track[data-phase='returning'] {
+  transition: transform var(--ds-motion-duration-vibe-return)
+    var(--ds-motion-easing-vibe-gesture);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
+}

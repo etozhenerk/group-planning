@@ -1,4 +1,5 @@
-import { Link } from 'react-router';
+import { AlbumNavigation } from '@/pages/memories/ui/AlbumNavigation';
+import { useMobileLayout } from '@/shared/lib/media';
 import type { Session } from '@/entities/session';
 import { Dialog } from '@/shared/ui/Dialog';
 import { UploadDraft } from '@/features/upload-media';
@@ -17,25 +18,23 @@ export type MemoriesViewProps = { id: string; session: Session };
 export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
   const view = useMemoriesView(id, session.user.id);
   const download = useAlbumDownload(id, session);
+  const mobile = useMobileLayout();
 
   return (
     <Workspace navigation={<Navigation session={session} />}>
       <main id="main" className={styles.page}>
-        <Link
-          className={styles.back}
-          to={view.fromChat ? `/meetings/${id}` : view.returnPath}
-        >
-          {view.fromChat ? '← К встрече' : '‹ Прошедшие встречи'}
-        </Link>
+        <AlbumNavigation id={id} view={view} />
         <AlbumHeading
           meeting={view.meeting.data}
           actions={
-            <AlbumActions
-              upload={view.choose}
-              disabled={view.query.access.denied}
-              canDownload={view.photos.length > 0 && !view.query.access.denied}
-              download={download}
-            />
+            (!mobile || !view.query.access.denied) && (
+              <AlbumActions
+                upload={view.choose}
+                disabled={view.query.access.denied}
+                canDownload={view.photos.length > 0 && !view.query.access.denied}
+                download={download}
+              />
+            )
           }
         />
         <DownloadAlbumFeedback state={download.state} />
@@ -51,6 +50,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
             media={view.current}
             index={view.photos.findIndex((photo) => photo.id === view.current?.id)}
             count={view.photos.length}
+            photos={view.photos}
             change={view.change}
             user={session.user.id}
             close={view.close}
@@ -62,6 +62,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
         title="Добавить фото в альбом"
         onClose={view.close}
         chatAction
+        formLayout
       >
         <UploadDraft
           id={id}

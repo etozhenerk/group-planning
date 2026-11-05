@@ -15,30 +15,32 @@ struct AlbumActionButton: View {
                 if busy {
                     ProgressView().controlSize(.small).tint(DesignTokens.colorText)
                         .frame(
-                            width: DesignTokens.componentButtonIconSize,
-                            height: DesignTokens.componentButtonIconSize
+                            width: DesignTokens.componentMobileFieldIconSize,
+                            height: DesignTokens.componentMobileFieldIconSize
                         ).accessibilityHidden(true)
                 } else if let icon {
-                    ExperienceIcon(kind: icon, size: DesignTokens.componentButtonIconSize)
+                    ExperienceIcon(kind: icon, size: DesignTokens.componentMobileFieldIconSize)
                 }
                 Text(title).multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .designFont(DesignTokens.typographySizeSmall, weight: .semibold)
-            .padding(.horizontal, DesignTokens.spaceS12)
-            .padding(.vertical, DesignTokens.spaceS10)
+            .padding(.horizontal, DesignTokens.componentMobileVibeActionInsetInline)
+            .padding(.vertical, DesignTokens.componentMobileVibeActionInsetBlock)
             .padding(DesignTokens.componentButtonBorderWidth)
-            .frame(maxWidth: .infinity, minHeight: DesignTokens.componentButtonMinimumHeight)
+            .frame(
+                maxWidth: .infinity, minHeight: DesignTokens.componentMobileVibeActionMinimumHeight
+            )
             .frame(maxHeight: .infinity)
             .foregroundStyle(primary ? DesignTokens.colorActionText : DesignTokens.colorText)
             .background(
-                primary ? DesignTokens.colorAction : Color.clear,
-                in: RoundedRectangle(cornerRadius: DesignTokens.componentButtonRadius)
+                primary ? DesignTokens.colorAction : DesignTokens.colorSurface,
+                in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileVibeActionRadius)
             )
             .overlay {
-                RoundedRectangle(cornerRadius: DesignTokens.componentButtonRadius)
+                RoundedRectangle(cornerRadius: DesignTokens.componentMobileVibeActionRadius)
                     .strokeBorder(
-                        primary ? Color.clear : DesignTokens.colorSubtleBorder,
+                        primary ? Color.clear : DesignTokens.colorBorderStrong,
                         lineWidth: DesignTokens.componentButtonBorderWidth)
             }
         }

@@ -4,235 +4,224 @@ struct MemoryPhotoStack: View {
     let owner: MemoriesOwner
     @Binding var selection: Int
     let open: () -> Void
-    @State private var translation: CGFloat = 0
-    @State private var aspects: [UUID: CGFloat] = [:]
+    @State private var translation = CGSize.zero
     @State private var flight: Task<Void, Never>?
-    @State private var motionID = UUID()
     @State private var reassembling = false
-    @State private var failedTarget: Int?
-    @State private var failedSide: CGFloat = -1
-    @State private var failedPhotos: Set<UUID> = []
-    @State private var retryID = UUID()
+    @State private var recycled: UUID?
+    @State private var failed: Set<UUID> = []
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
         GeometryReader { geometry in
+            let cardWidth =
+                geometry.size.width * CGFloat(DesignTokens.componentMobileVibeCardWidthRatio)
+            let compact = geometry.size.height <= DesignTokens.componentMobileVibeCompactDeckHeight
+            let cardHeight =
+                geometry.size.height
+                * (compact
+                    ? DesignTokens.componentMobileVibeCompactCardHeightRatio
+                    : DesignTokens.componentMobileVibeCardHeightRatio)
             ZStack {
                 if owner.current, owner.photos.indices.contains(selection) {
-                    if knownAspect(owner.photos[selection]) == nil {
-                        if failedPhotos.contains(owner.photos[selection].id) {
-                            StatusView(
-                                title: "Не удалось загрузить фото",
-                                retry: {
-                                    failedPhotos.remove(owner.photos[selection].id)
-                                    retryID = UUID()
-                                })
-                        } else {
-                            ProgressView().accessibilityLabel("Загрузка фото")
-                        }
-                    }
                     ForEach(visiblePhotos.reversed()) { photo in
                         let rank =
-                            (owner.photos.firstIndex { $0.id == photo.id } ?? selection) - selection
-                        picture(photo)
-                            .frame(
-                                width: width(photo, in: geometry.size),
-                                height: height(photo, in: geometry.size)
-                            )
+                            ((owner.photos.firstIndex(where: { $0.id == photo.id }) ?? selection)
+                                - selection
+                                + owner.photos.count) % owner.photos.count
+                        picture(photo).frame(width: cardWidth, height: cardHeight)
                             .overlay {
-                                if rank == 0 {
+                                if rank == 0 && !failed.contains(photo.id) {
                                     PhotoStackTouch(
                                         changed: { if flight == nil { translation = $0 } },
-                                        ended: { distance in
-                                            if abs(distance) > 60 {
-                                                swipe(
-                                                    side: distance < 0 ? -1 : 1,
-                                                    width: geometry.size.width)
+                                        ended: { distance, velocity in
+                                            guard flight == nil else { return }
+                                            if owner.photos.count > 1
+                                                && VibeMotion.accepts(
+                                                    distance.width, velocity: velocity,
+                                                    width: cardWidth)
+                                            {
+                                                begin(
+                                                    target: MediaPhotoNavigation.nextInStack(
+                                                        from: selection, count: owner.photos.count),
+                                                    side: distance.width < 0 ? -1 : 1,
+                                                    width: geometry.size.width,
+                                                    cardWidth: cardWidth, velocity: velocity)
                                             } else {
-                                                returnToRest()
+                                                restore()
                                             }
                                         }, open: { if flight == nil { open() } })
                                 }
                             }
-                            .rotationEffect(.degrees(angle(rank)))
-                            .offset(x: rank == 0 && !reduceMotion ? translation : 0)
-                            .opacity(
-                                reassembling || knownAspect(photo) == nil
-                                    || knownAspect(owner.photos[selection]) == nil
-                                    ? 0 : rank == 0 ? 1 : rank == 1 ? 0.85 : 0.75
+                            .rotationEffect(
+                                .degrees(reassembling ? 0 : angle(rank, width: geometry.size.width))
                             )
-                            .allowsHitTesting(rank == 0 && knownAspect(photo) != nil)
-                            .zIndex(Double(owner.photos.count - selection - rank))
+                            .offset(
+                                x: rank == 0 ? translation.width : 0,
+                                y: rank == 0
+                                    ? max(
+                                        -DesignTokens.componentMobileVibeVerticalDriftMaximum,
+                                        min(
+                                            DesignTokens.componentMobileVibeVerticalDriftMaximum,
+                                            translation.height
+                                                * DesignTokens.componentMobileVibeVerticalDriftRatio
+                                        )) : 0
+                            )
+                            .opacity(reassembling || recycled == photo.id ? 0 : 1)
+                            .allowsHitTesting(rank == 0).zIndex(Double(visiblePhotos.count - rank))
                             .transition(.identity)
-                            .accessibilityElement(children: .ignore)
+                            .accessibilityElement(
+                                children: failed.contains(photo.id) ? .contain : .ignore
+                            )
                             .accessibilityLabel("Открыть фото \(selection + 1)")
-                            .accessibilityAddTraits(.isButton)
-                            .accessibilityHidden(rank != 0 || knownAspect(photo) == nil)
+                            .accessibilityAddTraits(.isButton).accessibilityHidden(rank != 0)
                             .accessibilityAction { if flight == nil { open() } }
                     }
                 }
-            }.frame(width: geometry.size.width, height: geometry.size.height)
-                .contentShape(Rectangle()).focusable()
-                .accessibilityValue("Фото \(selection + 1) из \(owner.photos.count)")
+            }.frame(width: geometry.size.width, height: geometry.size.height).contentShape(
+                Rectangle()
+            ).focusable()
+                .accessibilityIdentifier("photo-stack").accessibilityValue(
+                    "Фото \(selection + 1) из \(owner.photos.count)"
+                )
                 .accessibilityAdjustableAction {
-                    keyboardStep($0 == .increment ? 1 : -1, width: geometry.size.width)
+                    keyboardStep(
+                        $0 == .increment ? 1 : -1, width: geometry.size.width, cardWidth: cardWidth)
                 }
                 .onKeyPress(.leftArrow) {
-                    keyboardStep(-1, width: geometry.size.width)
+                    keyboardStep(-1, width: geometry.size.width, cardWidth: cardWidth)
                     return .handled
                 }
                 .onKeyPress(.rightArrow) {
-                    keyboardStep(1, width: geometry.size.width)
+                    keyboardStep(1, width: geometry.size.width, cardWidth: cardWidth)
                     return .handled
                 }
-                .overlay(alignment: .bottom) {
-                    if let failedTarget {
-                        StatusView(
-                            title: "Не удалось загрузить фото",
-                            retry: {
-                                begin(
-                                    target: failedTarget, side: failedSide,
-                                    width: geometry.size.width)
-                            }
-                        )
-                        .padding(DesignTokens.spaceS12)
-                        .background(
-                            AppPalette.background,
-                            in: RoundedRectangle(cornerRadius: DesignTokens.radiusCard)
-                        )
-                        .padding(.horizontal, DesignTokens.spaceS20)
-                    }
-                }
         }.onDisappear {
-            motionID = UUID()
             flight?.cancel()
             flight = nil
-            translation = 0
-            reassembling = false
+            translation = .zero
         }
     }
-
     private var visiblePhotos: [MeetingMedia] {
-        Array(owner.photos.dropFirst(max(0, selection)).prefix(3))
+        guard !owner.photos.isEmpty else { return [] }
+        return (0..<min(3, owner.photos.count)).map {
+            owner.photos[(selection + $0) % owner.photos.count]
+        }
     }
-
-    private func angle(_ rank: Int) -> Double {
-        guard !reduceMotion, !reassembling else { return 0 }
-        return rank == 0 ? -1.5 + Double(translation / 30) : rank == 1 ? 7 : -9
-    }
-
     private func picture(_ photo: MeetingMedia) -> some View {
-        PrivatePhotoView(
-            media: photo, session: owner.session,
-            onAspect: { aspect in
-                if aspects[photo.id] == nil { aspects[photo.id] = aspect }
-                failedPhotos.remove(photo.id)
-            }, onFailure: { failedPhotos.insert(photo.id) }, retryID: retryID
-        ).id(photo.id)
-            .clipShape(RoundedRectangle(cornerRadius: 7)).padding(5)
-            .background(Color(designHex: 0xe4ded4), in: RoundedRectangle(cornerRadius: 12))
-            .shadow(color: .black.opacity(0.33), radius: 25, y: 20)
-    }
-
-    private func knownAspect(_ photo: MeetingMedia) -> CGFloat? {
-        if let known = aspects[photo.id] { return known }
-        if let size = owner.session.privateData.mediaCache.displaySize(photo.id), size.height > 0 {
-            return size.width / size.height
+        Group {
+            if failed.contains(photo.id) {
+                VibePhotoUnavailable { failed.remove(photo.id) }
+            } else {
+                PrivatePhotoView(
+                    media: photo, session: owner.session, onFailure: { failed.insert(photo.id) })
+            }
         }
-        return nil
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DesignTokens.componentMobileVibePhotoRadius
+                    - DesignTokens.componentMobileVibePhotoBorder)
+        )
+        .padding(DesignTokens.componentMobileVibePhotoBorder)
+        .background(
+            DesignTokens.colorPhotoFrame,
+            in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileVibePhotoRadius)
+        )
+        .shadow(
+            color: DesignTokens.colorMobileVibePhotoShadow,
+            radius: DesignTokens.componentMobileVibeCardShadowBlur,
+            y: DesignTokens.componentMobileVibeCardShadowDown)
     }
-
-    private func width(_ photo: MeetingMedia, in size: CGSize) -> CGFloat {
-        (knownAspect(photo) ?? 1.4) < 1
-            ? min(size.width * 0.78, size.height * 0.88 * 2 / 3) : size.width * 0.88
+    private func angle(_ rank: Int, width: CGFloat) -> Double {
+        if rank == 0 {
+            return Double(DesignTokens.componentMobileVibeStackInitialAngle)
+                + max(
+                    -Double(DesignTokens.componentMobileVibeDragAngleMaximum),
+                    min(
+                        Double(DesignTokens.componentMobileVibeDragAngleMaximum),
+                        Double(translation.width)
+                            / Double(DesignTokens.componentMobileVibeDragAngleDivisor)
+                    ))
+        }
+        let progress = min(
+            1,
+            abs(Double(translation.width))
+                / max(1, Double(width) * DesignTokens.componentMobileVibeProgressViewportRatio))
+        return Double(rank) * Double(DesignTokens.componentMobileVibeStackAngleStep)
+            + Double(DesignTokens.componentMobileVibeStackInitialAngle) - progress
+            * Double(DesignTokens.componentMobileVibeStackAngleStep)
     }
-
-    private func height(_ photo: MeetingMedia, in size: CGSize) -> CGFloat {
-        size.height * ((knownAspect(photo) ?? 1.4) < 1 ? 0.88 : 0.77)
-    }
-
-    private func returnToRest() {
+    private func restore() {
+        guard flight == nil else { return }
         withAnimation(
-            reduceMotion ? nil : .easeOut(duration: DesignTokens.motionDurationNavigation)
-        ) {
-            translation = 0
+            reduceMotion ? nil : VibeMotion.animation(DesignTokens.motionDurationVibeReturn)
+        ) { translation = .zero }
+        if !reduceMotion {
+            flight = Task {
+                try? await Task.sleep(for: .seconds(DesignTokens.motionDurationVibeReturn))
+                flight = nil
+            }
         }
     }
-
-    private func swipe(side: CGFloat, width: CGFloat) {
-        begin(
-            target: MediaPhotoNavigation.nextInStack(from: selection, count: owner.photos.count),
-            side: side, width: width)
-    }
-
-    private func keyboardStep(_ delta: Int, width: CGFloat) {
+    private func keyboardStep(_ delta: Int, width: CGFloat, cardWidth: CGFloat) {
         begin(
             target: MediaPhotoNavigation.index(
                 from: selection, delta: delta, count: owner.photos.count), side: delta > 0 ? -1 : 1,
-            width: width)
+            width: width, cardWidth: cardWidth, velocity: 0)
     }
-
-    private func begin(target: Int, side: CGFloat, width: CGFloat) {
+    private func begin(
+        target: Int, side: CGFloat, width: CGFloat, cardWidth: CGFloat, velocity: CGFloat
+    ) {
         guard flight == nil else { return }
-        guard owner.photos.count > 1, owner.photos.indices.contains(target), target != selection
+        guard owner.photos.count > 1, target != selection, owner.photos.indices.contains(target)
         else {
-            returnToRest()
+            restore()
             return
         }
-        let version = UUID()
-        motionID = version
-        failedTarget = nil
-        let restarting = selection == owner.photos.count - 1 && target == 0
+        if reduceMotion {
+            selection = target
+            translation = .zero
+            return
+        }
+        let old = owner.photos[selection].id
+        let cycle = selection == owner.photos.count - 1 && target == 0
+        let destination = side * (width + cardWidth)
+        let milliseconds = min(
+            DesignTokens.motionDurationVibeFlightMaximum * 1000,
+            max(
+                DesignTokens.motionDurationVibeFlightMinimum * 1000,
+                Double(abs(destination - translation.width))
+                    / (Double(abs(velocity)) / 1000
+                        + Double(DesignTokens.componentMobileVibeFlightSpeedBias))))
+        let duration = milliseconds / 1000
         flight = Task { @MainActor in
-            defer { if motionID == version { flight = nil } }
-            let photo = owner.photos[target]
-            let prepared = MediaContentOwner(media: photo, session: owner.session)
-            if prepared.image == nil { returnToRest() }
-            await prepared.load()
-            guard !Task.isCancelled, owner.current, motionID == version else { return }
-            guard let image = prepared.image, image.size.height > 0 else {
-                failedTarget = target
-                failedSide = side
-                returnToRest()
-                return
+            defer { flight = nil }
+            withAnimation(VibeMotion.animation(duration)) {
+                translation = CGSize(width: destination, height: DesignTokens.spaceS0)
             }
-            aspects[photo.id] = image.size.width / image.size.height
-            failedPhotos.remove(photo.id)
-            retryID = UUID()
-            if reduceMotion {
+            do { try await Task.sleep(for: .seconds(duration)) } catch { return }
+            guard owner.current, !Task.isCancelled else { return }
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
                 selection = target
-                translation = 0
-                return
+                translation = .zero
+                recycled = cycle ? nil : old
+                reassembling = cycle
             }
-            withAnimation(.easeOut(duration: DesignTokens.motionDurationPhoto)) {
-                translation = side * width
+            await Task.yield()
+            withAnimation(
+                VibeMotion.animation(
+                    cycle
+                        ? DesignTokens.motionDurationVibeAssembly
+                        : DesignTokens.motionDurationVibeFade)
+            ) {
+                recycled = nil
+                reassembling = false
             }
-            do { try await Task.sleep(for: .seconds(DesignTokens.motionDurationPhoto)) } catch {
-                return
-            }
-            guard owner.current, motionID == version else { return }
-            if restarting {
-                var transaction = Transaction()
-                transaction.disablesAnimations = true
-                withTransaction(transaction) {
-                    reassembling = true
-                    selection = target
-                    translation = 0
-                }
-                // Present the collapsed deck before its existing card angles fan out.
-                do { try await Task.sleep(for: .milliseconds(16)) } catch { return }
-                withAnimation(.easeOut(duration: DesignTokens.motionDurationPhoto)) {
-                    reassembling = false
-                }
-            } else {
-                withAnimation(.easeOut(duration: DesignTokens.motionDurationPhoto)) {
-                    selection = target
-                    translation = 0
-                }
-            }
-            do { try await Task.sleep(for: .seconds(DesignTokens.motionDurationPhoto)) } catch {
-                return
-            }
+            try? await Task.sleep(
+                for: .seconds(
+                    cycle
+                        ? DesignTokens.motionDurationVibeAssembly
+                        : DesignTokens.motionDurationVibeFade))
         }
     }
 }

@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.12.0. Do not edit.
+// Generated from design-system/tokens.json · 7.13.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -306,6 +306,20 @@ enum DesignTokens {
         opacity: 1
     )
     static let colorMobileStickyShadow = Color(
+        .sRGB,
+        red: 0,
+        green: 0,
+        blue: 0,
+        opacity: 0.3333333333333333
+    )
+    static let colorMobileVibePhotoShadow = Color(
+        .sRGB,
+        red: 0,
+        green: 0,
+        blue: 0,
+        opacity: 0.26666666666666666
+    )
+    static let colorMobileVibeRemoveShadow = Color(
         .sRGB,
         red: 0,
         green: 0,
@@ -1020,6 +1034,72 @@ enum DesignTokens {
     static let componentMobileUnreadInsetBottom = CGFloat(12)
     static let componentMobileUnreadInsetStart = CGFloat(17)
     static let componentMobileUnreadReserveEnd = CGFloat(138)
+    static let componentMobileVibeActionInsetBlock = CGFloat(10)
+    static let componentMobileVibeActionInsetInline = CGFloat(9)
+    static let componentMobileVibeActionLineHeight = CGFloat(18)
+    static let componentMobileVibeActionMinimumHeight = CGFloat(48)
+    static let componentMobileVibeActionRadius = CGFloat(14)
+    static let componentMobileVibeAxisBias = 1.1
+    static let componentMobileVibeBodyLineHeight = CGFloat(20)
+    static let componentMobileVibeCardHeightRatio = 0.78
+    static let componentMobileVibeCardShadowBlur = CGFloat(26)
+    static let componentMobileVibeCardShadowDown = CGFloat(12)
+    static let componentMobileVibeCardWidthRatio = 0.86
+    static let componentMobileVibeCompactCardHeightRatio = 0.8
+    static let componentMobileVibeCompactDeckHeight = CGFloat(290)
+    static let componentMobileVibeCompactDeckMinimumHeight = CGFloat(260)
+    static let componentMobileVibeCompactHeightBoundary = CGFloat(650)
+    static let componentMobileVibeCounterLineHeight = CGFloat(22)
+    static let componentMobileVibeCounterMinimumWidth = CGFloat(48)
+    static let componentMobileVibeCounterSize = CGFloat(16)
+    static let componentMobileVibeDeckHeightMaximum = CGFloat(470)
+    static let componentMobileVibeDeckHeightMinimum = CGFloat(310)
+    static let componentMobileVibeDeckMinimumHeight = CGFloat(300)
+    static let componentMobileVibeDeckViewportRatio = 0.47
+    static let componentMobileVibeDistanceMaximum = CGFloat(90)
+    static let componentMobileVibeDistanceMinimum = CGFloat(48)
+    static let componentMobileVibeDistanceRatio = 0.24
+    static let componentMobileVibeDragAngleDivisor = 35
+    static let componentMobileVibeDragAngleMaximum = 14
+    static let componentMobileVibeDragSlop = CGFloat(8)
+    static let componentMobileVibeFlickDistance = CGFloat(18)
+    static let componentMobileVibeFlickVelocityPerSecond = 500
+    static let componentMobileVibeFlightSpeedBias = 2
+    static let componentMobileVibeNavBottomGap = CGFloat(14)
+    static let componentMobileVibePhotoBorder = CGFloat(5)
+    static let componentMobileVibePhotoErrorIcon = CGFloat(26)
+    static let componentMobileVibePhotoRadius = CGFloat(14)
+    static let componentMobileVibeProgressViewportRatio = 0.8
+    static let componentMobileVibeStackAngleStep = 8
+    static let componentMobileVibeStackInitialAngle = -2
+    static let componentMobileVibeStateIcon = CGFloat(30)
+    static let componentMobileVibeStateIconTile = CGFloat(70)
+    static let componentMobileVibeStateMinimumHeight = CGFloat(240)
+    static let componentMobileVibeStateSkeletonRatio = 1.4
+    static let componentMobileVibeStateTextMaximumWidth = CGFloat(240)
+    static let componentMobileVibeStateTitle = CGFloat(23)
+    static let componentMobileVibeStateTitleLineHeight = CGFloat(29)
+    static let componentMobileVibeTitleLineHeight = CGFloat(33)
+    static let componentMobileVibeTitleTracking = CGFloat(0.6)
+    static let componentMobileVibeTitleWeight = 650
+    static let componentMobileVibeUploadEmptyIcon = CGFloat(34)
+    static let componentMobileVibeUploadEmptyTextMaximumWidth = CGFloat(220)
+    static let componentMobileVibeUploadEmptyTitle = CGFloat(19)
+    static let componentMobileVibeUploadEmptyTitleLineHeight = CGFloat(25)
+    static let componentMobileVibeUploadPhotoHeight = CGFloat(132)
+    static let componentMobileVibeUploadPhotoWidth = CGFloat(176)
+    static let componentMobileVibeVelocityLatestWeight = 0.65
+    static let componentMobileVibeVelocityPreviousWeight = 0.35
+    static let componentMobileVibeVerticalDriftMaximum = CGFloat(16)
+    static let componentMobileVibeVerticalDriftRatio = 0.15
+    static let componentMobileVibeViewerDistanceRatio = 0.2
+    static let componentMobileVibeViewerFlickDistance = CGFloat(22)
+    static let componentMobileVibeViewerTitleLineHeight = CGFloat(21)
+    static let componentMobileVibeViewerTitleSize = CGFloat(15)
+    static let componentMobileVibeViewerTopInset = CGFloat(6)
+    static let componentMobileVibeViewIconSize = CGFloat(19)
+    static let componentMobileVibeWheelCommitRatio = 0.45
+    static let componentMobileVibeWheelLineScale = 16
     static let componentNavigationDetailsSidebarWidth = CGFloat(280)
     static let componentNavigationHeight = CGFloat(62)
     static let componentNavigationIcon = CGFloat(19)
@@ -1126,8 +1206,20 @@ enum DesignTokens {
     static let motionDurationReactionExit = 0.15
     static let motionDurationReactionFeedback = 0.15
     static let motionDurationReactionLongPress = 0.45
+    static let motionDurationVibeAssembly = 0.3
+    static let motionDurationVibeFade = 0.18
+    static let motionDurationVibeFlightMaximum = 0.32
+    static let motionDurationVibeFlightMinimum = 0.18
+    static let motionDurationVibeReturn = 0.22
+    static let motionDurationVibeVelocityExpiry = 0.09
+    static let motionDurationVibeVelocitySampleMinimum = 0.008
+    static let motionDurationVibeViewer = 0.26
+    static let motionDurationVibeViewerWheelQuiet = 0.1
+    static let motionDurationVibeWheelConsumedQuiet = 0.16
+    static let motionDurationVibeWheelQuiet = 0.11
     static let motionEasingCalendarMonth = [0, 0, 0.58, 1]
     static let motionEasingStandard = [0.2, 0.7, 0.3, 1]
+    static let motionEasingVibeGesture = [0.2, 0.8, 0.2, 1]
     static let radiusBadge = CGFloat(8)
     static let radiusCard = CGFloat(22)
     static let radiusControl = CGFloat(12)

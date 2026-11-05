@@ -5,77 +5,131 @@ struct MemoryFullscreen: View {
     @Binding var selection: Int
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var translation: CGFloat = 0
+    @State private var flight: Task<Void, Never>?
     var body: some View {
-        ZStack {
-            Color(designHex: 0x141518).ignoresSafeArea()
-            if owner.current, owner.photos.indices.contains(selection) {
-                PrivatePhotoView(
-                    media: owner.photos[selection], session: owner.session, fitting: true
-                )
-                .id(owner.photos[selection].id)
-                .transition(reduceMotion ? .identity : .opacity)
-            }
-        }.contentShape(Rectangle()).focusable()
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 20).onEnded { value in
-                    if abs(value.translation.width) > 60
-                        && abs(value.translation.width) > abs(value.translation.height)
-                    {
-                        step(value.translation.width < 0 ? 1 : -1)
+        GeometryReader { geometry in
+            ZStack {
+                DesignTokens.colorPhotoBackdrop
+                if owner.current, owner.photos.indices.contains(selection) {
+                    ForEach([-1, 0, 1], id: \.self) { step in
+                        let target = MediaPhotoNavigation.index(
+                            from: selection, delta: step, count: owner.photos.count)
+                        if step == 0 || target != selection {
+                            PrivatePhotoView(
+                                media: owner.photos[target], session: owner.session, fitting: true
+                            )
+                            .id(owner.photos[target].id.uuidString + String(step))
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .offset(x: CGFloat(step) * geometry.size.width + translation)
+                            .accessibilityHidden(step != 0)
+                        }
                     }
-                }
-            )
-            .safeAreaInset(edge: .top, spacing: 0) {
-                HStack(spacing: 12) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(owner.current ? owner.meeting?.title ?? "Вайб встречи" : "").font(
-                            .system(size: 16, weight: .bold)
-                        ).lineLimit(2)
-                        HStack(spacing: 3) {
-                            if owner.current, let meeting = owner.meeting {
-                                Text(
-                                    ExperienceDate.label(
-                                        meeting.startsAt, day: meeting.startsOn,
-                                        timezone: meeting.timezone, clock: false) + " ·")
+                    PhotoStackTouch(
+                        changed: { if flight == nil { translation = $0.width } },
+                        ended: { distance, velocity in
+                            guard flight == nil else { return }
+                            if owner.photos.count > 1
+                                && VibeMotion.accepts(
+                                    distance.width, velocity: velocity, width: geometry.size.width,
+                                    viewer: true)
+                            {
+                                move(distance.width < 0 ? 1 : -1, width: geometry.size.width)
+                            } else {
+                                restore()
                             }
-                            Text("\(selection + 1) / \(owner.photos.count)")
-                                .accessibilityLabel("\(selection + 1) из \(owner.photos.count)")
-                                .accessibilityAddTraits(.updatesFrequently)
-                        }.font(.system(size: 12)).foregroundStyle(AppPalette.muted)
-                    }
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        ExperienceIcon(kind: .close).frame(width: 44, height: 44).contentShape(
-                            Rectangle())
-                    }.accessibilityLabel("Закрыть")
-                }.padding(14).background(
-                    Color(designHex: 0x141518))
-            }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                Color(designHex: 0x141518).frame(height: 38)
-            }
-            .accessibilityAdjustableAction { direction in step(direction == .increment ? 1 : -1) }
-            .onKeyPress(.leftArrow) {
-                step(-1)
-                return .handled
-            }
-            .onKeyPress(.rightArrow) {
-                step(1)
-                return .handled
-            }
-            .onKeyPress(.escape) {
-                dismiss()
-                return .handled
-            }
-            .task(id: selection) { await owner.prefetch(around: selection) }
-            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: selection)
-            .onChange(of: owner.current) { _, current in if !current { dismiss() } }
+                        }, open: {})
+                }
+            }.frame(width: geometry.size.width, height: geometry.size.height).clipped()
+                .contentShape(Rectangle()).focusable()
+                .accessibilityIdentifier("memory-fullscreen").accessibilityValue(
+                    "\(selection + 1) из \(owner.photos.count)"
+                )
+                .accessibilityAdjustableAction {
+                    move($0 == .increment ? 1 : -1, width: geometry.size.width)
+                }
+                .onKeyPress(.leftArrow) {
+                    move(-1, width: geometry.size.width)
+                    return .handled
+                }
+                .onKeyPress(.rightArrow) {
+                    move(1, width: geometry.size.width)
+                    return .handled
+                }
+        }
+        .background(DesignTokens.colorPhotoBackdrop.ignoresSafeArea())
+        .safeAreaInset(edge: .top, spacing: 0) {
+            HStack(spacing: DesignTokens.spaceS12) {
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
+                    Text(owner.current ? owner.meeting?.title ?? "Вайб встречи" : "").designFont(
+                        DesignTokens.componentMobileVibeViewerTitleSize, weight: .medium
+                    ).lineLimit(2)
+                    Text("\(selection + 1) / \(owner.photos.count)").designFont(
+                        DesignTokens.typographySizeCaption
+                    ).foregroundStyle(DesignTokens.colorMuted).accessibilityAddTraits(
+                        .updatesFrequently)
+                }
+                Spacer(minLength: DesignTokens.spaceS12)
+                Button {
+                    dismiss()
+                } label: {
+                    ExperienceIcon(kind: .close, size: DesignTokens.componentMobileChatIconSize)
+                        .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+                        .background(
+                            DesignTokens.colorSurface,
+                            in: RoundedRectangle(
+                                cornerRadius: DesignTokens.componentMobileVibeActionRadius)
+                        ).contentShape(Rectangle())
+                }.buttonStyle(.plain).accessibilityLabel("Закрыть просмотр")
+            }.padding(.leading, DesignTokens.spaceS20).padding(.trailing, DesignTokens.spaceS16)
+                .padding(.top, DesignTokens.componentMobileVibeViewerTopInset).padding(
+                    .bottom, DesignTokens.componentMobileVibeNavBottomGap
+                ).background(DesignTokens.colorPhotoBackdrop)
+        }
+        .onKeyPress(.escape) {
+            dismiss()
+            return .handled
+        }
+        .task(id: selection) { await owner.prefetch(around: selection) }
+        .onChange(of: owner.current) { _, current in if !current { dismiss() } }
+        .onDisappear {
+            flight?.cancel()
+            flight = nil
+        }
     }
-    private func step(_ delta: Int) {
-        guard owner.photos.count > 1 else { return }
-        selection = MediaPhotoNavigation.index(
+    private func restore() {
+        guard flight == nil else { return }
+        withAnimation(
+            reduceMotion ? nil : VibeMotion.animation(DesignTokens.motionDurationVibeReturn)
+        ) { translation = 0 }
+    }
+    private func move(_ delta: Int, width: CGFloat) {
+        guard flight == nil, owner.current else { return }
+        let target = MediaPhotoNavigation.index(
             from: selection, delta: delta, count: owner.photos.count)
+        guard owner.photos.count > 1, target != selection else {
+            restore()
+            return
+        }
+        if reduceMotion {
+            selection = target
+            translation = 0
+            return
+        }
+        flight = Task { @MainActor in
+            defer { flight = nil }
+            withAnimation(VibeMotion.animation(DesignTokens.motionDurationVibeViewer)) {
+                translation = CGFloat(-delta) * width
+            }
+            do { try await Task.sleep(for: .seconds(DesignTokens.motionDurationVibeViewer)) } catch
+            { return }
+            guard owner.current, !Task.isCancelled else { return }
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                selection = target
+                translation = 0
+            }
+        }
     }
 }

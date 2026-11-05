@@ -38,10 +38,23 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--ds-space-s8);
   width: 100%;
-  margin-top: var(--ds-space-s16);
+  margin-top: 0;
 }
 
 .actions[data-mobile='true'] .upload {
-  padding-inline: var(--ds-space-s12);
+  min-height: var(--ds-component-mobile-vibe-action-minimum-height);
+  padding: var(--ds-component-mobile-vibe-action-inset-block)
+    var(--ds-component-mobile-vibe-action-inset-inline);
+  border-radius: var(--ds-component-mobile-vibe-action-radius);
   font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-component-mobile-vibe-action-line-height);
+}
+
+.actions[data-mobile='true'] .upload svg {
+  width: var(--ds-component-mobile-field-icon-size);
+  height: var(--ds-component-mobile-field-icon-size);
+}
+
+.actions[data-mobile='true'][data-single='true'] .upload {
+  grid-column: 1/-1;
 }

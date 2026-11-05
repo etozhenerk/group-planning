@@ -5,111 +5,107 @@ struct MemoriesScreen: View {
     @State private var selection = 0
     @State private var grid = false
     @State private var adding = false
-    @State private var picker: MediaPickerKind?
     @State private var fullscreen = false
     @State private var reloadID = UUID()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     var body: some View {
         GeometryReader { viewport in
+            let height =
+                viewport.size.height + viewport.safeAreaInsets.top + viewport.safeAreaInsets.bottom
             ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    PageBackButton { dismiss() }.accessibilityIdentifier("memories-back")
-                    if owner.current, let meeting = owner.meeting {
-                        Text(
-                            ExperienceDate.label(
-                                meeting.startsAt, day: meeting.startsOn, timezone: meeting.timezone)
-                                + (meeting.place.map { " · " + $0 } ?? "")
-                        )
-                        .designFont(13).foregroundStyle(AppPalette.muted).frame(minHeight: 19.5)
-                        .padding(.top, 8)
-                        Text(meeting.title).designFont(29, weight: .bold).tracking(-0.9).frame(
-                            minHeight: 36.25
-                        )
-                        .padding(.top, 8).accessibilityAddTraits(.isHeader)
-                    }
-                    AlbumActions(owner: owner.albumSave, hasPhotos: !owner.photos.isEmpty) {
-                        picker = .photos
-                    }.padding(.top, DesignTokens.spaceS16)
-                    if owner.current {
-                        if owner.failed {
-                            StatusView(
-                                title: "Не удалось загрузить вайб", retry: { reloadID = UUID() })
-                        } else if !owner.loaded {
-                            RoundedRectangle(cornerRadius: 20).fill(AppPalette.surface).frame(
-                                height: 300
-                            ).padding(.top, 32).accessibilityLabel("Загрузка фото")
-                        }
-                        if owner.loaded && owner.photos.isEmpty {
-                            StatusView(
-                                title: "Как всё прошло?", text: "Добавьте фотографии встречи."
-                            ).padding(.vertical, 50)
-                        }
-                        if !owner.photos.isEmpty {
-                            if grid {
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 10)
-                                {
-                                    ForEach(Array(owner.photos.enumerated()), id: \.element.id) {
-                                        index, photo in
-                                        Button {
-                                            selection = index
-                                            fullscreen = true
-                                        } label: {
-                                            PrivatePhotoView(media: photo, session: owner.session)
-                                                .frame(height: 120)
-                                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                        }.accessibilityLabel("Открыть фото \(index + 1)")
-                                    }
-                                }.padding(.top, 28)
-                            } else {
-                                MemoryPhotoStack(owner: owner, selection: $selection) {
-                                    fullscreen = true
-                                }
-                                .frame(
-                                    height: min(500, max(340, (viewport.size.height + 51) * 0.51))
-                                )
-                                .padding(.horizontal, -8)
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                    VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                        HStack {
+                            PageBackButton { dismiss() }.accessibilityIdentifier("memories-back")
+                            Spacer(minLength: DesignTokens.spaceS12)
+                            if owner.current && !owner.photos.isEmpty {
+                                AlbumViewControls(
+                                    selection: selection, count: owner.photos.count, grid: $grid)
                             }
-                            HStack(spacing: 12) {
-                                Spacer()
-                                Text(
-                                    "\(min(selection + 1, owner.photos.count)) / \(owner.photos.count)"
-                                )
-                                .designFont(12).foregroundStyle(AppPalette.muted)
-                                .accessibilityLabel(
-                                    "\(min(selection + 1, owner.photos.count)) из \(owner.photos.count)"
-                                )
-                                Button {
-                                    grid.toggle()
-                                } label: {
-                                    ExperienceIcon(kind: grid ? .photo : .grid, size: 18)
-                                        .frame(width: 36, height: 36)
-                                        .contentShape(Rectangle().inset(by: -4))
-                                }.accessibilityLabel(grid ? "Показать стопкой" : "Показать сеткой")
-                                Spacer()
-                            }.padding(.top, grid ? 12 : -6)
+                        }.padding(.bottom, DesignTokens.componentMobileVibeNavBottomGap)
+                        Text(
+                            owner.current ? owner.meeting?.title ?? "Вайб встречи" : "Вайб встречи"
+                        )
+                        .designTokenFont(
+                            DesignTokens.typographySizeHeading,
+                            weight: DesignTokens.componentMobileVibeTitleWeight, relativeTo: .title
+                        )
+                        .tracking(-DesignTokens.componentMobileVibeTitleTracking).fixedSize(
+                            horizontal: false, vertical: true
+                        ).accessibilityAddTraits(.isHeader)
+                        .padding(.bottom, DesignTokens.spaceS8)
+                        if owner.current, let meeting = owner.meeting {
+                            Text(
+                                ExperienceDate.label(
+                                    meeting.startsAt, day: meeting.startsOn,
+                                    timezone: meeting.timezone, clock: false)
+                                    + (meeting.place.map { " · " + $0 } ?? "")
+                            )
+                            .designFont(DesignTokens.typographySizeSmall).foregroundStyle(
+                                DesignTokens.colorMuted
+                            ).padding(.bottom, DesignTokens.spaceS24)
+                        }
+                        if owner.current {
+                            AlbumActions(owner: owner.albumSave, hasPhotos: !owner.photos.isEmpty) {
+                                adding = true
+                            }
+                        }
+                    }.padding(.horizontal, DesignTokens.spaceS20)
+                    if !owner.current {
+                        VibeAlbumState(kind: .denied)
+                    } else if owner.failed && owner.photos.isEmpty {
+                        VibeAlbumState(kind: .error, retry: { reloadID = UUID() })
+                    } else if !owner.loaded {
+                        VibeAlbumState(kind: .loading)
+                    } else if owner.photos.isEmpty {
+                        VibeAlbumState(kind: .empty)
+                    } else {
+                        if grid {
+                            LazyVGrid(
+                                columns: [GridItem(.flexible()), GridItem(.flexible())],
+                                spacing: DesignTokens.spaceS10
+                            ) {
+                                ForEach(Array(owner.photos.enumerated()), id: \.element.id) {
+                                    index, photo in
+                                    Button {
+                                        selection = index
+                                        fullscreen = true
+                                    } label: {
+                                        PrivatePhotoView(media: photo, session: owner.session)
+                                            .aspectRatio(1, contentMode: .fit)
+                                            .clipShape(
+                                                RoundedRectangle(
+                                                    cornerRadius: DesignTokens.radiusCover))
+                                    }.accessibilityLabel("Открыть фото \(index + 1)")
+                                }
+                            }.padding(.horizontal, DesignTokens.spaceS20).padding(
+                                .top, (DesignTokens.spaceS24 + DesignTokens.spaceS4))
+                        } else {
+                            MemoryPhotoStack(owner: owner, selection: $selection) {
+                                fullscreen = true
+                            }
+                            .frame(height: deckHeight(height)).padding(
+                                .horizontal, DesignTokens.spaceS12
+                            ).padding(.top, DesignTokens.spaceS12)
+                        }
+                        if owner.failed {
+                            Button("Повторить загрузку") { reloadID = UUID() }.frame(
+                                minHeight: DesignTokens.targetIos
+                            ).padding(.horizontal, DesignTokens.spaceS20)
                         }
                         if owner.nextCursor != nil {
                             Button("Загрузить ещё") { Task { await owner.load(more: true) } }
-                                .disabled(owner.loading).padding(.top, 20)
+                                .disabled(owner.loading).padding(.top, DesignTokens.spaceS20)
                         }
                     }
-                }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, 28)
-            }.background(AppPalette.background).accessibilityIdentifier("memories-scroll")
+                }.padding(.bottom, DesignTokens.spaceS32)
+            }.background(DesignTokens.colorBackground).accessibilityIdentifier("memories-scroll")
         }
-
-        .toolbar(.hidden, for: .navigationBar)
-        .task(id: reloadID) { await owner.load() }
-        .task(id: "\(selection)-\(owner.photos.count)") {
-            await owner.prefetch(around: selection)
-        }
-        .modifier(
-            MediaSelectionPresenter(
-                owner: owner.transfer, kind: $picker, selected: { adding = true })
-        )
+        .toolbar(.hidden, for: .navigationBar).task(id: reloadID) { await owner.load() }
+        .task(id: "\(selection)-\(owner.photos.count)") { await owner.prefetch(around: selection) }
         .sheet(isPresented: $adding, onDismiss: { reloadID = UUID() }) {
-            MediaPickerPanel(owner: owner.transfer, photosOnly: true)
-
+            MemoryAlbumUploadPanel(owner: owner.transfer)
         }
         .fullScreenCover(isPresented: $fullscreen) {
             MemoryFullscreen(owner: owner, selection: $selection)
@@ -117,12 +113,27 @@ struct MemoriesScreen: View {
         .onChange(of: owner.current) { _, current in
             if !current {
                 owner.clear()
-                dismiss()
+                fullscreen = false
+                adding = false
             }
+        }
+        .onChange(of: owner.photos.count) { _, count in
+            selection = min(selection, max(0, count - 1))
         }
         .onDisappear { owner.albumSave.suspend() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { owner.albumSave.permissionMayHaveChanged() }
         }
+    }
+    private func deckHeight(_ height: CGFloat) -> CGFloat {
+        height < DesignTokens.componentMobileVibeCompactHeightBoundary
+            ? DesignTokens.componentMobileVibeCompactDeckHeight
+            : max(
+                DesignTokens.componentMobileVibeDeckMinimumHeight,
+                min(
+                    DesignTokens.componentMobileVibeDeckHeightMaximum,
+                    max(
+                        DesignTokens.componentMobileVibeDeckHeightMinimum,
+                        height * CGFloat(DesignTokens.componentMobileVibeDeckViewportRatio))))
     }
 }

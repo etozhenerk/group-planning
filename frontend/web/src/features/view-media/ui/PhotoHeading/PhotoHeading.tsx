@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { X } from 'lucide-react';
 import { useMeeting } from '@/entities/meeting';
 import { dayLabel } from '@/shared/lib/time';
@@ -13,6 +14,7 @@ export type PhotoHeadingProps = {
 };
 
 export const PhotoHeading = ({ media, user, index, count, close }: PhotoHeadingProps) => {
+  const mobile = useMobileLayout();
   const query = useMeeting(media.meeting_id, user);
   const meeting = query.data;
   const date = meeting?.startsOn
@@ -26,11 +28,11 @@ export const PhotoHeading = ({ media, user, index, count, close }: PhotoHeadingP
       : '';
 
   return (
-    <header className={styles.heading}>
+    <header className={styles.heading} data-mobile={mobile}>
       <div>
         <h3>{meeting?.title ?? 'Фото встречи'}</h3>
         <p aria-live="polite">
-          {date ? `${date} · ` : ''}
+          {!mobile && date ? `${date} · ` : ''}
           {index + 1} / {count}
         </p>
       </div>

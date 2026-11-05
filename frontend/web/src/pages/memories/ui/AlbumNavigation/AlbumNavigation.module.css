@@ -1,0 +1,48 @@
+.back {
+  display: flex;
+  align-items: center;
+  min-height: var(--ds-target-web);
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-small);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--ds-target-web);
+  padding: max(var(--ds-space-s12), env(safe-area-inset-top)) var(--ds-space-s20) 0;
+  margin-bottom: var(--ds-component-mobile-vibe-nav-bottom-gap);
+}
+
+.controls {
+  display: flex;
+  gap: var(--ds-space-s12);
+  align-items: center;
+  min-height: var(--ds-target-web);
+}
+
+.controls > span {
+  min-width: var(--ds-component-mobile-vibe-counter-minimum-width);
+  text-align: end;
+  font-size: var(--ds-component-mobile-vibe-counter-size);
+  line-height: var(--ds-component-mobile-vibe-counter-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  font-size: var(--ds-typography-size-caption);
+  color: var(--ds-color-muted);
+}
+
+.controls button {
+  display: grid;
+  place-items: center;
+  width: var(--ds-target-web);
+  height: var(--ds-target-web);
+  min-height: var(--ds-target-web);
+  border-radius: var(--ds-radius-control);
+  padding: 0;
+  background: transparent;
+  color: var(--ds-color-muted);
+}

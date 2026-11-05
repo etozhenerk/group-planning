@@ -49,20 +49,21 @@ const chatComponent = (token) => token.path[0] === 'component' &&
   ['chatComposer', 'chatActionDialog', 'mobileChat', 'messageDelivery'].includes(token.path[1]);
 const conversationComponent = (token) => token.path[0] === 'component' &&
   ['mobileMessage', 'mobileInfo', 'mobileSettings', 'mobileDecision', 'mobilePreparation', 'desktopMessage'].includes(token.path[1]);
+const galleryComponent = (token) => token.path[0] === 'component' && token.path[1] === 'mobileVibe';
 const mobileComponent = (token) => token.path[0] === 'component' &&
-  token.path[1].startsWith('mobile') && !chatComponent(token) && !conversationComponent(token);
+  token.path[1].startsWith('mobile') && !chatComponent(token) && !conversationComponent(token) && !galleryComponent(token);
 
 export const renderTokens = (tokens, version) => {
   const header = `Generated from design-system/tokens.json · ${version}. Do not edit.`;
   const files = {
     'frontend/web/src/app/styles/design-tokens.css': `/* ${header} */\n\n:root {\n${tokens.map((t) => `  --ds-${kebab(t.path)}: ${cssValue(t)};`).join('\n')}\n}\n`,
-    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\nimport { chatComponentTokens } from '@/shared/config/design-tokens/chat-components';\nimport { mobileComponentTokens } from '@/shared/config/design-tokens/mobile-components';\nimport { conversationTokens } from '@/shared/config/design-tokens/conversation-components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens, ...chatComponentTokens, ...mobileComponentTokens, ...conversationTokens } as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\nimport { chatComponentTokens } from '@/shared/config/design-tokens/chat-components';\nimport { mobileComponentTokens } from '@/shared/config/design-tokens/mobile-components';\nimport { conversationTokens } from '@/shared/config/design-tokens/conversation-components';\nimport { galleryTokens } from '@/shared/config/design-tokens/gallery-components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens, ...chatComponentTokens, ...mobileComponentTokens, ...conversationTokens, ...galleryTokens } as const;\n`,
     'frontend/web/src/shared/config/design-tokens/foundations.ts': `// ${header}\nexport const foundationTokens = {\n${tokens
       .filter((t) => t.path[0] !== 'component')
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/components.ts': `// ${header}\nexport const componentTokens = {\n${tokens
-      .filter((t) => t.path[0] === 'component' && !chatComponent(t) && !mobileComponent(t) && !conversationComponent(t))
+      .filter((t) => t.path[0] === 'component' && !chatComponent(t) && !mobileComponent(t) && !conversationComponent(t) && !galleryComponent(t))
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/chat-components.ts': `// ${header}\nexport const chatComponentTokens = {\n${tokens
@@ -74,6 +75,7 @@ export const renderTokens = (tokens, version) => {
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/conversation-components.ts': `// ${header}\nexport const conversationTokens = {\n${tokens.filter(conversationComponent).map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/gallery-components.ts': `// ${header}\nexport const galleryTokens = {\n${tokens.filter(galleryComponent).map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,
     'frontend/ios/Somewhere/UI/DesignTokens.swift': `// ${header}\nimport SwiftUI\n\nenum DesignTokens {\n${tokens
       .filter((t) => nativeToken(t, 'ios'))
       .map((t) => `    static let ${camel(t.path)} = ${swiftValue(t)}`)

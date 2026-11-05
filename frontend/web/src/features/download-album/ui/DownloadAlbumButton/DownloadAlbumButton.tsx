@@ -29,12 +29,20 @@ export const DownloadAlbumButton = ({
           ? 'Отменить подготовку фотографий'
           : state.phase === 'error'
             ? 'Повторить скачивание всех фото'
-            : 'Скачать все фото'
+            : mobile
+              ? 'Сохранить все фото'
+              : 'Скачать все фото'
       }
     >
       {preparing ? <ButtonSpinner /> : <Download aria-hidden="true" />}
       <span>
-        {preparing ? 'Отменить' : state.phase === 'error' ? 'Повторить' : 'Скачать все'}
+        {preparing
+          ? 'Отменить'
+          : state.phase === 'error'
+            ? 'Повторить'
+            : mobile
+              ? 'Сохранить все'
+              : 'Скачать все'}
       </span>
     </button>
   );

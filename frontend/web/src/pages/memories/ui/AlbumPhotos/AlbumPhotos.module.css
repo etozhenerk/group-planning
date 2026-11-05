@@ -54,33 +54,6 @@
   border-radius: 18px;
 }
 
-@media (max-width: 739px) {
-  .stack {
-    height: clamp(340px, 51dvh, 500px);
-    margin: 0 -4px;
-    width: calc(100% + 8px);
-  }
-
-  .card {
-    width: 88%;
-    height: 77%;
-    border-width: 5px;
-    border-radius: 12px;
-  }
-
-  .card[data-portrait='true'] {
-    max-width: 78%;
-  }
-
-  .cell {
-    height: 220px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .card {
     transition: none;
@@ -103,5 +76,91 @@
   from {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.stack[data-mobile='true'] {
+  width: auto;
+  max-width: none;
+  min-height: var(--ds-component-mobile-vibe-deck-minimum-height);
+  height: clamp(
+    var(--ds-component-mobile-vibe-deck-height-minimum),
+    calc(var(--ds-component-mobile-vibe-deck-viewport-ratio) * 100dvh),
+    var(--ds-component-mobile-vibe-deck-height-maximum)
+  );
+  margin: var(--ds-space-s12) var(--ds-space-s12) 0;
+  touch-action: pan-y pinch-zoom;
+}
+
+.stack[data-mobile='true'] .card {
+  width: calc(var(--ds-component-mobile-vibe-card-width-ratio) * 100%);
+  height: calc(var(--ds-component-mobile-vibe-card-height-ratio) * 100%);
+  border: var(--ds-component-mobile-vibe-photo-border) solid var(--ds-color-photo-frame);
+  border-radius: var(--ds-component-mobile-vibe-photo-radius);
+  background: var(--ds-color-photo-frame);
+  box-shadow: 0 var(--ds-component-mobile-vibe-card-shadow-down)
+    var(--ds-component-mobile-vibe-card-shadow-blur)
+    var(--ds-color-mobile-vibe-photo-shadow);
+  transform: translate(calc(-50% + var(--drag)), calc(-50% + var(--dy)))
+    rotate(var(--angle));
+  opacity: 1;
+}
+
+.stack[data-mobile='true'][data-phase='dragging'] .card {
+  transition: none;
+}
+
+.stack[data-mobile='true'][data-phase='exiting'] .card,
+.stack[data-mobile='true'][data-phase='returning'] .card {
+  transition:
+    transform var(--duration) var(--ds-motion-easing-vibe-gesture),
+    opacity var(--ds-motion-duration-vibe-fade) ease;
+}
+
+.stack[data-mobile='true'][data-phase='idle'] .card {
+  transition: opacity var(--ds-motion-duration-vibe-fade) ease;
+}
+
+.stack[data-mobile='true'] .card[data-recycling='true'] {
+  opacity: 0;
+  transition: none;
+}
+
+.stack[data-mobile='true'][data-phase='assembling'] .card {
+  animation: assemble var(--ds-motion-duration-vibe-assembly)
+    var(--ds-motion-easing-standard);
+}
+
+.stack[data-mobile='true'] .card:not([data-front='true']) {
+  pointer-events: none;
+}
+
+.grid[data-mobile='true'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-space-s10);
+  margin: calc(var(--ds-space-s24) + var(--ds-space-s4)) var(--ds-space-s20) 0;
+}
+
+.cell[data-mobile='true'] {
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: var(--ds-radius-cover);
+}
+
+@media (max-height: design-token(component.mobileVibe.compactHeightBoundary)) {
+  .stack[data-mobile='true'] {
+    min-height: var(--ds-component-mobile-vibe-compact-deck-minimum-height);
+    height: var(--ds-component-mobile-vibe-compact-deck-height);
+  }
+
+  .stack[data-mobile='true'] .card {
+    height: calc(var(--ds-component-mobile-vibe-compact-card-height-ratio) * 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack[data-mobile='true'] .card {
+    transition: none;
+    animation: none;
   }
 }

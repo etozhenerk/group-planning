@@ -3,8 +3,8 @@ import UIKit
 
 /// Tap waits for horizontal pan to fail; a vertical gesture remains with the enclosing scroll view.
 struct PhotoStackTouch: UIViewRepresentable {
-    let changed: (CGFloat) -> Void
-    let ended: (CGFloat) -> Void
+    let changed: (CGSize) -> Void
+    let ended: (CGSize, CGFloat) -> Void
     let open: () -> Void
 
     func makeUIView(context: Context) -> UIView {
@@ -14,6 +14,7 @@ struct PhotoStackTouch: UIViewRepresentable {
         let pan = UIPanGestureRecognizer(
             target: context.coordinator, action: #selector(Coordinator.pan(_:)))
         pan.delegate = context.coordinator
+        pan.maximumNumberOfTouches = 1
         let tap = UITapGestureRecognizer(
             target: context.coordinator, action: #selector(Coordinator.tap))
         tap.require(toFail: pan)
@@ -33,14 +34,16 @@ struct PhotoStackTouch: UIViewRepresentable {
             guard let pan = recognizer as? UIPanGestureRecognizer else { return true }
             let velocity = pan.velocity(in: pan.view?.window)
             return abs(velocity.x) > abs(velocity.y)
+                * CGFloat(DesignTokens.componentMobileVibeAxisBias)
         }
 
         @objc func pan(_ recognizer: UIPanGestureRecognizer) {
-            let distance = recognizer.translation(in: recognizer.view?.window).x
+            let valueInWindow = recognizer.translation(in: recognizer.view?.window)
+            let distance = CGSize(width: valueInWindow.x, height: valueInWindow.y)
             switch recognizer.state {
             case .began, .changed: value.changed(distance)
-            case .ended: value.ended(distance)
-            case .cancelled, .failed: value.ended(0)
+            case .ended: value.ended(distance, recognizer.velocity(in: recognizer.view?.window).x)
+            case .cancelled, .failed: value.ended(.zero, 0)
             default: break
             }
         }

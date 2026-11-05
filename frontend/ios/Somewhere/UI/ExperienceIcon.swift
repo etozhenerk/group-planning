@@ -4,7 +4,7 @@ import SwiftUI
 struct ExperienceIcon: View {
     enum Kind {
         case calendar, envelope, person, list, plus, close, pin, crown, lock, back, smile, send,
-            photo, file, share, more, grid, download
+            photo, file, share, more, grid, download, layers
     }
     let kind: Kind
     var size: CGFloat = 21
@@ -29,6 +29,12 @@ struct ExperienceIcon: View {
                 for point in points.dropFirst() { p.addLine(to: point) }
             }
             switch kind {
+            case .layers:
+                line(
+                    CGPoint(x: 12, y: 2), CGPoint(x: 2, y: 7), CGPoint(x: 12, y: 12),
+                    CGPoint(x: 22, y: 7), CGPoint(x: 12, y: 2))
+                line(CGPoint(x: 2, y: 12), CGPoint(x: 12, y: 17), CGPoint(x: 22, y: 12))
+                line(CGPoint(x: 2, y: 17), CGPoint(x: 12, y: 22), CGPoint(x: 22, y: 17))
             case .calendar:
                 p.addRoundedRect(
                     in: CGRect(x: 3, y: 5, width: 18, height: 16),

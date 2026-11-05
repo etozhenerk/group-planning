@@ -7,12 +7,6 @@
   margin: 8px 0 10px;
 }
 
-.heading p {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 12px 0 0;
-}
-
 .heading h1 {
   font-size: 34px;
   line-height: 1.15;
@@ -21,16 +15,16 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 739px) {
-  .heading {
-    display: block;
-    padding: 0 4px;
-    margin-bottom: 0;
-  }
+.heading[data-mobile='true'] {
+  display: block;
+  padding: 0 var(--ds-space-s20);
+  margin: 0;
+}
 
-  .heading h1 {
-    font-size: 29px;
-    max-width: 320px;
-    letter-spacing: -0.9px;
-  }
+.heading[data-mobile='true'] h1 {
+  font-size: var(--ds-typography-size-heading);
+  line-height: var(--ds-component-mobile-vibe-title-line-height);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-vibe-title-tracking));
+  font-weight: var(--ds-component-mobile-vibe-title-weight);
+  margin: 0 0 var(--ds-space-s8);
 }

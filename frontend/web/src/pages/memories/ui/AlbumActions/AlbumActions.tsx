@@ -23,6 +23,7 @@ export const AlbumActions = ({
     <div
       className={styles.actions}
       data-mobile={mobile}
+      data-single={!canDownload}
       role="group"
       aria-label="Действия с альбомом"
     >

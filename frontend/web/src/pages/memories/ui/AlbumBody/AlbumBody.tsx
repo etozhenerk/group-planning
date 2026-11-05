@@ -1,3 +1,5 @@
+import { VibeAlbumState } from '@/pages/memories/ui/VibeAlbumState';
+import { useMobileLayout } from '@/shared/lib/media';
 import { Grid2X2, Layers } from 'lucide-react';
 import type { Media } from '@/shared/api';
 import type { useMemories } from '@/entities/meeting';
@@ -16,16 +18,28 @@ export type AlbumBodyProps = {
 };
 
 export const AlbumBody = ({ photos, user, album, query, open }: AlbumBodyProps) => {
+  const mobile = useMobileLayout();
+
   if (query.access.denied) {
-    return <Status title="Доступ к фото закрыт" />;
+    return mobile ? (
+      <VibeAlbumState kind="denied" />
+    ) : (
+      <Status title="Доступ к фото закрыт" />
+    );
   }
 
   if (query.isPending) {
-    return <SkeletonRows label="Загрузка фото" />;
+    return mobile ? (
+      <VibeAlbumState kind="loading" />
+    ) : (
+      <SkeletonRows label="Загрузка фото" />
+    );
   }
 
   if (query.error && !photos.length) {
-    return (
+    return mobile ? (
+      <VibeAlbumState kind="error" retry={() => void query.refetch()} />
+    ) : (
       <Status title="Не удалось открыть фото" error action={() => void query.refetch()} />
     );
   }
@@ -35,20 +49,24 @@ export const AlbumBody = ({ photos, user, album, query, open }: AlbumBodyProps) 
       {photos.length > 0 ? (
         <>
           <AlbumPhotos photos={photos} user={user} album={album} open={open} />
-          <div className={styles.counter}>
-            <span aria-live="polite">
-              {album.index + 1} / {photos.length}
-              {query.hasNextPage ? ' +' : ''}
-            </span>
-            <button
-              type="button"
-              onClick={() => album.setGrid(!album.grid)}
-              aria-label={album.grid ? 'Показать стопкой' : 'Показать сеткой'}
-            >
-              {album.grid ? <Layers size={18} /> : <Grid2X2 size={18} />}
-            </button>
-          </div>
+          {!mobile && (
+            <div className={styles.counter}>
+              <span aria-live="polite">
+                {album.index + 1} / {photos.length}
+                {query.hasNextPage ? ' +' : ''}
+              </span>
+              <button
+                type="button"
+                onClick={() => album.setGrid(!album.grid)}
+                aria-label={album.grid ? 'Показать стопкой' : 'Показать сеткой'}
+              >
+                {album.grid ? <Layers size={18} /> : <Grid2X2 size={18} />}
+              </button>
+            </div>
+          )}
         </>
+      ) : mobile ? (
+        <VibeAlbumState kind="empty" />
       ) : (
         <Status
           title="Как всё прошло?"

@@ -1,4 +1,4 @@
-# Токены somewhere · 7.12.0
+# Токены somewhere · 7.13.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -54,6 +54,8 @@
 | color.mobileOnboardingInactive | color | #414249 | onboarding-r4/r5: фон невыбранной точки#414249, alias опубликованной neutral-роли. |
 | color.mobileOnboardingNext | color | #393a42 | onboarding-r4/r5: фон Далее#393a42, computed style действующего эталона. |
 | color.mobileStickyShadow | color | #00000055 | create-r4/r5: #0005, тень закреплённой мобильной панели |
+| color.mobileVibePhotoShadow | color | #00000044 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| color.mobileVibeRemoveShadow | color | #00000055 | Неизменённый vibe-r3 UploadCarousel: тень кнопки удаления #0005. |
 | color.muted | color | #b9b9c2 | Смысловая роль muted |
 | color.navigation | color | #1d1e22 | Смысловая роль navigation |
 | color.navigationInactiveText | color | #92939f | Неактивная нижняя вкладка, утверждённый assets/styles.css mobile navigation |
@@ -540,6 +542,72 @@
 | component.mobileUnread.insetBottom | dimension | 12px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
 | component.mobileUnread.insetStart | dimension | 17px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
 | component.mobileUnread.reserveEnd | dimension | 138px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
+| component.mobileVibe.actionInsetBlock | dimension | 10px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.actionInsetInline | dimension | 9px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.actionLineHeight | dimension | 18px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.actionMinimumHeight | dimension | 48px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.actionRadius | dimension | 14px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.axisBias | number | 1.1 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.bodyLineHeight | dimension | 20px | Неизменённый vibe-r3: facts/описания13px с line-height20px. |
+| component.mobileVibe.cardHeightRatio | number | 0.78 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.cardShadowBlur | dimension | 26px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.cardShadowDown | dimension | 12px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.cardWidthRatio | number | 0.86 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.compactCardHeightRatio | number | 0.8 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.compactDeckHeight | dimension | 290px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.compactDeckMinimumHeight | dimension | 260px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.compactHeightBoundary | dimension | 650px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.counterLineHeight | dimension | 22px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.counterMinimumWidth | dimension | 48px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.counterSize | dimension | 16px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.deckHeightMaximum | dimension | 470px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.deckHeightMinimum | dimension | 310px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.deckMinimumHeight | dimension | 300px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.deckViewportRatio | number | 0.47 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.distanceMaximum | dimension | 90px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.distanceMinimum | dimension | 48px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.distanceRatio | number | 0.24 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.dragAngleDivisor | number | 35 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.dragAngleMaximum | number | 14 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.dragSlop | dimension | 8px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.flickDistance | dimension | 18px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.flickVelocityPerSecond | number | 500 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.flightSpeedBias | number | 2 | Неизменённый useDeckMotion vibe-r3: стабилизатор расчёта продолжительности полёта в px/ms. |
+| component.mobileVibe.navBottomGap | dimension | 14px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.photoBorder | dimension | 5px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.photoErrorIcon | dimension | 26px | Неизменённый vibe-r3 PhotoDeck: ImageOff26 при ошибке фотографии. |
+| component.mobileVibe.photoRadius | dimension | 14px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.progressViewportRatio | number | 0.8 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stackAngleStep | number | 8 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stackInitialAngle | number | -2 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateIcon | dimension | 30px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateIconTile | dimension | 70px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateMinimumHeight | dimension | 240px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateSkeletonRatio | number | 1.4 | Неизменённый vibe-r3 AlbumState: пропорция skeleton фотографии. |
+| component.mobileVibe.stateTextMaximumWidth | dimension | 240px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateTitle | dimension | 23px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.stateTitleLineHeight | dimension | 29px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.titleLineHeight | dimension | 33px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.titleTracking | dimension | 0.6px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.titleWeight | fontWeight | 650 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadEmptyIcon | dimension | 34px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadEmptyTextMaximumWidth | dimension | 220px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadEmptyTitle | dimension | 19px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadEmptyTitleLineHeight | dimension | 25px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadPhotoHeight | dimension | 132px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.uploadPhotoWidth | dimension | 176px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.velocityLatestWeight | number | 0.65 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.velocityPreviousWeight | number | 0.35 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.verticalDriftMaximum | dimension | 16px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.verticalDriftRatio | number | 0.15 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewerDistanceRatio | number | 0.2 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewerFlickDistance | dimension | 22px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewerTitleLineHeight | dimension | 21px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewerTitleSize | dimension | 15px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewerTopInset | dimension | 6px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.viewIconSize | dimension | 19px | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.wheelCommitRatio | number | 0.45 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| component.mobileVibe.wheelLineScale | number | 16 | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
 | component.navigation.detailsSidebarWidth | dimension | 280px | Ширина боковой панели сведений встречи из styles.css:646 |
 | component.navigation.height | dimension | 62px | Основная нижняя навигация height |
 | component.navigation.icon | dimension | 19px | Основная нижняя навигация icon |
@@ -646,8 +714,20 @@
 | motion.duration.reactionExit | duration | 150ms | Коррекция 2.0.0: reactionExit контекстных реакций; Reduce Motion без scale/translation |
 | motion.duration.reactionFeedback | duration | 150ms | Коррекция 2.0.0: reactionFeedback контекстных реакций; Reduce Motion без scale/translation |
 | motion.duration.reactionLongPress | duration | 450ms | Web-порог удержания 450 ms; native системный long press, доступные действия на самом сообщении/чипе без постоянных кнопок |
+| motion.duration.vibeAssembly | duration | 300ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeFade | duration | 180ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeFlightMaximum | duration | 320ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeFlightMinimum | duration | 180ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeReturn | duration | 220ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeVelocityExpiry | duration | 90ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeVelocitySampleMinimum | duration | 8ms | Неизменённый vibe-r3: нижняя граница времени для расчёта скорости жеста. |
+| motion.duration.vibeViewer | duration | 260ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeViewerWheelQuiet | duration | 100ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeWheelConsumedQuiet | duration | 160ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
+| motion.duration.vibeWheelQuiet | duration | 110ms | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
 | motion.easing.calendarMonth | cubicBezier | cubic-bezier(0, 0, 0.58, 1) | CalendarGrid month-enter baseline CSS ease-out. |
 | motion.easing.standard | cubicBezier | cubic-bezier(0.2, 0.7, 0.3, 1) | Плавное завершение движения |
+| motion.easing.vibeGesture | cubicBezier | cubic-bezier(0.2, 0.8, 0.2, 1) | Неизменённый approved vibe-r3: header/deck/viewer и обычная upload-форма; source assets/vibe-r3. |
 | radius.badge | dimension | 8px | Радиус badge |
 | radius.card | dimension | 22px | Радиус card |
 | radius.control | dimension | 12px | Радиус control |

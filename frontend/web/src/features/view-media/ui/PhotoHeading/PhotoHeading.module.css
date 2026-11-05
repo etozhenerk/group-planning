@@ -34,3 +34,18 @@
     padding: max(14px, env(safe-area-inset-top)) 14px 14px;
   }
 }
+
+.heading[data-mobile='true'] {
+  padding: max(var(--ds-component-mobile-vibe-viewer-top-inset), env(safe-area-inset-top))
+    var(--ds-space-s16) var(--ds-component-mobile-vibe-nav-bottom-gap) var(--ds-space-s20);
+}
+
+.heading[data-mobile='true'] h3 {
+  font-size: var(--ds-component-mobile-vibe-viewer-title-size);
+  line-height: var(--ds-component-mobile-vibe-viewer-title-line-height);
+  font-weight: var(--ds-typography-weight-medium);
+}
+
+.heading[data-mobile='true'] button {
+  border-radius: var(--ds-component-mobile-vibe-action-radius);
+}

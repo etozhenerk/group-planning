@@ -2,6 +2,10 @@ import SwiftUI
 
 struct MediaPhotoSelection: View {
     let owner: MediaTransferOwner
+    var width = DesignTokens.componentPhotoPreviewWidth
+    var height = DesignTokens.componentPhotoPreviewHeight
+    var cornerRadius = DesignTokens.componentButtonRadius
+    var outset: CGFloat? = nil
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -11,13 +15,13 @@ struct MediaPhotoSelection: View {
                         if let image = UIImage(data: file.data) {
                             Image(uiImage: image).resizable().scaledToFill()
                                 .frame(
-                                    width: DesignTokens.componentPhotoPreviewWidth,
-                                    height: DesignTokens.componentPhotoPreviewHeight
+                                    width: width,
+                                    height: height
                                 )
                                 .clipped()
                                 .clipShape(
                                     RoundedRectangle(
-                                        cornerRadius: DesignTokens.componentButtonRadius)
+                                        cornerRadius: cornerRadius)
                                 )
                                 .accessibilityLabel("Выбранное фото")
                                 .overlay(alignment: .topTrailing) {
@@ -54,7 +58,7 @@ struct MediaPhotoSelection: View {
                                 .designFont(DesignTokens.typographySizeCaption)
                                 .foregroundStyle(DesignTokens.colorError)
                                 .frame(
-                                    width: DesignTokens.componentPhotoPreviewWidth,
+                                    width: width,
                                     alignment: .leading)
                         }
                     }
@@ -63,7 +67,8 @@ struct MediaPhotoSelection: View {
         }.scrollIndicators(.hidden).accessibilityIdentifier("media-photo-carousel")
     }
     private var removeOffset: CGFloat {
-        (DesignTokens.targetIos - DesignTokens.componentPhotoPreviewRemoveSize) / 2
-            + DesignTokens.componentPhotoPreviewRemoveOutset
+        outset
+            ?? ((DesignTokens.targetIos - DesignTokens.componentPhotoPreviewRemoveSize) / 2
+                + DesignTokens.componentPhotoPreviewRemoveOutset)
     }
 }

@@ -7,7 +7,7 @@ struct AlbumActions: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
+        VStack(alignment: .leading, spacing: DesignTokens.componentMobileVibeNavBottomGap) {
             HStack(spacing: DesignTokens.spaceS8) {
                 AlbumActionButton(
                     title: "Добавить фото", accessibleTitle: "Добавить фото", icon: .plus,
@@ -25,9 +25,16 @@ struct AlbumActions: View {
                 }
             }.fixedSize(horizontal: false, vertical: true)
             if let message {
-                Text(message).designFont(DesignTokens.typographySizeSmall)
-                    .foregroundStyle(isError ? DesignTokens.colorError : DesignTokens.colorMuted)
-                    .accessibilityIdentifier("album-save-feedback")
+                HStack(alignment: .top, spacing: DesignTokens.spaceS10) {
+                    Image(systemName: isError ? "exclamationmark.triangle" : "info.circle")
+                        .foregroundStyle(DesignTokens.colorAccent)
+                    Text(message).designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                        DesignTokens.colorMuted
+                    ).frame(maxWidth: .infinity, alignment: .leading)
+                }.padding(DesignTokens.spaceS12).background(
+                    DesignTokens.colorSurface,
+                    in: RoundedRectangle(cornerRadius: DesignTokens.radiusControl)
+                ).accessibilityIdentifier("album-save-feedback")
             }
         }
     }

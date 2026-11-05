@@ -1,4 +1,6 @@
 import type { CSSProperties } from 'react';
+import { albumPhotoStyle } from '@/pages/memories/ui/AlbumPhotos/lib/albumPhotoStyle';
+import { useMobileLayout } from '@/shared/lib/media';
 import type { Media } from '@/shared/api';
 import { MediaPhoto, LazyMediaPhoto } from '@/entities/meeting';
 import type { useAlbum } from '@/pages/memories/model/useAlbum';
@@ -12,11 +14,13 @@ export type AlbumPhotosProps = {
 };
 
 export const AlbumPhotos = ({ photos, user, album, open }: AlbumPhotosProps) => {
+  const mobile = useMobileLayout();
+
   if (album.grid) {
     return (
-      <div className={styles.grid}>
+      <div className={styles.grid} data-mobile={mobile}>
         {photos.map((photo, index) => (
-          <div className={styles.cell} key={photo.id}>
+          <div className={styles.cell} data-mobile={mobile} key={photo.id}>
             <LazyMediaPhoto
               media={photo}
               user={user}
@@ -35,6 +39,10 @@ export const AlbumPhotos = ({ photos, user, album, open }: AlbumPhotosProps) => 
   return (
     <div
       className={styles.stack}
+      ref={album.element}
+      data-mobile={mobile}
+      data-phase={album.phase}
+      style={{ '--duration': `${album.duration}ms` } as CSSProperties}
       data-resetting={album.resetting}
       data-moving={album.moving}
       data-dragging={album.offset !== 0 && !album.moving}
@@ -63,13 +71,10 @@ export const AlbumPhotos = ({ photos, user, album, open }: AlbumPhotosProps) => 
               key={photo.id}
               className={styles.card}
               data-front={depth === 0}
-              style={
-                {
-                  '--depth': depth,
-                  '--drag': `${depth === 0 ? album.offset : 0}px`,
-                  '--tilt': `${depth === 0 ? album.offset / 35 : 0}deg`,
-                } as CSSProperties
+              data-recycling={
+                album.recycledIndex === (album.index + depth) % photos.length
               }
+              style={albumPhotoStyle(album, depth)}
             >
               <MediaPhoto
                 media={photo}

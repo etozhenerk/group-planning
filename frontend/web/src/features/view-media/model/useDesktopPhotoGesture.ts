@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
 
-export const usePhotoGesture = (change: (step: -1 | 1) => void) => {
+export const useDesktopPhotoGesture = (change: (step: -1 | 1) => void) => {
   const start = useRef<{ x: number; y: number } | null>(null);
   const down = (event: PointerEvent<HTMLDivElement>) => {
     start.current = { x: event.clientX, y: event.clientY };

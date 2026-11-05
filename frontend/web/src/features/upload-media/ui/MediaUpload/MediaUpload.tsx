@@ -1,3 +1,5 @@
+import { useMobileLayout } from '@/shared/lib/media';
+import { AlbumUploadForm } from '@/features/upload-media/ui/AlbumUploadForm';
 import type { Session } from '@/entities/session';
 import { useMediaUpload } from '@/features/upload-media/model/useMediaUpload';
 import { useUploadCompletion } from '@/features/upload-media/ui/MediaUpload/hooks/useUploadCompletion';
@@ -26,6 +28,7 @@ export const MediaUpload = ({
   initialFiles = [],
   active = true,
 }: MediaUploadProps) => {
+  const mobile = useMobileLayout();
   const upload = useMediaUpload(id, session, purpose, photo, initialFiles);
   const complete =
     upload.items.length > 0 && upload.items.every((item) => item.state === 'done');
@@ -49,6 +52,10 @@ export const MediaUpload = ({
         action={() => void upload.limits.refetch()}
       />
     );
+  }
+
+  if (mobile && purpose === 'memory' && photo) {
+    return <AlbumUploadForm upload={upload} complete={complete} />;
   }
 
   return (

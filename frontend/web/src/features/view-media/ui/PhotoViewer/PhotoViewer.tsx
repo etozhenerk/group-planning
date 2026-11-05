@@ -1,6 +1,5 @@
-import { usePhotoGesture } from '@/features/view-media/model/usePhotoGesture';
-import { useLayoutEffect, useRef } from 'react';
-import { lockBackgroundScroll } from '@/shared/lib/lockBackgroundScroll';
+import { usePhotoViewerSurface } from '@/features/view-media/ui/PhotoViewer/hooks/usePhotoViewerSurface';
+import { PhotoSlideTrack } from '@/features/view-media/ui/PhotoSlideTrack';
 import { PhotoHeading } from '@/features/view-media/ui/PhotoHeading';
 import type { Media } from '@/shared/api';
 import { MediaPhoto } from '@/entities/meeting';
@@ -13,6 +12,7 @@ export type PhotoViewerProps = {
   change: (step: -1 | 1) => void;
   index: number;
   count: number;
+  photos?: Media[] | undefined;
 };
 
 export const PhotoViewer = ({
@@ -22,39 +22,22 @@ export const PhotoViewer = ({
   change,
   index,
   count,
+  photos,
 }: PhotoViewerProps) => {
-  const gesture = usePhotoGesture(change);
-  const ref = useRef<HTMLDialogElement>(null);
-  useLayoutEffect(() => {
-    const dialog = ref.current;
-
-    if (!dialog) {
-      return;
-    }
-
-    const previous = document.activeElement;
-    const fallback = previous?.parentElement?.closest<HTMLElement>('[tabindex]');
-    dialog.showModal();
-    const unlock = lockBackgroundScroll(dialog);
-
-    return () => {
-      dialog.close();
-      unlock();
-      const target = previous?.isConnected ? previous : fallback;
-
-      if (
-        target instanceof HTMLElement &&
-        target.isConnected &&
-        !document.querySelector('dialog[open]')
-      ) {
-        target.focus({ preventScroll: true });
-      }
-    };
-  }, []);
+  const { mobile, gesture, slide, ref } = usePhotoViewerSurface({
+    media,
+    user,
+    close,
+    change,
+    index,
+    count,
+    photos,
+  });
 
   return (
     <dialog
       className={styles.viewer}
+      data-mobile={mobile}
       ref={ref}
       onCancel={(event) => {
         event.preventDefault();
@@ -66,11 +49,26 @@ export const PhotoViewer = ({
       <PhotoHeading media={media} user={user} index={index} count={count} close={close} />
       <div
         className={styles.photo}
+        data-mobile={mobile}
+        ref={mobile ? slide.element : undefined}
+        data-testid="full-photo"
+        onPointerMove={mobile ? slide.move : undefined}
+        onLostPointerCapture={mobile ? slide.lostCapture : undefined}
         onPointerDown={gesture.down}
         onPointerUp={gesture.up}
         onPointerCancel={gesture.cancel}
       >
-        <MediaPhoto media={media} user={user} contain />
+        {mobile ? (
+          <PhotoSlideTrack
+            media={media}
+            photos={photos}
+            user={user}
+            offset={slide.offset}
+            phase={slide.phase}
+          />
+        ) : (
+          <MediaPhoto media={media} user={user} contain />
+        )}
       </div>
     </dialog>
   );
